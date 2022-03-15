@@ -1,0 +1,27 @@
+{
+  "name": "testilo",
+  "version": "1.0.0",
+  "description": "Client that runs Testaro tests to fulfill Aorta jobs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jrpool/testilo"
+  },
+  "keywords": ["accessibility", "a11y", "testing"],
+  "author": "Jonathan Pool <pool@jpdev.pro>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jrpool/testilo/issues"
+  },
+  "homepage": "https://github.com/jrpool/testilo",
+  "dependencies": {
+    "dotenv": "*",
+    "testaro": "*"
+  },
+  "devDependencies": {
+    "eslint": "*"
+  }
+}

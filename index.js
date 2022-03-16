@@ -18,12 +18,12 @@ const {USERNAME, AUTHCODE, HOSTNAME, PORT} =  process.env;
 
 // Requests data.
 const getData = what => {
-  console.log(`Submitted ${what} request to Aorta`);
-  const data = JSON.stringify({
+  const content = {
     userName: USERNAME,
     authCode: AUTHCODE,
     what
-  });
+  };
+  const contentJSON = JSON.stringify(content);
   const options = {
     hostname: HOSTNAME,
     port: PORT,
@@ -31,7 +31,7 @@ const getData = what => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Content-Length': Buffer.byteLength(data)
+      'Content-Length': Buffer.byteLength(contentJSON)
     }
   };
   const request = http.request(options, response => {
@@ -41,15 +41,29 @@ const getData = what => {
     });
     // When the response is complete:
     response.on('end', () => {
-      console.log(`Response from Aorta:\n${chunks.join('')}`);
+      console.log(`Response to ${what}:\n${JSON.stringify(JSON.parse(chunks.join('')), null, 2)}`);
     });
   });
-  request.end(JSON.stringify(data));
-  console.log('Request finished');
+  request.end(contentJSON);
 };
-
-// Request the orders.
-getData('seeOrders');
+// Waits.
+const wait = seconds => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve('')
+    }, 1000 * seconds)
+  });
+};
+// Requests the orders and jobs repeatedly.
+const askForever = async () => {
+  while(1 < 2) {
+    await wait(3);
+    getData('seeOrders');
+    await wait(3);
+    getData('seeJobs');
+  }
+};
+askForever();
 
 // ########## PLATFORM
 

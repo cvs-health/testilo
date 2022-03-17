@@ -10,41 +10,48 @@ require('dotenv').config();
 // Module to make HTTPS requests.
 // const https = require('https');
 const http = require('http');
+// Module to perform tests.
+const {handleRequest} = require('testaro');
 
 // ########## CONSTANTS
 const {USERNAME, AUTHCODE, HOSTNAME, PORT} =  process.env;
 
 // ########## FUNCTIONS
 
-// Requests data.
-const getData = what => {
+// Sends a request to the Aorta server and returns the response data.
+const makeAortaRequest = async (what, specs = {}) => {
   const content = {
     userName: USERNAME,
     authCode: AUTHCODE,
     what
   };
+  Object.assign(content, specs);
   const contentJSON = JSON.stringify(content);
   const options = {
     hostname: HOSTNAME,
     port: PORT,
-    path: `/aorta/api`,
+    path: '/aorta/api',
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Content-Length': Buffer.byteLength(contentJSON)
     }
   };
-  const request = http.request(options, response => {
-    const chunks = [];
-    response.on('data', chunk => {
-      chunks.push(chunk);
+  const responseData = await new Promise(resolve => {
+    const request = http.request(options, response => {
+      const chunks = [];
+      response.on('data', chunk => {
+        chunks.push(chunk);
+      });
+      // When the response is complete:
+      response.on('end', () => {
+        // Return its data.
+        resolve(JSON.parse(chunks.join('')));
+      });
     });
-    // When the response is complete:
-    response.on('end', () => {
-      console.log(`Response to ${what}:\n${JSON.stringify(JSON.parse(chunks.join('')), null, 2)}`);
-    });
+    request.end(contentJSON);
   });
-  request.end(contentJSON);
+  return responseData;
 };
 // Waits.
 const wait = seconds => {
@@ -54,16 +61,49 @@ const wait = seconds => {
     }, 1000 * seconds)
   });
 };
-// Requests the orders and jobs repeatedly.
-const askForever = async () => {
-  while(1 < 2) {
-    await wait(3);
-    getData('seeOrders');
-    await wait(3);
-    getData('seeJobs');
+// Asks Aorta to assign an order to this tester.
+const claimOrder = async () => {
+  await wait(2);
+  // Get the orders.
+  const orders = await makeAortaRequest('seeOrders');
+  await wait(2);
+  // If there are any:
+  let jobResult;
+  if (orders.length) {
+    // Ask Aorta to make the first order a job assigned to this tester.
+    const orderName = orders[0].id;
+    jobResult = await makeAortaRequest('claimOrder', {
+      orderName,
+      testerName: USERNAME
+    });
   }
+  else {
+    jobResult = {error: 'noOrders'};
+  }
+  console.log(JSON.stringify(jobResult, null, 2));
 };
-askForever();
+// Performs the first Aorta job and submits a report on it.
+const doJob = async () => {
+  await wait(2);
+  // Get the jobs.
+  const jobs = await makeAortaRequest('seeJobs');
+  await wait(2);
+  // If there are any:
+  let reportResult;
+  if (jobs.length) {
+    // Perform the first one.
+    const job = jobs[0];
+    await handleRequest(job);
+    // Submit the report to Aorta.
+    reportResult = await makeAortaRequest('createReport', {report: job});
+  }
+  else {
+    reportResult = {error: 'noJobs'};
+  }
+  console.log(JSON.stringify(reportResult, null, 2));
+};
+// claimOrder();
+doJob();
 
 // ########## PLATFORM
 

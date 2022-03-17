@@ -7,9 +7,11 @@
 
 // Module to keep secrets local.
 require('dotenv').config();
-// Module to make HTTPS requests.
+// Module to make HTTP(S) requests.
 // const https = require('https');
 const http = require('http');
+// Module to read and write files.
+const fs = require('fs').promise;
 // Module to perform tests.
 const {handleRequest} = require('testaro');
 
@@ -96,6 +98,11 @@ const doJob = async () => {
     await handleRequest(job);
     // Submit the report to Aorta.
     reportResult = await makeAortaRequest('createReport', {report: job});
+    // Delete any temporary files created by the ibm test.
+    await fs.rm('results', {
+      recursive: true,
+      force: true
+    });
   }
   else {
     reportResult = {error: 'noJobs'};

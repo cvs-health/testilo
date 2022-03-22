@@ -11,7 +11,7 @@ require('dotenv').config();
 // const https = require('https');
 const http = require('http');
 // Module to read and write files.
-const fs = require('fs').promise;
+const fs = require('fs').promises;
 // Module to perform tests.
 const {handleRequest} = require('testaro');
 
@@ -84,7 +84,7 @@ const claimOrder = async () => {
   }
   console.log(JSON.stringify(jobResult, null, 2));
 };
-// Performs the first Aorta job and submits a report on it.
+// Performs the first Aorta job assigned to this tester and submits a report on it.
 const doJob = async () => {
   await wait(2);
   // Get the jobs.

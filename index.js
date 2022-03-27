@@ -110,7 +110,7 @@ const doJob = async () => {
   console.log(JSON.stringify(reportResult, null, 2));
 };
 // claimOrder();
-doJob();
+setInterval(doJob(), 600000);
 
 // ########## PLATFORM
 

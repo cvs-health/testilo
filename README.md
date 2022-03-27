@@ -20,3 +20,21 @@ The Testaro dependency has some dependencies in the @siteimprove scope that are 
 ```
 
 In this content, replace `abc` with your Github username and `def` with your Github personal access token.
+
+## Operation
+
+Testilo acts as an Aorta _user_ with `test` permission. By executing the statement `node index`, you start Testilo. Periodically, it connects to an Aorta server and asks whether there are any jobs assigned to its user. If there are any, Testilo retrieves the first job and performs it. When the job is finished, Testilo contacts the Aorta server again and creates a report in Aorta containing the results of the job.
+
+## Configuration
+
+An untracked `.env` file contains environment variables required by Testilo. It has this format:
+
+```bash
+USERNAME=abc
+AUTHCODE=def
+HOSTNAME=ghi.jkl
+PORT=3005
+TESTARO_WAVE_KEY=mno
+```
+
+To create the `.env` file, replace `abc` with an Aorta user ID, `def` with the Aorta authCode for that user, `ghi.jkl` with the URL of the Aorta server (not including the `/aorta` path that Testilo will add), and `mno` with a WAVE API key if Testilo is going to perform any tests using the WAVE API.

@@ -25,6 +25,8 @@ In this content, replace `abc` with your Github username and `def` with your Git
 
 Testilo acts as an Aorta _user_ with `test` permission. By executing the statement `node index`, you start Testilo. Periodically, it connects to an Aorta server and asks whether there are any jobs assigned to its user. If there are any, Testilo retrieves the first job and performs it. When the job is finished, Testilo contacts the Aorta server again and creates a report in Aorta containing the results of the job.
 
+The interval between instances of this operation is settable (see below). Testilo performs only one job at a time. If a job is in progress at the next scheduled time for retrieving a job, that instance is skipped.
+
 ## Configuration
 
 An untracked `.env` file contains environment variables required by Testilo. It has this format:
@@ -35,6 +37,7 @@ AUTHCODE=def
 HOSTNAME=ghi.jkl
 PORT=3005
 TESTARO_WAVE_KEY=mno
+INTERVAL=pqr
 ```
 
-To create the `.env` file, replace `abc` with an Aorta user ID, `def` with the Aorta authCode for that user, `ghi.jkl` with the URL of the Aorta server (not including the `/aorta` path that Testilo will add), and `mno` with a WAVE API key if Testilo is going to perform any tests using the WAVE API.
+To create the `.env` file, replace `abc` with an Aorta user ID, `def` with the Aorta authCode for that user, `ghi.jkl` with the URL of the Aorta server (not including the `/aorta` path that Testilo will add), `mno` with a WAVE API key if Testilo is going to perform any tests using the WAVE API, and `pqr` with the number of seconds to wait between repetitions.

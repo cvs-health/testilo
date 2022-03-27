@@ -16,7 +16,10 @@ const fs = require('fs').promises;
 const {handleRequest} = require('testaro');
 
 // ########## CONSTANTS
-const {USERNAME, AUTHCODE, HOSTNAME, PORT} =  process.env;
+const {USERNAME, AUTHCODE, HOSTNAME, PORT, INTERVAL} =  process.env;
+
+// ########## VARIABLES
+let working = true;
 
 // ########## FUNCTIONS
 
@@ -86,56 +89,36 @@ const claimOrder = async () => {
 };
 // Performs the first Aorta job assigned to this tester and submits a report on it.
 const doJob = async () => {
-  await wait(2);
-  // Get the jobs.
-  const jobs = await makeAortaRequest('seeJobs');
-  await wait(2);
-  // If there are any:
-  let reportResult;
-  if (jobs.length) {
-    // Perform the first one.
-    const job = jobs[0];
-    await handleRequest(job);
-    // Submit the report to Aorta.
-    reportResult = await makeAortaRequest('createReport', {report: job});
-    // Delete any temporary files created by the ibm test.
-    await fs.rm('results', {
-      recursive: true,
-      force: true
-    });
+  if (working) {
+    console.log('Skipped an interval because job still running');
   }
   else {
-    reportResult = {error: 'noJobs'};
+    working = true;
+    await wait(2);
+    // Get the jobs.
+    const jobs = await makeAortaRequest('seeJobs');
+    await wait(2);
+    // If there are any:
+    let reportResult;
+    if (jobs.length) {
+      // Perform the first one.
+      const job = jobs[0];
+      await handleRequest(job);
+      // Submit the report to Aorta.
+      reportResult = await makeAortaRequest('createReport', {report: job});
+      // Delete any temporary files created by the ibm test.
+      await fs.rm('results', {
+        recursive: true,
+        force: true
+      });
+      // Be ready to perform another job.
+    }
+    else {
+      reportResult = {error: 'noJobs'};
+    }
+    working = false;
+    console.log(JSON.stringify(reportResult, null, 2));
   }
-  console.log(JSON.stringify(reportResult, null, 2));
 };
 // claimOrder();
-setInterval(doJob(), 600000);
-
-// ########## PLATFORM
-
-/**
- * @description Gracefully shut down Node and clean up.
- *
- */
- function shutdownNode() {
-  console.log('\nShutting down Node.');
-  // Perform any cleanup.
-  process.exit(0);
-}
-/**
-* @description Handle unhandled exceptions in the code.
-* @param err
-*/
-function handleUncaughtException(err) {
-
-  console.log('Unhandled exception occurred.' , err);
-  // Uncomment if DB connection is made
-  console.log('Unhandled exception or rejection. Node is shut down.');
-  process.exit(1);
-}
-// Process shutdown and error conditions.
-process.on('SIGTERM', shutdownNode);
-process.on('SIGINT', shutdownNode);
-process.on('uncaughtException', handleUncaughtException);
-process.on('unhandledRejection', handleUncaughtException);
+setInterval(doJob(), 1000 * INTERVAL);

@@ -34,6 +34,7 @@ An untracked `.env` file contains environment variables required by Testilo. It 
 ```bash
 USERNAME=abc
 AUTHCODE=def
+PROTOCOL=https
 HOSTNAME=ghi.jkl
 PORT=3005
 TESTARO_WAVE_KEY=mno

@@ -7,16 +7,13 @@
 
 // Module to keep secrets local.
 require('dotenv').config();
+const {USERNAME, AUTHCODE, PROTOCOL, HOSTNAME, PORT, INTERVAL} =  process.env;
 // Module to make HTTP(S) requests.
-// const https = require('https');
-const http = require('http');
+const protocol = require(PROTOCOL);
 // Module to read and write files.
 const fs = require('fs').promises;
 // Module to perform tests.
 const {handleRequest} = require('testaro');
-
-// ########## CONSTANTS
-const {USERNAME, AUTHCODE, HOSTNAME, PORT, INTERVAL} =  process.env;
 
 // ########## VARIABLES
 let working = true;
@@ -43,7 +40,7 @@ const makeAortaRequest = async (what, specs = {}) => {
     }
   };
   const responseData = await new Promise(resolve => {
-    const request = http.request(options, response => {
+    const request = protocol.request(options, response => {
       const chunks = [];
       response.on('data', chunk => {
         chunks.push(chunk);
@@ -59,19 +56,17 @@ const makeAortaRequest = async (what, specs = {}) => {
   return responseData;
 };
 // Waits.
-const wait = seconds => {
+const wait = ms => {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve('');
-    }, 1000 * seconds)
+    }, ms)
   });
 };
 // Asks Aorta to assign an order to this tester.
 const claimOrder = async () => {
-  await wait(2);
   // Get the orders.
   const orders = await makeAortaRequest('seeOrders');
-  await wait(2);
   // If there are any:
   let jobResult;
   if (orders.length) {
@@ -94,10 +89,8 @@ const doJob = async () => {
   }
   else {
     working = true;
-    await wait(2);
     // Get the jobs.
     const jobs = await makeAortaRequest('seeJobs');
-    await wait(2);
     // If there are any:
     let reportResult;
     if (jobs.length) {

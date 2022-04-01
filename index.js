@@ -62,7 +62,7 @@ const makeAortaRequest = async (what, specs = {}) => {
 const wait = seconds => {
   return new Promise(resolve => {
     setTimeout(() => {
-      resolve('')
+      resolve('');
     }, 1000 * seconds)
   });
 };
@@ -87,7 +87,7 @@ const claimOrder = async () => {
   }
   console.log(JSON.stringify(jobResult, null, 2));
 };
-// Performs the first Aorta job assigned to this tester and submits a report on it.
+// Performs the first Aorta job assigned to this tester, submits a report, and returns the status.
 const doJob = async () => {
   if (working) {
     console.log('Skipped an interval because job still running');
@@ -107,11 +107,7 @@ const doJob = async () => {
       // Submit the report to Aorta.
       reportResult = await makeAortaRequest('createReport', {report: job});
       // Delete any temporary files created by the ibm test.
-      await fs.rm('results', {
-        recursive: true,
-        force: true
-      });
-      // Be ready to perform another job.
+      await fs.unlink('results/*');
     }
     else {
       reportResult = {error: 'noJobs'};
@@ -120,5 +116,16 @@ const doJob = async () => {
     console.log(JSON.stringify(reportResult, null, 2));
   }
 };
-// claimOrder();
-setInterval(doJob(), 1000 * INTERVAL);
+// Repeatedly claims orders, performs jobs, and submits reports.
+const cycle = async () => {
+  const interval = Number.parseInt(INTERVAL);
+  while (true) {
+    await wait(interval);
+    await claimOrder();
+    await doJob();
+  };
+};
+
+// ########## OPERATION
+
+cycle();

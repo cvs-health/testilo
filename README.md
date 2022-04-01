@@ -29,6 +29,8 @@ The interval between instances of this operation is settable (see below). Testil
 
 ## Configuration
 
+### General
+
 An untracked `.env` file contains environment variables required by Testilo. It has this format:
 
 ```bash
@@ -42,3 +44,16 @@ INTERVAL=stu
 ```
 
 To create the `.env` file, replace `abc` with an Aorta user ID, `def` with the Aorta authCode for that user, `ghi.jkl` with the URL of the Aorta server (not including the `/aorta` path that Testilo will add), `mno` with a port (443 if Aorta is server-hosted or 3005 if on your local host), `pqr` with a WAVE API key if Testilo is going to perform any tests using the WAVE API, and `stu` with the number of seconds to wait between repetitions.
+
+### `ibm` test
+
+Testaro can perform the `ibm` test. That test requires a configuration file in the root directory of this (`testilo`) project. As described in the `README.md` file of the Testaro project, the file must be named `aceconfig.js` and must contain:
+
+```javascript
+module.exports = {
+  reportLevels: [
+    'violation',
+    'recommendation'
+  ]
+};
+```

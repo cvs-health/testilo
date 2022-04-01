@@ -99,8 +99,6 @@ const doJob = async () => {
       await handleRequest(job);
       // Submit the report to Aorta.
       reportResult = await makeAortaRequest('createReport', {report: job});
-      // Delete any temporary files created by the ibm test.
-      await fs.unlink('results/*');
     }
     else {
       reportResult = {error: 'noJobs'};

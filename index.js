@@ -16,7 +16,7 @@ const fs = require('fs').promises;
 const {handleRequest} = require('testaro');
 
 // ########## VARIABLES
-let working = true;
+let working = false;
 
 // ########## FUNCTIONS
 

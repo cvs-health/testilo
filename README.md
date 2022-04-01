@@ -36,9 +36,9 @@ USERNAME=abc
 AUTHCODE=def
 PROTOCOL=https
 HOSTNAME=ghi.jkl
-PORT=3005
-TESTARO_WAVE_KEY=mno
-INTERVAL=pqr
+PORT=mno
+TESTARO_WAVE_KEY=pqr
+INTERVAL=stu
 ```
 
-To create the `.env` file, replace `abc` with an Aorta user ID, `def` with the Aorta authCode for that user, `ghi.jkl` with the URL of the Aorta server (not including the `/aorta` path that Testilo will add), `mno` with a WAVE API key if Testilo is going to perform any tests using the WAVE API, and `pqr` with the number of seconds to wait between repetitions.
+To create the `.env` file, replace `abc` with an Aorta user ID, `def` with the Aorta authCode for that user, `ghi.jkl` with the URL of the Aorta server (not including the `/aorta` path that Testilo will add), `mno` with a port (443 if Aorta is server-hosted or 3005 if on your local host), `pqr` with a WAVE API key if Testilo is going to perform any tests using the WAVE API, and `stu` with the number of seconds to wait between repetitions.

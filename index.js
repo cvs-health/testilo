@@ -7,11 +7,12 @@
 
 // Module to keep secrets local.
 require('dotenv').config();
-const {USERNAME, AUTHCODE, PROTOCOL, HOSTNAME, PORT, INTERVAL} =  process.env;
+const {USERNAME, AUTHCODE, ENVIRONMENT, TESTARO_WAVE_KEY, INTERVAL} =  process.env;
+const protocol = process.env[`${ENVIRONMENT}PROTOCOL`];
+const hostname = process.env[`${ENVIRONMENT}HOSTNAME`];
+const port = process.env[`${ENVIRONMENT}PORT`];
 // Module to make HTTP(S) requests.
-const protocol = require(PROTOCOL);
-// Module to read and write files.
-const fs = require('fs').promises;
+const client = require(protocol);
 // Module to perform tests.
 const {handleRequest} = require('testaro');
 
@@ -30,8 +31,8 @@ const makeAortaRequest = async (what, specs = {}) => {
   Object.assign(content, specs);
   const contentJSON = JSON.stringify(content);
   const options = {
-    hostname: HOSTNAME,
-    port: PORT,
+    hostname,
+    port,
     path: '/aorta/api',
     method: 'POST',
     headers: {
@@ -40,7 +41,7 @@ const makeAortaRequest = async (what, specs = {}) => {
     }
   };
   const responseData = await new Promise(resolve => {
-    const request = protocol.request(options, response => {
+    const request = client.request(options, response => {
       const chunks = [];
       response.on('data', chunk => {
         chunks.push(chunk);

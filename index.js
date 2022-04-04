@@ -69,52 +69,60 @@ const claimOrder = async () => {
   // Get the orders.
   const orders = await makeAortaRequest('seeOrders');
   // If there are any:
-  let jobResult;
+  const orderResult = {};
   if (orders.length) {
     // Ask Aorta to make the first order a job assigned to this tester.
     const orderName = orders[0].id;
-    jobResult = await makeAortaRequest('claimOrder', {
+    orderResult.response = await makeAortaRequest('claimOrder', {
       orderName,
       testerName: USERNAME
     });
   }
   else {
-    jobResult = {error: 'noOrders'};
+    orderResult.error = 'noOrders';
   }
-  console.log(JSON.stringify(jobResult, null, 2));
+  console.log(JSON.stringify(orderResult, null, 2));
+  return orderResult;
 };
 // Performs the first Aorta job assigned to this tester, submits a report, and returns the status.
 const doJob = async () => {
+  const jobResult = {};
   if (working) {
     console.log('Skipped an interval because job still running');
+    jobResult.error = 'skipped';
   }
   else {
     working = true;
     // Get the jobs.
     const jobs = await makeAortaRequest('seeJobs');
     // If there are any:
-    let reportResult;
     if (jobs.length) {
       // Perform the first one.
       const job = jobs[0];
       await handleRequest(job);
       // Submit the report to Aorta.
-      reportResult = await makeAortaRequest('createReport', {report: job});
+      jobResult.response = await makeAortaRequest('createReport', {report: job});
     }
     else {
-      reportResult = {error: 'noJobs'};
+      jobResult.error = 'noJobs';
     }
     working = false;
-    console.log(JSON.stringify(reportResult, null, 2));
+    console.log(JSON.stringify(jobResult, null, 2));
   }
+  return jobResult;
 };
 // Repeatedly claims orders, performs jobs, and submits reports.
 const cycle = async () => {
   const interval = Number.parseInt(INTERVAL);
   while (true) {
     await wait(interval);
-    await claimOrder();
-    await doJob();
+    const jobResult = await doJob();
+    if (jobResult.error === 'noJobs') {
+      const orderResult = await claimOrder();
+      if (orderResult.response) {
+        await doJob();
+      }
+    }
   };
 };
 

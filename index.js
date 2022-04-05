@@ -7,7 +7,7 @@
 
 // Module to keep secrets local.
 require('dotenv').config();
-const {USERNAME, AUTHCODE, ENVIRONMENT, TESTARO_WAVE_KEY, INTERVAL} =  process.env;
+const {USERNAME, AUTHCODE, ENVIRONMENT, INTERVAL} =  process.env;
 const protocol = process.env[`${ENVIRONMENT}PROTOCOL`];
 const hostname = process.env[`${ENVIRONMENT}HOSTNAME`];
 const port = process.env[`${ENVIRONMENT}PORT`];
@@ -69,20 +69,26 @@ const claimOrder = async () => {
   // Get the orders.
   const orders = await makeAortaRequest('seeOrders');
   // If there are any:
-  const orderResult = {};
-  if (orders.length) {
-    // Ask Aorta to make the first order a job assigned to this tester.
-    const orderName = orders[0].id;
-    orderResult.response = await makeAortaRequest('claimOrder', {
-      orderName,
-      testerName: USERNAME
-    });
+  if (Array.isArray(orders)) {
+    if (orders.length) {
+      // Ask Aorta to make the first order a job assigned to this tester.
+      const orderName = orders[0].id;
+      return {
+        response: await makeAortaRequest('claimOrder', {
+          orderName,
+          testerName: USERNAME
+        })
+      };
+    }
+    else {
+      return {
+        error: 'noOrders'
+      };
+    }
   }
   else {
-    orderResult.error = 'noOrders';
+    return orders;
   }
-  console.log(JSON.stringify(orderResult, null, 2));
-  return orderResult;
 };
 // Performs the first Aorta job assigned to this tester, submits a report, and returns the status.
 const doJob = async () => {
@@ -119,6 +125,7 @@ const cycle = async () => {
     const jobResult = await doJob();
     if (jobResult.error === 'noJobs') {
       const orderResult = await claimOrder();
+      console.log(JSON.stringify(orderResult, null, 2));
       if (orderResult.response) {
         await doJob();
       }

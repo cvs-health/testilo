@@ -92,6 +92,7 @@ const claimOrder = async () => {
 const doJob = async () => {
   if (working) {
     console.log('Skipped an interval because job still running');
+    return 'skipped';
   }
   else {
     working = true;
@@ -104,10 +105,13 @@ const doJob = async () => {
         const job = jobs[0];
         await handleRequest(job);
         // Submit the report to Aorta.
-        console.log(JSON.stringify(await makeAortaRequest('createReport', {report: job})), null, 2);
+        const jobResult = await makeAortaRequest('createReport', {report: job});
+        console.log(JSON.stringify(jobResult, null, 2));
+        return jobResult;
       }
       else {
         console.log('noJobs');
+        return 'noJobs';
       }
     }
     working = false;
@@ -119,7 +123,7 @@ const cycle = async () => {
   while (true) {
     await wait(interval);
     const jobResult = await doJob();
-    if (jobResult.error === 'noJobs') {
+    if (jobResult === 'noJobs') {
       const orderResult = await claimOrder();
       console.log(JSON.stringify(orderResult, null, 2));
       if (orderResult.response) {

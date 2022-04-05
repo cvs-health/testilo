@@ -91,7 +91,6 @@ const claimOrder = async () => {
 // Performs the first Aorta job assigned to this tester, submits a report, and returns the status.
 const doJob = async () => {
   if (working) {
-    console.log('Skipped an interval because job still running');
     return 'skipped';
   }
   else {
@@ -106,18 +105,18 @@ const doJob = async () => {
         await handleRequest(job);
         // Submit the report to Aorta.
         const jobResult = await makeAortaRequest('createReport', {report: job});
-        console.log(JSON.stringify(jobResult, null, 2));
-        return jobResult;
+        working = false;
+        return JSON.stringify(jobResult, null, 2);
       }
       else {
-        console.log('noJobs');
+        working = false;
         return 'noJobs';
       }
     }
     else {
-      console.log(JSON.stringify(jobs, null, 2));
+      working = false;
+      return JSON.stringify(jobs, null, 2);
     }
-    working = false;
   }
 };
 // Repeatedly claims orders, performs jobs, and submits reports.
@@ -127,11 +126,12 @@ const cycle = async () => {
     await wait(interval);
     const jobResult = await doJob();
     if (jobResult === 'noJobs') {
+      console.log('noJobs');
       const orderResult = await claimOrder();
-      console.log(JSON.stringify(orderResult, null, 2));
-      if (orderResult.response) {
-        await doJob();
-      }
+      console.log(orderResult === 'noOrders' ? 'noOrders' : JSON.stringify(orderResult, null, 2));
+    }
+    else {
+      console.log(JSON.stringify(jobResult, null, 2));
     }
   };
 };

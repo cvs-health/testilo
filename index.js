@@ -85,7 +85,7 @@ const claimOrder = async () => {
     }
   }
   else {
-    return JSON.stringify(orders, null, 2);
+    return orders;
   }
 };
 // Performs the first Aorta job assigned to this tester, submits a report, and returns the status.
@@ -115,7 +115,7 @@ const doJob = async () => {
     }
     else {
       working = false;
-      return JSON.stringify(jobs, null, 2);
+      return jobs;
     }
   }
 };

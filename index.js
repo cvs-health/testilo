@@ -6,8 +6,8 @@
 // ########## IMPORTS
 
 // Module to keep secrets local.
-require('dotenv').config();
-const {USERNAME, AUTHCODE, ENVIRONMENT, INTERVAL} =  process.env;
+require('dotenv').config({override: true});
+const {USERNAME, AUTHCODE, ENVIRONMENT, INTERVAL} = process.env;
 const protocol = process.env[`${ENVIRONMENT}PROTOCOL`];
 const hostname = process.env[`${ENVIRONMENT}HOSTNAME`];
 const port = process.env[`${ENVIRONMENT}PORT`];
@@ -131,7 +131,7 @@ const cycle = async () => {
       console.log(orderResult === 'noOrders' ? 'noOrders' : JSON.stringify(orderResult, null, 2));
     }
     else {
-      console.log(JSON.stringify(jobResult, null, 2));
+      console.log(jobResult);
     }
   };
 };

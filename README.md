@@ -47,13 +47,4 @@ To create the `.env` file, replace `abc` with an Aorta user ID, `def` with the A
 
 ### `ibm` test
 
-Testaro can perform the `ibm` test. That test requires a configuration file in the root directory of this (`testilo`) project. As described in the `README.md` file of the Testaro project, the file must be named `aceconfig.js` and must contain:
-
-```javascript
-module.exports = {
-  reportLevels: [
-    'violation',
-    'recommendation'
-  ]
-};
-```
+Testaro can perform the `ibm` test. That test requires the `aceconfig.js` configuration file in the root directory.

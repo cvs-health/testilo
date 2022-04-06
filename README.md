@@ -19,7 +19,7 @@ The Testaro dependency has some dependencies in the @siteimprove scope that are 
 //npm.pkg.github.com/:_authToken=def
 ```
 
-In this content, replace `abc` with your Github username and `def` with your Github personal access token.
+In this content, replace `abc` with your Github username and `def` with a Github personal access token that has `read:packages` scope.
 
 ## Operation
 

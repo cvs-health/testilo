@@ -138,4 +138,13 @@ const cycle = async () => {
 
 // ########## OPERATION
 
-cycle();
+try {
+  cycle();
+}
+catch(error) {
+  console.log(`ERROR: ${error.message}`);
+  const interval = Number.parseInt(INTERVAL);
+  setTimeout(() => {
+    cycle();
+  }, interval)
+}

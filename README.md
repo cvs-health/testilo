@@ -47,7 +47,7 @@ TESTARO_WAVE_KEY=x4
 INTERVAL=x5
 ```
 
-To create the `.env` file, replace `x0` with an Aorta user ID, `x1` with the Aorta authCode for that user, `x2` with either `DEV` (if running locally) or `prod` (if running on a server), `x3` with the hostname (such as `example.com`) of the Aorta server (thus, not including the `/aorta` path that Testilo will add), `x4` with a WAVE API key if Testilo is going to perform any tests using the WAVE API, and `x5` with the number of milliseconds to wait between repetitions (such as `60000` for one minute).
+To create the `.env` file, replace `x0` with an Aorta user ID, `x1` with the Aorta authCode for that user, `x2` with either `DEV` (if Aorta is running locally) or `PROD` (if Aorta is running on a server), `x3` with the hostname (such as `example.com`) of the Aorta server (thus, not including the `/aorta` path that Testilo will add), `x4` with a WAVE API key if Testilo is going to perform any tests using the WAVE API, and `x5` with the number of milliseconds to wait between repetitions (such as `60000` for one minute).
 
 ### `ibm` test
 

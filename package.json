@@ -1,6 +1,6 @@
 {
   "name": "testilo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Client that runs Testaro tests to fulfill Aorta jobs",
   "main": "index.js",
   "scripts": {

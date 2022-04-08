@@ -34,16 +34,20 @@ The interval between instances of this operation is settable (see below). Testil
 An untracked `.env` file contains environment variables required by Testilo. It has this format:
 
 ```bash
-USERNAME=abc
-AUTHCODE=def
-PROTOCOL=https
-HOSTNAME=ghi.jkl
-PORT=mno
-TESTARO_WAVE_KEY=pqr
-INTERVAL=stu
+USERNAME=x0
+AUTHCODE=x1
+ENVIRONMENT=x2
+PRODPROTOCOL=https
+PRODHOSTNAME=x3
+PRODPORT=443
+DEVPROTOCOL=http
+DEVHOSTNAME=localhost
+DEVPORT=3005
+TESTARO_WAVE_KEY=x4
+INTERVAL=x5
 ```
 
-To create the `.env` file, replace `abc` with an Aorta user ID, `def` with the Aorta authCode for that user, `ghi.jkl` with the URL of the Aorta server (not including the `/aorta` path that Testilo will add), `mno` with a port (443 if Aorta is server-hosted or 3005 if on your local host), `pqr` with a WAVE API key if Testilo is going to perform any tests using the WAVE API, and `stu` with the number of seconds to wait between repetitions.
+To create the `.env` file, replace `x0` with an Aorta user ID, `x1` with the Aorta authCode for that user, `x2` with either `DEV` (if running locally) or `prod` (if running on a server), `x3` with the hostname (such as `example.com`) of the Aorta server (thus, not including the `/aorta` path that Testilo will add), `x4` with a WAVE API key if Testilo is going to perform any tests using the WAVE API, and `x5` with the number of milliseconds to wait between repetitions (such as `60000` for one minute).
 
 ### `ibm` test
 

@@ -54,7 +54,6 @@ const makeAortaRequest = async (what, specs = {}) => {
     });
     request.end(contentJSON);
   });
-  console.log(`Response to ${what} is:\n${JSON.stringify(responseData, null, 2)}`);
   return responseData;
 };
 // Waits.

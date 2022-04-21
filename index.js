@@ -24,7 +24,7 @@ let working = false;
 // Sends a request to the Aorta server and returns the response data.
 const makeAortaRequest = async (what, specs = {}) => {
   const content = {
-    userName: ID,
+    id: ID,
     authCode: AUTHCODE,
     what
   };

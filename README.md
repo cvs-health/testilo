@@ -1,13 +1,11 @@
 # testilo
-Client that runs Testaro tests to fulfill Aorta jobs
+Runner of Testaro tests
 
 ## Introduction
 
-This application is designed to be installed on a Windows or Macintosh host and to operate as an agent performing Testaro jobs for an Aorta server.
+This application is designed to be installed on a Windows or Macintosh host and to operate as a runner of Testaro jobs.
 
 [Testaro](https://www.npmjs.com/package/testaro) is a dependency that performs digital accessibility tests on Web resources.
-
-[Aorta](https://github.com/jrpool/aorta) is a server application that routes orders to testers and receives test reports back from testers. Testilo acts as a tester for Aorta.
 
 ## Dependencies
 
@@ -23,32 +21,63 @@ In this content, replace `abc` with your Github username and `def` with a Github
 
 ## Operation
 
-Testilo acts as an Aorta _user_ with `test` permission. By executing the statement `node index`, you start Testilo. Periodically, it connects to an Aorta server and asks whether there are any jobs assigned to its user. If there are any, Testilo retrieves the first job and performs it. When the job is finished, Testilo contacts the Aorta server again and creates a report in Aorta containing the results of the job.
+### General
 
-The interval between instances of this operation is settable (see below). Testilo performs only one job at a time. If a job is in progress at the next scheduled time for retrieving a job, that instance is skipped.
+Testilo orders a Testaro job by calling Testaro’s `handleRequest` function with an options-object argument. The options argument has this structure:
+
+```javascript
+{
+  log: [],
+  report: {},
+  script: {…}
+}
+```
+
+The `script` property has a Testaro script as its value. See the Testaro `README.md` file for documentation on scripts.
+
+If a script is represented as JSON in a file `scripts/scriptX.json`, you can incorporate it into the options object of a Testaro call by executing the statement
+
+```javascript
+node index scriptX
+```
+
+### Batches
+
+You may wish to have Testaro perform the same sequence of tests on multiple web pages. In that case, you can create a _batch_, with the following structure:
+
+```javascript
+{
+  what: 'Web leaders',
+  hosts: {
+    id: 'w3c',
+    which: 'https://www.w3.org/',
+    what: 'W3C'
+  },
+  {
+    id: 'wikimedia',
+    which: 'https://www.wikimedia.org/',
+    what: 'Wikimedia'
+  }
+}
+
+With a batch, you can execute a single statement to call Testaro multiple times, one per host. On each call, Testilo takes one of the hosts in the batch and substitutes it for each host specified in a `url` command of the script. Testilo waits for each Testaro job to finish before calling the next Testaro job.
+
+If a batch is represented as a JSON file `batches/batchY.json`, you can use it to call a set of Testaro jobs with the statement
+
+```javascript
+node index scriptX batchY
+```
+
+Given that statement, Testilo replaces the hosts in the script with the first host in the batch and calls Testaro. When Testaro finishes performing that script, Testilo replaces the script hosts with the second batch host and calls Testaro again. And so on.
+
+### Results
+
+When you execute a `node index …` statement, Testilo begins populating the `report` object by giving it an `id` property. If there is no batch, the value of that property is a string encoding the date and time when you executed the statement (e.g., `eh9q7r`). If there is a batch, the value is the same, except that it is suffixed with a hyphen-minus character followed by the `id` value of the host (e.g., `eh9q7r-wikimedia`).
+
+Testaro delivers its results by populating the `log` array and the `report` object of the options object. Testilo waits for Testaro to finish performing the script and then saves the options object in JSON format as a file in the `results` directory.
 
 ## Configuration
 
-### General
-
-An untracked `.env` file contains environment variables required by Testilo. It has this format:
-
-```bash
-USERNAME=x0
-AUTHCODE=x1
-ENVIRONMENT=x2
-PRODPROTOCOL=https
-PRODHOSTNAME=x3
-PRODPORT=443
-DEVPROTOCOL=http
-DEVHOSTNAME=localhost
-DEVPORT=3005
-TESTARO_WAVE_KEY=x4
-INTERVAL=x5
-```
-
-To create the `.env` file, replace `x0` with an Aorta user ID, `x1` with the Aorta authCode for that user, `x2` with either `DEV` (if Aorta is running locally) or `PROD` (if Aorta is running on a server), `x3` with the hostname (such as `example.com`) of the Aorta server (thus, not including the `/aorta` path that Testilo will add), `x4` with a WAVE API key if Testilo is going to perform any tests using the WAVE API, and `x5` with the number of milliseconds to wait between repetitions (such as `60000` for one minute).
-
 ### `ibm` test
 
-Testaro can perform the `ibm` test. That test requires the `aceconfig.js` configuration file in the root directory.
+Testaro can perform the `ibm` test. That test requires the `aceconfig.js` configuration file in the root directory of the Testilo project.

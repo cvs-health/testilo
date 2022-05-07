@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/jrpool/testilo",
   "dependencies": {
-    "dotenv": "*",
     "testaro": "*"
   },
   "devDependencies": {

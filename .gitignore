@@ -9,9 +9,9 @@ node_modules/
 .eslintrc.json
 
 # Secrets
-.env
 .npmrc
 
 # Transactions
-.data/
+batches/
 results/
+scripts/

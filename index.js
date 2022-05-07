@@ -15,7 +15,7 @@ const fs = require('fs').promises;
 const batchify = (script, batch, timeStamp) => {
   const {hosts} = batch;
   const specs = hosts.map(host => {
-    const newScript = Object.assign({}, script);
+    const newScript = JSON.parse(JSON.stringify(script));
     newScript.commands.forEach(command => {
       if (command.type === 'url') {
         command.which = host.which;

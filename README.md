@@ -23,13 +23,14 @@ In this content, replace `abc` with your Github username and `def` with a Github
 
 ### General
 
-Testilo orders a Testaro job by calling Testaro’s `handleRequest` function with an options-object argument. The options argument has this structure:
+Testilo orders a Testaro job by calling Testaro’s `handleRequest` function with an object argument. The argument has this structure:
 
 ```javascript
 {
+  id,
+  script: {…},
   log: [],
-  report: {},
-  script: {…}
+  acts: []
 }
 ```
 
@@ -59,6 +60,7 @@ You may wish to have Testaro perform the same sequence of tests on multiple web 
     what: 'Wikimedia'
   }
 }
+```
 
 With a batch, you can execute a single statement to call Testaro multiple times, one per host. On each call, Testilo takes one of the hosts in the batch and substitutes it for each host specified in a `url` command of the script. Testilo waits for each Testaro job to finish before calling the next Testaro job.
 
@@ -70,11 +72,11 @@ node index scriptX batchY
 
 Given that statement, Testilo replaces the hosts in the script with the first host in the batch and calls Testaro. When Testaro finishes performing that script, Testilo replaces the script hosts with the second batch host and calls Testaro again. And so on.
 
-### Results
+### Reports
 
-When you execute a `node index …` statement, Testilo begins populating the `report` object by giving it an `id` property. If there is no batch, the value of that property is a string encoding the date and time when you executed the statement (e.g., `eh9q7r`). If there is a batch, the value is the same, except that it is suffixed with a hyphen-minus character followed by the `id` value of the host (e.g., `eh9q7r-wikimedia`).
+When you execute a `node index …` statement, Testilo begins populating the object argument by giving its `id` property a value. If there is no batch, the value of that property is a string encoding the date and time when you executed the statement (e.g., `eh9q7r`). If there is a batch, the value is the same, except that it is suffixed with a hyphen-minus character followed by the `id` value of the host (e.g., `eh9q7r-wikimedia`).
 
-Testaro delivers its results by populating the `log` array and the `report` object of the options object. Testilo waits for Testaro to finish performing the script and then saves the options object in JSON format as a file in the `results` directory.
+Testaro delivers its results by populating the `log` and `acts` arrays of the object argument. Testilo waits for Testaro to finish performing the script and then saves the object argument in JSON format as a file in the `reports` directory.
 
 ## Configuration
 

@@ -31,18 +31,16 @@ const batchify = (script, batch, timeStamp) => {
   return specs;
 };
 // Calls Testaro.
-const callTestaro = async (script, startTime, id) => {
-  const options = {
+const callTestaro = async (id, script) => {
+  const report = {
+    id,
     log: [],
-    report: {
-      id,
-      startTime
-    },
-    script
+    script,
+    acts: []
   };
-  await handleRequest(options);
-  const optionsJSON = JSON.stringify(options, null, 2);
-  await fs.writeFile(`results/${options.report.id}.json`, optionsJSON);
+  await handleRequest(report);
+  const reportJSON = JSON.stringify(report, null, 2);
+  await fs.writeFile(`reports/${id}.json`, reportJSON);
 };
 // Runs a job.
 const run = async () => {
@@ -54,7 +52,6 @@ const run = async () => {
       const script = JSON.parse(scriptJSON);
       let batch = null;
       // Identify the start time and a timestamp.
-      const startTime = (new Date()).toISOString().slice(0, 19);
       const timeStamp = Math.floor((Date.now() - Date.UTC(2022, 1)) / 2000).toString(36);
       // If there is a batch:
       if (batchFileName) {
@@ -65,14 +62,15 @@ const run = async () => {
         // For each script:
         while (specs.length) {
           const spec = specs.shift();
+          const {id, script} = spec;
           // Call Testaro on it and save the result with a host-suffixed ID.
-          await callTestaro(spec.script, startTime, spec.id);
+          await callTestaro(id, script);
         }
       }
       // Otherwise, i.e. if there is no batch:
       else {
         // Call Testaro on the script and save the result with a timestamp ID.
-        await callTestaro(script, startTime, timeStamp);
+        await callTestaro(timeStamp, script);
       }
     }
     catch(error) {

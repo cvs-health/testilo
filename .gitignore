@@ -13,5 +13,5 @@ node_modules/
 
 # Transactions
 batches/
-results/
+reports/
 scripts/

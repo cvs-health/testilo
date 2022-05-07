@@ -16,10 +16,10 @@ const batchify = (script, batch, timeStamp) => {
   const {hosts} = batch;
   const specs = hosts.map(host => {
     const newScript = Object.assign({}, script);
-    newScript.acts.forEach(act => {
-      if (act.type === 'url') {
-        act.which = host.which;
-        act.what = host.what;
+    newScript.commands.forEach(command => {
+      if (command.type === 'url') {
+        command.which = host.which;
+        command.what = host.what;
       }
     });
     const spec = {
@@ -54,7 +54,7 @@ const run = async () => {
       // Identify the start time and a timestamp.
       const timeStamp = Math.floor((Date.now() - Date.UTC(2022, 1)) / 2000).toString(36);
       // If there is a batch:
-      if (batchFileName) {
+      if (batchName) {
         // Convert the script to a batch-based set of scripts.
         const batchJSON = await fs.readFile(`batches/${batchName}.json`, 'utf8');
         batch = JSON.parse(batchJSON);

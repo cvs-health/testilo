@@ -8,6 +8,7 @@
 // Module to perform tests.
 const {handleRequest} = require('testaro');
 const fs = require('fs').promises;
+require('dotenv').config();
 
 // ########## FUNCTIONS
 

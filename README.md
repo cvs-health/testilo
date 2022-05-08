@@ -9,6 +9,8 @@ This application is designed to be installed on a Windows or Macintosh host and 
 
 ## Dependencies
 
+The `dotenv` dependency lets you set environment variables in an untracked `.env` file.
+
 The Testaro dependency has some dependencies in the @siteimprove scope that are Github Packages. In order to execute `npm install` successfully, you need the `.npmrc` file in your project directory with this content, unless an `.npmrc` file in your home directory or elsewhere provides the same content:
 
 ```bash
@@ -83,3 +85,9 @@ Testaro delivers its results by populating the `log` and `acts` arrays of the ob
 ### `ibm` test
 
 Testaro can perform the `ibm` test. That test requires the `aceconfig.js` configuration file in the root directory of the Testilo project.
+
+### Environment variables
+
+If a `wave` test is included in a script, an environment variable named `TESTARO_WAVE_KEY` must exist, with your WAVE API key as its value.
+
+Before executing a Testaro script, you can optionally also set the environment variables `TESTARO_DEBUG` (to `'true'` or anything else) and/or `TESTARO_WAITS` (to a non-negative integer). The effects of these variables are described in the Testaro `index.js` file.

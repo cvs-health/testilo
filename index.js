@@ -45,16 +45,16 @@ const callTestaro = async (id, script) => {
 };
 // Runs a job.
 const run = async () => {
-  const scriptName = process.argv[2];
+  const scriptID = process.argv[2];
   const batchName = process.argv[3];
-  if (scriptName) {
+  if (scriptID) {
     try {
-      const scriptJSON = await fs.readFile(`scripts/${scriptName}.json`, 'utf8');
+      const scriptJSON = await fs.readFile(`scripts/${scriptID}.json`, 'utf8');
       const script = JSON.parse(scriptJSON);
-      let batch = null;
       // Identify the start time and a timestamp.
       const timeStamp = Math.floor((Date.now() - Date.UTC(2022, 1)) / 2000).toString(36);
       // If there is a batch:
+      let batch = null;
       if (batchName) {
         // Convert the script to a batch-based set of scripts.
         const batchJSON = await fs.readFile(`batches/${batchName}.json`, 'utf8');

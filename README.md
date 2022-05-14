@@ -78,7 +78,7 @@ Given that statement, Testilo replaces the hosts in the script with the first ho
 
 When you execute a `node index …` statement, Testilo begins populating the object argument by giving its `id` property a value. If there is no batch, the value of that property is a string encoding the date and time when you executed the statement (e.g., `eh9q7r`). If there is a batch, the value is the same, except that it is suffixed with a hyphen-minus character followed by the `id` value of the host (e.g., `eh9q7r-wikimedia`).
 
-Testaro delivers its results by populating the `log` and `acts` arrays of the object argument. Testilo waits for Testaro to finish performing the script and then saves the object argument in JSON format as a file in the `reports` directory.
+Testaro delivers its results by populating the `log` and `acts` arrays of the object argument. Testilo waits for Testaro to finish performing the script and then saves the object argument in JSON format as a file in the `reports` directory. The name of the file is the `id` value of the object, suffixed with `.json`.
 
 ## Configuration
 

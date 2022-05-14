@@ -6,9 +6,9 @@
 // ########## IMPORTS
 
 // Module to perform tests.
+require('dotenv').config();
 const {handleRequest} = require('testaro');
 const fs = require('fs').promises;
-require('dotenv').config();
 
 // ########## FUNCTIONS
 

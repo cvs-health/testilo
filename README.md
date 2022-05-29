@@ -80,6 +80,37 @@ When you execute a `node index …` statement, Testilo begins populating the obj
 
 Testaro delivers its results by populating the `log` and `acts` arrays of the object argument. Testilo waits for Testaro to finish performing the script and then saves the object argument in JSON format as a file in the `reports` directory. The name of the file is the `id` value of the object, suffixed with `.json`.
 
+##### Scoring
+
+An example of a **scoring** command is:
+
+```json
+{
+  "type": "score",
+  "which": "asp09",
+  "what": "5 packages and 16 custom tests, with duplication discounts"
+}
+```
+
+In this case, Testaro executes the procedure specified in the `asp09` score proc (in the `procs/score` directory) to compute a total score for the script or (if there is a batch) the host. The proc is a JavaScript module whose `scorer` function returns an object containing a total score and the itemized scores that yield the total.
+
+The `scorer` function inspects the script report to find the required data, applies specific weights and formulas to yield the itemized scores, and combines the itemized scores to yield the total score.
+
+The data for scores can include not only test results, but also log statistics. Testaro includes in each report the properties:
+- `logCount`: how many log items the browser generated
+- `logSize`: how large the log items were in the aggregate, in characters
+- `prohibitedCount`: how many log items contain (case-insensitively) `403` and `status`, or `prohibited`
+- `visitTimeoutCount`: how many times an attempt to visit a URL timed out
+- `visitRejectionCount`: how many times a URL visit got an HTTP status other than 200 or 304
+
+Those log statistics can provide data for a log-based test defined in a score proc.
+
+A good score proc takes account of duplications between test packages: two or more packages that discover the same accessibility defects. Score procs can apply discounts to reflect duplications between test packages, so that, if two or more packages discover the same defect, the defect will not be overweighted.
+
+The procedures in the `scoring` directory have produced data there that score procs can use for the calibration of discounts.
+
+Some documents are implemented in such a way that some tests are prevented from being conducted on them. When that occurs, the score proc can **infer** a score for that test.
+
 ## Configuration
 
 ### `ibm` test

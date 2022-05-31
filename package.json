@@ -1,7 +1,7 @@
 {
   "name": "testilo",
-  "version": "2.1.0",
-  "description": "Client that runs Testaro tests to fulfill Aorta jobs",
+  "version": "3.0.0",
+  "description": "Client that scores and digests Testaro reports",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,8 +18,7 @@
   },
   "homepage": "https://github.com/jrpool/testilo",
   "dependencies": {
-    "dotenv": "*",
-    "testaro": "*"
+    "dotenv": "*"
   },
   "devDependencies": {
     "eslint": "*"

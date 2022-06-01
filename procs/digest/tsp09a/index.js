@@ -12,21 +12,19 @@ exports.makeQuery = (report, query) => {
   const joiner = '\n      ';
   const innerJoiner = '\n        ';
   // Create an HTML identification of the host report.
-  const {acts, host, hostName, id, orderName} = report;
-  const reportHostInfo = hostName ? `the <code>${hostName}</code> host report in ` : '';
-  const reportInfo = `${reportHostInfo}the <code>${orderName || id}</code> report`;
+  const {id, script, acts, host, score} = report;
   // Creates a packaged-test success message.
   const packageSucceedText = package =>
     `<p>The page <strong>passed</strong> the <code>${package}</code> test.</p>`;
   // Creates a packaged-test failure message.
   const packageFailText = (score, package, failures) =>
-    `<p>The page <strong>did not pass</strong> the <code>${package}</code> test and received a score of ${score} on <code>${package}</code>. The details are in ${reportInfo}, in the section starting with <code>"which": "${package}"</code>. There was at least one failure of:</p>${joiner}<ul>${innerJoiner}${failures}${joiner}</ul>`;
+    `<p>The page <strong>did not pass</strong> the <code>${package}</code> test and received a score of ${score} on <code>${package}</code>. The details are in the appended report, in the section starting with <code>"which": "${package}"</code>. There was at least one failure of:</p>${joiner}<ul>${innerJoiner}${failures}${joiner}</ul>`;
   // Creates a custom-test success message.
   const customSucceedText =
     test => `<p>The page <strong>passed</strong> the <code>${test}</code> test.</p>`;
   // Creates a custom-test failure message.
   const customFailText = (score, test) =>
-    `<p>The page <strong>did not pass</strong> the <code>${test}</code> test and received a score of ${score} on <code>${test}</code>. The details are in ${reportInfo}, in the section starting with <code>"which": "${test}"</code>.</p>`;
+    `<p>The page <strong>did not pass</strong> the <code>${test}</code> test and received a score of ${score} on <code>${test}</code>. The details are in the appended report, in the section starting with <code>"which": "${test}"</code>.</p>`;
   // Creates a test unperformability message.
   const testCrashText = (score, test) => `<p>The <code>${test}</code> test could not be performed. The page received an inferred score of ${score} on <code>${test}</code>.</p>`;
   // Creates the HTML items in a list of a custom test’s failures.
@@ -53,12 +51,16 @@ exports.makeQuery = (report, query) => {
   // Add the job data to the query.
   query.dateISO = report.endTime.slice(0, 10);
   query.dateSlash = query.dateISO.replace(/-/g, '/');
-  query.reportInfo = reportInfo;
-  query.org = host.what;
-  query.url = host.which;
-  const scoreAct = acts.filter(act => act.type === 'score')[0];
-  const {result} = scoreAct;
-  const {inferences, scores} = result;
+  if (host) {
+    query.org = host.what;
+    query.url = host.which;
+  }
+  else {
+    const firstURLCommand = script.commands.find(command => command.type === 'url');
+    query.org = firstURLCommand.what;
+    query.url = firstURLCommand.which;
+  }
+  const {inferences, scores} = score;
   query.totalScore = scores.total;
   // Create rows of an HTML table of net scores.
   const netScores = Object.assign({}, scores, inferences);

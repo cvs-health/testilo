@@ -1,6 +1,6 @@
 /*
-  tsp09
-  Testilo score proc 9
+  tsp09a
+  Testilo score proc 9a
   Computes scores from script tsp09 and adds them to a report.
 */
 exports.scorer = report => {
@@ -553,8 +553,7 @@ exports.scorer = report => {
   scores.total += logScore;
   // Add the score facts to the report.
   report.score = {
-    scoreProc: 'tsp',
-    version: '9',
+    scoreProcID: '',
     duplications,
     rules,
     diffStyles,

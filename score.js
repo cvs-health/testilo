@@ -15,15 +15,16 @@ const fs = require('fs').promises;
 const reportDirRaw = process.env.REPORTDIR_RAW || 'reports/raw';
 const reportDirScored = process.env.REPORTDIR_SCORED || 'reports/scored';
 const reportID = process.argv[2];
+const scoreProcID = process.argv[3];
 
 // ########## FUNCTIONS
 
 const score = async () => {
   const reportJSON = await fs.readFile(`${__dirname}/${reportDirRaw}/${reportID}.json`, 'utf8');
   const report = JSON.parse(reportJSON);
-  const scorerID = report.script.id;
-  const {scorer} = require(`./procs/score/${scorerID}`);
+  const {scorer} = require(`./procs/score/${scoreProcID}`);
   scorer(report);
+  report.score.scoreProcID = scoreProcID;
   const scoredReportJSON = JSON.stringify(report, null, 2);
   await fs.writeFile(`${__dirname}/${reportDirScored}/${reportID}.json`, scoredReportJSON);
   console.log(`Report ${reportID} scored and saved`);

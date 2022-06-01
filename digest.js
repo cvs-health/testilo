@@ -15,6 +15,7 @@ const fs = require('fs').promises;
 const reportDirScored = process.env.REPORTDIR_SCORED || 'reports/scored';
 const reportDirDigested = process.env.REPORTDIR_DIGESTED || 'reports/digested';
 const reportID = process.argv[2];
+const digesterID = process.argv[3];
 
 // ########## FUNCTIONS
 
@@ -25,9 +26,7 @@ const replaceHolders = (content, query) => content
 const digest = async () => {
   const reportJSON = await fs.readFile(`${__dirname}/${reportDirScored}/${reportID}.json`, 'utf8');
   const report = JSON.parse(reportJSON);
-  const digesterID = report.script.id;
-  const {digester} = require(`${__dirname}/procs/digest/${digesterID}/index.js`);
-  const {makeQuery} = digester;
+  const {makeQuery} = require(`${__dirname}/procs/digest/${digesterID}/index.js`);
   const query = {};
   makeQuery(report, query);
   const template = await fs.readFile(`${__dirname}/procs/digest/${digesterID}/index.html`, 'utf8');

@@ -10,20 +10,20 @@
     <meta name="keywords" content="accessibility a11y web testing">
     <title>Accessibility test digest</title>
     <link rel="icon" href="favicon.png">
-    <link rel="stylesheet" href="/aorta/style.css">
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <main>
       <header>
         <h1>Accessibility test digest</h1>
-        <p class="summary">__org__</p>
-        <p class="summary">Testilo, <code>__scoreProc__</code> procedure</p>
+        <p class="summary bold">__org__</p>
+        <p class="summary">Testilo, <code>tsp09</code> procedure</p>
         <p class="summary">Score: __totalScore__</p>
       </header>
       <h2>Introduction</h2>
-      <p>The <code>tsp09</code> accessibility testing procedure was executed by <a href="https://www.npmjs.com/package/testaro">Testaro</a> on the web page at <a href="__url__">__url__</a>, belonging to __org__, on __dateSlash__. The procedure performed 628 tests. Of these, 16 tests are custom tests defined by Testaro, and the others belong to packages of tests created by others.</p>
+      <p>The <code>tsp09</code> accessibility testing procedure was executed by <a href="https://www.npmjs.com/package/testaro">Testaro</a> on the web page at <a href="__url__">__url__</a>, belonging to __org__, on __dateSlash__. The procedure performed 628 tests. Of these, 16 tests are custom tests defined by Testaro, and the others belong to packages of tests created by others. Testaro produced a report enumerating the test results.</p>
       <p>These tests&mdash;like all tests&mdash;are fallible. The failures described below merit investigation as <strong>potential</strong> opportunities for improved accessibility. But some reported faults may not actually harm accessibility, and some accessibility faults can escape detection by any of these tests.</p>
-      <p>The <code>tsp09</code> procedure weights the test results and aggregates them into a total score. The page obtained a total score of __totalScore__ (where 0 is the best possible score). This digest explains how that score was computed.</p>
+      <p>Given the report produced by Testaro, another procedure, <code>tsp09a</code>, assigned weights to the tests and computed a total score for the page, __totalScore__ (where 0 is the best possible score). Just as tests are fallible, any scoring procedure is subjective, and different reasonable procedures could assign different scores on the basis of the same report. This digest explains how <code>tsp09a</code> computed a score for the page.</p>
       <h2>Summary</h2>
       <p>The packages&rsquo; and custom tests&rsquo; contributions to the score were:</p>
       <table class="allBorder secondCellRight">
@@ -112,7 +112,7 @@
       <h3><code>zIndex</code></h3>
       __zIndexResult__
       <p>The <code>zIndex</code> test detects elements with non-default z indexes. Pages present difficulty for some users when they require users to perceive a third dimension (depth) in the two-dimensional display. Layers, popups, and dialogs that cover other content make it difficult for some users to interpret the content and know what parts of the content can be acted on. Layering also complicates accessibility testing. Tests for visibility of focus, for example, may fail if a focused element is covered by another element.</p>
-      <h2>Testing failures</h2>
+      <h2>Test prevention</h2>
       <p>Some pages prevent some of the tests in this procedure from being performed. This may occur, for example, when a page tries to block any non-human visitor. The procedure estimates high scores when pages prevent tests, because preventing accessibility testing is itself an accessibility deficiency. Specifically:</p>
       <ul>
         <li>Measuring success is a prerequisite for achieving success, so interfering with accessibility measurement interferes with accessibility.</li>

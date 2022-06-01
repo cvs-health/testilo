@@ -2,7 +2,7 @@
   index: digester for procedure tsp09.
   Creator of parameters for substitution into index.html.
 */
-exports.parameters = (report, query) => {
+exports.makeQuery = (report, query) => {
   // Makes strings HTML-safe.
   const htmlEscape = textOrNumber => textOrNumber
   .toString()
@@ -54,7 +54,6 @@ exports.parameters = (report, query) => {
   query.dateISO = report.endTime.slice(0, 10);
   query.dateSlash = query.dateISO.replace(/-/g, '/');
   query.reportInfo = reportInfo;
-  query.scoreProc = __filename.slice(0, -3).replace(/^.+\//, '');
   query.org = host.what;
   query.url = host.which;
   const scoreAct = acts.filter(act => act.type === 'score')[0];

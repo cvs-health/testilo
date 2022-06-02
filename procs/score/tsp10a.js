@@ -1,7 +1,8 @@
 /*
   tsp10a
   Testilo score proc 10a
-  Computes scores from script tsp10 and adds them to a report.
+  Computes scores from script tsp10 and adds them to a report. Does not discount tenon. Tenon
+  discounting is planned future work.
 */
 exports.scorer = report => {
   // CONSTANTS
@@ -280,31 +281,27 @@ exports.scorer = report => {
             }
           }
         }
-        else if (which === 'wave') {
-          facts = test.result && test.result.categories;
+        else if (which === 'tenon') {
+          facts = test.result
+          && test.result.data
+          && test.result.data.resultSummary
+          && test.result.data.resultSummary.issues;
           if (facts) {
-            rules.wave
-              = 'multiply alerts by 2*, contrast errors by 3*, errors by 4* (*discounted); sum';
+            rules.tenon
+              = 'multiply warnings by 1, errors by 3; sum';
             const weights = {
-              error: 4,
-              contrast: 3,
-              alert: 2
+              totalErrors: 3,
+              totalWarnings: 1
             };
-            const waveScores = {
-              error: 0,
-              contrast: 0,
-              alert: 0
+            const tenonScores = {
+              totalErrors: 0,
+              totalWarnings: 0
             };
-            ['error', 'contrast', 'alert'].forEach(level => {
-              const {items} = facts[level];
-              waveScores[level] = Math.round(Object.keys(items).reduce((total, ruleID) => {
-                const rawScore = items[ruleID].count * weights[level];
-                const divisor = duplications.wave[`${level.slice(0, 1)}:${ruleID}`] + 1 || 1;
-                return total + rawScore / divisor;
-              }, 0));
+            ['totalErrors', 'totalWarnings'].forEach(level => {
+              tenonScores[level] = weights[level] * facts[level];
             });
-            scores.wave = waveScores.error + waveScores.contrast + waveScores.alert;
-            scores.total += scores.wave;
+            scores.tenon = tenonScores.totalErrors + tenonScores.totalWarnings;
+            scores.total += scores.tenon;
           }
         }
         else if (which === 'bulk') {
@@ -521,7 +518,7 @@ exports.scorer = report => {
           increment('zIndex');
         }
       });
-      // Compute the inferred scores of package tests that failed and adjust the total score.
+      // Compute the inferred scores of prevented package tests and adjust the total score.
       const estimate = (tests, penalty) => {
         const packageScores = tests.map(test => scores[test]).filter(score => score !== null);
         const scoreCount = packageScores.length;
@@ -541,7 +538,7 @@ exports.scorer = report => {
           }
         });
       };
-      estimate(['alfa', 'aatt', 'axe', 'ibm', 'wave'], 100);
+      estimate(['alfa', 'aatt', 'axe', 'ibm', 'tenon', 'wave'], 100);
     }
   }
   logScore = Math.floor(

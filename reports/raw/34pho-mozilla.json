@@ -1,0 +1,541 @@
+{
+  "id": "34pho-mozilla",
+  "log": [
+    {
+      "event": "startTime",
+      "value": "2022-06-02T17:23:36"
+    },
+    {
+      "event": "endTime",
+      "value": "2022-06-02T17:23:52"
+    }
+  ],
+  "script": {
+    "id": "tenon",
+    "what": "Test example.com with tenon",
+    "strict": true,
+    "commands": [
+      {
+        "type": "launch",
+        "which": "chromium",
+        "what": "Chromium browser"
+      },
+      {
+        "type": "url",
+        "which": "https://www.mozilla.org/en-US/",
+        "what": "Mozilla"
+      },
+      {
+        "type": "tenonRequest",
+        "withNewContent": true,
+        "what": "Initiate a Tenon test",
+        "id": "a"
+      },
+      {
+        "type": "test",
+        "which": "tenon",
+        "what": "Tenon package",
+        "id": "a"
+      }
+    ]
+  },
+  "acts": [
+    {
+      "type": "launch",
+      "which": "chromium",
+      "what": "Chromium browser"
+    },
+    {
+      "type": "url",
+      "which": "https://www.mozilla.org/en-US/",
+      "what": "Mozilla",
+      "result": "https://www.mozilla.org/en-US/"
+    },
+    {
+      "type": "tenonRequest",
+      "withNewContent": true,
+      "what": "Initiate a Tenon test",
+      "id": "a",
+      "url": "https://www.mozilla.org/en-US/"
+    },
+    {
+      "type": "test",
+      "which": "tenon",
+      "what": "Tenon",
+      "id": "a",
+      "url": "https://www.mozilla.org/en-US/",
+      "result": {
+        "status": 200,
+        "message": "OK",
+        "code": "success",
+        "info": "Success",
+        "moreInfo": "https://tenon.io/documentation/apiv2/response-codes#success",
+        "responseExecTime": "0.072",
+        "responseTime": "2022-06-02T17:23:52.853Z",
+        "data": {
+          "apiErrors": [],
+          "documentSize": 1057521,
+          "metadata": null,
+          "resultSummary": {
+            "tests": {
+              "total": 180,
+              "passing": 175,
+              "failing": 5
+            },
+            "issues": {
+              "totalErrors": 9,
+              "totalWarnings": 1,
+              "totalIssues": 10
+            },
+            "issuesByLevel": {
+              "A": {
+                "count": 9,
+                "pct": 90
+              },
+              "AA": {
+                "count": 3,
+                "pct": 30
+              },
+              "AAA": {
+                "count": 10,
+                "pct": 100
+              }
+            },
+            "density": {
+              "errorDensity": 1,
+              "warningDensity": 0,
+              "allDensity": 1
+            }
+          },
+          "projectID": "E4B12DC9-2F67-8DB7-26C9-E50C8490",
+          "responseID": "e16d44e6-35bc-4e12-a86a-10c916029605",
+          "docID": "76ddb2ed-c373-435e-cc7d-3e33e8da81fe",
+          "sourceHash": "2076c9988a3c3effd7f90fe52cef5bf9",
+          "urlHttpCode": 200,
+          "clientScriptErrors": [],
+          "remainingApiCalls": {
+            "planCalls": 0,
+            "boosts": 19
+          },
+          "globalStats": {
+            "errorDensity": "N/A",
+            "warningDensity": "N/A",
+            "allDensity": "N/A",
+            "stdDev": "N/A"
+          },
+          "resultUrl": "http://ngnix/history.php?responseID=e16d44e6-35bc-4e12-a86a-10c916029605",
+          "resultSet": [
+            {
+              "tID": 73,
+              "bpID": 106,
+              "priority": 100,
+              "level": [
+                "A",
+                "AAA"
+              ],
+              "certainty": 100,
+              "errorTitle": "This link text is uninformative.",
+              "standards": [
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level A: 2.4.4 Link Purpose (In Context)",
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level AAA: 2.4.9 Link Purpose (Link Only)"
+              ],
+              "resultTitle": "Make sure that link text (and the alternate text for any images that are used as links) describes the destination or purpose of the link.",
+              "errorDescription": "The text in this link is too generic to be helpful for users.  Users will be unable to discern the purpose or destination of the link without reading the text that surrounds it. Change the text in this link to something that is unique and informative so that the user can understand what content or actions can be found at the link's destination.",
+              "viewPortLocation": {
+                "top-left": {
+                  "x": 0,
+                  "y": 0
+                },
+                "bottom-right": {
+                  "x": -52,
+                  "y": -16
+                },
+                "height": -16,
+                "width": -52
+              },
+              "position": {
+                "line": 4826,
+                "column": 52
+              },
+              "errorSnippet": "&lt;a href=\"/en-US/firefox/accounts/\" class=\"mzp-c-button mzp-t-product mzp-t-dark\" id=\"fxa-learn-secondary\"&gt;Learn more&lt;/a&gt;",
+              "xpath": "/html/body/div[3]/main[1]/section[8]/div[1]/div[2]/div[1]/a[1]",
+              "issueID": "23aa5ea96ec7cb23f0b76accd547c6df",
+              "signature": "f74f839d929a6612acb9ff9ee37ca553",
+              "ref": "https://tenon.io/bestpractice.php?bpID=106&tID=73&issueID=23aa5ea96ec7cb23f0b76accd547c6df"
+            },
+            {
+              "tID": 73,
+              "bpID": 106,
+              "priority": 100,
+              "level": [
+                "A",
+                "AAA"
+              ],
+              "certainty": 100,
+              "errorTitle": "This link text is uninformative.",
+              "standards": [
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level A: 2.4.4 Link Purpose (In Context)",
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level AAA: 2.4.9 Link Purpose (Link Only)"
+              ],
+              "resultTitle": "Make sure that link text (and the alternate text for any images that are used as links) describes the destination or purpose of the link.",
+              "errorDescription": "The text in this link is too generic to be helpful for users.  Users will be unable to discern the purpose or destination of the link without reading the text that surrounds it. Change the text in this link to something that is unique and informative so that the user can understand what content or actions can be found at the link's destination.",
+              "viewPortLocation": {
+                "top-left": {
+                  "x": 0,
+                  "y": 0
+                },
+                "bottom-right": {
+                  "x": 0,
+                  "y": 0
+                },
+                "height": 0,
+                "width": 0
+              },
+              "position": {
+                "line": 7908,
+                "column": 9
+              },
+              "errorSnippet": "&lt;a class=\"c-banner-button show-android\" href=\"https://app.adjust.com/2uo1qc?redirect=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dorg.mozilla.firefox&amp;amp;campaign=www.mozilla.org&amp;amp;adgroup=app-store-banner\" data-link-type=\"d",
+              "xpath": "/html/body/div[3]/aside[1]/div[1]/div[1]/div[1]/a[1]",
+              "issueID": "a7b029840cdaa60546b190f4543393b8",
+              "signature": "aa20c3e22a77d12a3cc5a0e6f47c2d99",
+              "ref": "https://tenon.io/bestpractice.php?bpID=106&tID=73&issueID=a7b029840cdaa60546b190f4543393b8"
+            },
+            {
+              "tID": 73,
+              "bpID": 106,
+              "priority": 100,
+              "level": [
+                "A",
+                "AAA"
+              ],
+              "certainty": 100,
+              "errorTitle": "This link text is uninformative.",
+              "standards": [
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level A: 2.4.4 Link Purpose (In Context)",
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level AAA: 2.4.9 Link Purpose (Link Only)"
+              ],
+              "resultTitle": "Make sure that link text (and the alternate text for any images that are used as links) describes the destination or purpose of the link.",
+              "errorDescription": "The text in this link is too generic to be helpful for users.  Users will be unable to discern the purpose or destination of the link without reading the text that surrounds it. Change the text in this link to something that is unique and informative so that the user can understand what content or actions can be found at the link's destination.",
+              "viewPortLocation": {
+                "top-left": {
+                  "x": 0,
+                  "y": 0
+                },
+                "bottom-right": {
+                  "x": 0,
+                  "y": 0
+                },
+                "height": 0,
+                "width": 0
+              },
+              "position": {
+                "line": 7924,
+                "column": 3
+              },
+              "errorSnippet": "&lt;a class=\"c-banner-link show-ios\" href=\"https://app.adjust.com/2uo1qc?redirect=https%3A%2F%2Fitunes.apple.com%2Fus%2Fapp%2Ffirefox-private-safe-browser%2Fid989804926&amp;amp;campaign=www.mozilla.org&amp;amp;adgroup=app-store-banner\" data-link-type=\"do",
+              "xpath": "/html/body/div[3]/aside[1]/div[1]/div[1]/div[1]/a[2]",
+              "issueID": "3388d44f43492fd585646e0f2c91447a",
+              "signature": "de1420fefa901d169b6fd2e6f9feff8e",
+              "ref": "https://tenon.io/bestpractice.php?bpID=106&tID=73&issueID=3388d44f43492fd585646e0f2c91447a"
+            },
+            {
+              "tID": 95,
+              "bpID": 181,
+              "priority": 95,
+              "level": [
+                "AAA"
+              ],
+              "certainty": 100,
+              "errorTitle": "This element has insufficient color contrast (Level AAA).",
+              "standards": [
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level AAA: 1.4.6 Contrast (Enhanced)"
+              ],
+              "resultTitle": "Avoid using color as the only visual means of conveying information",
+              "errorDescription": "This element has insufficient contrast between the foreground color (the text) and the background color when measured against the WCAG 2.0 Level AAA requirements. Sufficient color contrast is important for users who have low-vision or are color-blind, because text with a low contrast ratio may be difficult or impossible for such users to see. Increase the contrast of this content. This can be done by adjusting the color(s) used by either the foreground content or background content – or both.",
+              "viewPortLocation": {
+                "top-left": {
+                  "x": 263,
+                  "y": 395
+                },
+                "bottom-right": {
+                  "x": 506,
+                  "y": 412
+                },
+                "height": 17,
+                "width": 243
+              },
+              "position": {
+                "line": 4419,
+                "column": 0
+              },
+              "errorSnippet": "&lt;a class=\"fx100-story-link\" href=\"https://blog.mozilla.org/en/mozilla/celebrating-firefox-100/?utm_source=www.mozilla.org&amp;amp;utm_medium=referral&amp;amp;utm_campaign=homepage&amp;amp;utm_content=100promo\" data-cta-type=\"link\" data-cta-text=\"Read ",
+              "xpath": "/html/body/div[3]/main[1]/section[1]/div[1]/div[2]/a[2]",
+              "issueID": "c8a906e61007b81a23a21765740c751d",
+              "signature": "0a90ccd6b221da46088ede62b63e9b08",
+              "ref": "https://tenon.io/bestpractice.php?bpID=181&tID=95&issueID=c8a906e61007b81a23a21765740c751d"
+            },
+            {
+              "tID": 98,
+              "bpID": 105,
+              "priority": 100,
+              "level": [
+                "A",
+                "AAA"
+              ],
+              "certainty": 100,
+              "errorTitle": "These links have the same text but different destinations.",
+              "standards": [
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level A: 2.4.4 Link Purpose (In Context)",
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level AAA: 2.4.9 Link Purpose (Link Only)"
+              ],
+              "resultTitle": "Don't reuse the same link text for links that have different destinations",
+              "errorDescription": "This link has the same text as another link that goes to a different place. Using the same text for multiple links which point to different pages is ambiguous and may be confusing for assistive technology users, or for users who have a cognitive disability. Link text should tell the user where they will go if they follow the link. If two links on a page go to two different destinations, use different link text that accurately and concisely describes their destination.",
+              "viewPortLocation": {
+                "top-left": {
+                  "x": 560,
+                  "y": 486
+                },
+                "bottom-right": {
+                  "x": 686,
+                  "y": 510
+                },
+                "height": 24,
+                "width": 126
+              },
+              "position": {
+                "line": 4419,
+                "column": 0
+              },
+              "errorSnippet": "&lt;a href=\"/products/vpn/\" class=\"mzp-c-button \" data-cta-text=\"Get Mozilla VPN\" data-cta-type=\"link\"&gt;Get Mozilla VPN&lt;/a&gt;",
+              "xpath": "/html/body/div[3]/main[1]/section[3]/div[1]/div[1]/a[1]",
+              "issueID": "b6db15fe93f8e482d539e2c5a3986065",
+              "signature": "0d7bcd5e4dd2916f8d158e5b8aad1158",
+              "ref": "https://tenon.io/bestpractice.php?bpID=105&tID=98&issueID=b6db15fe93f8e482d539e2c5a3986065"
+            },
+            {
+              "tID": 98,
+              "bpID": 105,
+              "priority": 100,
+              "level": [
+                "A",
+                "AAA"
+              ],
+              "certainty": 100,
+              "errorTitle": "These links have the same text but different destinations.",
+              "standards": [
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level A: 2.4.4 Link Purpose (In Context)",
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level AAA: 2.4.9 Link Purpose (Link Only)"
+              ],
+              "resultTitle": "Don't reuse the same link text for links that have different destinations",
+              "errorDescription": "This link has the same text as another link that goes to a different place. Using the same text for multiple links which point to different pages is ambiguous and may be confusing for assistive technology users, or for users who have a cognitive disability. Link text should tell the user where they will go if they follow the link. If two links on a page go to two different destinations, use different link text that accurately and concisely describes their destination.",
+              "viewPortLocation": {
+                "top-left": {
+                  "x": 0,
+                  "y": 0
+                },
+                "bottom-right": {
+                  "x": 0,
+                  "y": 0
+                },
+                "height": 0,
+                "width": 0
+              },
+              "position": {
+                "line": 7924,
+                "column": 3
+              },
+              "errorSnippet": "&lt;a class=\"c-banner-link show-ios\" href=\"https://app.adjust.com/2uo1qc?redirect=https%3A%2F%2Fitunes.apple.com%2Fus%2Fapp%2Ffirefox-private-safe-browser%2Fid989804926&amp;amp;campaign=www.mozilla.org&amp;amp;adgroup=app-store-banner\" data-link-type=\"do",
+              "xpath": "/html/body/div[3]/aside[1]/div[1]/div[1]/div[1]/a[2]",
+              "issueID": "d3d74373ff056eeeaf299259c4851107",
+              "signature": "5b14795ee29bb5fb311a0417934096cf",
+              "ref": "https://tenon.io/bestpractice.php?bpID=105&tID=98&issueID=d3d74373ff056eeeaf299259c4851107"
+            },
+            {
+              "tID": 152,
+              "bpID": 211,
+              "priority": 88,
+              "level": [
+                "A",
+                "AA",
+                "AAA"
+              ],
+              "certainty": 100,
+              "errorTitle": "This actionable element is smaller than the minimum required size.",
+              "standards": [
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level A: 1.3.1 Info and Relationships",
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level AA: 1.4.5 Images of Text",
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level AA: 3.2.4 Consistent Identification",
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level AA: 1.4.4 Resize text",
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level AAA: 2.5.5 Target Size"
+              ],
+              "resultTitle": "Ensure content is legible.",
+              "errorDescription": "This actionable element is smaller than the stated minimum defined by all mobile platform developer guides. Minimum sizes for actionable elements ensure that those elements can be operated by people with vision, motor and cognitive disabilities. Even if this system is not explicitly intended for mobile use, it should be enlarged with CSS to meet minimu requirements and improve usability for users with vision, motor and cognitive disabilities.",
+              "viewPortLocation": {
+                "top-left": {
+                  "x": 0,
+                  "y": 0
+                },
+                "bottom-right": {
+                  "x": -52,
+                  "y": -20
+                },
+                "height": -20,
+                "width": -52
+              },
+              "position": {
+                "line": 185,
+                "column": 0
+              },
+              "errorSnippet": "&lt;select name=\"country\" required=\"required\" aria-required=\"true\" id=\"id_country\"&gt; &lt;option value=\"af\"&gt;Afghanistan&lt;/option&gt; &lt;option value=\"qz\"&gt;Akrotiri&lt;/option&gt; &lt;option value=\"al\"&gt;Albania&lt;/option&gt; &lt;option value=\"",
+              "xpath": "/html/body/div[3]/main[1]/div[1]/aside[1]/div[2]/form[1]/fieldset[1]/div[1]/p[1]/select[1]",
+              "issueID": "ac641d0ecb2b9ee79e86261188e8212f",
+              "signature": "7a97258d33e15dae0f74f0269d3596e3",
+              "ref": "https://tenon.io/bestpractice.php?bpID=211&tID=152&issueID=ac641d0ecb2b9ee79e86261188e8212f"
+            },
+            {
+              "tID": 152,
+              "bpID": 211,
+              "priority": 88,
+              "level": [
+                "A",
+                "AA",
+                "AAA"
+              ],
+              "certainty": 100,
+              "errorTitle": "This actionable element is smaller than the minimum required size.",
+              "standards": [
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level A: 1.3.1 Info and Relationships",
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level AA: 1.4.5 Images of Text",
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level AA: 3.2.4 Consistent Identification",
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level AA: 1.4.4 Resize text",
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level AAA: 2.5.5 Target Size"
+              ],
+              "resultTitle": "Ensure content is legible.",
+              "errorDescription": "This actionable element is smaller than the stated minimum defined by all mobile platform developer guides. Minimum sizes for actionable elements ensure that those elements can be operated by people with vision, motor and cognitive disabilities. Even if this system is not explicitly intended for mobile use, it should be enlarged with CSS to meet minimu requirements and improve usability for users with vision, motor and cognitive disabilities.",
+              "viewPortLocation": {
+                "top-left": {
+                  "x": 0,
+                  "y": 0
+                },
+                "bottom-right": {
+                  "x": -52,
+                  "y": -20
+                },
+                "height": -20,
+                "width": -52
+              },
+              "position": {
+                "line": 185,
+                "column": 0
+              },
+              "errorSnippet": "&lt;select name=\"lang\" required=\"required\" aria-required=\"true\" id=\"id_lang\"&gt; &lt;option value=\"id\"&gt;Bahasa Indonesia&lt;/option&gt; &lt;option value=\"de\"&gt;Deutsch&lt;/option&gt; &lt;option value=\"en\" selected=\"\"&gt;English&lt;/option&gt; &lt;opti",
+              "xpath": "/html/body/div[3]/main[1]/div[1]/aside[1]/div[2]/form[1]/fieldset[1]/div[1]/p[2]/select[1]",
+              "issueID": "618cabb548e68db31dc2040a0113b2cd",
+              "signature": "73dcfaa16c1b29816c1a0d1882d6b072",
+              "ref": "https://tenon.io/bestpractice.php?bpID=211&tID=152&issueID=618cabb548e68db31dc2040a0113b2cd"
+            },
+            {
+              "tID": 152,
+              "bpID": 211,
+              "priority": 88,
+              "level": [
+                "A",
+                "AA",
+                "AAA"
+              ],
+              "certainty": 100,
+              "errorTitle": "This actionable element is smaller than the minimum required size.",
+              "standards": [
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level A: 1.3.1 Info and Relationships",
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level AA: 1.4.5 Images of Text",
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level AA: 3.2.4 Consistent Identification",
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level AA: 1.4.4 Resize text",
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level AAA: 2.5.5 Target Size"
+              ],
+              "resultTitle": "Ensure content is legible.",
+              "errorDescription": "This actionable element is smaller than the stated minimum defined by all mobile platform developer guides. Minimum sizes for actionable elements ensure that those elements can be operated by people with vision, motor and cognitive disabilities. Even if this system is not explicitly intended for mobile use, it should be enlarged with CSS to meet minimu requirements and improve usability for users with vision, motor and cognitive disabilities.",
+              "viewPortLocation": {
+                "top-left": {
+                  "x": 0,
+                  "y": -8
+                },
+                "bottom-right": {
+                  "x": 20,
+                  "y": 13
+                },
+                "height": 21,
+                "width": 20
+              },
+              "position": {
+                "line": 9639,
+                "column": 5
+              },
+              "errorSnippet": "&lt;button type=\"submit\" style=\"\"&gt;Go&lt;/button&gt;",
+              "xpath": "/html/body/div[3]/footer[1]/div[1]/nav[2]/div[1]/form[1]/button[1]",
+              "issueID": "44112966c81ea76fdb59a48b83ba3cd7",
+              "signature": "0a8f9aa6552f5241f6e7674532f91088",
+              "ref": "https://tenon.io/bestpractice.php?bpID=211&tID=152&issueID=44112966c81ea76fdb59a48b83ba3cd7"
+            },
+            {
+              "tID": 155,
+              "bpID": 143,
+              "priority": 100,
+              "level": [
+                "A",
+                "AAA"
+              ],
+              "certainty": 60,
+              "errorTitle": "These headings are not structured in a hierarchical manner.",
+              "standards": [
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level A: 1.3.1 Info and Relationships",
+                "Web Content Accessibility Guidelines (WCAG) 2.0, Level AAA: 2.4.10 Section Headings"
+              ],
+              "resultTitle": "Make sure that headings are in the right order for the content.",
+              "errorDescription": "The heading structure of this page does not effectively communicate the structure of the content on it. Heading elements provide important benefits: they act as wayfinding cues for in-page navigation, they contribute to page content summaries, and they provide context to the content below them. To do so effectively, headings should follow the `<h1>` to `<h6>` hierarchy and they should not skip levels. Restructure the document's heading order so it uses a clear, ordered, and intuitive hierarchy. Ensure there are no gaps between each numbered heading level and the next.",
+              "viewPortLocation": {
+                "top-left": {
+                  "x": 0,
+                  "y": 0
+                },
+                "bottom-right": {
+                  "x": 1024,
+                  "y": 5685
+                },
+                "height": 5685,
+                "width": 1024
+              },
+              "position": {
+                "line": 2221,
+                "column": 60
+              },
+              "errorSnippet": "&lt;body id=\"home\" class=\"html-ltr lang-en-US\"&gt; &lt;div id=\"strings\" data-global-close=\"Close\" data-global-next=\"Next\" data-global-previous=\"Previous\"&gt;&lt;/div&gt; &lt;div class=\"c-navigation top-header-navigation mzp-is-sticky nav-button-is-ready\"",
+              "xpath": "/html/body",
+              "issueID": "d930b708ff10bfd6f3dfcefbc3a2a87b",
+              "signature": "cacfa32cc301887b7fc2f2f7094d62c6",
+              "ref": "https://tenon.io/bestpractice.php?bpID=143&tID=155&issueID=d930b708ff10bfd6f3dfcefbc3a2a87b"
+            }
+          ],
+          "log": []
+        }
+      }
+    }
+  ],
+  "timeStamp": "34pho",
+  "startTime": "2022-06-02T17:23:36",
+  "presses": 0,
+  "amountRead": 0,
+  "testTimes": [
+    [
+      "tenon",
+      1
+    ]
+  ],
+  "logCount": 1,
+  "logSize": 101,
+  "prohibitedCount": 0,
+  "visitTimeoutCount": 0,
+  "visitRejectionCount": 0,
+  "endTime": "2022-06-02T17:23:52",
+  "elapsedSeconds": 16
+}

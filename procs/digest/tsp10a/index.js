@@ -1,5 +1,5 @@
 /*
-  index: digester for procedure tsp09.
+  index: digester for procedure tsp10.
   Creator of parameters for substitution into index.html.
 */
 exports.makeQuery = (report, query) => {
@@ -141,6 +141,20 @@ exports.makeQuery = (report, query) => {
   }
   else {
     query.ibmResult = packageSucceedText('ibm');
+  }
+  // tenon
+  if (scores.tenon) {
+    const testAct = actOf('tenon');
+    const tenonResult = testAct.result.data.resultSet;
+    const tenonItems = new Set(tenonResult.map(result => result.errorTitle));
+    const tenonFailures = Array.from(tenonItems).join(innerJoiner);
+    query.tenonResult = packageFailText(scores.tenon, 'tenon', tenonFailures);
+  }
+  else if (inferences.tenon) {
+    query.tenonResult = testCrashText(inferences.tenon, 'tenon');
+  }
+  else {
+    query.tenonResult = packageSucceedText('tenon');
   }
   // wave
   if (scores.wave) {

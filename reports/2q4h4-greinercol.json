@@ -1,0 +1,4965 @@
+{
+  "id": "2q4h4-greinercol",
+  "log": [
+    {
+      "event": "startTime",
+      "value": "2022-05-17T23:25:57"
+    },
+    {
+      "event": "endTime",
+      "value": "2022-05-17T23:27:22"
+    }
+  ],
+  "script": {
+    "id": "asp09",
+    "what": "AATT, Alfa, Axe, IBM, WAVE, and 16 custom tests",
+    "strict": true,
+    "commands": [
+      {
+        "type": "launch",
+        "which": "webkit",
+        "what": "used for tests on which chromium fails on some URLs"
+      },
+      {
+        "type": "url",
+        "which": "https://greinersclothing.com/collections-fw2018-2/",
+        "what": "Greiner’s Fine Men’s Clothing: Collections"
+      },
+      {
+        "type": "test",
+        "which": "motion",
+        "what": "spontaneous change of content",
+        "delay": 2400,
+        "interval": 2600,
+        "count": 5
+      },
+      {
+        "type": "test",
+        "which": "axe",
+        "withItems": true,
+        "rules": [],
+        "what": "Axe core, all rules"
+      },
+      {
+        "type": "launch",
+        "which": "chromium",
+        "what": "used for most tests"
+      },
+      {
+        "type": "url",
+        "which": "https://greinersclothing.com/collections-fw2018-2/",
+        "what": "Greiner’s Fine Men’s Clothing: Collections"
+      },
+      {
+        "type": "test",
+        "which": "bulk",
+        "what": "count of visible elements"
+      },
+      {
+        "type": "test",
+        "which": "embAc",
+        "what": "active elements incorrectly embedded in each other",
+        "withItems": true
+      },
+      {
+        "type": "test",
+        "which": "focAll",
+        "what": "Tab-focusability"
+      },
+      {
+        "type": "test",
+        "which": "focInd",
+        "what": "focus indicators",
+        "withItems": true,
+        "revealAll": true
+      },
+      {
+        "type": "test",
+        "which": "focOp",
+        "what": "focusability and operability of elements",
+        "withItems": true
+      },
+      {
+        "type": "test",
+        "which": "hover",
+        "what": "hover-triggered content changes",
+        "withItems": true
+      },
+      {
+        "type": "test",
+        "which": "labClash",
+        "what": "unlabeled and mislabeled form controls",
+        "withItems": true
+      },
+      {
+        "type": "test",
+        "which": "linkUl",
+        "what": "underlining of inline links",
+        "withItems": true
+      },
+      {
+        "type": "test",
+        "which": "menuNav",
+        "what": "keyboard navigation within true-focus menus",
+        "withItems": true
+      },
+      {
+        "type": "test",
+        "which": "radioSet",
+        "what": "grouping of radio buttons in fieldsets",
+        "withItems": true
+      },
+      {
+        "type": "test",
+        "which": "role",
+        "what": "validity and necessity of role assignments"
+      },
+      {
+        "type": "test",
+        "which": "styleDiff",
+        "what": "style consistency of headings, buttons, and links",
+        "withItems": true
+      },
+      {
+        "type": "test",
+        "which": "tabNav",
+        "what": "keyboard navigation within tab lists",
+        "withItems": true
+      },
+      {
+        "type": "test",
+        "which": "zIndex",
+        "what": "elements with non-auto z indexes",
+        "withItems": true
+      },
+      {
+        "type": "test",
+        "which": "ibm",
+        "withItems": true,
+        "what": "IBM Accessibility Checker"
+      },
+      {
+        "type": "test",
+        "which": "aatt",
+        "what": "AATT with HTML CodeSniffer"
+      },
+      {
+        "type": "test",
+        "which": "alfa",
+        "what": "Siteimprove alfa"
+      },
+      {
+        "type": "test",
+        "which": "wave",
+        "reportType": 4,
+        "what": "WAVE, report-type 4"
+      },
+      {
+        "type": "score",
+        "which": "asp09",
+        "what": "5 packages and 16 custom tests, with empirical duplication discounts"
+      }
+    ]
+  },
+  "acts": [
+    {
+      "type": "launch",
+      "which": "webkit",
+      "what": "used for tests on which chromium fails on some URLs"
+    },
+    {
+      "type": "url",
+      "which": "https://greinersclothing.com/collections-fw2018-2/",
+      "what": "Greiner’s Fine Men’s Clothing: Collections",
+      "result": "https://greinersclothing.com/collections-fw2018-2/"
+    },
+    {
+      "type": "test",
+      "which": "motion",
+      "what": "motion",
+      "delay": 2400,
+      "interval": 2600,
+      "count": 5,
+      "url": "https://greinersclothing.com/collections-fw2018-2/",
+      "result": {
+        "bytes": [
+          560340,
+          560340,
+          560340,
+          560340,
+          560340
+        ],
+        "localRatios": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "meanLocalRatio": 1,
+        "maxLocalRatio": 1,
+        "globalRatio": 1,
+        "pixelChanges": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "meanPixelChange": 0,
+        "maxPixelChange": 0,
+        "changeFrequency": 0
+      }
+    },
+    {
+      "type": "test",
+      "which": "axe",
+      "withItems": true,
+      "rules": [],
+      "what": "Axe",
+      "url": "https://greinersclothing.com/collections-fw2018-2/",
+      "result": {
+        "warnings": 0,
+        "violations": {
+          "minor": 1,
+          "moderate": 25,
+          "serious": 2,
+          "critical": 1
+        },
+        "items": [
+          {
+            "rule": "color-contrast",
+            "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds",
+            "impact": "serious",
+            "elements": [
+              {
+                "selector": "#menu-item-3056 > a",
+                "impact": "serious",
+                "must pass any of": [
+                  {
+                    "check": "color-contrast",
+                    "description": "Element has insufficient color contrast of 2.28 (foreground color: #9e9e9e, background color: #faebd7, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1",
+                    "impact": "serious"
+                  }
+                ]
+              },
+              {
+                "selector": "p:nth-child(3)",
+                "impact": "serious",
+                "must pass any of": [
+                  {
+                    "check": "color-contrast",
+                    "description": "Element has insufficient color contrast of 3.99 (foreground color: #747474, background color: #faebd7, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1",
+                    "impact": "serious"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "rule": "duplicate-id",
+            "description": "Ensures every id attribute value is unique",
+            "impact": "minor",
+            "elements": [
+              {
+                "selector": ".fusion-main-menu > ul",
+                "impact": "minor",
+                "must pass any of": [
+                  {
+                    "check": "duplicate-id",
+                    "description": "Document has multiple static elements with the same id attribute: menu-abv-menu",
+                    "impact": "minor"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "rule": "heading-order",
+            "description": "Ensures the order of headings is semantically correct",
+            "impact": "moderate",
+            "elements": [
+              {
+                "selector": ".fusion-page-title-captions > h3",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "heading-order",
+                    "description": "Heading order invalid",
+                    "impact": "moderate"
+                  }
+                ]
+              },
+              {
+                "selector": ".fusion-row > h4",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "heading-order",
+                    "description": "Heading order invalid",
+                    "impact": "moderate"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "rule": "landmark-no-duplicate-contentinfo",
+            "description": "Ensures the document has at most one contentinfo landmark",
+            "impact": "moderate",
+            "elements": [
+              {
+                "selector": ".fusion-footer-widget-area",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "page-no-duplicate-contentinfo",
+                    "description": "Document has more than one contentinfo landmark",
+                    "impact": "moderate"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "rule": "landmark-one-main",
+            "description": "Ensures the document has a main landmark",
+            "impact": "moderate",
+            "elements": [
+              {
+                "selector": "html",
+                "impact": "moderate"
+              }
+            ]
+          },
+          {
+            "rule": "landmark-unique",
+            "description": "Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+            "impact": "moderate",
+            "elements": [
+              {
+                "selector": ".fusion-footer-widget-area",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "landmark-is-unique",
+                    "description": "The landmark must have a unique aria-label, aria-labelledby, or title to make landmarks distinguishable",
+                    "impact": "moderate"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "rule": "meta-viewport",
+            "description": "Ensures <meta name=\"viewport\"> does not disable text scaling and zooming",
+            "impact": "critical",
+            "elements": [
+              {
+                "selector": "meta[name=\"viewport\"]",
+                "impact": "critical",
+                "must pass any of": [
+                  {
+                    "check": "meta-viewport",
+                    "description": "maximum-scale on <meta> tag disables zooming on mobile devices",
+                    "impact": "critical"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "rule": "region",
+            "description": "Ensures all page content is contained by landmarks",
+            "impact": "moderate",
+            "elements": [
+              {
+                "selector": ".fusion-standard-logo[width=\"250\"][height=\"25\"]:nth-child(1)",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "region",
+                    "description": "Some page content is not contained by landmarks",
+                    "impact": "moderate"
+                  }
+                ]
+              },
+              {
+                "selector": ".fusion-main-menu",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "region",
+                    "description": "Some page content is not contained by landmarks",
+                    "impact": "moderate"
+                  }
+                ]
+              },
+              {
+                "selector": ".fusion-page-title-bar",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "region",
+                    "description": "Some page content is not contained by landmarks",
+                    "impact": "moderate"
+                  }
+                ]
+              },
+              {
+                "selector": ".fusion-fullwidth-1",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "region",
+                    "description": "Some page content is not contained by landmarks",
+                    "impact": "moderate"
+                  }
+                ]
+              },
+              {
+                "selector": ".fusion-fullwidth-2",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "region",
+                    "description": "Some page content is not contained by landmarks",
+                    "impact": "moderate"
+                  }
+                ]
+              },
+              {
+                "selector": ".robert-talbott > .fusion-portfolio-content-wrapper > .fusion-image-wrapper[aria-haspopup=\"true\"]",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "region",
+                    "description": "Some page content is not contained by landmarks",
+                    "impact": "moderate"
+                  }
+                ]
+              },
+              {
+                "selector": ".david-donahue > .fusion-portfolio-content-wrapper > .fusion-image-wrapper[aria-haspopup=\"true\"]",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "region",
+                    "description": "Some page content is not contained by landmarks",
+                    "impact": "moderate"
+                  }
+                ]
+              },
+              {
+                "selector": ".peter-millar > .fusion-portfolio-content-wrapper > .fusion-image-wrapper[aria-haspopup=\"true\"]",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "region",
+                    "description": "Some page content is not contained by landmarks",
+                    "impact": "moderate"
+                  }
+                ]
+              },
+              {
+                "selector": ".krewe > .fusion-portfolio-content-wrapper > .fusion-image-wrapper[aria-haspopup=\"true\"]",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "region",
+                    "description": "Some page content is not contained by landmarks",
+                    "impact": "moderate"
+                  }
+                ]
+              },
+              {
+                "selector": ".samuelsohn > .fusion-portfolio-content-wrapper > .fusion-image-wrapper[aria-haspopup=\"true\"]",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "region",
+                    "description": "Some page content is not contained by landmarks",
+                    "impact": "moderate"
+                  }
+                ]
+              },
+              {
+                "selector": ".byron > .fusion-portfolio-content-wrapper > .fusion-image-wrapper[aria-haspopup=\"true\"]",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "region",
+                    "description": "Some page content is not contained by landmarks",
+                    "impact": "moderate"
+                  }
+                ]
+              },
+              {
+                "selector": ".patrick-assaraf > .fusion-portfolio-content-wrapper > .fusion-image-wrapper[aria-haspopup=\"true\"]",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "region",
+                    "description": "Some page content is not contained by landmarks",
+                    "impact": "moderate"
+                  }
+                ]
+              },
+              {
+                "selector": ".scarpe-di-bianco > .fusion-portfolio-content-wrapper > .fusion-image-wrapper[aria-haspopup=\"true\"]",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "region",
+                    "description": "Some page content is not contained by landmarks",
+                    "impact": "moderate"
+                  }
+                ]
+              },
+              {
+                "selector": ".stenstroms > .fusion-portfolio-content-wrapper > .fusion-image-wrapper[aria-haspopup=\"true\"]",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "region",
+                    "description": "Some page content is not contained by landmarks",
+                    "impact": "moderate"
+                  }
+                ]
+              },
+              {
+                "selector": ".ballin > .fusion-portfolio-content-wrapper > .fusion-image-wrapper[aria-haspopup=\"true\"]",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "region",
+                    "description": "Some page content is not contained by landmarks",
+                    "impact": "moderate"
+                  }
+                ]
+              },
+              {
+                "selector": ".masons > .fusion-portfolio-content-wrapper > .fusion-image-wrapper[aria-haspopup=\"true\"]",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "region",
+                    "description": "Some page content is not contained by landmarks",
+                    "impact": "moderate"
+                  }
+                ]
+              },
+              {
+                "selector": ".nettleton > .fusion-portfolio-content-wrapper > .fusion-image-wrapper[aria-haspopup=\"true\"]",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "region",
+                    "description": "Some page content is not contained by landmarks",
+                    "impact": "moderate"
+                  }
+                ]
+              },
+              {
+                "selector": ".fusion-portfolio-post.fall-2016.fusion-col-spacing:nth-child(13) > .fusion-portfolio-content-wrapper > .fusion-image-wrapper[aria-haspopup=\"true\"]",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "region",
+                    "description": "Some page content is not contained by landmarks",
+                    "impact": "moderate"
+                  }
+                ]
+              },
+              {
+                "selector": ".fusion-fullwidth-4",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "region",
+                    "description": "Some page content is not contained by landmarks",
+                    "impact": "moderate"
+                  }
+                ]
+              },
+              {
+                "selector": ".fusion-fullwidth-5",
+                "impact": "moderate",
+                "must pass any of": [
+                  {
+                    "check": "region",
+                    "description": "Some page content is not contained by landmarks",
+                    "impact": "moderate"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "launch",
+      "which": "chromium",
+      "what": "used for most tests"
+    },
+    {
+      "type": "url",
+      "which": "https://greinersclothing.com/collections-fw2018-2/",
+      "what": "Greiner’s Fine Men’s Clothing: Collections",
+      "result": "https://greinersclothing.com/collections-fw2018-2/"
+    },
+    {
+      "type": "test",
+      "which": "bulk",
+      "what": "count of visible elements",
+      "url": "https://greinersclothing.com/collections-fw2018-2/",
+      "result": {
+        "visibleElements": 158
+      }
+    },
+    {
+      "type": "test",
+      "which": "embAc",
+      "what": "active elements embedded in links or buttons",
+      "withItems": true,
+      "url": "https://greinersclothing.com/collections-fw2018-2/",
+      "result": {
+        "totals": {
+          "links": 0,
+          "buttons": 0,
+          "inputs": 0,
+          "selects": 0
+        },
+        "items": []
+      }
+    },
+    {
+      "type": "test",
+      "which": "focAll",
+      "what": "focusable and Tab-focused elements",
+      "url": "https://greinersclothing.com/collections-fw2018-2/",
+      "result": {
+        "tabFocusables": 12,
+        "tabFocused": 26,
+        "discrepancy": 14
+      }
+    },
+    {
+      "type": "url",
+      "which": "https://greinersclothing.com/collections-fw2018-2/",
+      "what": "URL",
+      "result": "https://greinersclothing.com/collections-fw2018-2/"
+    },
+    {
+      "type": "test",
+      "which": "focInd",
+      "what": "focus indicators",
+      "withItems": true,
+      "revealAll": true,
+      "url": "https://greinersclothing.com/collections-fw2018-2/",
+      "result": {
+        "totals": {
+          "total": 34,
+          "types": {
+            "indicatorMissing": {
+              "total": 1,
+              "tagNames": {
+                "A": 1
+              }
+            },
+            "nonOutlinePresent": {
+              "total": 0,
+              "tagNames": {}
+            },
+            "outlinePresent": {
+              "total": 33,
+              "tagNames": {
+                "A": 33
+              }
+            }
+          }
+        },
+        "items": {
+          "indicatorMissing": [
+            {
+              "tagName": "A",
+              "text": ""
+            }
+          ],
+          "nonOutlinePresent": [],
+          "outlinePresent": [
+            {
+              "tagName": "A",
+              "text": ""
+            },
+            {
+              "tagName": "A",
+              "text": ""
+            },
+            {
+              "tagName": "A",
+              "text": "HOME"
+            },
+            {
+              "tagName": "A",
+              "text": "ABOUT US"
+            },
+            {
+              "tagName": "A",
+              "text": "COLLECTIONS"
+            },
+            {
+              "tagName": "A",
+              "text": "COVID-19 MASKS"
+            },
+            {
+              "tagName": "A",
+              "text": "MADE TO MEASURE"
+            },
+            {
+              "tagName": "A",
+              "text": "CONTACT + LOCATIONS"
+            },
+            {
+              "tagName": "A",
+              "text": "HOME"
+            },
+            {
+              "tagName": "A",
+              "text": "ABOUT US"
+            },
+            {
+              "tagName": "A",
+              "text": "COLLECTIONS"
+            },
+            {
+              "tagName": "A",
+              "text": "COVID-19 MASKS"
+            },
+            {
+              "tagName": "A",
+              "text": "MADE TO MEASURE"
+            },
+            {
+              "tagName": "A",
+              "text": "CONTACT + LOCATIONS"
+            },
+            {
+              "tagName": "A",
+              "text": "keri@theartery.com"
+            },
+            {
+              "tagName": "A",
+              "text": "keri@theartery.com"
+            },
+            {
+              "tagName": "A",
+              "text": "keri@theartery.com"
+            },
+            {
+              "tagName": "A",
+              "text": "keri@theartery.com"
+            },
+            {
+              "tagName": "A",
+              "text": "keri@theartery.com"
+            },
+            {
+              "tagName": "A",
+              "text": "keri@theartery.com"
+            },
+            {
+              "tagName": "A",
+              "text": "keri@theartery.com"
+            },
+            {
+              "tagName": "A",
+              "text": "keri@theartery.com"
+            },
+            {
+              "tagName": "A",
+              "text": "keri@theartery.com"
+            },
+            {
+              "tagName": "A",
+              "text": "keri@theartery.com"
+            },
+            {
+              "tagName": "A",
+              "text": "keri@theartery.com"
+            },
+            {
+              "tagName": "A",
+              "text": "keri@theartery.com"
+            },
+            {
+              "tagName": "A",
+              "text": "keri@theartery.com"
+            },
+            {
+              "tagName": "A",
+              "text": "keri@theartery.com"
+            },
+            {
+              "tagName": "A",
+              "text": "PRIVACY NOTICE"
+            },
+            {
+              "tagName": "A",
+              "text": "theARTery,LLC"
+            },
+            {
+              "tagName": "A",
+              "text": ""
+            },
+            {
+              "tagName": "A",
+              "text": ""
+            },
+            {
+              "tagName": "A",
+              "text": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "url",
+      "which": "https://greinersclothing.com/collections-fw2018-2/",
+      "what": "URL",
+      "result": "https://greinersclothing.com/collections-fw2018-2/"
+    },
+    {
+      "type": "test",
+      "which": "focOp",
+      "what": "focusability and operability",
+      "withItems": true,
+      "url": "https://greinersclothing.com/collections-fw2018-2/",
+      "result": {
+        "totals": {
+          "total": 47,
+          "types": {
+            "onlyFocusable": {
+              "total": 0,
+              "tagNames": {}
+            },
+            "onlyOperable": {
+              "total": 0,
+              "tagNames": {}
+            },
+            "focusableAndOperable": {
+              "total": 47,
+              "tagNames": {
+                "A": 47
+              }
+            }
+          }
+        },
+        "items": {
+          "onlyFocusable": [],
+          "onlyOperable": [],
+          "focusableAndOperable": [
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "<a href=\"https://greinersclothing.com\" style=\"cursor: default;\"> <img src=\"http:",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "<a href=\"#\" class=\"fusion-icon fusion-icon-bars\" style=\"cursor: default;\"></a>",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "HOME",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "ABOUT US",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "COLLECTIONS",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "COVID-19 MASKS",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "MADE TO MEASURE",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "CONTACT + LOCATIONS",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "HOME",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "ABOUT US",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "COLLECTIONS",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "COVID-19 MASKS",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "MADE TO MEASURE",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "CONTACT + LOCATIONS",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "keri@theartery.com",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "keri@theartery.com",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "Robert Talbott",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "keri@theartery.com",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "David Donahue",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "keri@theartery.com",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "Peter Millar",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "keri@theartery.com",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "Krewe",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "keri@theartery.com",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "Samuelsohn",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "keri@theartery.com",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "Byron",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "keri@theartery.com",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "Patrick Assaraf",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "keri@theartery.com",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "Scarpe Di Bianco",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "keri@theartery.com",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "Stenstroms",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "keri@theartery.com",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "Ballin",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "keri@theartery.com",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "Masons",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "keri@theartery.com",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "Nettleton",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "keri@theartery.com",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "MAC Jeans",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "PRIVACY NOTICE",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "theARTery,LLC",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "<a class=\"fusion-social-network-icon fusion-tooltip fusion-facebook fusion-icon-",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "<a class=\"fusion-social-network-icon fusion-tooltip fusion-twitter fusion-icon-t",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "",
+              "text": "<a class=\"fusion-social-network-icon fusion-tooltip fusion-mail fusion-icon-mail",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            },
+            {
+              "tagName": "A",
+              "id": "toTop",
+              "text": "<a href=\"#\" id=\"toTop\" style=\"display: inline; opacity: 0.89831; cursor: default",
+              "byTag": true,
+              "byOnClick": false,
+              "byPointer": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "url",
+      "which": "https://greinersclothing.com/collections-fw2018-2/",
+      "what": "URL",
+      "result": "https://greinersclothing.com/collections-fw2018-2/"
+    },
+    {
+      "type": "test",
+      "which": "hover",
+      "what": "hover-caused content additions",
+      "withItems": true,
+      "url": "https://greinersclothing.com/collections-fw2018-2/",
+      "result": {
+        "totals": {
+          "triggers": 10,
+          "madeVisible": 0,
+          "opacityChanged": 10,
+          "opacityAffected": 10,
+          "unhoverables": 0
+        },
+        "items": {
+          "triggers": [],
+          "unhoverables": []
+        }
+      }
+    },
+    {
+      "type": "url",
+      "which": "https://greinersclothing.com/collections-fw2018-2/",
+      "what": "URL",
+      "result": "https://greinersclothing.com/collections-fw2018-2/"
+    },
+    {
+      "type": "test",
+      "which": "labClash",
+      "what": "labeling inconsistencies",
+      "withItems": true,
+      "url": "https://greinersclothing.com/collections-fw2018-2/",
+      "result": {
+        "totals": {
+          "mislabeled": 0,
+          "unlabeled": 0,
+          "wellLabeled": 0
+        },
+        "items": {
+          "mislabeled": [],
+          "unlabeled": [],
+          "wellLabeled": []
+        }
+      }
+    },
+    {
+      "type": "test",
+      "which": "linkUl",
+      "what": "inline-link underlining",
+      "withItems": true,
+      "url": "https://greinersclothing.com/collections-fw2018-2/",
+      "result": {
+        "totals": {
+          "links": 47,
+          "inline": {
+            "total": 2,
+            "underlined": 0,
+            "underlinedPercent": 0
+          }
+        },
+        "items": {
+          "underlined": [],
+          "notUnderlined": [
+            "PRIVACY NOTICE",
+            "theARTery,LLC"
+          ]
+        }
+      }
+    },
+    {
+      "type": "test",
+      "which": "menuNav",
+      "what": "keyboard navigation between focusable menu items",
+      "withItems": true,
+      "url": "https://greinersclothing.com/collections-fw2018-2/",
+      "result": {
+        "totals": {
+          "navigations": {
+            "all": {
+              "total": 0,
+              "correct": 0,
+              "incorrect": 0
+            },
+            "specific": {
+              "tab": {
+                "total": 0,
+                "correct": 0,
+                "incorrect": 0
+              },
+              "left": {
+                "total": 0,
+                "correct": 0,
+                "incorrect": 0
+              },
+              "right": {
+                "total": 0,
+                "correct": 0,
+                "incorrect": 0
+              },
+              "up": {
+                "total": 0,
+                "correct": 0,
+                "incorrect": 0
+              },
+              "down": {
+                "total": 0,
+                "correct": 0,
+                "incorrect": 0
+              },
+              "home": {
+                "total": 0,
+                "correct": 0,
+                "incorrect": 0
+              },
+              "end": {
+                "total": 0,
+                "correct": 0,
+                "incorrect": 0
+              }
+            }
+          },
+          "menuItems": {
+            "total": 0,
+            "correct": 0,
+            "incorrect": 0
+          },
+          "menus": {
+            "total": 0,
+            "correct": 0,
+            "incorrect": 0
+          }
+        },
+        "menuItems": {
+          "incorrect": [],
+          "correct": []
+        }
+      }
+    },
+    {
+      "type": "url",
+      "which": "https://greinersclothing.com/collections-fw2018-2/",
+      "what": "URL",
+      "result": "https://greinersclothing.com/collections-fw2018-2/"
+    },
+    {
+      "type": "test",
+      "which": "radioSet",
+      "what": "fieldset grouping of radio buttons",
+      "withItems": true,
+      "url": "https://greinersclothing.com/collections-fw2018-2/",
+      "result": {
+        "totals": {
+          "total": 0,
+          "inSet": 0,
+          "percent": "N.A."
+        },
+        "items": {
+          "inSet": [],
+          "notInSet": []
+        }
+      }
+    },
+    {
+      "type": "test",
+      "which": "role",
+      "what": "roles",
+      "url": "https://greinersclothing.com/collections-fw2018-2/",
+      "result": {
+        "roleElements": 0,
+        "badRoleElements": 0,
+        "tagNames": {}
+      }
+    },
+    {
+      "type": "test",
+      "which": "styleDiff",
+      "what": "style inconsistencies",
+      "withItems": true,
+      "url": "https://greinersclothing.com/collections-fw2018-2/",
+      "result": {
+        "totals": {
+          "h1": {
+            "total": 1
+          },
+          "h2": {
+            "total": 3
+          },
+          "h3": {
+            "total": 2,
+            "subtotals": [
+              1,
+              1
+            ]
+          },
+          "h4": {
+            "total": 14
+          },
+          "aInline": {
+            "total": 2
+          },
+          "aBlock": {
+            "total": 45,
+            "subtotals": [
+              15,
+              13,
+              6,
+              6,
+              3,
+              1,
+              1
+            ]
+          }
+        },
+        "items": {
+          "h1": {},
+          "h2": {},
+          "h3": {
+            "lineHeight": {
+              "30px": 1,
+              "18px": 1
+            }
+          },
+          "h4": {},
+          "aInline": {},
+          "aBlock": {
+            "borderStyle": {
+              "none": 33,
+              "solid none none": 6,
+              "none none solid": 6
+            },
+            "borderWidth": {
+              "0px": 33,
+              "1px 0px 0px": 6,
+              "0px 0px 1px": 6
+            },
+            "lineHeight": {
+              "30px": 29,
+              "40px": 6,
+              "45px": 6,
+              "16px": 3,
+              "21px": 1
+            },
+            "opacity": {
+              "1": 44,
+              "0.9": 1
+            },
+            "fontSize": {
+              "16px": 380,
+              "24px": 260,
+              "15px": 120,
+              "12px": 120,
+              "21px": 20
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "test",
+      "which": "tabNav",
+      "what": "keyboard navigation between tab elements",
+      "withItems": true,
+      "url": "https://greinersclothing.com/collections-fw2018-2/",
+      "result": {
+        "totals": {
+          "navigations": {
+            "all": {
+              "total": 0,
+              "correct": 0,
+              "incorrect": 0
+            },
+            "specific": {
+              "tab": {
+                "total": 0,
+                "correct": 0,
+                "incorrect": 0
+              },
+              "left": {
+                "total": 0,
+                "correct": 0,
+                "incorrect": 0
+              },
+              "right": {
+                "total": 0,
+                "correct": 0,
+                "incorrect": 0
+              },
+              "up": {
+                "total": 0,
+                "correct": 0,
+                "incorrect": 0
+              },
+              "down": {
+                "total": 0,
+                "correct": 0,
+                "incorrect": 0
+              },
+              "home": {
+                "total": 0,
+                "correct": 0,
+                "incorrect": 0
+              },
+              "end": {
+                "total": 0,
+                "correct": 0,
+                "incorrect": 0
+              }
+            }
+          },
+          "tabElements": {
+            "total": 0,
+            "correct": 0,
+            "incorrect": 0
+          },
+          "tabLists": {
+            "total": 0,
+            "correct": 0,
+            "incorrect": 0
+          }
+        },
+        "tabElements": {
+          "incorrect": [],
+          "correct": []
+        }
+      }
+    },
+    {
+      "type": "test",
+      "which": "zIndex",
+      "what": "z indexes",
+      "withItems": true,
+      "url": "https://greinersclothing.com/collections-fw2018-2/",
+      "result": {
+        "totals": {
+          "total": 24,
+          "tagNames": {
+            "DIV": 18,
+            "SPAN": 4,
+            "FOOTER": 1,
+            "A": 1
+          }
+        },
+        "items": [
+          {
+            "tagName": "DIV",
+            "id": "",
+            "text": "HOME\nABOUT US\nCOLLECTIONS\nCOVID-19 MASKS\nMADE TO MEASURE\nCONTACT + LOCATIONS\nHOME\nABOUT US\nCOLLECTIO"
+          },
+          {
+            "tagName": "DIV",
+            "id": "",
+            "text": "HOME\nABOUT US\nCOLLECTIONS\nCOVID-19 MASKS\nMADE TO MEASURE\nCONTACT + LOCATIONS"
+          },
+          {
+            "tagName": "DIV",
+            "id": "",
+            "text": "DiscoverOUR COLLECTIONS"
+          },
+          {
+            "tagName": "DIV",
+            "id": "",
+            "text": "Robert Talbott"
+          },
+          {
+            "tagName": "DIV",
+            "id": "",
+            "text": "David Donahue"
+          },
+          {
+            "tagName": "DIV",
+            "id": "",
+            "text": "Peter Millar"
+          },
+          {
+            "tagName": "DIV",
+            "id": "",
+            "text": "Krewe"
+          },
+          {
+            "tagName": "DIV",
+            "id": "",
+            "text": "Samuelsohn"
+          },
+          {
+            "tagName": "DIV",
+            "id": "",
+            "text": "Byron"
+          },
+          {
+            "tagName": "DIV",
+            "id": "",
+            "text": "Patrick Assaraf"
+          },
+          {
+            "tagName": "DIV",
+            "id": "",
+            "text": "Scarpe Di Bianco"
+          },
+          {
+            "tagName": "DIV",
+            "id": "",
+            "text": "Stenstroms"
+          },
+          {
+            "tagName": "DIV",
+            "id": "",
+            "text": "Ballin"
+          },
+          {
+            "tagName": "DIV",
+            "id": "",
+            "text": "Masons"
+          },
+          {
+            "tagName": "DIV",
+            "id": "",
+            "text": "Nettleton"
+          },
+          {
+            "tagName": "DIV",
+            "id": "",
+            "text": "MAC Jeans"
+          },
+          {
+            "tagName": "SPAN",
+            "id": "",
+            "text": ""
+          },
+          {
+            "tagName": "SPAN",
+            "id": "",
+            "text": ""
+          },
+          {
+            "tagName": "SPAN",
+            "id": "",
+            "text": ""
+          },
+          {
+            "tagName": "SPAN",
+            "id": "",
+            "text": ""
+          },
+          {
+            "tagName": "DIV",
+            "id": "",
+            "text": ""
+          },
+          {
+            "tagName": "FOOTER",
+            "id": "footer",
+            "text": "Copyright ©2020 Greiner's Fine Men's Clothing | All Rights Reserved | PRIVACY NOTICE | Designed by t"
+          },
+          {
+            "tagName": "DIV",
+            "id": "",
+            "text": ""
+          },
+          {
+            "tagName": "A",
+            "id": "toTop",
+            "text": ""
+          }
+        ]
+      }
+    },
+    {
+      "type": "test",
+      "which": "ibm",
+      "withItems": true,
+      "what": "IBM Accessibility Checker",
+      "url": "https://greinersclothing.com/collections-fw2018-2/",
+      "result": {
+        "content": {
+          "totals": {
+            "violation": 25,
+            "recommendation": 3,
+            "ignored": 0
+          },
+          "items": [
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[4]/div[1]/h2[1]",
+                "aria": "/document[1]/heading[19]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 44,
+                "top": 4979,
+                "height": 44,
+                "width": 713
+              },
+              "snippet": "<h2 data-lineheight=\"44\" data-fontsize=\"40\" style=\"text-align: center;\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[9]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[14]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 436,
+                "top": 3283,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[8]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[13]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 30,
+                "top": 2931,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[7]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[12]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 436,
+                "top": 2865,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[6]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[11]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 30,
+                "top": 2550,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[10]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 436,
+                "top": 2321,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[4]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[9]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 30,
+                "top": 2210,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[8]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 30,
+                "top": 1869,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[7]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 436,
+                "top": 1759,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[13]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[18]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 30,
+                "top": 4457,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[12]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[17]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 436,
+                "top": 4147,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[11]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[16]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 436,
+                "top": 3708,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[10]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[15]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 30,
+                "top": 3673,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[6]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 30,
+                "top": 1595,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/h2[1]",
+                "aria": "/document[1]/heading[4]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 91,
+                "top": 988,
+                "height": 44,
+                "width": 620
+              },
+              "snippet": "<h2 data-lineheight=\"44\" data-fontsize=\"40\" style=\"text-align: center;\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/h2[1]",
+                "aria": "/document[1]/heading[3]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 126,
+                "top": 469,
+                "height": 44,
+                "width": 550
+              },
+              "snippet": "<h2 data-lineheight=\"44\" data-fontsize=\"40\" style=\"text-align: center;\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[4]/div[1]/div[1]/div[1]/h1[1]",
+                "aria": "/document[1]/heading[1]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 317,
+                "top": 224,
+                "height": 80,
+                "width": 168
+              },
+              "snippet": "<h1 data-lineheight=\"NaN\" data-fontsize=\"54\" class=\"entry-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[1]/a[1]",
+                "aria": "/document[1]/link[1]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 30,
+                "top": 63,
+                "height": 75,
+                "width": 300
+              },
+              "snippet": "<a href=\"https://greinersclothing.com\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_MultipleContentinfoLandmarks_Implicit",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[6]/footer[2]",
+                "aria": "/document[1]/contentinfo[2]"
+              },
+              "message": "Multiple elements with \"contentinfo\" role do not have unique labels",
+              "bounds": {
+                "left": 0,
+                "top": 5951,
+                "height": 160,
+                "width": 800
+              },
+              "snippet": "<footer class=\"fusion-footer-copyright-area\" id=\"footer\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_MultipleContentinfoLandmarks_Implicit",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[6]/footer[1]",
+                "aria": "/document[1]/contentinfo[1]"
+              },
+              "message": "Multiple elements with \"contentinfo\" role do not have unique labels",
+              "bounds": {
+                "left": 0,
+                "top": 5640,
+                "height": 311,
+                "width": 800
+              },
+              "snippet": "<footer class=\"fusion-footer-widget-area\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_MultipleContentinfoInSiblingSet_Implicit",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[6]/footer[2]",
+                "aria": "/document[1]/contentinfo[2]"
+              },
+              "message": "Multiple elements with \"contentinfo\" role found on a page",
+              "bounds": {
+                "left": 0,
+                "top": 5951,
+                "height": 160,
+                "width": 800
+              },
+              "snippet": "<footer class=\"fusion-footer-copyright-area\" id=\"footer\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_MultipleContentinfoInSiblingSet_Implicit",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[6]/footer[1]",
+                "aria": "/document[1]/contentinfo[1]"
+              },
+              "message": "Multiple elements with \"contentinfo\" role found on a page",
+              "bounds": {
+                "left": 0,
+                "top": 5640,
+                "height": 311,
+                "width": 800
+              },
+              "snippet": "<footer class=\"fusion-footer-widget-area\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "landmark_name_unique",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[6]/footer[2]",
+                "aria": "/document[1]/contentinfo[2]"
+              },
+              "message": "Multiple \"contentinfo\" landmarks with the same parent region are not distinguished from one another because they have the same \"\" label",
+              "bounds": {
+                "left": 0,
+                "top": 5951,
+                "height": 160,
+                "width": 800
+              },
+              "snippet": "<footer class=\"fusion-footer-copyright-area\" id=\"footer\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "landmark_name_unique",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[6]/footer[1]",
+                "aria": "/document[1]/contentinfo[1]"
+              },
+              "message": "Multiple \"contentinfo\" landmarks with the same parent region are not distinguished from one another because they have the same \"\" label",
+              "bounds": {
+                "left": 0,
+                "top": 5640,
+                "height": 311,
+                "width": 800
+              },
+              "snippet": "<footer class=\"fusion-footer-widget-area\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "IBMA_Color_Contrast_WCAG2AA",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/p[2]",
+                "aria": "/document[1]"
+              },
+              "message": "Text contrast of 3.99 with its background is less than the WCAG AA minimum requirements for text of size 16px and weight of 400",
+              "bounds": {
+                "left": 126,
+                "top": 578,
+                "height": 210,
+                "width": 550
+              },
+              "snippet": "<p style=\"text-align: center;\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_ContentinfoWithNoMain_Implicit",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[6]/footer[2]",
+                "aria": "/document[1]/contentinfo[2]"
+              },
+              "message": "The element with \"contentinfo\" role is present without an element with \"main\" role",
+              "bounds": {
+                "left": 0,
+                "top": 5951,
+                "height": 160,
+                "width": 800
+              },
+              "snippet": "<footer class=\"fusion-footer-copyright-area\" id=\"footer\">",
+              "level": "recommendation"
+            },
+            {
+              "ruleId": "Rpt_Aria_ContentinfoWithNoMain_Implicit",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[6]/footer[1]",
+                "aria": "/document[1]/contentinfo[1]"
+              },
+              "message": "The element with \"contentinfo\" role is present without an element with \"main\" role",
+              "bounds": {
+                "left": 0,
+                "top": 5640,
+                "height": 311,
+                "width": 800
+              },
+              "snippet": "<footer class=\"fusion-footer-widget-area\">",
+              "level": "recommendation"
+            },
+            {
+              "ruleId": "element_attribute_deprecated",
+              "path": {
+                "dom": "/html[1]/head[1]/meta[1]",
+                "aria": "/document[1]"
+              },
+              "message": "The HTML attribute(s) \"http-equiv\" is deprecated for the <meta> element in HTML 5",
+              "bounds": {
+                "left": 0,
+                "top": 0,
+                "height": 0,
+                "width": 0
+              },
+              "snippet": "<meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\">",
+              "level": "recommendation"
+            }
+          ]
+        },
+        "url": {
+          "totals": {
+            "violation": 25,
+            "recommendation": 3,
+            "ignored": 0
+          },
+          "items": [
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[4]/div[1]/h2[1]",
+                "aria": "/document[1]/heading[19]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 44,
+                "top": 4929,
+                "height": 44,
+                "width": 713
+              },
+              "snippet": "<h2 data-lineheight=\"44\" data-fontsize=\"40\" style=\"text-align: center;\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[9]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[14]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 436,
+                "top": 3233,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[8]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[13]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 30,
+                "top": 2881,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[7]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[12]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 436,
+                "top": 2815,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[6]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[11]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 30,
+                "top": 2500,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[10]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 436,
+                "top": 2271,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[4]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[9]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 30,
+                "top": 2160,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[8]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 30,
+                "top": 1819,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[7]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 436,
+                "top": 1709,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[13]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[18]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 30,
+                "top": 4407,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[12]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[17]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 436,
+                "top": 4097,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[11]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[16]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 436,
+                "top": 3658,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[10]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[15]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 30,
+                "top": 3623,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+                "aria": "/document[1]/heading[6]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 30,
+                "top": 1545,
+                "height": 0,
+                "width": 335
+              },
+              "snippet": "<h4 data-lineheight=\"30\" data-fontsize=\"24\" class=\"fusion-rollover-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/h2[1]",
+                "aria": "/document[1]/heading[4]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 91,
+                "top": 938,
+                "height": 44,
+                "width": 620
+              },
+              "snippet": "<h2 data-lineheight=\"44\" data-fontsize=\"40\" style=\"text-align: center;\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/h2[1]",
+                "aria": "/document[1]/heading[3]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 126,
+                "top": 419,
+                "height": 44,
+                "width": 550
+              },
+              "snippet": "<h2 data-lineheight=\"44\" data-fontsize=\"40\" style=\"text-align: center;\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[4]/div[1]/div[1]/div[1]/h1[1]",
+                "aria": "/document[1]/heading[1]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 317,
+                "top": 174,
+                "height": 80,
+                "width": 168
+              },
+              "snippet": "<h1 data-lineheight=\"NaN\" data-fontsize=\"54\" class=\"entry-title\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[1]/a[1]",
+                "aria": "/document[1]/link[1]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 30,
+                "top": 63,
+                "height": 75,
+                "width": 300
+              },
+              "snippet": "<a href=\"https://greinersclothing.com\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_MultipleContentinfoLandmarks_Implicit",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[6]/footer[2]",
+                "aria": "/document[1]/contentinfo[2]"
+              },
+              "message": "Multiple elements with \"contentinfo\" role do not have unique labels",
+              "bounds": {
+                "left": 0,
+                "top": 6206,
+                "height": 158,
+                "width": 800
+              },
+              "snippet": "<footer class=\"fusion-footer-copyright-area\" id=\"footer\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_MultipleContentinfoLandmarks_Implicit",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[6]/footer[1]",
+                "aria": "/document[1]/contentinfo[1]"
+              },
+              "message": "Multiple elements with \"contentinfo\" role do not have unique labels",
+              "bounds": {
+                "left": 0,
+                "top": 5895,
+                "height": 311,
+                "width": 800
+              },
+              "snippet": "<footer class=\"fusion-footer-widget-area\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_MultipleContentinfoInSiblingSet_Implicit",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[6]/footer[2]",
+                "aria": "/document[1]/contentinfo[2]"
+              },
+              "message": "Multiple elements with \"contentinfo\" role found on a page",
+              "bounds": {
+                "left": 0,
+                "top": 6206,
+                "height": 158,
+                "width": 800
+              },
+              "snippet": "<footer class=\"fusion-footer-copyright-area\" id=\"footer\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_MultipleContentinfoInSiblingSet_Implicit",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[6]/footer[1]",
+                "aria": "/document[1]/contentinfo[1]"
+              },
+              "message": "Multiple elements with \"contentinfo\" role found on a page",
+              "bounds": {
+                "left": 0,
+                "top": 5895,
+                "height": 311,
+                "width": 800
+              },
+              "snippet": "<footer class=\"fusion-footer-widget-area\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "landmark_name_unique",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[6]/footer[2]",
+                "aria": "/document[1]/contentinfo[2]"
+              },
+              "message": "Multiple \"contentinfo\" landmarks with the same parent region are not distinguished from one another because they have the same \"\" label",
+              "bounds": {
+                "left": 0,
+                "top": 6206,
+                "height": 158,
+                "width": 800
+              },
+              "snippet": "<footer class=\"fusion-footer-copyright-area\" id=\"footer\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "landmark_name_unique",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[6]/footer[1]",
+                "aria": "/document[1]/contentinfo[1]"
+              },
+              "message": "Multiple \"contentinfo\" landmarks with the same parent region are not distinguished from one another because they have the same \"\" label",
+              "bounds": {
+                "left": 0,
+                "top": 5895,
+                "height": 311,
+                "width": 800
+              },
+              "snippet": "<footer class=\"fusion-footer-widget-area\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "IBMA_Color_Contrast_WCAG2AA",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/p[2]",
+                "aria": "/document[1]"
+              },
+              "message": "Text contrast of 3.99 with its background is less than the WCAG AA minimum requirements for text of size 16px and weight of 400",
+              "bounds": {
+                "left": 126,
+                "top": 528,
+                "height": 210,
+                "width": 550
+              },
+              "snippet": "<p style=\"text-align: center;\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_ContentinfoWithNoMain_Implicit",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[6]/footer[2]",
+                "aria": "/document[1]/contentinfo[2]"
+              },
+              "message": "The element with \"contentinfo\" role is present without an element with \"main\" role",
+              "bounds": {
+                "left": 0,
+                "top": 6206,
+                "height": 158,
+                "width": 800
+              },
+              "snippet": "<footer class=\"fusion-footer-copyright-area\" id=\"footer\">",
+              "level": "recommendation"
+            },
+            {
+              "ruleId": "Rpt_Aria_ContentinfoWithNoMain_Implicit",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[6]/footer[1]",
+                "aria": "/document[1]/contentinfo[1]"
+              },
+              "message": "The element with \"contentinfo\" role is present without an element with \"main\" role",
+              "bounds": {
+                "left": 0,
+                "top": 5895,
+                "height": 311,
+                "width": 800
+              },
+              "snippet": "<footer class=\"fusion-footer-widget-area\">",
+              "level": "recommendation"
+            },
+            {
+              "ruleId": "element_attribute_deprecated",
+              "path": {
+                "dom": "/html[1]/head[1]/meta[1]",
+                "aria": "/document[1]"
+              },
+              "message": "The HTML attribute(s) \"http-equiv\" is deprecated for the <meta> element in HTML 5",
+              "bounds": {
+                "left": 0,
+                "top": 0,
+                "height": 0,
+                "width": 0
+              },
+              "snippet": "<meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\">",
+              "level": "recommendation"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "url",
+      "which": "https://greinersclothing.com/collections-fw2018-2/",
+      "what": "URL",
+      "result": "https://greinersclothing.com/collections-fw2018-2/"
+    },
+    {
+      "type": "test",
+      "which": "aatt",
+      "what": "AATT with HTML CodeSniffer WCAG 2.1 AA ruleset",
+      "url": "https://greinersclothing.com/collections-fw2018-2/",
+      "result": [
+        {
+          "type": "warning",
+          "msg": "Interfering with a user agent's ability to zoom may be a failure of this Success Criterion.",
+          "code": "&lt;meta name=\"viewport\"\ncontent=\"width=device-width,\ninitial-scale=1,\nmaximum-scale=1\"&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/C32\" target=\"_blank\">C32</a>",
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/C31\" target=\"_blank\">C31</a>",
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/C33\" target=\"_blank\">C33</a>",
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/C38\" target=\"_blank\">C38</a>",
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/SCR34\" target=\"_blank\">SCR34</a>",
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/G206\" target=\"_blank\">G206</a>"
+          ],
+          "id": "C31+C32+C33+C38+G206+SCR34"
+        },
+        {
+          "type": "error",
+          "msg": "Anchor element found with a valid href attribute, but no link content has been supplied.",
+          "code": "&lt;a href=\"#\"\nclass=\"fusion-icon\nfusion-icon-bars\"&gt;&lt;/a&gt\n",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#robust\" target=\"_blank\">Robust</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H91\" target=\"_blank\">H91</a>"
+          ],
+          "id": "H91"
+        },
+        {
+          "type": "error",
+          "msg": "Duplicate id attribute value \"menu-abv-menu\" found on the web page.",
+          "code": "&lt;ul id=\"menu-abv-menu\"\nclass=\"fusion-menu\"&gt;&lt;li\nid=\"mobile-menu-item-2443\"\nclass=\"fusion-mobil...&lt;/ul&\nt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#robust\" target=\"_blank\">Robust</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/F77\" target=\"_blank\">F77</a>"
+          ],
+          "id": "F77"
+        },
+        {
+          "type": "warning",
+          "msg": "This element's text is placed on a background image. Ensure the contrast ratio between the text and all covered parts of the image are at least 3:1.",
+          "code": "&lt;h1 class=\"entry-title\"\ndata-fontsize=\"54\"\ndata-lineheight=\"NaN\"&gt;Disco\ner&lt;/h1&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/G145\" target=\"_blank\">G145</a>"
+          ],
+          "id": "G145"
+        },
+        {
+          "type": "warning",
+          "msg": "The heading structure is not logically nested. This h3 element should be an h2 to be properly nested.",
+          "code": "&lt;h3 data-fontsize=\"18\"\ndata-lineheight=\"30\"&gt;OUR\nCOLLECTIONS&lt;/h3&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/G141\" target=\"_blank\">G141</a>"
+          ],
+          "id": "G141"
+        },
+        {
+          "type": "warning",
+          "msg": "This element's text is placed on a background image. Ensure the contrast ratio between the text and all covered parts of the image are at least 4.5:1.",
+          "code": "&lt;h3 data-fontsize=\"18\"\ndata-lineheight=\"30\"&gt;OUR\nCOLLECTIONS&lt;/h3&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/G18\" target=\"_blank\">G18</a>"
+          ],
+          "id": "G18"
+        },
+        {
+          "type": "warning",
+          "msg": "Check that this element has an inherited foreground colour to complement the corresponding inline background colour or image.",
+          "code": "&lt;div\nclass=\"fusion-fullwidth\nfullwidth-box\nfusion-fullwidth-1 \nfusion-parallax-none\"\nstyle=\"border-color:#eae9e9;bo\nder-bottom-width:\n0px;border-top-width:\n0px;border-bottom-style:\nsolid;border-top-style:\nsolid;padding-bottom:90px;padd\nng-left:15%;padding-right:15%;\nadding-top:90px;background-pos\ntion:left\ntop;background-repeat:no-repea\n;-webkit-background-size:cover\n-moz-background-size:cover;-o-\nackground-size:cover;backgroun\n-size:cover;\"&gt;&lt;div\nclass=\"fusion-row\"&gt;&lt;h2\nstyle=\"text-align:\ncen...&lt;/div&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/F24\" target=\"_blank\">F24</a>"
+          ],
+          "id": "F24"
+        },
+        {
+          "type": "warning",
+          "msg": "Img element is marked so that it is ignored by Assistive Technology.",
+          "code": "&lt;img class=\"aligncenter\nwp-image-1334 size-full\"\nsrc=\"https://i2.wp.com/greiner\nclothing.com/temp0/wp-content/\nploads/glyph-medjem.png?resize\n669%2C29\" alt=\"\" width=\"669\"\nheight=\"30\"\nsrcset=\"https://i1.wp.com/grei\nersclothing.com/wp-content/upl\nads/glyph-medjem.png?w=700&amp\namp;ssl=1 700w,\nhttps://i1.wp.com/greinersclot\ning.com/wp-content/uploads/gly\nh-medjem.png?resize=300%2C13&a\np;amp;ssl=1 300w,\nhttps://i1.wp.com/greinersclot\ning.com/wp-content/uploads/gly\nh-medjem.png?resize=669%2C30&a\np;amp;ssl=1 669w\"\nsizes=\"(max-width: 669px)\n100vw, 669px\"&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H67\" target=\"_blank\">H67</a>"
+          ],
+          "id": "H67"
+        },
+        {
+          "type": "error",
+          "msg": "This element has insufficient contrast at this conformance level. Expected a contrast ratio of at least 4.5:1, but text in this element has a contrast ratio of 3.99:1. Recommendation:  change background to #fffaf3.",
+          "code": "&lt;p style=\"text-align:\ncenter;\"&gt;Greiner’s Fine\nMen’s Clothing continually\nstrives ...&lt;/p&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/G18\" target=\"_blank\">G18</a>"
+          ],
+          "id": "G18"
+        },
+        {
+          "type": "warning",
+          "msg": "Check that this element has an inherited foreground colour to complement the corresponding inline background colour or image.",
+          "code": "&lt;div\nclass=\"fusion-fullwidth\nfullwidth-box\nfusion-fullwidth-2 \nfusion-parallax-none\"\nstyle=\"border-color:#eae9e9;bo\nder-bottom-width:\n0px;border-top-width:\n0px;border-bottom-style:\nsolid;border-top-style:\nsolid;padding-bottom:90px;padd\nng-left:10%;padding-right:10%;\nadding-top:90px;background-col\nr:#00305b;background-position:\neft\ntop;background-repeat:no-repea\n;-webkit-background-size:cover\n-moz-background-size:cover;-o-\nackground-size:cover;backgroun\n-size:cover;\"&gt;&lt;div\nclass=\"fusion-row\"&gt;&lt;h2\nstyle=\"text-align:\ncen...&lt;/div&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/F24\" target=\"_blank\">F24</a>"
+          ],
+          "id": "F24"
+        },
+        {
+          "type": "warning",
+          "msg": "Check that this element has an inherited background colour or image to complement the corresponding inline foreground colour.",
+          "code": "&lt;span style=\"color:\n#faebd7;\"&gt;SOME&amp;nbsp;OF\nTHE COLLECTIONS WE\nFEATURE&lt;/span&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/F24\" target=\"_blank\">F24</a>"
+          ],
+          "id": "F24"
+        },
+        {
+          "type": "warning",
+          "msg": "Check that this element has an inherited background colour or image to complement the corresponding inline foreground colour.",
+          "code": "&lt;span style=\"color:\n#faebd7;\"&gt;&lt;img\nclass=\"aligncenter\nwp-image-1380 size-full\"\ns...&lt;/span&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/F24\" target=\"_blank\">F24</a>"
+          ],
+          "id": "F24"
+        },
+        {
+          "type": "warning",
+          "msg": "Img element is marked so that it is ignored by Assistive Technology.",
+          "code": "&lt;img class=\"aligncenter\nwp-image-1380 size-full\"\nsrc=\"https://i2.wp.com/greiner\nclothing.com/temp0/wp-content/\nploads/glyph-medjem-faebd7.png\nresize=669%2C29\" alt=\"\"\nwidth=\"669\" height=\"30\"\nsrcset=\"https://i0.wp.com/grei\nersclothing.com/wp-content/upl\nads/glyph-medjem-faebd7.png?w=\n00&amp;amp;ssl=1 700w,\nhttps://i0.wp.com/greinersclot\ning.com/wp-content/uploads/gly\nh-medjem-faebd7.png?resize=300\n2C13&amp;amp;ssl=1 300w,\nhttps://i0.wp.com/greinersclot\ning.com/wp-content/uploads/gly\nh-medjem-faebd7.png?resize=669\n2C30&amp;amp;ssl=1 669w\"\nsizes=\"(max-width: 669px)\n100vw, 669px\"&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H67\" target=\"_blank\">H67</a>"
+          ],
+          "id": "H67"
+        },
+        {
+          "type": "warning",
+          "msg": "The heading structure is not logically nested. This h4 element should be an h3 to be properly nested.",
+          "code": "&lt;h4 style=\"text-align:\ncenter;\" data-fontsize=\"24\"\ndata-lineheight=\"30\"&gt;AG\nJeans | Ballin | Bills Khakis\n| Bosca | Byron\n|...&lt;/h4&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/G141\" target=\"_blank\">G141</a>"
+          ],
+          "id": "G141"
+        },
+        {
+          "type": "warning",
+          "msg": "Check that this element has an inherited foreground colour to complement the corresponding inline background colour or image.",
+          "code": "&lt;div\nclass=\"fusion-fullwidth\nfullwidth-box\nfusion-fullwidth-3 \nfusion-parallax-none\nhundred-percent-fullwidth\"\nstyle=\"border-color:#eae9e9;bo\nder-bottom-width:\n0px;border-top-width:\n0px;border-bottom-style:\nsolid;border-top-style:\nsolid;padding-bottom:110px;pad\ning-left:0px;padding-right:0px\npadding-top:20px;background-po\nition:left\ntop;background-repeat:no-repea\n;-webkit-background-size:cover\n-moz-background-size:cover;-o-\nackground-size:cover;backgroun\n-size:cover;\"&gt;&lt;style\ntype=\"text/css\"\nscoped=\"scoped\"&gt;.width-100\n...&lt;/div&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/F24\" target=\"_blank\">F24</a>"
+          ],
+          "id": "F24"
+        },
+        {
+          "type": "warning",
+          "msg": "Img element is marked so that it is ignored by Assistive Technology.",
+          "code": "&lt;img width=\"1200\"\nheight=\"800\"\nsrc=\"https://i1.wp.com/greiner\nclothing.com/wp-content/upload\n/RT-16SP-Book-Email-37.jpg?fit\n1200%2C800&amp;amp;ssl=1\"\nclass=\"attachment-full\nsize-full wp-post-image\"\nalt=\"\"\nsrcset=\"https://i1.wp.com/grei\nersclothing.com/wp-content/upl\nads/RT-16SP-Book-Email-37.jpg?\n=1200&amp;amp;ssl=1 1200w,\nhttps://i1.wp.com/greinersclot\ning.com/wp-content/uploads/RT-\n6SP-Book-Email-37.jpg?resize=3\n0%2C200&amp;amp;ssl=1 300w,\nhttps://i1.wp.com/greinersclot\ning.com/wp-content/uploads/RT-\n6SP-Book-Email-37.jpg?resize=7\n8%2C512&amp;amp;ssl=1 768w,\nhttps://i1.wp.com/greinersclot\ning.com/wp-content/uploads/RT-\n6SP-Book-Email-37.jpg?resize=1\n24%2C683&amp;amp;ssl=1 1024w\"\nsizes=\"(max-width: 669px)\n100vw, 669px\"&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H67\" target=\"_blank\">H67</a>"
+          ],
+          "id": "H67"
+        },
+        {
+          "type": "warning",
+          "msg": "This element's text or background contains transparency. Ensure the contrast ratio between the text and background are at least 3:1.",
+          "code": "&lt;a\nhref=\"https://greinersclothing\ncom/portfolio-items/robert-tal\nott-fw2016/\"&gt;Robert\nTalbott&lt;/a&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/G145\" target=\"_blank\">G145</a>"
+          ],
+          "id": "G145"
+        },
+        {
+          "type": "warning",
+          "msg": "Img element is marked so that it is ignored by Assistive Technology.",
+          "code": "&lt;img width=\"2403\"\nheight=\"3600\"\nsrc=\"https://i1.wp.com/greiner\nclothing.com/wp-content/upload\n/DavidDonahue_Fall16_Lookbook_\nage_25_RGB.jpg?fit=2403%2C3600\namp;amp;ssl=1\"\nclass=\"attachment-full\nsize-full wp-post-image\"\nalt=\"\"\nsrcset=\"https://i1.wp.com/grei\nersclothing.com/wp-content/upl\nads/DavidDonahue_Fall16_Lookbo\nk_page_25_RGB.jpg?w=2403&amp;a\np;ssl=1 2403w,\nhttps://i1.wp.com/greinersclot\ning.com/wp-content/uploads/Dav\ndDonahue_Fall16_Lookbook_page_\n5_RGB.jpg?resize=200%2C300&amp\namp;ssl=1 200w,\nhttps://i1.wp.com/greinersclot\ning.com/wp-content/uploads/Dav\ndDonahue_Fall16_Lookbook_page_\n5_RGB.jpg?resize=768%2C1151&am\n;amp;ssl=1 768w,\nhttps://i1.wp.com/greinersclot\ning.com/wp-content/uploads/Dav\ndDonahue_Fall16_Lookbook_page_\n5_RGB.jpg?resize=684%2C1024&am\n;amp;ssl=1 684w,\nhttps://i1.wp.com/greinersclot\ning.com/wp-content/uploads/Dav\ndDonahue_Fall16_Lookbook_page_\n5_RGB.jpg?w=1338 1338w,\nhttps://i1.wp.com/greinersclot\ning.com/wp-content/uploads/Dav\ndDonahue_Fall16_Lookbook_page_\n5_RGB.jpg?w=2007 2007w\"\nsizes=\"(max-width: 669px)\n100vw, 669px\"&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H67\" target=\"_blank\">H67</a>"
+          ],
+          "id": "H67"
+        },
+        {
+          "type": "warning",
+          "msg": "This element's text or background contains transparency. Ensure the contrast ratio between the text and background are at least 3:1.",
+          "code": "&lt;a\nhref=\"https://greinersclothing\ncom/portfolio-items/david-dona\nue-fw2016/\"&gt;David\nDonahue&lt;/a&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/G145\" target=\"_blank\">G145</a>"
+          ],
+          "id": "G145"
+        },
+        {
+          "type": "warning",
+          "msg": "Img element is marked so that it is ignored by Assistive Technology.",
+          "code": "&lt;img width=\"900\"\nheight=\"601\"\nsrc=\"https://i0.wp.com/greiner\nclothing.com/wp-content/upload\n/F16-CSM-EZ21_2512.jpg?fit=900\n2C601&amp;amp;ssl=1\"\nclass=\"attachment-full\nsize-full wp-post-image\"\nalt=\"\"\nsrcset=\"https://i0.wp.com/grei\nersclothing.com/wp-content/upl\nads/F16-CSM-EZ21_2512.jpg?w=90\n&amp;amp;ssl=1 900w,\nhttps://i0.wp.com/greinersclot\ning.com/wp-content/uploads/F16\nCSM-EZ21_2512.jpg?resize=300%2\n200&amp;amp;ssl=1 300w,\nhttps://i0.wp.com/greinersclot\ning.com/wp-content/uploads/F16\nCSM-EZ21_2512.jpg?resize=768%2\n513&amp;amp;ssl=1 768w\"\nsizes=\"(max-width: 669px)\n100vw, 669px\"&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H67\" target=\"_blank\">H67</a>"
+          ],
+          "id": "H67"
+        },
+        {
+          "type": "warning",
+          "msg": "This element's text or background contains transparency. Ensure the contrast ratio between the text and background are at least 3:1.",
+          "code": "&lt;a\nhref=\"https://greinersclothing\ncom/portfolio-items/peter-mill\nr-fw2016/\"&gt;Peter\nMillar&lt;/a&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/G145\" target=\"_blank\">G145</a>"
+          ],
+          "id": "G145"
+        },
+        {
+          "type": "warning",
+          "msg": "Img element is marked so that it is ignored by Assistive Technology.",
+          "code": "&lt;img width=\"1408\"\nheight=\"1407\"\nsrc=\"https://i1.wp.com/greiner\nclothing.com/wp-content/upload\n/StLouis_BengalP.jpg?fit=1408%\nC1407&amp;amp;ssl=1\"\nclass=\"attachment-full\nsize-full wp-post-image\"\nalt=\"\"\nsrcset=\"https://i1.wp.com/grei\nersclothing.com/wp-content/upl\nads/StLouis_BengalP.jpg?w=1408\namp;amp;ssl=1 1408w,\nhttps://i1.wp.com/greinersclot\ning.com/wp-content/uploads/StL\nuis_BengalP.jpg?resize=150%2C1\n0&amp;amp;ssl=1 150w,\nhttps://i1.wp.com/greinersclot\ning.com/wp-content/uploads/StL\nuis_BengalP.jpg?resize=300%2C3\n0&amp;amp;ssl=1 300w,\nhttps://i1.wp.com/greinersclot\ning.com/wp-content/uploads/StL\nuis_BengalP.jpg?resize=768%2C7\n7&amp;amp;ssl=1 768w,\nhttps://i1.wp.com/greinersclot\ning.com/wp-content/uploads/StL\nuis_BengalP.jpg?resize=1024%2C\n024&amp;amp;ssl=1 1024w,\nhttps://i1.wp.com/greinersclot\ning.com/wp-content/uploads/StL\nuis_BengalP.jpg?resize=66%2C66\namp;amp;ssl=1 66w,\nhttps://i1.wp.com/greinersclot\ning.com/wp-content/uploads/StL\nuis_BengalP.jpg?w=1338 1338w\"\nsizes=\"(max-width: 669px)\n100vw, 669px\"&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H67\" target=\"_blank\">H67</a>"
+          ],
+          "id": "H67"
+        },
+        {
+          "type": "warning",
+          "msg": "This element's text or background contains transparency. Ensure the contrast ratio between the text and background are at least 3:1.",
+          "code": "&lt;a\nhref=\"https://greinersclothing\ncom/portfolio-items/krewe/\"&gt\nKrewe&lt;/a&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/G145\" target=\"_blank\">G145</a>"
+          ],
+          "id": "G145"
+        },
+        {
+          "type": "warning",
+          "msg": "Img element is marked so that it is ignored by Assistive Technology.",
+          "code": "&lt;img width=\"503\"\nheight=\"655\"\nsrc=\"https://i0.wp.com/greiner\nclothing.com/wp-content/upload\n/LO-SAM-FPO-3.png?fit=503%2C65\n&amp;amp;ssl=1\"\nclass=\"attachment-full\nsize-full wp-post-image\"\nalt=\"\"\nsrcset=\"https://i0.wp.com/grei\nersclothing.com/wp-content/upl\nads/LO-SAM-FPO-3.png?w=503&amp\namp;ssl=1 503w,\nhttps://i0.wp.com/greinersclot\ning.com/wp-content/uploads/LO-\nAM-FPO-3.png?resize=230%2C300&\nmp;amp;ssl=1 230w\"\nsizes=\"(max-width: 503px)\n100vw, 503px\"&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H67\" target=\"_blank\">H67</a>"
+          ],
+          "id": "H67"
+        },
+        {
+          "type": "warning",
+          "msg": "This element's text or background contains transparency. Ensure the contrast ratio between the text and background are at least 3:1.",
+          "code": "&lt;a\nhref=\"https://greinersclothing\ncom/portfolio-items/samuelsohn\n\"&gt;Samuelsohn&lt;/a&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/G145\" target=\"_blank\">G145</a>"
+          ],
+          "id": "G145"
+        },
+        {
+          "type": "warning",
+          "msg": "Img element is marked so that it is ignored by Assistive Technology.",
+          "code": "&lt;img width=\"5760\"\nheight=\"3840\"\nsrc=\"https://i2.wp.com/greiner\nclothing.com/wp-content/upload\n/IMG_5616.jpg?fit=5760%2C3840&\nmp;amp;ssl=1\"\nclass=\"attachment-full\nsize-full wp-post-image\"\nalt=\"\"\nsrcset=\"https://i2.wp.com/grei\nersclothing.com/wp-content/upl\nads/IMG_5616.jpg?w=5760&amp;am\n;ssl=1 5760w,\nhttps://i2.wp.com/greinersclot\ning.com/wp-content/uploads/IMG\n5616.jpg?resize=300%2C200&amp;\nmp;ssl=1 300w,\nhttps://i2.wp.com/greinersclot\ning.com/wp-content/uploads/IMG\n5616.jpg?resize=768%2C512&amp;\nmp;ssl=1 768w,\nhttps://i2.wp.com/greinersclot\ning.com/wp-content/uploads/IMG\n5616.jpg?resize=1024%2C683&amp\namp;ssl=1 1024w,\nhttps://i2.wp.com/greinersclot\ning.com/wp-content/uploads/IMG\n5616.jpg?w=1338 1338w,\nhttps://i2.wp.com/greinersclot\ning.com/wp-content/uploads/IMG\n5616.jpg?w=2007 2007w\"\nsizes=\"(max-width: 669px)\n100vw, 669px\"&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H67\" target=\"_blank\">H67</a>"
+          ],
+          "id": "H67"
+        },
+        {
+          "type": "warning",
+          "msg": "This element's text or background contains transparency. Ensure the contrast ratio between the text and background are at least 3:1.",
+          "code": "&lt;a\nhref=\"https://greinersclothing\ncom/portfolio-items/byron-fw20\n6/\"&gt;Byron&lt;/a&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/G145\" target=\"_blank\">G145</a>"
+          ],
+          "id": "G145"
+        },
+        {
+          "type": "warning",
+          "msg": "Img element is marked so that it is ignored by Assistive Technology.",
+          "code": "&lt;img width=\"717\"\nheight=\"1000\"\nsrc=\"https://i0.wp.com/greiner\nclothing.com/wp-content/upload\n/img765-Edit.jpg?fit=717%2C100\n&amp;amp;ssl=1\"\nclass=\"attachment-full\nsize-full wp-post-image\"\nalt=\"\"\nsrcset=\"https://i0.wp.com/grei\nersclothing.com/wp-content/upl\nads/img765-Edit.jpg?w=717&amp;\nmp;ssl=1 717w,\nhttps://i0.wp.com/greinersclot\ning.com/wp-content/uploads/img\n65-Edit.jpg?resize=215%2C300&a\np;amp;ssl=1 215w\"\nsizes=\"(max-width: 669px)\n100vw, 669px\"&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H67\" target=\"_blank\">H67</a>"
+          ],
+          "id": "H67"
+        },
+        {
+          "type": "warning",
+          "msg": "This element's text or background contains transparency. Ensure the contrast ratio between the text and background are at least 3:1.",
+          "code": "&lt;a\nhref=\"https://greinersclothing\ncom/portfolio-items/patrick-as\naraf-fw2016/\"&gt;Patrick\nAssaraf&lt;/a&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/G145\" target=\"_blank\">G145</a>"
+          ],
+          "id": "G145"
+        },
+        {
+          "type": "warning",
+          "msg": "Img element is marked so that it is ignored by Assistive Technology.",
+          "code": "&lt;img width=\"600\"\nheight=\"724\"\nsrc=\"https://i2.wp.com/greiner\nclothing.com/wp-content/upload\n/dibianco-image.png?fit=600%2C\n24&amp;amp;ssl=1\"\nclass=\"attachment-full\nsize-full wp-post-image\"\nalt=\"\"\nsrcset=\"https://i2.wp.com/grei\nersclothing.com/wp-content/upl\nads/dibianco-image.png?w=600&a\np;amp;ssl=1 600w,\nhttps://i2.wp.com/greinersclot\ning.com/wp-content/uploads/dib\nanco-image.png?resize=249%2C30\n&amp;amp;ssl=1 249w\"\nsizes=\"(max-width: 600px)\n100vw, 600px\"&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H67\" target=\"_blank\">H67</a>"
+          ],
+          "id": "H67"
+        },
+        {
+          "type": "warning",
+          "msg": "This element's text or background contains transparency. Ensure the contrast ratio between the text and background are at least 3:1.",
+          "code": "&lt;a\nhref=\"https://greinersclothing\ncom/portfolio-items/scarpe-di-\nianco-fw2016/\"&gt;Scarpe Di\nBianco&lt;/a&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/G145\" target=\"_blank\">G145</a>"
+          ],
+          "id": "G145"
+        },
+        {
+          "type": "warning",
+          "msg": "Img element is marked so that it is ignored by Assistive Technology.",
+          "code": "&lt;img width=\"3543\"\nheight=\"2363\"\nsrc=\"https://i0.wp.com/greiner\nclothing.com/wp-content/upload\n/162f_42942_mid.jpg?fit=3543%2\n2363&amp;amp;ssl=1\"\nclass=\"attachment-full\nsize-full wp-post-image\"\nalt=\"\"\nsrcset=\"https://i0.wp.com/grei\nersclothing.com/wp-content/upl\nads/162f_42942_mid.jpg?w=3543&\nmp;amp;ssl=1 3543w,\nhttps://i0.wp.com/greinersclot\ning.com/wp-content/uploads/162\n_42942_mid.jpg?resize=300%2C20\n&amp;amp;ssl=1 300w,\nhttps://i0.wp.com/greinersclot\ning.com/wp-content/uploads/162\n_42942_mid.jpg?resize=768%2C51\n&amp;amp;ssl=1 768w,\nhttps://i0.wp.com/greinersclot\ning.com/wp-content/uploads/162\n_42942_mid.jpg?resize=1024%2C6\n3&amp;amp;ssl=1 1024w,\nhttps://i0.wp.com/greinersclot\ning.com/wp-content/uploads/162\n_42942_mid.jpg?w=1338 1338w,\nhttps://i0.wp.com/greinersclot\ning.com/wp-content/uploads/162\n_42942_mid.jpg?w=2007 2007w\"\nsizes=\"(max-width: 669px)\n100vw, 669px\"&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H67\" target=\"_blank\">H67</a>"
+          ],
+          "id": "H67"
+        },
+        {
+          "type": "warning",
+          "msg": "This element's text or background contains transparency. Ensure the contrast ratio between the text and background are at least 3:1.",
+          "code": "&lt;a\nhref=\"https://greinersclothing\ncom/portfolio-items/stenstroms\nfw2016/\"&gt;Stenstroms&lt;/a&g\n;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/G145\" target=\"_blank\">G145</a>"
+          ],
+          "id": "G145"
+        },
+        {
+          "type": "warning",
+          "msg": "Img element is marked so that it is ignored by Assistive Technology.",
+          "code": "&lt;img width=\"1024\"\nheight=\"2556\"\nsrc=\"https://i1.wp.com/greiner\nclothing.com/wp-content/upload\n/2016-BALLINposter_all_labels.\npg?fit=1024%2C2556&amp;amp;ssl\n1\" class=\"attachment-full\nsize-full wp-post-image\"\nalt=\"\"\nsrcset=\"https://i1.wp.com/grei\nersclothing.com/wp-content/upl\nads/2016-BALLINposter_all_labe\ns.jpg?w=1024&amp;amp;ssl=1\n1024w,\nhttps://i1.wp.com/greinersclot\ning.com/wp-content/uploads/201\n-BALLINposter_all_labels.jpg?r\nsize=120%2C300&amp;amp;ssl=1\n120w,\nhttps://i1.wp.com/greinersclot\ning.com/wp-content/uploads/201\n-BALLINposter_all_labels.jpg?r\nsize=768%2C1917&amp;amp;ssl=1\n768w,\nhttps://i1.wp.com/greinersclot\ning.com/wp-content/uploads/201\n-BALLINposter_all_labels.jpg?r\nsize=410%2C1024&amp;amp;ssl=1\n410w\" sizes=\"(max-width:\n669px) 100vw, 669px\"&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H67\" target=\"_blank\">H67</a>"
+          ],
+          "id": "H67"
+        },
+        {
+          "type": "warning",
+          "msg": "This element's text or background contains transparency. Ensure the contrast ratio between the text and background are at least 3:1.",
+          "code": "&lt;a\nhref=\"https://greinersclothing\ncom/portfolio-items/ballin-fw2\n16/\"&gt;Ballin&lt;/a&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/G145\" target=\"_blank\">G145</a>"
+          ],
+          "id": "G145"
+        },
+        {
+          "type": "warning",
+          "msg": "Img element is marked so that it is ignored by Assistive Technology.",
+          "code": "&lt;img width=\"700\"\nheight=\"1000\"\nsrc=\"https://i2.wp.com/greiner\nclothing.com/wp-content/upload\n/Masons-5.jpg?fit=700%2C1000&a\np;amp;ssl=1\"\nclass=\"attachment-full\nsize-full wp-post-image\"\nalt=\"\"\nsrcset=\"https://i2.wp.com/grei\nersclothing.com/wp-content/upl\nads/Masons-5.jpg?w=700&amp;amp\nssl=1 700w,\nhttps://i2.wp.com/greinersclot\ning.com/wp-content/uploads/Mas\nns-5.jpg?resize=210%2C300&amp;\nmp;ssl=1 210w\"\nsizes=\"(max-width: 669px)\n100vw, 669px\"&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H67\" target=\"_blank\">H67</a>"
+          ],
+          "id": "H67"
+        },
+        {
+          "type": "warning",
+          "msg": "This element's text or background contains transparency. Ensure the contrast ratio between the text and background are at least 3:1.",
+          "code": "&lt;a\nhref=\"https://greinersclothing\ncom/portfolio-items/masons/\"&g\n;Masons&lt;/a&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/G145\" target=\"_blank\">G145</a>"
+          ],
+          "id": "G145"
+        },
+        {
+          "type": "warning",
+          "msg": "Img element is marked so that it is ignored by Assistive Technology.",
+          "code": "&lt;img width=\"1550\"\nheight=\"1150\"\nsrc=\"https://i0.wp.com/greiner\nclothing.com/wp-content/upload\n/Nettleton-2015_Nettleton_Shel\n_32x24.jpg?fit=1550%2C1150&amp\namp;ssl=1\"\nclass=\"attachment-full\nsize-full wp-post-image\"\nalt=\"\"\nsrcset=\"https://i0.wp.com/grei\nersclothing.com/wp-content/upl\nads/Nettleton-2015_Nettleton_S\nell_32x24.jpg?w=1550&amp;amp;s\nl=1 1550w,\nhttps://i0.wp.com/greinersclot\ning.com/wp-content/uploads/Net\nleton-2015_Nettleton_Shell_32x\n4.jpg?resize=300%2C223&amp;amp\nssl=1 300w,\nhttps://i0.wp.com/greinersclot\ning.com/wp-content/uploads/Net\nleton-2015_Nettleton_Shell_32x\n4.jpg?resize=768%2C570&amp;amp\nssl=1 768w,\nhttps://i0.wp.com/greinersclot\ning.com/wp-content/uploads/Net\nleton-2015_Nettleton_Shell_32x\n4.jpg?resize=1024%2C760&amp;am\n;ssl=1 1024w,\nhttps://i0.wp.com/greinersclot\ning.com/wp-content/uploads/Net\nleton-2015_Nettleton_Shell_32x\n4.jpg?w=1338 1338w\"\nsizes=\"(max-width: 669px)\n100vw, 669px\"&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H67\" target=\"_blank\">H67</a>"
+          ],
+          "id": "H67"
+        },
+        {
+          "type": "warning",
+          "msg": "This element's text or background contains transparency. Ensure the contrast ratio between the text and background are at least 3:1.",
+          "code": "&lt;a\nhref=\"https://greinersclothing\ncom/portfolio-items/nettleton/\n&gt;Nettleton&lt;/a&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/G145\" target=\"_blank\">G145</a>"
+          ],
+          "id": "G145"
+        },
+        {
+          "type": "warning",
+          "msg": "Img element is marked so that it is ignored by Assistive Technology.",
+          "code": "&lt;img width=\"700\"\nheight=\"1000\"\nsrc=\"https://i2.wp.com/greiner\nclothing.com/wp-content/upload\n/MAC_Kampagne_FS16_MEN_2_CMYK.\npg?fit=700%2C1000&amp;amp;ssl=\n\" class=\"attachment-full\nsize-full wp-post-image\"\nalt=\"\"\nsrcset=\"https://i2.wp.com/grei\nersclothing.com/wp-content/upl\nads/MAC_Kampagne_FS16_MEN_2_CM\nK.jpg?w=700&amp;amp;ssl=1\n700w,\nhttps://i2.wp.com/greinersclot\ning.com/wp-content/uploads/MAC\nKampagne_FS16_MEN_2_CMYK.jpg?r\nsize=210%2C300&amp;amp;ssl=1\n210w\" sizes=\"(max-width:\n669px) 100vw, 669px\"&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H67\" target=\"_blank\">H67</a>"
+          ],
+          "id": "H67"
+        },
+        {
+          "type": "warning",
+          "msg": "This element's text or background contains transparency. Ensure the contrast ratio between the text and background are at least 3:1.",
+          "code": "&lt;a\nhref=\"https://greinersclothing\ncom/portfolio-items/mac/\"&gt;M\nC Jeans&lt;/a&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/G145\" target=\"_blank\">G145</a>"
+          ],
+          "id": "G145"
+        },
+        {
+          "type": "warning",
+          "msg": "Check that this element has an inherited foreground colour to complement the corresponding inline background colour or image.",
+          "code": "&lt;div\nclass=\"fusion-fullwidth\nfullwidth-box\nfusion-fullwidth-4 \nfusion-parallax-none\"\nstyle=\"border-color:#eae9e9;bo\nder-bottom-width:\n0px;border-top-width:\n0px;border-bottom-style:\nsolid;border-top-style:\nsolid;padding-bottom:10px;padd\nng-left:25px;padding-right:25p\n;padding-top:50px;background-c\nlor:#0c0c0d;background-positio\n:left\ntop;background-repeat:no-repea\n;-webkit-background-size:cover\n-moz-background-size:cover;-o-\nackground-size:cover;backgroun\n-size:cover;\"&gt;&lt;div\nclass=\"fusion-row\"&gt;&lt;h2\nstyle=\"text-align:\ncen...&lt;/div&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/F24\" target=\"_blank\">F24</a>"
+          ],
+          "id": "F24"
+        },
+        {
+          "type": "warning",
+          "msg": "Img element is marked so that it is ignored by Assistive Technology.",
+          "code": "&lt;img class=\"aligncenter\nwp-image-1334 size-full\"\nsrc=\"https://i2.wp.com/greiner\nclothing.com/temp0/wp-content/\nploads/glyph-medjem.png?resize\n669%2C29\" alt=\"\" width=\"669\"\nheight=\"30\"\nsrcset=\"https://i1.wp.com/grei\nersclothing.com/wp-content/upl\nads/glyph-medjem.png?w=700&amp\namp;ssl=1 700w,\nhttps://i1.wp.com/greinersclot\ning.com/wp-content/uploads/gly\nh-medjem.png?resize=300%2C13&a\np;amp;ssl=1 300w,\nhttps://i1.wp.com/greinersclot\ning.com/wp-content/uploads/gly\nh-medjem.png?resize=669%2C30&a\np;amp;ssl=1 669w\"\nsizes=\"(max-width: 669px)\n100vw, 669px\"&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H67\" target=\"_blank\">H67</a>"
+          ],
+          "id": "H67"
+        },
+        {
+          "type": "warning",
+          "msg": "Check that this element has an inherited foreground colour to complement the corresponding inline background colour or image.",
+          "code": "&lt;div\nclass=\"fusion-fullwidth\nfullwidth-box\nfusion-fullwidth-5 \nfusion-parallax-none\"\nstyle=\"border-color:#eae9e9;bo\nder-bottom-width:\n0px;border-top-width:\n0px;border-bottom-style:\nsolid;border-top-style:\nsolid;padding-bottom:20px;padd\nng-left:0px;padding-right:0px;\nadding-top:10px;background-col\nr:#0c0c0d;background-position:\neft\ntop;background-repeat:no-repea\n;-webkit-background-size:cover\n-moz-background-size:cover;-o-\nackground-size:cover;backgroun\n-size:cover;\"&gt;&lt;div\nclass=\"fusion-row\"&gt;&lt;div\nclass=\"fusion-one-fif...&lt;/d\nv&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/F24\" target=\"_blank\">F24</a>"
+          ],
+          "id": "F24"
+        },
+        {
+          "type": "warning",
+          "msg": "Img element is marked so that it is ignored by Assistive Technology.",
+          "code": "&lt;img\nsrc=\"https://i0.wp.com/greiner\nclothing.com/wp-content/upload\n/Logos-Cristoforo-fiore.png?re\nize=150%2C107\" alt=\"\"\nclass=\"img-responsive\"\nwidth=\"150\" height=\"107\"&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H67\" target=\"_blank\">H67</a>"
+          ],
+          "id": "H67"
+        },
+        {
+          "type": "warning",
+          "msg": "Img element is marked so that it is ignored by Assistive Technology.",
+          "code": "&lt;img\nsrc=\"https://i0.wp.com/greiner\nclothing.com/temp0/wp-content/\nploads/Logos-stenstroms.png?w=\n69\" alt=\"\"\nclass=\"img-responsive\"\nwidth=\"204\" height=\"145\"&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H67\" target=\"_blank\">H67</a>"
+          ],
+          "id": "H67"
+        },
+        {
+          "type": "warning",
+          "msg": "Img element is marked so that it is ignored by Assistive Technology.",
+          "code": "&lt;img\nsrc=\"https://i0.wp.com/greiner\nclothing.com/wp-content/upload\n/Logos-Emanuel-Berg.png?resize\n150%2C107\" alt=\"\"\nclass=\"img-responsive\"\nwidth=\"150\" height=\"107\"&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H67\" target=\"_blank\">H67</a>"
+          ],
+          "id": "H67"
+        },
+        {
+          "type": "warning",
+          "msg": "Img element is marked so that it is ignored by Assistive Technology.",
+          "code": "&lt;img\nsrc=\"https://i2.wp.com/greiner\nclothing.com/temp0/wp-content/\nploads/Logos-Zanella.png?w=669\n alt=\"\"\nclass=\"img-responsive\"\nwidth=\"204\" height=\"145\"&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H67\" target=\"_blank\">H67</a>"
+          ],
+          "id": "H67"
+        },
+        {
+          "type": "warning",
+          "msg": "If this element contains a navigation section, it is recommended that it be marked up as a list.",
+          "code": "&lt;div&gt;Copyright ©2020\nGreiner's Fine Men's Clothing\n  | ...&lt;/div&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H48\" target=\"_blank\">H48</a>"
+          ],
+          "id": "H48"
+        },
+        {
+          "type": "warning",
+          "msg": "If this element contains a navigation section, it is recommended that it be marked up as a list.",
+          "code": "&lt;div\nclass=\"fusion-social-networks\"\ngt;&lt;a\nclass=\"fusion-social-network-i\non\nfusion-toolti...&lt;/div&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H48\" target=\"_blank\">H48</a>"
+          ],
+          "id": "H48"
+        },
+        {
+          "type": "warning",
+          "msg": "Check that this element has an inherited background colour or image to complement the corresponding inline foreground colour.",
+          "code": "&lt;a\nclass=\"fusion-social-network-i\non fusion-tooltip\nfusion-facebook\nfusion-icon-facebook\"\nstyle=\"color:#f0eadb;\"\ntarget=\"_blank\"\nhref=\"http://facebook.com/grei\nerstampa\"\ntitle=\"Facebook\"&gt;&lt;/a&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/F24\" target=\"_blank\">F24</a>"
+          ],
+          "id": "F24"
+        },
+        {
+          "type": "warning",
+          "msg": "Check that this element has an inherited background colour or image to complement the corresponding inline foreground colour.",
+          "code": "&lt;a\nclass=\"fusion-social-network-i\non fusion-tooltip\nfusion-twitter\nfusion-icon-twitter\"\nstyle=\"color:#f0eadb;\"\ntarget=\"_blank\"\nhref=\"http://twitter.com/grein\nrstampa\"\ntitle=\"Twitter\"&gt;&lt;/a&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/F24\" target=\"_blank\">F24</a>"
+          ],
+          "id": "F24"
+        },
+        {
+          "type": "warning",
+          "msg": "Check that this element has an inherited background colour or image to complement the corresponding inline foreground colour.",
+          "code": "&lt;a\nclass=\"fusion-social-network-i\non fusion-tooltip fusion-mail\nfusion-icon-mail\"\nstyle=\"color:#f0eadb;\"\ntarget=\"_self\"\nhref=\"mailto:info@GreinersClot\ning.com\"\ntitle=\"Mail\"&gt;&lt;/a&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/F24\" target=\"_blank\">F24</a>"
+          ],
+          "id": "F24"
+        },
+        {
+          "type": "warning",
+          "msg": "This element has \"position: fixed\". This may require scrolling in two dimensions, which is considered a failure of this Success Criterion.",
+          "code": "&lt;a href=\"#\" id=\"toTop\"\nstyle=\"display:\nnone;\"&gt;&lt;span\nid=\"toTopHover\"&gt;&lt;/span&g\n;&lt;/a&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/C32\" target=\"_blank\">C32</a>",
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/C31\" target=\"_blank\">C31</a>",
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/C33\" target=\"_blank\">C33</a>",
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/C38\" target=\"_blank\">C38</a>",
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/SCR34\" target=\"_blank\">SCR34</a>",
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/G206\" target=\"_blank\">G206</a>"
+          ],
+          "id": "C31+C32+C33+C38+G206+SCR34"
+        },
+        {
+          "type": "error",
+          "msg": "Anchor element found with a valid href attribute, but no link content has been supplied.",
+          "code": "&lt;a href=\"#\" id=\"toTop\"\nstyle=\"display:\nnone;\"&gt;&lt;span\nid=\"toTopHover\"&gt;&lt;/span&g\n;&lt;/a&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#robust\" target=\"_blank\">Robust</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H91\" target=\"_blank\">H91</a>"
+          ],
+          "id": "H91"
+        },
+        {
+          "type": "warning",
+          "msg": "Img element is marked so that it is ignored by Assistive Technology.",
+          "code": "&lt;img\nsrc=\"https://pixel.wp.com/g.gi\n?v=ext&amp;amp;j=1%3A8.9.2&amp\namp;blog=96578744&amp;amp;post\n3054&amp;amp;tz=-4&amp;amp;srv\ngreinersclothing.com&amp;amp;h\nst=greinersclothing.com&amp;am\n;ref=&amp;amp;fcp=2642&amp;amp\nrand=0.09534598431394214\"\nalt=\"\" width=\"6\" height=\"5\"\nid=\"wpstats\"&gt;",
+          "principle": "<a href=\"http://www.w3.org/TR/WCAG20/#perceivable\" target=\"_blank\">Perceivable</a>",
+          "techniques": [
+            "<a href=\"http://www.w3.org/TR/WCAG20-TECHS/H67\" target=\"_blank\">H67</a>"
+          ],
+          "id": "H67"
+        },
+        {
+          "errorcount": 4
+        }
+      ]
+    },
+    {
+      "type": "test",
+      "which": "alfa",
+      "what": "alfa",
+      "url": "https://greinersclothing.com/collections-fw2018-2/",
+      "result": [
+        {
+          "index": 147,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r3",
+            "ruleSummary": "id attributes have a unique value",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r3",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#parsing",
+                "chapter": "4.1.1",
+                "title": "Parsing"
+              },
+              {
+                "uri": "https://www.w3.org/WAI/WCAG21/Techniques/html/H93",
+                "name": "H93",
+                "title": "Ensuring that id attributes are unique on a Web page"
+              }
+            ]
+          },
+          "target": {
+            "type": "element",
+            "tagName": "ul",
+            "path": "/html[1]/body[1]/div[1]/div[2]/div[1]/div[3]/div[2]/div[1]/div[1]/ul[1]",
+            "codeLines": [
+              "<ul id=\"menu-abv-menu\" class=\"fusion-menu\">",
+              "  <li id=\"menu-item-2443\" class=\"menu-item menu-item-type-post_type menu-item-object-page menu-item...",
+              "    <a href=\"https://greinersclothing.com/home-sp16/\">",
+              "      HOME",
+              "    </a>",
+              "  </li>",
+              "  <li id=\"menu-item-3912\" class=\"menu-item menu-item-type-post_type menu-item-object-page menu-item...",
+              "    <a href=\"https://greinersclothing.com/about-us/\">",
+              "      ABOUT US",
+              "    </a>",
+              "  </li>",
+              "  <li id=\"menu-item-3056\" class=\"menu-item menu-item-type-post_type menu-item-object-page current-m...",
+              "    <a href=\"https://greinersclothing.com/collections-fw2018-2/\">",
+              "      COLLECTIONS",
+              "    </a>",
+              "  </li>",
+              "  <li id=\"menu-item-3605\" class=\"menu-item menu-item-type-post_type menu-item-object-page menu-item...",
+              "    <a href=\"https://greinersclothing.com/covid19masks/\">",
+              "      COVID-19 MASKS",
+              "    </a>",
+              "  </li>",
+              "  <li id=\"menu-item-1969\" class=\"menu-item menu-item-type-post_type menu-item-object-page menu-item...",
+              "    <a href=\"https://greinersclothing.com/made-to-measure/\">",
+              "      MADE TO MEASURE",
+              "    </a>",
+              "  </li>",
+              "  <li id=\"menu-item-1968\" class=\"menu-item menu-item-type-post_type menu-item-object-page menu-item...",
+              "    <a href=\"https://greinersclothing.com/contact-2/\">",
+              "      CONTACT + LOCATIONS",
+              "    </a>",
+              "  </li>",
+              "</ul>"
+            ]
+          }
+        },
+        {
+          "index": 154,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r3",
+            "ruleSummary": "id attributes have a unique value",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r3",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#parsing",
+                "chapter": "4.1.1",
+                "title": "Parsing"
+              },
+              {
+                "uri": "https://www.w3.org/WAI/WCAG21/Techniques/html/H93",
+                "name": "H93",
+                "title": "Ensuring that id attributes are unique on a Web page"
+              }
+            ]
+          },
+          "target": {
+            "type": "element",
+            "tagName": "ul",
+            "path": "/html[1]/body[1]/div[1]/div[2]/div[1]/div[3]/div[2]/div[1]/div[2]/ul[1]",
+            "codeLines": [
+              "<ul id=\"menu-abv-menu\" class=\"fusion-menu\">",
+              "  <li id=\"mobile-menu-item-2443\" class=\"fusion-mobile-nav-item\" style=\"\">",
+              "    <a href=\"https://greinersclothing.com/home-sp16/\">",
+              "      HOME",
+              "    </a>",
+              "  </li>",
+              "  <li id=\"mobile-menu-item-3912\" class=\"fusion-mobile-nav-item\" style=\"\">",
+              "    <a href=\"https://greinersclothing.com/about-us/\">",
+              "      ABOUT US",
+              "    </a>",
+              "  </li>",
+              "  <li id=\"mobile-menu-item-3056\" class=\"fusion-mobile-nav-item fusion-mobile-current-nav-item\" styl...",
+              "    <a href=\"https://greinersclothing.com/collections-fw2018-2/\">",
+              "      COLLECTIONS",
+              "    </a>",
+              "  </li>",
+              "  <li id=\"mobile-menu-item-3605\" class=\"fusion-mobile-nav-item\" style=\"\">",
+              "    <a href=\"https://greinersclothing.com/covid19masks/\">",
+              "      COVID-19 MASKS",
+              "    </a>",
+              "  </li>",
+              "  <li id=\"mobile-menu-item-1969\" class=\"fusion-mobile-nav-item\" style=\"\">",
+              "    <a href=\"https://greinersclothing.com/made-to-measure/\">",
+              "      MADE TO MEASURE",
+              "    </a>",
+              "  </li>",
+              "  <li id=\"mobile-menu-item-1968\" class=\"fusion-mobile-nav-item\" style=\"\">",
+              "    <a href=\"https://greinersclothing.com/contact-2/\">",
+              "      CONTACT + LOCATIONS",
+              "    </a>",
+              "  </li>",
+              "</ul>"
+            ]
+          }
+        },
+        {
+          "index": 194,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r47",
+            "ruleSummary": "<meta name='viewport'> elements do not prevent zoom",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r47",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#resize-text",
+                "chapter": "1.4.4",
+                "title": "Resize text"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#reflow",
+                "chapter": "1.4.10",
+                "title": "Reflow"
+              }
+            ]
+          },
+          "target": {
+            "type": "element",
+            "tagName": "meta",
+            "path": "/html[1]/head[1]/meta[2]",
+            "codeLines": [
+              "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\">"
+            ]
+          }
+        },
+        {
+          "index": 199,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r53",
+            "ruleSummary": "Headings are structured",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r53",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h3",
+            "path": "/html[1]/body[1]/div[1]/div[4]/div[1]/div[1]/div[1]/h3[1]",
+            "codeLines": [
+              "<h3 data-fontsize=\"18\" data-lineheight=\"30\">",
+              "  OUR COLLECTIONS",
+              "</h3>"
+            ]
+          }
+        },
+        {
+          "index": 202,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r53",
+            "ruleSummary": "Headings are structured",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r53",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h4",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/h4[1]",
+            "codeLines": [
+              "<h4 style=\"text-align: center;\" data-fontsize=\"24\" data-lineheight=\"30\">",
+              "  AG Jeans | Ballin | Bills Khakis | Bosca | Byron | Carrot & Gibbs | Cristoforo fiore Collection |...",
+              "</h4>"
+            ]
+          }
+        },
+        {
+          "index": 221,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/div[1]/div[3]/div[2]/div[1]/div[1]/ul[1]/li[1]/a[1]/text()[1]",
+            "codeLines": [
+              "HOME"
+            ]
+          }
+        },
+        {
+          "index": 222,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/div[1]/div[3]/div[2]/div[1]/div[1]/ul[1]/li[2]/a[1]/text()[1]",
+            "codeLines": [
+              "ABOUT US"
+            ]
+          }
+        },
+        {
+          "index": 223,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/div[1]/div[3]/div[2]/div[1]/div[1]/ul[1]/li[3]/a[1]/text()[1]",
+            "codeLines": [
+              "COLLECTIONS"
+            ]
+          }
+        },
+        {
+          "index": 224,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/div[1]/div[3]/div[2]/div[1]/div[1]/ul[1]/li[4]/a[1]/text()[1]",
+            "codeLines": [
+              "COVID-19 MASKS"
+            ]
+          }
+        },
+        {
+          "index": 225,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/div[1]/div[3]/div[2]/div[1]/div[1]/ul[1]/li[5]/a[1]/text()[1]",
+            "codeLines": [
+              "MADE TO MEASURE"
+            ]
+          }
+        },
+        {
+          "index": 226,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/div[1]/div[3]/div[2]/div[1]/div[1]/ul[1]/li[6]/a[1]/text()[1]",
+            "codeLines": [
+              "CONTACT + LOCATIONS"
+            ]
+          }
+        },
+        {
+          "index": 227,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[4]/div[1]/div[1]/div[1]/h1[1]/text()[1]",
+            "codeLines": [
+              "Discover"
+            ]
+          }
+        },
+        {
+          "index": 228,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[4]/div[1]/div[1]/div[1]/h3[1]/text()[1]",
+            "codeLines": [
+              "OUR COLLECTIONS"
+            ]
+          }
+        },
+        {
+          "index": 229,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/h2[1]/text()[1]",
+            "codeLines": [
+              "Our Unique Style"
+            ]
+          }
+        },
+        {
+          "index": 230,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/p[2]/text()[1]",
+            "codeLines": [
+              "Greiner’s Fine Men’s Clothing continually strives to offer the finest collections of clothing prese..."
+            ]
+          }
+        },
+        {
+          "index": 231,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/h2[1]/span[1]/text()[1]",
+            "codeLines": [
+              "SOME OF THE COLLECTIONS WE FEATURE"
+            ]
+          }
+        },
+        {
+          "index": 232,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/h4[1]/text()[1]",
+            "codeLines": [
+              "AG Jeans | Ballin | Bills Khakis | Bosca | Byron | Carrot & Gibbs | Cristoforo fiore Collection | D..."
+            ]
+          }
+        },
+        {
+          "index": 233,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/h4[1]/a[1]/text()[1]",
+            "codeLines": [
+              "Robert Talbott"
+            ]
+          }
+        },
+        {
+          "index": 234,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/h4[1]/a[1]/text()[1]",
+            "codeLines": [
+              "David Donahue"
+            ]
+          }
+        },
+        {
+          "index": 235,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/h4[1]/a[1]/text()[1]",
+            "codeLines": [
+              "Peter Millar"
+            ]
+          }
+        },
+        {
+          "index": 236,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[4]/div[1]/div[1]/div[1]/div[1]/h4[1]/a[1]/text()[1]",
+            "codeLines": [
+              "Krewe"
+            ]
+          }
+        },
+        {
+          "index": 237,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/h4[1]/a[1]/text()[1]",
+            "codeLines": [
+              "Samuelsohn"
+            ]
+          }
+        },
+        {
+          "index": 238,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[6]/div[1]/div[1]/div[1]/div[1]/h4[1]/a[1]/text()[1]",
+            "codeLines": [
+              "Byron"
+            ]
+          }
+        },
+        {
+          "index": 239,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[7]/div[1]/div[1]/div[1]/div[1]/h4[1]/a[1]/text()[1]",
+            "codeLines": [
+              "Patrick Assaraf"
+            ]
+          }
+        },
+        {
+          "index": 240,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[8]/div[1]/div[1]/div[1]/div[1]/h4[1]/a[1]/text()[1]",
+            "codeLines": [
+              "Scarpe Di Bianco"
+            ]
+          }
+        },
+        {
+          "index": 241,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[9]/div[1]/div[1]/div[1]/div[1]/h4[1]/a[1]/text()[1]",
+            "codeLines": [
+              "Stenstroms"
+            ]
+          }
+        },
+        {
+          "index": 242,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[10]/div[1]/div[1]/div[1]/div[1]/h4[1]/a[1]/text()[1]",
+            "codeLines": [
+              "Ballin"
+            ]
+          }
+        },
+        {
+          "index": 243,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[11]/div[1]/div[1]/div[1]/div[1]/h4[1]/a[1]/text()[1]",
+            "codeLines": [
+              "Masons"
+            ]
+          }
+        },
+        {
+          "index": 244,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[12]/div[1]/div[1]/div[1]/div[1]/h4[1]/a[1]/text()[1]",
+            "codeLines": [
+              "Nettleton"
+            ]
+          }
+        },
+        {
+          "index": 245,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[13]/div[1]/div[1]/div[1]/div[1]/h4[1]/a[1]/text()[1]",
+            "codeLines": [
+              "MAC Jeans"
+            ]
+          }
+        },
+        {
+          "index": 246,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r57",
+            "ruleSummary": "Perceivable text content is included in a landmark",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r57",
+            "requirements": []
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[4]/div[1]/h2[1]/text()[1]",
+            "codeLines": [
+              "A Few of Our Preferred Vendors"
+            ]
+          }
+        },
+        {
+          "index": 304,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[4]/div[1]/div[1]/div[1]/h1[1]/text()[1]",
+            "codeLines": [
+              "Discover"
+            ]
+          }
+        },
+        {
+          "index": 305,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[4]/div[1]/div[1]/div[1]/h3[1]/text()[1]",
+            "codeLines": [
+              "OUR COLLECTIONS"
+            ]
+          }
+        },
+        {
+          "index": 306,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/h2[1]/text()[1]",
+            "codeLines": [
+              "Our Unique Style"
+            ]
+          }
+        },
+        {
+          "index": 307,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/p[2]/text()[1]",
+            "codeLines": [
+              "Greiner’s Fine Men’s Clothing continually strives to offer the finest collections of clothing prese..."
+            ]
+          }
+        },
+        {
+          "index": 309,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/h4[1]/text()[1]",
+            "codeLines": [
+              "AG Jeans | Ballin | Bills Khakis | Bosca | Byron | Carrot & Gibbs | Cristoforo fiore Collection | D..."
+            ]
+          }
+        },
+        {
+          "index": 312,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[6]/footer[1]/div[1]/div[1]/div[1]/div[1]/div[1]/p[1]/text()[1]",
+            "codeLines": [
+              "117 E Whiting St"
+            ]
+          }
+        },
+        {
+          "index": 313,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[6]/footer[2]/div[1]/div[1]/div[1]/div[1]/text()[1]",
+            "codeLines": [
+              "Copyright ©2020 Greiner's Fine Men's Clothing   |   All Rights Reserved  |"
+            ]
+          }
+        },
+        {
+          "index": 314,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[6]/footer[2]/div[1]/div[1]/div[1]/div[1]/text()[2]",
+            "codeLines": [
+              "|   Designed by"
+            ]
+          }
+        },
+        {
+          "index": 337,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[4]/div[1]/div[1]/div[1]/h1[1]/text()[1]",
+            "codeLines": [
+              "Discover"
+            ]
+          }
+        },
+        {
+          "index": 338,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[4]/div[1]/div[1]/div[1]/h3[1]/text()[1]",
+            "codeLines": [
+              "OUR COLLECTIONS"
+            ]
+          }
+        },
+        {
+          "index": 340,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/p[2]/text()[1]",
+            "codeLines": [
+              "Greiner’s Fine Men’s Clothing continually strives to offer the finest collections of clothing prese..."
+            ]
+          }
+        },
+        {
+          "index": 384,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r78",
+            "ruleSummary": "Headings of same level have text content between them",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r78",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h3",
+            "path": "/html[1]/body[1]/div[1]/div[4]/div[1]/div[1]/div[1]/h3[1]",
+            "codeLines": [
+              "<h3 data-fontsize=\"18\" data-lineheight=\"30\">",
+              "  OUR COLLECTIONS",
+              "</h3>"
+            ]
+          }
+        },
+        {
+          "index": 387,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r78",
+            "ruleSummary": "Headings of same level have text content between them",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r78",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h4",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/h4[1]",
+            "codeLines": [
+              "<h4 style=\"text-align: center;\" data-fontsize=\"24\" data-lineheight=\"30\">",
+              "  AG Jeans | Ballin | Bills Khakis | Bosca | Byron | Carrot & Gibbs | Cristoforo fiore Collection |...",
+              "</h4>"
+            ]
+          }
+        },
+        {
+          "index": 388,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r78",
+            "ruleSummary": "Headings of same level have text content between them",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r78",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h4",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+            "codeLines": [
+              "<h4 class=\"fusion-rollover-title\" data-fontsize=\"24\" data-lineheight=\"30\">",
+              "  <a href=\"https://greinersclothing.com/portfolio-items/robert-talbott-fw2016/\">",
+              "    Robert Talbott",
+              "  </a>",
+              "</h4>"
+            ]
+          }
+        },
+        {
+          "index": 389,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r78",
+            "ruleSummary": "Headings of same level have text content between them",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r78",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h4",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+            "codeLines": [
+              "<h4 class=\"fusion-rollover-title\" data-fontsize=\"24\" data-lineheight=\"30\">",
+              "  <a href=\"https://greinersclothing.com/portfolio-items/david-donahue-fw2016/\">",
+              "    David Donahue",
+              "  </a>",
+              "</h4>"
+            ]
+          }
+        },
+        {
+          "index": 390,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r78",
+            "ruleSummary": "Headings of same level have text content between them",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r78",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h4",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+            "codeLines": [
+              "<h4 class=\"fusion-rollover-title\" data-fontsize=\"24\" data-lineheight=\"30\">",
+              "  <a href=\"https://greinersclothing.com/portfolio-items/peter-millar-fw2016/\">",
+              "    Peter Millar",
+              "  </a>",
+              "</h4>"
+            ]
+          }
+        },
+        {
+          "index": 391,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r78",
+            "ruleSummary": "Headings of same level have text content between them",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r78",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h4",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[4]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+            "codeLines": [
+              "<h4 class=\"fusion-rollover-title\" data-fontsize=\"24\" data-lineheight=\"30\">",
+              "  <a href=\"https://greinersclothing.com/portfolio-items/krewe/\">",
+              "    Krewe",
+              "  </a>",
+              "</h4>"
+            ]
+          }
+        },
+        {
+          "index": 392,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r78",
+            "ruleSummary": "Headings of same level have text content between them",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r78",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h4",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+            "codeLines": [
+              "<h4 class=\"fusion-rollover-title\" data-fontsize=\"24\" data-lineheight=\"30\">",
+              "  <a href=\"https://greinersclothing.com/portfolio-items/samuelsohn/\">",
+              "    Samuelsohn",
+              "  </a>",
+              "</h4>"
+            ]
+          }
+        },
+        {
+          "index": 393,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r78",
+            "ruleSummary": "Headings of same level have text content between them",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r78",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h4",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[6]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+            "codeLines": [
+              "<h4 class=\"fusion-rollover-title\" data-fontsize=\"24\" data-lineheight=\"30\">",
+              "  <a href=\"https://greinersclothing.com/portfolio-items/byron-fw2016/\">",
+              "    Byron",
+              "  </a>",
+              "</h4>"
+            ]
+          }
+        },
+        {
+          "index": 394,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r78",
+            "ruleSummary": "Headings of same level have text content between them",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r78",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h4",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[7]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+            "codeLines": [
+              "<h4 class=\"fusion-rollover-title\" data-fontsize=\"24\" data-lineheight=\"30\">",
+              "  <a href=\"https://greinersclothing.com/portfolio-items/patrick-assaraf-fw2016/\">",
+              "    Patrick Assaraf",
+              "  </a>",
+              "</h4>"
+            ]
+          }
+        },
+        {
+          "index": 395,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r78",
+            "ruleSummary": "Headings of same level have text content between them",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r78",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h4",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[8]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+            "codeLines": [
+              "<h4 class=\"fusion-rollover-title\" data-fontsize=\"24\" data-lineheight=\"30\">",
+              "  <a href=\"https://greinersclothing.com/portfolio-items/scarpe-di-bianco-fw2016/\">",
+              "    Scarpe Di Bianco",
+              "  </a>",
+              "</h4>"
+            ]
+          }
+        },
+        {
+          "index": 396,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r78",
+            "ruleSummary": "Headings of same level have text content between them",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r78",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h4",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[9]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+            "codeLines": [
+              "<h4 class=\"fusion-rollover-title\" data-fontsize=\"24\" data-lineheight=\"30\">",
+              "  <a href=\"https://greinersclothing.com/portfolio-items/stenstroms-fw2016/\">",
+              "    Stenstroms",
+              "  </a>",
+              "</h4>"
+            ]
+          }
+        },
+        {
+          "index": 397,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r78",
+            "ruleSummary": "Headings of same level have text content between them",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r78",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h4",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[10]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+            "codeLines": [
+              "<h4 class=\"fusion-rollover-title\" data-fontsize=\"24\" data-lineheight=\"30\">",
+              "  <a href=\"https://greinersclothing.com/portfolio-items/ballin-fw2016/\">",
+              "    Ballin",
+              "  </a>",
+              "</h4>"
+            ]
+          }
+        },
+        {
+          "index": 398,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r78",
+            "ruleSummary": "Headings of same level have text content between them",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r78",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h4",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[11]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+            "codeLines": [
+              "<h4 class=\"fusion-rollover-title\" data-fontsize=\"24\" data-lineheight=\"30\">",
+              "  <a href=\"https://greinersclothing.com/portfolio-items/masons/\">",
+              "    Masons",
+              "  </a>",
+              "</h4>"
+            ]
+          }
+        },
+        {
+          "index": 399,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r78",
+            "ruleSummary": "Headings of same level have text content between them",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r78",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h4",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[12]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+            "codeLines": [
+              "<h4 class=\"fusion-rollover-title\" data-fontsize=\"24\" data-lineheight=\"30\">",
+              "  <a href=\"https://greinersclothing.com/portfolio-items/nettleton/\">",
+              "    Nettleton",
+              "  </a>",
+              "</h4>"
+            ]
+          }
+        },
+        {
+          "index": 400,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r78",
+            "ruleSummary": "Headings of same level have text content between them",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r78",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h4",
+            "path": "/html[1]/body[1]/div[1]/div[5]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[13]/div[1]/div[1]/div[1]/div[1]/h4[1]",
+            "codeLines": [
+              "<h4 class=\"fusion-rollover-title\" data-fontsize=\"24\" data-lineheight=\"30\">",
+              "  <a href=\"https://greinersclothing.com/portfolio-items/mac/\">",
+              "    MAC Jeans",
+              "  </a>",
+              "</h4>"
+            ]
+          }
+        },
+        {
+          "index": 438,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r87",
+            "ruleSummary": "First focusable element is link to main content",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r87",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/WAI/WCAG21/Techniques/general/G1",
+                "name": "G1",
+                "title": "Adding a link at the top of each page that goes directly to the main content area"
+              }
+            ]
+          },
+          "target": {
+            "type": "document",
+            "tagName": "",
+            "path": "/",
+            "codeLines": [
+              "#document",
+              "  <!doctype html>",
+              "...",
+              "  </html>"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "test",
+      "which": "wave",
+      "reportType": 4,
+      "what": "WAVE",
+      "url": "https://greinersclothing.com/collections-fw2018-2/",
+      "result": {
+        "status": {
+          "success": true,
+          "httpstatuscode": 200
+        },
+        "statistics": {
+          "pagetitle": "Greiner's Fine Men's Clothing - COLLECTIONS-FW2018",
+          "pageurl": "https://greinersclothing.com/collections-fw2018-2/",
+          "time": 5.52,
+          "creditsremaining": 558,
+          "allitemcount": 74,
+          "totalelements": 423,
+          "waveurl": "http://wave.webaim.org/report?url=https://greinersclothing.com/collections-fw2018-2/",
+          "domid": "21e761deda245e1bf57f949b4f0018b0"
+        },
+        "categories": {
+          "error": {
+            "description": "Errors",
+            "count": 2,
+            "items": {
+              "link_empty": {
+                "id": "link_empty",
+                "description": "Empty link",
+                "count": 2,
+                "selectors": [
+                  "HTML > HEAD:first-child + BODY > DIV#wrapper > DIV:first-child + DIV > DIV:first-child > DIV:first-child + DIV + DIV > DIV:first-child > DIV:first-child > DIV:first-child + DIV > A:first-child",
+                  "HTML > HEAD:first-child + BODY > DIV:first-child + IMG + SCRIPT + DIV + SCRIPT + SCRIPT + SCRIPT + SCRIPT + SCRIPT + SCRIPT + SCRIPT + SCRIPT + SCRIPT + SCRIPT + SCRIPT + SCRIPT + SCRIPT + DIV > A#toTop"
+                ]
+              }
+            }
+          },
+          "contrast": {
+            "description": "Contrast Errors",
+            "count": 3,
+            "items": {
+              "contrast": {
+                "id": "contrast",
+                "description": "Very low contrast",
+                "count": 3,
+                "selectors": [
+                  "HTML > HEAD:first-child + BODY > DIV#wrapper > DIV:first-child + DIV > DIV:first-child > DIV:first-child + DIV + DIV > DIV:first-child + DIV > DIV:first-child > DIV:first-child > UL#menu-abv-menu > LI#menu-item-3056 > A:first-child",
+                  "HTML > HEAD:first-child + BODY > DIV#wrapper > DIV:first-child + DIV + DIV + DIV > DIV:first-child > DIV:first-child > DIV:first-child > H1:first-child + H3",
+                  "HTML > HEAD:first-child + BODY > DIV#wrapper > DIV#main > DIV:first-child > DIV#content > DIV#post-3054 > SPAN:first-child + SPAN + SPAN + DIV > DIV:first-child > DIV:first-child > H2:first-child + P + P"
+                ],
+                "contrastdata": [
+                  [
+                    2.28,
+                    "#9e9e9e",
+                    "#faebd7",
+                    false
+                  ],
+                  [
+                    3.47,
+                    "#5785ba",
+                    "#00305b",
+                    false
+                  ],
+                  [
+                    3.99,
+                    "#747474",
+                    "#faebd7",
+                    false
+                  ]
+                ]
+              }
+            }
+          },
+          "alert": {
+            "description": "Alerts",
+            "count": 3,
+            "items": {
+              "heading_skipped": {
+                "id": "heading_skipped",
+                "description": "Skipped heading level",
+                "count": 2,
+                "selectors": [
+                  "HTML > HEAD:first-child + BODY > DIV#wrapper > DIV:first-child + DIV + DIV + DIV > DIV:first-child > DIV:first-child > DIV:first-child > H1:first-child + H3",
+                  "HTML > HEAD:first-child + BODY > DIV#wrapper > DIV#main > DIV:first-child > DIV#content > DIV#post-3054 > SPAN:first-child + SPAN + SPAN + DIV > DIV:first-child + DIV > DIV:first-child > H2:first-child + P + H4"
+                ]
+              },
+              "link_redundant": {
+                "id": "link_redundant",
+                "description": "Redundant link",
+                "count": 1,
+                "selectors": [
+                  "HTML > HEAD:first-child + BODY > DIV#wrapper > DIV#main > DIV:first-child > DIV#content > DIV#post-3054 > SPAN:first-child + SPAN + SPAN + DIV > DIV:first-child + DIV + DIV > STYLE:first-child + DIV > DIV:first-child > STYLE:first-child + DIV > DIV:first-child > DIV:first-child > SPAN:first-child + SPAN > SPAN:first-child > A:first-child"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "score",
+      "which": "asp09",
+      "what": "5 packages and 16 custom tests, with empirical duplication discounts",
+      "result": {
+        "scoreProc": "asp",
+        "version": "9",
+        "duplications": {
+          "aatt": {
+            "e:F77": 1,
+            "e:H36": 4,
+            "e:H37": 2,
+            "e:H57": 3,
+            "e:H58": 2,
+            "w:G141": 3,
+            "w:H98": 1,
+            "e:ARIA6+H53": 1,
+            "e:H24": 2,
+            "e:G1+G123+G124": 1,
+            "w:G90": 1,
+            "w:H44": 1
+          },
+          "alfa": {
+            "r3": 2,
+            "r28": 4,
+            "r2": 2,
+            "r4": 3,
+            "r7": 2,
+            "r53": 3,
+            "r10": 1,
+            "r11": 1,
+            "r12": 2,
+            "r20": 1,
+            "r42": 1,
+            "r43": 1,
+            "r47": 1,
+            "r5": 2,
+            "r68": 1,
+            "r93": 1,
+            "r13": 1
+          },
+          "axe": {
+            "input-image-alt": 4,
+            "html-has-lang": 3,
+            "valid-lang": 2,
+            "heading-order": 3,
+            "link-name": 2,
+            "aria-command-name": 2,
+            "dlitem": 1,
+            "image-alt": 2,
+            "duplicate-id": 1,
+            "aria-required-parent": 1,
+            "svg-img-alt": 1,
+            "meta-viewport": 1,
+            "html-lang-valid": 2,
+            "aria-required-children": 1,
+            "avoid-inline-spacing": 1,
+            "area-alt": 2,
+            "aria-allowed-role": 1,
+            "aria-required-attr": 1,
+            "aria-valid-attr": 1,
+            "autocomplete-valid": 1,
+            "color-contrast": 1,
+            "empty-heading": 2,
+            "frame-title": 1,
+            "image-redundant-alt": 1,
+            "landmark-complementary-is-top-level": 2,
+            "landmark-no-duplicate-banner": 1,
+            "landmark-no-duplicate-main": 2,
+            "document-title": 1,
+            "object-alt": 1,
+            "page-has-heading-one": 1,
+            "select-name": 1
+          },
+          "ibm": {
+            "v:WCAG20_Object_HasText": 1,
+            "v:WCAG20_Area_HasAlt": 2,
+            "v:WCAG20_Input_ExplicitLabelImage": 4,
+            "v:WCAG20_Frame_HasTitle": 2,
+            "v:WCAG20_Elem_Lang_Valid": 2,
+            "v:HAAC_Img_UsemapAlt": 1,
+            "v:aria_semantics_role": 1,
+            "v:Rpt_Aria_RequiredProperties": 1,
+            "v:Rpt_Aria_ValidProperty": 1,
+            "v:WCAG21_Input_Autocomplete": 1,
+            "v:IBMA_Color_Contrast_WCAG2AA": 2,
+            "v:RPT_Header_HasContent": 2,
+            "v:WCAG20_Img_HasAlt": 2,
+            "v:WCAG20_Img_LinkTextNotRedundant": 1,
+            "v:Rpt_Aria_ComplementaryRequiredLabel_Implicit": 1,
+            "v:Rpt_Aria_MultipleComplementaryLandmarks_Implicit": 1,
+            "v:Rpt_Aria_MultipleBannerLandmarks_Implicit": 1,
+            "r:Rpt_Aria_MultipleMainsVisibleLabel_Implicit": 1,
+            "v:Rpt_Aria_MultipleMainsRequireLabel_Implicit_2": 1,
+            "v:WCAG20_A_HasText": 1,
+            "v:Rpt_Aria_ValidIdRef": 1,
+            "v:WCAG20_Elem_UniqueAccessKey": 1,
+            "v:WCAG20_Input_RadioChkInFieldSet": 1
+          },
+          "wave": {
+            "a:link_internal_broken": 1,
+            "e:alt_area_missing": 3,
+            "e:alt_input_missing": 4,
+            "e:alt_missing": 2,
+            "e:language_missing": 3,
+            "a:heading_skipped": 3,
+            "a:event_handler": 1,
+            "a:label_orphaned": 1,
+            "e:title_invalid": 1,
+            "e:heading_empty": 2,
+            "a:plugin": 1,
+            "a:h1_missing": 1,
+            "a:select_missing_label": 1,
+            "c:contrast": 1,
+            "e:aria_reference_broken": 1,
+            "a:accesskey": 1,
+            "a:fieldset_missing": 1
+          }
+        },
+        "rules": {
+          "aatt": "multiply warning by 2*, error by 4* (*discounted); sum",
+          "alfa": "multiply cantTell by 2*, failed by 4* (*discounted); sum",
+          "axe": "multiply minor by 2*, moderate by 3*, serious by 4*, critical by 5* (*discounted); sum",
+          "bulk": "subtract 250 from visible elements; make 0 if negative; raise to 0.9th power; multiply by 0.15",
+          "embAc": "multiply link- or button-contained links, buttons, inputs, and selects by 3 (discounted)",
+          "focAll": "multiply discrepancy between focusable and focused element counts by 3",
+          "focInd": "multiply indicatorless-when-focused elements by 5",
+          "focOp": "multiply nonfocusable operable elements by 4, nonoperable focusable by 1; sum",
+          "hover": "multiply elements changing page on hover by 4, made visible by 2, with directly changed opacity by 0.1, with indirectly changed opacity by 0.2, unhoverable by 2; sum",
+          "ibm": "multiply violations by 4*, recommendations by 2* (*discounted); sum",
+          "labClash": "multiply conflictually labeled elements by 2, unlabeled elements by 2; sum",
+          "linkUl": "multiply nonunderlined inline links by 3",
+          "log": "multiply log items by respective logWeights; sum",
+          "menuNav": "multiply Home and End errors by 1 and other key-navigation errors by 3; sum",
+          "motion": "get PNG screenshot sizes (sss); get differing-pixel counts between adjacent PNG screenshots (pd); “sssd” = sss difference ÷ smaller sss - 1; multiply mean adjacent sssd by 5, maximum adjacent sssd by 2, maximum over-all ssd by 1; divide mean pd by 10,000, maximum pd by 25,000; multiply count of non-0 pd by 30; sum",
+          "radioSet": "multiply radio buttons not in fieldsets with legends and no other-name radio buttons by 2",
+          "role": "multiple role attributes with invalid or native-HTML-equivalent values by 2",
+          "styleDiff": "for each of element classes block a, inline a, button, h1, h2, h3, h4, h5, and h6, get diffStyles-distinct styles; multiply their count minus 1 by 2; multiply count of elements with non-plurality styles by 0.2; sum",
+          "tabNav": "multiply Home and End errors by 1 and other key-navigation errors by 3; sum",
+          "wave": "multiply alerts by 2*, contrast errors by 3*, errors by 4* (*discounted); sum",
+          "zIndex": "multiply non-auto z indexes by 3"
+        },
+        "diffStyles": [
+          "borderStyle",
+          "borderWidth",
+          "fontStyle",
+          "fontWeight",
+          "lineHeight",
+          "maxHeight",
+          "maxWidth",
+          "minHeight",
+          "minWidth",
+          "opacity",
+          "outlineOffset",
+          "outlineStyle",
+          "outlineWidth",
+          "textDecorationLine",
+          "textDecorationStyle",
+          "textDecorationThickness"
+        ],
+        "logWeights": {
+          "count": 0.5,
+          "size": 0.01,
+          "prohibited": 15,
+          "visitTimeout": 10,
+          "visitRejection": 10
+        },
+        "inferences": {},
+        "scores": {
+          "total": 1047,
+          "aatt": 115,
+          "alfa": 209,
+          "axe": 78,
+          "bulk": 0,
+          "embAc": 0,
+          "focAll": 42,
+          "focInd": 5,
+          "focOp": 0,
+          "hover": 43,
+          "ibm": 103,
+          "labClash": 0,
+          "linkUl": 6,
+          "log": 338,
+          "menuNav": 0,
+          "motion": 0,
+          "radioSet": 0,
+          "role": 0,
+          "styleDiff": 20,
+          "tabNav": 0,
+          "wave": 16,
+          "zIndex": 72
+        }
+      }
+    }
+  ],
+  "startTime": "2022-05-17T23:25:57",
+  "presses": 0,
+  "amountRead": 0,
+  "testTimes": [
+    [
+      "motion",
+      14
+    ],
+    [
+      "hover",
+      12
+    ],
+    [
+      "ibm",
+      10
+    ],
+    [
+      "alfa",
+      9
+    ],
+    [
+      "wave",
+      6
+    ],
+    [
+      "aatt",
+      5
+    ],
+    [
+      "axe",
+      1
+    ],
+    [
+      "focAll",
+      1
+    ],
+    [
+      "bulk",
+      0
+    ],
+    [
+      "embAc",
+      0
+    ],
+    [
+      "focInd",
+      0
+    ],
+    [
+      "focOp",
+      0
+    ],
+    [
+      "labClash",
+      0
+    ],
+    [
+      "linkUl",
+      0
+    ],
+    [
+      "menuNav",
+      0
+    ],
+    [
+      "radioSet",
+      0
+    ],
+    [
+      "role",
+      0
+    ],
+    [
+      "styleDiff",
+      0
+    ],
+    [
+      "tabNav",
+      0
+    ],
+    [
+      "zIndex",
+      0
+    ]
+  ],
+  "logCount": 94,
+  "logSize": 29164,
+  "prohibitedCount": 0,
+  "visitTimeoutCount": 0,
+  "visitRejectionCount": 0,
+  "endTime": "2022-05-17T23:27:22",
+  "elapsedSeconds": 85
+}

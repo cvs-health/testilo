@@ -1,0 +1,11 @@
+{
+  "id": "plxhunch",
+  "what": "The PanLex Hunch",
+  "hosts": [
+    {
+      "id": "plxhunch",
+      "which": "file:///Users/pool/Documents/Topics/repos/a11yTesting/testilo/hosts/plxHunch/index.html",
+      "what": "The PanLexHunch"
+    }
+  ]
+}

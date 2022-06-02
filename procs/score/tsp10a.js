@@ -34,7 +34,7 @@ exports.scorer = report => {
     role: '',
     styleDiff: '',
     tabNav: '',
-    tenon: 11,
+    tenon: '',
     wave: '',
     zIndex: ''
   };

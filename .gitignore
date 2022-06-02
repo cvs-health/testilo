@@ -10,10 +10,3 @@ node_modules/
 
 # Secrets
 .env
-.npmrc
-
-# Transactions
-batches/
-reports/
-scripts/
-hosts/

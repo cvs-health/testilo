@@ -1,0 +1,85 @@
+*:focus {
+  outline: solid 0.2rem #00f;
+  outline-offset: 0.2rem;
+}
+body {
+  margin: 2rem;
+  font-size: large;
+}
+.bold {
+  font-weight: 700;
+}
+button {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.5rem;
+  border: solid 0.2rem #03a;
+  border-radius: 1rem;
+  font-size: inherit;
+  font-weight: 700;
+  color: #fff;
+  background-color: #03a;
+}
+button:hover {
+  color: #000;
+  background-color: #9df;
+}
+caption {
+  margin: 1rem 0;
+  font-weight: 700;
+  font-style: italic;
+}
+code {
+  font-family: sans-serif;
+  color: #832703;
+}
+.error {
+  font-weight: 700;
+  color: #c00;
+}
+fieldset {
+  width: max-content;
+  margin-top: 1rem;
+}
+.firstCellRight td:nth-child(1) {
+  text-align: right;
+}
+form {
+  margin-top: 1rem;
+}
+h2 {
+  margin: 1rem auto 0.5rem auto;
+  color: #006666;
+}
+input {
+  margin: 0.5rem 0;
+  font-size: inherit;
+}
+legend {
+  font-weight: 700;
+}
+.secondCellRight td:nth-child(2) {
+  text-align: right;
+}
+section:not(.wide) {
+  max-width: 36rem;
+}
+table {
+  border-collapse: collapse;
+}
+table.allBorder th {
+  padding-bottom: 0;
+}
+table.allBorder th, table.allBorder td, tbody td {
+  border: 1px gray solid;
+}
+tbody th {
+  padding-right: 1rem;
+  text-align: right;
+}
+td, th {
+  padding: 0 0.5rem;
+}
+thead th {
+  padding-bottom: 1rem;
+}

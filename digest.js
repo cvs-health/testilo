@@ -8,7 +8,7 @@
 // Module to keep secrets.
 require('dotenv').config();
 // Module to read and write files.
-const fs = require('fs').promises;
+const fs = require('fs/promises');
 
 // ########## CONSTANTS
 

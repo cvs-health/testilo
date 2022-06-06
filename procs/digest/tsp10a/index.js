@@ -12,7 +12,12 @@ exports.makeQuery = (report, query) => {
   const joiner = '\n      ';
   const innerJoiner = '\n        ';
   // Create an HTML identification of the host report.
-  const {id, script, acts, host, score} = report;
+  const {script, host, score} = report;
+  const reportJSON = JSON.stringify(report, null, 2);
+  const reportJSONSafe = reportJSON
+  .replace(/</g, '&lt;')
+  .replace(/&/g, '&amp;');
+  query.report = reportJSONSafe;
   // Creates a packaged-test success message.
   const packageSucceedText = package =>
     `<p>The page <strong>passed</strong> the <code>${package}</code> test.</p>`;

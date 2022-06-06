@@ -1,5 +1,10 @@
 {
   "id": "35k1r-railpass",
+  "host": {
+    "id": "railpass",
+    "which": "https://www.railpass.com/",
+    "what": "railpass"
+  },
   "log": [
     {
       "event": "startTime",

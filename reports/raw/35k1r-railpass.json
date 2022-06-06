@@ -3,7 +3,11 @@
   "host": {
     "id": "railpass",
     "which": "https://www.railpass.com/",
+<<<<<<< HEAD
     "what": "railpass"
+=======
+    "what": "Railpass"
+>>>>>>> 7d7a731 (Began developing table proc)
   },
   "log": [
     {

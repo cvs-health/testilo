@@ -1,12 +1,15 @@
 /*
   ttp0.js
   Converts a set of scored reports to an HTML bar-graph table.
+<<<<<<< HEAD
   Arguments:
     0. Subdirectory of report directory.
     1. What columns to include:
       'aut': Autotest.
       'aa': Autotest and axe.
       'p3': Axe, IBM, and WAVE.
+=======
+>>>>>>> 7d7a731 (Began developing table proc)
 */
 
 // ########## IMPORTS

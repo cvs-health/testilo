@@ -304,6 +304,33 @@ exports.scorer = report => {
             scores.total += scores.tenon;
           }
         }
+        else if (which === 'wave') {
+          facts = test.result && test.result.categories;
+          if (facts) {
+            rules.wave
+              = 'multiply alerts by 2*, contrast errors by 3*, errors by 4* (*discounted); sum';
+            const weights = {
+              error: 4,
+              contrast: 3,
+              alert: 2
+            };
+            const waveScores = {
+              error: 0,
+              contrast: 0,
+              alert: 0
+            };
+            ['error', 'contrast', 'alert'].forEach(level => {
+              const {items} = facts[level];
+              waveScores[level] = Math.round(Object.keys(items).reduce((total, ruleID) => {
+                const rawScore = items[ruleID].count * weights[level];
+                const divisor = duplications.wave[`${level.slice(0, 1)}:${ruleID}`] + 1 || 1;
+                return total + rawScore / divisor;
+              }, 0));
+            });
+            scores.wave = waveScores.error + waveScores.contrast + waveScores.alert;
+            scores.total += scores.wave;
+          }
+        }
         else if (which === 'bulk') {
           facts = test.result && test.result.visibleElements;
           if (typeof facts === 'number') {

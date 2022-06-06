@@ -14,20 +14,27 @@ const fs = require('fs').promises;
 
 const reportDirRaw = process.env.REPORTDIR_RAW || 'reports/raw';
 const reportDirScored = process.env.REPORTDIR_SCORED || 'reports/scored';
-const reportID = process.argv[2];
+const reportIDStart = process.argv[2];
 const scoreProcID = process.argv[3];
 
 // ########## FUNCTIONS
 
 const score = async () => {
-  const reportJSON = await fs.readFile(`${__dirname}/${reportDirRaw}/${reportID}.json`, 'utf8');
-  const report = JSON.parse(reportJSON);
+  const reportDirRawAbs = `${__dirname}/${reportDirRaw}`;
+  const allReportFileNames = await fs.readdir(reportDirRawAbs);
+  const sourceReportFileNames = allReportFileNames
+  .filter(fileName => fileName.startsWith(reportIDStart) && fileName.endsWith('.json'));
   const {scorer} = require(`./procs/score/${scoreProcID}`);
-  scorer(report);
-  report.score.scoreProcID = scoreProcID;
-  const scoredReportJSON = JSON.stringify(report, null, 2);
-  await fs.writeFile(`${__dirname}/${reportDirScored}/${reportID}.json`, scoredReportJSON);
-  console.log(`Report ${reportID} scored and saved`);
+  for (const fileName of sourceReportFileNames) {
+    const reportJSON = await fs
+    .readFile(`${reportDirRawAbs}/${fileName}`, 'utf8');
+    const report = JSON.parse(reportJSON);
+    scorer(report);
+    report.score.scoreProcID = scoreProcID;
+    const scoredReportJSON = JSON.stringify(report, null, 2);
+    await fs.writeFile(`${__dirname}/${reportDirScored}/${fileName}`, scoredReportJSON);
+    console.log(`Report ${fileName.slice(0, -5)} scored and saved`);
+  };
 };
 
 // ########## OPERATION

@@ -3242,10 +3242,1110 @@
       "url": "https://www.railpass.com/",
       "result": {
         "content": {
-          "error": "ERROR: ibm test delivered no report summary"
+          "totals": {
+            "violation": 39,
+            "recommendation": 2,
+            "ignored": 0
+          },
+          "items": [
+            {
+              "ruleId": "WCAG20_Label_RefValid",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[5]/label[1]",
+                "aria": "/document[1]/banner[1]"
+              },
+              "message": "The value \"\" of the 'for' attribute is not the 'id' of a valid <input> element",
+              "bounds": {
+                "left": 8,
+                "top": 1136,
+                "height": 18,
+                "width": 0
+              },
+              "snippet": "<label for=\"\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Label_RefValid",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[4]/label[1]",
+                "aria": "/document[1]/banner[1]"
+              },
+              "message": "The value \"\" of the 'for' attribute is not the 'id' of a valid <input> element",
+              "bounds": {
+                "left": 8,
+                "top": 1067,
+                "height": 18,
+                "width": 109
+              },
+              "snippet": "<label for=\"\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Label_RefValid",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[3]/label[1]",
+                "aria": "/document[1]/banner[1]"
+              },
+              "message": "The value \"\" of the 'for' attribute is not the 'id' of a valid <input> element",
+              "bounds": {
+                "left": 8,
+                "top": 723,
+                "height": 18,
+                "width": 60
+              },
+              "snippet": "<label for=\"\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Label_RefValid",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[2]/label[1]",
+                "aria": "/document[1]/banner[1]"
+              },
+              "message": "The value \"\" of the 'for' attribute is not the 'id' of a valid <input> element",
+              "bounds": {
+                "left": 8,
+                "top": 683,
+                "height": 18,
+                "width": 65
+              },
+              "snippet": "<label for=\"\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Label_RefValid",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[1]/label[1]",
+                "aria": "/document[1]/banner[1]"
+              },
+              "message": "The value \"\" of the 'for' attribute is not the 'id' of a valid <input> element",
+              "bounds": {
+                "left": 8,
+                "top": 539,
+                "height": 18,
+                "width": 63
+              },
+              "snippet": "<label for=\"\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Input_ExplicitLabel",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[3]/div[3]/div[4]/div[1]/input[1]",
+                "aria": "/document[1]/banner[1]/textbox[5]"
+              },
+              "message": "Form control element <input> has no associated label",
+              "bounds": {
+                "left": 28,
+                "top": 1027,
+                "height": 22,
+                "width": 147
+              },
+              "snippet": "<input max=\"25\" min=\"0\" value=\"0\" class=\"form-control input-number__3 traveller-bind\" data-traveller=\"tt_child\" name=\"quant[1]\" type=\"text\" data-controller=\"number-child\" id=\"tt_child\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Input_ExplicitLabel",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[3]/div[3]/div[4]/div[1]/button[2]",
+                "aria": "/document[1]/banner[1]/button[8]"
+              },
+              "message": "Form control element <button> has no associated label",
+              "bounds": {
+                "left": 179,
+                "top": 1039,
+                "height": 6,
+                "width": 16
+              },
+              "snippet": "<button data-field=\"quant[1]\" disabled=\"disabled\" data-type=\"plus\" class=\"btn-number__3\" type=\"button\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Input_ExplicitLabel",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[3]/div[3]/div[4]/div[1]/button[1]",
+                "aria": "/document[1]/banner[1]/button[7]"
+              },
+              "message": "Form control element <button> has no associated label",
+              "bounds": {
+                "left": 8,
+                "top": 1039,
+                "height": 6,
+                "width": 16
+              },
+              "snippet": "<button data-field=\"quant[1]\" data-type=\"minus\" disabled=\"disabled\" class=\"btn-number__3\" type=\"button\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Input_ExplicitLabel",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[3]/div[3]/div[3]/div[1]/input[1]",
+                "aria": "/document[1]/banner[1]/textbox[4]"
+              },
+              "message": "Form control element <input> has no associated label",
+              "bounds": {
+                "left": 28,
+                "top": 955,
+                "height": 22,
+                "width": 147
+              },
+              "snippet": "<input max=\"25\" min=\"0\" value=\"0\" class=\"form-control input-number__3 traveller-bind\" data-traveller=\"tt_youth\" name=\"quant[1]\" type=\"text\" data-controller=\"number-youth\" id=\"tt_youth\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Input_ExplicitLabel",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[3]/div[3]/div[3]/div[1]/button[2]",
+                "aria": "/document[1]/banner[1]/button[6]"
+              },
+              "message": "Form control element <button> has no associated label",
+              "bounds": {
+                "left": 179,
+                "top": 967,
+                "height": 6,
+                "width": 16
+              },
+              "snippet": "<button data-field=\"quant[1]\" data-type=\"plus\" class=\"btn-number__2\" type=\"button\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Input_ExplicitLabel",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[3]/div[3]/div[3]/div[1]/button[1]",
+                "aria": "/document[1]/banner[1]/button[5]"
+              },
+              "message": "Form control element <button> has no associated label",
+              "bounds": {
+                "left": 8,
+                "top": 967,
+                "height": 6,
+                "width": 16
+              },
+              "snippet": "<button data-field=\"quant[1]\" data-type=\"minus\" disabled=\"disabled\" class=\"btn-number__2\" type=\"button\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Input_ExplicitLabel",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[3]/div[3]/div[2]/div[1]/input[1]",
+                "aria": "/document[1]/banner[1]/textbox[3]"
+              },
+              "message": "Form control element <input> has no associated label",
+              "bounds": {
+                "left": 28,
+                "top": 883,
+                "height": 22,
+                "width": 147
+              },
+              "snippet": "<input max=\"25\" min=\"0\" value=\"0\" class=\"form-control input-number__1 traveller-bind\" data-traveller=\"tt_adult\" name=\"quant[1]\" type=\"text\" data-controller=\"number-adult\" id=\"tt_adult\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Input_ExplicitLabel",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[3]/div[3]/div[2]/div[1]/button[2]",
+                "aria": "/document[1]/banner[1]/button[4]"
+              },
+              "message": "Form control element <button> has no associated label",
+              "bounds": {
+                "left": 179,
+                "top": 895,
+                "height": 6,
+                "width": 16
+              },
+              "snippet": "<button data-field=\"quant[1]\" data-type=\"plus\" class=\"btn-number__1\" type=\"button\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Input_ExplicitLabel",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[3]/div[3]/div[2]/div[1]/button[1]",
+                "aria": "/document[1]/banner[1]/button[3]"
+              },
+              "message": "Form control element <button> has no associated label",
+              "bounds": {
+                "left": 8,
+                "top": 895,
+                "height": 6,
+                "width": 16
+              },
+              "snippet": "<button data-field=\"quant[1]\" data-type=\"minus\" disabled=\"disabled\" class=\"btn-number__1\" type=\"button\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Input_ExplicitLabel",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[3]/div[3]/div[1]/div[1]/input[1]",
+                "aria": "/document[1]/banner[1]/textbox[2]"
+              },
+              "message": "Form control element <input> has no associated label",
+              "bounds": {
+                "left": 28,
+                "top": 811,
+                "height": 22,
+                "width": 147
+              },
+              "snippet": "<input max=\"25\" min=\"0\" value=\"0\" class=\"form-control input-number__4 traveller-bind\" data-traveller=\"tt_senior\" name=\"quant[1]\" type=\"text\" data-controller=\"number-senior\" id=\"tt_senior\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Input_ExplicitLabel",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[3]/div[3]/div[1]/div[1]/button[2]",
+                "aria": "/document[1]/banner[1]/button[2]"
+              },
+              "message": "Form control element <button> has no associated label",
+              "bounds": {
+                "left": 179,
+                "top": 823,
+                "height": 6,
+                "width": 16
+              },
+              "snippet": "<button data-field=\"quant[1]\" data-type=\"plus\" class=\"btn-number__1\" type=\"button\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Input_ExplicitLabel",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[3]/div[3]/div[1]/div[1]/button[1]",
+                "aria": "/document[1]/banner[1]/button[1]"
+              },
+              "message": "Form control element <button> has no associated label",
+              "bounds": {
+                "left": 8,
+                "top": 823,
+                "height": 6,
+                "width": 16
+              },
+              "snippet": "<button data-field=\"quant[1]\" data-type=\"minus\" disabled=\"disabled\" class=\"btn-number__1\" type=\"button\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Input_ExplicitLabel",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[2]/div[1]/input[1]",
+                "aria": "/document[1]/banner[1]/textbox[1]"
+              },
+              "message": "Form control element <input> has no associated label",
+              "bounds": {
+                "left": 8,
+                "top": 702,
+                "height": 22,
+                "width": 147
+              },
+              "snippet": "<input value=\"Select Date\" name=\"daterange\" type=\"text\" id=\"daterange\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Img_HasAlt",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[1]/div[3]/ul[1]/li[1]/div[1]/img[1]",
+                "aria": "/document[1]/banner[1]/list[1]/listitem[1]/img[1]"
+              },
+              "message": "Image does not have an 'alt' attribute short text alternative",
+              "bounds": {
+                "left": 48,
+                "top": 608,
+                "height": 0,
+                "width": 0
+              },
+              "snippet": "<img src=\"/themes/railpass/img/countries-flags/europe.svg\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_A_HasText",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/nav[2]/a[1]",
+                "aria": "/document[1]/banner[1]/navigation[3]/link[1]"
+              },
+              "message": "Hyperlink has no link text, label or image with a text alternative",
+              "bounds": {
+                "left": 8,
+                "top": 361,
+                "height": 0,
+                "width": 0
+              },
+              "snippet": "<a class=\"menu-link\" href=\"#\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_A_HasText",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/footer[1]/div[1]/div[4]/ul[1]/li[5]/a[2]",
+                "aria": "/document[1]/contentinfo[1]/list[3]/listitem[5]/link[2]"
+              },
+              "message": "Hyperlink has no link text, label or image with a text alternative",
+              "bounds": {
+                "left": 48,
+                "top": 3310,
+                "height": 18,
+                "width": 0
+              },
+              "snippet": "<a href=\"https://www.facebook.com/pages/Railpasscom/68417556695\" target=\"blank\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_A_HasText",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/footer[1]/div[1]/div[4]/ul[1]/li[5]/a[1]",
+                "aria": "/document[1]/contentinfo[1]/list[3]/listitem[5]/link[1]"
+              },
+              "message": "Hyperlink has no link text, label or image with a text alternative",
+              "bounds": {
+                "left": 48,
+                "top": 3310,
+                "height": 18,
+                "width": 0
+              },
+              "snippet": "<a href=\"https://twitter.com/railpass\" target=\"blank\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_A_HasText",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[1]/div[1]/aside[1]/div[1]/div[1]/div[1]/div[1]/div[1]/ul[1]/li[2]/figure[1]/a[1]",
+                "aria": "/document[1]/main[1]/complementary[1]/list[1]/listitem[2]/figure[1]/link[1]"
+              },
+              "message": "Hyperlink has no link text, label or image with a text alternative",
+              "bounds": {
+                "left": 88,
+                "top": 1701,
+                "height": 18,
+                "width": 560
+              },
+              "snippet": "<a href=\"/rail-passes/eurail-passes/italy\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_A_HasText",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[1]/div[1]/aside[1]/div[1]/div[1]/div[1]/div[1]/div[1]/ul[1]/li[1]/figure[1]/a[1]",
+                "aria": "/document[1]/main[1]/complementary[1]/list[1]/listitem[1]/figure[1]/link[1]"
+              },
+              "message": "Hyperlink has no link text, label or image with a text alternative",
+              "bounds": {
+                "left": 88,
+                "top": 1441,
+                "height": 18,
+                "width": 560
+              },
+              "snippet": "<a href=\"/rail-passes/eurail-passes/global-pass\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "RPT_Label_UniqueFor",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[5]/label[1]",
+                "aria": "/document[1]/banner[1]"
+              },
+              "message": "Form control has more than one label",
+              "bounds": {
+                "left": 8,
+                "top": 1136,
+                "height": 18,
+                "width": 0
+              },
+              "snippet": "<label for=\"\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "RPT_Label_UniqueFor",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[4]/label[1]",
+                "aria": "/document[1]/banner[1]"
+              },
+              "message": "Form control has more than one label",
+              "bounds": {
+                "left": 8,
+                "top": 1067,
+                "height": 18,
+                "width": 109
+              },
+              "snippet": "<label for=\"\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "RPT_Label_UniqueFor",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[3]/label[1]",
+                "aria": "/document[1]/banner[1]"
+              },
+              "message": "Form control has more than one label",
+              "bounds": {
+                "left": 8,
+                "top": 723,
+                "height": 18,
+                "width": 60
+              },
+              "snippet": "<label for=\"\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "RPT_Label_UniqueFor",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[2]/label[1]",
+                "aria": "/document[1]/banner[1]"
+              },
+              "message": "Form control has more than one label",
+              "bounds": {
+                "left": 8,
+                "top": 683,
+                "height": 18,
+                "width": 65
+              },
+              "snippet": "<label for=\"\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[2]/div[1]/p[1]",
+                "aria": "/document[1]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 23,
+                "top": 564,
+                "height": 61,
+                "width": 800
+              },
+              "snippet": "<p class=\"ioc2__text\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/a[1]",
+                "aria": "/document[1]/link[1]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 8,
+                "top": 8,
+                "height": 18,
+                "width": 133
+              },
+              "snippet": "<a class=\"visually-hidden focusable\" href=\"#main-content\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_MultipleNavigationLandmarks_Implicit",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/nav[2]",
+                "aria": "/document[1]/banner[1]/navigation[3]"
+              },
+              "message": "Multiple elements with \"navigation\" role do not have unique labels",
+              "bounds": {
+                "left": 8,
+                "top": 361,
+                "height": 0,
+                "width": 784
+              },
+              "snippet": "<nav class=\"header__nav__mobile\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_MultipleNavigationLandmarks_Implicit",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/nav[1]",
+                "aria": "/document[1]/banner[1]/navigation[2]"
+              },
+              "message": "Multiple elements with \"navigation\" role do not have unique labels",
+              "bounds": {
+                "left": 8,
+                "top": 342,
+                "height": 19,
+                "width": 784
+              },
+              "snippet": "<nav class=\"header__nav\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_MultipleNavigationLandmarks_Implicit",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[1]/nav[1]",
+                "aria": "/document[1]/banner[1]/navigation[1]"
+              },
+              "message": "Multiple elements with \"navigation\" role do not have unique labels",
+              "bounds": {
+                "left": 8,
+                "top": 61,
+                "height": 93,
+                "width": 784
+              },
+              "snippet": "<nav class=\"nav--menu-reponsive\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_ComplementaryRequiredLabel_Implicit",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[1]/div[1]/aside[1]",
+                "aria": "/document[1]/main[1]/complementary[1]"
+              },
+              "message": "The element with \"complementary\" role does not have a label",
+              "bounds": {
+                "left": 8,
+                "top": 1176,
+                "height": 544,
+                "width": 784
+              },
+              "snippet": "<aside class=\"passes__container\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "landmark_name_unique",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/nav[2]",
+                "aria": "/document[1]/banner[1]/navigation[3]"
+              },
+              "message": "Multiple \"navigation\" landmarks with the same parent region are not distinguished from one another because they have the same \"\" label",
+              "bounds": {
+                "left": 8,
+                "top": 361,
+                "height": 0,
+                "width": 784
+              },
+              "snippet": "<nav class=\"header__nav__mobile\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "landmark_name_unique",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/nav[1]",
+                "aria": "/document[1]/banner[1]/navigation[2]"
+              },
+              "message": "Multiple \"navigation\" landmarks with the same parent region are not distinguished from one another because they have the same \"\" label",
+              "bounds": {
+                "left": 8,
+                "top": 342,
+                "height": 19,
+                "width": 784
+              },
+              "snippet": "<nav class=\"header__nav\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "landmark_name_unique",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[1]/nav[1]",
+                "aria": "/document[1]/banner[1]/navigation[1]"
+              },
+              "message": "Multiple \"navigation\" landmarks with the same parent region are not distinguished from one another because they have the same \"\" label",
+              "bounds": {
+                "left": 8,
+                "top": 61,
+                "height": 93,
+                "width": 784
+              },
+              "snippet": "<nav class=\"nav--menu-reponsive\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "HAAC_Figure_label",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[1]/div[1]/aside[1]/div[1]/div[1]/div[1]/div[1]/div[1]/ul[1]/li[2]/figure[1]",
+                "aria": "/document[1]/main[1]/complementary[1]/list[1]/listitem[2]/figure[1]"
+              },
+              "message": "The <figure> element does not have an associated label",
+              "bounds": {
+                "left": 88,
+                "top": 1475,
+                "height": 244,
+                "width": 664
+              },
+              "snippet": "<figure>",
+              "level": "violation"
+            },
+            {
+              "ruleId": "HAAC_Figure_label",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[1]/div[1]/aside[1]/div[1]/div[1]/div[1]/div[1]/div[1]/ul[1]/li[1]/figure[1]",
+                "aria": "/document[1]/main[1]/complementary[1]/list[1]/listitem[1]/figure[1]"
+              },
+              "message": "The <figure> element does not have an associated label",
+              "bounds": {
+                "left": 88,
+                "top": 1215,
+                "height": 244,
+                "width": 664
+              },
+              "snippet": "<figure>",
+              "level": "violation"
+            },
+            {
+              "ruleId": "element_attribute_deprecated",
+              "path": {
+                "dom": "/html[1]/head[1]/meta[10]",
+                "aria": "/document[1]"
+              },
+              "message": "The HTML attribute(s) \"http-equiv\" is deprecated for the <meta> element in HTML 5",
+              "bounds": {
+                "left": 0,
+                "top": 0,
+                "height": 0,
+                "width": 0
+              },
+              "snippet": "<meta content=\"IE=edge\" http-equiv=\"X-UA-Compatible\">",
+              "level": "recommendation"
+            },
+            {
+              "ruleId": "aria_role_redundant",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[2]/main[1]",
+                "aria": "/document[1]/main[1]"
+              },
+              "message": "The explicitly-assigned ARIA role \"main\" is redundant with the implicit role of the element <main>",
+              "bounds": {
+                "left": 8,
+                "top": 1176,
+                "height": 1746,
+                "width": 784
+              },
+              "snippet": "<main role=\"main\">",
+              "level": "recommendation"
+            }
+          ]
         },
         "url": {
-          "error": "ERROR: ibm test delivered no report summary"
+          "totals": {
+            "violation": 25,
+            "recommendation": 2,
+            "ignored": 0
+          },
+          "items": [
+            {
+              "ruleId": "WCAG20_Label_RefValid",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[5]/label[1]",
+                "aria": "/document[1]/banner[1]"
+              },
+              "message": "The value \"\" of the 'for' attribute is not the 'id' of a valid <input> element",
+              "bounds": {
+                "left": 36,
+                "top": 729,
+                "height": 28,
+                "width": 728
+              },
+              "snippet": "<label for=\"\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Label_RefValid",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[4]/label[1]",
+                "aria": "/document[1]/banner[1]"
+              },
+              "message": "The value \"\" of the 'for' attribute is not the 'id' of a valid <input> element",
+              "bounds": {
+                "left": 36,
+                "top": 656,
+                "height": 28,
+                "width": 728
+              },
+              "snippet": "<label for=\"\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Label_RefValid",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[3]/label[1]",
+                "aria": "/document[1]/banner[1]"
+              },
+              "message": "The value \"\" of the 'for' attribute is not the 'id' of a valid <input> element",
+              "bounds": {
+                "left": 36,
+                "top": 582,
+                "height": 28,
+                "width": 728
+              },
+              "snippet": "<label for=\"\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Label_RefValid",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[2]/label[1]",
+                "aria": "/document[1]/banner[1]"
+              },
+              "message": "The value \"\" of the 'for' attribute is not the 'id' of a valid <input> element",
+              "bounds": {
+                "left": 36,
+                "top": 509,
+                "height": 28,
+                "width": 728
+              },
+              "snippet": "<label for=\"\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Label_RefValid",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[1]/label[1]",
+                "aria": "/document[1]/banner[1]"
+              },
+              "message": "The value \"\" of the 'for' attribute is not the 'id' of a valid <input> element",
+              "bounds": {
+                "left": 36,
+                "top": 435,
+                "height": 28,
+                "width": 728
+              },
+              "snippet": "<label for=\"\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_Input_ExplicitLabel",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[2]/div[1]/input[1]",
+                "aria": "/document[1]/banner[1]/textbox[1]"
+              },
+              "message": "Form control element <input> has no associated label",
+              "bounds": {
+                "left": 45,
+                "top": 546,
+                "height": 23,
+                "width": 171
+              },
+              "snippet": "<input value=\"Select Date\" name=\"daterange\" type=\"text\" id=\"daterange\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "WCAG20_A_HasText",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[1]/div[1]/aside[1]/div[1]/div[1]/div[1]/div[1]/div[1]/ul[1]/li[1]/figure[1]/a[1]",
+                "aria": "/document[1]/main[1]/complementary[1]/list[1]/listitem[1]/figure[1]/link[1]"
+              },
+              "message": "Hyperlink has no link text, label or image with a text alternative",
+              "bounds": {
+                "left": 18,
+                "top": 940,
+                "height": 105,
+                "width": 245
+              },
+              "snippet": "<a href=\"/rail-passes/eurail-passes/global-pass\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "RPT_Label_UniqueFor",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[5]/label[1]",
+                "aria": "/document[1]/banner[1]"
+              },
+              "message": "Form control has more than one label",
+              "bounds": {
+                "left": 36,
+                "top": 729,
+                "height": 28,
+                "width": 728
+              },
+              "snippet": "<label for=\"\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "RPT_Label_UniqueFor",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[4]/label[1]",
+                "aria": "/document[1]/banner[1]"
+              },
+              "message": "Form control has more than one label",
+              "bounds": {
+                "left": 36,
+                "top": 656,
+                "height": 28,
+                "width": 728
+              },
+              "snippet": "<label for=\"\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "RPT_Label_UniqueFor",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[3]/label[1]",
+                "aria": "/document[1]/banner[1]"
+              },
+              "message": "Form control has more than one label",
+              "bounds": {
+                "left": 36,
+                "top": 582,
+                "height": 28,
+                "width": 728
+              },
+              "snippet": "<label for=\"\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "RPT_Label_UniqueFor",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[2]/label[1]",
+                "aria": "/document[1]/banner[1]"
+              },
+              "message": "Form control has more than one label",
+              "bounds": {
+                "left": 36,
+                "top": 509,
+                "height": 28,
+                "width": 728
+              },
+              "snippet": "<label for=\"\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/div[4]/div[1]/p[1]",
+                "aria": "/document[1]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 15,
+                "top": 471,
+                "height": 115,
+                "width": 770
+              },
+              "snippet": "<p class=\"ioc2__text\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_OrphanedContent_Native_Host_Sematics",
+              "path": {
+                "dom": "/html[1]/body[1]/a[1]",
+                "aria": "/document[1]/link[1]"
+              },
+              "message": "Content is not within a landmark element",
+              "bounds": {
+                "left": 0,
+                "top": 0,
+                "height": 1,
+                "width": 1
+              },
+              "snippet": "<a class=\"visually-hidden focusable\" href=\"#main-content\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_MultipleNavigationLandmarks_Implicit",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/nav[2]",
+                "aria": "/document[1]/banner[1]/navigation[3]"
+              },
+              "message": "Multiple elements with \"navigation\" role do not have unique labels",
+              "bounds": {
+                "left": 279,
+                "top": 58,
+                "height": 48,
+                "width": 494
+              },
+              "snippet": "<nav class=\"header__nav__mobile\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_MultipleNavigationLandmarks_Implicit",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[1]/nav[1]",
+                "aria": "/document[1]/banner[1]/navigation[1]"
+              },
+              "message": "Multiple elements with \"navigation\" role do not have unique labels",
+              "bounds": {
+                "left": 836,
+                "top": 77,
+                "height": 355,
+                "width": 248
+              },
+              "snippet": "<nav class=\"nav--menu-reponsive\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "Rpt_Aria_ComplementaryRequiredLabel_Implicit",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[1]/div[1]/aside[1]",
+                "aria": "/document[1]/main[1]/complementary[1]"
+              },
+              "message": "The element with \"complementary\" role does not have a label",
+              "bounds": {
+                "left": 18,
+                "top": 882,
+                "height": 199,
+                "width": 764
+              },
+              "snippet": "<aside class=\"passes__container\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "landmark_name_unique",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/nav[2]",
+                "aria": "/document[1]/banner[1]/navigation[3]"
+              },
+              "message": "Multiple \"navigation\" landmarks with the same parent region are not distinguished from one another because they have the same \"\" label",
+              "bounds": {
+                "left": 279,
+                "top": 58,
+                "height": 48,
+                "width": 494
+              },
+              "snippet": "<nav class=\"header__nav__mobile\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "landmark_name_unique",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[1]/nav[1]",
+                "aria": "/document[1]/banner[1]/navigation[1]"
+              },
+              "message": "Multiple \"navigation\" landmarks with the same parent region are not distinguished from one another because they have the same \"\" label",
+              "bounds": {
+                "left": 836,
+                "top": 77,
+                "height": 355,
+                "width": 248
+              },
+              "snippet": "<nav class=\"nav--menu-reponsive\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "IBMA_Color_Contrast_WCAG2AA",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[5]/a[1]",
+                "aria": "/document[1]/banner[1]/link[2]"
+              },
+              "message": "Text contrast of 2.22 with its background is less than the WCAG AA minimum requirements for text of size 18px and weight of 700",
+              "bounds": {
+                "left": 36,
+                "top": 757,
+                "height": 42,
+                "width": 728
+              },
+              "snippet": "<a href=\"#\" class=\"button\" id=\"search-btn\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "IBMA_Color_Contrast_WCAG2AA",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[2]/h4[1]/b[1]",
+                "aria": "/document[1]/banner[1]/heading[2]"
+              },
+              "message": "Text contrast of 1.17 with its background is less than the WCAG AA minimum requirements for text of size 22px and weight of 700",
+              "bounds": {
+                "left": 197,
+                "top": 276,
+                "height": 57,
+                "width": 408
+              },
+              "snippet": "<b>",
+              "level": "violation"
+            },
+            {
+              "ruleId": "IBMA_Color_Contrast_WCAG2AA",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[2]/h1[1]/b[1]",
+                "aria": "/document[1]/banner[1]/heading[1]"
+              },
+              "message": "Text contrast of 1.17 with its background is less than the WCAG AA minimum requirements for text of size 40px and weight of 700",
+              "bounds": {
+                "left": 172,
+                "top": 230,
+                "height": 51,
+                "width": 457
+              },
+              "snippet": "<b>",
+              "level": "violation"
+            },
+            {
+              "ruleId": "IBMA_Color_Contrast_WCAG2AA",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/footer[1]/div[1]/div[1]/p[2]",
+                "aria": "/document[1]/contentinfo[1]"
+              },
+              "message": "Text contrast of 3.13 with its background is less than the WCAG AA minimum requirements for text of size 14px and weight of 400",
+              "bounds": {
+                "left": 18,
+                "top": 4090,
+                "height": 46,
+                "width": 174
+              },
+              "snippet": "<p>",
+              "level": "violation"
+            },
+            {
+              "ruleId": "IBMA_Color_Contrast_WCAG2AA",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[3]/div[1]/div[2]/a[1]",
+                "aria": "/document[1]/main[1]/link[7]"
+              },
+              "message": "Text contrast of 2.22 with its background is less than the WCAG AA minimum requirements for text of size 18px and weight of 700",
+              "bounds": {
+                "left": 18,
+                "top": 2877,
+                "height": 23,
+                "width": 95
+              },
+              "snippet": "<a href=\"/frequently-asked-questions\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "IBMA_Color_Contrast_WCAG2AA",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[3]/div[1]/div[1]/a[1]",
+                "aria": "/document[1]/main[1]/link[6]"
+              },
+              "message": "Text contrast of 2.22 with its background is less than the WCAG AA minimum requirements for text of size 18px and weight of 700",
+              "bounds": {
+                "left": 18,
+                "top": 2555,
+                "height": 23,
+                "width": 72
+              },
+              "snippet": "<a href=\"/about-railpass\">",
+              "level": "violation"
+            },
+            {
+              "ruleId": "HAAC_Figure_label",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[1]/div[1]/aside[1]/div[1]/div[1]/div[1]/div[1]/div[1]/ul[1]/li[1]/figure[1]",
+                "aria": "/document[1]/main[1]/complementary[1]/list[1]/listitem[1]/figure[1]"
+              },
+              "message": "The <figure> element does not have an associated label",
+              "bounds": {
+                "left": 18,
+                "top": 940,
+                "height": 105,
+                "width": 245
+              },
+              "snippet": "<figure>",
+              "level": "violation"
+            },
+            {
+              "ruleId": "element_attribute_deprecated",
+              "path": {
+                "dom": "/html[1]/head[1]/meta[10]",
+                "aria": "/document[1]"
+              },
+              "message": "The HTML attribute(s) \"http-equiv\" is deprecated for the <meta> element in HTML 5",
+              "bounds": {
+                "left": 0,
+                "top": 0,
+                "height": 0,
+                "width": 0
+              },
+              "snippet": "<meta content=\"IE=edge\" http-equiv=\"X-UA-Compatible\">",
+              "level": "recommendation"
+            },
+            {
+              "ruleId": "aria_role_redundant",
+              "path": {
+                "dom": "/html[1]/body[1]/div[1]/div[2]/main[1]",
+                "aria": "/document[1]/main[1]"
+              },
+              "message": "The explicitly-assigned ARIA role \"main\" is redundant with the implicit role of the element <main>",
+              "bounds": {
+                "left": 0,
+                "top": 882,
+                "height": 3019,
+                "width": 800
+              },
+              "snippet": "<main role=\"main\">",
+              "level": "recommendation"
+            }
+          ]
         }
       }
     },
@@ -3973,7 +5073,2026 @@
       "which": "alfa",
       "what": "alfa",
       "url": "https://www.railpass.com/",
-      "result": "NONE"
+      "result": [
+        {
+          "index": 15,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r11",
+            "ruleSummary": "Links have an accessible name",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r11",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#link-purpose-in-context",
+                "chapter": "2.4.4",
+                "title": "Link Purpose (In Context)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#link-purpose-link-only",
+                "chapter": "2.4.9",
+                "title": "Link Purpose (Link Only)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#name-role-value",
+                "chapter": "4.1.2",
+                "title": "Name, Role, Value"
+              },
+              {
+                "uri": "https://www.w3.org/WAI/WCAG21/Techniques/general/G91",
+                "name": "G91",
+                "title": "Providing link text that describes the purpose of a link"
+              }
+            ]
+          },
+          "target": {
+            "type": "element",
+            "tagName": "a",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[1]/div[1]/aside[1]/div[1]/div[1]/div[1]/div[1]/div[1]/ul[1]/li[1]/figure[1]/a[1]",
+            "codeLines": [
+              "<a href=\"/rail-passes/eurail-passes/global-pass\">",
+              "  <img src=\"/sites/default/files/2016-05/passes-1-2x.png\" width=\"560\" height=\"240\" alt=\"\" typeof=\"I...",
+              "</a>"
+            ]
+          }
+        },
+        {
+          "index": 16,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r11",
+            "ruleSummary": "Links have an accessible name",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r11",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#link-purpose-in-context",
+                "chapter": "2.4.4",
+                "title": "Link Purpose (In Context)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#link-purpose-link-only",
+                "chapter": "2.4.9",
+                "title": "Link Purpose (Link Only)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#name-role-value",
+                "chapter": "4.1.2",
+                "title": "Name, Role, Value"
+              },
+              {
+                "uri": "https://www.w3.org/WAI/WCAG21/Techniques/general/G91",
+                "name": "G91",
+                "title": "Providing link text that describes the purpose of a link"
+              }
+            ]
+          },
+          "target": {
+            "type": "element",
+            "tagName": "a",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[1]/div[1]/aside[1]/div[1]/div[1]/div[1]/div[1]/div[1]/ul[1]/li[2]/figure[1]/a[1]",
+            "codeLines": [
+              "<a href=\"/rail-passes/eurail-passes/italy\">",
+              "  <img src=\"/sites/default/files/2016-05/passes-4-2x.png\" width=\"560\" height=\"240\" alt=\"\" typeof=\"I...",
+              "</a>"
+            ]
+          }
+        },
+        {
+          "index": 44,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r11",
+            "ruleSummary": "Links have an accessible name",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r11",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#link-purpose-in-context",
+                "chapter": "2.4.4",
+                "title": "Link Purpose (In Context)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#link-purpose-link-only",
+                "chapter": "2.4.9",
+                "title": "Link Purpose (Link Only)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#name-role-value",
+                "chapter": "4.1.2",
+                "title": "Name, Role, Value"
+              },
+              {
+                "uri": "https://www.w3.org/WAI/WCAG21/Techniques/general/G91",
+                "name": "G91",
+                "title": "Providing link text that describes the purpose of a link"
+              }
+            ]
+          },
+          "target": {
+            "type": "element",
+            "tagName": "a",
+            "path": "/html[1]/body[1]/div[1]/footer[1]/div[1]/div[4]/ul[1]/li[5]/a[1]",
+            "codeLines": [
+              "<a target=\"blank\" href=\"https://twitter.com/railpass\">",
+              "  <span class=\"icon-twitter\"></span>",
+              "</a>"
+            ]
+          }
+        },
+        {
+          "index": 45,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r11",
+            "ruleSummary": "Links have an accessible name",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r11",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#link-purpose-in-context",
+                "chapter": "2.4.4",
+                "title": "Link Purpose (In Context)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#link-purpose-link-only",
+                "chapter": "2.4.9",
+                "title": "Link Purpose (Link Only)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#name-role-value",
+                "chapter": "4.1.2",
+                "title": "Name, Role, Value"
+              },
+              {
+                "uri": "https://www.w3.org/WAI/WCAG21/Techniques/general/G91",
+                "name": "G91",
+                "title": "Providing link text that describes the purpose of a link"
+              }
+            ]
+          },
+          "target": {
+            "type": "element",
+            "tagName": "a",
+            "path": "/html[1]/body[1]/div[1]/footer[1]/div[1]/div[4]/ul[1]/li[5]/a[2]",
+            "codeLines": [
+              "<a target=\"blank\" href=\"https://www.facebook.com/pages/Railpasscom/68417556695\">",
+              "  <span class=\"icon-facebook\"></span>",
+              "</a>"
+            ]
+          }
+        },
+        {
+          "index": 317,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r47",
+            "ruleSummary": "<meta name='viewport'> elements do not prevent zoom",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r47",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#resize-text",
+                "chapter": "1.4.4",
+                "title": "Resize text"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#reflow",
+                "chapter": "1.4.10",
+                "title": "Reflow"
+              }
+            ]
+          },
+          "target": {
+            "type": "element",
+            "tagName": "meta",
+            "path": "/html[1]/head[1]/meta[9]",
+            "codeLines": [
+              "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\">"
+            ]
+          }
+        },
+        {
+          "index": 322,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r53",
+            "ruleSummary": "Headings are structured",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r53",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h4",
+            "path": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[2]/h4[1]",
+            "codeLines": [
+              "<h4>",
+              "  <b>",
+              "    Easy Booking & Low Prices",
+              "    <br>",
+              "    25+ Year Authorized Seller of Eurail Passes",
+              "  </b>",
+              "</h4>"
+            ]
+          }
+        },
+        {
+          "index": 327,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r53",
+            "ruleSummary": "Headings are structured",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r53",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h4",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[1]/h4[1]",
+            "codeLines": [
+              "<h4>",
+              "  Starting from:",
+              "</h4>"
+            ]
+          }
+        },
+        {
+          "index": 329,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r53",
+            "ruleSummary": "Headings are structured",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r53",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h4",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[1]/h4[2]",
+            "codeLines": [
+              "<h4>",
+              "  per person/day *",
+              "  <small>",
+              "    * 2-Month Youth Pass",
+              "  </small>",
+              "</h4>"
+            ]
+          }
+        },
+        {
+          "index": 333,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r53",
+            "ruleSummary": "Headings are structured",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r53",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h5",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[4]/div[1]/h5[1]",
+            "codeLines": [
+              "<h5>",
+              "  From Portugal to Poland and beyond, get inspired with our insider information on",
+              "  <b>",
+              "    28 European",
+              "  </b>",
+              "  countries, including top festivals events,",
+              "  <b>",
+              "    “best time to go”",
+              "  </b>",
+              "  weather recommendations, and maps.",
+              "</h5>"
+            ]
+          }
+        },
+        {
+          "index": 451,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r65",
+            "ruleSummary": "Element in sequential focus order has visible focus",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r65",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#focus-visible",
+                "chapter": "2.4.7",
+                "title": "Focus Visible"
+              }
+            ]
+          },
+          "target": {
+            "type": "element",
+            "tagName": "input",
+            "path": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[2]/div[1]/input[1]",
+            "codeLines": [
+              "<input id=\"daterange\" type=\"text\" name=\"daterange\" value=\"Select Date\">"
+            ]
+          }
+        },
+        {
+          "index": 485,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[2]/h1[1]/b[1]/text()[1]",
+            "codeLines": [
+              "TRAVEL EUROPE BY TRAIN"
+            ]
+          }
+        },
+        {
+          "index": 486,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[2]/h4[1]/b[1]/text()[1]",
+            "codeLines": [
+              "Easy Booking & Low Prices"
+            ]
+          }
+        },
+        {
+          "index": 487,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[2]/h4[1]/b[1]/text()[2]",
+            "codeLines": [
+              "25+ Year Authorized Seller of Eurail Passes"
+            ]
+          }
+        },
+        {
+          "index": 489,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[1]/label[1]/text()[1]",
+            "codeLines": [
+              "Countries"
+            ]
+          }
+        },
+        {
+          "index": 491,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[2]/label[1]/text()[1]",
+            "codeLines": [
+              "Start Date"
+            ]
+          }
+        },
+        {
+          "index": 492,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[3]/label[1]/text()[1]",
+            "codeLines": [
+              "Travelers"
+            ]
+          }
+        },
+        {
+          "index": 494,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[4]/label[1]/text()[1]",
+            "codeLines": [
+              "Rail Travel Days"
+            ]
+          }
+        },
+        {
+          "index": 496,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[5]/label[1]/text()[1]",
+            "codeLines": [
+              "​"
+            ]
+          }
+        },
+        {
+          "index": 499,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/h1[1]/text()[1]",
+            "codeLines": [
+              "Eurail"
+            ]
+          }
+        },
+        {
+          "index": 500,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/h1[1]/b[1]/text()[1]",
+            "codeLines": [
+              "Global Pass"
+            ]
+          }
+        },
+        {
+          "index": 501,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[1]/h4[1]/text()[1]",
+            "codeLines": [
+              "Starting from:"
+            ]
+          }
+        },
+        {
+          "index": 502,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[1]/h2[1]/text()[1]",
+            "codeLines": [
+              "US$ 16"
+            ]
+          }
+        },
+        {
+          "index": 503,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[1]/h4[2]/text()[1]",
+            "codeLines": [
+              "per person/day *"
+            ]
+          }
+        },
+        {
+          "index": 504,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[1]/h4[2]/small[1]/text()[1]",
+            "codeLines": [
+              "* 2-Month Youth Pass"
+            ]
+          }
+        },
+        {
+          "index": 505,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[1]/p[1]/text()[1]",
+            "codeLines": [
+              "The best choice for a flexible & budget-friendly European train holiday."
+            ]
+          }
+        },
+        {
+          "index": 506,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[2]/p[1]/b[1]/text()[1]",
+            "codeLines": [
+              "Unlimited"
+            ]
+          }
+        },
+        {
+          "index": 507,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[2]/p[1]/text()[1]",
+            "codeLines": [
+              "train travel within"
+            ]
+          }
+        },
+        {
+          "index": 508,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[2]/p[1]/b[2]/text()[1]",
+            "codeLines": [
+              "&"
+            ]
+          }
+        },
+        {
+          "index": 509,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[2]/p[1]/text()[2]",
+            "codeLines": [
+              "between"
+            ]
+          }
+        },
+        {
+          "index": 510,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[2]/p[1]/b[3]/text()[1]",
+            "codeLines": [
+              "28 European Countries."
+            ]
+          }
+        },
+        {
+          "index": 520,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[4]/div[1]/h3[1]/b[1]/text()[1]",
+            "codeLines": [
+              "Explore Europe"
+            ]
+          }
+        },
+        {
+          "index": 521,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[4]/div[1]/h5[1]/text()[1]",
+            "codeLines": [
+              "From Portugal to Poland and beyond, get inspired with our insider information on"
+            ]
+          }
+        },
+        {
+          "index": 522,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[4]/div[1]/h5[1]/b[1]/text()[1]",
+            "codeLines": [
+              "28 European"
+            ]
+          }
+        },
+        {
+          "index": 523,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[4]/div[1]/h5[1]/text()[2]",
+            "codeLines": [
+              "countries, including top festivals events,"
+            ]
+          }
+        },
+        {
+          "index": 524,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[4]/div[1]/h5[1]/b[2]/text()[1]",
+            "codeLines": [
+              "“best time to go”"
+            ]
+          }
+        },
+        {
+          "index": 525,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[4]/div[1]/h5[1]/text()[3]",
+            "codeLines": [
+              "weather recommendations, and maps."
+            ]
+          }
+        },
+        {
+          "index": 527,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[5]/div[1]/div[1]/p[1]/text()[1]",
+            "codeLines": [
+              "Mike Fuller, President and CEO, RailPass.com"
+            ]
+          }
+        },
+        {
+          "index": 529,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r66",
+            "ruleSummary": "Text outside widget has enhanced contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r66",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/footer[1]/div[1]/div[1]/p[2]/text()[1]",
+            "codeLines": [
+              "Copyright ©2022 InterRail, LLC"
+            ]
+          }
+        },
+        {
+          "index": 543,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[2]/h1[1]/b[1]/text()[1]",
+            "codeLines": [
+              "TRAVEL EUROPE BY TRAIN"
+            ]
+          }
+        },
+        {
+          "index": 544,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[2]/h4[1]/b[1]/text()[1]",
+            "codeLines": [
+              "Easy Booking & Low Prices"
+            ]
+          }
+        },
+        {
+          "index": 545,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[2]/h4[1]/b[1]/text()[2]",
+            "codeLines": [
+              "25+ Year Authorized Seller of Eurail Passes"
+            ]
+          }
+        },
+        {
+          "index": 557,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/h1[1]/text()[1]",
+            "codeLines": [
+              "Eurail"
+            ]
+          }
+        },
+        {
+          "index": 558,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/h1[1]/b[1]/text()[1]",
+            "codeLines": [
+              "Global Pass"
+            ]
+          }
+        },
+        {
+          "index": 559,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[1]/h4[1]/text()[1]",
+            "codeLines": [
+              "Starting from:"
+            ]
+          }
+        },
+        {
+          "index": 560,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[1]/h2[1]/text()[1]",
+            "codeLines": [
+              "US$ 16"
+            ]
+          }
+        },
+        {
+          "index": 561,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[1]/h4[2]/text()[1]",
+            "codeLines": [
+              "per person/day *"
+            ]
+          }
+        },
+        {
+          "index": 562,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[1]/h4[2]/small[1]/text()[1]",
+            "codeLines": [
+              "* 2-Month Youth Pass"
+            ]
+          }
+        },
+        {
+          "index": 563,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[1]/p[1]/text()[1]",
+            "codeLines": [
+              "The best choice for a flexible & budget-friendly European train holiday."
+            ]
+          }
+        },
+        {
+          "index": 564,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[2]/p[1]/b[1]/text()[1]",
+            "codeLines": [
+              "Unlimited"
+            ]
+          }
+        },
+        {
+          "index": 565,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[2]/p[1]/text()[1]",
+            "codeLines": [
+              "train travel within"
+            ]
+          }
+        },
+        {
+          "index": 566,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[2]/p[1]/b[2]/text()[1]",
+            "codeLines": [
+              "&"
+            ]
+          }
+        },
+        {
+          "index": 567,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[2]/p[1]/text()[2]",
+            "codeLines": [
+              "between"
+            ]
+          }
+        },
+        {
+          "index": 568,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[2]/p[1]/b[3]/text()[1]",
+            "codeLines": [
+              "28 European Countries."
+            ]
+          }
+        },
+        {
+          "index": 578,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[4]/div[1]/h3[1]/b[1]/text()[1]",
+            "codeLines": [
+              "Explore Europe"
+            ]
+          }
+        },
+        {
+          "index": 579,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[4]/div[1]/h5[1]/text()[1]",
+            "codeLines": [
+              "From Portugal to Poland and beyond, get inspired with our insider information on"
+            ]
+          }
+        },
+        {
+          "index": 580,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[4]/div[1]/h5[1]/b[1]/text()[1]",
+            "codeLines": [
+              "28 European"
+            ]
+          }
+        },
+        {
+          "index": 581,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[4]/div[1]/h5[1]/text()[2]",
+            "codeLines": [
+              "countries, including top festivals events,"
+            ]
+          }
+        },
+        {
+          "index": 582,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[4]/div[1]/h5[1]/b[2]/text()[1]",
+            "codeLines": [
+              "“best time to go”"
+            ]
+          }
+        },
+        {
+          "index": 583,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[4]/div[1]/h5[1]/text()[3]",
+            "codeLines": [
+              "weather recommendations, and maps."
+            ]
+          }
+        },
+        {
+          "index": 587,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r69",
+            "ruleSummary": "Text outside widget has minimum contrast",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r69",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-minimum",
+                "chapter": "1.4.3",
+                "title": "Contrast (Minimum)"
+              },
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+                "chapter": "1.4.6",
+                "title": "Contrast (Enhanced)"
+              }
+            ]
+          },
+          "target": {
+            "type": "text",
+            "tagName": "",
+            "path": "/html[1]/body[1]/div[1]/footer[1]/div[1]/div[1]/p[2]/text()[1]",
+            "codeLines": [
+              "Copyright ©2022 InterRail, LLC"
+            ]
+          }
+        },
+        {
+          "index": 609,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r73",
+            "ruleSummary": "Paragraphs of text have sufficient line height",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r73",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#visual-presentation",
+                "chapter": "1.4.8",
+                "title": "Visual Presentation"
+              }
+            ]
+          },
+          "target": {
+            "type": "element",
+            "tagName": "p",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[1]/p[1]",
+            "codeLines": [
+              "<p>",
+              "  The best choice for a flexible & budget-friendly European train holiday.",
+              "</p>"
+            ]
+          }
+        },
+        {
+          "index": 610,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r73",
+            "ruleSummary": "Paragraphs of text have sufficient line height",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r73",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#visual-presentation",
+                "chapter": "1.4.8",
+                "title": "Visual Presentation"
+              }
+            ]
+          },
+          "target": {
+            "type": "element",
+            "tagName": "p",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[2]/p[1]",
+            "codeLines": [
+              "<p>",
+              "  <b>",
+              "    Unlimited",
+              "  </b>",
+              "  train travel within",
+              "  <b>",
+              "    &",
+              "  </b>",
+              "  between",
+              "  <b>",
+              "    28 European Countries.",
+              "  </b>",
+              "</p>"
+            ]
+          }
+        },
+        {
+          "index": 611,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r73",
+            "ruleSummary": "Paragraphs of text have sufficient line height",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r73",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#visual-presentation",
+                "chapter": "1.4.8",
+                "title": "Visual Presentation"
+              }
+            ]
+          },
+          "target": {
+            "type": "element",
+            "tagName": "p",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[3]/div[1]/div[1]/ul[1]/li[1]/p[1]",
+            "codeLines": [
+              "<p>",
+              "  <b>",
+              "    462 Different Pass",
+              "    <br>",
+              "    Combinations",
+              "  </b>",
+              "</p>"
+            ]
+          }
+        },
+        {
+          "index": 612,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r73",
+            "ruleSummary": "Paragraphs of text have sufficient line height",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r73",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#visual-presentation",
+                "chapter": "1.4.8",
+                "title": "Visual Presentation"
+              }
+            ]
+          },
+          "target": {
+            "type": "element",
+            "tagName": "p",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[3]/div[1]/div[1]/ul[1]/li[2]/p[1]",
+            "codeLines": [
+              "<p>",
+              "  <b>",
+              "    Thousands",
+              "    <br>",
+              "    of Destinations",
+              "  </b>",
+              "</p>"
+            ]
+          }
+        },
+        {
+          "index": 613,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r73",
+            "ruleSummary": "Paragraphs of text have sufficient line height",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r73",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#visual-presentation",
+                "chapter": "1.4.8",
+                "title": "Visual Presentation"
+              }
+            ]
+          },
+          "target": {
+            "type": "element",
+            "tagName": "p",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[3]/div[1]/div[1]/ul[1]/li[3]/p[1]",
+            "codeLines": [
+              "<p>",
+              "  <b>",
+              "    Low Prices",
+              "  </b>",
+              "</p>"
+            ]
+          }
+        },
+        {
+          "index": 614,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r73",
+            "ruleSummary": "Paragraphs of text have sufficient line height",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r73",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#visual-presentation",
+                "chapter": "1.4.8",
+                "title": "Visual Presentation"
+              }
+            ]
+          },
+          "target": {
+            "type": "element",
+            "tagName": "p",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[3]/div[1]/div[1]/ul[1]/li[4]/p[1]",
+            "codeLines": [
+              "<p>",
+              "  <b>",
+              "    In Business",
+              "    <br>",
+              "    Since 1991",
+              "  </b>",
+              "</p>"
+            ]
+          }
+        },
+        {
+          "index": 617,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r73",
+            "ruleSummary": "Paragraphs of text have sufficient line height",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r73",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#visual-presentation",
+                "chapter": "1.4.8",
+                "title": "Visual Presentation"
+              }
+            ]
+          },
+          "target": {
+            "type": "element",
+            "tagName": "p",
+            "path": "/html[1]/body[1]/div[1]/footer[1]/div[1]/div[1]/p[2]",
+            "codeLines": [
+              "<p>",
+              "  Copyright ©2022 InterRail, LLC",
+              "</p>"
+            ]
+          }
+        },
+        {
+          "index": 689,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r78",
+            "ruleSummary": "Headings of same level have text content between them",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r78",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h4",
+            "path": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[2]/h4[1]",
+            "codeLines": [
+              "<h4>",
+              "  <b>",
+              "    Easy Booking & Low Prices",
+              "    <br>",
+              "    25+ Year Authorized Seller of Eurail Passes",
+              "  </b>",
+              "</h4>"
+            ]
+          }
+        },
+        {
+          "index": 691,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r78",
+            "ruleSummary": "Headings of same level have text content between them",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r78",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h4",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[1]/div[1]/aside[1]/h4[1]",
+            "codeLines": [
+              "<h4>",
+              "  <span class=\"icon-star\"></span>",
+              "  <b>",
+              "    Popular Passes",
+              "  </b>",
+              "</h4>"
+            ]
+          }
+        },
+        {
+          "index": 694,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r78",
+            "ruleSummary": "Headings of same level have text content between them",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r78",
+            "requirements": []
+          },
+          "target": {
+            "type": "element",
+            "tagName": "h4",
+            "path": "/html[1]/body[1]/div[1]/div[2]/main[1]/section[2]/div[1]/div[1]/div[1]/h4[1]",
+            "codeLines": [
+              "<h4>",
+              "  Starting from:",
+              "</h4>"
+            ]
+          }
+        },
+        {
+          "index": 703,
+          "verdict": "failed",
+          "rule": {
+            "ruleID": "r8",
+            "ruleSummary": "Form fields have an accessible name",
+            "scope": "component",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r8",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/TR/WCAG/#name-role-value",
+                "chapter": "4.1.2",
+                "title": "Name, Role, Value"
+              }
+            ]
+          },
+          "target": {
+            "type": "element",
+            "tagName": "input",
+            "path": "/html[1]/body[1]/div[1]/header[1]/div[3]/div[3]/div[1]/div[1]/div[2]/div[1]/input[1]",
+            "codeLines": [
+              "<input id=\"daterange\" type=\"text\" name=\"daterange\" value=\"Select Date\">"
+            ]
+          }
+        },
+        {
+          "index": 737,
+          "verdict": "cantTell",
+          "rule": {
+            "ruleID": "r87",
+            "ruleSummary": "First focusable element is link to main content",
+            "scope": "page",
+            "uri": "https://alfa.siteimprove.com/rules/sia-r87",
+            "requirements": [
+              {
+                "uri": "https://www.w3.org/WAI/WCAG21/Techniques/general/G1",
+                "name": "G1",
+                "title": "Adding a link at the top of each page that goes directly to the main content area"
+              }
+            ]
+          },
+          "target": {
+            "type": "document",
+            "tagName": "",
+            "path": "/",
+            "codeLines": [
+              "#document",
+              "  <!doctype html>",
+              "...",
+              "  </html>"
+            ]
+          }
+        }
+      ]
     },
     {
       "type": "test",

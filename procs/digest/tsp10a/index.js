@@ -146,8 +146,9 @@ exports.makeQuery = (report, query) => {
   if (scores.tenon) {
     const testAct = actOf('tenon');
     const tenonResult = testAct.result.data.resultSet;
-    const tenonItems = new Set(tenonResult.map(result => result.errorTitle));
-    const tenonFailures = Array.from(tenonItems).join(innerJoiner);
+    const tenonSet = new Set(tenonResult.map(result => result.errorTitle));
+    const tenonItems = Array.from(tenonSet).map(item => `<li>${item}</li>`);
+    const tenonFailures = tenonItems.join(innerJoiner);
     query.tenonResult = packageFailText(scores.tenon, 'tenon', tenonFailures);
   }
   else if (inferences.tenon) {

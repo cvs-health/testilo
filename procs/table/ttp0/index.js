@@ -20,7 +20,7 @@ const query = {};
 
 // Gets data on the hosts and their scores and adds query parameter.
 const getData = async () => {
-  const reportDirAbs = `${__dirname}/../../${reportDirScored}`;
+  const reportDirAbs = `${__dirname}/../../../${reportDirScored}`;
   const reportFileNamesAll = await fs.readdir(reportDirAbs);
   const reportFileNamesSource = reportFileNamesAll
   .filter(fileName => fileName.startsWith(reportIDStart) && fileName.endsWith('.json'));

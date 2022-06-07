@@ -19,12 +19,18 @@ const tableProcID = process.argv[3];
 
 // ########## FUNCTIONS
 
+// Replaces the placeholders in content with eponymous query parameters.
+const replaceHolders = (content, query) => content
+.replace(/__([a-zA-Z]+)__/g, (ph, qp) => query[qp]);
+// Creates and saves a web page containing a comparative table.
 const table = async () => {
   const tableDirAbs = `${__dirname}/${tableDir}`;
-  const {getTable} = require(`./procs/table/${tableProcID}`);
-  const table = await getTable();
-  await fs.writeFile(`${tableDirAbs}/${reportTimeStamp}.html`, table);
-  console.log(`Table for scores of ${reportTimeStamp} reports created and saved`);
+  const {getQuery} = require(`./procs/table/${tableProcID}/index`);
+  const query = await getQuery();
+  const pageRaw = await fs.readFile(`${__dirname}/procs/table/${tableProcID}/index.html`, 'utf8');
+  const page = replaceHolders(pageRaw, query);
+  await fs.writeFile(`${tableDirAbs}/${reportTimeStamp}.html`, page);
+  console.log(`Page comparing ${reportTimeStamp} reports created and saved`);
 };
 
 // ########## OPERATION

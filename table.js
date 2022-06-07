@@ -1,6 +1,7 @@
 /*
   table.js
   Testilo tabling script.
+  Usage example: node table 35k1r ttp0
 */
 
 // ########## IMPORTS
@@ -12,7 +13,7 @@ const fs = require('fs/promises');
 
 // ########## CONSTANTS
 
-const tableDir = process.env.TABLEDIR || 'reports/tabular';
+const tableDir = process.env.TABLEDIR || 'reports/comparative';
 const reportTimeStamp = process.argv[2];
 const tableProcID = process.argv[3];
 

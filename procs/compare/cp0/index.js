@@ -1,6 +1,6 @@
 /*
   ttp0.js
-  Converts a set of scored reports to an HTML bar-graph table.
+  Returns a query for an HTML page including a bar-graph table.
 */
 
 // ########## IMPORTS
@@ -65,5 +65,8 @@ exports.getQuery = async () => {
   const data = await getData();
   query.pageCount = data.pageCount;
   query.tableBody = await getTableBody(data.bodyData);
+  const date = new Date();
+  query.dateISO = date.toISOString().slice(0, 10);
+  query.dateSlash = query.dateISO.replace(/-/g, '/');
   return query;
 };

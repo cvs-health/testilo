@@ -1,6 +1,7 @@
 /*
   digest.js
   Testilo digesting script.
+  Usage example: node digest 35k1r-railpass dp10a
 */
 
 // ########## IMPORTS

@@ -3,11 +3,7 @@
   "host": {
     "id": "railpass",
     "which": "https://www.railpass.com/",
-<<<<<<< HEAD
-    "what": "railpass"
-=======
     "what": "Railpass"
->>>>>>> 7d7a731 (Began developing table proc)
   },
   "log": [
     {
@@ -20,7 +16,7 @@
     }
   ],
   "script": {
-    "id": "asp10",
+    "id": "tp10",
     "what": "AATT, Alfa, Axe, IBM, Tenon, WAVE, and 16 custom tests",
     "strict": true,
     "commands": [

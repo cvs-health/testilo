@@ -1,8 +1,9 @@
 /*
-  tsp10a
+  sp10a
   Testilo score proc 10a
-  Computes scores from script tsp10 and adds them to a report. Does not discount tenon. Tenon
-  discounting is planned future work.
+  Computes scores from Testaro script tp10 and adds them to a report. Does not discount tenon.
+  Tenon discounting is planned future work.
+  Usage example: node score 35k1r sp10a
 */
 exports.scorer = report => {
   // CONSTANTS

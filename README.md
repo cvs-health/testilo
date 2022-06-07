@@ -17,39 +17,45 @@ To score a report, Testilo needs to be told where to find the report, and also w
 
 Similarly, once a report has been scored, Testilo can digest it, provided that Testilo is told where to find the scored report and which _digest proc_ to use. Different digest procs could produce different human-oriented explanations of the same scored report, such as for different audiences.
 
-Testilo includes some score procs and digest procs. You can add others.
+Testilo includes some score procs, digest procs, and comparison procs. You can add others.
 
 ## Execution
 
 ### Scoring
 
-To score a Testaro report, execute the statement `node score abc xyz`, replacing (here and below) `abc` with the base of the name of the file containing the report and `xyz` with the base of the name of the score proc.
+To score Testaro reports, execute the statement `node score abc xyz`. Replace (here and below) `abc` with the base of the name of the file containing the report, or the prefix of the file name. Replace `xyz` with the base of the name of the score proc.
+
+If you replace `abc` with the entire name base, Testilo will score one report. If you replace `abc` with a prefix (such as `35k1r-`), Testilo will score all the reports whose names begin with that prefix.
 
 This procedure has some preconditions:
-- The score proc is compatible with the report.
-- The full name of the report file is `abc.json`.
-- The report file is located in the directory whose relative path (relative to the project directory of Testilo) is the value of the `REPORTDIR_RAW` environment variable.
-- Testilo can read and write in the `REPORTDIR_RAW` directory.
-- Testilo can write in the `REPORTDIR_SCORED` directory.
+- The score proc is compatible with the script that produced the report(s).
+- The filename extension is `.json`.
+- Testilo can find the report file(s) in the directory whose relative path (relative to the project directory of Testilo) is the value of the `REPORTDIR_RAW` environment variable.
+- Testilo can read in the `REPORTDIR_RAW` directory.
+- There is a `REPORTDIR_SCORED` environment variable, whose value is the relative path of a directory that Testilo can write to.
 - The `procs/score` directory contains a file named `xyz.js`.
 
-Thus, the script that Testaro ran in order to produce the report must be one that Testilo has a scoring algorithm (_score proc_) for. If so, Testilo can score the report.
-
-When Testilo scores a report, Testilo saves the scored report in the directory whose relative path is the value of the `REPORTDIR_SCORED`. The scored report file has the same name as the original.
+When Testilo scores a report, Testilo saves the scored report in the directory whose relative path is the value of the `REPORTDIR_SCORED`. The scored report file has the same name as the original. The scored report has the same content as the original, plus a new property named `score`.
 
 ### Digesting
 
-To make a scored Testaro report more useful for humans, Testilo can create a digest of the report. This is an HTML document (a web page) summarizing and explaining the findings.
+To make scored Testaro reports more useful for humans, Testilo can create digests of scored reports. A digest is an HTML document (a web page) summarizing and explaining the findings, with the scored report appended to it.
 
-To make Testilo digest a report, execute the statement `node digest abc xyz`, replacing `abc` (here and below) with the base of the name of the file containing the scored report and `xyz` with the base of the name of the digest proc.
+To make Testilo digest reports, execute the statement `node digest abc xyz`, replacing `abc` (here and below) with a whole base name or prefix, as with scoring, and `xyz` with the base of the name of the digest proc.
 
 This procedure has some preconditions:
-- The digest proc is compatible with the report.
-- The full name of the report file is `abc.json`.
-- The report file is located in the directory whose relative path (relative to the project directory of Testilo) is the value of the `REPORTDIR_SCORED` environment variable.
-- Testilo can read and write in the `REPORTDIR_SCORED` directory.
-- Testilo can write in the `REPORTDIR_DIGESTED` directory.
+- The digest proc is compatible with the score proc that scored the report.
+- The filename extension is `.json`.
+- Testile can find the report file(s) in the directory whose relative path (relative to the project directory of Testilo) is the value of the `REPORTDIR_SCORED` environment variable.
+- Testilo can read in the `REPORTDIR_SCORED` directory.
+- There is a `REPORTDIR_DIGESTED` environment variable, whose value is the relative path of a directory that Testilo can write to.
 - The `procs/digest` directory contains a subdirectory named `xyz`, which in turn contains files named `index.html` and `index.js`.
 - You have copied the `reports/digested/style.css` file into the `REPORTDIR_DIGESTED` directory.
 
-When Testilo digests a report, Testilo saves the digest in the directory whose relative path is the value of the `REPORTDIR_DIGESTED`. The digest has the name `abc.html`.
+When Testilo digests a report, Testilo saves the digest in the directory whose relative path is the value of the `REPORTDIR_DIGESTED` environment variable. The digest has the same name as the report on which it is based, except with `.html` as the extension.
+
+### Comparing
+
+You can use Testilo to publish comparisons of accessibility scores. To do this, execute the statement `node compare abc xyz`, replacing `abc` with the prefix of the names of the reports and `xyz` with the name of a subdirectory of the `procs/compare` directory.
+
+Testilo will save a web page in the `reports/comparative` directory. The name of the file will be `abc.html`, where `abc` is the prefix of the names of the reports. The page will include a table listing the tested web pages and the scores they received.

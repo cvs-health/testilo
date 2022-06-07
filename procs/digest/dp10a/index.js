@@ -1,6 +1,7 @@
 /*
-  index: digester for procedure tsp10.
+  index: digester for scoring procedure sp10.
   Creator of parameters for substitution into index.html.
+  Usage example: node digest 35k1r-railpass dp10a
 */
 exports.makeQuery = (report, query) => {
   // Makes strings HTML-safe.

@@ -1,7 +1,7 @@
 /*
-  table.js
-  Testilo tabling script.
-  Usage example: node table 35k1r ttp0
+  compare.js
+  Testilo comparison script.
+  Usage example: node compare 35k1r cp0
 */
 
 // ########## IMPORTS

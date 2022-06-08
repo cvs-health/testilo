@@ -46,7 +46,7 @@ To make Testilo digest reports, execute the statement `node digest abc xyz`, rep
 This procedure has some preconditions:
 - The digest proc is compatible with the score proc that scored the report.
 - The filename extension is `.json`.
-- Testile can find the report file(s) in the directory whose relative path (relative to the project directory of Testilo) is the value of the `REPORTDIR_SCORED` environment variable.
+- Testilo can find the scored report file(s) in the directory whose relative path (relative to the project directory of Testilo) is the value of the `REPORTDIR_SCORED` environment variable.
 - Testilo can read in the `REPORTDIR_SCORED` directory.
 - There is a `REPORTDIR_DIGESTED` environment variable, whose value is the relative path of a directory that Testilo can write to.
 - The `procs/digest` directory contains a subdirectory named `xyz`, which in turn contains files named `index.html` and `index.js`.
@@ -58,4 +58,14 @@ When Testilo digests a report, Testilo saves the digest in the directory whose r
 
 You can use Testilo to publish comparisons of accessibility scores. To do this, execute the statement `node compare abc xyz`, replacing `abc` with the prefix of the names of the reports and `xyz` with the name of a subdirectory of the `procs/compare` directory.
 
-Testilo will save a web page in the `reports/comparative` directory. The name of the file will be `abc.html`, where `abc` is the prefix of the names of the reports. The page will include a table listing the tested web pages and the scores they received.
+Testilo will use the comparison proc you name to compile the scores into a table and construct a web page containing that table. It will save the page in the `reports/comparative` directory. The name of the file will be `abc.html`.
+
+In the table, the first column will contain descriptions of the pages (the `what` property of the hosts in the batch), such as “Wikipedia English”. Each such description will be a link to the page on the web. The second column will contain the scores of the pages. Each score will be a link to the digest for its page. The link will be `
+
+This procedure has some preconditions:
+- The comparison proc is compatible with the score proc that scored the report.
+- Testilo can find the scored report files in the directory whose relative path (relative to the project directory of Testilo) is the value of the `REPORTDIR_SCORED` environment variable.
+- Testilo can read in the `REPORTDIR_SCORED` directory.
+- There is a `COMPARISONDIR` environment variable, whose value is the relative path of a directory that Testilo can write to.
+- The `procs/compare` directory contains a subdirectory named `xyz`, which in turn contains files named `index.html` and `index.js`.
+- You have copied the `reports/comparative/style.css` file into the `COMPARISONDIR` directory.

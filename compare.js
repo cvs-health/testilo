@@ -13,7 +13,7 @@ const fs = require('fs/promises');
 
 // ########## CONSTANTS
 
-const tableDir = process.env.TABLEDIR || 'reports/comparative';
+const tableDir = process.env.COMPARISONDIR || 'reports/comparative';
 const reportTimeStamp = process.argv[2];
 const tableProcID = process.argv[3];
 

@@ -13,9 +13,9 @@ const fs = require('fs/promises');
 
 // ########## CONSTANTS
 
-const tableDir = process.env.COMPARISONDIR || 'reports/comparative';
-const reportTimeStamp = process.argv[2];
-const tableProcID = process.argv[3];
+const comparisonDir = process.env.COMPARISONDIR || 'reports/comparative';
+const comparisonNameBase = process.argv[2];
+const compareProcID = process.argv[3];
 
 // ########## FUNCTIONS
 
@@ -24,13 +24,13 @@ const replaceHolders = (content, query) => content
 .replace(/__([a-zA-Z]+)__/g, (ph, qp) => query[qp]);
 // Creates and saves a web page containing a comparative table.
 const compare = async () => {
-  const tableDirAbs = `${__dirname}/${tableDir}`;
-  const {getQuery} = require(`./procs/compare/${tableProcID}/index`);
+  const comparisonDirAbs = `${__dirname}/${comparisonDir}`;
+  const {getQuery} = require(`./procs/compare/${compareProcID}/index`);
   const query = await getQuery();
-  const pageRaw = await fs.readFile(`${__dirname}/procs/compare/${tableProcID}/index.html`, 'utf8');
+  const pageRaw = await fs.readFile(`${__dirname}/procs/compare/${compareProcID}/index.html`, 'utf8');
   const page = replaceHolders(pageRaw, query);
-  await fs.writeFile(`${tableDirAbs}/${reportTimeStamp}.html`, page);
-  console.log(`Page comparing ${reportTimeStamp} reports created and saved`);
+  await fs.writeFile(`${comparisonDirAbs}/${comparisonNameBase}.html`, page);
+  console.log(`Page ${comparisonNameBase}.html created and saved`);
 };
 
 // ########## OPERATION

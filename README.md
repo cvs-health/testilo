@@ -56,11 +56,11 @@ When Testilo digests a report, Testilo saves the digest in the directory whose r
 
 ### Comparing
 
-You can use Testilo to publish comparisons of accessibility scores. To do this, execute the statement `node compare abc xyz`, replacing `abc` with the prefix of the names of the reports and `xyz` with the name of a subdirectory of the `procs/compare` directory.
+You can use Testilo to publish comparisons of accessibility scores. To do this, execute the statement `node compare abc xyz`, replacing `abc` with a filename base for the comparison and `xyz` with the name of a subdirectory of the `procs/compare` directory.
 
-Testilo will use the comparison proc you name to compile the scores into a table and construct a web page containing that table. It will save the page in the `reports/comparative` directory. The name of the file will be `abc.html`.
+Testilo will examine all of the scored reports in the `REPORTDIR_SCORED` directory. The comparison proc in the `xyz` directory will construct a web page. Testilo will save the page in the `COMPARISONDIR` directory. The name of the file will be `abc.html`.
 
-In the table, the first column will contain descriptions of the pages (the `what` property of the hosts in the batch), such as “Wikipedia English”. Each such description will be a link to the page on the web. The second column will contain the scores of the pages. Each score will be a link to the digest for its page. The link will be `
+Comparison procs can design various pages on the basis of a set of scored reports. As an example, the `cp0` comparison proc creates a page that contains a table of scores, shown both numerically and with a bar graph. In the table, the first column contains descriptions of the pages (the `what` property of the hosts in the batch), such as “Wikipedia English”. Each such description is a link to the page on the web. The second column contains the scores of the pages. Each score is a link to the digest for its page. The link points to a digest located in a `digests` directory adjacent to the page itself. Thus, to use the `cp0` comparison proc, you would copy its output file to a web server, create a `digests` directory on the server as a sibling of that file, and copy the digest files into the `digests` directory.
 
 This procedure has some preconditions:
 - The comparison proc is compatible with the score proc that scored the report.

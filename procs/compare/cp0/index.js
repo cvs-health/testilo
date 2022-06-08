@@ -13,7 +13,6 @@ const fs = require('fs/promises');
 // ########## CONSTANTS
 
 const reportDirScored = process.env.REPORTDIR_SCORED || 'reports/scored';
-const reportIDStart = process.argv[2];
 const query = {};
 
 // ########## FUNCTIONS
@@ -22,8 +21,7 @@ const query = {};
 const getData = async () => {
   const reportDirAbs = `${__dirname}/../../../${reportDirScored}`;
   const reportFileNamesAll = await fs.readdir(reportDirAbs);
-  const reportFileNamesSource = reportFileNamesAll
-  .filter(fileName => fileName.startsWith(reportIDStart) && fileName.endsWith('.json'));
+  const reportFileNamesSource = reportFileNamesAll.filter(fileName => fileName.endsWith('.json'));
   const pageCount = reportFileNamesSource.length;
   const bodyData = [];
   for (const fileName of reportFileNamesSource) {
@@ -51,7 +49,7 @@ const getTableBody = async bodyData => {
   .map(item => {
     const {id, host, score} = item;
     const pageCell = `<th scope="row"><a href="${host.which}">${host.what}</a></th>`;
-    const numCell = `<td><a href="reports/${id}.html">${score}</a></td>`;
+    const numCell = `<td><a href="digests/${id}.html">${score}</a></td>`;
     const barWidth = 100 * score / maxScore;
     const bar = `<rect height="100%" width="${barWidth}%" fill="red"></rect>`;
     const barCell = `<td aria-hidden="true"><svg width="100%" height="0.7em">${bar}</svg></td>`;

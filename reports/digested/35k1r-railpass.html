@@ -16,14 +16,20 @@
     <main>
       <header>
         <h1>Accessibility test digest</h1>
-        <p class="summary bold">railpass</p>
-        <p class="summary">Testilo, <code>tsp10</code> procedure</p>
-        <p class="summary">Score: 1589</p>
+        <h2>Summary</h2>
+        <div id="summary">
+          <p>Page: Railpass</p>
+          <p>URL: https://www.railpass.com/</p>
+          <p>Score: 1589</p>
+          <p>Tested by: Testaro, <code>tp10</code></p>
+          <p>Scored by: Testilo, <code>sp10a</code></p>
+          <p>Digested by: Testilo, <code>dp10a</code></p>
+        </dl>
       </header>
       <h2>Introduction</h2>
-      <p>The <code>tsp10</code> accessibility testing procedure was executed by <a href="https://www.npmjs.com/package/testaro">Testaro</a> on the web page at <a href="https://www.railpass.com/">https://www.railpass.com/</a>, belonging to railpass, on 2022/06/03. The procedure performed 808 tests. Of these, 16 tests are custom tests defined by Testaro, and the others belong to packages of tests created by others. Testaro produced a report enumerating the test results. The report is appended, below, to this page.</p>
+      <p>The <code>tp10</code> <a href="https://www.w3.org/WAI/fundamentals/accessibility-intro/">accessibility</a> testing procedure was executed by <a href="https://www.npmjs.com/package/testaro">Testaro</a> on the web page at <a href="https://www.railpass.com/">https://www.railpass.com/</a>, belonging to Railpass, on 2022/06/03. The procedure performed 808 tests. Of these, 16 tests are custom tests defined by Testaro, and the others belong to packages of tests created by others. Testaro produced a report enumerating the test results. The report is appended, below, to this page.</p>
       <p>These tests&mdash;like all tests&mdash;are fallible. The failures described below merit investigation as <strong>potential</strong> opportunities for improved accessibility. But some reported faults may not actually harm accessibility, and some accessibility faults can escape detection by any of these tests.</p>
-      <p>Given the report produced by Testaro, another procedure, <code>tsp10a</code>, assigned weights to the tests and computed a total score for the page, 1589 (where 0 is the best possible score). Just as tests are fallible, any scoring procedure is subjective, and different reasonable procedures could assign different scores on the basis of the same report. This digest explains how <code>tsp10a</code> computed a score for the page.</p>
+      <p>Given the report produced by Testaro, another procedure, <code>sp10a</code>, was executed by <a href="https://www.npmjs.com/package/testilo">Testilo</a>. The procedure assigned weights to the tests and computed a total score for the page, 1589 (where 0 is the best possible score). Just as tests are fallible, any scoring procedure is subjective, and different reasonable procedures could assign different scores on the basis of the same report. Testilo used procedure <code>dp10a</code> to produce this digest, explaining how <code>sp10a</code> computed the score.</p>
       <h2>Summary</h2>
       <p>The packages&rsquo; and custom tests&rsquo; contributions to the score were:</p>
       <table class="allBorder secondCellRight">
@@ -324,7 +330,7 @@
     }
   ],
   "script": {
-    "id": "asp10",
+    "id": "tp10",
     "what": "AATT, Alfa, Axe, IBM, Tenon, WAVE, and 16 custom tests",
     "strict": true,
     "commands": [
@@ -9098,7 +9104,7 @@
   "endTime": "2022-06-03T15:25:21",
   "elapsedSeconds": 99,
   "score": {
-    "scoreProcID": "tsp10a",
+    "scoreProcID": "sp10a",
     "duplications": {
       "aatt": {
         "e:F77": 1,

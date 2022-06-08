@@ -64,6 +64,10 @@ legend {
 section:not(.wide) {
   max-width: 36rem;
 }
+#summary > p {
+  margin: 0;
+  padding: 0;
+}
 table {
   border-collapse: collapse;
 }

@@ -33,7 +33,7 @@ const score = async () => {
     scorer(report);
     report.score.scoreProcID = scoreProcID;
     const scoredReportJSON = JSON.stringify(report, null, 2);
-    await fs.writeFile(`${__dirname}/${reportDirScored}/${fileName}`, scoredReportJSON);
+    await fs.writeFile(`${__dirname}/${reportDirScored}/${fileName}`, `${scoredReportJSON}\n`);
     console.log(`Report ${fileName.slice(0, -5)} scored and saved`);
   };
 };

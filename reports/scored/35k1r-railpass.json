@@ -16,7 +16,7 @@
     }
   ],
   "script": {
-    "id": "asp10",
+    "id": "tp10",
     "what": "AATT, Alfa, Axe, IBM, Tenon, WAVE, and 16 custom tests",
     "strict": true,
     "commands": [
@@ -8790,7 +8790,7 @@
   "endTime": "2022-06-03T15:25:21",
   "elapsedSeconds": 99,
   "score": {
-    "scoreProcID": "tsp10a",
+    "scoreProcID": "sp10a",
     "duplications": {
       "aatt": {
         "e:F77": 1,

@@ -23,11 +23,11 @@ const tableProcID = process.argv[3];
 const replaceHolders = (content, query) => content
 .replace(/__([a-zA-Z]+)__/g, (ph, qp) => query[qp]);
 // Creates and saves a web page containing a comparative table.
-const table = async () => {
+const compare = async () => {
   const tableDirAbs = `${__dirname}/${tableDir}`;
-  const {getQuery} = require(`./procs/table/${tableProcID}/index`);
+  const {getQuery} = require(`./procs/compare/${tableProcID}/index`);
   const query = await getQuery();
-  const pageRaw = await fs.readFile(`${__dirname}/procs/table/${tableProcID}/index.html`, 'utf8');
+  const pageRaw = await fs.readFile(`${__dirname}/procs/compare/${tableProcID}/index.html`, 'utf8');
   const page = replaceHolders(pageRaw, query);
   await fs.writeFile(`${tableDirAbs}/${reportTimeStamp}.html`, page);
   console.log(`Page comparing ${reportTimeStamp} reports created and saved`);
@@ -35,4 +35,4 @@ const table = async () => {
 
 // ########## OPERATION
 
-table();
+compare();

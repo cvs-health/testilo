@@ -1,0 +1,55 @@
+accesskey	Accesskey
+alt_area_missing	Image map area missing alternative text
+alt_duplicate	A nearby image has the same alternative text
+alt_input_missing	Image button missing alternative text
+alt_link_missing	Linked image missing alternative text
+alt_long	Long alternative text
+alt_missing	Missing alternative text
+alt_redundant	Redundant alternative text
+alt_spacer_missing	Spacer image missing alternative text
+alt_suspicious	Suspicious alternative text
+aria_menu_broken	Broken ARIA menu
+aria_reference_broken	Broken ARIA reference
+audio_video	Audio/Video
+button_empty	Empty button
+contrast	Very low contrast
+event_handler	Device dependent event handler
+fieldset_missing	Missing fieldset
+flash	Flash
+h1_missing	Missing first level heading
+heading_empty	Empty heading
+heading_missing	No heading structure
+heading_possible	Possible heading
+heading_skipped	Skipped heading level
+html5_video_audio	HTML5 video or audio
+image_title	Image with title
+javascript_jumpmenu	JavaScript jump menu
+label_empty	Empty form label
+label_missing	Missing form label
+label_multiple	Multiple form labels
+label_orphaned	Orphaned form label
+label_title	Unlabeled form control with title
+language_missing	Language missing or invalid
+legend_missing	Fieldset missing legend
+link_empty	Empty link
+link_excel	Link to Excel spreadsheet
+link_internal_broken	Broken same-page link
+link_pdf	Link to PDF document
+link_redundant	Redundant link
+link_skip_broken	Broken skip link
+link_suspicious	Suspicious link text
+list_possible	Possible list
+longdesc	Long description
+noscript	Noscript element
+plugin	Plugin
+region_missing	No page regions
+select_missing_label	Select missing label
+tabindex	Tabindex
+table_layout	Layout table
+text_justified	Justified text
+text_small	Very small text
+th_empty	Empty table header
+title_invalid	Missing or uninformative page title
+title_redundant	Redundant title text
+underline	Underlined text
+youtube_video	YouTube video

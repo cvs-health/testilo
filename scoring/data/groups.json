@@ -37,14 +37,14 @@
     "alfa": [
       "r2 image does not have an accessible name"
     ],
-    "wave": [
-      "e:alt_missing"
-    ],
     "axe": [
       "image-alt"
     ],
     "ibm": [
       "v:WCAG20_Img_HasAlt Images must have an alt attribute if they convey meaning, or alt='' if decorative"
+    ],
+    "wave": [
+      "e:alt_missing"
     ]
   },
   {

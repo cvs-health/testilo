@@ -1,0 +1,80 @@
+er62	The link is not distinguishable from the surrounding text
+er65	The element does not have a visible focus indicator
+er87	The document has no valid tabbable descendants or its first one is invalid
+r1	The document has no valid title element
+r10	The autocomplete attribute does not have a valid value
+r109	The lang attribute does not match the document language
+r11	The link does not have an accessible name
+r12	The button does not have an accessible name
+r13	The iframe does not have an accessible name
+r14	The visible text content of the element is not included within its accessible name
+r15	The iframe elements do not embed the same or equivalent resources
+r16	The element does not have all required states and properties
+r17	The element is either tabbable or has tabbable descendants
+r18	The attribute is not allowed for the element on which it is specified
+r19	The attribute does not have a valid value
+r2	The image does not have an accessible name
+r20	The attribute is not defined
+r21	The element does not have a valid role
+r22	The video element does not have captions
+r25	The visual information of the video element is not available through audio
+r27	The video element has no text alternative for its audio content
+r28	The input type=image element does not have an accessible name
+r3	The element does not have a unique ID
+r30	The audio element does not have a text alternative
+r32	The video element does not have an audio track that describes its
+r35	The video element does not have an alternative
+r37	The video element does not have an audio description
+r38	The video element does not have an audio or text alternative
+r39	The accessible name of the ${name} element does not describe its purpose
+r4	The lang attribute is either missing, empty, or only whitespace
+r40	The region does not have an accessible name
+r41	The links do not resolve to the same or equivalent resources
+r42	The element is not owned by an element of its required context role
+r43	The ${target} element does not have an accessible name
+r44	The element is locked in orientation
+r45	The headers attribute has an invalid reference
+r46	The header cell is not assigned to any cell
+r47	The meta element restricts the ability to zoom
+r48	The total duration of audio output of the ${name} element exceeds
+r49	An audio element has no valid mechanism to pause or stop
+r5	The lang attribute does not have a valid primary language tag
+r50	The total duration of the autoplaying audio output of the element lasts
+r53	The heading skips one or more levels
+r54	The assertive region is not atomic
+r55	Some role has the same name and different content
+r56	Some ${role} have the same name.`, role, errors));
+r57	The text is not included in a landmark region
+r59	The document does not have a heading element
+r6	The lang and xml:lang attributes do not have matching primary language subtags
+r60	The grouping elements have an accessible name
+r61	The document does not start with a level 1 heading
+r62	The link is not distinguishable from the surrounding text
+r63	The object element does not have an accessible name
+r64	The heading does not have an accessible name
+r65	The element does not have a visible focus indicator
+r67	The element is marked as decorative but is exposed
+r68	The element owns no elements as required by its semantic role
+r7	The lang attribute does not have a valid primary language subtag
+r70	The document contains deprecated elements
+r71	The text of the paragraph is justified
+r72	The text of the paragraph is uppercased
+r73	The line height of the paragraph is less than 1.5 or invalid
+r74	The font size is specified using an absolute unit
+r75	The font size is smaller than 9 pixels
+r76	The header element is not a semantic header
+r77	The cell is not assigned to any header cell
+r78	There is no content between this heading and the next
+r79	The element has no required hidden, figure, code, kbd, or samp ancestor
+r8	The form field does not have an accessible name
+r80	The line height is specified using an absolute unit
+r81	The links do not resolve to the same or equivalent resources
+r82	An error indicator fails to identify the form field or cause of error
+r83	The text is clipped
+r84	The scrollable element is not reachable through keyboard navigation
+r85	The text of the paragraph is all italic
+r86	The element is marked as decorative but is exposed
+r87	The first tabbable element in the document is invalid on nonexistent
+r90	The element has tabbable descendants
+r94	The menuitem does not have an accessible name
+r95	The iframe contains some interactive element

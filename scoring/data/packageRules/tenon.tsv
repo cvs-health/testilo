@@ -1,0 +1,14 @@
+28	The layout or sizing of this page causes horizontal scrolling.
+57	This link has no text inside it.
+79	This link has a `title` attribute that is the same as the text inside the link.
+95	This element has insufficient color contrast (Level AAA).
+98	These links have the same text but different destinations.
+129	CSS underline on text has been detected that is not a link.
+134	Very small text found.
+144	This content's line height is insufficent to properly display the computed element font size.
+152	This actionable element is smaller than the minimum required size.
+153	This long string of text is in all caps.
+155	These headings are not structured in a hierarchical manner.
+190	Item(s) with interactive role must have tabindex=0 unless it is natively actionable.
+218	This link opens in a new window without user control.
+242	Multiple consecutive br tags next to each other, simulating paragraphs.

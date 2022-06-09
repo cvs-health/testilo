@@ -1,0 +1,159 @@
+HAAC_Accesskey_NeedLabel	An HTML element with an assigned accesskey attribute must have an associated label
+HAAC_ActiveDescendantCheck	The aria-activedescendant property must reference the id of a non-empty, non-hidden active child element
+HAAC_Application_Role_Text	Non-decorative static text and image content within an element with application role must be accessible
+HAAC_Aria_ErrorMessage	A custom error message must reference a valid id value and when triggered the message must be appropriately exposed
+HAAC_Aria_ImgAlt	An element with img role must have a non-empty label
+HAAC_Aria_SvgAlt	An element with a graphics role must have a non-empty label
+HAAC_Audio_Video_Trigger	Media using audio and/or video elements must have keyboard accessible controls
+HAAC_BackgroundImg_HasTextOrTitle	Background images that convey important information must have a text alternative that describes the image
+HAAC_Canvas	The canvas element may not be accessible
+HAAC_Figure_label	A figure element must have an associated label
+HAAC_Img_UsemapAlt	An image map and each area element in an image map must have text alternative(s)
+HAAC_Input_Placeholder	HTML5 placeholder attribute must not be used as a visible label replacement
+HAAC_List_Group_ListItem	List component with group role must limit children to listitem elements
+HAAC_Media_DocumentTrigger2	File download mechanisms should be keyboard-operable and preserve page focus location
+HAAC_Video_HasNoTrack	A video element must have a text alternative for any meaningful audio content
+IBMA_Color_Contrast_WCAG2AA	The contrast ratio of text with its background must meet WCAG 2.1 AA requirements
+IBMA_Color_Contrast_WCAG2AA_PV	The contrast ratio of text with its background must meet WCAG 2.1 AA
+IBMA_Focus_MultiTab	Certain components must have no more than one tabbable element
+IBMA_Focus_Tabbable	Component must have at least one tabbable element
+RPT_Blink_CSSTrigger1	Do not use the blink value of the text-decoration property for longer than five seconds
+RPT_Block_ShouldBeHeading	Heading text must use a heading element
+RPT_Blockquote_HasCite	Use blockquote only for quotations, not indentation
+RPT_Blockquote_WrapsTextQuote	Quotations should be marked with q or blockquote elements
+RPT_Elem_EventMouseAndKey	All interactive content with mouse event handlers must have equivalent keyboard access
+RPT_Elem_UniqueId	Element id attribute values must be unique within a document
+RPT_Embed_AutoStart	Mechanism must be available to pause or stop and control the volume of the audio that plays automatically
+RPT_Embed_HasAlt	Provide alternative content for embed elements
+RPT_Font_ColorInForm	Combine color and descriptive markup to indicate required form fields
+RPT_Form_ChangeEmpty	A form should not be submitted automatically without warning the user
+RPT_Header_HasContent	Heading elements must provide descriptive text
+RPT_Headers_FewWords	Heading elements must not be used for presentation
+RPT_Html_SkipNav	Provide a way to bypass blocks of content that are repeated on multiple Web pages
+RPT_Img_AltCommonMisuse	alt attribute value must be a good inline replacement for the image
+RPT_Img_LongDescription2	 The longdesc attribute must reference HTML content
+RPT_Img_UsemapValid	Server-side image map hot-spots must have duplicate text links
+RPT_Label_UniqueFor	Form controls should have exactly one label
+RPT_List_Misuse	List elements should only be used for lists of related items
+RPT_List_UseMarkup	Use proper HTML list elements to create lists
+RPT_Media_AltBrief	Alternative text in alt attribute should be brief (150 characters)
+RPT_Media_AudioTrigger	Audio information should also be available in text form
+RPT_Media_AudioVideoAltFilename	Audio or video on the page must have a short text alternative that describes the media content
+RPT_Media_VideoObjectTrigger	Live media (streaming video with audio) should have captions for audio content
+RPT_Media_VideoReferenceTrigger	Pre-recorded media should have an audio track that describes visual information
+RPT_Meta_Refresh	Pages should not refresh automatically
+RPT_Pre_ASCIIArt	ASCII art must have a text alternative
+RPT_Script_OnclickHTML1	Scripts should not be used to emulate links
+RPT_Script_OnclickHTML2	Scripts should not be used to emulate links
+RPT_Style_BackgroundImage	Images included by using CSS alone must not convey important information
+RPT_Style_ColorSemantics1	Combine color and descriptive markup to convey information
+RPT_Style_HinderFocus1	The keyboard focus indicator must be highly visible when default border or outline is modified by CSS
+RPT_Style_Trigger2	Windows high contrast mode must be supported when using CSS to include, position or alter non-decorative content
+RPT_Table_DataHeadingsAria	Data table must identify headers
+RPT_Table_LayoutTrigger	Avoid using tables to format text documents in columns unless the table can be linearized
+RPT_Text_SensoryReference	Instructions must be meaningful without shape or location words
+RPT_Title_Valid	Page title should be a descriptive title, rather than a filename
+Rpt_Aria_ApplicationLandmarkLabel	An element with application role must have a label that describes its purpose
+Rpt_Aria_ComplementaryLandmarkLabel_Implicit	Each element with complementary role should have a visible label that describes its purpose
+Rpt_Aria_ComplementaryRequiredLabel_Implicit	An element with complementary role must have a label
+Rpt_Aria_ContentinfoWithNoMain_Implicit	An element with contentinfo role is only permitted with an element with main role
+Rpt_Aria_EmptyPropertyValue	When specifying a required ARIA attribute, the value must not be empty
+Rpt_Aria_EventHandlerMissingRole_Native_Host_Sematics	Elements with event handlers must have a valid ARIA role
+Rpt_Aria_InvalidTabindexForActivedescendant	Element using aria-activedescendant property must have its tabindex attribute value set to 0 or -1
+Rpt_Aria_MissingFocusableChild	UI component must have at least one focusable child element for keyboard access
+Rpt_Aria_MissingKeyboardHandler	Interactive WAI_ARIA UI components must provide keyboard access
+Rpt_Aria_MultipleApplicationLandmarks	Each element with application role must have a unique label that describes its purpose
+Rpt_Aria_MultipleArticleRoles_Implicit	Each element with article role must have a unique label that describes its purpose
+Rpt_Aria_MultipleBannerLandmarks_Implicit	Each element with banner role must have a unique label that describes its purpose
+Rpt_Aria_MultipleComplementaryLandmarks_Implicit	Each element with complementary role must have a unique label that describes its purpose
+Rpt_Aria_MultipleContentinfoInSiblingSet_Implicit	A page, document or application should only have one element with contentinfo role
+Rpt_Aria_MultipleContentinfoLandmarks_Implicit	Each element with contentinfo role must have a unique label that describes its purpose
+Rpt_Aria_MultipleDocumentRoles	All elements with a document role must have unique labels
+Rpt_Aria_MultipleFormLandmarks_Implicit	Each element with form role must have a unique label that describes its purpose
+Rpt_Aria_MultipleMainsRequireLabel_Implicit_2	Elements with main role must have unique labels
+Rpt_Aria_MultipleMainsVisibleLabel_Implicit	Each element with main role should have a unique visible label that describes its purpose
+Rpt_Aria_MultipleNavigationLandmarks_Implicit	Each element with navigation role must have a unique label that describes its purpose
+Rpt_Aria_MultipleRegionsUniqueLabel_Implicit	Each element with a region role must have a unique label
+Rpt_Aria_MultipleSearchLandmarks	Each element with search role must have a unique label that describes its purpose
+Rpt_Aria_MultipleToolbarUniqueLabel	All toolbar components on a page must have unique labels specified
+Rpt_Aria_OneBannerInSiblingSet_Implicit	There must be only one element with banner role on the page
+Rpt_Aria_OrphanedContent_Native_Host_Sematics	All content must reside within an element with a landmark role
+Rpt_Aria_RegionLabel_Implicit	Each element with region role must have a label that describes its purpose
+Rpt_Aria_RequiredChildren_Native_Host_Sematics	An element with a ARIA role must contain required children
+Rpt_Aria_RequiredParent_Native_Host_Sematics	An element with an implicit or explicit role must be contained within a valid element
+Rpt_Aria_RequiredProperties	When using a ARIA role on an element, the required attributes for that role must be defined
+Rpt_Aria_ValidIdRef	The ARIA property must reference a non-empty unique id of an existing element that is visible
+Rpt_Aria_ValidProperty	ARIA attributes must be valid for the elements role
+Rpt_Aria_ValidPropertyValue	ARIA property values must be valid
+Rpt_Aria_ValidRole	Elements must have a valid role per ARIA specification
+Rpt_Aria_WidgetLabels_Implicit	Interactive component must have a programmatically associated name
+Valerie_Caption_HasContent	A caption element for a table element must contain descriptive text
+Valerie_Caption_InTable	The caption element must be nested inside the associated table element
+Valerie_Elem_DirValid	dir attribute value must be ltr, rtl, or auto
+Valerie_Frame_SrcHtml	A frame containing non-HTML content must be made accessible
+Valerie_Label_HasContent	A label element must have non-empty descriptive text that identifies the purpose of the interactive component
+Valerie_Noembed_HasContent	noembed elements should contain descriptive text
+Valerie_Table_DataCellRelationships	For a complex data table, all th and td elements must be related via header or scope attributes
+WCAG20_A_HasText	Hyperlinks must have a text description of their purpose
+WCAG20_A_TargetAndText	Users should be warned in advance if their input action will open a new window or otherwise change their context
+WCAG20_Applet_HasAlt	applet elements must provide an alt attribute and an alternative description
+WCAG20_Area_HasAlt	area elements in an image map must have a text alternative
+WCAG20_Body_FirstAContainsSkipText_Native_Host_Sematics	The description of a hyperlink used to skip content must communicate where it links to
+WCAG20_Body_FirstASkips_Native_Host_Sematics	Pages must provide a way to skip directly to the main content
+WCAG20_Doc_HasTitle	The page should have a title that correctly identifies the subject of the page
+WCAG20_Elem_Lang_Valid	The language of content must be valid and specified in accordance with BCP 47
+WCAG20_Elem_UniqueAccessKey	accesskey attribute values on each element must be unique for the page
+WCAG20_Embed_HasNoEmbed	embed elements should be immediately followed by a non-embedded element
+WCAG20_Fieldset_HasLegend	 fieldset elements must have a single, non-empty legend as a label
+WCAG20_Form_HasSubmit	A form element should have a submit button or an image button
+WCAG20_Form_TargetAndText	User should be informed in advance when interacting with content causes a change of context
+WCAG20_Frame_HasTitle	Inline frames must have a unique, non-empty title attribute
+WCAG20_Html_HasLang	Page must identify the default language of the document with a lang attribute
+WCAG20_Img_HasAlt	Images must have an alt attribute with a short text alternative if they convey meaning, or alt= if decorative
+WCAG20_Img_LinkTextNotRedundant	The text alternative for an image within a link should not repeat the link text or adjacent link text
+WCAG20_Img_PresentationImgHasNonNullAlt	Image designated as decorative must have alt=
+WCAG20_Img_TitleEmptyWhenAltNull	When the image alt attribute is empty, the title attribute must also be empty
+WCAG20_Input_ExplicitLabel	Each form control must have an associated label
+WCAG20_Input_ExplicitLabelImage	The input element of type image should have a text alternative
+WCAG20_Input_HasOnchange	Verify that any changes of context are explained in advance to the user
+WCAG20_Input_InFieldSet	Groups of logically related input elements should be contained within a fieldset element
+WCAG20_Input_LabelAfter	Checkboxes and radio buttons must have a label after the input control
+WCAG20_Input_LabelBefore	Text inputs and select elements must have a label before the input control
+WCAG20_Input_RadioChkInFieldSet	input is in a different group than another with the name
+WCAG20_Input_VisibleLabel	An input element must have an associated visible label
+WCAG20_Label_RefValid	The for attribute must reference a non-empty, unique id attribute of an input element
+WCAG20_Meta_RedirectZero	Page should not automatically refresh without warning or option to turn it off or adjust the time limit
+WCAG20_Object_HasText	object elements must have a text alternative for the content rendered by the object
+WCAG20_Script_FocusBlurs	Scripting must not remove focus from content that normally receives focus
+WCAG20_Select_HasOptGroup	Groups of related options within a selection list should be grouped with optgroup
+WCAG20_Select_NoChangeAction	No changes of context should occur when a selection value receives focus
+WCAG20_Style_BeforeAfter	Do not use CSS ::before and ::after pseudo-elements to insert non-decorative content
+WCAG20_Table_CapSummRedundant	The table summary must not duplicate the caption
+WCAG20_Table_Scope_Valid	Value for scope attribute must be row, col, rowgroup, or colgroup
+WCAG20_Table_Structure	Table elements with role=presentation or role=none should not have structural elements or attributes
+WCAG20_Text_Emoticons	Emoticons must have a short text alternative that describes their purpose
+WCAG20_Text_LetterSpacing	Use CSS letter-spacing to control spacing within a word
+WCAG21_Input_Autocomplete	The autocomplete attributes token(s) must be appropriate for the input form field
+WCAG21_Label_Accessible	Accessible name must match or contain the visible label text
+WCAG21_Style_Viewport	Text must scale up to 200% without loss of content or functionality
+aria_attribute_conflict	An ARIA attribute must not conflict with the corresponding HTML attribute
+aria_attribute_deprecated	No deprecated ARIA role or attribute should be used
+aria_attribute_redundant	An ARIA attribute should not be used when there is a corresponding HTML attribute
+aria_hidden_focus_misuse	A focusable element should not be within the subtree of an element with aria-hidden set to true
+aria_role_redundant	An explicitly-assigned ARIA role should not be redundant with the implicit role of the element
+aria_semantics_role	ARIA roles must be valid for the element to which they are assigned
+aria_semantics_attribute	ARIA attributes must be valid for the element and ARIA role to which they are assigned
+combobox_active_descendant	aria-activedescendant must be used to define focus within the combobox popup, except when using a dialog popup
+combobox_autocomplete	combobox_autocomplete.html
+combobox_focusable_elements	Tabbable focus for the combobox must be allowed only on the text input, except when using a dialog popup
+combobox_haspopup	The combobox attribute aria-haspopup value must be appropriate for the role of the element referenced by aria-controls or aria-owns
+combobox_popup_reference	The aria-controls or aria-owns attribute of the expanded combobox must reference a valid popup id value
+combobox_version	The combobox design pattern must be valid for ARIA 1.2
+element_attribute_deprecated	Avoid use of obsolete features if possible
+group_withInputs_hasName	Groups with nested inputs must have unique accessible name
+input_haspopup_invalid	input element with list attribute should not also use aria-haspopup attribute
+landmark_name_unique	Multiple landmarks should have a unique aria-labelledby or aria-label or be nested in a different parent regions
+meta_viewport_zoom	The meta[name=viewport] should not prevent the browser zooming the content
+style_hover_persistent	The pointer should be able to move over content displayed on hover
+table_aria_descendants	Table structure elements cannot specify an explicit role within table containers
+table_headers_ref_valid	The headers attribute should refer to a valid cell in the same table

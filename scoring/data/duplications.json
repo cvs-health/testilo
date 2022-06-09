@@ -1,75 +1,75 @@
 {
   "aatt_alfa": {
-    "e:F77": {
+    "e:F77 Duplicate id attribute value": {
       "r3": "0.89 (253)"
     },
-    "e:H36": {
+    "e:H36 Image submit button missing an alt attribute": {
       "r28": "0.98 (6)"
     },
-    "e:H37": {
+    "e:H37 Img element missing an alt attribute": {
       "r2": "0.72 (221)"
     },
-    "e:H57": {
+    "e:H57 lang attribute of the document element": {
       "r4": "0.81 (66)"
     },
-    "e:H58": {
+    "e:H58 change in language is marked": {
       "r7": "0.82 (5)"
     },
-    "w:G141": {
+    "w:G141 heading structure is not logically nested": {
       "r53": "0.89 (427)"
     },
-    "w:H98": {
+    "w:H98 autocomplete attribute": {
       "r10": "0.95 (3)"
     }
   },
   "aatt_axe": {
-    "e:H36": {
+    "e:H36 Image submit button missing an alt attribute": {
       "input-image-alt": "0.98 (6)"
     },
-    "e:H57": {
+    "e:H57 lang attribute of the document element": {
       "html-has-lang": "0.73 (75)"
     },
-    "e:H58": {
+    "e:H58 change in language is marked": {
       "valid-lang": "0.82 (5)"
     },
-    "w:G141": {
+    "w:G141 heading structure is not logically nested": {
       "heading-order": "0.79 (515)"
     }
   },
   "aatt_ibm": {
-    "e:ARIA6+H53": {
+    "e:ARIA6+H53 Object elements must contain a text alternative": {
       "v:WCAG20_Object_HasText": "1.00 (6)"
     },
-    "e:H24": {
+    "e:H24 Area element in an image map missing an alt attribute": {
       "v:WCAG20_Area_HasAlt": "0.79 (4)"
     },
-    "e:H36": {
+    "e:H36 Image submit button missing an alt attribute": {
       "v:WCAG20_Input_ExplicitLabelImage": "0.98 (6)"
     }
   },
   "aatt_wave": {
-    "e:G1+G123+G124": {
+    "e:G1+G123+G124 common navigation elements can be bypassed": {
       "a:link_internal_broken": "0.94 (109)"
     },
-    "e:H24": {
+    "e:H24 Area element in an image map missing an alt attribute": {
       "e:alt_area_missing": "0.73 (5)"
     },
-    "e:H36": {
+    "e:H36 Image submit button missing an alt attribute": {
       "e:alt_input_missing": "0.91 (7)"
     },
-    "e:H37": {
+    "e:H37 Img element missing an alt attribute": {
       "e:alt_missing": "0.75 (274)"
     },
-    "e:H57": {
+    "e:H57 lang attribute of the document element": {
       "e:language_missing": "0.72 (85)"
     },
-    "w:G141": {
+    "w:G141 heading structure is not logically nested": {
       "a:heading_skipped": "0.85 (535)"
     },
-    "w:G90": {
+    "w:G90 event handler functionality is available through the keyboard": {
       "a:event_handler": "0.76 (109)"
     },
-    "w:H44": {
+    "w:H44 label for attribute bad ID": {
       "a:label_orphaned": "0.71 (67)"
     }
   },

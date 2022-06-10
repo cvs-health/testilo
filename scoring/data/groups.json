@@ -153,8 +153,7 @@
   },
   "buttonNoText": {
     "alfa": [
-      "r12 button does not have an accessible name",
-      "r20 aria- attribute is not defined"
+      "r12 button does not have an accessible name"
     ],
     "axe": [
       "aria-command-name ARIA commands must have an accessible name"
@@ -239,6 +238,9 @@
     ]
   },
   "roleBadAttr": {
+    "alfa": [
+      "r20 aria- attribute is not defined"
+    ],
     "axe": [
       "aria-valid-attr ARIA attributes must conform to valid names"
     ],

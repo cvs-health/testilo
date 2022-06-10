@@ -1,5 +1,5 @@
-[
-  {
+{
+  "dupID": {
     "aatt": [
       "e:F77 Duplicate id attribute value"
     ],
@@ -7,13 +7,13 @@
       "r3 element does not have a unique ID"
     ],
     "axe": [
-      "duplicate-id"
+      "duplicate-id id attribute value must be unique"
     ],
     "ibm": [
       "RPT_Elem_UniqueId Element id attribute values must be unique within a document"
     ]
   },
-  {
+  "imgInputAlt": {
     "aatt": [
       "e:H36 Image submit button missing an alt attribute"
     ],
@@ -21,16 +21,16 @@
       "r28 image input element does not have an accessible name"
     ],
     "axe": [
-      "input-image-alt"
+      "input-image-alt Image buttons must have alternate text"
     ],
     "ibm": [
       "v:WCAG20_Input_ExplicitLabelImage input element of type image should have a text alternative"
     ],
     "wave": [
-      "e:alt_input_missing"
+      "e:alt_input_missing Image button missing alternative text"
     ]
   },
-  {
+  "imgAlt": {
     "aatt": [
       "e:H37 Img element missing an alt attribute"
     ],
@@ -38,16 +38,16 @@
       "r2 image does not have an accessible name"
     ],
     "axe": [
-      "image-alt"
+      "image-alt Images must have alternate text"
     ],
     "ibm": [
       "v:WCAG20_Img_HasAlt Images must have an alt attribute if they convey meaning, or alt='' if decorative"
     ],
     "wave": [
-      "e:alt_missing"
+      "e:alt_missing Missing alternative text"
     ]
   },
-  {
+  "htmlLang": {
     "aatt": [
       "e:H57 lang attribute of the document element"
     ],
@@ -55,16 +55,16 @@
       "r4 lang attribute is either missing, empty, or only whitespace"
     ],
     "axe": [
-      "html-has-lang"
+      "html-has-lang html element must have a lang attribute"
     ],
     "ibm": [
       "WCAG20_Html_HasLang Page detected as HTML, but does not have a lang attribute"
     ],
     "wave": [
-      "e:language_missing"
+      "e:language_missing Language missing or invalid"
     ]
   },
-  {
+  "langChange": {
     "aatt": [
       "e:H58 change in language is marked"
     ],
@@ -72,10 +72,10 @@
       "r7 lang attribute does not have a valid primary language subtag"
     ],
     "axe": [
-      "valid-lang"
+      "valid-lang lang attribute must have a valid value"
     ]
   },
-  {
+  "headingStruc": {
     "aatt": [
       "w:G141 heading structure is not logically nested"
     ],
@@ -83,29 +83,30 @@
       "r53 heading skips one or more levels"
     ],
     "axe": [
-      "heading-order"
+      "heading-order Heading levels should only increase by one"
+    ],
+    "tenon": [
+      "155 These headings are not structured in a hierarchical manner"
     ],
     "wave": [
-      "a:heading_skipped"
+      "a:heading_skipped Skipped heading level"
     ]
   },
-  {
-    "aatt": [
-      "w:H98 autocomplete attribute"
-    ],
-    "alfa": [
-      "r10 autocomplete attribute does not have a valid value"
-    ]
-  },
-  {
+  "objAlt": {
     "aatt": [
       "e:ARIA6+H53 Object elements must contain a text alternative"
     ],
+    "axe": [
+      "object-alt object elements must have alternate text"
+    ],
     "ibm": [
       "v:WCAG20_Object_HasText object elements must have a text alternative"
+    ],
+    "wave": [
+      "a:plugin Plugin"
     ]
   },
-  {
+  "imgMapAreaNoText": {
     "aatt": [
       "e:H24 Area element in an image map missing an alt attribute"
     ],
@@ -117,255 +118,224 @@
       "v:WCAG20_Area_HasAlt area element in an image map has no text alternative"
     ],
     "wave": [
-      "e:alt_area_missing"
+      "e:alt_area_missing Image map area missing alternative text"
     ]
   },
-  {
-    "aatt": [
-      "e:G1+G123+G124 common navigation elements can be bypassed"
-    ],
-    "wave": [
-      "a:link_internal_broken"
-    ]
-  },
-  {
+  "eventKbd": {
     "aatt": [
       "w:G90 event handler functionality is available through the keyboard"
     ],
     "wave": [
-      "a:event_handler"
+      "a:event_handler Device dependent event handler"
     ]
   },
-  {
+  "labelForBadID": {
     "aatt": [
       "w:H44 label for attribute bad ID"
     ],
     "wave": [
-      "a:label_orphaned"
+      "a:label_orphaned Orphaned form label"
     ]
   },
-  {
+  "linkNoText": {
     "alfa": [
       "r11 link does not have an accessible name"
     ],
     "axe": [
-      "link-name"
+      "link-name Links must have discernible text"
     ],
     "ibm": [
       "v:WCAG20_A_HasText Hyperlinks must have a text description"
+    ],
+    "tenon": [
+      "57 This link has no text inside it"
     ]
   },
-  {
+  "buttonNoText": {
     "alfa": [
       "r12 button does not have an accessible name",
       "r20 aria- attribute is not defined"
     ],
     "axe": [
-      "aria-command-name"
+      "aria-command-name ARIA commands must have an accessible name"
     ]
   },
-  {
+  "parentMissing": {
     "alfa": [
       "r42 element is not owned by an element of its required context role"
     ],
     "axe": [
-      "aria-required-parent"
+      "aria-required-parent Certain ARIA roles must be contained by particular parents"
     ]
   },
-  {
+  "svgImgNoText": {
     "alfa": [
       "r43 SVG image element does not have an accessible name"
     ],
     "axe": [
-      "svg-img-alt"
+      "svg-img-alt svg elements with an img role must have an alternative text"
     ]
   },
-  {
+  "metaBansZoom": {
     "alfa": [
       "r47 meta element restricts the ability to zoom"
     ],
     "axe": [
-      "meta-viewport"
+      "meta-viewport Zooming and scaling should not be disabled"
     ]
   },
-  {
+  "htmlLangBad": {
     "alfa": [
       "r5 lang attribute does not have a valid primary language tag"
     ],
     "axe": [
-      "html-lang-valid"
+      "html-lang-valid html element must have a valid value for the lang attribute"
     ],
     "ibm": [
       "v:WCAG20_Elem_Lang_Valid lang attribute does not include a valid primary language"
     ]
   },
-  {
+  "childMissing": {
     "alfa": [
       "r68 element owns no elements as required by its semantic role"
     ],
     "axe": [
-      "aria-required-children"
+      "aria-required-children 'Certain ARIA roles must contain particular children"
     ]
   },
-  {
+  "leadingFrozen": {
     "alfa": [
       "r93 style attribute is used to prevent adjusting line-height by using !important"
     ],
     "axe": [
-      "avoid-inline-spacing"
+      "avoid-inline-spacing Inline text spacing must be adjustable with custom stylesheets"
     ]
   },
-  {
+  "iframeNoText": {
     "alfa": [
       "r13 iframe does not have an accessible name"
     ],
+    "axe": [
+      "frame-title Frames must have an accessible name"
+    ],
     "ibm": [
       "v:WCAG20_Frame_HasTitle Inline frames must have a unique, non-empty title attribute"
-    ],
-    "axe": [
-      "frame-title"
     ]
   },
-  {
+  "roleBad": {
     "axe": [
-      "aria-allowed-role"
+      "aria-allowed-role ARIA role should be appropriate for the element"
     ],
     "ibm": [
       "v:aria_semantics_role ARIA roles must be valid for the element to which they are assigned"
     ]
   },
-  {
+  "roleMissingAttr": {
     "axe": [
-      "aria-required-attr"
+      "aria-required-attr Required ARIA attributes must be provided"
     ],
     "ibm": [
       "v:Rpt_Aria_RequiredProperties ARIA role on an element must have required attributes"
     ]
   },
-  {
+  "roleBadAttr": {
     "axe": [
-      "aria-valid-attr"
+      "aria-valid-attr ARIA attributes must conform to valid names"
     ],
     "ibm": [
       "v:Rpt_Aria_ValidProperty ARIA attributes must be valid for the role"
     ]
   },
-  {
+  "autocompleteBad": {
+    "aatt": [
+      "w:H98 autocomplete attribute"
+    ],
+    "alfa": [
+      "r10 autocomplete attribute does not have a valid value"
+    ],
     "axe": [
-      "autocomplete-valid"
+      "autocomplete-valid autocomplete attribute must be used correctly"
     ],
     "ibm": [
       "v:WCAG21_Input_Autocomplete autocomplete attribute token(s) must be appropriate for the input form field"
     ]
   },
-  {
+  "contrast": {
     "axe": [
-      "color-contrast"
+      "color-contrast Elements must have sufficient color contrast"
     ],
     "ibm": [
       "v:IBMA_Color_Contrast_WCAG2AA contrast ratio of text with background must meet WCAG 2.1 AA"
     ],
     "wave": [
-      "c:contrast"
+      "c:contrast Very low contrast"
     ]
   },
-  {
+  "headingEmpty": {
     "axe": [
-      "empty-heading"
+      "empty-heading Headings should not be empty"
     ],
     "ibm": [
       "v:RPT_Header_HasContent Heading elements must provide descriptive text"
     ],
     "wave": [
-      "e:heading_empty"
+      "e:heading_empty Empty heading"
     ]
   },
-  {
+  "imgAltRedundant": {
     "axe": [
-      "image-redundant-alt"
+      "image-redundant-alt Text of buttons and links should not be repeated in the image alternative"
     ],
     "ibm": [
       "v:WCAG20_Img_LinkTextNotRedundant text alternative for image within link should not repeat link text or adjacent link text"
     ]
   },
-  {
+  "title": {
     "axe": [
-      "landmark-complementary-is-top-level"
+      "document-title Documents must contain a title element"
     ],
+    "wave": [
+      "e:title_invalid Missing or uninformative page title"
+    ]
+  },
+  "h1Missing": {
+    "axe": [
+      "page-has-heading-one Page should contain a level-one heading"
+    ],
+    "wave": [
+      "a:h1_missing Missing first level heading"
+    ]
+  },
+  "selectNoText": {
+    "axe": [
+      "select-name Select element must have an accessible name"
+    ],
+    "wave": [
+      "a:select_missing_label Select missing label"
+    ]
+  },
+  "ariaRefBad": {
     "ibm": [
-      "v:Rpt_Aria_ComplementaryRequiredLabel_Implicit element with complementary role must have a label"
+      "v:Rpt_Aria_ValidIdRef The ARIA property must reference a non-empty unique id of an existing element that is visible"
+    ],
+    "wave": [
+      "e:aria_reference_broken Broken ARIA reference"
     ]
   },
-  {
-    "axe": [
-      "landmark-no-duplicate-banner"
-    ],
+  "accessKeyDup": {
     "ibm": [
-      "v:Rpt_Aria_MultipleBannerLandmarks_Implicit element with banner role must have unique label"
+      "v:WCAG20_Elem_UniqueAccessKey accesskey attribute values on each element must be unique for the page"
+    ],
+    "wave": [
+      "a:accesskey Accesskey"
     ]
   },
-  {
-    "axe": [
-      "landmark-no-duplicate-main"
-    ],
+  "fieldSetMissing": {
     "ibm": [
-      "r:Rpt_Aria_MultipleMainsVisibleLabel_Implicit element with main role should have unique visible label"
-    ]
-  },
-  {
-    "axe": [
-      "document-title"
+      "v:WCAG20_Input_RadioChkInFieldSet input is in a different group than another with the name"
     ],
     "wave": [
-      "e:title_invalid"
-    ]
-  },
-  {
-    "axe": [
-      "object-alt"
-    ],
-    "wave": [
-      "a:plugin"
-    ]
-  },
-  {
-    "axe": [
-      "page-has-heading-one"
-    ],
-    "wave": [
-      "a:h1_missing"
-    ]
-  },
-  {
-    "axe": [
-      "select-name"
-    ],
-    "wave": [
-      "a:select_missing_label"
-    ]
-  },
-  {
-    "ibm": [
-      "v:Rpt_Aria_ValidIdRef"
-    ],
-    "wave": [
-      "e:aria_reference_broken"
-    ]
-  },
-  {
-    "ibm": [
-      "v:WCAG20_Elem_UniqueAccessKey"
-    ],
-    "wave": [
-      "a:accesskey"
-    ]
-  },
-  {
-    "ibm": [
-      "v:WCAG20_Input_RadioChkInFieldSet"
-    ],
-    "wave": [
-      "a:fieldset_missing"
+      "a:fieldset_missing Missing fieldset"
     ]
   }
-]
+}

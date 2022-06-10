@@ -23,6 +23,8 @@ Testilo includes some score procs, digest procs, and comparison procs. You can a
 
 ### Scoring
 
+#### Process
+
 To score Testaro reports, execute the statement `node score abc xyz`. Replace (here and below) `abc` with the base of the name of the file containing the report, or the prefix of the file name. Replace `xyz` with the base of the name of the score proc.
 
 If you replace `abc` with the entire name base, Testilo will score one report. If you replace `abc` with a prefix (such as `35k1r-`), Testilo will score all the reports whose names begin with that prefix.
@@ -36,6 +38,27 @@ This procedure has some preconditions:
 - The `procs/score` directory contains a file named `xyz.js`.
 
 When Testilo scores a report, Testilo saves the scored report in the directory whose relative path is the value of the `REPORTDIR_SCORED`. The scored report file has the same name as the original. The scored report has the same content as the original, plus a new property named `score`.
+
+#### Procedures
+
+Score proc `tsp09a` implements one possible algorithm for scoring results from Testaro sample script `tsp09`.
+
+Score proc `sp10a` implements an algorithm similar to `tsp09a`, except for Testaro sample script `tp10`, which, unlike `tsp09`, includes the Tenon package.
+
+Score proc `sp10b` likewise scores results from Testaro script `tp10`, but, unlike score proc `sp10a`, bases scores on _issues_ rather than tests. Here, an issue is a case of a fault or a suspected fault of a particular kind. For example, if there are 7 informative images without text alternatives, the count of issues of that kind is 7.
+
+Because packages differ in how they identify the locations of issues, score proc `sp10b` does not try to establish whether an issue discovered by one test is the same as an issue discovered by another test. Instead, its algorithm is based on the presumption that the issues of a kind discovered by different tests are probably, but not certainly, subsets or supersets of one another. For example, if test A discovers 4 issues of kind X and test B discovers 6 issues of kind X, it is likely that the 4 discovered by A are also among the 6 discovered by B.
+
+Reflecting this presumption, the contribution of any issue kind to a total score is based substantially on the largest count of issues of that kind discovered by any test. The first issue of a kind is weighted more heavily than each additional issue, because the existence of any issues of a particular kind, regardless of how many, tends to create usability barriers, remediation costs, and liability risks.
+
+To a smaller extent, the total score is also affected by the counts of issues of the same kind discovered by other tests. This is because, when multiple tests discover a kind of issue:
+- we can be more confident that there really are issues of that kind.
+- there is less excuse for allowing issues of that kind to appear.
+- the website owner is more likely to receive complaints or claims about issues of that kind.
+
+Score proc `sp10b` uses the data in `scoring/data/testGroups.json` to identify _groups_ of tests, where the tests in any group are deemed to test for the same kind of issue. 
+
+The contribution also depends on how serious each kind of issue is deemed to be.
 
 ### Digesting
 

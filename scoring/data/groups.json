@@ -13,7 +13,7 @@
       "RPT_Elem_UniqueId Element id attribute values must be unique within a document"
     ]
   },
-  "imgInputAlt": {
+  "imgInputNoText": {
     "aatt": [
       "e:H36 Image submit button missing an alt attribute"
     ],
@@ -30,7 +30,7 @@
       "e:alt_input_missing Image button missing alternative text"
     ]
   },
-  "imgAlt": {
+  "imgNoText": {
     "aatt": [
       "e:H37 Img element missing an alt attribute"
     ],
@@ -92,7 +92,7 @@
       "a:heading_skipped Skipped heading level"
     ]
   },
-  "objAlt": {
+  "objNoText": {
     "aatt": [
       "e:ARIA6+H53 Object elements must contain a text alternative"
     ],

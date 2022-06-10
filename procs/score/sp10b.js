@@ -4,165 +4,194 @@
   Computes scores from Testaro script tp10 and adds them to a report.
   Usage example: node score 35k1r sp10b
 */
+
+// CONSTANTS
+
+const {acts} = report;
+// Define the configuration disclosures.
+const logWeights = {
+  count: 0.5,
+  size: 0.01,
+  prohibited: 15,
+  visitTimeout: 10,
+  visitRejection: 10
+};
+const faultWeights = {
+  accessKeyDup: 3,
+  ariaRefBad: 4,
+  autocompleteBad: 2,
+  buttonNoText: 4,
+  childMissing: 3,
+  contrast: 3,
+  dupID: 2,
+  eventKbd: 3,
+  fieldSetMissing: 2,
+  h1Missing: 1,
+  headingEmpty: 2,
+  headingStruc: 2,
+  htmlLang: 3,
+  htmlLangBad: 3,
+  iframeNoText: 3,
+  imgNoText: 4,
+  imgAltRedundant: 1,
+  imgInputNoText: 4,
+  imgMapAreaNoText: 3,
+  labelForBadID: 4,
+  langChange: 2,
+  leadingFrozen: 3,
+  linkNoText: 4,
+  metaBansZoom: 3,
+  objNoText: 2,
+  parentMissing: 3,
+  roleBad: 3,
+  roleBadAttr: 3,
+  roleMissingAttr: 3,
+  selectNoText: 3,
+  svgImgNoText: 4,
+  title: 3,
+  ungrouped: 1
+};
+const countWeights = {
+  first: 2,
+  more: 1,
+  dup: 0.4
+};
+const diffStyles = [
+  'borderStyle',
+  'borderWidth',
+  'fontStyle',
+  'fontWeight',
+  'lineHeight',
+  'maxHeight',
+  'maxWidth',
+  'minHeight',
+  'minWidth',
+  'opacity',
+  'outlineOffset',
+  'outlineStyle',
+  'outlineWidth',
+  'textDecorationLine',
+  'textDecorationStyle',
+  'textDecorationThickness'
+];
+const details = {};
+const summary = {
+  total: 0,
+  log: null
+};
+
+// Adds to the count of issues of a kind discovered by a test package.
+const addDetail = (actWhich, testID, addition = 1) => {
+  if (! details[actWhich]) {
+    details[actWhich] = {};
+  }
+  if (! details[actWhich][testID]) {
+    details[actWhich][testID] = 0;
+  }
+  details[actWhich][testID] += addition;
+};
+
 exports.scorer = report => {
-  // CONSTANTS
-  const {acts} = report;
-  // Define the configuration disclosures.
-  const logWeights = {
-    count: 0.5,
-    size: 0.01,
-    prohibited: 15,
-    visitTimeout: 10,
-    visitRejection: 10
-  };
-  const diffStyles = [
-    'borderStyle',
-    'borderWidth',
-    'fontStyle',
-    'fontWeight',
-    'lineHeight',
-    'maxHeight',
-    'maxWidth',
-    'minHeight',
-    'minWidth',
-    'opacity',
-    'outlineOffset',
-    'outlineStyle',
-    'outlineWidth',
-    'textDecorationLine',
-    'textDecorationStyle',
-    'textDecorationThickness'
-  ];
-  // Initialize the score.
-  let scores = {
-    total: 0,
-    log: null
-  };
-  // VARIABLES
-  let facts;
   // If there are any acts:
   if (Array.isArray(acts)) {
-    // If any of them are tests:
+    // If any of them are test acts:
     const tests = acts.filter(act => act.type === 'test');
     if (tests.length) {
-      // OPERATION
-      // For each test:
+      // For each test act:
       tests.forEach(test => {
         const {which} = test;
-        // Compute its score.
-        if (which === 'alfa') {
-          facts = test.result;
-          if (facts && Array.isArray(facts)) {
-            rules.alfa = 'multiply cantTell by 2*, failed by 4* (*discounted); sum';
-            scores.alfa = Math.round(facts.reduce((total, issue) => {
-              const rawScore = [4, 2][['failed', 'cantTell'].indexOf(issue.verdict)] || 0;
-              const divisor = duplications.alfa[issue.rule.ruleID] + 1 || 1;
-              return total + rawScore / divisor;
-            }, 0));
-            scores.total += scores.alfa;
+        // Get the issue tally.
+        if (which === 'aatt') {
+          const issues = test.result;
+          if (issues && Array.isArray(issues)) {
+            issues.forEach(issue => {
+              const {type, id} = issue;
+              if (type && id) {
+                const typedID = `${type[0]}:${id}`;
+                addDetail(which, typedID);
+              }
+            });
           }
         }
-        else if (which === 'aatt') {
-          facts = test.result;
-          if (facts && Array.isArray(facts)) {
-            rules.aatt = 'multiply warning by 2*, error by 4* (*discounted); sum';
-            const issues = facts.filter(fact => fact.type);
-            scores.aatt = Math.round(issues.reduce((total, issue) => {
-              const rawScore = [4, 2][['error', 'warning'].indexOf(issue.type)] || 0;
-              const divisor = duplications.aatt[`${issue.type.slice(0, 1)}:${issue.id}`] + 1 || 1;
-              return total + rawScore / divisor;
-            }, 0));
-            scores.total += scores.aatt;
+        else if (which === 'alfa') {
+          const issues = test.result;
+          if (issues && Array.isArray(issues)) {
+            issues.forEach(issue => {
+              const {rule} = issue;
+              if (rule) {
+                const {ruleID} = rule;
+                if (ruleID) {
+                  addDetail(which, ruleID);
+                }
+              }
+            });
           }
         }
         else if (which === 'axe') {
-          facts = test.result && test.result.items;
-          if (facts) {
-            rules.axe = 'multiply minor by 2*, moderate by 3*, serious by 4*, critical by 5* (*discounted); sum';
-            scores.axe = Math.round(facts.reduce((total, item) => {
-              const rawScore = item.elements.length * (
-                [5, 4, 3, 2][['critical', 'serious', 'moderate', 'minor'].indexOf(item.impact)] || 0
-              );
-              const divisor = duplications.axe[item.rule] + 1 || 1;
-              return total + rawScore / divisor;
-            }, 0));
-            scores.total += scores.axe;
+          const tests = test.result && test.result.items;
+          if (tests && Array.isArray(tests)) {
+            tests.forEach(test => {
+              const {rule, elements} = test;
+              if (rule && Array.isArray(elements) && elements.length) {
+                addDetail(which, rule, elements.length);
+              }
+            });
           }
         }
         else if (which === 'ibm') {
-          facts = test.result;
-          if (facts && facts.content && facts.url && (facts.content.totals || facts.url.totals)) {
-            rules.ibm = 'multiply violations by 4*, recommendations by 2* (*discounted); sum';
-            const ibmScores = {
-              content: null,
-              url: null
-            };
-            ['content', 'url'].forEach(type => {
-              const totals = facts[type].totals;
-              if (totals) {
-                const items = facts[type].items || [];
-                ibmScores[type] = Math.round(items.reduce((total, item) => {
-                  const {ruleId, level} = item;
-                  const rawScore = [4, 2][['violation', 'recommendation'].indexOf(level)] || 0;
-                  const divisor = duplications.ibm[`${level.slice(0, 1)}:${ruleId}`] + 1 || 1;
-                  return total + rawScore / divisor;
-                }, 0));
-              }
-            });
-            if (ibmScores.content !== null || ibmScores.url !== null) {
-              scores.ibm = Math.max(ibmScores.content || 0, ibmScores.url || 0);
-              scores.total += scores.ibm;
+          const envs = test.result;
+          const {content, url} = envs;
+          if (content && url) {
+            let preferredEnv = 'content';
+            if (
+              content.error
+              || content.totals
+              && content.totals.violation
+              && url.totals
+              && url.totals.violation
+              && url.totals.violation > content.totals.violation
+            ) {
+              preferredEnv = 'url';
+            }
+            const {items} = envs[preferredEnv];
+            if (items && Array.isArray(items) && items.length) {
+              items.forEach(issue => {
+                const {ruleID} = issue;
+                if (ruleID) {
+                  addDetail(which, ruleID);
+                }
+              });
             }
           }
         }
         else if (which === 'tenon') {
-          facts = test.result
-          && test.result.data
-          && test.result.data.resultSummary
-          && test.result.data.resultSummary.issues;
-          if (facts) {
-            rules.tenon
-              = 'multiply warnings by 1, errors by 3; sum';
-            const weights = {
-              totalErrors: 3,
-              totalWarnings: 1
-            };
-            const tenonScores = {
-              totalErrors: 0,
-              totalWarnings: 0
-            };
-            ['totalErrors', 'totalWarnings'].forEach(level => {
-              tenonScores[level] = weights[level] * facts[level];
-            });
-            scores.tenon = tenonScores.totalErrors + tenonScores.totalWarnings;
-            scores.total += scores.tenon;
+          const issues = test.result && test.result.data && test.result.data.resultSet;
+          if (issues && Array.isArray(issues) && issues.length) {
+            issues.forEach(issue => {
+              const {tID} = issue;
+              if (tID) {
+                addDetail(which, tID);
+              }
+            })
           }
         }
         else if (which === 'wave') {
-          facts = test.result && test.result.categories;
-          if (facts) {
-            rules.wave
-              = 'multiply alerts by 2*, contrast errors by 3*, errors by 4* (*discounted); sum';
-            const weights = {
-              error: 4,
-              contrast: 3,
-              alert: 2
-            };
-            const waveScores = {
-              error: 0,
-              contrast: 0,
-              alert: 0
-            };
-            ['error', 'contrast', 'alert'].forEach(level => {
-              const {items} = facts[level];
-              waveScores[level] = Math.round(Object.keys(items).reduce((total, ruleID) => {
-                const rawScore = items[ruleID].count * weights[level];
-                const divisor = duplications.wave[`${level.slice(0, 1)}:${ruleID}`] + 1 || 1;
-                return total + rawScore / divisor;
-              }, 0));
+          const issueClasses = test.result && test.result.categories;
+          if (issueClasses) {
+            ['error', 'contrast', 'alert'].forEach(issueClass => {
+              const {items} = issueClasses[issueClass];
+              if (items) {
+                const testIDs = Object.keys(items);
+                if (testIDs.length) {
+                  testIDs.forEach(testID => {
+                    const {count} = items[testID];
+                    if (count) {
+                      addDetail(which, `${issueClass[0]}:${testID}`, count);
+                    }
+                  });
+                }
+              }
             });
-            scores.wave = waveScores.error + waveScores.contrast + waveScores.alert;
-            scores.total += scores.wave;
           }
         }
         else if (which === 'bulk') {

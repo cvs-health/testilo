@@ -58,7 +58,13 @@ To a smaller extent, the total score is also affected by the counts of issues of
 
 Score proc `sp10b` uses the data in `scoring/data/testGroups.json` to identify _groups_ of tests, where the tests in any group are deemed to test for the same kind of issue. 
 
-The contribution also depends on how serious each kind of issue is deemed to be.
+Some tests have not been grouped. The proper treatment of those tests may be:
+- to treat them as a group of 1, because they alone discover issues of some kind.
+- to insert them into an existing group.
+
+As long as they are not grouped, each issue discovered by one of those tests contributes a small amount to the total score.
+
+The contribution also depends on how serious each kind of issue is deemed to be. Although the Axe-core package attributes a seriousness to each issue, so that two issues of the same kind can differ in seriousness, score proc `sp10b` ignores that information.
 
 ### Digesting
 

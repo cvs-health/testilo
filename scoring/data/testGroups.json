@@ -6,11 +6,11 @@
         "what": "Duplicate id attribute value"
       },
       "e:H36": {
-        "groupID": "imgInputAlt",
+        "groupID": "imgInputNoText",
         "what": "Image submit button missing an alt attribute"
       },
       "e:H37": {
-        "groupID": "imgAlt",
+        "groupID": "imgNoText",
         "what": "Img element missing an alt attribute"
       },
       "e:H57": {
@@ -26,7 +26,7 @@
         "what": "heading structure is not logically nested"
       },
       "e:ARIA6+H53": {
-        "groupID": "objAlt",
+        "groupID": "objNoText",
         "what": "Object elements must contain a text alternative"
       },
       "e:H24": {
@@ -52,11 +52,11 @@
         "what": "element does not have a unique ID"
       },
       "r28": {
-        "groupID": "imgInputAlt",
+        "groupID": "imgInputNoText",
         "what": "image input element does not have an accessible name"
       },
       "r2": {
-        "groupID": "imgAlt",
+        "groupID": "imgNoText",
         "what": "image does not have an accessible name"
       },
       "r4": {
@@ -122,11 +122,11 @@
         "what": "id attribute value must be unique"
       },
       "input-image-alt": {
-        "groupID": "imgInputAlt",
+        "groupID": "imgInputNoText",
         "what": "Image buttons must have alternate text"
       },
       "image-alt": {
-        "groupID": "imgAlt",
+        "groupID": "imgNoText",
         "what": "Images must have alternate text"
       },
       "html-has-lang": {
@@ -142,7 +142,7 @@
         "what": "Heading levels should only increase by one"
       },
       "object-alt": {
-        "groupID": "objAlt",
+        "groupID": "objNoText",
         "what": "object elements must have alternate text"
       },
       "area-alt": {
@@ -232,11 +232,11 @@
         "what": "Element id attribute values must be unique within a document"
       },
       "v:WCAG20_Input_ExplicitLabelImage": {
-        "groupID": "imgInputAlt",
+        "groupID": "imgInputNoText",
         "what": "input element of type image should have a text alternative"
       },
       "v:WCAG20_Img_HasAlt": {
-        "groupID": "imgAlt",
+        "groupID": "imgNoText",
         "what": "Images must have an alt attribute if they convey meaning, or alt='' if decorative"
       },
       "WCAG20_Html_HasLang": {
@@ -244,7 +244,7 @@
         "what": "Page detected as HTML, but does not have a lang attribute"
       },
       "v:WCAG20_Object_HasText": {
-        "groupID": "objAlt",
+        "groupID": "objNoText",
         "what": "object elements must have a text alternative"
       },
       "v:HAAC_Img_UsemapAlt": {
@@ -310,11 +310,11 @@
     },
     "wave": {
       "e:alt_input_missing": {
-        "groupID": "imgInputAlt",
+        "groupID": "imgInputNoText",
         "what": "Image button missing alternative text"
       },
       "e:alt_missing": {
-        "groupID": "imgAlt",
+        "groupID": "imgNoText",
         "what": "Missing alternative text"
       },
       "e:language_missing": {
@@ -326,7 +326,7 @@
         "what": "Skipped heading level"
       },
       "a:plugin": {
-        "groupID": "objAlt",
+        "groupID": "objNoText",
         "what": "Plugin"
       },
       "e:alt_area_missing": {
@@ -400,7 +400,7 @@
         "RPT_Elem_UniqueId Element id attribute values must be unique within a document"
       ]
     },
-    "imgInputAlt": {
+    "imgInputNoText": {
       "aatt": [
         "e:H36 Image submit button missing an alt attribute"
       ],
@@ -417,7 +417,7 @@
         "e:alt_input_missing Image button missing alternative text"
       ]
     },
-    "imgAlt": {
+    "imgNoText": {
       "aatt": [
         "e:H37 Img element missing an alt attribute"
       ],
@@ -479,7 +479,7 @@
         "a:heading_skipped Skipped heading level"
       ]
     },
-    "objAlt": {
+    "objNoText": {
       "aatt": [
         "e:ARIA6+H53 Object elements must contain a text alternative"
       ],

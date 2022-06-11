@@ -227,6 +227,9 @@
     ],
     "ibm": [
       "v:aria_semantics_role ARIA roles must be valid for the element to which they are assigned"
+    ],
+    "testaro": [
+      "role nonexistent or implicit-overriding role"
     ]
   },
   "roleMissingAttr": {
@@ -336,6 +339,9 @@
     "ibm": [
       "v:WCAG20_Input_RadioChkInFieldSet input is in a different group than another with the name"
     ],
+    "testaro": [
+      "radioSet no or invalid grouping of radio buttons in fieldsets"
+    ],
     "wave": [
       "a:fieldset_missing Missing fieldset"
     ]
@@ -370,39 +376,34 @@
       "labClash incompatible label types"
     ]
   },
-  "bulk": {
+  "linkUl": {
     "testaro": [
-      "bulk"
+      "linkUl non-underlined inline links"
     ]
   },
-  "bulk": {
+  "menuNav": {
     "testaro": [
-      "bulk"
+      "menuNav nonstandard keyboard navigation among focusable menu items"
     ]
   },
-  "bulk": {
+  "motion": {
     "testaro": [
-      "bulk"
+      "motion change of visible content not requested by user"
     ]
   },
-  "bulk": {
+  "styleDiff": {
     "testaro": [
-      "bulk"
+      "styleDiff heading, link, and button style inconsistencies"
     ]
   },
-  "bulk": {
+  "tabNav": {
     "testaro": [
-      "bulk"
+      "tabNav nonstandard keyboard navigation among tabs"
     ]
   },
-  "bulk": {
+  "zIndex": {
     "testaro": [
-      "bulk"
-    ]
-  },
-  "bulk": {
-    "testaro": [
-      "bulk"
+      "zIndex layering with nondefault z-index values"
     ]
   }
 }

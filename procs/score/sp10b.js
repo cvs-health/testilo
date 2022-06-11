@@ -16,7 +16,7 @@ const logWeights = {
   visitTimeout: 10,
   visitRejection: 10
 };
-const faultWeights = {
+const groupWeights = {
   accessKeyDup: 3,
   ariaRefBad: 4,
   autocompleteBad: 2,
@@ -47,40 +47,28 @@ const faultWeights = {
   langChange: 2,
   leadingFrozen: 3,
   linkNoText: 4,
+  linkUl: 2,
+  menuNav: 2,
   metaBansZoom: 3,
+  motion: 2,
   objNoText: 2,
   parentMissing: 3,
   roleBad: 3,
   roleBadAttr: 3,
   roleMissingAttr: 3,
   selectNoText: 3,
+  styleDiff: 1,
   svgImgNoText: 4,
+  tabNav: 2,
   title: 3,
-  ungrouped: 1
+  zIndex: 1
 };
+const soloWeight = 1;
 const countWeights = {
   first: 2,
   more: 1,
   dup: 0.4
 };
-const diffStyles = [
-  'borderStyle',
-  'borderWidth',
-  'fontStyle',
-  'fontWeight',
-  'lineHeight',
-  'maxHeight',
-  'maxWidth',
-  'minHeight',
-  'minWidth',
-  'opacity',
-  'outlineOffset',
-  'outlineStyle',
-  'outlineWidth',
-  'textDecorationLine',
-  'textDecorationStyle',
-  'textDecorationThickness'
-];
 const details = {};
 const summary = {
   total: 0,
@@ -269,118 +257,82 @@ exports.scorer = report => {
           }
         }
         else if (which === 'linkUl') {
-          facts = test.result && test.result.totals;
-          facts = facts ? facts.inline : null;
-          if (facts) {
-            rules.linkUl = 'multiply nonunderlined inline links by 3';
-            scores.linkUl = 3 * (facts.total - facts.underlined);
+          const issues = test.result && test.result.items && test.result.items.notUnderlined;
+          if (issues && issues.length) {
+            addDetail('testaro', which, issues.length);
           }
-          else {
-            inferences.linkUl = 150;
-          }
-          increment('linkUl');
         }
         else if (which === 'menuNav') {
-          facts = test.result && test.result.totals && test.result.totals.navigations;
-          if (facts) {
-            rules.menuNav = 'multiply Home and End errors by 1 and other key-navigation errors by 3; sum';
-            scores.menuNav
-              = 3 * facts.all.incorrect
-              - 2 * (facts.specific.home.incorrect + facts.specific.end.incorrect);
+          const issueCount = test.result
+          && test.result.totals
+          && test.result.totals.navigations
+          && test.result.totals.navigations.all
+          && test.result.totals.navigations.all.incorrect;
+          if (issueCount && typeof issueCount === 'number') {
+            addDetail('testaro', which, issueCount);
           }
-          else {
-            inferences.menuNav = 150;
-          }
-          increment('menuNav');
         }
         else if (which === 'motion') {
-          facts = test.result;
-          if (facts && facts.bytes) {
-            rules.motion = 'get PNG screenshot sizes (sss); get differing-pixel counts between adjacent PNG screenshots (pd); “sssd” = sss difference ÷ smaller sss - 1; multiply mean adjacent sssd by 5, maximum adjacent sssd by 2, maximum over-all ssd by 1; divide mean pd by 10,000, maximum pd by 25,000; multiply count of non-0 pd by 30; sum';
-            scores.motion = Math.floor(
-              5 * (facts.meanLocalRatio - 1)
-              + 2 * (facts.maxLocalRatio - 1)
-              + facts.globalRatio - 1
-              + facts.meanPixelChange / 10000
-              + facts.maxPixelChange / 25000
-              + 30 * facts.changeFrequency
+          const data = test.result;
+          if (data && data.bytes) {
+            const faultCount = Math.floor(
+              5 * (data.meanLocalRatio - 1)
+              + 2 * (data.maxLocalRatio - 1)
+              + data.globalRatio - 1
+              + data.meanPixelChange / 10000
+              + data.maxPixelChange / 25000
+              + 30 * data.changeFrequency
             );
+            addDetail('testaro', which, faultCount);
           }
-          else {
-            inferences.motion = 150;
-          }
-          increment('motion');
         }
         else if (which === 'radioSet') {
-          facts = test.result && test.result.totals;
-          if (facts) {
-            rules.radioSet = 'multiply radio buttons not in fieldsets with legends and no other-name radio buttons by 2';
-            // Defects discounted.
-            scores.radioSet = 2 * (facts.total - facts.inSet);
+          const counts = test.result && test.result.totals;
+          const {total, inSet} = counts;
+          if (total && typeof inSet === 'number' && total >= inSet) {
+            addDetail('testaro', which, total - inSet);
           }
-          else {
-            inferences.radioSet = 100;
-          }
-          increment('radioSet');
         }
         else if (which === 'role') {
-          facts = test.result && test.result.badRoleElements;
-          if (typeof facts === 'number') {
-            rules.role = 'multiple role attributes with invalid or native-HTML-equivalent values by 2';
-            // Defects discounted.
-            scores.role = 2 * facts;
+          const issueCount = test.result && test.result.badRoleElements;
+          if (issueCount && typeof issueCount === 'number') {
+            addDetail('testaro', which, issueCount);
           }
-          else {
-            inferences.role = 100;
-          }
-          increment('role');
         }
         else if (which === 'styleDiff') {
-          facts = test.result && test.result.totals;
-          if (facts) {
-            rules.styleDiff = 'for each of element classes block a, inline a, button, h1, h2, h3, h4, h5, and h6, get diffStyles-distinct styles; multiply their count minus 1 by 2; multiply count of elements with non-plurality styles by 0.2; sum';
+          const counts = test.result && test.result.totals;
+          if (counts) {
             // Identify objects having the tag-name totals and style distributions as properties.
-            const tagNameCounts = Object.values(facts);
-            // Identify an array of pairs of counts of excess styles and nonplurality elements.
-            const deficits = tagNameCounts.map(
+            const tagNameCounts = Object.values(counts);
+            // Identify an array of pairs of counts of excess styles and of nonplurality elements.
+            const faults = tagNameCounts.map(
               item => {
                 const subtotals = item.subtotals ? item.subtotals : [item.total];
                 return [subtotals.length - 1, item.total - subtotals[0]];
               }
             );
-            // Deficit: 2 per excess style + 0.2 per nonplurality element.
-            scores.styleDiff = Math.floor(deficits.reduce(
+            // Fault count: 2 per excess style + 0.2 per nonplurality element.
+            const faultCount = Math.floor(faults.reduce(
               (total, currentPair) => total + 2 * currentPair[0] + 0.2 * currentPair[1], 0
             ));
+            addDetail('testaro', which, faultCount);
           }
-          else {
-            inferences.styleDiff = 100;
-          }
-          increment('styleDiff');
         }
         else if (which === 'tabNav') {
-          facts = test.result && test.result.totals && test.result.totals.navigations;
-          if (facts) {
-            rules.tabNav = 'multiply Home and End errors by 1 and other key-navigation errors by 3; sum';
-            scores.tabNav
-              = 3 * facts.all.incorrect
-              - 2 * (facts.specific.home.incorrect + facts.specific.end.incorrect);
+          const issueCount = test.result
+          && test.result.totals
+          && test.result.totals.navigations
+          && test.result.totals.navigations.all
+          && test.result.totals.navigations.all.incorrect;
+          if (issueCount && typeof issueCount === 'number') {
+            addDetail('testaro', which, issueCount);
           }
-          else {
-            inferences.tabNav = 150;
-          }
-          increment('tabNav');
         }
         else if (which === 'zIndex') {
-          facts = test.result && test.result.totals;
-          if (facts) {
-            rules.zIndex = 'multiply non-auto z indexes by 3';
-            scores.zIndex = 3 * facts.total;
+          const issueCount = test.result && test.result.totals;
+          if (issueCount && typeof issueCount === 'number') {
+            addDetail('testaro', which, issueCount);
           }
-          else {
-            inferences.zIndex = 100;
-          }
-          increment('zIndex');
         }
       });
       // Compute the inferred scores of prevented package tests and adjust the total score.
@@ -418,9 +370,6 @@ exports.scorer = report => {
   // Add the score facts to the report.
   report.score = {
     scoreProcID: '',
-    duplications,
-    rules,
-    diffStyles,
     logWeights,
     inferences,
     scores

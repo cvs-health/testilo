@@ -69,23 +69,34 @@ const countWeights = {
   more: 1,
   dup: 0.4
 };
-const details = {};
+const preventionWeights = {
+  testaro: 50,
+  other: 100
+};
+const packageDetails = {};
+const groupDetails = {
+  groups: {},
+  solos: {}
+};
 const summary = {
   total: 0,
   log: null
 };
+const otherPackages = ['aatt', 'alfa', 'axe', 'ibm', 'tenon', 'wave'];
+const preventionScores = {};
+
+// FUNCTIONS
 
 // Adds to the count of issues of a kind discovered by a test package.
 const addDetail = (actWhich, testID, addition = 1) => {
-  if (! details[actWhich]) {
-    details[actWhich] = {};
+  if (! packageDetails[actWhich]) {
+    packageDetails[actWhich] = {};
   }
-  if (! details[actWhich][testID]) {
-    details[actWhich][testID] = 0;
+  if (! packageDetails[actWhich][testID]) {
+    packageDetails[actWhich][testID] = 0;
   }
-  details[actWhich][testID] += addition;
+  packageDetails[actWhich][testID] += addition;
 };
-
 exports.scorer = report => {
   // If there are any acts:
   if (Array.isArray(acts)) {
@@ -334,6 +345,65 @@ exports.scorer = report => {
             addDetail('testaro', which, issueCount);
           }
         }
+      });
+      // Get the prevention scores.
+      const actsPrevented = tests.filter(test => test.result.prevented);
+      actsPrevented.forEach(act => {
+        if (otherPackages.includes(act.which)) {
+          preventionScores[act.which] = preventionWeights.other;
+        }
+        else {
+          preventionScores[`testaro-${act.which}`] = preventionWeights.testaro;
+        }
+      });
+      // Get data on test groups.
+      const testGroupsJSON = await fs.readFile('scoring/data/testGroups.json', 'utf8');
+      const testGroups = JSON.parse(testGroupsJSON);
+      const {tests} = testGroups;
+      // Get the IDs of the packages whose tests report any issues.
+      const issuePackageIDs = Object.keys(packageDetails);
+      // For each such package:
+      issuePackageIDs.forEach(packageID => {
+        // Get the IDs of the tests in the package that report issues.
+        const issueTestIDs = Object.keys(packageID);
+        // For each such test:
+        issueTestIDs.forEach(testID => {
+          // Get its group data, if any.
+          const testGroupData = tests[packageID][testID];
+          // If it is in a group:
+          if (testGroupData) {
+            // Add the issue count to the group details.
+            const {groupID, what} = testGroupData;
+            if (! groupDetails.groups[packageID]) {
+              groupDetails.groups[packageID] = {};
+            }
+            groupDetails.groups[groupID][packageID][testID] = {
+              issueCount: packageDetails[packageID][testID],
+              what
+            };
+          }
+          // Otherwise, i.e. if the test is solo:
+          else {
+            // Add the issue count to the solo details.
+            if (! groupDetails.solos[packageID]) {
+              groupDetails.solos[packageID] = {};
+            }
+            groupDetails.solos[packageID][testID] = {
+              issueCount: packageDetails[packageID][testID],
+              what
+            };
+          }
+        });
+
+        }
+        issueTests.forEach(test => {
+          const testData = tests[test];
+          if (testData) {
+            const {}
+          }
+
+          }
+        });
       });
       // Compute the inferred scores of prevented package tests and adjust the total score.
       const estimate = (tests, penalty) => {

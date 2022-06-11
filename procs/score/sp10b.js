@@ -7,6 +7,7 @@
 
 // CONSTANTS
 
+const scoreProcID = 'sp10b';
 const {acts} = report;
 // Define the configuration disclosures.
 const logWeights = {
@@ -65,9 +66,9 @@ const groupWeights = {
 };
 const soloWeight = 1;
 const countWeights = {
-  first: 2,
-  more: 1,
-  dup: 0.4
+  absolute: 2,
+  largest: 1,
+  smaller: 0.4
 };
 const preventionWeights = {
   testaro: 50,
@@ -80,7 +81,10 @@ const groupDetails = {
 };
 const summary = {
   total: 0,
-  log: null
+  log: 0,
+  preventions: 0,
+  solos: 0,
+  groups: {}
 };
 const otherPackages = ['aatt', 'alfa', 'axe', 'ibm', 'tenon', 'wave'];
 const preventionScores = {};
@@ -346,7 +350,7 @@ exports.scorer = report => {
           }
         }
       });
-      // Get the prevention scores.
+      // Get the prevention scores and add them to the summary.
       const actsPrevented = tests.filter(test => test.result.prevented);
       actsPrevented.forEach(act => {
         if (otherPackages.includes(act.which)) {
@@ -356,6 +360,11 @@ exports.scorer = report => {
           preventionScores[`testaro-${act.which}`] = preventionWeights.testaro;
         }
       });
+      const preventionScore = Object
+      .values(preventionScores)
+      .reduce((sum, current) => sum + current);
+      summary.preventions = preventionScore;
+      summary.total += preventionScore;
       // Get data on test groups.
       const testGroupsJSON = await fs.readFile('scoring/data/testGroups.json', 'utf8');
       const testGroups = JSON.parse(testGroupsJSON);
@@ -372,7 +381,7 @@ exports.scorer = report => {
           const testGroupData = tests[packageID][testID];
           // If it is in a group:
           if (testGroupData) {
-            // Add the issue count to the group details.
+            // Add the issue count and test description to the group details.
             const {groupID, what} = testGroupData;
             if (! groupDetails.groups[packageID]) {
               groupDetails.groups[packageID] = {};
@@ -388,46 +397,44 @@ exports.scorer = report => {
             if (! groupDetails.solos[packageID]) {
               groupDetails.solos[packageID] = {};
             }
-            groupDetails.solos[packageID][testID] = {
-              issueCount: packageDetails[packageID][testID],
-              what
-            };
-          }
-        });
-
-        }
-        issueTests.forEach(test => {
-          const testData = tests[test];
-          if (testData) {
-            const {}
-          }
-
+            groupDetails.solos[packageID][testID] = packageDetails[packageID][testID];
           }
         });
       });
-      // Compute the inferred scores of prevented package tests and adjust the total score.
-      const estimate = (tests, penalty) => {
-        const packageScores = tests.map(test => scores[test]).filter(score => score !== null);
-        const scoreCount = packageScores.length;
-        let meanScore;
-        if (scoreCount) {
-          meanScore = Math.floor(
-            packageScores.reduce((sum, current) => sum + current) / packageScores.length
-          );
-        }
-        else {
-          meanScore = 100;
-        }
-        tests.forEach(test => {
-          if (scores[test] === null) {
-            inferences[test] = meanScore + penalty;
-            scores.total += inferences[test];
-          }
+      // Get the group scores and add them to the summary.
+      const issueGroupIDs = Object.keys(groupDetails.groups);
+      const {absolute, largest, smaller} = countWeights;
+      issueGroupIDs.forEach(groupID => {
+        const issueCounts = [];
+        const groupPackageIDs = Object.keys(groupDetails.groups[groupID]);
+        groupPackageIDs.forEach(packageID => {
+          const testIDs = Object.keys(groupDetails.groups[groupID][packageID]);
+          const issueCountSum = testIDs.reduce((sum, current) => sum + current.issueCount, 0);
+          issueCounts.push(issueCountSum);
         });
-      };
-      estimate(['alfa', 'aatt', 'axe', 'ibm', 'tenon', 'wave'], 100);
+        issueCounts.sort((a, b) => b - a);
+        const groupScore = groupWeights[groupID] * (
+          absolute + largest * issueCounts[0] + smaller * issueCounts.slice(1).reduce(
+            (sum, current) => sum + current
+          )
+        );
+        summary.groups[groupID] = groupScore;
+        summary.total += groupScore;
+      });
+      // Get the solo scores and add them to the summary.
+      const issueSoloPackageIDs = Object.keys(groupDetails.solos);
+      issueSoloPackageIDs.forEach(packageID => {
+        const testIDs = Object.keys(groupDetails.solos[packageID]);
+        testIDs.forEach(testID => {
+          const issueCount = groupDetails.solos[packageID][testID];
+          const issueScore = soloWeight * issueCount;
+          summary.solos += issueScore;
+          summary.total += issueScore;
+        });
+      });
     }
   }
+  // Get the log score.
   logScore = Math.floor(
     logWeights.count * report.logCount
     + logWeights.size * report.logSize
@@ -435,13 +442,19 @@ exports.scorer = report => {
     + logWeights.visitTimeout * report.visitTimeoutCount
     + logWeights.visitRejection * report.visitRejectionCount
   );
-  scores.log = logScore;
-  scores.total += logScore;
+  summary.log = logScore;
+  summary.total += logScore;
   // Add the score facts to the report.
   report.score = {
-    scoreProcID: '',
+    scoreProcID,
     logWeights,
-    inferences,
-    scores
+    groupWeights,
+    soloWeight,
+    countWeights,
+    preventionWeights,
+    packageDetails,
+    groupDetails,
+    preventionScores,
+    summary
   };
 };

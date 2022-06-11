@@ -373,31 +373,42 @@ exports.scorer = async report => {
       // Get data on test groups.
       const testGroupsJSON = await fs.readFile('scoring/data/testGroups.json', 'utf8');
       const testGroups = JSON.parse(testGroupsJSON);
+      // Use the data to populate groupDetails.groups.
       const {tests} = testGroups;
+      const groupPackageIDs = Object.keys(tests);
+      groupPackageIDs.forEach(packageID => {
+        const packageTestIDs = Object.keys(tests[packageID]);
+        packageTestIDs.forEach(testID => {
+          const testData = tests[packageID][testID];
+          const {groupID, what} = testData;
+          if (! groupDetails.groups[groupID]) {
+            groupDetails.groups[groupID] = {};
+          }
+          if (! groupDetails.groups[groupID][packageID]) {
+            groupDetails.groups[groupID][packageID] = {};
+          }
+          groupDetails.groups[testData.groupID][packageID][testID] = {
+            what,
+            issueCount: 0
+          };
+        });
+      })
       // Get the IDs of the packages whose tests report any issues.
       const issuePackageIDs = Object.keys(packageDetails);
       // For each such package:
       issuePackageIDs.forEach(packageID => {
         // Get the IDs of the tests in the package that report issues.
-        const issueTestIDs = Object.keys(tests[packageID]);
+        const issueTestIDs = Object.keys(packageDetails[packageID]);
         // For each such test:
         issueTestIDs.forEach(testID => {
           // Get its group data, if any.
           const testGroupData = tests[packageID][testID];
+          const issueCount = packageDetails[packageID][testID];
           // If it is in a group:
           if (testGroupData) {
-            // Add the issue count and test description to the group details.
-            const {groupID, what} = testGroupData;
-            if (! groupDetails.groups[groupID]) {
-              groupDetails.groups[groupID] = {};
-            }
-            if (! groupDetails.groups[groupID][packageID]) {
-              groupDetails.groups[groupID][packageID] = {};
-            }
-            groupDetails.groups[groupID][packageID][testID] = {
-              issueCount: packageDetails[packageID][testID],
-              what
-            };
+            // Add the issue count to the group details.
+            const {groupID} = testGroupData;
+            groupDetails.groups[groupID][packageID][testID].issueCount = issueCount;
           }
           // Otherwise, i.e. if the test is solo:
           else {
@@ -405,19 +416,30 @@ exports.scorer = async report => {
             if (! groupDetails.solos[packageID]) {
               groupDetails.solos[packageID] = {};
             }
-            groupDetails.solos[packageID][testID] = packageDetails[packageID][testID];
+            groupDetails.solos[packageID][testID] = issueCount;
           }
         });
+      });
+      // Delete from the group details groups without any issues.
+      const groupIDs = Object.keys(groupDetails.groups);
+      groupIDs.forEach(groupID => {
+        const groupPackageData = Object.values(groupDetails.groups[groupID]);
+        if (
+          groupPackageData.every(datum => Object.keys(datum).every(test => test.issueCount === 0))
+        ) {
+          delete groupDetails.groups[groupID];
+        }
       });
       // Get the group scores and add them to the summary.
       const issueGroupIDs = Object.keys(groupDetails.groups);
       const {absolute, largest, smaller} = countWeights;
       issueGroupIDs.forEach(groupID => {
         const issueCounts = [];
-        const groupPackageIDs = Object.keys(groupDetails.groups[groupID]);
-        groupPackageIDs.forEach(packageID => {
-          const testIDs = Object.keys(groupDetails.groups[groupID][packageID]);
-          const issueCountSum = testIDs.reduce((sum, current) => sum + current.issueCount, 0);
+        const groupPackageData = Object.values(groupDetails.groups[groupID]);
+        groupPackageData.forEach(packageDatum => {
+          const issueCountSum = Object
+          .values(packageDatum)
+          .reduce((sum, current) => sum + current.issueCount, 0);
           issueCounts.push(issueCountSum);
         });
         issueCounts.sort((a, b) => b - a);

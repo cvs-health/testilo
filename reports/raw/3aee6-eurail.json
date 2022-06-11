@@ -11557,6 +11557,7 @@
       "url": "https://www.eurail.com/en",
       "result": {
         "content": {
+          "prevented": true,
           "error": "ERROR: getting ibm test report took too long"
         },
         "url": {
@@ -12143,7 +12144,8 @@
               "level": "violation"
             }
           ]
-        }
+        },
+        "prevented": true
       }
     },
     {

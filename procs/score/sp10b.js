@@ -5,10 +5,14 @@
   Usage example: node score 35k1r sp10b
 */
 
+// ########## IMPORTS
+
+// Module to read and write files.
+const fs = require('fs/promises');
+
 // CONSTANTS
 
 const scoreProcID = 'sp10b';
-const {acts} = report;
 // Define the configuration disclosures.
 const logWeights = {
   count: 0.5,
@@ -101,14 +105,15 @@ const addDetail = (actWhich, testID, addition = 1) => {
   }
   packageDetails[actWhich][testID] += addition;
 };
-exports.scorer = report => {
+exports.scorer = async report => {
   // If there are any acts:
+  const {acts} = report;
   if (Array.isArray(acts)) {
     // If any of them are test acts:
-    const tests = acts.filter(act => act.type === 'test');
-    if (tests.length) {
+    const testActs = acts.filter(act => act.type === 'test');
+    if (testActs.length) {
       // For each test act:
-      tests.forEach(test => {
+      testActs.forEach(test => {
         const {which} = test;
         // Get the issue tally.
         if (which === 'aatt') {
@@ -351,7 +356,7 @@ exports.scorer = report => {
         }
       });
       // Get the prevention scores and add them to the summary.
-      const actsPrevented = tests.filter(test => test.result.prevented);
+      const actsPrevented = testActs.filter(test => test.result.prevented);
       actsPrevented.forEach(act => {
         if (otherPackages.includes(act.which)) {
           preventionScores[act.which] = preventionWeights.other;
@@ -362,7 +367,7 @@ exports.scorer = report => {
       });
       const preventionScore = Object
       .values(preventionScores)
-      .reduce((sum, current) => sum + current);
+      .reduce((sum, current) => sum + current, 0);
       summary.preventions = preventionScore;
       summary.total += preventionScore;
       // Get data on test groups.
@@ -374,7 +379,7 @@ exports.scorer = report => {
       // For each such package:
       issuePackageIDs.forEach(packageID => {
         // Get the IDs of the tests in the package that report issues.
-        const issueTestIDs = Object.keys(packageID);
+        const issueTestIDs = Object.keys(tests[packageID]);
         // For each such test:
         issueTestIDs.forEach(testID => {
           // Get its group data, if any.
@@ -383,8 +388,11 @@ exports.scorer = report => {
           if (testGroupData) {
             // Add the issue count and test description to the group details.
             const {groupID, what} = testGroupData;
-            if (! groupDetails.groups[packageID]) {
-              groupDetails.groups[packageID] = {};
+            if (! groupDetails.groups[groupID]) {
+              groupDetails.groups[groupID] = {};
+            }
+            if (! groupDetails.groups[groupID][packageID]) {
+              groupDetails.groups[groupID][packageID] = {};
             }
             groupDetails.groups[groupID][packageID][testID] = {
               issueCount: packageDetails[packageID][testID],
@@ -415,7 +423,7 @@ exports.scorer = report => {
         issueCounts.sort((a, b) => b - a);
         const groupScore = groupWeights[groupID] * (
           absolute + largest * issueCounts[0] + smaller * issueCounts.slice(1).reduce(
-            (sum, current) => sum + current
+            (sum, current) => sum + current, 0
           )
         );
         summary.groups[groupID] = groupScore;

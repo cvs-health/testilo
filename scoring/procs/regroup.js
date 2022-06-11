@@ -1,6 +1,6 @@
 /*
   regroup
-  Converts groups.json to sp10b.json.
+  Converts groups.json to testGroups.json.
 */
 const fs = require('fs');
 // Initialize the data.

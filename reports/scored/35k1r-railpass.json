@@ -8790,161 +8790,7 @@
   "endTime": "2022-06-03T15:25:21",
   "elapsedSeconds": 99,
   "score": {
-    "scoreProcID": "sp10a",
-    "duplications": {
-      "aatt": {
-        "e:F77": 1,
-        "e:H36": 4,
-        "e:H37": 2,
-        "e:H57": 3,
-        "e:H58": 2,
-        "w:G141": 3,
-        "w:H98": 1,
-        "e:ARIA6+H53": 1,
-        "e:H24": 2,
-        "e:G1+G123+G124": 1,
-        "w:G90": 1,
-        "w:H44": 1
-      },
-      "alfa": {
-        "r3": 2,
-        "r28": 4,
-        "r2": 2,
-        "r4": 3,
-        "r7": 2,
-        "r53": 3,
-        "r10": 1,
-        "r11": 1,
-        "r12": 2,
-        "r20": 1,
-        "r42": 1,
-        "r43": 1,
-        "r47": 1,
-        "r5": 2,
-        "r68": 1,
-        "r93": 1,
-        "r13": 1
-      },
-      "axe": {
-        "input-image-alt": 4,
-        "html-has-lang": 3,
-        "valid-lang": 2,
-        "heading-order": 3,
-        "link-name": 2,
-        "aria-command-name": 2,
-        "dlitem": 1,
-        "image-alt": 2,
-        "duplicate-id": 1,
-        "aria-required-parent": 1,
-        "svg-img-alt": 1,
-        "meta-viewport": 1,
-        "html-lang-valid": 2,
-        "aria-required-children": 1,
-        "avoid-inline-spacing": 1,
-        "area-alt": 2,
-        "aria-allowed-role": 1,
-        "aria-required-attr": 1,
-        "aria-valid-attr": 1,
-        "autocomplete-valid": 1,
-        "color-contrast": 1,
-        "empty-heading": 2,
-        "frame-title": 1,
-        "image-redundant-alt": 1,
-        "landmark-complementary-is-top-level": 2,
-        "landmark-no-duplicate-banner": 1,
-        "landmark-no-duplicate-main": 2,
-        "document-title": 1,
-        "object-alt": 1,
-        "page-has-heading-one": 1,
-        "select-name": 1
-      },
-      "ibm": {
-        "v:WCAG20_Object_HasText": 1,
-        "v:WCAG20_Area_HasAlt": 2,
-        "v:WCAG20_Input_ExplicitLabelImage": 4,
-        "v:WCAG20_Frame_HasTitle": 2,
-        "v:WCAG20_Elem_Lang_Valid": 2,
-        "v:HAAC_Img_UsemapAlt": 1,
-        "v:aria_semantics_role": 1,
-        "v:Rpt_Aria_RequiredProperties": 1,
-        "v:Rpt_Aria_ValidProperty": 1,
-        "v:WCAG21_Input_Autocomplete": 1,
-        "v:IBMA_Color_Contrast_WCAG2AA": 2,
-        "v:RPT_Header_HasContent": 2,
-        "v:WCAG20_Img_HasAlt": 2,
-        "v:WCAG20_Img_LinkTextNotRedundant": 1,
-        "v:Rpt_Aria_ComplementaryRequiredLabel_Implicit": 1,
-        "v:Rpt_Aria_MultipleComplementaryLandmarks_Implicit": 1,
-        "v:Rpt_Aria_MultipleBannerLandmarks_Implicit": 1,
-        "r:Rpt_Aria_MultipleMainsVisibleLabel_Implicit": 1,
-        "v:Rpt_Aria_MultipleMainsRequireLabel_Implicit_2": 1,
-        "v:WCAG20_A_HasText": 1,
-        "v:Rpt_Aria_ValidIdRef": 1,
-        "v:WCAG20_Elem_UniqueAccessKey": 1,
-        "v:WCAG20_Input_RadioChkInFieldSet": 1
-      },
-      "wave": {
-        "a:link_internal_broken": 1,
-        "e:alt_area_missing": 3,
-        "e:alt_input_missing": 4,
-        "e:alt_missing": 2,
-        "e:language_missing": 3,
-        "a:heading_skipped": 3,
-        "a:event_handler": 1,
-        "a:label_orphaned": 1,
-        "e:title_invalid": 1,
-        "e:heading_empty": 2,
-        "a:plugin": 1,
-        "a:h1_missing": 1,
-        "a:select_missing_label": 1,
-        "c:contrast": 1,
-        "e:aria_reference_broken": 1,
-        "a:accesskey": 1,
-        "a:fieldset_missing": 1
-      }
-    },
-    "rules": {
-      "aatt": "multiply warning by 2*, error by 4* (*discounted); sum",
-      "alfa": "multiply cantTell by 2*, failed by 4* (*discounted); sum",
-      "axe": "multiply minor by 2*, moderate by 3*, serious by 4*, critical by 5* (*discounted); sum",
-      "bulk": "subtract 250 from visible elements; make 0 if negative; raise to 0.9th power; multiply by 0.15",
-      "embAc": "multiply link- or button-contained links, buttons, inputs, and selects by 3 (discounted)",
-      "focAll": "multiply discrepancy between focusable and focused element counts by 3",
-      "focInd": "multiply indicatorless-when-focused elements by 5",
-      "focOp": "multiply nonfocusable operable elements by 4, nonoperable focusable by 1; sum",
-      "hover": "multiply elements changing page on hover by 4, made visible by 2, with directly changed opacity by 0.1, with indirectly changed opacity by 0.2, unhoverable by 2; sum",
-      "ibm": "multiply violations by 4*, recommendations by 2* (*discounted); sum",
-      "labClash": "multiply conflictually labeled elements by 2, unlabeled elements by 2; sum",
-      "linkUl": "multiply nonunderlined inline links by 3",
-      "log": "multiply log items by respective logWeights; sum",
-      "menuNav": "multiply Home and End errors by 1 and other key-navigation errors by 3; sum",
-      "motion": "get PNG screenshot sizes (sss); get differing-pixel counts between adjacent PNG screenshots (pd); “sssd” = sss difference ÷ smaller sss - 1; multiply mean adjacent sssd by 5, maximum adjacent sssd by 2, maximum over-all ssd by 1; divide mean pd by 10,000, maximum pd by 25,000; multiply count of non-0 pd by 30; sum",
-      "radioSet": "multiply radio buttons not in fieldsets with legends and no other-name radio buttons by 2",
-      "role": "multiple role attributes with invalid or native-HTML-equivalent values by 2",
-      "styleDiff": "for each of element classes block a, inline a, button, h1, h2, h3, h4, h5, and h6, get diffStyles-distinct styles; multiply their count minus 1 by 2; multiply count of elements with non-plurality styles by 0.2; sum",
-      "tabNav": "multiply Home and End errors by 1 and other key-navigation errors by 3; sum",
-      "tenon": "multiply warnings by 1, errors by 3; sum",
-      "wave": "multiply alerts by 2*, contrast errors by 3*, errors by 4* (*discounted); sum",
-      "zIndex": "multiply non-auto z indexes by 3"
-    },
-    "diffStyles": [
-      "borderStyle",
-      "borderWidth",
-      "fontStyle",
-      "fontWeight",
-      "lineHeight",
-      "maxHeight",
-      "maxWidth",
-      "minHeight",
-      "minWidth",
-      "opacity",
-      "outlineOffset",
-      "outlineStyle",
-      "outlineWidth",
-      "textDecorationLine",
-      "textDecorationStyle",
-      "textDecorationThickness"
-    ],
+    "scoreProcID": "sp10b",
     "logWeights": {
       "count": 0.5,
       "size": 0.01,
@@ -8952,31 +8798,739 @@
       "visitTimeout": 10,
       "visitRejection": 10
     },
-    "inferences": {},
-    "scores": {
-      "total": 1589,
-      "aatt": 179,
-      "alfa": 178,
-      "axe": 38,
-      "bulk": 0,
-      "embAc": 0,
+    "groupWeights": {
+      "accessKeyDup": 3,
+      "ariaRefBad": 4,
+      "autocompleteBad": 2,
+      "bulk": 1,
+      "buttonNoText": 4,
+      "childMissing": 3,
+      "contrast": 3,
+      "dupID": 2,
+      "embAc": 2,
+      "eventKbd": 3,
+      "fieldSetMissing": 2,
       "focAll": 3,
-      "focInd": 530,
-      "focOp": 34,
-      "hover": 28,
-      "ibm": 145,
-      "labClash": 30,
-      "linkUl": 30,
+      "focInd": 3,
+      "focOp": 3,
+      "h1Missing": 1,
+      "headingEmpty": 2,
+      "headingStruc": 2,
+      "hover": 1,
+      "htmlLang": 3,
+      "htmlLangBad": 3,
+      "iframeNoText": 3,
+      "imgNoText": 4,
+      "imgAltRedundant": 1,
+      "imgInputNoText": 4,
+      "imgMapAreaNoText": 3,
+      "labClash": 2,
+      "labelForBadID": 4,
+      "langChange": 2,
+      "leadingFrozen": 3,
+      "linkNoText": 4,
+      "linkUl": 2,
+      "menuNav": 2,
+      "metaBansZoom": 3,
+      "motion": 2,
+      "objNoText": 2,
+      "parentMissing": 3,
+      "roleBad": 3,
+      "roleBadAttr": 3,
+      "roleMissingAttr": 3,
+      "selectNoText": 3,
+      "styleDiff": 1,
+      "svgImgNoText": 4,
+      "tabNav": 2,
+      "title": 3,
+      "zIndex": 1
+    },
+    "soloWeight": 1,
+    "countWeights": {
+      "absolute": 2,
+      "largest": 1,
+      "smaller": 0.4
+    },
+    "preventionWeights": {
+      "testaro": 50,
+      "other": 100
+    },
+    "packageDetails": {
+      "testaro": {
+        "motion": 74,
+        "bulk": 1,
+        "embAc": 0,
+        "focAll": 1,
+        "focInd": 106,
+        "focOp": 9,
+        "hover": 14,
+        "linkUl": 10,
+        "role": 1,
+        "styleDiff": 35
+      },
+      "axe": {
+        "color-contrast": 6,
+        "heading-order": 4,
+        "label": 1,
+        "landmark-unique": 1,
+        "link-name": 4,
+        "list": 1,
+        "meta-viewport": 1,
+        "region": 1
+      },
+      "aatt": {
+        "w:C31+C32+C33+C38+G206+SCR34": 2,
+        "e:G1+G123+G124": 1,
+        "w:H91": 2,
+        "e:H91": 16,
+        "w:G141": 4,
+        "w:H42": 5,
+        "e:H37": 2,
+        "w:F24": 25,
+        "e:F68": 5,
+        "e:H30": 2,
+        "w:H48": 2,
+        "w:H67": 2,
+        "e:G18": 1
+      },
+      "alfa": {
+        "r11": 4,
+        "r47": 1,
+        "r53": 4,
+        "r65": 1,
+        "r66": 28,
+        "r69": 22,
+        "r73": 7,
+        "r78": 3,
+        "r8": 1,
+        "r87": 1
+      },
+      "wave": {
+        "e:alt_missing": 2,
+        "e:alt_link_missing": 2,
+        "e:label_missing": 7,
+        "e:button_empty": 8,
+        "e:link_empty": 3,
+        "c:contrast": 22,
+        "a:heading_skipped": 4,
+        "a:heading_possible": 1,
+        "a:link_internal_broken": 1,
+        "a:noscript": 1,
+        "a:html5_video_audio": 1
+      },
+      "tenon": {
+        "28": 1,
+        "57": 5,
+        "95": 8,
+        "134": 1,
+        "144": 3,
+        "152": 12,
+        "155": 1
+      }
+    },
+    "groupDetails": {
+      "groups": {
+        "roleBad": {
+          "testaro": {
+            "role": {
+              "issueCount": 1,
+              "what": "nonexistent or implicit-overriding role"
+            }
+          },
+          "axe": {
+            "aria-allowed-role": {
+              "what": "ARIA role should be appropriate for the element"
+            }
+          }
+        },
+        "fieldSetMissing": {
+          "testaro": {
+            "radioSet": {
+              "what": "no or invalid grouping of radio buttons in fieldsets"
+            }
+          },
+          "wave": {
+            "a:fieldset_missing": {
+              "what": "Missing fieldset"
+            }
+          }
+        },
+        "bulk": {
+          "testaro": {
+            "bulk": {
+              "issueCount": 1,
+              "what": "Count of visible elements as a multiple of 300"
+            }
+          }
+        },
+        "embAc": {
+          "testaro": {
+            "embAc": {
+              "issueCount": 0,
+              "what": "active elements embedded in links or buttons"
+            }
+          }
+        },
+        "focAll": {
+          "testaro": {
+            "focAll": {
+              "issueCount": 1,
+              "what": "discrepancy between elements that should be and that are Tab-focusable"
+            }
+          }
+        },
+        "focOp": {
+          "testaro": {
+            "focOp": {
+              "issueCount": 9,
+              "what": "operable elements that cannot be Tab-focused and vice versa"
+            }
+          }
+        },
+        "hover": {
+          "testaro": {
+            "hover": {
+              "issueCount": 14,
+              "what": "content changes caused by hovering"
+            }
+          }
+        },
+        "labClash": {
+          "testaro": {
+            "labClash": {
+              "what": "incompatible label types"
+            }
+          }
+        },
+        "linkUl": {
+          "testaro": {
+            "linkUl": {
+              "issueCount": 10,
+              "what": "non-underlined inline links"
+            }
+          }
+        },
+        "menuNav": {
+          "testaro": {
+            "menuNav": {
+              "what": "nonstandard keyboard navigation among focusable menu items"
+            }
+          }
+        },
+        "motion": {
+          "testaro": {
+            "motion": {
+              "issueCount": 74,
+              "what": "change of visible content not requested by user"
+            }
+          }
+        },
+        "styleDiff": {
+          "testaro": {
+            "styleDiff": {
+              "issueCount": 35,
+              "what": "heading, link, and button style inconsistencies"
+            }
+          }
+        },
+        "tabNav": {
+          "testaro": {
+            "tabNav": {
+              "what": "nonstandard keyboard navigation among tabs"
+            }
+          }
+        },
+        "zIndex": {
+          "testaro": {
+            "zIndex": {
+              "what": "layering with nondefault z-index values"
+            }
+          }
+        },
+        "dupID": {
+          "axe": {
+            "duplicate-id": {
+              "what": "id attribute value must be unique"
+            }
+          },
+          "aatt": {
+            "e:F77": {
+              "what": "Duplicate id attribute value"
+            }
+          },
+          "alfa": {
+            "r3": {
+              "what": "element does not have a unique ID"
+            }
+          }
+        },
+        "imgInputNoText": {
+          "axe": {
+            "input-image-alt": {
+              "what": "Image buttons must have alternate text"
+            }
+          },
+          "aatt": {
+            "e:H36": {
+              "what": "Image submit button missing an alt attribute"
+            }
+          },
+          "alfa": {
+            "r28": {
+              "what": "image input element does not have an accessible name"
+            }
+          },
+          "wave": {
+            "e:alt_input_missing": {
+              "what": "Image button missing alternative text"
+            }
+          }
+        },
+        "imgNoText": {
+          "axe": {
+            "image-alt": {
+              "what": "Images must have alternate text"
+            }
+          },
+          "aatt": {
+            "e:H37": {
+              "issueCount": 2,
+              "what": "Img element missing an alt attribute"
+            }
+          },
+          "alfa": {
+            "r2": {
+              "what": "image does not have an accessible name"
+            }
+          },
+          "wave": {
+            "e:alt_missing": {
+              "issueCount": 2,
+              "what": "Missing alternative text"
+            }
+          }
+        },
+        "htmlLang": {
+          "axe": {
+            "html-has-lang": {
+              "what": "html element must have a lang attribute"
+            }
+          },
+          "aatt": {
+            "e:H57": {
+              "what": "lang attribute of the document element"
+            }
+          },
+          "alfa": {
+            "r4": {
+              "what": "lang attribute is either missing, empty, or only whitespace"
+            }
+          },
+          "wave": {
+            "e:language_missing": {
+              "what": "Language missing or invalid"
+            }
+          }
+        },
+        "langChange": {
+          "axe": {
+            "valid-lang": {
+              "what": "lang attribute must have a valid value"
+            }
+          },
+          "aatt": {
+            "e:H58": {
+              "what": "change in language is marked"
+            }
+          },
+          "alfa": {
+            "r7": {
+              "what": "lang attribute does not have a valid primary language subtag"
+            }
+          }
+        },
+        "headingStruc": {
+          "axe": {
+            "heading-order": {
+              "issueCount": 4,
+              "what": "Heading levels should only increase by one"
+            }
+          },
+          "aatt": {
+            "w:G141": {
+              "issueCount": 4,
+              "what": "heading structure is not logically nested"
+            }
+          },
+          "alfa": {
+            "r53": {
+              "issueCount": 4,
+              "what": "heading skips one or more levels"
+            }
+          },
+          "wave": {
+            "a:heading_skipped": {
+              "issueCount": 4,
+              "what": "Skipped heading level"
+            }
+          },
+          "tenon": {
+            "155": {
+              "issueCount": 1,
+              "what": "These headings are not structured in a hierarchical manner"
+            }
+          }
+        },
+        "objNoText": {
+          "axe": {
+            "object-alt": {
+              "what": "object elements must have alternate text"
+            }
+          },
+          "aatt": {
+            "e:ARIA6+H53": {
+              "what": "Object elements must contain a text alternative"
+            }
+          },
+          "wave": {
+            "a:plugin": {
+              "what": "Plugin"
+            }
+          }
+        },
+        "imgMapAreaNoText": {
+          "axe": {
+            "area-alt": {
+              "what": "area-alt"
+            }
+          },
+          "aatt": {
+            "e:H24": {
+              "what": "Area element in an image map missing an alt attribute"
+            }
+          },
+          "wave": {
+            "e:alt_area_missing": {
+              "what": "Image map area missing alternative text"
+            }
+          }
+        },
+        "linkNoText": {
+          "axe": {
+            "link-name": {
+              "issueCount": 4,
+              "what": "Links must have discernible text"
+            }
+          },
+          "alfa": {
+            "r11": {
+              "issueCount": 4,
+              "what": "link does not have an accessible name"
+            }
+          },
+          "tenon": {
+            "57": {
+              "issueCount": 5,
+              "what": "This link has no text inside it"
+            }
+          }
+        },
+        "buttonNoText": {
+          "axe": {
+            "aria-command-name": {
+              "what": "ARIA commands must have an accessible name"
+            }
+          },
+          "alfa": {
+            "r12": {
+              "what": "button does not have an accessible name"
+            }
+          }
+        },
+        "parentMissing": {
+          "axe": {
+            "aria-required-parent": {
+              "what": "Certain ARIA roles must be contained by particular parents"
+            }
+          },
+          "alfa": {
+            "r42": {
+              "what": "element is not owned by an element of its required context role"
+            }
+          }
+        },
+        "svgImgNoText": {
+          "axe": {
+            "svg-img-alt": {
+              "what": "svg elements with an img role must have an alternative text"
+            }
+          },
+          "alfa": {
+            "r43": {
+              "what": "SVG image element does not have an accessible name"
+            }
+          }
+        },
+        "metaBansZoom": {
+          "axe": {
+            "meta-viewport": {
+              "issueCount": 1,
+              "what": "Zooming and scaling should not be disabled"
+            }
+          },
+          "alfa": {
+            "r47": {
+              "issueCount": 1,
+              "what": "meta element restricts the ability to zoom"
+            }
+          }
+        },
+        "htmlLangBad": {
+          "axe": {
+            "html-lang-valid": {
+              "what": "html element must have a valid value for the lang attribute"
+            }
+          },
+          "alfa": {
+            "r5": {
+              "what": "lang attribute does not have a valid primary language tag"
+            }
+          }
+        },
+        "childMissing": {
+          "axe": {
+            "aria-required-children": {
+              "what": "'Certain ARIA roles must contain particular children"
+            }
+          },
+          "alfa": {
+            "r68": {
+              "what": "element owns no elements as required by its semantic role"
+            }
+          }
+        },
+        "leadingFrozen": {
+          "axe": {
+            "avoid-inline-spacing": {
+              "what": "Inline text spacing must be adjustable with custom stylesheets"
+            }
+          },
+          "alfa": {
+            "r93": {
+              "what": "style attribute is used to prevent adjusting line-height by using !important"
+            }
+          }
+        },
+        "iframeNoText": {
+          "axe": {
+            "frame-title": {
+              "what": "Frames must have an accessible name"
+            }
+          },
+          "alfa": {
+            "r13": {
+              "what": "iframe does not have an accessible name"
+            }
+          }
+        },
+        "roleMissingAttr": {
+          "axe": {
+            "aria-required-attr": {
+              "what": "Required ARIA attributes must be provided"
+            }
+          }
+        },
+        "roleBadAttr": {
+          "axe": {
+            "aria-valid-attr": {
+              "what": "ARIA attributes must conform to valid names"
+            }
+          },
+          "alfa": {
+            "r20": {
+              "what": "aria- attribute is not defined"
+            }
+          }
+        },
+        "autocompleteBad": {
+          "axe": {
+            "autocomplete-valid": {
+              "what": "autocomplete attribute must be used correctly"
+            }
+          },
+          "aatt": {
+            "w:H98": {
+              "what": "autocomplete attribute"
+            }
+          },
+          "alfa": {
+            "r10": {
+              "what": "autocomplete attribute does not have a valid value"
+            }
+          }
+        },
+        "contrast": {
+          "axe": {
+            "color-contrast": {
+              "issueCount": 6,
+              "what": "Elements must have sufficient color contrast"
+            }
+          },
+          "wave": {
+            "c:contrast": {
+              "issueCount": 22,
+              "what": "Very low contrast"
+            }
+          }
+        },
+        "headingEmpty": {
+          "axe": {
+            "empty-heading": {
+              "what": "Headings should not be empty"
+            }
+          },
+          "wave": {
+            "e:heading_empty": {
+              "what": "Empty heading"
+            }
+          }
+        },
+        "imgAltRedundant": {
+          "axe": {
+            "image-redundant-alt": {
+              "what": "Text of buttons and links should not be repeated in the image alternative"
+            }
+          }
+        },
+        "title": {
+          "axe": {
+            "document-title": {
+              "what": "Documents must contain a title element"
+            }
+          },
+          "wave": {
+            "e:title_invalid": {
+              "what": "Missing or uninformative page title"
+            }
+          }
+        },
+        "h1Missing": {
+          "axe": {
+            "page-has-heading-one": {
+              "what": "Page should contain a level-one heading"
+            }
+          },
+          "wave": {
+            "a:h1_missing": {
+              "what": "Missing first level heading"
+            }
+          }
+        },
+        "selectNoText": {
+          "axe": {
+            "select-name": {
+              "what": "Select element must have an accessible name"
+            }
+          },
+          "wave": {
+            "a:select_missing_label": {
+              "what": "Select missing label"
+            }
+          }
+        },
+        "eventKbd": {
+          "aatt": {
+            "w:G90": {
+              "what": "event handler functionality is available through the keyboard"
+            }
+          },
+          "wave": {
+            "a:event_handler": {
+              "what": "Device dependent event handler"
+            }
+          }
+        },
+        "labelForBadID": {
+          "aatt": {
+            "w:H44": {
+              "what": "label for attribute bad ID"
+            }
+          },
+          "wave": {
+            "a:label_orphaned": {
+              "what": "Orphaned form label"
+            }
+          }
+        },
+        "ariaRefBad": {
+          "wave": {
+            "e:aria_reference_broken": {
+              "what": "Broken ARIA reference"
+            }
+          }
+        },
+        "accessKeyDup": {
+          "wave": {
+            "a:accesskey": {
+              "what": "Accesskey"
+            }
+          }
+        }
+      },
+      "solos": {}
+    },
+    "preventionScores": {},
+    "summary": {
+      "total": null,
       "log": 34,
-      "menuNav": 0,
-      "motion": 74,
-      "radioSet": 0,
-      "role": 2,
-      "styleDiff": 35,
-      "tabNav": 0,
-      "tenon": 91,
-      "wave": 125,
-      "zIndex": 33
+      "preventions": 0,
+      "solos": 0,
+      "groups": {
+        "roleBad": null,
+        "fieldSetMissing": null,
+        "bulk": null,
+        "embAc": null,
+        "focAll": null,
+        "focOp": null,
+        "hover": null,
+        "labClash": null,
+        "linkUl": null,
+        "menuNav": null,
+        "motion": null,
+        "styleDiff": null,
+        "tabNav": null,
+        "zIndex": null,
+        "dupID": null,
+        "imgInputNoText": null,
+        "imgNoText": null,
+        "htmlLang": null,
+        "langChange": null,
+        "headingStruc": null,
+        "objNoText": null,
+        "imgMapAreaNoText": null,
+        "linkNoText": null,
+        "buttonNoText": null,
+        "parentMissing": null,
+        "svgImgNoText": null,
+        "metaBansZoom": null,
+        "htmlLangBad": null,
+        "childMissing": null,
+        "leadingFrozen": null,
+        "iframeNoText": null,
+        "roleMissingAttr": null,
+        "roleBadAttr": null,
+        "autocompleteBad": null,
+        "contrast": null,
+        "headingEmpty": null,
+        "imgAltRedundant": null,
+        "title": null,
+        "h1Missing": null,
+        "selectNoText": null,
+        "eventKbd": null,
+        "labelForBadID": null,
+        "ariaRefBad": null,
+        "accessKeyDup": null
+      }
     }
   }
 }

@@ -383,6 +383,64 @@
         "groupID": "headingStruc",
         "what": "These headings are not structured in a hierarchical manner"
       }
+    },
+    "testaro": {
+      "role": {
+        "groupID": "roleBad",
+        "what": "nonexistent or implicit-overriding role"
+      },
+      "radioSet": {
+        "groupID": "fieldSetMissing",
+        "what": "no or invalid grouping of radio buttons in fieldsets"
+      },
+      "bulk": {
+        "groupID": "bulk",
+        "what": "Count of visible elements as a multiple of 300"
+      },
+      "embAc": {
+        "groupID": "embAc",
+        "what": "active elements embedded in links or buttons"
+      },
+      "focAll": {
+        "groupID": "focAll",
+        "what": "discrepancy between elements that should be and that are Tab-focusable"
+      },
+      "focOp": {
+        "groupID": "focOp",
+        "what": "operable elements that cannot be Tab-focused and vice versa"
+      },
+      "hover": {
+        "groupID": "hover",
+        "what": "content changes caused by hovering"
+      },
+      "labClash": {
+        "groupID": "labClash",
+        "what": "incompatible label types"
+      },
+      "linkUl": {
+        "groupID": "linkUl",
+        "what": "non-underlined inline links"
+      },
+      "menuNav": {
+        "groupID": "menuNav",
+        "what": "nonstandard keyboard navigation among focusable menu items"
+      },
+      "motion": {
+        "groupID": "motion",
+        "what": "change of visible content not requested by user"
+      },
+      "styleDiff": {
+        "groupID": "styleDiff",
+        "what": "heading, link, and button style inconsistencies"
+      },
+      "tabNav": {
+        "groupID": "tabNav",
+        "what": "nonstandard keyboard navigation among tabs"
+      },
+      "zIndex": {
+        "groupID": "zIndex",
+        "what": "layering with nondefault z-index values"
+      }
     }
   },
   "groups": {
@@ -614,6 +672,9 @@
       ],
       "ibm": [
         "v:aria_semantics_role ARIA roles must be valid for the element to which they are assigned"
+      ],
+      "testaro": [
+        "role nonexistent or implicit-overriding role"
       ]
     },
     "roleMissingAttr": {
@@ -723,8 +784,71 @@
       "ibm": [
         "v:WCAG20_Input_RadioChkInFieldSet input is in a different group than another with the name"
       ],
+      "testaro": [
+        "radioSet no or invalid grouping of radio buttons in fieldsets"
+      ],
       "wave": [
         "a:fieldset_missing Missing fieldset"
+      ]
+    },
+    "bulk": {
+      "testaro": [
+        "bulk Count of visible elements as a multiple of 300"
+      ]
+    },
+    "embAc": {
+      "testaro": [
+        "embAc active elements embedded in links or buttons"
+      ]
+    },
+    "focAll": {
+      "testaro": [
+        "focAll discrepancy between elements that should be and that are Tab-focusable"
+      ]
+    },
+    "focOp": {
+      "testaro": [
+        "focOp operable elements that cannot be Tab-focused and vice versa"
+      ]
+    },
+    "hover": {
+      "testaro": [
+        "hover content changes caused by hovering"
+      ]
+    },
+    "labClash": {
+      "testaro": [
+        "labClash incompatible label types"
+      ]
+    },
+    "linkUl": {
+      "testaro": [
+        "linkUl non-underlined inline links"
+      ]
+    },
+    "menuNav": {
+      "testaro": [
+        "menuNav nonstandard keyboard navigation among focusable menu items"
+      ]
+    },
+    "motion": {
+      "testaro": [
+        "motion change of visible content not requested by user"
+      ]
+    },
+    "styleDiff": {
+      "testaro": [
+        "styleDiff heading, link, and button style inconsistencies"
+      ]
+    },
+    "tabNav": {
+      "testaro": [
+        "tabNav nonstandard keyboard navigation among tabs"
+      ]
+    },
+    "zIndex": {
+      "testaro": [
+        "zIndex layering with nondefault z-index values"
       ]
     }
   }

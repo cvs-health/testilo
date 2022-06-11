@@ -30,7 +30,7 @@ const score = async () => {
     const reportJSON = await fs
     .readFile(`${reportDirRawAbs}/${fileName}`, 'utf8');
     const report = JSON.parse(reportJSON);
-    scorer(report);
+    await scorer(report);
     report.score.scoreProcID = scoreProcID;
     const scoredReportJSON = JSON.stringify(report, null, 2);
     await fs.writeFile(`${__dirname}/${reportDirScored}/${fileName}`, `${scoredReportJSON}\n`);

@@ -44,6 +44,10 @@
       "w:H98": {
         "groupID": "autocompleteBad",
         "what": "autocomplete attribute"
+      },
+      "w:F24": {
+        "groupID": "inlineBackgroundRisk",
+        "what": "Inline background color needs complementary foreground color"
       }
     },
     "alfa": {
@@ -394,51 +398,55 @@
         "what": "no or invalid grouping of radio buttons in fieldsets"
       },
       "bulk": {
-        "groupID": "bulk",
+        "groupID": "visibleBulk",
         "what": "Count of visible elements as a multiple of 300"
       },
       "embAc": {
-        "groupID": "embAc",
+        "groupID": "activeEmbedding",
         "what": "active elements embedded in links or buttons"
       },
       "focAll": {
-        "groupID": "focAll",
+        "groupID": "tabFocusability",
         "what": "discrepancy between elements that should be and that are Tab-focusable"
       },
+      "focInd": {
+        "groupID": "focusIndication",
+        "what": "operable elements that cannot be Tab-focused and vice versa"
+      },
       "focOp": {
-        "groupID": "focOp",
+        "groupID": "focusableOperable",
         "what": "operable elements that cannot be Tab-focused and vice versa"
       },
       "hover": {
-        "groupID": "hover",
+        "groupID": "hoverSurprise",
         "what": "content changes caused by hovering"
       },
       "labClash": {
-        "groupID": "labClash",
+        "groupID": "labelClash",
         "what": "incompatible label types"
       },
       "linkUl": {
-        "groupID": "linkUl",
+        "groupID": "linkUnderlines",
         "what": "non-underlined inline links"
       },
       "menuNav": {
-        "groupID": "menuNav",
+        "groupID": "menuNavigation",
         "what": "nonstandard keyboard navigation among focusable menu items"
       },
       "motion": {
-        "groupID": "motion",
+        "groupID": "spontaneousMotion",
         "what": "change of visible content not requested by user"
       },
       "styleDiff": {
-        "groupID": "styleDiff",
+        "groupID": "inconsistentStyles",
         "what": "heading, link, and button style inconsistencies"
       },
       "tabNav": {
-        "groupID": "tabNav",
+        "groupID": "tabNavigation",
         "what": "nonstandard keyboard navigation among tabs"
       },
       "zIndex": {
-        "groupID": "zIndex",
+        "groupID": "zIndexNotZero",
         "what": "layering with nondefault z-index values"
       }
     }
@@ -721,6 +729,11 @@
         "c:contrast Very low contrast"
       ]
     },
+    "inlineBackgroundRisk": {
+      "aatt": [
+        "w:F24 Inline background color needs complementary foreground color"
+      ]
+    },
     "headingEmpty": {
       "axe": [
         "empty-heading Headings should not be empty"
@@ -791,62 +804,67 @@
         "a:fieldset_missing Missing fieldset"
       ]
     },
-    "bulk": {
+    "visibleBulk": {
       "testaro": [
         "bulk Count of visible elements as a multiple of 300"
       ]
     },
-    "embAc": {
+    "activeEmbedding": {
       "testaro": [
         "embAc active elements embedded in links or buttons"
       ]
     },
-    "focAll": {
+    "tabFocusability": {
       "testaro": [
         "focAll discrepancy between elements that should be and that are Tab-focusable"
       ]
     },
-    "focOp": {
+    "focusIndication": {
+      "testaro": [
+        "focInd operable elements that cannot be Tab-focused and vice versa"
+      ]
+    },
+    "focusableOperable": {
       "testaro": [
         "focOp operable elements that cannot be Tab-focused and vice versa"
       ]
     },
-    "hover": {
+    "hoverSurprise": {
       "testaro": [
         "hover content changes caused by hovering"
       ]
     },
-    "labClash": {
+    "labelClash": {
       "testaro": [
         "labClash incompatible label types"
       ]
     },
-    "linkUl": {
+    "linkUnderlines": {
       "testaro": [
         "linkUl non-underlined inline links"
       ]
     },
-    "menuNav": {
+    "menuNavigation": {
       "testaro": [
         "menuNav nonstandard keyboard navigation among focusable menu items"
       ]
     },
-    "motion": {
+    "spontaneousMotion": {
       "testaro": [
         "motion change of visible content not requested by user"
       ]
     },
-    "styleDiff": {
+    "inconsistentStyles": {
       "testaro": [
         "styleDiff heading, link, and button style inconsistencies"
       ]
     },
-    "tabNav": {
+    "tabNavigation": {
       "testaro": [
         "tabNav nonstandard keyboard navigation among tabs"
       ]
     },
-    "zIndex": {
+    "zIndexNotZero": {
       "testaro": [
         "zIndex layering with nondefault z-index values"
       ]

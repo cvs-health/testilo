@@ -23,50 +23,51 @@ const logWeights = {
 };
 const groupWeights = {
   accessKeyDup: 3,
+  activeEmbedding: 2,
   ariaRefBad: 4,
   autocompleteBad: 2,
-  bulk: 1,
   buttonNoText: 4,
   childMissing: 3,
   contrast: 3,
   dupID: 2,
-  embAc: 2,
   eventKbd: 3,
   fieldSetMissing: 2,
-  focAll: 3,
-  focInd: 3,
-  focOp: 3,
+  focusableOperable: 3,
+  focusIndication: 3,
   h1Missing: 1,
   headingEmpty: 2,
   headingStruc: 2,
-  hover: 1,
+  hoverSurprise: 1,
   htmlLang: 3,
   htmlLangBad: 3,
   iframeNoText: 3,
-  imgNoText: 4,
   imgAltRedundant: 1,
   imgInputNoText: 4,
   imgMapAreaNoText: 3,
-  labClash: 2,
+  imgNoText: 4,
+  inconsistentStyles: 1,
+  inlineBackgroundRisk: 1,
+  labelClash: 2,
   labelForBadID: 4,
   langChange: 2,
   leadingFrozen: 3,
   linkNoText: 4,
-  linkUl: 2,
-  menuNav: 2,
+  linkUnderlines: 2,
+  menuNavigation: 2,
   metaBansZoom: 3,
-  motion: 2,
   objNoText: 2,
   parentMissing: 3,
   roleBad: 3,
   roleBadAttr: 3,
   roleMissingAttr: 3,
   selectNoText: 3,
-  styleDiff: 1,
+  spontaneousMotion: 2,
   svgImgNoText: 4,
-  tabNav: 2,
+  tabFocusability: 3,
+  tabNavigation: 2,
   title: 3,
-  zIndex: 1
+  visibleBulk: 1,
+  zIndexNotZero: 1
 };
 const soloWeight = 1;
 const countWeights = {
@@ -425,7 +426,7 @@ exports.scorer = async report => {
       groupIDs.forEach(groupID => {
         const groupPackageData = Object.values(groupDetails.groups[groupID]);
         if (
-          groupPackageData.every(datum => Object.keys(datum).every(test => test.issueCount === 0))
+          groupPackageData.every(datum => Object.values(datum).every(test => test.issueCount === 0))
         ) {
           delete groupDetails.groups[groupID];
         }
@@ -448,8 +449,9 @@ exports.scorer = async report => {
             (sum, current) => sum + current, 0
           )
         );
-        summary.groups[groupID] = groupScore;
-        summary.total += groupScore;
+        const roundedScore = Math.round(groupScore);
+        summary.groups[groupID] = roundedScore;
+        summary.total += roundedScore;
       });
       // Get the solo scores and add them to the summary.
       const issueSoloPackageIDs = Object.keys(groupDetails.solos);
@@ -457,7 +459,7 @@ exports.scorer = async report => {
         const testIDs = Object.keys(groupDetails.solos[packageID]);
         testIDs.forEach(testID => {
           const issueCount = groupDetails.solos[packageID][testID];
-          const issueScore = soloWeight * issueCount;
+          const issueScore = Math.round(soloWeight * issueCount);
           summary.solos += issueScore;
           summary.total += issueScore;
         });

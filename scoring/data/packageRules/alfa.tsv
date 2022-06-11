@@ -53,6 +53,7 @@ r62	The link is not distinguishable from the surrounding text
 r63	The object element does not have an accessible name
 r64	The heading does not have an accessible name
 r65	The element does not have a visible focus indicator
+r66	Text outside widget has enhanced contrast
 r67	The element is marked as decorative but is exposed
 r68	The element owns no elements as required by its semantic role
 r7	The lang attribute does not have a valid primary language subtag

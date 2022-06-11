@@ -20,15 +20,21 @@ const faultWeights = {
   accessKeyDup: 3,
   ariaRefBad: 4,
   autocompleteBad: 2,
+  bulk: 1,
   buttonNoText: 4,
   childMissing: 3,
   contrast: 3,
   dupID: 2,
+  embAc: 2,
   eventKbd: 3,
   fieldSetMissing: 2,
+  focAll: 3,
+  focInd: 3,
+  focOp: 3,
   h1Missing: 1,
   headingEmpty: 2,
   headingStruc: 2,
+  hover: 1,
   htmlLang: 3,
   htmlLangBad: 3,
   iframeNoText: 3,
@@ -36,6 +42,7 @@ const faultWeights = {
   imgAltRedundant: 1,
   imgInputNoText: 4,
   imgMapAreaNoText: 3,
+  labClash: 2,
   labelForBadID: 4,
   langChange: 2,
   leadingFrozen: 3,
@@ -195,103 +202,71 @@ exports.scorer = report => {
           }
         }
         else if (which === 'bulk') {
-          facts = test.result && test.result.visibleElements;
-          if (typeof facts === 'number') {
-            rules.bulk = 'subtract 250 from visible elements; make 0 if negative; raise to 0.9th power; multiply by 0.15';
-            // Deficit: 15% of the excess, to the 0.9th power, of the element count over 250.
-            scores.bulk = Math.floor(0.15 * Math.pow(Math.max(0, facts - 250), 0.9));
+          const count = test.result && test.result.visibleElements;
+          if (typeof count === 'number') {
+            const faultCount = Math.round(count / 300);
+            addDetail('testaro', which, faultCount);
           }
-          else {
-            inferences.bulk = 100;
-          }
-          increment('bulk');
         }
         else if (which === 'embAc') {
-          facts = test.result && test.result.totals;
-          if (facts) {
-            rules.embAc = 'multiply link- or button-contained links, buttons, inputs, and selects by 3 (discounted)';
-            scores.embAc = 3 * (facts.links + facts.buttons + facts.inputs + facts.selects);
+          const issueCounts = test.result && test.result.totals;
+          if (issueCounts) {
+            const counts = Object.values(issueCounts);
+            const total = counts.reduce((sum, current) => sum + current);
+            addDetail('testaro', which, total);
           }
-          else {
-            inferences.embAc = 150;
-          }
-          increment('embAc');
         }
         else if (which === 'focAll') {
-          facts = test.result;
-          if (facts && typeof facts === 'object') {
-            rules.focAll= 'multiply discrepancy between focusable and focused element counts by 3';
-            scores.focAll = 3 * Math.abs(facts.discrepancy);
+          const discrepancy = test.result && test.result.discrepancy;
+          if (discrepancy) {
+            addDetail('testaro', which, Math.abs(discrepancy));
           }
-          else {
-            inferences.focAll = 150;
-          }
-          increment('focAll');
         }
         else if (which === 'focInd') {
-          facts = test.result && test.result.totals;
-          facts = facts ? facts.types : null;
-          if (facts) {
-            rules.focInd = 'multiply indicatorless-when-focused elements by 5';
-            scores.focInd = 5 * facts.indicatorMissing.total + 3 * facts.nonOutlinePresent.total;
+          const issueTypes = test.result && test.result.totals && test.result.totals.types;
+          if (issueTypes) {
+            const missingCount = issueTypes.indicatorMissing && issueTypes.indicatorMissing.total;
+            const badCount = issueTypes.nonOutlinePresent && issueTypes.nonOutlinePresent.total;
+            const faultCount = Math.round(missingCount + badCount / 2);
+            if (faultCount) {
+              addDetail('testaro', which, faultCount);
+            }
           }
-          else {
-            inferences.focInd = 150;
-          }
-          increment('focInd');
-        }
-        else if (which === 'focOl') {
-          facts = test.result && test.result.totals;
-          facts = facts ? facts.types : null;
-          facts = facts ? facts.outlineMissing : null;
-          if (facts) {
-            rules.focOl = 'multiply non-outline focus indicators by 3, missing focus indicators by 5; sum';
-            scores.focOl = 3 * facts.total;
-          }
-          else {
-            inferences.focOl = 100;
-          }
-          increment('focOl');
         }
         else if (which === 'focOp') {
-          facts = test.result && test.result.totals;
-          if (facts) {
-            rules.focOp = 'multiply nonfocusable operable elements by 4, nonoperable focusable by 1; sum';
-            scores.focOp
-              = 4 * facts.types.onlyOperable.total + 1 * facts.types.onlyFocusable.total;
+          const issueTypes = test.result && test.result.totals && test.result.totals.types;
+          if (issueTypes) {
+            const noOpCount = issueTypes.onlyFocusable && issueTypes.onlyFocusable.total;
+            const noFocCount = issueTypes.onlyOperable && issueTypes.onlyOperable.total;
+            const faultCount = Math.round(noFocCount + noOpCount / 2);
+            if (faultCount) {
+              addDetail('testaro', which, faultCount);
+            }
           }
-          else {
-            inferences.focOp = 150;
-          }
-          increment('focOp');
         }
         else if (which === 'hover') {
-          facts = test.result && test.result.totals;
-          if (facts) {
-            rules.hover = 'multiply elements changing page on hover by 4, made visible by 2, with directly changed opacity by 0.1, with indirectly changed opacity by 0.2, unhoverable by 2; sum';
-            scores.hover
-              = 4 * facts.triggers
-              + 2 * facts.madeVisible
-              + Math.floor(0.1 * facts.opacityChanged)
-              + Math.floor(0.2 * facts.opacityAffected)
-              + 2 * facts.unhoverables;
+          const issues = test.result && test.result.totals;
+          if (issues) {
+            const {triggers, madeVisible, opacityChanged, opacityAffected, unhoverables} = issues;
+            const faultCount = Math.round(
+              1 * triggers
+              + 0.5 * madeVisible
+              + 0.2 * opacityChanged
+              + 0.2 * opacityAffected
+              + 1 * unhoverables
+            );
+            if (faultCount) {
+              addDetail('testaro', which, faultCount);
+            }
           }
-          else {
-            inferences.hover = 150;
-          }
-          increment('hover');
         }
         else if (which === 'labClash') {
-          facts = test.result && test.result.totals;
-          if (facts) {
-            rules.labClash = 'multiply conflictually labeled elements by 2, unlabeled elements by 2; sum';
-            // Unlabeled elements discounted.
-            scores.labClash = 2 * facts.mislabeled + 2 * facts.unlabeled;
+          const mislabeledCount = test.result
+          && test.result.totals
+          && test.result.totals.mislabeled;
+          if (mislabeledCount) {
+            addDetail('testaro', which, mislabeledCount);
           }
-          else {
-            inferences.labClash = 100;
-          }
-          increment('labClash');
         }
         else if (which === 'linkUl') {
           facts = test.result && test.result.totals;

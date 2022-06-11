@@ -339,5 +339,70 @@
     "wave": [
       "a:fieldset_missing Missing fieldset"
     ]
+  },
+  "bulk": {
+    "testaro": [
+      "bulk Count of visible elements as a multiple of 300"
+    ]
+  },
+  "embAc": {
+    "testaro": [
+      "embAc active elements embedded in links or buttons"
+    ]
+  },
+  "focAll": {
+    "testaro": [
+      "focAll discrepancy between elements that should be and that are Tab-focusable"
+    ]
+  },
+  "focOp": {
+    "testaro": [
+      "focOp operable elements that cannot be Tab-focused and vice versa"
+    ]
+  },
+  "hover": {
+    "testaro": [
+      "hover content changes caused by hovering"
+    ]
+  },
+  "labClash": {
+    "testaro": [
+      "labClash incompatible label types"
+    ]
+  },
+  "bulk": {
+    "testaro": [
+      "bulk"
+    ]
+  },
+  "bulk": {
+    "testaro": [
+      "bulk"
+    ]
+  },
+  "bulk": {
+    "testaro": [
+      "bulk"
+    ]
+  },
+  "bulk": {
+    "testaro": [
+      "bulk"
+    ]
+  },
+  "bulk": {
+    "testaro": [
+      "bulk"
+    ]
+  },
+  "bulk": {
+    "testaro": [
+      "bulk"
+    ]
+  },
+  "bulk": {
+    "testaro": [
+      "bulk"
+    ]
   }
 }

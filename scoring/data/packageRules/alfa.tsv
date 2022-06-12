@@ -56,6 +56,7 @@ r65	The element does not have a visible focus indicator
 r66	Text outside widget has enhanced contrast
 r67	The element is marked as decorative but is exposed
 r68	The element owns no elements as required by its semantic role
+r69	Text outside widget has minimum contrast
 r7	The lang attribute does not have a valid primary language subtag
 r70	The document contains deprecated elements
 r71	The text of the paragraph is justified

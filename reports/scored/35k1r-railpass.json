@@ -8805,7 +8805,8 @@
       "autocompleteBad": 2,
       "buttonNoText": 4,
       "childMissing": 3,
-      "contrast": 3,
+      "contrastAA": 3,
+      "contrastAAA": 1,
       "dupID": 2,
       "eventKbd": 3,
       "fieldSetMissing": 2,
@@ -8832,8 +8833,11 @@
       "linkUnderlines": 2,
       "menuNavigation": 2,
       "metaBansZoom": 3,
+      "nameValue": 3,
+      "noLeading": 2,
       "objNoText": 2,
       "parentMissing": 3,
+      "pseudoHeadingRisk": 1,
       "roleBad": 3,
       "roleBadAttr": 3,
       "roleMissingAttr": 3,
@@ -8842,6 +8846,7 @@
       "svgImgNoText": 4,
       "tabFocusability": 3,
       "tabNavigation": 2,
+      "targetSize": 2,
       "title": 3,
       "visibleBulk": 1,
       "zIndexNotZero": 1
@@ -9003,6 +9008,32 @@
             }
           }
         },
+        "pseudoHeadingRisk": {
+          "aatt": {
+            "w:H42": {
+              "what": "Heading markup should be used if this content is intended as a heading",
+              "issueCount": 5
+            }
+          }
+        },
+        "nameValue": {
+          "aatt": {
+            "e:F68": {
+              "what": "Form control wrongly labeled or unlabeled",
+              "issueCount": 5
+            },
+            "e:H91": {
+              "what": "Missing name or value of form control or link",
+              "issueCount": 16
+            }
+          },
+          "wave": {
+            "e:label_missing": {
+              "what": "Missing form label",
+              "issueCount": 7
+            }
+          }
+        },
         "linkNoText": {
           "alfa": {
             "r11": {
@@ -9029,6 +9060,26 @@
             }
           }
         },
+        "buttonNoText": {
+          "alfa": {
+            "r12": {
+              "what": "button does not have an accessible name",
+              "issueCount": 0
+            }
+          },
+          "axe": {
+            "aria-command-name": {
+              "what": "ARIA commands must have an accessible name",
+              "issueCount": 0
+            }
+          },
+          "wave": {
+            "e:button_empty": {
+              "what": "Empty button",
+              "issueCount": 8
+            }
+          }
+        },
         "metaBansZoom": {
           "alfa": {
             "r47": {
@@ -9040,6 +9091,54 @@
             "meta-viewport": {
               "what": "Zooming and scaling should not be disabled",
               "issueCount": 1
+            }
+          }
+        },
+        "noLeading": {
+          "alfa": {
+            "r73": {
+              "what": "Paragraphs of text have sufficient line height",
+              "issueCount": 7
+            }
+          }
+        },
+        "contrastAA": {
+          "alfa": {
+            "r69": {
+              "what": "Text outside widget has minimum contrast",
+              "issueCount": 22
+            }
+          },
+          "axe": {
+            "color-contrast": {
+              "what": "Elements must have sufficient color contrast",
+              "issueCount": 6
+            }
+          },
+          "ibm": {
+            "v:IBMA_Color_Contrast_WCAG2AA": {
+              "what": "contrast ratio of text with background must meet WCAG 2.1 AA",
+              "issueCount": 0
+            }
+          },
+          "wave": {
+            "c:contrast": {
+              "what": "Very low contrast",
+              "issueCount": 22
+            }
+          }
+        },
+        "contrastAAA": {
+          "alfa": {
+            "r66": {
+              "what": "Text contrast less than AAA requires",
+              "issueCount": 28
+            }
+          },
+          "tenon": {
+            "95": {
+              "what": "This element has insufficient color contrast (Level AAA)",
+              "issueCount": 8
             }
           }
         },
@@ -9063,23 +9162,11 @@
             }
           }
         },
-        "contrast": {
-          "axe": {
-            "color-contrast": {
-              "what": "Elements must have sufficient color contrast",
-              "issueCount": 6
-            }
-          },
-          "ibm": {
-            "v:IBMA_Color_Contrast_WCAG2AA": {
-              "what": "contrast ratio of text with background must meet WCAG 2.1 AA",
-              "issueCount": 0
-            }
-          },
-          "wave": {
-            "c:contrast": {
-              "what": "Very low contrast",
-              "issueCount": 22
+        "targetSize": {
+          "tenon": {
+            "152": {
+              "what": "This actionable element is smaller than the minimum required size",
+              "issueCount": 12
             }
           }
         },
@@ -9159,9 +9246,6 @@
           "w:C31+C32+C33+C38+G206+SCR34": 2,
           "e:G1+G123+G124": 1,
           "w:H91": 2,
-          "e:H91": 16,
-          "w:H42": 5,
-          "e:F68": 5,
           "e:H30": 2,
           "w:H48": 2,
           "w:H67": 2,
@@ -9169,17 +9253,12 @@
         },
         "alfa": {
           "r65": 1,
-          "r66": 28,
-          "r69": 22,
-          "r73": 7,
           "r78": 3,
           "r8": 1,
           "r87": 1
         },
         "wave": {
           "e:alt_link_missing": 2,
-          "e:label_missing": 7,
-          "e:button_empty": 8,
           "e:link_empty": 3,
           "a:heading_possible": 1,
           "a:link_internal_broken": 1,
@@ -9188,27 +9267,31 @@
         },
         "tenon": {
           "28": 1,
-          "95": 8,
           "134": 1,
-          "144": 3,
-          "152": 12
+          "144": 3
         }
       }
     },
     "preventionScores": {},
     "summary": {
-      "total": 993,
+      "total": 1105,
       "log": 34,
       "preventions": 0,
-      "solos": 154,
+      "solos": 36,
       "groups": {
         "imgNoText": 19,
         "headingStruc": 22,
         "inlineBackgroundRisk": 27,
+        "pseudoHeadingRisk": 7,
+        "nameValue": 77,
         "linkNoText": 41,
+        "buttonNoText": 40,
         "metaBansZoom": 10,
+        "noLeading": 18,
+        "contrastAA": 106,
+        "contrastAAA": 33,
         "roleBad": 9,
-        "contrast": 79,
+        "targetSize": 28,
         "visibleBulk": 3,
         "tabFocusability": 9,
         "focusIndication": 324,

@@ -15,15 +15,15 @@
       },
       "e:H57": {
         "groupID": "htmlLang",
-        "what": "lang attribute of the document element"
+        "what": "Lang attribute of the document element"
       },
       "e:H58": {
         "groupID": "langChange",
-        "what": "change in language is marked"
+        "what": "Change in language is not marked"
       },
       "w:G141": {
         "groupID": "headingStruc",
-        "what": "heading structure is not logically nested"
+        "what": "Heading structure is not logically nested"
       },
       "e:ARIA6+H53": {
         "groupID": "objNoText",
@@ -35,57 +35,77 @@
       },
       "w:G90": {
         "groupID": "eventKbd",
-        "what": "event handler functionality is available through the keyboard"
+        "what": "Event handler functionality not available by keyboard"
       },
       "w:H44": {
         "groupID": "labelForBadID",
-        "what": "label for attribute bad ID"
+        "what": "Label for attribute is bad ID"
       },
       "w:H98": {
         "groupID": "autocompleteBad",
-        "what": "autocomplete attribute"
+        "what": "Autocomplete attribute wrong"
       },
       "w:F24": {
-        "groupID": "inlineBackgroundRisk",
+        "groupID": "contrastRisk",
         "what": "Inline background color needs complementary foreground color"
+      },
+      "w:G18": {
+        "groupID": "contrastRisk",
+        "what": "Contrast adequacy not determinable"
+      },
+      "w:H42": {
+        "groupID": "pseudoHeadingRisk",
+        "what": "Heading coding should be used if intended as a heading"
+      },
+      "e:F68": {
+        "groupID": "nameValue",
+        "what": "Form control wrongly labeled or unlabeled"
+      },
+      "e:H91": {
+        "groupID": "nameValue",
+        "what": "Missing name or value of form control or link"
+      },
+      "w:H48": {
+        "groupID": "pseudoListRisk",
+        "what": "Navigation links should be coded as list"
       }
     },
     "alfa": {
       "r3": {
         "groupID": "dupID",
-        "what": "element does not have a unique ID"
+        "what": "Element does not have a unique ID"
       },
       "r28": {
         "groupID": "imgInputNoText",
-        "what": "image input element does not have an accessible name"
+        "what": "Image input element does not have an accessible name"
       },
       "r2": {
         "groupID": "imgNoText",
-        "what": "image does not have an accessible name"
+        "what": "Image does not have an accessible name"
       },
       "r4": {
         "groupID": "htmlLang",
-        "what": "lang attribute is either missing, empty, or only whitespace"
+        "what": "Lang attribute missing, empty, or only whitespace"
       },
       "r7": {
         "groupID": "langChange",
-        "what": "lang attribute does not have a valid primary language subtag"
+        "what": "Lang attribute does not have a valid primary language subtag"
       },
       "r53": {
         "groupID": "headingStruc",
-        "what": "heading skips one or more levels"
+        "what": "Heading skips one or more levels"
       },
       "r11": {
         "groupID": "linkNoText",
-        "what": "link does not have an accessible name"
+        "what": "Link has no accessible name"
       },
       "r12": {
         "groupID": "buttonNoText",
-        "what": "button does not have an accessible name"
+        "what": "Button has no accessible name"
       },
       "r42": {
         "groupID": "parentMissing",
-        "what": "element is not owned by an element of its required context role"
+        "what": "Element is not owned by an element of its required context role"
       },
       "r43": {
         "groupID": "svgImgNoText",
@@ -93,37 +113,53 @@
       },
       "r47": {
         "groupID": "metaBansZoom",
-        "what": "meta element restricts the ability to zoom"
+        "what": "Meta element restricts zooming"
       },
       "r5": {
         "groupID": "htmlLangBad",
-        "what": "lang attribute does not have a valid primary language tag"
+        "what": "Lang attribute does not have a valid primary language tag"
       },
       "r68": {
         "groupID": "childMissing",
-        "what": "element owns no elements as required by its semantic role"
+        "what": "Element owns no elements as required by its semantic role"
       },
       "r93": {
         "groupID": "leadingFrozen",
-        "what": "style attribute is used to prevent adjusting line-height by using !important"
+        "what": "Style attribute with!important prevents adjusting line height"
+      },
+      "r73": {
+        "groupID": "noLeading",
+        "what": "Paragraphs of text have sufficient line height"
       },
       "r13": {
         "groupID": "iframeNoText",
-        "what": "iframe does not have an accessible name"
+        "what": "Iframe has no accessible name"
       },
       "r20": {
         "groupID": "roleBadAttr",
-        "what": "aria- attribute is not defined"
+        "what": "Aria- attribute is not defined"
       },
       "r10": {
         "groupID": "autocompleteBad",
-        "what": "autocomplete attribute does not have a valid value"
+        "what": "Autocomplete attribute does not have a valid value"
+      },
+      "r69": {
+        "groupID": "contrastAA",
+        "what": "Text outside widget has minimum contrast"
+      },
+      "r66": {
+        "groupID": "contrastAAA",
+        "what": "Text contrast less than AAA requires"
+      },
+      "r65": {
+        "groupID": "focusIndication",
+        "what": "Element in sequential focus order has visible focus"
       }
     },
     "axe": {
       "duplicate-id": {
         "groupID": "dupID",
-        "what": "id attribute value must be unique"
+        "what": "ID attribute value must be unique"
       },
       "input-image-alt": {
         "groupID": "imgInputNoText",
@@ -135,11 +171,11 @@
       },
       "html-has-lang": {
         "groupID": "htmlLang",
-        "what": "html element must have a lang attribute"
+        "what": "Html element must have a lang attribute"
       },
       "valid-lang": {
         "groupID": "langChange",
-        "what": "lang attribute must have a valid value"
+        "what": "Lang attribute must have a valid value"
       },
       "heading-order": {
         "groupID": "headingStruc",
@@ -147,11 +183,11 @@
       },
       "object-alt": {
         "groupID": "objNoText",
-        "what": "object elements must have alternate text"
+        "what": "Object elements must have alternate text"
       },
       "area-alt": {
         "groupID": "imgMapAreaNoText",
-        "what": "area-alt"
+        "what": "Active area elements must have alternate text"
       },
       "link-name": {
         "groupID": "linkNoText",
@@ -167,7 +203,7 @@
       },
       "svg-img-alt": {
         "groupID": "svgImgNoText",
-        "what": "svg elements with an img role must have an alternative text"
+        "what": "SVG elements with an img role must have an alternative text"
       },
       "meta-viewport": {
         "groupID": "metaBansZoom",
@@ -175,11 +211,11 @@
       },
       "html-lang-valid": {
         "groupID": "htmlLangBad",
-        "what": "html element must have a valid value for the lang attribute"
+        "what": "Html element must have a valid value for the lang attribute"
       },
       "aria-required-children": {
         "groupID": "childMissing",
-        "what": "'Certain ARIA roles must contain particular children"
+        "what": "Certain ARIA roles must contain particular children"
       },
       "avoid-inline-spacing": {
         "groupID": "leadingFrozen",
@@ -203,10 +239,10 @@
       },
       "autocomplete-valid": {
         "groupID": "autocompleteBad",
-        "what": "autocomplete attribute must be used correctly"
+        "what": "Autocomplete attribute must be used correctly"
       },
       "color-contrast": {
-        "groupID": "contrast",
+        "groupID": "contrastAA",
         "what": "Elements must have sufficient color contrast"
       },
       "empty-heading": {
@@ -237,7 +273,7 @@
       },
       "v:WCAG20_Input_ExplicitLabelImage": {
         "groupID": "imgInputNoText",
-        "what": "input element of type image should have a text alternative"
+        "what": "Input element of type image should have a text alternative"
       },
       "v:WCAG20_Img_HasAlt": {
         "groupID": "imgNoText",
@@ -249,7 +285,7 @@
       },
       "v:WCAG20_Object_HasText": {
         "groupID": "objNoText",
-        "what": "object elements must have a text alternative"
+        "what": "Object elements must have a text alternative"
       },
       "v:HAAC_Img_UsemapAlt": {
         "groupID": "imgMapAreaNoText",
@@ -257,7 +293,7 @@
       },
       "v:WCAG20_Area_HasAlt": {
         "groupID": "imgMapAreaNoText",
-        "what": "area element in an image map has no text alternative"
+        "what": "Area element in an image map has no text alternative"
       },
       "v:WCAG20_A_HasText": {
         "groupID": "linkNoText",
@@ -265,7 +301,7 @@
       },
       "v:WCAG20_Elem_Lang_Valid": {
         "groupID": "htmlLangBad",
-        "what": "lang attribute does not include a valid primary language"
+        "what": "Lang attribute does not include a valid primary language"
       },
       "v:WCAG20_Frame_HasTitle": {
         "groupID": "iframeNoText",
@@ -285,11 +321,11 @@
       },
       "v:WCAG21_Input_Autocomplete": {
         "groupID": "autocompleteBad",
-        "what": "autocomplete attribute token(s) must be appropriate for the input form field"
+        "what": "Autocomplete attribute token(s) must be appropriate for the input form field"
       },
       "v:IBMA_Color_Contrast_WCAG2AA": {
-        "groupID": "contrast",
-        "what": "contrast ratio of text with background must meet WCAG 2.1 AA"
+        "groupID": "contrastAA",
+        "what": "Contrast ratio of text with background must meet WCAG 2.1 AA"
       },
       "v:RPT_Header_HasContent": {
         "groupID": "headingEmpty",
@@ -297,19 +333,19 @@
       },
       "v:WCAG20_Img_LinkTextNotRedundant": {
         "groupID": "imgAltRedundant",
-        "what": "text alternative for image within link should not repeat link text or adjacent link text"
+        "what": "Text alternative for image within link should not repeat link text or adjacent link text"
       },
       "v:Rpt_Aria_ValidIdRef": {
         "groupID": "ariaRefBad",
-        "what": "The ARIA property must reference a non-empty unique id of an existing element that is visible"
+        "what": "ARIA property must reference non-empty unique id of visible element"
       },
       "v:WCAG20_Elem_UniqueAccessKey": {
         "groupID": "accessKeyDup",
-        "what": "accesskey attribute values on each element must be unique for the page"
+        "what": "Accesskey attribute values on each element must be unique for the page"
       },
       "v:WCAG20_Input_RadioChkInFieldSet": {
         "groupID": "fieldSetMissing",
-        "what": "input is in a different group than another with the name"
+        "what": "Input is in a different group than another with the name"
       }
     },
     "wave": {
@@ -339,14 +375,22 @@
       },
       "a:event_handler": {
         "groupID": "eventKbd",
-        "what": "Device dependent event handler"
+        "what": "Device-dependent event handler"
       },
       "a:label_orphaned": {
         "groupID": "labelForBadID",
         "what": "Orphaned form label"
       },
+      "e:link_empty": {
+        "groupID": "linkNoText",
+        "what": "Link contains no text"
+      },
+      "e:button_empty": {
+        "groupID": "buttonNoText",
+        "what": "Empty button"
+      },
       "c:contrast": {
-        "groupID": "contrast",
+        "groupID": "contrastAA",
         "what": "Very low contrast"
       },
       "e:heading_empty": {
@@ -376,6 +420,10 @@
       "a:fieldset_missing": {
         "groupID": "fieldSetMissing",
         "what": "Missing fieldset"
+      },
+      "e:label_missing": {
+        "groupID": "nameValue",
+        "what": "Missing form label"
       }
     },
     "tenon": {
@@ -383,19 +431,35 @@
         "groupID": "linkNoText",
         "what": "This link has no text inside it"
       },
+      "95": {
+        "groupID": "contrastAAA",
+        "what": "This element has insufficient color contrast (Level AAA)"
+      },
+      "98": {
+        "groupID": "linkTextsIdentical",
+        "what": "These links have the same text but different destinations"
+      },
+      "152": {
+        "groupID": "targetSize",
+        "what": "This actionable element is smaller than the minimum required size"
+      },
       "155": {
         "groupID": "headingStruc",
         "what": "These headings are not structured in a hierarchical manner"
+      },
+      "218": {
+        "groupID": "linkForcesNewWindow",
+        "what": "This link opens in a new window without user control"
       }
     },
     "testaro": {
       "role": {
         "groupID": "roleBad",
-        "what": "nonexistent or implicit-overriding role"
+        "what": "Nonexistent or implicit-overriding role"
       },
       "radioSet": {
         "groupID": "fieldSetMissing",
-        "what": "no or invalid grouping of radio buttons in fieldsets"
+        "what": "No or invalid grouping of radio buttons in fieldsets"
       },
       "bulk": {
         "groupID": "visibleBulk",
@@ -403,51 +467,51 @@
       },
       "embAc": {
         "groupID": "activeEmbedding",
-        "what": "active elements embedded in links or buttons"
+        "what": "Active elements embedded in links or buttons"
       },
       "focAll": {
         "groupID": "tabFocusability",
-        "what": "discrepancy between elements that should be and that are Tab-focusable"
+        "what": "Discrepancy between elements that should be and that are Tab-focusable"
       },
       "focInd": {
         "groupID": "focusIndication",
-        "what": "operable elements that cannot be Tab-focused and vice versa"
+        "what": "Operable elements that cannot be Tab-focused and vice versa"
       },
       "focOp": {
         "groupID": "focusableOperable",
-        "what": "operable elements that cannot be Tab-focused and vice versa"
+        "what": "Operable elements that cannot be Tab-focused and vice versa"
       },
       "hover": {
         "groupID": "hoverSurprise",
-        "what": "content changes caused by hovering"
+        "what": "Content changes caused by hovering"
       },
       "labClash": {
         "groupID": "labelClash",
-        "what": "incompatible label types"
+        "what": "Incompatible label types"
       },
       "linkUl": {
         "groupID": "linkUnderlines",
-        "what": "non-underlined inline links"
+        "what": "Non-underlined inline links"
       },
       "menuNav": {
         "groupID": "menuNavigation",
-        "what": "nonstandard keyboard navigation among focusable menu items"
-      },
-      "motion": {
-        "groupID": "spontaneousMotion",
-        "what": "change of visible content not requested by user"
-      },
-      "styleDiff": {
-        "groupID": "inconsistentStyles",
-        "what": "heading, link, and button style inconsistencies"
+        "what": "Nonstandard keyboard navigation among focusable menu items"
       },
       "tabNav": {
         "groupID": "tabNavigation",
-        "what": "nonstandard keyboard navigation among tabs"
+        "what": "Nonstandard keyboard navigation among tabs"
+      },
+      "motion": {
+        "groupID": "spontaneousMotion",
+        "what": "Change of visible content not requested by user"
+      },
+      "styleDiff": {
+        "groupID": "inconsistentStyles",
+        "what": "Heading, link, and button style inconsistencies"
       },
       "zIndex": {
         "groupID": "zIndexNotZero",
-        "what": "layering with nondefault z-index values"
+        "what": "Layering with nondefault z-index values"
       }
     }
   },
@@ -457,10 +521,10 @@
         "e:F77 Duplicate id attribute value"
       ],
       "alfa": [
-        "r3 element does not have a unique ID"
+        "r3 Element does not have a unique ID"
       ],
       "axe": [
-        "duplicate-id id attribute value must be unique"
+        "duplicate-id ID attribute value must be unique"
       ],
       "ibm": [
         "RPT_Elem_UniqueId Element id attribute values must be unique within a document"
@@ -471,13 +535,13 @@
         "e:H36 Image submit button missing an alt attribute"
       ],
       "alfa": [
-        "r28 image input element does not have an accessible name"
+        "r28 Image input element does not have an accessible name"
       ],
       "axe": [
         "input-image-alt Image buttons must have alternate text"
       ],
       "ibm": [
-        "v:WCAG20_Input_ExplicitLabelImage input element of type image should have a text alternative"
+        "v:WCAG20_Input_ExplicitLabelImage Input element of type image should have a text alternative"
       ],
       "wave": [
         "e:alt_input_missing Image button missing alternative text"
@@ -488,7 +552,7 @@
         "e:H37 Img element missing an alt attribute"
       ],
       "alfa": [
-        "r2 image does not have an accessible name"
+        "r2 Image does not have an accessible name"
       ],
       "axe": [
         "image-alt Images must have alternate text"
@@ -502,13 +566,13 @@
     },
     "htmlLang": {
       "aatt": [
-        "e:H57 lang attribute of the document element"
+        "e:H57 Lang attribute of the document element"
       ],
       "alfa": [
-        "r4 lang attribute is either missing, empty, or only whitespace"
+        "r4 Lang attribute missing, empty, or only whitespace"
       ],
       "axe": [
-        "html-has-lang html element must have a lang attribute"
+        "html-has-lang Html element must have a lang attribute"
       ],
       "ibm": [
         "WCAG20_Html_HasLang Page detected as HTML, but does not have a lang attribute"
@@ -519,21 +583,21 @@
     },
     "langChange": {
       "aatt": [
-        "e:H58 change in language is marked"
+        "e:H58 Change in language is not marked"
       ],
       "alfa": [
-        "r7 lang attribute does not have a valid primary language subtag"
+        "r7 Lang attribute does not have a valid primary language subtag"
       ],
       "axe": [
-        "valid-lang lang attribute must have a valid value"
+        "valid-lang Lang attribute must have a valid value"
       ]
     },
     "headingStruc": {
       "aatt": [
-        "w:G141 heading structure is not logically nested"
+        "w:G141 Heading structure is not logically nested"
       ],
       "alfa": [
-        "r53 heading skips one or more levels"
+        "r53 Heading skips one or more levels"
       ],
       "axe": [
         "heading-order Heading levels should only increase by one"
@@ -550,10 +614,10 @@
         "e:ARIA6+H53 Object elements must contain a text alternative"
       ],
       "axe": [
-        "object-alt object elements must have alternate text"
+        "object-alt Object elements must have alternate text"
       ],
       "ibm": [
-        "v:WCAG20_Object_HasText object elements must have a text alternative"
+        "v:WCAG20_Object_HasText Object elements must have a text alternative"
       ],
       "wave": [
         "a:plugin Plugin"
@@ -564,11 +628,11 @@
         "e:H24 Area element in an image map missing an alt attribute"
       ],
       "axe": [
-        "area-alt"
+        "area-alt Active area elements must have alternate text"
       ],
       "ibm": [
         "v:HAAC_Img_UsemapAlt Image map or child area has no text alternative",
-        "v:WCAG20_Area_HasAlt area element in an image map has no text alternative"
+        "v:WCAG20_Area_HasAlt Area element in an image map has no text alternative"
       ],
       "wave": [
         "e:alt_area_missing Image map area missing alternative text"
@@ -576,15 +640,15 @@
     },
     "eventKbd": {
       "aatt": [
-        "w:G90 event handler functionality is available through the keyboard"
+        "w:G90 Event handler functionality not available by keyboard"
       ],
       "wave": [
-        "a:event_handler Device dependent event handler"
+        "a:event_handler Device-dependent event handler"
       ]
     },
     "labelForBadID": {
       "aatt": [
-        "w:H44 label for attribute bad ID"
+        "w:H44 Label for attribute is bad ID"
       ],
       "wave": [
         "a:label_orphaned Orphaned form label"
@@ -592,7 +656,7 @@
     },
     "linkNoText": {
       "alfa": [
-        "r11 link does not have an accessible name"
+        "r11 Link has no accessible name"
       ],
       "axe": [
         "link-name Links must have discernible text"
@@ -602,19 +666,35 @@
       ],
       "tenon": [
         "57 This link has no text inside it"
+      ],
+      "wave": [
+        "e:link_empty Link contains no text"
+      ]
+    },
+    "linkTextsIdentical": {
+      "tenon": [
+        "98 These links have the same text but different destinations"
+      ]
+    },
+    "linkForcesNewWindow": {
+      "tenon": [
+        "218 This link opens in a new window without user control"
       ]
     },
     "buttonNoText": {
       "alfa": [
-        "r12 button does not have an accessible name"
+        "r12 Button has no accessible name"
       ],
       "axe": [
         "aria-command-name ARIA commands must have an accessible name"
+      ],
+      "wave": [
+        "e:button_empty Empty button"
       ]
     },
     "parentMissing": {
       "alfa": [
-        "r42 element is not owned by an element of its required context role"
+        "r42 Element is not owned by an element of its required context role"
       ],
       "axe": [
         "aria-required-parent Certain ARIA roles must be contained by particular parents"
@@ -625,12 +705,12 @@
         "r43 SVG image element does not have an accessible name"
       ],
       "axe": [
-        "svg-img-alt svg elements with an img role must have an alternative text"
+        "svg-img-alt SVG elements with an img role must have an alternative text"
       ]
     },
     "metaBansZoom": {
       "alfa": [
-        "r47 meta element restricts the ability to zoom"
+        "r47 Meta element restricts zooming"
       ],
       "axe": [
         "meta-viewport Zooming and scaling should not be disabled"
@@ -638,34 +718,39 @@
     },
     "htmlLangBad": {
       "alfa": [
-        "r5 lang attribute does not have a valid primary language tag"
+        "r5 Lang attribute does not have a valid primary language tag"
       ],
       "axe": [
-        "html-lang-valid html element must have a valid value for the lang attribute"
+        "html-lang-valid Html element must have a valid value for the lang attribute"
       ],
       "ibm": [
-        "v:WCAG20_Elem_Lang_Valid lang attribute does not include a valid primary language"
+        "v:WCAG20_Elem_Lang_Valid Lang attribute does not include a valid primary language"
       ]
     },
     "childMissing": {
       "alfa": [
-        "r68 element owns no elements as required by its semantic role"
+        "r68 Element owns no elements as required by its semantic role"
       ],
       "axe": [
-        "aria-required-children 'Certain ARIA roles must contain particular children"
+        "aria-required-children Certain ARIA roles must contain particular children"
       ]
     },
     "leadingFrozen": {
       "alfa": [
-        "r93 style attribute is used to prevent adjusting line-height by using !important"
+        "r93 Style attribute with!important prevents adjusting line height"
       ],
       "axe": [
         "avoid-inline-spacing Inline text spacing must be adjustable with custom stylesheets"
       ]
     },
+    "noLeading": {
+      "alfa": [
+        "r73 Paragraphs of text have sufficient line height"
+      ]
+    },
     "iframeNoText": {
       "alfa": [
-        "r13 iframe does not have an accessible name"
+        "r13 Iframe has no accessible name"
       ],
       "axe": [
         "frame-title Frames must have an accessible name"
@@ -682,7 +767,7 @@
         "v:aria_semantics_role ARIA roles must be valid for the element to which they are assigned"
       ],
       "testaro": [
-        "role nonexistent or implicit-overriding role"
+        "role Nonexistent or implicit-overriding role"
       ]
     },
     "roleMissingAttr": {
@@ -695,7 +780,7 @@
     },
     "roleBadAttr": {
       "alfa": [
-        "r20 aria- attribute is not defined"
+        "r20 Aria- attribute is not defined"
       ],
       "axe": [
         "aria-valid-attr ARIA attributes must conform to valid names"
@@ -706,32 +791,44 @@
     },
     "autocompleteBad": {
       "aatt": [
-        "w:H98 autocomplete attribute"
+        "w:H98 Autocomplete attribute wrong"
       ],
       "alfa": [
-        "r10 autocomplete attribute does not have a valid value"
+        "r10 Autocomplete attribute does not have a valid value"
       ],
       "axe": [
-        "autocomplete-valid autocomplete attribute must be used correctly"
+        "autocomplete-valid Autocomplete attribute must be used correctly"
       ],
       "ibm": [
-        "v:WCAG21_Input_Autocomplete autocomplete attribute token(s) must be appropriate for the input form field"
+        "v:WCAG21_Input_Autocomplete Autocomplete attribute token(s) must be appropriate for the input form field"
       ]
     },
-    "contrast": {
+    "contrastAA": {
+      "alfa": [
+        "r69 Text outside widget has minimum contrast"
+      ],
       "axe": [
         "color-contrast Elements must have sufficient color contrast"
       ],
       "ibm": [
-        "v:IBMA_Color_Contrast_WCAG2AA contrast ratio of text with background must meet WCAG 2.1 AA"
+        "v:IBMA_Color_Contrast_WCAG2AA Contrast ratio of text with background must meet WCAG 2.1 AA"
       ],
       "wave": [
         "c:contrast Very low contrast"
       ]
     },
-    "inlineBackgroundRisk": {
+    "contrastAAA": {
+      "alfa": [
+        "r66 Text contrast less than AAA requires"
+      ],
+      "tenon": [
+        "95 This element has insufficient color contrast (Level AAA)"
+      ]
+    },
+    "contrastRisk": {
       "aatt": [
-        "w:F24 Inline background color needs complementary foreground color"
+        "w:F24 Inline background color needs complementary foreground color",
+        "w:G18 Contrast adequacy not determinable"
       ]
     },
     "headingEmpty": {
@@ -750,7 +847,7 @@
         "image-redundant-alt Text of buttons and links should not be repeated in the image alternative"
       ],
       "ibm": [
-        "v:WCAG20_Img_LinkTextNotRedundant text alternative for image within link should not repeat link text or adjacent link text"
+        "v:WCAG20_Img_LinkTextNotRedundant Text alternative for image within link should not repeat link text or adjacent link text"
       ]
     },
     "title": {
@@ -769,6 +866,11 @@
         "a:h1_missing Missing first level heading"
       ]
     },
+    "pseudoHeadingRisk": {
+      "aatt": [
+        "w:H42 Heading coding should be used if intended as a heading"
+      ]
+    },
     "selectNoText": {
       "axe": [
         "select-name Select element must have an accessible name"
@@ -779,7 +881,7 @@
     },
     "ariaRefBad": {
       "ibm": [
-        "v:Rpt_Aria_ValidIdRef The ARIA property must reference a non-empty unique id of an existing element that is visible"
+        "v:Rpt_Aria_ValidIdRef ARIA property must reference non-empty unique id of visible element"
       ],
       "wave": [
         "e:aria_reference_broken Broken ARIA reference"
@@ -787,7 +889,7 @@
     },
     "accessKeyDup": {
       "ibm": [
-        "v:WCAG20_Elem_UniqueAccessKey accesskey attribute values on each element must be unique for the page"
+        "v:WCAG20_Elem_UniqueAccessKey Accesskey attribute values on each element must be unique for the page"
       ],
       "wave": [
         "a:accesskey Accesskey"
@@ -795,13 +897,27 @@
     },
     "fieldSetMissing": {
       "ibm": [
-        "v:WCAG20_Input_RadioChkInFieldSet input is in a different group than another with the name"
+        "v:WCAG20_Input_RadioChkInFieldSet Input is in a different group than another with the name"
       ],
       "testaro": [
-        "radioSet no or invalid grouping of radio buttons in fieldsets"
+        "radioSet No or invalid grouping of radio buttons in fieldsets"
       ],
       "wave": [
         "a:fieldset_missing Missing fieldset"
+      ]
+    },
+    "nameValue": {
+      "aatt": [
+        "e:F68 Form control wrongly labeled or unlabeled",
+        "e:H91 Missing name or value of form control or link"
+      ],
+      "wave": [
+        "e:label_missing Missing form label"
+      ]
+    },
+    "targetSize": {
+      "tenon": [
+        "152 This actionable element is smaller than the minimum required size"
       ]
     },
     "visibleBulk": {
@@ -811,62 +927,70 @@
     },
     "activeEmbedding": {
       "testaro": [
-        "embAc active elements embedded in links or buttons"
+        "embAc Active elements embedded in links or buttons"
       ]
     },
     "tabFocusability": {
       "testaro": [
-        "focAll discrepancy between elements that should be and that are Tab-focusable"
+        "focAll Discrepancy between elements that should be and that are Tab-focusable"
       ]
     },
     "focusIndication": {
+      "alfa": [
+        "r65 Element in sequential focus order has visible focus"
+      ],
       "testaro": [
-        "focInd operable elements that cannot be Tab-focused and vice versa"
+        "focInd Operable elements that cannot be Tab-focused and vice versa"
       ]
     },
     "focusableOperable": {
       "testaro": [
-        "focOp operable elements that cannot be Tab-focused and vice versa"
+        "focOp Operable elements that cannot be Tab-focused and vice versa"
       ]
     },
     "hoverSurprise": {
       "testaro": [
-        "hover content changes caused by hovering"
+        "hover Content changes caused by hovering"
       ]
     },
     "labelClash": {
       "testaro": [
-        "labClash incompatible label types"
+        "labClash Incompatible label types"
       ]
     },
     "linkUnderlines": {
       "testaro": [
-        "linkUl non-underlined inline links"
+        "linkUl Non-underlined inline links"
       ]
     },
     "menuNavigation": {
       "testaro": [
-        "menuNav nonstandard keyboard navigation among focusable menu items"
-      ]
-    },
-    "spontaneousMotion": {
-      "testaro": [
-        "motion change of visible content not requested by user"
-      ]
-    },
-    "inconsistentStyles": {
-      "testaro": [
-        "styleDiff heading, link, and button style inconsistencies"
+        "menuNav Nonstandard keyboard navigation among focusable menu items"
       ]
     },
     "tabNavigation": {
       "testaro": [
-        "tabNav nonstandard keyboard navigation among tabs"
+        "tabNav Nonstandard keyboard navigation among tabs"
+      ]
+    },
+    "pseudoListRisk": {
+      "aatt": [
+        "w:H48 Navigation links should be coded as list"
+      ]
+    },
+    "spontaneousMotion": {
+      "testaro": [
+        "motion Change of visible content not requested by user"
+      ]
+    },
+    "inconsistentStyles": {
+      "testaro": [
+        "styleDiff Heading, link, and button style inconsistencies"
       ]
     },
     "zIndexNotZero": {
       "testaro": [
-        "zIndex layering with nondefault z-index values"
+        "zIndex Layering with nondefault z-index values"
       ]
     }
   }

@@ -11557,6 +11557,7 @@
       "url": "https://www.eurail.com/en",
       "result": {
         "content": {
+          "prevented": true,
           "error": "ERROR: getting ibm test report took too long"
         },
         "url": {
@@ -12143,7 +12144,8 @@
               "level": "violation"
             }
           ]
-        }
+        },
+        "prevented": true
       }
     },
     {
@@ -35246,161 +35248,7 @@
   "endTime": "2022-06-08T20:57:59",
   "elapsedSeconds": 154,
   "score": {
-    "scoreProcID": "sp10a",
-    "duplications": {
-      "aatt": {
-        "e:F77": 1,
-        "e:H36": 4,
-        "e:H37": 2,
-        "e:H57": 3,
-        "e:H58": 2,
-        "w:G141": 3,
-        "w:H98": 1,
-        "e:ARIA6+H53": 1,
-        "e:H24": 2,
-        "e:G1+G123+G124": 1,
-        "w:G90": 1,
-        "w:H44": 1
-      },
-      "alfa": {
-        "r3": 2,
-        "r28": 4,
-        "r2": 2,
-        "r4": 3,
-        "r7": 2,
-        "r53": 3,
-        "r10": 1,
-        "r11": 1,
-        "r12": 2,
-        "r20": 1,
-        "r42": 1,
-        "r43": 1,
-        "r47": 1,
-        "r5": 2,
-        "r68": 1,
-        "r93": 1,
-        "r13": 1
-      },
-      "axe": {
-        "input-image-alt": 4,
-        "html-has-lang": 3,
-        "valid-lang": 2,
-        "heading-order": 3,
-        "link-name": 2,
-        "aria-command-name": 2,
-        "dlitem": 1,
-        "image-alt": 2,
-        "duplicate-id": 1,
-        "aria-required-parent": 1,
-        "svg-img-alt": 1,
-        "meta-viewport": 1,
-        "html-lang-valid": 2,
-        "aria-required-children": 1,
-        "avoid-inline-spacing": 1,
-        "area-alt": 2,
-        "aria-allowed-role": 1,
-        "aria-required-attr": 1,
-        "aria-valid-attr": 1,
-        "autocomplete-valid": 1,
-        "color-contrast": 1,
-        "empty-heading": 2,
-        "frame-title": 1,
-        "image-redundant-alt": 1,
-        "landmark-complementary-is-top-level": 2,
-        "landmark-no-duplicate-banner": 1,
-        "landmark-no-duplicate-main": 2,
-        "document-title": 1,
-        "object-alt": 1,
-        "page-has-heading-one": 1,
-        "select-name": 1
-      },
-      "ibm": {
-        "v:WCAG20_Object_HasText": 1,
-        "v:WCAG20_Area_HasAlt": 2,
-        "v:WCAG20_Input_ExplicitLabelImage": 4,
-        "v:WCAG20_Frame_HasTitle": 2,
-        "v:WCAG20_Elem_Lang_Valid": 2,
-        "v:HAAC_Img_UsemapAlt": 1,
-        "v:aria_semantics_role": 1,
-        "v:Rpt_Aria_RequiredProperties": 1,
-        "v:Rpt_Aria_ValidProperty": 1,
-        "v:WCAG21_Input_Autocomplete": 1,
-        "v:IBMA_Color_Contrast_WCAG2AA": 2,
-        "v:RPT_Header_HasContent": 2,
-        "v:WCAG20_Img_HasAlt": 2,
-        "v:WCAG20_Img_LinkTextNotRedundant": 1,
-        "v:Rpt_Aria_ComplementaryRequiredLabel_Implicit": 1,
-        "v:Rpt_Aria_MultipleComplementaryLandmarks_Implicit": 1,
-        "v:Rpt_Aria_MultipleBannerLandmarks_Implicit": 1,
-        "r:Rpt_Aria_MultipleMainsVisibleLabel_Implicit": 1,
-        "v:Rpt_Aria_MultipleMainsRequireLabel_Implicit_2": 1,
-        "v:WCAG20_A_HasText": 1,
-        "v:Rpt_Aria_ValidIdRef": 1,
-        "v:WCAG20_Elem_UniqueAccessKey": 1,
-        "v:WCAG20_Input_RadioChkInFieldSet": 1
-      },
-      "wave": {
-        "a:link_internal_broken": 1,
-        "e:alt_area_missing": 3,
-        "e:alt_input_missing": 4,
-        "e:alt_missing": 2,
-        "e:language_missing": 3,
-        "a:heading_skipped": 3,
-        "a:event_handler": 1,
-        "a:label_orphaned": 1,
-        "e:title_invalid": 1,
-        "e:heading_empty": 2,
-        "a:plugin": 1,
-        "a:h1_missing": 1,
-        "a:select_missing_label": 1,
-        "c:contrast": 1,
-        "e:aria_reference_broken": 1,
-        "a:accesskey": 1,
-        "a:fieldset_missing": 1
-      }
-    },
-    "rules": {
-      "aatt": "multiply warning by 2*, error by 4* (*discounted); sum",
-      "alfa": "multiply cantTell by 2*, failed by 4* (*discounted); sum",
-      "axe": "multiply minor by 2*, moderate by 3*, serious by 4*, critical by 5* (*discounted); sum",
-      "bulk": "subtract 250 from visible elements; make 0 if negative; raise to 0.9th power; multiply by 0.15",
-      "embAc": "multiply link- or button-contained links, buttons, inputs, and selects by 3 (discounted)",
-      "focAll": "multiply discrepancy between focusable and focused element counts by 3",
-      "focInd": "multiply indicatorless-when-focused elements by 5",
-      "focOp": "multiply nonfocusable operable elements by 4, nonoperable focusable by 1; sum",
-      "hover": "multiply elements changing page on hover by 4, made visible by 2, with directly changed opacity by 0.1, with indirectly changed opacity by 0.2, unhoverable by 2; sum",
-      "ibm": "multiply violations by 4*, recommendations by 2* (*discounted); sum",
-      "labClash": "multiply conflictually labeled elements by 2, unlabeled elements by 2; sum",
-      "linkUl": "multiply nonunderlined inline links by 3",
-      "log": "multiply log items by respective logWeights; sum",
-      "menuNav": "multiply Home and End errors by 1 and other key-navigation errors by 3; sum",
-      "motion": "get PNG screenshot sizes (sss); get differing-pixel counts between adjacent PNG screenshots (pd); “sssd” = sss difference ÷ smaller sss - 1; multiply mean adjacent sssd by 5, maximum adjacent sssd by 2, maximum over-all ssd by 1; divide mean pd by 10,000, maximum pd by 25,000; multiply count of non-0 pd by 30; sum",
-      "radioSet": "multiply radio buttons not in fieldsets with legends and no other-name radio buttons by 2",
-      "role": "multiple role attributes with invalid or native-HTML-equivalent values by 2",
-      "styleDiff": "for each of element classes block a, inline a, button, h1, h2, h3, h4, h5, and h6, get diffStyles-distinct styles; multiply their count minus 1 by 2; multiply count of elements with non-plurality styles by 0.2; sum",
-      "tabNav": "multiply Home and End errors by 1 and other key-navigation errors by 3; sum",
-      "tenon": "multiply warnings by 1, errors by 3; sum",
-      "wave": "multiply alerts by 2*, contrast errors by 3*, errors by 4* (*discounted); sum",
-      "zIndex": "multiply non-auto z indexes by 3"
-    },
-    "diffStyles": [
-      "borderStyle",
-      "borderWidth",
-      "fontStyle",
-      "fontWeight",
-      "lineHeight",
-      "maxHeight",
-      "maxWidth",
-      "minHeight",
-      "minWidth",
-      "opacity",
-      "outlineOffset",
-      "outlineStyle",
-      "outlineWidth",
-      "textDecorationLine",
-      "textDecorationStyle",
-      "textDecorationThickness"
-    ],
+    "scoreProcID": "sp10b",
     "logWeights": {
       "count": 0.5,
       "size": 0.01,
@@ -35408,31 +35256,634 @@
       "visitTimeout": 10,
       "visitRejection": 10
     },
-    "inferences": {},
-    "scores": {
-      "total": 6861,
-      "aatt": 944,
-      "alfa": 463,
-      "axe": 45,
-      "bulk": 30,
-      "embAc": 9,
-      "focAll": 303,
-      "focInd": 2915,
-      "focOp": 240,
-      "hover": 148,
-      "ibm": 109,
-      "labClash": 36,
-      "linkUl": 6,
+    "groupWeights": {
+      "accessKeyDup": 3,
+      "activeEmbedding": 2,
+      "ariaRefBad": 4,
+      "autocompleteBad": 2,
+      "buttonNoText": 4,
+      "childMissing": 3,
+      "contrastAA": 3,
+      "contrastAAA": 1,
+      "dupID": 2,
+      "eventKbd": 3,
+      "fieldSetMissing": 2,
+      "focusableOperable": 3,
+      "focusIndication": 3,
+      "h1Missing": 1,
+      "headingEmpty": 2,
+      "headingStruc": 2,
+      "hoverSurprise": 1,
+      "htmlLang": 3,
+      "htmlLangBad": 3,
+      "iframeNoText": 3,
+      "imgAltRedundant": 1,
+      "imgInputNoText": 4,
+      "imgMapAreaNoText": 3,
+      "imgNoText": 4,
+      "inconsistentStyles": 1,
+      "contrastRisk": 1,
+      "labelClash": 2,
+      "labelForBadID": 4,
+      "langChange": 2,
+      "leadingFrozen": 3,
+      "linkForcesNewWindow": 2,
+      "linkNoText": 4,
+      "linkTextsIdentical": 2,
+      "linkUnderlines": 2,
+      "menuNavigation": 2,
+      "metaBansZoom": 3,
+      "nameValue": 3,
+      "noLeading": 2,
+      "objNoText": 2,
+      "parentMissing": 3,
+      "pseudoHeadingRisk": 1,
+      "pseudoListRisk": 1,
+      "roleBad": 3,
+      "roleBadAttr": 3,
+      "roleMissingAttr": 3,
+      "selectNoText": 3,
+      "spontaneousMotion": 2,
+      "svgImgNoText": 4,
+      "tabFocusability": 3,
+      "tabNavigation": 2,
+      "targetSize": 2,
+      "title": 3,
+      "visibleBulk": 1,
+      "zIndexNotZero": 1
+    },
+    "soloWeight": 1,
+    "countWeights": {
+      "absolute": 2,
+      "largest": 1,
+      "smaller": 0.4
+    },
+    "preventionWeights": {
+      "testaro": 50,
+      "other": 100
+    },
+    "packageDetails": {
+      "testaro": {
+        "motion": 0,
+        "bulk": 2,
+        "embAc": 3,
+        "focAll": 101,
+        "focInd": 583,
+        "focOp": 60,
+        "hover": 74,
+        "linkUl": 2,
+        "role": 1,
+        "styleDiff": 139
+      },
+      "axe": {
+        "button-name": 3,
+        "color-contrast": 2,
+        "image-alt": 2,
+        "image-redundant-alt": 1,
+        "label-title-only": 1,
+        "landmark-unique": 1,
+        "link-name": 4,
+        "page-has-heading-one": 1,
+        "select-name": 3
+      },
+      "aatt": {
+        "w:C31+C32+C33+C38+G206+SCR34": 2,
+        "e:H91": 46,
+        "w:ARIA6": 2,
+        "w:F24": 7,
+        "w:G141": 3,
+        "w:G18": 259,
+        "w:H48": 41,
+        "w:H91": 29,
+        "e:F68": 10,
+        "w:H85": 5,
+        "e:G1+G123+G124": 4,
+        "e:H30": 1,
+        "e:H32": 2,
+        "w:H42": 1,
+        "w:H44": 1,
+        "e:H37": 1,
+        "e:H64": 1
+      },
+      "alfa": {
+        "r11": 4,
+        "r12": 3,
+        "r2": 2,
+        "r57": 15,
+        "r61": 1,
+        "r62": 2,
+        "r65": 91,
+        "r66": 27,
+        "r69": 21,
+        "r72": 3,
+        "r73": 12,
+        "r75": 1,
+        "r8": 3,
+        "r83": 1,
+        "r87": 1
+      },
+      "wave": {
+        "e:alt_missing": 1,
+        "e:alt_link_missing": 1,
+        "e:label_missing": 6,
+        "e:button_empty": 3,
+        "e:link_empty": 30,
+        "c:contrast": 33,
+        "a:select_missing_label": 5,
+        "a:alt_suspicious": 2,
+        "a:label_orphaned": 1,
+        "a:h1_missing": 1,
+        "a:heading_skipped": 1,
+        "a:link_internal_broken": 4,
+        "a:link_suspicious": 1,
+        "a:link_redundant": 9,
+        "a:noscript": 4,
+        "a:text_small": 1,
+        "a:title_redundant": 1
+      },
+      "tenon": {
+        "57": 32,
+        "79": 19,
+        "95": 32,
+        "98": 47,
+        "129": 21,
+        "134": 2,
+        "144": 12,
+        "152": 45,
+        "153": 27,
+        "155": 1,
+        "190": 1,
+        "218": 79,
+        "242": 4
+      }
+    },
+    "groupDetails": {
+      "groups": {
+        "imgNoText": {
+          "aatt": {
+            "e:H37": {
+              "what": "Img element missing an alt attribute",
+              "issueCount": 1
+            }
+          },
+          "alfa": {
+            "r2": {
+              "what": "Image does not have an accessible name",
+              "issueCount": 2
+            }
+          },
+          "axe": {
+            "image-alt": {
+              "what": "Images must have alternate text",
+              "issueCount": 2
+            }
+          },
+          "ibm": {
+            "v:WCAG20_Img_HasAlt": {
+              "what": "Images must have an alt attribute if they convey meaning, or alt='' if decorative",
+              "issueCount": 0
+            }
+          },
+          "wave": {
+            "e:alt_missing": {
+              "what": "Missing alternative text",
+              "issueCount": 1
+            }
+          }
+        },
+        "headingStruc": {
+          "aatt": {
+            "w:G141": {
+              "what": "Heading structure is not logically nested",
+              "issueCount": 3
+            }
+          },
+          "alfa": {
+            "r53": {
+              "what": "Heading skips one or more levels",
+              "issueCount": 0
+            }
+          },
+          "axe": {
+            "heading-order": {
+              "what": "Heading levels should only increase by one",
+              "issueCount": 0
+            }
+          },
+          "wave": {
+            "a:heading_skipped": {
+              "what": "Skipped heading level",
+              "issueCount": 1
+            }
+          },
+          "tenon": {
+            "155": {
+              "what": "These headings are not structured in a hierarchical manner",
+              "issueCount": 1
+            }
+          }
+        },
+        "labelForBadID": {
+          "aatt": {
+            "w:H44": {
+              "what": "Label for attribute is bad ID",
+              "issueCount": 1
+            }
+          },
+          "wave": {
+            "a:label_orphaned": {
+              "what": "Orphaned form label",
+              "issueCount": 1
+            }
+          }
+        },
+        "contrastRisk": {
+          "aatt": {
+            "w:F24": {
+              "what": "Inline background color needs complementary foreground color",
+              "issueCount": 7
+            },
+            "w:G18": {
+              "what": "Contrast adequacy not determinable",
+              "issueCount": 259
+            }
+          }
+        },
+        "pseudoHeadingRisk": {
+          "aatt": {
+            "w:H42": {
+              "what": "Heading coding should be used if intended as a heading",
+              "issueCount": 1
+            }
+          }
+        },
+        "nameValue": {
+          "aatt": {
+            "e:F68": {
+              "what": "Form control wrongly labeled or unlabeled",
+              "issueCount": 10
+            },
+            "e:H91": {
+              "what": "Missing name or value of form control or link",
+              "issueCount": 46
+            }
+          },
+          "wave": {
+            "e:label_missing": {
+              "what": "Missing form label",
+              "issueCount": 6
+            }
+          }
+        },
+        "pseudoListRisk": {
+          "aatt": {
+            "w:H48": {
+              "what": "Navigation links should be coded as list",
+              "issueCount": 41
+            }
+          }
+        },
+        "linkNoText": {
+          "alfa": {
+            "r11": {
+              "what": "Link has no accessible name",
+              "issueCount": 4
+            }
+          },
+          "axe": {
+            "link-name": {
+              "what": "Links must have discernible text",
+              "issueCount": 4
+            }
+          },
+          "ibm": {
+            "v:WCAG20_A_HasText": {
+              "what": "Hyperlinks must have a text description",
+              "issueCount": 0
+            }
+          },
+          "wave": {
+            "e:link_empty": {
+              "what": "Link contains no text",
+              "issueCount": 30
+            }
+          },
+          "tenon": {
+            "57": {
+              "what": "This link has no text inside it",
+              "issueCount": 32
+            }
+          }
+        },
+        "buttonNoText": {
+          "alfa": {
+            "r12": {
+              "what": "Button has no accessible name",
+              "issueCount": 3
+            }
+          },
+          "axe": {
+            "aria-command-name": {
+              "what": "ARIA commands must have an accessible name",
+              "issueCount": 0
+            }
+          },
+          "wave": {
+            "e:button_empty": {
+              "what": "Empty button",
+              "issueCount": 3
+            }
+          }
+        },
+        "noLeading": {
+          "alfa": {
+            "r73": {
+              "what": "Paragraphs of text have sufficient line height",
+              "issueCount": 12
+            }
+          }
+        },
+        "contrastAA": {
+          "alfa": {
+            "r69": {
+              "what": "Text outside widget has minimum contrast",
+              "issueCount": 21
+            }
+          },
+          "axe": {
+            "color-contrast": {
+              "what": "Elements must have sufficient color contrast",
+              "issueCount": 2
+            }
+          },
+          "ibm": {
+            "v:IBMA_Color_Contrast_WCAG2AA": {
+              "what": "Contrast ratio of text with background must meet WCAG 2.1 AA",
+              "issueCount": 0
+            }
+          },
+          "wave": {
+            "c:contrast": {
+              "what": "Very low contrast",
+              "issueCount": 33
+            }
+          }
+        },
+        "contrastAAA": {
+          "alfa": {
+            "r66": {
+              "what": "Text contrast less than AAA requires",
+              "issueCount": 27
+            }
+          },
+          "tenon": {
+            "95": {
+              "what": "This element has insufficient color contrast (Level AAA)",
+              "issueCount": 32
+            }
+          }
+        },
+        "focusIndication": {
+          "alfa": {
+            "r65": {
+              "what": "Element in sequential focus order has visible focus",
+              "issueCount": 91
+            }
+          },
+          "testaro": {
+            "focInd": {
+              "what": "Operable elements that cannot be Tab-focused and vice versa",
+              "issueCount": 583
+            }
+          }
+        },
+        "roleBad": {
+          "axe": {
+            "aria-allowed-role": {
+              "what": "ARIA role should be appropriate for the element",
+              "issueCount": 0
+            }
+          },
+          "ibm": {
+            "v:aria_semantics_role": {
+              "what": "ARIA roles must be valid for the element to which they are assigned",
+              "issueCount": 0
+            }
+          },
+          "testaro": {
+            "role": {
+              "what": "Nonexistent or implicit-overriding role",
+              "issueCount": 1
+            }
+          }
+        },
+        "imgAltRedundant": {
+          "axe": {
+            "image-redundant-alt": {
+              "what": "Text of buttons and links should not be repeated in the image alternative",
+              "issueCount": 1
+            }
+          },
+          "ibm": {
+            "v:WCAG20_Img_LinkTextNotRedundant": {
+              "what": "Text alternative for image within link should not repeat link text or adjacent link text",
+              "issueCount": 0
+            }
+          }
+        },
+        "h1Missing": {
+          "axe": {
+            "page-has-heading-one": {
+              "what": "Page should contain a level-one heading",
+              "issueCount": 1
+            }
+          },
+          "wave": {
+            "a:h1_missing": {
+              "what": "Missing first level heading",
+              "issueCount": 1
+            }
+          }
+        },
+        "selectNoText": {
+          "axe": {
+            "select-name": {
+              "what": "Select element must have an accessible name",
+              "issueCount": 3
+            }
+          },
+          "wave": {
+            "a:select_missing_label": {
+              "what": "Select missing label",
+              "issueCount": 5
+            }
+          }
+        },
+        "linkTextsIdentical": {
+          "tenon": {
+            "98": {
+              "what": "These links have the same text but different destinations",
+              "issueCount": 47
+            }
+          }
+        },
+        "targetSize": {
+          "tenon": {
+            "152": {
+              "what": "This actionable element is smaller than the minimum required size",
+              "issueCount": 45
+            }
+          }
+        },
+        "linkForcesNewWindow": {
+          "tenon": {
+            "218": {
+              "what": "This link opens in a new window without user control",
+              "issueCount": 79
+            }
+          }
+        },
+        "visibleBulk": {
+          "testaro": {
+            "bulk": {
+              "what": "Count of visible elements as a multiple of 300",
+              "issueCount": 2
+            }
+          }
+        },
+        "activeEmbedding": {
+          "testaro": {
+            "embAc": {
+              "what": "Active elements embedded in links or buttons",
+              "issueCount": 3
+            }
+          }
+        },
+        "tabFocusability": {
+          "testaro": {
+            "focAll": {
+              "what": "Discrepancy between elements that should be and that are Tab-focusable",
+              "issueCount": 101
+            }
+          }
+        },
+        "focusableOperable": {
+          "testaro": {
+            "focOp": {
+              "what": "Operable elements that cannot be Tab-focused and vice versa",
+              "issueCount": 60
+            }
+          }
+        },
+        "hoverSurprise": {
+          "testaro": {
+            "hover": {
+              "what": "Content changes caused by hovering",
+              "issueCount": 74
+            }
+          }
+        },
+        "linkUnderlines": {
+          "testaro": {
+            "linkUl": {
+              "what": "Non-underlined inline links",
+              "issueCount": 2
+            }
+          }
+        },
+        "inconsistentStyles": {
+          "testaro": {
+            "styleDiff": {
+              "what": "Heading, link, and button style inconsistencies",
+              "issueCount": 139
+            }
+          }
+        }
+      },
+      "solos": {
+        "axe": {
+          "button-name": 3,
+          "label-title-only": 1,
+          "landmark-unique": 1
+        },
+        "aatt": {
+          "w:C31+C32+C33+C38+G206+SCR34": 2,
+          "w:ARIA6": 2,
+          "w:H91": 29,
+          "w:H85": 5,
+          "e:G1+G123+G124": 4,
+          "e:H30": 1,
+          "e:H32": 2,
+          "e:H64": 1
+        },
+        "alfa": {
+          "r57": 15,
+          "r61": 1,
+          "r62": 2,
+          "r72": 3,
+          "r75": 1,
+          "r8": 3,
+          "r83": 1,
+          "r87": 1
+        },
+        "wave": {
+          "e:alt_link_missing": 1,
+          "a:alt_suspicious": 2,
+          "a:link_internal_broken": 4,
+          "a:link_suspicious": 1,
+          "a:link_redundant": 9,
+          "a:noscript": 4,
+          "a:text_small": 1,
+          "a:title_redundant": 1
+        },
+        "tenon": {
+          "79": 19,
+          "129": 21,
+          "134": 2,
+          "144": 12,
+          "153": 27,
+          "190": 1,
+          "242": 4
+        }
+      }
+    },
+    "preventionScores": {
+      "ibm": 100
+    },
+    "summary": {
+      "total": 4253,
       "log": 3,
-      "menuNav": 0,
-      "motion": 0,
-      "radioSet": 0,
-      "role": 2,
-      "styleDiff": 139,
-      "tabNav": 0,
-      "tenon": 910,
-      "wave": 259,
-      "zIndex": 300
+      "preventions": 100,
+      "solos": 187,
+      "groups": {
+        "imgNoText": 22,
+        "headingStruc": 12,
+        "labelForBadID": 14,
+        "contrastRisk": 268,
+        "pseudoHeadingRisk": 3,
+        "nameValue": 181,
+        "pseudoListRisk": 43,
+        "linkNoText": 197,
+        "buttonNoText": 25,
+        "noLeading": 28,
+        "contrastAA": 133,
+        "contrastAAA": 45,
+        "focusIndication": 1864,
+        "roleBad": 9,
+        "imgAltRedundant": 3,
+        "h1Missing": 3,
+        "selectNoText": 25,
+        "linkTextsIdentical": 98,
+        "targetSize": 94,
+        "linkForcesNewWindow": 162,
+        "visibleBulk": 4,
+        "activeEmbedding": 10,
+        "tabFocusability": 309,
+        "focusableOperable": 186,
+        "hoverSurprise": 76,
+        "linkUnderlines": 8,
+        "inconsistentStyles": 141
+      }
     }
   }
 }

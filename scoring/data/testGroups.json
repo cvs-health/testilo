@@ -57,6 +57,18 @@
         "groupID": "pseudoHeadingRisk",
         "what": "Heading coding should be used if intended as a heading"
       },
+      "w:H48": {
+        "groupID": "pseudoListRisk",
+        "what": "Navigation links should be coded as list"
+      },
+      "w:H91": {
+        "groupID": "selectNoText",
+        "what": "Select element has no value available to an accessibility API"
+      },
+      "w:H85": {
+        "groupID": "selectFlatRisk",
+        "what": "If selection list contains groups of related options, they should be grouped with optgroup"
+      },
       "e:F68": {
         "groupID": "nameValue",
         "what": "Form control wrongly labeled or unlabeled"
@@ -64,24 +76,20 @@
       "e:H91": {
         "groupID": "nameValue",
         "what": "Missing name or value of form control or link"
-      },
-      "w:H48": {
-        "groupID": "pseudoListRisk",
-        "what": "Navigation links should be coded as list"
       }
     },
     "alfa": {
       "r3": {
         "groupID": "dupID",
-        "what": "Element does not have a unique ID"
+        "what": "Element has no unique ID"
       },
       "r28": {
         "groupID": "imgInputNoText",
-        "what": "Image input element does not have an accessible name"
+        "what": "Image input element has no accessible name"
       },
       "r2": {
         "groupID": "imgNoText",
-        "what": "Image does not have an accessible name"
+        "what": "Image has no accessible name"
       },
       "r4": {
         "groupID": "htmlLang",
@@ -89,7 +97,7 @@
       },
       "r7": {
         "groupID": "langChange",
-        "what": "Lang attribute does not have a valid primary language subtag"
+        "what": "Lang attribute has no valid primary language subtag"
       },
       "r53": {
         "groupID": "headingStruc",
@@ -109,7 +117,7 @@
       },
       "r43": {
         "groupID": "svgImgNoText",
-        "what": "SVG image element does not have an accessible name"
+        "what": "SVG image element has no accessible name"
       },
       "r47": {
         "groupID": "metaBansZoom",
@@ -117,7 +125,7 @@
       },
       "r5": {
         "groupID": "htmlLangBad",
-        "what": "Lang attribute does not have a valid primary language tag"
+        "what": "Lang attribute has no valid primary language tag"
       },
       "r68": {
         "groupID": "childMissing",
@@ -141,7 +149,7 @@
       },
       "r10": {
         "groupID": "autocompleteBad",
-        "what": "Autocomplete attribute does not have a valid value"
+        "what": "Autocomplete attribute has no valid value"
       },
       "r69": {
         "groupID": "contrastAA",
@@ -154,6 +162,10 @@
       "r65": {
         "groupID": "focusIndication",
         "what": "Element in sequential focus order has visible focus"
+      },
+      "r57": {
+        "groupID": "textBeyondLandmarks",
+        "what": "Perceivable text content not included in any landmark"
       }
     },
     "axe": {
@@ -281,7 +293,7 @@
       },
       "WCAG20_Html_HasLang": {
         "groupID": "htmlLang",
-        "what": "Page detected as HTML, but does not have a lang attribute"
+        "what": "Page detected as HTML, but has no lang attribute"
       },
       "v:WCAG20_Object_HasText": {
         "groupID": "objNoText",
@@ -367,7 +379,7 @@
       },
       "a:plugin": {
         "groupID": "objNoText",
-        "what": "Plugin"
+        "what": "An unidentified plugin is present"
       },
       "e:alt_area_missing": {
         "groupID": "imgMapAreaNoText",
@@ -385,9 +397,13 @@
         "groupID": "linkNoText",
         "what": "Link contains no text"
       },
+      "a:link_redundant": {
+        "groupID": "linkPair",
+        "what": "Adjacent links go to same URL"
+      },
       "e:button_empty": {
         "groupID": "buttonNoText",
-        "what": "Empty button"
+        "what": "Button is empty or has no value text"
       },
       "c:contrast": {
         "groupID": "contrastAA",
@@ -429,19 +445,35 @@
     "tenon": {
       "57": {
         "groupID": "linkNoText",
-        "what": "This link has no text inside it"
+        "what": "Link has no text inside it"
+      },
+      "79": {
+        "groupID": "linkTitleRedundant",
+        "what": "Link has a title attribute that is the same as the text inside the link"
       },
       "95": {
         "groupID": "contrastAAA",
-        "what": "This element has insufficient color contrast (Level AAA)"
+        "what": "Element has insufficient color contrast (Level AAA)"
       },
       "98": {
         "groupID": "linkTextsIdentical",
         "what": "These links have the same text but different destinations"
       },
+      "129": {
+        "groupID": "pseudoLinkRisk",
+        "what": "CSS underline on text that is not a link"
+      },
+      "144": {
+        "groupID": "leadingClipsText",
+        "what": "Line height insufficent to properly display computed font size"
+      },
       "152": {
         "groupID": "targetSize",
-        "what": "This actionable element is smaller than the minimum required size"
+        "what": "Actionable element is smaller than the minimum required size"
+      },
+      "153": {
+        "groupID": "allCaps",
+        "what": "Long string of text is in all caps"
       },
       "155": {
         "groupID": "headingStruc",
@@ -449,7 +481,7 @@
       },
       "218": {
         "groupID": "linkForcesNewWindow",
-        "what": "This link opens in a new window without user control"
+        "what": "Link opens in a new window without user control"
       }
     },
     "testaro": {
@@ -521,7 +553,7 @@
         "e:F77 Duplicate id attribute value"
       ],
       "alfa": [
-        "r3 Element does not have a unique ID"
+        "r3 Element has no unique ID"
       ],
       "axe": [
         "duplicate-id ID attribute value must be unique"
@@ -535,7 +567,7 @@
         "e:H36 Image submit button missing an alt attribute"
       ],
       "alfa": [
-        "r28 Image input element does not have an accessible name"
+        "r28 Image input element has no accessible name"
       ],
       "axe": [
         "input-image-alt Image buttons must have alternate text"
@@ -552,7 +584,7 @@
         "e:H37 Img element missing an alt attribute"
       ],
       "alfa": [
-        "r2 Image does not have an accessible name"
+        "r2 Image has no accessible name"
       ],
       "axe": [
         "image-alt Images must have alternate text"
@@ -575,7 +607,7 @@
         "html-has-lang Html element must have a lang attribute"
       ],
       "ibm": [
-        "WCAG20_Html_HasLang Page detected as HTML, but does not have a lang attribute"
+        "WCAG20_Html_HasLang Page detected as HTML, but has no lang attribute"
       ],
       "wave": [
         "e:language_missing Language missing or invalid"
@@ -586,7 +618,7 @@
         "e:H58 Change in language is not marked"
       ],
       "alfa": [
-        "r7 Lang attribute does not have a valid primary language subtag"
+        "r7 Lang attribute has no valid primary language subtag"
       ],
       "axe": [
         "valid-lang Lang attribute must have a valid value"
@@ -620,7 +652,7 @@
         "v:WCAG20_Object_HasText Object elements must have a text alternative"
       ],
       "wave": [
-        "a:plugin Plugin"
+        "a:plugin An unidentified plugin is present"
       ]
     },
     "imgMapAreaNoText": {
@@ -665,7 +697,7 @@
         "v:WCAG20_A_HasText Hyperlinks must have a text description"
       ],
       "tenon": [
-        "57 This link has no text inside it"
+        "57 Link has no text inside it"
       ],
       "wave": [
         "e:link_empty Link contains no text"
@@ -676,9 +708,14 @@
         "98 These links have the same text but different destinations"
       ]
     },
+    "linkPair": {
+      "wave": [
+        "a:link_redundant Adjacent links go to same URL"
+      ]
+    },
     "linkForcesNewWindow": {
       "tenon": [
-        "218 This link opens in a new window without user control"
+        "218 Link opens in a new window without user control"
       ]
     },
     "buttonNoText": {
@@ -689,7 +726,7 @@
         "aria-command-name ARIA commands must have an accessible name"
       ],
       "wave": [
-        "e:button_empty Empty button"
+        "e:button_empty Button is empty or has no value text"
       ]
     },
     "parentMissing": {
@@ -702,7 +739,7 @@
     },
     "svgImgNoText": {
       "alfa": [
-        "r43 SVG image element does not have an accessible name"
+        "r43 SVG image element has no accessible name"
       ],
       "axe": [
         "svg-img-alt SVG elements with an img role must have an alternative text"
@@ -718,7 +755,7 @@
     },
     "htmlLangBad": {
       "alfa": [
-        "r5 Lang attribute does not have a valid primary language tag"
+        "r5 Lang attribute has no valid primary language tag"
       ],
       "axe": [
         "html-lang-valid Html element must have a valid value for the lang attribute"
@@ -746,6 +783,11 @@
     "noLeading": {
       "alfa": [
         "r73 Paragraphs of text have sufficient line height"
+      ]
+    },
+    "leadingClipsText": {
+      "tenon": [
+        "144 Line height insufficent to properly display computed font size"
       ]
     },
     "iframeNoText": {
@@ -794,7 +836,7 @@
         "w:H98 Autocomplete attribute wrong"
       ],
       "alfa": [
-        "r10 Autocomplete attribute does not have a valid value"
+        "r10 Autocomplete attribute has no valid value"
       ],
       "axe": [
         "autocomplete-valid Autocomplete attribute must be used correctly"
@@ -822,7 +864,7 @@
         "r66 Text contrast less than AAA requires"
       ],
       "tenon": [
-        "95 This element has insufficient color contrast (Level AAA)"
+        "95 Element has insufficient color contrast (Level AAA)"
       ]
     },
     "contrastRisk": {
@@ -850,6 +892,11 @@
         "v:WCAG20_Img_LinkTextNotRedundant Text alternative for image within link should not repeat link text or adjacent link text"
       ]
     },
+    "linkTitleRedundant": {
+      "tenon": [
+        "79 Link has a title attribute that is the same as the text inside the link"
+      ]
+    },
     "title": {
       "axe": [
         "document-title Documents must contain a title element"
@@ -871,12 +918,30 @@
         "w:H42 Heading coding should be used if intended as a heading"
       ]
     },
+    "pseudoLinkRisk": {
+      "tenon": [
+        "129 CSS underline on text that is not a link"
+      ]
+    },
+    "pseudoListRisk": {
+      "aatt": [
+        "w:H48 Navigation links should be coded as list"
+      ]
+    },
     "selectNoText": {
+      "aatt": [
+        "w:H91 Select element has no value available to an accessibility API"
+      ],
       "axe": [
         "select-name Select element must have an accessible name"
       ],
       "wave": [
         "a:select_missing_label Select missing label"
+      ]
+    },
+    "selectFlatRisk": {
+      "aatt": [
+        "w:H85 If selection list contains groups of related options, they should be grouped with optgroup"
       ]
     },
     "ariaRefBad": {
@@ -917,7 +982,7 @@
     },
     "targetSize": {
       "tenon": [
-        "152 This actionable element is smaller than the minimum required size"
+        "152 Actionable element is smaller than the minimum required size"
       ]
     },
     "visibleBulk": {
@@ -941,6 +1006,16 @@
       ],
       "testaro": [
         "focInd Operable elements that cannot be Tab-focused and vice versa"
+      ]
+    },
+    "allCaps": {
+      "tenon": [
+        "153 Long string of text is in all caps"
+      ]
+    },
+    "textBeyondLandmarks": {
+      "alfa": [
+        "r57 Perceivable text content not included in any landmark"
       ]
     },
     "focusableOperable": {
@@ -971,11 +1046,6 @@
     "tabNavigation": {
       "testaro": [
         "tabNav Nonstandard keyboard navigation among tabs"
-      ]
-    },
-    "pseudoListRisk": {
-      "aatt": [
-        "w:H48 Navigation links should be coded as list"
       ]
     },
     "spontaneousMotion": {

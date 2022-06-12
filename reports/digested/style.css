@@ -6,7 +6,7 @@ body {
   margin: 2rem;
   font-size: large;
 }
-.bold {
+.bold, .componentID {
   font-weight: 700;
 }
 button {
@@ -64,7 +64,7 @@ legend {
 section:not(.wide) {
   max-width: 36rem;
 }
-#summary > p {
+#synopsis > p {
   margin: 0;
   padding: 0;
 }

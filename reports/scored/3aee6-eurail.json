@@ -35259,6 +35259,7 @@
     "groupWeights": {
       "accessKeyDup": 3,
       "activeEmbedding": 2,
+      "allCaps": 1,
       "ariaRefBad": 4,
       "autocompleteBad": 2,
       "buttonNoText": 4,
@@ -35286,10 +35287,13 @@
       "labelClash": 2,
       "labelForBadID": 4,
       "langChange": 2,
+      "leadingClipsText": 3,
       "leadingFrozen": 3,
       "linkForcesNewWindow": 2,
       "linkNoText": 4,
+      "linkPair": 1,
       "linkTextsIdentical": 2,
+      "linkTitleRedundant": 1,
       "linkUnderlines": 2,
       "menuNavigation": 2,
       "metaBansZoom": 3,
@@ -35298,16 +35302,19 @@
       "objNoText": 2,
       "parentMissing": 3,
       "pseudoHeadingRisk": 1,
+      "pseudoLinkRisk": 2,
       "pseudoListRisk": 1,
       "roleBad": 3,
       "roleBadAttr": 3,
       "roleMissingAttr": 3,
+      "selectFlatRisk": 1,
       "selectNoText": 3,
       "spontaneousMotion": 2,
       "svgImgNoText": 4,
       "tabFocusability": 3,
       "tabNavigation": 2,
       "targetSize": 2,
+      "textBeyondLandmarks": 1,
       "title": 3,
       "visibleBulk": 1,
       "zIndexNotZero": 1
@@ -35428,7 +35435,7 @@
           },
           "alfa": {
             "r2": {
-              "what": "Image does not have an accessible name",
+              "what": "Image has no accessible name",
               "issueCount": 2
             }
           },
@@ -35517,6 +35524,42 @@
             }
           }
         },
+        "pseudoListRisk": {
+          "aatt": {
+            "w:H48": {
+              "what": "Navigation links should be coded as list",
+              "issueCount": 41
+            }
+          }
+        },
+        "selectNoText": {
+          "aatt": {
+            "w:H91": {
+              "what": "Select element has no value available to an accessibility API",
+              "issueCount": 29
+            }
+          },
+          "axe": {
+            "select-name": {
+              "what": "Select element must have an accessible name",
+              "issueCount": 3
+            }
+          },
+          "wave": {
+            "a:select_missing_label": {
+              "what": "Select missing label",
+              "issueCount": 5
+            }
+          }
+        },
+        "selectFlatRisk": {
+          "aatt": {
+            "w:H85": {
+              "what": "If selection list contains groups of related options, they should be grouped with optgroup",
+              "issueCount": 5
+            }
+          }
+        },
         "nameValue": {
           "aatt": {
             "e:F68": {
@@ -35532,14 +35575,6 @@
             "e:label_missing": {
               "what": "Missing form label",
               "issueCount": 6
-            }
-          }
-        },
-        "pseudoListRisk": {
-          "aatt": {
-            "w:H48": {
-              "what": "Navigation links should be coded as list",
-              "issueCount": 41
             }
           }
         },
@@ -35570,7 +35605,7 @@
           },
           "tenon": {
             "57": {
-              "what": "This link has no text inside it",
+              "what": "Link has no text inside it",
               "issueCount": 32
             }
           }
@@ -35590,7 +35625,7 @@
           },
           "wave": {
             "e:button_empty": {
-              "what": "Empty button",
+              "what": "Button is empty or has no value text",
               "issueCount": 3
             }
           }
@@ -35638,7 +35673,7 @@
           },
           "tenon": {
             "95": {
-              "what": "This element has insufficient color contrast (Level AAA)",
+              "what": "Element has insufficient color contrast (Level AAA)",
               "issueCount": 32
             }
           }
@@ -35654,6 +35689,14 @@
             "focInd": {
               "what": "Operable elements that cannot be Tab-focused and vice versa",
               "issueCount": 583
+            }
+          }
+        },
+        "textBeyondLandmarks": {
+          "alfa": {
+            "r57": {
+              "what": "Perceivable text content not included in any landmark",
+              "issueCount": 15
             }
           }
         },
@@ -35705,17 +35748,19 @@
             }
           }
         },
-        "selectNoText": {
-          "axe": {
-            "select-name": {
-              "what": "Select element must have an accessible name",
-              "issueCount": 3
-            }
-          },
+        "linkPair": {
           "wave": {
-            "a:select_missing_label": {
-              "what": "Select missing label",
-              "issueCount": 5
+            "a:link_redundant": {
+              "what": "Adjacent links go to same URL",
+              "issueCount": 9
+            }
+          }
+        },
+        "linkTitleRedundant": {
+          "tenon": {
+            "79": {
+              "what": "Link has a title attribute that is the same as the text inside the link",
+              "issueCount": 19
             }
           }
         },
@@ -35727,18 +35772,42 @@
             }
           }
         },
+        "pseudoLinkRisk": {
+          "tenon": {
+            "129": {
+              "what": "CSS underline on text that is not a link",
+              "issueCount": 21
+            }
+          }
+        },
+        "leadingClipsText": {
+          "tenon": {
+            "144": {
+              "what": "Line height insufficent to properly display computed font size",
+              "issueCount": 12
+            }
+          }
+        },
         "targetSize": {
           "tenon": {
             "152": {
-              "what": "This actionable element is smaller than the minimum required size",
+              "what": "Actionable element is smaller than the minimum required size",
               "issueCount": 45
+            }
+          }
+        },
+        "allCaps": {
+          "tenon": {
+            "153": {
+              "what": "Long string of text is in all caps",
+              "issueCount": 27
             }
           }
         },
         "linkForcesNewWindow": {
           "tenon": {
             "218": {
-              "what": "This link opens in a new window without user control",
+              "what": "Link opens in a new window without user control",
               "issueCount": 79
             }
           }
@@ -35809,15 +35878,12 @@
         "aatt": {
           "w:C31+C32+C33+C38+G206+SCR34": 2,
           "w:ARIA6": 2,
-          "w:H91": 29,
-          "w:H85": 5,
           "e:G1+G123+G124": 4,
           "e:H30": 1,
           "e:H32": 2,
           "e:H64": 1
         },
         "alfa": {
-          "r57": 15,
           "r61": 1,
           "r62": 2,
           "r72": 3,
@@ -35831,17 +35897,12 @@
           "a:alt_suspicious": 2,
           "a:link_internal_broken": 4,
           "a:link_suspicious": 1,
-          "a:link_redundant": 9,
           "a:noscript": 4,
           "a:text_small": 1,
           "a:title_redundant": 1
         },
         "tenon": {
-          "79": 19,
-          "129": 21,
           "134": 2,
-          "144": 12,
-          "153": 27,
           "190": 1,
           "242": 4
         }
@@ -35851,30 +35912,37 @@
       "ibm": 100
     },
     "summary": {
-      "total": 4253,
+      "total": 4367,
       "log": 3,
       "preventions": 100,
-      "solos": 187,
+      "solos": 50,
       "groups": {
         "imgNoText": 22,
         "headingStruc": 12,
         "labelForBadID": 14,
         "contrastRisk": 268,
         "pseudoHeadingRisk": 3,
-        "nameValue": 181,
         "pseudoListRisk": 43,
+        "selectNoText": 103,
+        "selectFlatRisk": 7,
+        "nameValue": 181,
         "linkNoText": 197,
         "buttonNoText": 25,
         "noLeading": 28,
         "contrastAA": 133,
         "contrastAAA": 45,
         "focusIndication": 1864,
+        "textBeyondLandmarks": 17,
         "roleBad": 9,
         "imgAltRedundant": 3,
         "h1Missing": 3,
-        "selectNoText": 25,
+        "linkPair": 11,
+        "linkTitleRedundant": 21,
         "linkTextsIdentical": 98,
+        "pseudoLinkRisk": 46,
+        "leadingClipsText": 42,
         "targetSize": 94,
+        "allCaps": 29,
         "linkForcesNewWindow": 162,
         "visibleBulk": 4,
         "activeEmbedding": 10,

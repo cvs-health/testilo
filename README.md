@@ -47,16 +47,17 @@ Score proc `sp10a` implements an algorithm similar to `tsp09a`, except for Testa
 
 Score proc `sp10b` likewise scores results from Testaro script `tp10`, but, unlike score proc `sp10a`, bases scores on _issues_ rather than tests. Here, an issue is a case of a fault or a suspected fault of a particular kind. For example, if there are 7 informative images without text alternatives, the count of issues of that kind is 7.
 
-Because packages differ in how they identify the locations of issues, score proc `sp10b` does not try to establish whether an issue discovered by one test is the same as an issue discovered by another test. Instead, its algorithm is based on the presumption that the issues of a kind discovered by different tests are probably, but not certainly, subsets or supersets of one another. For example, if test A discovers 4 issues of kind X and test B discovers 6 issues of kind X, it is likely that the 4 discovered by A are also among the 6 discovered by B.
+Because packages differ in how they identify the locations of issues, score proc `sp10b` does not try to establish whether an issue discovered by one test is the same as an issue discovered by another test. Instead, its algorithm is based on the presumption that the issues of a kind discovered by different tests are typically, but not always, subsets or supersets of one another. For example, if test A discovers 4 issues of kind X and test B discovers 6 issues of kind X, it is likely that the 4 discovered by A are also among the 6 discovered by B.
 
 Reflecting this presumption, the contribution of any issue kind to a total score is based substantially on the largest count of issues of that kind discovered by any test. The first issue of a kind is weighted more heavily than each additional issue, because the existence of any issues of a particular kind, regardless of how many, tends to create usability barriers, remediation costs, and liability risks.
 
 To a smaller extent, the total score is also affected by the counts of issues of the same kind discovered by other tests. This is because, when multiple tests discover a kind of issue:
 - we can be more confident that there really are issues of that kind.
+- the issues discovered by different tests might not fully overlap.
 - there is less excuse for allowing issues of that kind to appear.
 - the website owner is more likely to receive complaints or claims about issues of that kind.
 
-Score proc `sp10b` uses the data in `scoring/data/testGroups.json` to identify _groups_ of tests, where the tests in any group are deemed to test for the same kind of issue. 
+Score proc `sp10b` uses the data in `scoring/data/testGroups.json` to identify _groups_ of tests, where the tests in any group are deemed to test for the same kind of issue.
 
 Some tests have not been grouped. The proper treatment of those tests may be:
 - to treat them as a group of 1, because they alone discover issues of some kind.
@@ -64,7 +65,7 @@ Some tests have not been grouped. The proper treatment of those tests may be:
 
 As long as they are not grouped, each issue discovered by one of those tests contributes a small amount to the total score.
 
-The contribution also depends on how serious each kind of issue is deemed to be. Although the Axe-core package attributes a seriousness to each issue, so that two issues of the same kind can differ in seriousness, score proc `sp10b` ignores that information.
+The contribution also depends on how serious each kind of issue is deemed to be. Score proc `sp10b` assigns a weight to each test group. Weighting could be even more granular: The Axe-core package attributes a seriousness to each issue, so that two issues of the same kind can differ in seriousness. But score proc `sp10b` ignores that Axe-core rating.
 
 ### Digesting
 

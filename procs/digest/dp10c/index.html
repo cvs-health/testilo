@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Testilo">
+    <meta name="creator" content="Testilo">
+    <meta name="publisher" name="Testilo">
+    <meta name="description" content="report of accessibility testing of a web page">
+    <meta name="keywords" content="accessibility a11y web testing">
+    <title>Accessibility test digest</title>
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Accessibility test digest</h1>
+        <h2>Synopsis</h2>
+        <div id="synopsis">
+          <p>Page: __org__</p>
+          <p>URL: __url__</p>
+          <p>Score: __totalScore__</p>
+          <p>Tested by: Testaro, script <code>__scriptID__</code></p>
+          <p>Scored by: Testilo, procedure <code>sp10c</code></p>
+          <p>Digested by: Testilo, procedure <code>dp10c</code></p>
+        </div>
+      </header>
+      <h2>Introduction</h2>
+      <p>The <code>__scriptID__</code> <a href="https://www.w3.org/WAI/fundamentals/accessibility-intro/">accessibility</a> testing script was executed by <a href="https://www.npmjs.com/package/testaro">Testaro</a> on the __org__ web page arrived at in a transaction that began at <a href="__url__">__url__</a>, on __dateSlash__. The procedure performed custom tests defined by Testaro and tests belonging to packages created by others. Testaro produced a report enumerating the test results.</p>
+      <p><a href="https://www.npmjs.com/package/testilo">Testilo</a> used its <code>sp10c</code> scoring procedure to compute partial and total scores for the page. The total score is __totalScore__ (where 0 is the best possible score). The scored report is appended below.</p>
+      <p>Finally, Testilo used procedure <code>dp10c</code> to produce this digest, explaining how <code>sp10c</code> computed the scores.</p>
+      <p>Disclaimer: Even though there are widely accepted accessibility standards, there is still no unanimity about how to define, test for, and quantify accessibility. The failures reported below merit investigation as <strong>potential</strong> opportunities for improved accessibility. But you may conclude that some of the failures do not actually harm accessibility, and some substantial accessibility faults can escape detection by any of these tests. Likewise, you may not agree with weightings and formulas of scoring procedure <code>sp10b</code>, or even question whether it is appropriate to assign accessibility scores to a web page. This digest describes only one interpretation of the page&rsquo;s accessibility.</p>
+      <h2>Score summary</h2>
+      <p>The total score and its components were:</p>
+      <table class="allBorder secondCellRight">
+        <caption>Score components</caption>
+        <tbody class="headersLeft">
+        __scoreRows__
+        </tbody>
+      </table>
+      <h2>Issue summary</h2>
+      <h3>Special issues</h3>
+      __specialSummary__
+      <h3>Classified issues</h3>
+      <p>The classified issues reported by tests are summarized below.</p>
+      __groupSummary__
+      <h2>Report</h2>
+      <pre>__report__</pre>
+      <footer>
+        <p class="date">Produced <time itemprop="datePublished" datetime="__dateISO__">__dateSlash__</time></p>
+      </footer>
+    </main>
+  </body>
+</html>

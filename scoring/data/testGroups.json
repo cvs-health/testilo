@@ -507,7 +507,7 @@
       },
       "focInd": {
         "groupID": "focusIndication",
-        "what": "Operable elements that cannot be Tab-focused and vice versa"
+        "what": "Focused element displaying no or nostandard focus indicator"
       },
       "focOp": {
         "groupID": "focusableOperable",
@@ -1005,7 +1005,7 @@
         "r65 Element in sequential focus order has visible focus"
       ],
       "testaro": [
-        "focInd Operable elements that cannot be Tab-focused and vice versa"
+        "focInd Focused element displaying no or nostandard focus indicator"
       ]
     },
     "allCaps": {

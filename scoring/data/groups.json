@@ -1,13 +1,13 @@
 {
-  "dupID": {
+  "duplicateID": {
     "aatt": ["e:F77 Duplicate id attribute value"],
-    "alfa": ["r3 Element has no unique ID"],
+    "alfa": ["r3 Element ID is not unique"],
     "axe": ["duplicate-id ID attribute value must be unique"],
     "ibm": [
       "RPT_Elem_UniqueId Element id attribute values must be unique within a document"
     ]
   },
-  "imgInputNoText": {
+  "imageInputNoText": {
     "aatt": ["e:H36 Image submit button missing an alt attribute"],
     "alfa": ["r28 Image input element has no accessible name"],
     "axe": ["input-image-alt Image buttons must have alternate text"],
@@ -16,16 +16,16 @@
     ],
     "wave": ["e:alt_input_missing Image button missing alternative text"]
   },
-  "imgNoText": {
+  "imageNoText": {
     "aatt": ["e:H37 Img element missing an alt attribute"],
     "alfa": ["r2 Image has no accessible name"],
     "axe": ["image-alt Images must have alternate text"],
     "ibm": [
-      "v:WCAG20_Img_HasAlt Images must have an alt attribute if they convey meaning, or alt='' if decorative"
+      "v:WCAG20_Img_HasAlt Images must have an alt attribute if they convey meaning, or alt=\"\" if decorative"
     ],
     "wave": ["e:alt_missing Missing alternative text"]
   },
-  "htmlLang": {
+  "pageLanguage": {
     "aatt": ["e:H57 Lang attribute of the document element"],
     "alfa": ["r4 Lang attribute missing, empty, or only whitespace"],
     "axe": ["html-has-lang Html element must have a lang attribute"],
@@ -34,19 +34,28 @@
     ],
     "wave": ["e:language_missing Language missing or invalid"]
   },
-  "langChange": {
+  "pageLanguageBad": {
+    "alfa": ["r5 Lang attribute has no valid primary language tag"],
+    "axe": [
+      "html-lang-valid Html element must have a valid value for the lang attribute"
+    ],
+    "ibm": [
+      "v:WCAG20_Elem_Lang_Valid Lang attribute does not include a valid primary language"
+    ]
+  },
+  "languageChange": {
     "aatt": ["e:H58 Change in language is not marked"],
     "alfa": ["r7 Lang attribute has no valid primary language subtag"],
     "axe": ["valid-lang Lang attribute must have a valid value"]
   },
-  "headingStruc": {
+  "headingStructure": {
     "aatt": ["w:G141 Heading structure is not logically nested"],
     "alfa": ["r53 Heading skips one or more levels"],
     "axe": ["heading-order Heading levels should only increase by one"],
     "tenon": ["155 These headings are not structured in a hierarchical manner"],
     "wave": ["a:heading_skipped Skipped heading level"]
   },
-  "objNoText": {
+  "objectNoText": {
     "aatt": ["e:ARIA6+H53 Object elements must contain a text alternative"],
     "axe": ["object-alt Object elements must have alternate text"],
     "ibm": [
@@ -54,7 +63,7 @@
     ],
     "wave": ["a:plugin An unidentified plugin is present"]
   },
-  "imgMapAreaNoText": {
+  "imageMapAreaNoText": {
     "aatt": ["e:H24 Area element in an image map missing an alt attribute"],
     "axe": ["area-alt Active area elements must have alternate text"],
     "ibm": [
@@ -63,7 +72,7 @@
     ],
     "wave": ["e:alt_area_missing Image map area missing alternative text"]
   },
-  "eventKbd": {
+  "eventKeyboard": {
     "aatt": ["w:G90 Event handler functionality not available by keyboard"],
     "wave": ["a:event_handler Device-dependent event handler"]
   },
@@ -78,7 +87,7 @@
     "tenon": ["57 Link has no text inside it"],
     "wave": ["e:link_empty Link contains no text"]
   },
-  "linkTextsIdentical": {
+  "linkTextsSame": {
     "tenon": ["98 These links have the same text but different destinations"]
   },
   "linkPair": {
@@ -100,7 +109,7 @@
       "aria-required-parent Certain ARIA roles must be contained by particular parents"
     ]
   },
-  "svgImgNoText": {
+  "svgImageNoText": {
     "alfa": ["r43 SVG image element has no accessible name"],
     "axe": [
       "svg-img-alt SVG elements with an img role must have an alternative text"
@@ -110,15 +119,6 @@
     "alfa": ["r47 Meta element restricts zooming"],
     "axe": ["meta-viewport Zooming and scaling should not be disabled"]
   },
-  "htmlLangBad": {
-    "alfa": ["r5 Lang attribute has no valid primary language tag"],
-    "axe": [
-      "html-lang-valid Html element must have a valid value for the lang attribute"
-    ],
-    "ibm": [
-      "v:WCAG20_Elem_Lang_Valid Lang attribute does not include a valid primary language"
-    ]
-  },
   "childMissing": {
     "alfa": ["r68 Element owns no elements as required by its semantic role"],
     "axe": [
@@ -127,14 +127,14 @@
   },
   "leadingFrozen": {
     "alfa": [
-      "r93 Style attribute with!important prevents adjusting line height"
+      "r93 Style attribute with !important prevents adjusting line height"
     ],
     "axe": [
       "avoid-inline-spacing Inline text spacing must be adjustable with custom stylesheets"
     ]
   },
   "noLeading": {
-    "alfa": ["r73 Paragraphs of text have sufficient line height"]
+    "alfa": ["r73 Paragraphs of text have insufficient line height"]
   },
   "leadingClipsText": {
     "tenon": [
@@ -157,13 +157,13 @@
     ],
     "testaro": ["role Nonexistent or implicit-overriding role"]
   },
-  "roleMissingAttr": {
+  "roleMissingAttribute": {
     "axe": ["aria-required-attr Required ARIA attributes must be provided"],
     "ibm": [
       "v:Rpt_Aria_RequiredProperties ARIA role on an element must have required attributes"
     ]
   },
-  "roleBadAttr": {
+  "roleBadAttribute": {
     "alfa": ["r20 Aria- attribute is not defined"],
     "axe": ["aria-valid-attr ARIA attributes must conform to valid names"],
     "ibm": [
@@ -179,7 +179,7 @@
     ]
   },
   "contrastAA": {
-    "alfa": ["r69 Text outside widget has minimum contrast"],
+    "alfa": ["r69 Text outside widget has subminimum contrast"],
     "axe": ["color-contrast Elements must have sufficient color contrast"],
     "ibm": [
       "v:IBMA_Color_Contrast_WCAG2AA Contrast ratio of text with background must meet WCAG 2.1 AA"
@@ -203,7 +203,7 @@
     ],
     "wave": ["e:heading_empty Empty heading"]
   },
-  "imgAltRedundant": {
+  "imageTextRedundant": {
     "axe": [
       "image-redundant-alt Text of buttons and links should not be repeated in the image alternative"
     ],
@@ -216,7 +216,7 @@
       "79 Link has a title attribute that is the same as the text inside the link"
     ]
   },
-  "title": {
+  "pageTitle": {
     "axe": ["document-title Documents must contain a title element"],
     "wave": ["e:title_invalid Missing or uninformative page title"]
   },
@@ -245,13 +245,13 @@
       "w:H85 If selection list contains groups of related options, they should be grouped with optgroup"
     ]
   },
-  "ariaRefBad": {
+  "ariaReferenceBad": {
     "ibm": [
       "v:Rpt_Aria_ValidIdRef ARIA property must reference non-empty unique id of visible element"
     ],
     "wave": ["e:aria_reference_broken Broken ARIA reference"]
   },
-  "accessKeyDup": {
+  "accessKeyDuplicate": {
     "ibm": [
       "v:WCAG20_Elem_UniqueAccessKey Accesskey attribute values on each element must be unique for the page"
     ],
@@ -290,7 +290,7 @@
     ]
   },
   "focusIndication": {
-    "alfa": ["r65 Element in sequential focus order has visible focus"],
+    "alfa": ["r65 Element in sequential focus order has no visible focus"],
     "testaro": [
       "focInd Focused element displaying no or nostandard focus indicator"
     ]

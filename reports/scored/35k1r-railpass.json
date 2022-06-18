@@ -8799,55 +8799,65 @@
       "visitRejection": 10
     },
     "groupWeights": {
-      "accessKeyDup": 3,
+      "accessKeyDuplicate": 3,
       "activeEmbedding": 2,
-      "ariaRefBad": 4,
+      "allCaps": 1,
+      "ariaReferenceBad": 4,
       "autocompleteBad": 2,
       "buttonNoText": 4,
       "childMissing": 3,
       "contrastAA": 3,
       "contrastAAA": 1,
-      "dupID": 2,
-      "eventKbd": 3,
+      "duplicateID": 2,
+      "eventKeyboard": 3,
       "fieldSetMissing": 2,
       "focusableOperable": 3,
       "focusIndication": 3,
       "h1Missing": 1,
       "headingEmpty": 2,
-      "headingStruc": 2,
+      "headingStructure": 2,
       "hoverSurprise": 1,
-      "htmlLang": 3,
-      "htmlLangBad": 3,
       "iframeNoText": 3,
-      "imgAltRedundant": 1,
-      "imgInputNoText": 4,
-      "imgMapAreaNoText": 3,
-      "imgNoText": 4,
+      "imageInputNoText": 4,
+      "imageMapAreaNoText": 3,
+      "imageNoText": 4,
+      "imageTextRedundant": 1,
       "inconsistentStyles": 1,
-      "inlineBackgroundRisk": 1,
+      "contrastRisk": 1,
       "labelClash": 2,
       "labelForBadID": 4,
-      "langChange": 2,
+      "languageChange": 2,
+      "leadingClipsText": 3,
       "leadingFrozen": 3,
+      "linkForcesNewWindow": 2,
       "linkNoText": 4,
+      "linkPair": 1,
+      "linkTextsSame": 2,
+      "linkTitleRedundant": 1,
       "linkUnderlines": 2,
       "menuNavigation": 2,
       "metaBansZoom": 3,
       "nameValue": 3,
       "noLeading": 2,
-      "objNoText": 2,
+      "objectNoText": 2,
+      "pageLanguage": 3,
+      "pageLanguageBad": 3,
+      "pageTitle": 3,
       "parentMissing": 3,
       "pseudoHeadingRisk": 1,
+      "pseudoLinkRisk": 2,
+      "pseudoListRisk": 1,
       "roleBad": 3,
-      "roleBadAttr": 3,
-      "roleMissingAttr": 3,
+      "roleBadAttribute": 3,
+      "roleMissingAttribute": 3,
+      "selectFlatRisk": 1,
       "selectNoText": 3,
       "spontaneousMotion": 2,
-      "svgImgNoText": 4,
+      "svgImageNoText": 4,
       "tabFocusability": 3,
       "tabNavigation": 2,
       "targetSize": 2,
-      "title": 3,
+      "textBeyondLandmarks": 1,
       "visibleBulk": 1,
       "zIndexNotZero": 1
     },
@@ -8936,7 +8946,7 @@
     },
     "groupDetails": {
       "groups": {
-        "imgNoText": {
+        "imageNoText": {
           "aatt": {
             "e:H37": {
               "what": "Img element missing an alt attribute",
@@ -8945,7 +8955,7 @@
           },
           "alfa": {
             "r2": {
-              "what": "image does not have an accessible name",
+              "what": "Image has no accessible name",
               "issueCount": 0
             }
           },
@@ -8957,7 +8967,7 @@
           },
           "ibm": {
             "v:WCAG20_Img_HasAlt": {
-              "what": "Images must have an alt attribute if they convey meaning, or alt='' if decorative",
+              "what": "Images must have an alt attribute if they convey meaning, or alt=\"\" if decorative",
               "issueCount": 0
             }
           },
@@ -8968,16 +8978,16 @@
             }
           }
         },
-        "headingStruc": {
+        "headingStructure": {
           "aatt": {
             "w:G141": {
-              "what": "heading structure is not logically nested",
+              "what": "Heading structure is not logically nested",
               "issueCount": 4
             }
           },
           "alfa": {
             "r53": {
-              "what": "heading skips one or more levels",
+              "what": "Heading skips one or more levels",
               "issueCount": 4
             }
           },
@@ -9000,19 +9010,51 @@
             }
           }
         },
-        "inlineBackgroundRisk": {
+        "contrastRisk": {
           "aatt": {
             "w:F24": {
               "what": "Inline background color needs complementary foreground color",
               "issueCount": 25
+            },
+            "w:G18": {
+              "what": "Contrast adequacy not determinable",
+              "issueCount": 0
             }
           }
         },
         "pseudoHeadingRisk": {
           "aatt": {
             "w:H42": {
-              "what": "Heading markup should be used if this content is intended as a heading",
+              "what": "Heading coding should be used if intended as a heading",
               "issueCount": 5
+            }
+          }
+        },
+        "pseudoListRisk": {
+          "aatt": {
+            "w:H48": {
+              "what": "Navigation links should be coded as list",
+              "issueCount": 2
+            }
+          }
+        },
+        "selectNoText": {
+          "aatt": {
+            "w:H91": {
+              "what": "Select element has no value available to an accessibility API",
+              "issueCount": 2
+            }
+          },
+          "axe": {
+            "select-name": {
+              "what": "Select element must have an accessible name",
+              "issueCount": 0
+            }
+          },
+          "wave": {
+            "a:select_missing_label": {
+              "what": "Select missing label",
+              "issueCount": 0
             }
           }
         },
@@ -9037,7 +9079,7 @@
         "linkNoText": {
           "alfa": {
             "r11": {
-              "what": "link does not have an accessible name",
+              "what": "Link has no accessible name",
               "issueCount": 4
             }
           },
@@ -9053,9 +9095,15 @@
               "issueCount": 0
             }
           },
+          "wave": {
+            "e:link_empty": {
+              "what": "Link contains no text",
+              "issueCount": 3
+            }
+          },
           "tenon": {
             "57": {
-              "what": "This link has no text inside it",
+              "what": "Link has no text inside it",
               "issueCount": 5
             }
           }
@@ -9063,7 +9111,7 @@
         "buttonNoText": {
           "alfa": {
             "r12": {
-              "what": "button does not have an accessible name",
+              "what": "Button has no accessible name",
               "issueCount": 0
             }
           },
@@ -9075,7 +9123,7 @@
           },
           "wave": {
             "e:button_empty": {
-              "what": "Empty button",
+              "what": "Button is empty or has no value text",
               "issueCount": 8
             }
           }
@@ -9083,7 +9131,7 @@
         "metaBansZoom": {
           "alfa": {
             "r47": {
-              "what": "meta element restricts the ability to zoom",
+              "what": "Meta element restricts zooming",
               "issueCount": 1
             }
           },
@@ -9097,7 +9145,7 @@
         "noLeading": {
           "alfa": {
             "r73": {
-              "what": "Paragraphs of text have sufficient line height",
+              "what": "Paragraphs of text have insufficient line height",
               "issueCount": 7
             }
           }
@@ -9105,7 +9153,7 @@
         "contrastAA": {
           "alfa": {
             "r69": {
-              "what": "Text outside widget has minimum contrast",
+              "what": "Text outside widget has subminimum contrast",
               "issueCount": 22
             }
           },
@@ -9117,7 +9165,7 @@
           },
           "ibm": {
             "v:IBMA_Color_Contrast_WCAG2AA": {
-              "what": "contrast ratio of text with background must meet WCAG 2.1 AA",
+              "what": "Contrast ratio of text with background must meet WCAG 2.1 AA",
               "issueCount": 0
             }
           },
@@ -9137,8 +9185,22 @@
           },
           "tenon": {
             "95": {
-              "what": "This element has insufficient color contrast (Level AAA)",
+              "what": "Element has insufficient color contrast (Level AAA)",
               "issueCount": 8
+            }
+          }
+        },
+        "focusIndication": {
+          "alfa": {
+            "r65": {
+              "what": "Element in sequential focus order has no visible focus",
+              "issueCount": 1
+            }
+          },
+          "testaro": {
+            "focInd": {
+              "what": "Operable elements that cannot be Tab-focused and vice versa",
+              "issueCount": 106
             }
           }
         },
@@ -9157,15 +9219,23 @@
           },
           "testaro": {
             "role": {
-              "what": "nonexistent or implicit-overriding role",
+              "what": "Nonexistent or implicit-overriding role",
               "issueCount": 1
+            }
+          }
+        },
+        "leadingClipsText": {
+          "tenon": {
+            "144": {
+              "what": "Line height insufficent to properly display computed font size",
+              "issueCount": 3
             }
           }
         },
         "targetSize": {
           "tenon": {
             "152": {
-              "what": "This actionable element is smaller than the minimum required size",
+              "what": "Actionable element is smaller than the minimum required size",
               "issueCount": 12
             }
           }
@@ -9181,23 +9251,15 @@
         "tabFocusability": {
           "testaro": {
             "focAll": {
-              "what": "discrepancy between elements that should be and that are Tab-focusable",
+              "what": "Discrepancy between elements that should be and that are Tab-focusable",
               "issueCount": 1
-            }
-          }
-        },
-        "focusIndication": {
-          "testaro": {
-            "focInd": {
-              "what": "operable elements that cannot be Tab-focused and vice versa",
-              "issueCount": 106
             }
           }
         },
         "focusableOperable": {
           "testaro": {
             "focOp": {
-              "what": "operable elements that cannot be Tab-focused and vice versa",
+              "what": "Operable elements that cannot be Tab-focused and vice versa",
               "issueCount": 9
             }
           }
@@ -9205,7 +9267,7 @@
         "hoverSurprise": {
           "testaro": {
             "hover": {
-              "what": "content changes caused by hovering",
+              "what": "Content changes caused by hovering",
               "issueCount": 14
             }
           }
@@ -9213,7 +9275,7 @@
         "linkUnderlines": {
           "testaro": {
             "linkUl": {
-              "what": "non-underlined inline links",
+              "what": "Non-underlined inline links",
               "issueCount": 10
             }
           }
@@ -9221,7 +9283,7 @@
         "spontaneousMotion": {
           "testaro": {
             "motion": {
-              "what": "change of visible content not requested by user",
+              "what": "Change of visible content not requested by user",
               "issueCount": 74
             }
           }
@@ -9229,7 +9291,7 @@
         "inconsistentStyles": {
           "testaro": {
             "styleDiff": {
-              "what": "heading, link, and button style inconsistencies",
+              "what": "Heading, link, and button style inconsistencies",
               "issueCount": 35
             }
           }
@@ -9245,21 +9307,17 @@
         "aatt": {
           "w:C31+C32+C33+C38+G206+SCR34": 2,
           "e:G1+G123+G124": 1,
-          "w:H91": 2,
           "e:H30": 2,
-          "w:H48": 2,
           "w:H67": 2,
           "e:G18": 1
         },
         "alfa": {
-          "r65": 1,
           "r78": 3,
           "r8": 1,
           "r87": 1
         },
         "wave": {
           "e:alt_link_missing": 2,
-          "e:link_empty": 3,
           "a:heading_possible": 1,
           "a:link_internal_broken": 1,
           "a:noscript": 1,
@@ -9267,34 +9325,36 @@
         },
         "tenon": {
           "28": 1,
-          "134": 1,
-          "144": 3
+          "134": 1
         }
       }
     },
     "preventionScores": {},
     "summary": {
-      "total": 1105,
+      "total": 1131,
       "log": 34,
       "preventions": 0,
-      "solos": 36,
+      "solos": 25,
       "groups": {
-        "imgNoText": 19,
-        "headingStruc": 22,
-        "inlineBackgroundRisk": 27,
+        "imageNoText": 19,
+        "headingStructure": 22,
+        "contrastRisk": 27,
         "pseudoHeadingRisk": 7,
+        "pseudoListRisk": 4,
+        "selectNoText": 12,
         "nameValue": 77,
-        "linkNoText": 41,
+        "linkNoText": 46,
         "buttonNoText": 40,
         "metaBansZoom": 10,
         "noLeading": 18,
         "contrastAA": 106,
         "contrastAAA": 33,
+        "focusIndication": 325,
         "roleBad": 9,
+        "leadingClipsText": 15,
         "targetSize": 28,
         "visibleBulk": 3,
         "tabFocusability": 9,
-        "focusIndication": 324,
         "focusableOperable": 33,
         "hoverSurprise": 16,
         "linkUnderlines": 24,

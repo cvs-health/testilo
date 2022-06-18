@@ -27,12 +27,19 @@
         </div>
       </header>
       <h2>Introduction</h2>
-      <p>The <code>tp10</code> <a href="https://www.w3.org/WAI/fundamentals/accessibility-intro/">accessibility</a> testing procedure was executed by <a href="https://www.npmjs.com/package/testaro">Testaro</a> on the Eurail web page at <a href="https://www.eurail.com/en">https://www.eurail.com/en</a>, on 2022/06/08. The procedure performed 808 tests. Of these, 16 tests are custom tests defined by Testaro, and the others belong to packages of tests created by others. Testaro produced a report enumerating the test results.</p>
+      <p>The <a href="https://www.npmjs.com/package/testaro">Testaro</a> application used its <code>tp10</code> testing procedure to test the <a href="https://www.w3.org/WAI/fundamentals/accessibility-intro/"><dfn>accessibility</dfn></a> (barrier-free design and coding) of the Eurail web page at <a href="https://www.eurail.com/en">https://www.eurail.com/en</a> on 2022/06/08. The procedure performed 808 tests. Of these, 16 are custom tests defined by Testaro, and the others belong to six other packages of tests:</p>
+      <ul>
+        <li><a href="https://www.npmjs.com/package/aatt">AATT</a> by PayPal running <a href="https://marketplace.squiz.net/extensions/html-codesniffer">HTMLCodeSniffer</a> by Squiz</li>
+        <li><a href="https://github.com/Siteimprove/alfa">Alfa</a> by Siteimprove</li>
+        <li><a href="https://www.npmjs.com/package/axe-core">Axe-core</a> by Deque</li>
+        <li><a href="https://github.com/IBMa/equal-access">Equal Access</a> by IBM</li>
+        <li><a href="https://tenon.io/documentation/apiv2.php">Tenon</a> by Level Access</li>
+        <li><a href="https://wave.webaim.org/api/">WAVE</a> by WebAIM</li>
+      </ul>
+      <p>Testaro produced a report enumerating the test results.</p>
       <p><a href="https://www.npmjs.com/package/testilo">Testilo</a> used its <code>sp10b</code> scoring procedure to compute partial and total scores for the page. The total score is 4367 (where 0 is the best possible score). The scored report is appended below.</p>
       <p>Finally, Testilo used procedure <code>dp10b</code> to produce this digest, explaining how <code>sp10b</code> computed the scores.</p>
-      <p>Disclaimer: Even though there are widely accepted accessibility standards, there is still no unanimity about how to define, test for, and quantify accessibility. The failures reported below merit investigation as <strong>potential</strong> opportunities for improved accessibility. But you may conclude that some of the failures do not actually harm accessibility, and some substantial accessibility faults can escape detection by any of these tests. Likewise, you may not agree with weightings and formulas of scoring procedure <code>sp10b</code>, or even question whether it is appropriate to assign accessibility scores to a web page. This digest describes only one interpretation of the page&rsquo;s accessibility.</p>
       <h2>Score summary</h2>
-      <p>The total score and its components were:</p>
       <table class="allBorder secondCellRight">
         <caption>Score components</caption>
         <tbody class="headersLeft">
@@ -40,214 +47,226 @@
         <tr><th>log</th><td>3</td></tr>
         <tr><th>preventions</th><td>100</td></tr>
         <tr><th>solos</th><td>50</td></tr>
-        <tr><th>group focusIndication</th><td>1864</td></tr>
-        <tr><th>group tabFocusability</th><td>309</td></tr>
-        <tr><th>group contrastRisk</th><td>268</td></tr>
-        <tr><th>group linkNoText</th><td>197</td></tr>
-        <tr><th>group focusableOperable</th><td>186</td></tr>
-        <tr><th>group nameValue</th><td>181</td></tr>
-        <tr><th>group linkForcesNewWindow</th><td>162</td></tr>
-        <tr><th>group inconsistentStyles</th><td>141</td></tr>
-        <tr><th>group contrastAA</th><td>133</td></tr>
-        <tr><th>group selectNoText</th><td>103</td></tr>
-        <tr><th>group linkTextsIdentical</th><td>98</td></tr>
-        <tr><th>group targetSize</th><td>94</td></tr>
-        <tr><th>group hoverSurprise</th><td>76</td></tr>
-        <tr><th>group pseudoLinkRisk</th><td>46</td></tr>
-        <tr><th>group contrastAAA</th><td>45</td></tr>
-        <tr><th>group pseudoListRisk</th><td>43</td></tr>
-        <tr><th>group leadingClipsText</th><td>42</td></tr>
-        <tr><th>group allCaps</th><td>29</td></tr>
-        <tr><th>group noLeading</th><td>28</td></tr>
-        <tr><th>group buttonNoText</th><td>25</td></tr>
-        <tr><th>group imgNoText</th><td>22</td></tr>
-        <tr><th>group linkTitleRedundant</th><td>21</td></tr>
-        <tr><th>group textBeyondLandmarks</th><td>17</td></tr>
-        <tr><th>group labelForBadID</th><td>14</td></tr>
-        <tr><th>group headingStruc</th><td>12</td></tr>
-        <tr><th>group linkPair</th><td>11</td></tr>
-        <tr><th>group activeEmbedding</th><td>10</td></tr>
-        <tr><th>group roleBad</th><td>9</td></tr>
-        <tr><th>group linkUnderlines</th><td>8</td></tr>
-        <tr><th>group selectFlatRisk</th><td>7</td></tr>
-        <tr><th>group visibleBulk</th><td>4</td></tr>
-        <tr><th>group pseudoHeadingRisk</th><td>3</td></tr>
-        <tr><th>group imgAltRedundant</th><td>3</td></tr>
-        <tr><th>group h1Missing</th><td>3</td></tr>
+        <tr><th>focusIndication</th><td>1864</td></tr>
+        <tr><th>tabFocusability</th><td>309</td></tr>
+        <tr><th>contrastRisk</th><td>268</td></tr>
+        <tr><th>linkNoText</th><td>197</td></tr>
+        <tr><th>focusableOperable</th><td>186</td></tr>
+        <tr><th>nameValue</th><td>181</td></tr>
+        <tr><th>linkForcesNewWindow</th><td>162</td></tr>
+        <tr><th>inconsistentStyles</th><td>141</td></tr>
+        <tr><th>contrastAA</th><td>133</td></tr>
+        <tr><th>selectNoText</th><td>103</td></tr>
+        <tr><th>linkTextsSame</th><td>98</td></tr>
+        <tr><th>targetSize</th><td>94</td></tr>
+        <tr><th>hoverSurprise</th><td>76</td></tr>
+        <tr><th>pseudoLinkRisk</th><td>46</td></tr>
+        <tr><th>contrastAAA</th><td>45</td></tr>
+        <tr><th>pseudoListRisk</th><td>43</td></tr>
+        <tr><th>leadingClipsText</th><td>42</td></tr>
+        <tr><th>allCaps</th><td>29</td></tr>
+        <tr><th>noLeading</th><td>28</td></tr>
+        <tr><th>buttonNoText</th><td>25</td></tr>
+        <tr><th>imageNoText</th><td>22</td></tr>
+        <tr><th>linkTitleRedundant</th><td>21</td></tr>
+        <tr><th>textBeyondLandmarks</th><td>17</td></tr>
+        <tr><th>labelForBadID</th><td>14</td></tr>
+        <tr><th>headingStructure</th><td>12</td></tr>
+        <tr><th>linkPair</th><td>11</td></tr>
+        <tr><th>activeEmbedding</th><td>10</td></tr>
+        <tr><th>roleBad</th><td>9</td></tr>
+        <tr><th>linkUnderlines</th><td>8</td></tr>
+        <tr><th>selectFlatRisk</th><td>7</td></tr>
+        <tr><th>visibleBulk</th><td>4</td></tr>
+        <tr><th>pseudoHeadingRisk</th><td>3</td></tr>
+        <tr><th>imageTextRedundant</th><td>3</td></tr>
+        <tr><th>h1Missing</th><td>3</td></tr>
         </tbody>
       </table>
       <h2>Issue summary</h2>
       <h3>Special issues</h3>
       <p><span class="componentID">log</span>: Score 3. This is based on the amount of browser logging during the tests. Browsers usually log messages only when pages contain erroneous code.
-      <p><span class="componentID">log</span>: Score 100. This is based on tests that the page did not allow to be run. That impedes accessibility progress and risks interfering with tools that users with disabilities need.
-      <p><span class="componentID">log</span>: Score 50. This is based on issues reported by unclassified tests. Details are in the report.
+      <p><span class="componentID">preventions</span>: Score 100. This is based on tests that the page did not allow to be run. That impedes accessibility progress and risks interfering with tools that users with disabilities need.
+      <p><span class="componentID">solos</span>: Score 50. This is based on issues reported by unclassified tests. Details are in the report.
       <h3>Classified issues</h3>
       <p>The classified issues reported by tests are summarized below.</p>
-      <p><span class="componentID">focusIndication</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">focusIndication</span>: Score 1864. Issues reported by tests in this category:</p>
       <ul>
-      <li>91 issues reported by package alfa, test r65 (Element in sequential focus order has visible focus)</li>
-  <li>583 issues reported by package testaro, test focInd (Operable elements that cannot be Tab-focused and vice versa)</li>
+      <li>91 issues reported by package <code>alfa</code>, test <code>r65</code> (Element in sequential focus order has no visible focus)</li>
+  <li>583 issues reported by package <code>testaro</code>, test <code>focInd</code> (Operable elements that cannot be Tab-focused and vice versa)</li>
       </ul>
-      <p><span class="componentID">tabFocusability</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">tabFocusability</span>: Score 309. Issues reported by tests in this category:</p>
       <ul>
-      <li>101 issues reported by package testaro, test focAll (Discrepancy between elements that should be and that are Tab-focusable)</li>
+      <li>101 issues reported by package <code>testaro</code>, test <code>focAll</code> (Discrepancy between elements that should be and that are Tab-focusable)</li>
       </ul>
-      <p><span class="componentID">contrastRisk</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">contrastRisk</span>: Score 268. Issues reported by tests in this category:</p>
       <ul>
-      <li>7 issues reported by package aatt, test w:F24 (Inline background color needs complementary foreground color)</li>
-  <li>259 issues reported by package aatt, test w:G18 (Contrast adequacy not determinable)</li>
+      <li>7 issues reported by package <code>aatt</code>, test <code>w:F24</code> (Inline background color needs complementary foreground color)</li>
+  <li>259 issues reported by package <code>aatt</code>, test <code>w:G18</code> (Contrast adequacy not determinable)</li>
       </ul>
-      <p><span class="componentID">linkNoText</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">linkNoText</span>: Score 197. Issues reported by tests in this category:</p>
       <ul>
-      <li>4 issues reported by package alfa, test r11 (Link has no accessible name)</li>
-  <li>4 issues reported by package axe, test link-name (Links must have discernible text)</li>
-  <li>0 issues reported by package ibm, test v:WCAG20_A_HasText (Hyperlinks must have a text description)</li>
-  <li>30 issues reported by package wave, test e:link_empty (Link contains no text)</li>
-  <li>32 issues reported by package tenon, test 57 (Link has no text inside it)</li>
+      <li>4 issues reported by package <code>alfa</code>, test <code>r11</code> (Link has no accessible name)</li>
+  <li>4 issues reported by package <code>axe</code>, test <code>link-name</code> (Links must have discernible text)</li>
+  <li>0 issues reported by package <code>ibm</code>, test <code>v:WCAG20_A_HasText</code> (Hyperlinks must have a text description)</li>
+  <li>30 issues reported by package <code>wave</code>, test <code>e:link_empty</code> (Link contains no text)</li>
+  <li>32 issues reported by package <code>tenon</code>, test <code>57</code> (Link has no text inside it)</li>
       </ul>
-      <p><span class="componentID">focusableOperable</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">focusableOperable</span>: Score 186. Issues reported by tests in this category:</p>
       <ul>
-      <li>60 issues reported by package testaro, test focOp (Operable elements that cannot be Tab-focused and vice versa)</li>
+      <li>60 issues reported by package <code>testaro</code>, test <code>focOp</code> (Operable elements that cannot be Tab-focused and vice versa)</li>
       </ul>
-      <p><span class="componentID">nameValue</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">nameValue</span>: Score 181. Issues reported by tests in this category:</p>
       <ul>
-      <li>10 issues reported by package aatt, test e:F68 (Form control wrongly labeled or unlabeled)</li>
-  <li>46 issues reported by package aatt, test e:H91 (Missing name or value of form control or link)</li>
-  <li>6 issues reported by package wave, test e:label_missing (Missing form label)</li>
+      <li>10 issues reported by package <code>aatt</code>, test <code>e:F68</code> (Form control wrongly labeled or unlabeled)</li>
+  <li>46 issues reported by package <code>aatt</code>, test <code>e:H91</code> (Missing name or value of form control or link)</li>
+  <li>6 issues reported by package <code>wave</code>, test <code>e:label_missing</code> (Missing form label)</li>
       </ul>
-      <p><span class="componentID">linkForcesNewWindow</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">linkForcesNewWindow</span>: Score 162. Issues reported by tests in this category:</p>
       <ul>
-      <li>79 issues reported by package tenon, test 218 (Link opens in a new window without user control)</li>
+      <li>79 issues reported by package <code>tenon</code>, test <code>218</code> (Link opens in a new window without user control)</li>
       </ul>
-      <p><span class="componentID">inconsistentStyles</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">inconsistentStyles</span>: Score 141. Issues reported by tests in this category:</p>
       <ul>
-      <li>139 issues reported by package testaro, test styleDiff (Heading, link, and button style inconsistencies)</li>
+      <li>139 issues reported by package <code>testaro</code>, test <code>styleDiff</code> (Heading, link, and button style inconsistencies)</li>
       </ul>
-      <p><span class="componentID">contrastAA</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">contrastAA</span>: Score 133. Issues reported by tests in this category:</p>
       <ul>
-      <li>21 issues reported by package alfa, test r69 (Text outside widget has minimum contrast)</li>
-  <li>2 issues reported by package axe, test color-contrast (Elements must have sufficient color contrast)</li>
-  <li>0 issues reported by package ibm, test v:IBMA_Color_Contrast_WCAG2AA (Contrast ratio of text with background must meet WCAG 2.1 AA)</li>
-  <li>33 issues reported by package wave, test c:contrast (Very low contrast)</li>
+      <li>21 issues reported by package <code>alfa</code>, test <code>r69</code> (Text outside widget has subminimum contrast)</li>
+  <li>2 issues reported by package <code>axe</code>, test <code>color-contrast</code> (Elements must have sufficient color contrast)</li>
+  <li>0 issues reported by package <code>ibm</code>, test <code>v:IBMA_Color_Contrast_WCAG2AA</code> (Contrast ratio of text with background must meet WCAG 2.1 AA)</li>
+  <li>33 issues reported by package <code>wave</code>, test <code>c:contrast</code> (Very low contrast)</li>
       </ul>
-      <p><span class="componentID">selectNoText</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">selectNoText</span>: Score 103. Issues reported by tests in this category:</p>
       <ul>
-      <li>29 issues reported by package aatt, test w:H91 (Select element has no value available to an accessibility API)</li>
-  <li>3 issues reported by package axe, test select-name (Select element must have an accessible name)</li>
-  <li>5 issues reported by package wave, test a:select_missing_label (Select missing label)</li>
+      <li>29 issues reported by package <code>aatt</code>, test <code>w:H91</code> (Select element has no value available to an accessibility API)</li>
+  <li>3 issues reported by package <code>axe</code>, test <code>select-name</code> (Select element must have an accessible name)</li>
+  <li>5 issues reported by package <code>wave</code>, test <code>a:select_missing_label</code> (Select missing label)</li>
       </ul>
-      <p><span class="componentID">linkTextsIdentical</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">linkTextsSame</span>: Score 98. Issues reported by tests in this category:</p>
       <ul>
-      <li>47 issues reported by package tenon, test 98 (These links have the same text but different destinations)</li>
+      <li>47 issues reported by package <code>tenon</code>, test <code>98</code> (These links have the same text but different destinations)</li>
       </ul>
-      <p><span class="componentID">targetSize</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">targetSize</span>: Score 94. Issues reported by tests in this category:</p>
       <ul>
-      <li>45 issues reported by package tenon, test 152 (Actionable element is smaller than the minimum required size)</li>
+      <li>45 issues reported by package <code>tenon</code>, test <code>152</code> (Actionable element is smaller than the minimum required size)</li>
       </ul>
-      <p><span class="componentID">hoverSurprise</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">hoverSurprise</span>: Score 76. Issues reported by tests in this category:</p>
       <ul>
-      <li>74 issues reported by package testaro, test hover (Content changes caused by hovering)</li>
+      <li>74 issues reported by package <code>testaro</code>, test <code>hover</code> (Content changes caused by hovering)</li>
       </ul>
-      <p><span class="componentID">pseudoLinkRisk</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">pseudoLinkRisk</span>: Score 46. Issues reported by tests in this category:</p>
       <ul>
-      <li>21 issues reported by package tenon, test 129 (CSS underline on text that is not a link)</li>
+      <li>21 issues reported by package <code>tenon</code>, test <code>129</code> (CSS underline on text that is not a link)</li>
       </ul>
-      <p><span class="componentID">contrastAAA</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">contrastAAA</span>: Score 45. Issues reported by tests in this category:</p>
       <ul>
-      <li>27 issues reported by package alfa, test r66 (Text contrast less than AAA requires)</li>
-  <li>32 issues reported by package tenon, test 95 (Element has insufficient color contrast (Level AAA))</li>
+      <li>27 issues reported by package <code>alfa</code>, test <code>r66</code> (Text contrast less than AAA requires)</li>
+  <li>32 issues reported by package <code>tenon</code>, test <code>95</code> (Element has insufficient color contrast (Level AAA))</li>
       </ul>
-      <p><span class="componentID">pseudoListRisk</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">pseudoListRisk</span>: Score 43. Issues reported by tests in this category:</p>
       <ul>
-      <li>41 issues reported by package aatt, test w:H48 (Navigation links should be coded as list)</li>
+      <li>41 issues reported by package <code>aatt</code>, test <code>w:H48</code> (Navigation links should be coded as list)</li>
       </ul>
-      <p><span class="componentID">leadingClipsText</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">leadingClipsText</span>: Score 42. Issues reported by tests in this category:</p>
       <ul>
-      <li>12 issues reported by package tenon, test 144 (Line height insufficent to properly display computed font size)</li>
+      <li>12 issues reported by package <code>tenon</code>, test <code>144</code> (Line height insufficent to properly display computed font size)</li>
       </ul>
-      <p><span class="componentID">allCaps</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">allCaps</span>: Score 29. Issues reported by tests in this category:</p>
       <ul>
-      <li>27 issues reported by package tenon, test 153 (Long string of text is in all caps)</li>
+      <li>27 issues reported by package <code>tenon</code>, test <code>153</code> (Long string of text is in all caps)</li>
       </ul>
-      <p><span class="componentID">noLeading</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">noLeading</span>: Score 28. Issues reported by tests in this category:</p>
       <ul>
-      <li>12 issues reported by package alfa, test r73 (Paragraphs of text have sufficient line height)</li>
+      <li>12 issues reported by package <code>alfa</code>, test <code>r73</code> (Paragraphs of text have insufficient line height)</li>
       </ul>
-      <p><span class="componentID">buttonNoText</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">buttonNoText</span>: Score 25. Issues reported by tests in this category:</p>
       <ul>
-      <li>3 issues reported by package alfa, test r12 (Button has no accessible name)</li>
-  <li>0 issues reported by package axe, test aria-command-name (ARIA commands must have an accessible name)</li>
-  <li>3 issues reported by package wave, test e:button_empty (Button is empty or has no value text)</li>
+      <li>3 issues reported by package <code>alfa</code>, test <code>r12</code> (Button has no accessible name)</li>
+  <li>0 issues reported by package <code>axe</code>, test <code>aria-command-name</code> (ARIA commands must have an accessible name)</li>
+  <li>3 issues reported by package <code>wave</code>, test <code>e:button_empty</code> (Button is empty or has no value text)</li>
       </ul>
-      <p><span class="componentID">imgNoText</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">imageNoText</span>: Score 22. Issues reported by tests in this category:</p>
       <ul>
-      <li>1 issues reported by package aatt, test e:H37 (Img element missing an alt attribute)</li>
-  <li>2 issues reported by package alfa, test r2 (Image has no accessible name)</li>
-  <li>2 issues reported by package axe, test image-alt (Images must have alternate text)</li>
-  <li>0 issues reported by package ibm, test v:WCAG20_Img_HasAlt (Images must have an alt attribute if they convey meaning, or alt='' if decorative)</li>
-  <li>1 issues reported by package wave, test e:alt_missing (Missing alternative text)</li>
+      <li>1 issue reported by package <code>aatt</code>, test <code>e:H37</code> (Img element missing an alt attribute)</li>
+  <li>2 issues reported by package <code>alfa</code>, test <code>r2</code> (Image has no accessible name)</li>
+  <li>2 issues reported by package <code>axe</code>, test <code>image-alt</code> (Images must have alternate text)</li>
+  <li>0 issues reported by package <code>ibm</code>, test <code>v:WCAG20_Img_HasAlt</code> (Images must have an alt attribute if they convey meaning, or alt="" if decorative)</li>
+  <li>1 issue reported by package <code>wave</code>, test <code>e:alt_missing</code> (Missing alternative text)</li>
       </ul>
-      <p><span class="componentID">linkTitleRedundant</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">linkTitleRedundant</span>: Score 21. Issues reported by tests in this category:</p>
       <ul>
-      <li>19 issues reported by package tenon, test 79 (Link has a title attribute that is the same as the text inside the link)</li>
+      <li>19 issues reported by package <code>tenon</code>, test <code>79</code> (Link has a title attribute that is the same as the text inside the link)</li>
       </ul>
-      <p><span class="componentID">textBeyondLandmarks</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">textBeyondLandmarks</span>: Score 17. Issues reported by tests in this category:</p>
       <ul>
-      <li>15 issues reported by package alfa, test r57 (Perceivable text content not included in any landmark)</li>
+      <li>15 issues reported by package <code>alfa</code>, test <code>r57</code> (Perceivable text content not included in any landmark)</li>
       </ul>
-      <p><span class="componentID">labelForBadID</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">labelForBadID</span>: Score 14. Issues reported by tests in this category:</p>
       <ul>
-      <li>1 issues reported by package aatt, test w:H44 (Label for attribute is bad ID)</li>
-  <li>1 issues reported by package wave, test a:label_orphaned (Orphaned form label)</li>
+      <li>1 issue reported by package <code>aatt</code>, test <code>w:H44</code> (Label for attribute is bad ID)</li>
+  <li>1 issue reported by package <code>wave</code>, test <code>a:label_orphaned</code> (Orphaned form label)</li>
       </ul>
-      <p><span class="componentID">headingStruc</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">headingStructure</span>: Score 12. Issues reported by tests in this category:</p>
       <ul>
-      <li>3 issues reported by package aatt, test w:G141 (Heading structure is not logically nested)</li>
-  <li>0 issues reported by package alfa, test r53 (Heading skips one or more levels)</li>
-  <li>0 issues reported by package axe, test heading-order (Heading levels should only increase by one)</li>
-  <li>1 issues reported by package wave, test a:heading_skipped (Skipped heading level)</li>
-  <li>1 issues reported by package tenon, test 155 (These headings are not structured in a hierarchical manner)</li>
+      <li>3 issues reported by package <code>aatt</code>, test <code>w:G141</code> (Heading structure is not logically nested)</li>
+  <li>0 issues reported by package <code>alfa</code>, test <code>r53</code> (Heading skips one or more levels)</li>
+  <li>0 issues reported by package <code>axe</code>, test <code>heading-order</code> (Heading levels should only increase by one)</li>
+  <li>1 issue reported by package <code>wave</code>, test <code>a:heading_skipped</code> (Skipped heading level)</li>
+  <li>1 issue reported by package <code>tenon</code>, test <code>155</code> (These headings are not structured in a hierarchical manner)</li>
       </ul>
-      <p><span class="componentID">linkPair</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">linkPair</span>: Score 11. Issues reported by tests in this category:</p>
       <ul>
-      <li>9 issues reported by package wave, test a:link_redundant (Adjacent links go to same URL)</li>
+      <li>9 issues reported by package <code>wave</code>, test <code>a:link_redundant</code> (Adjacent links go to same URL)</li>
       </ul>
-      <p><span class="componentID">activeEmbedding</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">activeEmbedding</span>: Score 10. Issues reported by tests in this category:</p>
       <ul>
-      <li>3 issues reported by package testaro, test embAc (Active elements embedded in links or buttons)</li>
+      <li>3 issues reported by package <code>testaro</code>, test <code>embAc</code> (Active elements embedded in links or buttons)</li>
       </ul>
-      <p><span class="componentID">roleBad</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">roleBad</span>: Score 9. Issues reported by tests in this category:</p>
       <ul>
-      <li>0 issues reported by package axe, test aria-allowed-role (ARIA role should be appropriate for the element)</li>
-  <li>0 issues reported by package ibm, test v:aria_semantics_role (ARIA roles must be valid for the element to which they are assigned)</li>
-  <li>1 issues reported by package testaro, test role (Nonexistent or implicit-overriding role)</li>
+      <li>0 issues reported by package <code>axe</code>, test <code>aria-allowed-role</code> (ARIA role should be appropriate for the element)</li>
+  <li>0 issues reported by package <code>ibm</code>, test <code>v:aria_semantics_role</code> (ARIA roles must be valid for the element to which they are assigned)</li>
+  <li>1 issue reported by package <code>testaro</code>, test <code>role</code> (Nonexistent or implicit-overriding role)</li>
       </ul>
-      <p><span class="componentID">linkUnderlines</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">linkUnderlines</span>: Score 8. Issues reported by tests in this category:</p>
       <ul>
-      <li>2 issues reported by package testaro, test linkUl (Non-underlined inline links)</li>
+      <li>2 issues reported by package <code>testaro</code>, test <code>linkUl</code> (Non-underlined inline links)</li>
       </ul>
-      <p><span class="componentID">selectFlatRisk</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">selectFlatRisk</span>: Score 7. Issues reported by tests in this category:</p>
       <ul>
-      <li>5 issues reported by package aatt, test w:H85 (If selection list contains groups of related options, they should be grouped with optgroup)</li>
+      <li>5 issues reported by package <code>aatt</code>, test <code>w:H85</code> (If selection list contains groups of related options, they should be grouped with optgroup)</li>
       </ul>
-      <p><span class="componentID">visibleBulk</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">visibleBulk</span>: Score 4. Issues reported by tests in this category:</p>
       <ul>
-      <li>2 issues reported by package testaro, test bulk (Count of visible elements as a multiple of 300)</li>
+      <li>2 issues reported by package <code>testaro</code>, test <code>bulk</code> (Count of visible elements as a multiple of 300)</li>
       </ul>
-      <p><span class="componentID">pseudoHeadingRisk</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">pseudoHeadingRisk</span>: Score 3. Issues reported by tests in this category:</p>
       <ul>
-      <li>1 issues reported by package aatt, test w:H42 (Heading coding should be used if intended as a heading)</li>
+      <li>1 issue reported by package <code>aatt</code>, test <code>w:H42</code> (Heading coding should be used if intended as a heading)</li>
       </ul>
-      <p><span class="componentID">imgAltRedundant</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">imageTextRedundant</span>: Score 3. Issues reported by tests in this category:</p>
       <ul>
-      <li>1 issues reported by package axe, test image-redundant-alt (Text of buttons and links should not be repeated in the image alternative)</li>
-  <li>0 issues reported by package ibm, test v:WCAG20_Img_LinkTextNotRedundant (Text alternative for image within link should not repeat link text or adjacent link text)</li>
+      <li>1 issue reported by package <code>axe</code>, test <code>image-redundant-alt</code> (Text of buttons and links should not be repeated in the image alternative)</li>
+  <li>0 issues reported by package <code>ibm</code>, test <code>v:WCAG20_Img_LinkTextNotRedundant</code> (Text alternative for image within link should not repeat link text or adjacent link text)</li>
       </ul>
-      <p><span class="componentID">h1Missing</span>: Score undefined. Issues reported by tests in this category:</p>
+      <p><span class="componentID">h1Missing</span>: Score 3. Issues reported by tests in this category:</p>
       <ul>
-      <li>1 issues reported by package axe, test page-has-heading-one (Page should contain a level-one heading)</li>
-  <li>1 issues reported by package wave, test a:h1_missing (Missing first level heading)</li>
+      <li>1 issue reported by package <code>axe</code>, test <code>page-has-heading-one</code> (Page should contain a level-one heading)</li>
+  <li>1 issue reported by package <code>wave</code>, test <code>a:h1_missing</code> (Missing first level heading)</li>
       </ul>
+      <h2>Discussion</h2>
+      <p>Although there are widely accepted <a href="https://www.w3.org/WAI/standards-guidelines/">accessibility standards</a>, there is still no unanimity about how to define, test, and quantify accessibility. The failures reported in this digest merit investigation as <strong>potential</strong> opportunities for improved accessibility. But you may conclude that some of the failures do not actually harm accessibility, and some substantial accessibility faults can escape detection by any of these tests. Likewise, you may disagree with weightings and formulas of scoring procedure <code>sp10b</code>, or question whether it is appropriate even to assign accessibility scores to a web page. This digest describes only one interpretation of the page&rsquo;s accessibility. You can modify and extend Testaro and Testilo to fit other understandings.</p>
+      <p>Scoring procedure <code>sp10b</code> bases scores on:</p>
+      <ul>
+        <li>how many categories of issues were reported</li>
+        <li>how many issues were reported per category</li>
+        <li>the largest count of issues of a category reported by a single test</li>
+        <li>how many tests reported the issues</li>
+        <li>how important each issue is deemed to be</li>
+      </ul>
+      <p>Most issues are simply counted, but some are complex and get a <q>count</q> that is really the result of a formula. The exact rules for scoring are in the <a href="https://github.com/jrpool/testilo/blob/main/procs/score/sp10b.js"><code>sp10b.js</code> file</a> that performs the scoring.</p>
+      <p>Weights used in the calculations are contained in the appended report in the <code>score</code> block. The <code>groupWeights</code> block within it contains the weights applied to the classified issues, and the <code>countWeights</code> block within it contains the amounts those weights are multiplied by or added to. For example, if <code>roleBad</code> issues are reported, the <code>roleBad</code> score is the <code>absolute</code> amount (2), plus the largest count of those issues reported by any test multiplied by the <code>largest</code> amount (1), plus the total count of those issues reported by all other tests multiplied by the <code>smaller</code> amount (0.4), all multiplied by the <code>roleBad</code> weight (3).</p>
       <h2>Report</h2>
       <pre>{
   "id": "3aee6-eurail",
@@ -35508,65 +35527,65 @@
       "visitRejection": 10
     },
     "groupWeights": {
-      "accessKeyDup": 3,
+      "accessKeyDuplicate": 3,
       "activeEmbedding": 2,
       "allCaps": 1,
-      "ariaRefBad": 4,
+      "ariaReferenceBad": 4,
       "autocompleteBad": 2,
       "buttonNoText": 4,
       "childMissing": 3,
       "contrastAA": 3,
       "contrastAAA": 1,
-      "dupID": 2,
-      "eventKbd": 3,
+      "duplicateID": 2,
+      "eventKeyboard": 3,
       "fieldSetMissing": 2,
       "focusableOperable": 3,
       "focusIndication": 3,
       "h1Missing": 1,
       "headingEmpty": 2,
-      "headingStruc": 2,
+      "headingStructure": 2,
       "hoverSurprise": 1,
-      "htmlLang": 3,
-      "htmlLangBad": 3,
       "iframeNoText": 3,
-      "imgAltRedundant": 1,
-      "imgInputNoText": 4,
-      "imgMapAreaNoText": 3,
-      "imgNoText": 4,
+      "imageInputNoText": 4,
+      "imageMapAreaNoText": 3,
+      "imageNoText": 4,
+      "imageTextRedundant": 1,
       "inconsistentStyles": 1,
       "contrastRisk": 1,
       "labelClash": 2,
       "labelForBadID": 4,
-      "langChange": 2,
+      "languageChange": 2,
       "leadingClipsText": 3,
       "leadingFrozen": 3,
       "linkForcesNewWindow": 2,
       "linkNoText": 4,
       "linkPair": 1,
-      "linkTextsIdentical": 2,
+      "linkTextsSame": 2,
       "linkTitleRedundant": 1,
       "linkUnderlines": 2,
       "menuNavigation": 2,
       "metaBansZoom": 3,
       "nameValue": 3,
       "noLeading": 2,
-      "objNoText": 2,
+      "objectNoText": 2,
+      "pageLanguage": 3,
+      "pageLanguageBad": 3,
+      "pageTitle": 3,
       "parentMissing": 3,
       "pseudoHeadingRisk": 1,
       "pseudoLinkRisk": 2,
       "pseudoListRisk": 1,
       "roleBad": 3,
-      "roleBadAttr": 3,
-      "roleMissingAttr": 3,
+      "roleBadAttribute": 3,
+      "roleMissingAttribute": 3,
       "selectFlatRisk": 1,
       "selectNoText": 3,
       "spontaneousMotion": 2,
-      "svgImgNoText": 4,
+      "svgImageNoText": 4,
       "tabFocusability": 3,
       "tabNavigation": 2,
       "targetSize": 2,
       "textBeyondLandmarks": 1,
-      "title": 3,
       "visibleBulk": 1,
       "zIndexNotZero": 1
     },
@@ -35677,7 +35696,7 @@
     },
     "groupDetails": {
       "groups": {
-        "imgNoText": {
+        "imageNoText": {
           "aatt": {
             "e:H37": {
               "what": "Img element missing an alt attribute",
@@ -35698,7 +35717,7 @@
           },
           "ibm": {
             "v:WCAG20_Img_HasAlt": {
-              "what": "Images must have an alt attribute if they convey meaning, or alt='' if decorative",
+              "what": "Images must have an alt attribute if they convey meaning, or alt=\"\" if decorative",
               "issueCount": 0
             }
           },
@@ -35709,7 +35728,7 @@
             }
           }
         },
-        "headingStruc": {
+        "headingStructure": {
           "aatt": {
             "w:G141": {
               "what": "Heading structure is not logically nested",
@@ -35884,7 +35903,7 @@
         "noLeading": {
           "alfa": {
             "r73": {
-              "what": "Paragraphs of text have sufficient line height",
+              "what": "Paragraphs of text have insufficient line height",
               "issueCount": 12
             }
           }
@@ -35892,7 +35911,7 @@
         "contrastAA": {
           "alfa": {
             "r69": {
-              "what": "Text outside widget has minimum contrast",
+              "what": "Text outside widget has subminimum contrast",
               "issueCount": 21
             }
           },
@@ -35932,7 +35951,7 @@
         "focusIndication": {
           "alfa": {
             "r65": {
-              "what": "Element in sequential focus order has visible focus",
+              "what": "Element in sequential focus order has no visible focus",
               "issueCount": 91
             }
           },
@@ -35971,7 +35990,7 @@
             }
           }
         },
-        "imgAltRedundant": {
+        "imageTextRedundant": {
           "axe": {
             "image-redundant-alt": {
               "what": "Text of buttons and links should not be repeated in the image alternative",
@@ -36015,7 +36034,7 @@
             }
           }
         },
-        "linkTextsIdentical": {
+        "linkTextsSame": {
           "tenon": {
             "98": {
               "what": "These links have the same text but different destinations",
@@ -36168,8 +36187,8 @@
       "preventions": 100,
       "solos": 50,
       "groups": {
-        "imgNoText": 22,
-        "headingStruc": 12,
+        "imageNoText": 22,
+        "headingStructure": 12,
         "labelForBadID": 14,
         "contrastRisk": 268,
         "pseudoHeadingRisk": 3,
@@ -36185,11 +36204,11 @@
         "focusIndication": 1864,
         "textBeyondLandmarks": 17,
         "roleBad": 9,
-        "imgAltRedundant": 3,
+        "imageTextRedundant": 3,
         "h1Missing": 3,
         "linkPair": 11,
         "linkTitleRedundant": 21,
-        "linkTextsIdentical": 98,
+        "linkTextsSame": 98,
         "pseudoLinkRisk": 46,
         "leadingClipsText": 42,
         "targetSize": 94,

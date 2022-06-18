@@ -2,39 +2,39 @@
   "tests": {
     "aatt": {
       "e:F77": {
-        "groupID": "dupID",
+        "groupID": "duplicateID",
         "what": "Duplicate id attribute value"
       },
       "e:H36": {
-        "groupID": "imgInputNoText",
+        "groupID": "imageInputNoText",
         "what": "Image submit button missing an alt attribute"
       },
       "e:H37": {
-        "groupID": "imgNoText",
+        "groupID": "imageNoText",
         "what": "Img element missing an alt attribute"
       },
       "e:H57": {
-        "groupID": "htmlLang",
+        "groupID": "pageLanguage",
         "what": "Lang attribute of the document element"
       },
       "e:H58": {
-        "groupID": "langChange",
+        "groupID": "languageChange",
         "what": "Change in language is not marked"
       },
       "w:G141": {
-        "groupID": "headingStruc",
+        "groupID": "headingStructure",
         "what": "Heading structure is not logically nested"
       },
       "e:ARIA6+H53": {
-        "groupID": "objNoText",
+        "groupID": "objectNoText",
         "what": "Object elements must contain a text alternative"
       },
       "e:H24": {
-        "groupID": "imgMapAreaNoText",
+        "groupID": "imageMapAreaNoText",
         "what": "Area element in an image map missing an alt attribute"
       },
       "w:G90": {
-        "groupID": "eventKbd",
+        "groupID": "eventKeyboard",
         "what": "Event handler functionality not available by keyboard"
       },
       "w:H44": {
@@ -80,27 +80,31 @@
     },
     "alfa": {
       "r3": {
-        "groupID": "dupID",
-        "what": "Element has no unique ID"
+        "groupID": "duplicateID",
+        "what": "Element ID is not unique"
       },
       "r28": {
-        "groupID": "imgInputNoText",
+        "groupID": "imageInputNoText",
         "what": "Image input element has no accessible name"
       },
       "r2": {
-        "groupID": "imgNoText",
+        "groupID": "imageNoText",
         "what": "Image has no accessible name"
       },
       "r4": {
-        "groupID": "htmlLang",
+        "groupID": "pageLanguage",
         "what": "Lang attribute missing, empty, or only whitespace"
       },
+      "r5": {
+        "groupID": "pageLanguageBad",
+        "what": "Lang attribute has no valid primary language tag"
+      },
       "r7": {
-        "groupID": "langChange",
+        "groupID": "languageChange",
         "what": "Lang attribute has no valid primary language subtag"
       },
       "r53": {
-        "groupID": "headingStruc",
+        "groupID": "headingStructure",
         "what": "Heading skips one or more levels"
       },
       "r11": {
@@ -116,16 +120,12 @@
         "what": "Element is not owned by an element of its required context role"
       },
       "r43": {
-        "groupID": "svgImgNoText",
+        "groupID": "svgImageNoText",
         "what": "SVG image element has no accessible name"
       },
       "r47": {
         "groupID": "metaBansZoom",
         "what": "Meta element restricts zooming"
-      },
-      "r5": {
-        "groupID": "htmlLangBad",
-        "what": "Lang attribute has no valid primary language tag"
       },
       "r68": {
         "groupID": "childMissing",
@@ -133,18 +133,18 @@
       },
       "r93": {
         "groupID": "leadingFrozen",
-        "what": "Style attribute with!important prevents adjusting line height"
+        "what": "Style attribute with !important prevents adjusting line height"
       },
       "r73": {
         "groupID": "noLeading",
-        "what": "Paragraphs of text have sufficient line height"
+        "what": "Paragraphs of text have insufficient line height"
       },
       "r13": {
         "groupID": "iframeNoText",
         "what": "Iframe has no accessible name"
       },
       "r20": {
-        "groupID": "roleBadAttr",
+        "groupID": "roleBadAttribute",
         "what": "Aria- attribute is not defined"
       },
       "r10": {
@@ -153,7 +153,7 @@
       },
       "r69": {
         "groupID": "contrastAA",
-        "what": "Text outside widget has minimum contrast"
+        "what": "Text outside widget has subminimum contrast"
       },
       "r66": {
         "groupID": "contrastAAA",
@@ -161,7 +161,7 @@
       },
       "r65": {
         "groupID": "focusIndication",
-        "what": "Element in sequential focus order has visible focus"
+        "what": "Element in sequential focus order has no visible focus"
       },
       "r57": {
         "groupID": "textBeyondLandmarks",
@@ -170,35 +170,39 @@
     },
     "axe": {
       "duplicate-id": {
-        "groupID": "dupID",
+        "groupID": "duplicateID",
         "what": "ID attribute value must be unique"
       },
       "input-image-alt": {
-        "groupID": "imgInputNoText",
+        "groupID": "imageInputNoText",
         "what": "Image buttons must have alternate text"
       },
       "image-alt": {
-        "groupID": "imgNoText",
+        "groupID": "imageNoText",
         "what": "Images must have alternate text"
       },
       "html-has-lang": {
-        "groupID": "htmlLang",
+        "groupID": "pageLanguage",
         "what": "Html element must have a lang attribute"
       },
+      "html-lang-valid": {
+        "groupID": "pageLanguageBad",
+        "what": "Html element must have a valid value for the lang attribute"
+      },
       "valid-lang": {
-        "groupID": "langChange",
+        "groupID": "languageChange",
         "what": "Lang attribute must have a valid value"
       },
       "heading-order": {
-        "groupID": "headingStruc",
+        "groupID": "headingStructure",
         "what": "Heading levels should only increase by one"
       },
       "object-alt": {
-        "groupID": "objNoText",
+        "groupID": "objectNoText",
         "what": "Object elements must have alternate text"
       },
       "area-alt": {
-        "groupID": "imgMapAreaNoText",
+        "groupID": "imageMapAreaNoText",
         "what": "Active area elements must have alternate text"
       },
       "link-name": {
@@ -214,16 +218,12 @@
         "what": "Certain ARIA roles must be contained by particular parents"
       },
       "svg-img-alt": {
-        "groupID": "svgImgNoText",
+        "groupID": "svgImageNoText",
         "what": "SVG elements with an img role must have an alternative text"
       },
       "meta-viewport": {
         "groupID": "metaBansZoom",
         "what": "Zooming and scaling should not be disabled"
-      },
-      "html-lang-valid": {
-        "groupID": "htmlLangBad",
-        "what": "Html element must have a valid value for the lang attribute"
       },
       "aria-required-children": {
         "groupID": "childMissing",
@@ -242,11 +242,11 @@
         "what": "ARIA role should be appropriate for the element"
       },
       "aria-required-attr": {
-        "groupID": "roleMissingAttr",
+        "groupID": "roleMissingAttribute",
         "what": "Required ARIA attributes must be provided"
       },
       "aria-valid-attr": {
-        "groupID": "roleBadAttr",
+        "groupID": "roleBadAttribute",
         "what": "ARIA attributes must conform to valid names"
       },
       "autocomplete-valid": {
@@ -262,11 +262,11 @@
         "what": "Headings should not be empty"
       },
       "image-redundant-alt": {
-        "groupID": "imgAltRedundant",
+        "groupID": "imageTextRedundant",
         "what": "Text of buttons and links should not be repeated in the image alternative"
       },
       "document-title": {
-        "groupID": "title",
+        "groupID": "pageTitle",
         "what": "Documents must contain a title element"
       },
       "page-has-heading-one": {
@@ -280,40 +280,40 @@
     },
     "ibm": {
       "RPT_Elem_UniqueId": {
-        "groupID": "dupID",
+        "groupID": "duplicateID",
         "what": "Element id attribute values must be unique within a document"
       },
       "v:WCAG20_Input_ExplicitLabelImage": {
-        "groupID": "imgInputNoText",
+        "groupID": "imageInputNoText",
         "what": "Input element of type image should have a text alternative"
       },
       "v:WCAG20_Img_HasAlt": {
-        "groupID": "imgNoText",
-        "what": "Images must have an alt attribute if they convey meaning, or alt='' if decorative"
+        "groupID": "imageNoText",
+        "what": "Images must have an alt attribute if they convey meaning, or alt=\"\" if decorative"
       },
       "WCAG20_Html_HasLang": {
-        "groupID": "htmlLang",
+        "groupID": "pageLanguage",
         "what": "Page detected as HTML, but has no lang attribute"
       },
+      "v:WCAG20_Elem_Lang_Valid": {
+        "groupID": "pageLanguageBad",
+        "what": "Lang attribute does not include a valid primary language"
+      },
       "v:WCAG20_Object_HasText": {
-        "groupID": "objNoText",
+        "groupID": "objectNoText",
         "what": "Object elements must have a text alternative"
       },
       "v:HAAC_Img_UsemapAlt": {
-        "groupID": "imgMapAreaNoText",
+        "groupID": "imageMapAreaNoText",
         "what": "Image map or child area has no text alternative"
       },
       "v:WCAG20_Area_HasAlt": {
-        "groupID": "imgMapAreaNoText",
+        "groupID": "imageMapAreaNoText",
         "what": "Area element in an image map has no text alternative"
       },
       "v:WCAG20_A_HasText": {
         "groupID": "linkNoText",
         "what": "Hyperlinks must have a text description"
-      },
-      "v:WCAG20_Elem_Lang_Valid": {
-        "groupID": "htmlLangBad",
-        "what": "Lang attribute does not include a valid primary language"
       },
       "v:WCAG20_Frame_HasTitle": {
         "groupID": "iframeNoText",
@@ -324,11 +324,11 @@
         "what": "ARIA roles must be valid for the element to which they are assigned"
       },
       "v:Rpt_Aria_RequiredProperties": {
-        "groupID": "roleMissingAttr",
+        "groupID": "roleMissingAttribute",
         "what": "ARIA role on an element must have required attributes"
       },
       "v:Rpt_Aria_ValidProperty": {
-        "groupID": "roleBadAttr",
+        "groupID": "roleBadAttribute",
         "what": "ARIA attributes must be valid for the role"
       },
       "v:WCAG21_Input_Autocomplete": {
@@ -344,15 +344,15 @@
         "what": "Heading elements must provide descriptive text"
       },
       "v:WCAG20_Img_LinkTextNotRedundant": {
-        "groupID": "imgAltRedundant",
+        "groupID": "imageTextRedundant",
         "what": "Text alternative for image within link should not repeat link text or adjacent link text"
       },
       "v:Rpt_Aria_ValidIdRef": {
-        "groupID": "ariaRefBad",
+        "groupID": "ariaReferenceBad",
         "what": "ARIA property must reference non-empty unique id of visible element"
       },
       "v:WCAG20_Elem_UniqueAccessKey": {
-        "groupID": "accessKeyDup",
+        "groupID": "accessKeyDuplicate",
         "what": "Accesskey attribute values on each element must be unique for the page"
       },
       "v:WCAG20_Input_RadioChkInFieldSet": {
@@ -362,31 +362,31 @@
     },
     "wave": {
       "e:alt_input_missing": {
-        "groupID": "imgInputNoText",
+        "groupID": "imageInputNoText",
         "what": "Image button missing alternative text"
       },
       "e:alt_missing": {
-        "groupID": "imgNoText",
+        "groupID": "imageNoText",
         "what": "Missing alternative text"
       },
       "e:language_missing": {
-        "groupID": "htmlLang",
+        "groupID": "pageLanguage",
         "what": "Language missing or invalid"
       },
       "a:heading_skipped": {
-        "groupID": "headingStruc",
+        "groupID": "headingStructure",
         "what": "Skipped heading level"
       },
       "a:plugin": {
-        "groupID": "objNoText",
+        "groupID": "objectNoText",
         "what": "An unidentified plugin is present"
       },
       "e:alt_area_missing": {
-        "groupID": "imgMapAreaNoText",
+        "groupID": "imageMapAreaNoText",
         "what": "Image map area missing alternative text"
       },
       "a:event_handler": {
-        "groupID": "eventKbd",
+        "groupID": "eventKeyboard",
         "what": "Device-dependent event handler"
       },
       "a:label_orphaned": {
@@ -414,7 +414,7 @@
         "what": "Empty heading"
       },
       "e:title_invalid": {
-        "groupID": "title",
+        "groupID": "pageTitle",
         "what": "Missing or uninformative page title"
       },
       "a:h1_missing": {
@@ -426,11 +426,11 @@
         "what": "Select missing label"
       },
       "e:aria_reference_broken": {
-        "groupID": "ariaRefBad",
+        "groupID": "ariaReferenceBad",
         "what": "Broken ARIA reference"
       },
       "a:accesskey": {
-        "groupID": "accessKeyDup",
+        "groupID": "accessKeyDuplicate",
         "what": "Accesskey"
       },
       "a:fieldset_missing": {
@@ -456,7 +456,7 @@
         "what": "Element has insufficient color contrast (Level AAA)"
       },
       "98": {
-        "groupID": "linkTextsIdentical",
+        "groupID": "linkTextsSame",
         "what": "These links have the same text but different destinations"
       },
       "129": {
@@ -476,7 +476,7 @@
         "what": "Long string of text is in all caps"
       },
       "155": {
-        "groupID": "headingStruc",
+        "groupID": "headingStructure",
         "what": "These headings are not structured in a hierarchical manner"
       },
       "218": {
@@ -548,12 +548,12 @@
     }
   },
   "groups": {
-    "dupID": {
+    "duplicateID": {
       "aatt": [
         "e:F77 Duplicate id attribute value"
       ],
       "alfa": [
-        "r3 Element has no unique ID"
+        "r3 Element ID is not unique"
       ],
       "axe": [
         "duplicate-id ID attribute value must be unique"
@@ -562,7 +562,7 @@
         "RPT_Elem_UniqueId Element id attribute values must be unique within a document"
       ]
     },
-    "imgInputNoText": {
+    "imageInputNoText": {
       "aatt": [
         "e:H36 Image submit button missing an alt attribute"
       ],
@@ -579,7 +579,7 @@
         "e:alt_input_missing Image button missing alternative text"
       ]
     },
-    "imgNoText": {
+    "imageNoText": {
       "aatt": [
         "e:H37 Img element missing an alt attribute"
       ],
@@ -590,13 +590,13 @@
         "image-alt Images must have alternate text"
       ],
       "ibm": [
-        "v:WCAG20_Img_HasAlt Images must have an alt attribute if they convey meaning, or alt='' if decorative"
+        "v:WCAG20_Img_HasAlt Images must have an alt attribute if they convey meaning, or alt=\"\" if decorative"
       ],
       "wave": [
         "e:alt_missing Missing alternative text"
       ]
     },
-    "htmlLang": {
+    "pageLanguage": {
       "aatt": [
         "e:H57 Lang attribute of the document element"
       ],
@@ -613,7 +613,18 @@
         "e:language_missing Language missing or invalid"
       ]
     },
-    "langChange": {
+    "pageLanguageBad": {
+      "alfa": [
+        "r5 Lang attribute has no valid primary language tag"
+      ],
+      "axe": [
+        "html-lang-valid Html element must have a valid value for the lang attribute"
+      ],
+      "ibm": [
+        "v:WCAG20_Elem_Lang_Valid Lang attribute does not include a valid primary language"
+      ]
+    },
+    "languageChange": {
       "aatt": [
         "e:H58 Change in language is not marked"
       ],
@@ -624,7 +635,7 @@
         "valid-lang Lang attribute must have a valid value"
       ]
     },
-    "headingStruc": {
+    "headingStructure": {
       "aatt": [
         "w:G141 Heading structure is not logically nested"
       ],
@@ -641,7 +652,7 @@
         "a:heading_skipped Skipped heading level"
       ]
     },
-    "objNoText": {
+    "objectNoText": {
       "aatt": [
         "e:ARIA6+H53 Object elements must contain a text alternative"
       ],
@@ -655,7 +666,7 @@
         "a:plugin An unidentified plugin is present"
       ]
     },
-    "imgMapAreaNoText": {
+    "imageMapAreaNoText": {
       "aatt": [
         "e:H24 Area element in an image map missing an alt attribute"
       ],
@@ -670,7 +681,7 @@
         "e:alt_area_missing Image map area missing alternative text"
       ]
     },
-    "eventKbd": {
+    "eventKeyboard": {
       "aatt": [
         "w:G90 Event handler functionality not available by keyboard"
       ],
@@ -703,7 +714,7 @@
         "e:link_empty Link contains no text"
       ]
     },
-    "linkTextsIdentical": {
+    "linkTextsSame": {
       "tenon": [
         "98 These links have the same text but different destinations"
       ]
@@ -737,7 +748,7 @@
         "aria-required-parent Certain ARIA roles must be contained by particular parents"
       ]
     },
-    "svgImgNoText": {
+    "svgImageNoText": {
       "alfa": [
         "r43 SVG image element has no accessible name"
       ],
@@ -753,17 +764,6 @@
         "meta-viewport Zooming and scaling should not be disabled"
       ]
     },
-    "htmlLangBad": {
-      "alfa": [
-        "r5 Lang attribute has no valid primary language tag"
-      ],
-      "axe": [
-        "html-lang-valid Html element must have a valid value for the lang attribute"
-      ],
-      "ibm": [
-        "v:WCAG20_Elem_Lang_Valid Lang attribute does not include a valid primary language"
-      ]
-    },
     "childMissing": {
       "alfa": [
         "r68 Element owns no elements as required by its semantic role"
@@ -774,7 +774,7 @@
     },
     "leadingFrozen": {
       "alfa": [
-        "r93 Style attribute with!important prevents adjusting line height"
+        "r93 Style attribute with !important prevents adjusting line height"
       ],
       "axe": [
         "avoid-inline-spacing Inline text spacing must be adjustable with custom stylesheets"
@@ -782,7 +782,7 @@
     },
     "noLeading": {
       "alfa": [
-        "r73 Paragraphs of text have sufficient line height"
+        "r73 Paragraphs of text have insufficient line height"
       ]
     },
     "leadingClipsText": {
@@ -812,7 +812,7 @@
         "role Nonexistent or implicit-overriding role"
       ]
     },
-    "roleMissingAttr": {
+    "roleMissingAttribute": {
       "axe": [
         "aria-required-attr Required ARIA attributes must be provided"
       ],
@@ -820,7 +820,7 @@
         "v:Rpt_Aria_RequiredProperties ARIA role on an element must have required attributes"
       ]
     },
-    "roleBadAttr": {
+    "roleBadAttribute": {
       "alfa": [
         "r20 Aria- attribute is not defined"
       ],
@@ -847,7 +847,7 @@
     },
     "contrastAA": {
       "alfa": [
-        "r69 Text outside widget has minimum contrast"
+        "r69 Text outside widget has subminimum contrast"
       ],
       "axe": [
         "color-contrast Elements must have sufficient color contrast"
@@ -884,7 +884,7 @@
         "e:heading_empty Empty heading"
       ]
     },
-    "imgAltRedundant": {
+    "imageTextRedundant": {
       "axe": [
         "image-redundant-alt Text of buttons and links should not be repeated in the image alternative"
       ],
@@ -897,7 +897,7 @@
         "79 Link has a title attribute that is the same as the text inside the link"
       ]
     },
-    "title": {
+    "pageTitle": {
       "axe": [
         "document-title Documents must contain a title element"
       ],
@@ -944,7 +944,7 @@
         "w:H85 If selection list contains groups of related options, they should be grouped with optgroup"
       ]
     },
-    "ariaRefBad": {
+    "ariaReferenceBad": {
       "ibm": [
         "v:Rpt_Aria_ValidIdRef ARIA property must reference non-empty unique id of visible element"
       ],
@@ -952,7 +952,7 @@
         "e:aria_reference_broken Broken ARIA reference"
       ]
     },
-    "accessKeyDup": {
+    "accessKeyDuplicate": {
       "ibm": [
         "v:WCAG20_Elem_UniqueAccessKey Accesskey attribute values on each element must be unique for the page"
       ],
@@ -1002,7 +1002,7 @@
     },
     "focusIndication": {
       "alfa": [
-        "r65 Element in sequential focus order has visible focus"
+        "r65 Element in sequential focus order has no visible focus"
       ],
       "testaro": [
         "focInd Focused element displaying no or nostandard focus indicator"

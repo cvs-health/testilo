@@ -28,8 +28,8 @@ const htmlEscape = textOrNumber => textOrNumber
 // Gets a row of the score-summary table.
 const getScoreRow = (component, score) => `<tr><th>${component}</th><td>${score}</td></tr>`;
 // Gets the start of a paragraph about a special score.
-const getSpecialPStart
-= (summary, scoreID) => `<p><span class="componentID">log</span>: Score ${summary[scoreID]}.`;
+const getSpecialPStart = (summary, scoreID) =>
+`<p><span class="componentID">${scoreID}</span>: Score ${summary[scoreID]}.`;
 // Adds parameters to a query for a digest.
 exports.makeQuery = (report, query) => {
   // Add an HTML-safe copy of the host report to the query to be appended to the digest.
@@ -76,7 +76,7 @@ exports.makeQuery = (report, query) => {
   const groupIDs = Object.keys(groups);
   groupIDs.sort((a, b) => groups[b] - groups[a]);
   groupIDs.forEach(groupID => {
-    scoreRows.push(getScoreRow(`group ${groupID}`, groups[groupID]));
+    scoreRows.push(getScoreRow(`${groupID}`, groups[groupID]));
   });
   query.scoreRows = scoreRows.join(innerJoiner);
   // If the score has any special components:
@@ -99,7 +99,7 @@ exports.makeQuery = (report, query) => {
     // Add paragraphs about them for the special summary to the query.
     const groupSummaryItems = [];
     groupIDs.forEach(id => {
-      const groupP = `<p><span class="componentID">${id}</span>: Score ${summary[id]}. Issues reported by tests in this category:</p>`;
+      const groupP = `<p><span class="componentID">${id}</span>: Score ${summary.groups[id]}. Issues reported by tests in this category:</p>`;
       const groupListItems = [];
       const groupData = groupDetails.groups[id];
       const packageIDs = Object.keys(groupData);
@@ -107,7 +107,9 @@ exports.makeQuery = (report, query) => {
         const testIDs = Object.keys(groupData[packageID]);
         testIDs.forEach(testID => {
           const testData = groupData[packageID][testID];
-          const listItem = `<li>${testData.issueCount} issues reported by package ${packageID}, test ${testID} (${testData.what})</li>`;
+          const {issueCount} = testData;
+          const issueNoun = issueCount !== 1 ? 'issues' : 'issue';
+          const listItem = `<li>${issueCount} ${issueNoun} reported by package <code>${packageID}</code>, test <code>${testID}</code> (${testData.what})</li>`;
           groupListItems.push(listItem);
         });
       });

@@ -228,7 +228,7 @@ exports.scorer = async report => {
         else if (which === 'bulk') {
           const count = test.result && test.result.visibleElements;
           if (typeof count === 'number') {
-            const faultCount = Math.round(count / 300);
+            const faultCount = Math.floor(count / 300);
             addDetail('testaro', which, faultCount);
           }
         }

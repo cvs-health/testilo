@@ -1,7 +1,8 @@
 /*
   sp10c
   Testilo score proc 10c
-  Computes scores from a Testaro script that removes API tests from tp10 and adds them to a report.
+  Computes scores from a Testaro script that removes API tests from tp10, and adds the scores
+  to a report.
   Usage example: node score 35k1r sp10c
 */
 
@@ -185,7 +186,7 @@ exports.scorer = async report => {
         else if (which === 'bulk') {
           const count = test.result && test.result.visibleElements;
           if (typeof count === 'number') {
-            const faultCount = Math.round(count / 300);
+            const faultCount = Math.floor(count / 300);
             addDetail('testaro', which, faultCount);
           }
         }

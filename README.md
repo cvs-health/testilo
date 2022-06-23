@@ -67,6 +67,16 @@ As long as they are not grouped, each issue discovered by one of those tests con
 
 The contribution also depends on how serious each kind of issue is deemed to be. Score proc `sp10b` assigns a weight to each test group. Weighting could be even more granular: The Axe-core package attributes a seriousness to each issue, so that two issues of the same kind can differ in seriousness. But score proc `sp10b` ignores that Axe-core rating.
 
+#### Prevention
+
+Testaro reports an error when it is unable to perform a test on a host. A score proc can take such errors into account. Score procs `sp10a`, `sp10b`, and `sp10c` presume that a failure of Testaro to perform a test is caused by the host. Thus, it treats such a failure as a case of the host preventing Testaro from performing a test. These score procs add amounts for such presumed preventions to total scores, guessing the score contributions of the tests if they had not been prevented plus an amount representing the estimated impact on accessibility of the prevention _per se_.
+
+One motivation for penalizing prevention is the assumption that measurement of success is an essential contributor to success, so preventing measurement of accessibility interferes with the achievement of accessibility.
+
+A second motivation is the presumtion that assistive technologies are unpredictable, changing, and not fundamentally different from testing technologies. Therefore, a host that prevents a testing technology is at risk for preventing an assistive technology, too, and thereby interfering with accessibility.
+
+Users who prefer to disregard prevention in scoring can create score procs that do that. It is not obvious what it means to disregard a test that could not be performed. Treating it as contributing 0 to a score arguably is not neutral, but rather rewards prevention.
+
 ### Digesting
 
 To make scored Testaro reports more useful for humans, Testilo can create digests of scored reports. A digest is an HTML document (a web page) summarizing and explaining the findings, with the scored report appended to it.

@@ -45,7 +45,7 @@ const groups = {
         }
       },
       alfa: {
-        'r3': {
+        r3: {
           weight: 1,
           what: 'Element ID is not unique'
         }
@@ -57,7 +57,7 @@ const groups = {
         }
       },
       ibm: {
-        'RPT_Elem_UniqueId': {
+        RPT_Elem_UniqueId: {
           weight: 1,
           what: 'Element id attribute values must be unique within a document'
         }
@@ -74,7 +74,7 @@ const groups = {
         }
       },
       alfa: {
-        'r28': {
+        r28: {
           weight: 1,
           what: 'Image input element has no accessible name'
         }
@@ -109,7 +109,7 @@ const groups = {
         }
       },
       alfa: {
-        'r2': {
+        r2: {
           weight: 1,
           what: 'Image has no accessible name'
         }
@@ -123,7 +123,7 @@ const groups = {
       ibm: {
         'v:WCAG20_Img_HasAlt': {
           weight: 1,
-          what: 'Images must have an alt attribute if they convey meaning, or alt=\'\' if decorative'
+          what: 'Images must have an alt attribute if they convey meaning, or alt="" if decorative'
         }
       },
       wave: {
@@ -144,7 +144,7 @@ const groups = {
         }
       },
       alfa: {
-        'r4': {
+        r4: {
           weight: 1,
           what: 'Lang attribute missing, empty, or only whitespace'
         }
@@ -156,7 +156,7 @@ const groups = {
         }
       },
       ibm: {
-        'WCAG20_Html_HasLang': {
+        WCAG20_Html_HasLang: {
           weight: 1,
           what: 'Page detected as HTML, but has no lang attribute'
         }
@@ -173,7 +173,7 @@ const groups = {
     weight: 3,
     packages: {
       alfa: {
-        'r5': {
+        r5: {
           weight: 1,
           what: 'Lang attribute has no valid primary language tag'
         }
@@ -202,7 +202,7 @@ const groups = {
         }
       },
       alfa: {
-        'r7': {
+        r7: {
           weight: 1,
           what: 'Lang attribute has no valid primary language subtag'
         }
@@ -225,7 +225,7 @@ const groups = {
         }
       },
       alfa: {
-        'r53': {
+        r53: {
           weight: 1,
           what: 'Heading skips one or more levels'
         }
@@ -237,7 +237,7 @@ const groups = {
         }
       },
       tenon: {
-        '155': {
+        155: {
           weight: 1,
           what: 'These headings are not structured in a hierarchical manner'
         }
@@ -350,7 +350,7 @@ const groups = {
     weight: 4,
     packages: {
       alfa: {
-        'r11': {
+        r11: {
           weight: 1,
           what: 'Link has no accessible name'
         }
@@ -368,7 +368,7 @@ const groups = {
         }
       },
       tenon: {
-        '57': {
+        57: {
           weight: 1,
           what: 'Link has no text inside it'
         }
@@ -385,7 +385,7 @@ const groups = {
     weight: 2,
     packages: {
       tenon: {
-        '98': {
+        98: {
           weight: 1,
           what: 'These links have the same text but different destinations'
         }
@@ -407,7 +407,7 @@ const groups = {
     weight: 2,
     packages: {
       tenon: {
-        '218': {
+        218: {
           weight: 1,
           what: 'Link opens in a new window without user control'
         }
@@ -418,7 +418,7 @@ const groups = {
     weight: 4,
     packages: {
       alfa: {
-        'r12': {
+        r12: {
           weight: 1,
           what: 'Button has no accessible name'
         }
@@ -441,7 +441,7 @@ const groups = {
     weight: 3,
     packages: {
       alfa: {
-        'r42': {
+        r42: {
           weight: 1,
           what: 'Element is not owned by an element of its required context role'
         }
@@ -458,7 +458,7 @@ const groups = {
     weight: 4,
     packages: {
       alfa: {
-        'r43': {
+        r43: {
           weight: 1,
           what: 'SVG image element has no accessible name'
         }
@@ -475,7 +475,7 @@ const groups = {
     weight: 3,
     packages: {
       alfa: {
-        'r47': {
+        r47: {
           weight: 1,
           what: 'Meta element restricts zooming'
         }
@@ -492,7 +492,7 @@ const groups = {
     weight: 3,
     packages: {
       alfa: {
-        'r68': {
+        r68: {
           weight: 1,
           what: 'Element owns no elements as required by its semantic role'
         }
@@ -509,7 +509,7 @@ const groups = {
     weight: 3,
     packages: {
       alfa: {
-        'r93': {
+        r93: {
           weight: 1,
           what: 'Style attribute with !important prevents adjusting line height'
         }
@@ -526,7 +526,7 @@ const groups = {
     weight: 2,
     packages: {
       alfa: {
-        'r73': {
+        r73: {
           weight: 1,
           what: 'Paragraphs of text have insufficient line height'
         }
@@ -537,7 +537,7 @@ const groups = {
     weight: 3,
     packages: {
       tenon: {
-        '144': {
+        144: {
           weight: 1,
           what: 'Line height insufficent to properly display computed font size'
         }
@@ -548,7 +548,7 @@ const groups = {
     weight: 3,
     packages: {
       alfa: {
-        'r13': {
+        r13: {
           weight: 1,
           what: 'Iframe has no accessible name'
         }
@@ -583,7 +583,7 @@ const groups = {
         }
       },
       testaro: {
-        'role': {
+        role: {
           weight: 1,
           what: 'Nonexistent or implicit-overriding role'
         }
@@ -611,7 +611,7 @@ const groups = {
     weight: 3,
     packages: {
       alfa: {
-        'r20': {
+        r20: {
           weight: 1,
           what: 'Aria- attribute is not defined'
         }
@@ -640,7 +640,7 @@ const groups = {
         }
       },
       alfa: {
-        'r10': {
+        r10: {
           weight: 1,
           what: 'Autocomplete attribute has no valid value'
         }
@@ -663,7 +663,7 @@ const groups = {
     weight: 3,
     packages: {
       alfa: {
-        'r69': {
+        r69: {
           weight: 1,
           what: 'Text outside widget has subminimum contrast'
         }
@@ -692,13 +692,13 @@ const groups = {
     weight: 1,
     packages: {
       alfa: {
-        'r66': {
+        r66: {
           weight: 1,
           what: 'Text contrast less than AAA requires'
         }
       },
       tenon: {
-        '95': {
+        95: {
           weight: 1,
           what: 'Element has insufficient color contrast (Level AAA)'
         }
@@ -764,7 +764,7 @@ const groups = {
     weight: 1,
     packages: {
       tenon: {
-        '79': {
+        79: {
           weight: 1,
           what: 'Link has a title attribute that is the same as the text inside the link'
         }
@@ -820,7 +820,7 @@ const groups = {
     weight: 2,
     packages: {
       tenon: {
-        '129': {
+        129: {
           weight: 1,
           what: 'CSS underline on text that is not a link'
         }
@@ -916,7 +916,7 @@ const groups = {
         }
       },
       testaro: {
-        'radioSet': {
+        radioSet: {
           weight: 1,
           what: 'No or invalid grouping of radio buttons in fieldsets'
         }
@@ -954,7 +954,7 @@ const groups = {
     weight: 2,
     packages: {
       tenon: {
-        '152': {
+        152: {
           weight: 1,
           what: 'Actionable element is smaller than the minimum required size'
         }
@@ -965,7 +965,7 @@ const groups = {
     weight: 1,
     packages: {
       testaro: {
-        'bulk': {
+        bulk: {
           weight: 1,
           what: 'Count of visible elements as a multiple of 300'
         }
@@ -976,7 +976,7 @@ const groups = {
     weight: 2,
     packages: {
       testaro: {
-        'embAc': {
+        embAc: {
           weight: 1,
           what: 'Active elements embedded in links or buttons'
         }
@@ -987,7 +987,7 @@ const groups = {
     weight: 3,
     packages: {
       testaro: {
-        'focAll': {
+        focAll: {
           weight: 1,
           what: 'Discrepancy between elements that should be and that are Tab-focusable'
         }
@@ -998,13 +998,13 @@ const groups = {
     weight: 3,
     packages: {
       alfa: {
-        'r65': {
+        r65: {
           weight: 1,
           what: 'Element in sequential focus order has no visible focus'
         }
       },
       testaro: {
-        'focInd': {
+        focInd: {
           weight: 1,
           what: 'Focused element displaying no or nostandard focus indicator'
         }
@@ -1015,7 +1015,7 @@ const groups = {
     weight: 1,
     packages: {
       tenon: {
-        '153': {
+        153: {
           weight: 1,
           what: 'Long string of text is in all caps'
         }
@@ -1026,7 +1026,7 @@ const groups = {
     weight: 1,
     packages: {
       alfa: {
-        'r57': {
+        r57: {
           weight: 1,
           what: 'Perceivable text content not included in any landmark'
         }
@@ -1037,7 +1037,7 @@ const groups = {
     weight: 3,
     packages: {
       testaro: {
-        'focOp': {
+        focOp: {
           weight: 1,
           what: 'Operable elements that cannot be Tab-focused and vice versa'
         }
@@ -1048,7 +1048,7 @@ const groups = {
     weight: 1,
     packages: {
       testaro: {
-        'hover': {
+        hover: {
           weight: 1,
           what: 'Content changes caused by hovering'
         }
@@ -1059,7 +1059,7 @@ const groups = {
     weight: 2,
     packages: {
       testaro: {
-        'labClash': {
+        labClash: {
           weight: 1,
           what: 'Incompatible label types'
         }
@@ -1070,7 +1070,7 @@ const groups = {
     weight: 2,
     packages: {
       testaro: {
-        'linkUl': {
+        linkUl: {
           weight: 1,
           what: 'Non-underlined inline links'
         }
@@ -1081,7 +1081,7 @@ const groups = {
     weight: 2,
     packages: {
       testaro: {
-        'menuNav': {
+        menuNav: {
           weight: 1,
           what: 'Nonstandard keyboard navigation among focusable menu items'
         }
@@ -1092,7 +1092,7 @@ const groups = {
     weight: 2,
     packages: {
       testaro: {
-        'tabNav': {
+        tabNav: {
           weight: 1,
           what: 'Nonstandard keyboard navigation among tabs'
         }
@@ -1103,7 +1103,7 @@ const groups = {
     weight: 2,
     packages: {
       testaro: {
-        'motion': {
+        motion: {
           weight: 1,
           what: 'Change of visible content not requested by user'
         }
@@ -1114,7 +1114,7 @@ const groups = {
     weight: 1,
     packages: {
       testaro: {
-        'styleDiff': {
+        styleDiff: {
           weight: 1,
           what: 'Heading, link, and button style inconsistencies'
         }
@@ -1125,7 +1125,7 @@ const groups = {
     weight: 1,
     packages: {
       testaro: {
-        'zIndex': {
+        zIndex: {
           weight: 1,
           what: 'Layering with nondefault z-index values'
         }
@@ -1175,40 +1175,63 @@ exports.scorer = async report => {
         const {which} = test;
         // Add scores to the package details.
         if (which === 'aatt') {
-          const issues = test.result;
+          const issues = test.result && test.result.report;
           if (issues && Array.isArray(issues)) {
             issues.forEach(issue => {
               const {type, id} = issue;
               if (type && id) {
                 const typedID = `${type[0]}:${id}`;
-                addDetail(which, typedID);
+                // Add 4 per error, 1 per warning.
+                addDetail(which, typedID, type === 'error' ? 4 : 1);
               }
             });
           }
-        } else if (which === 'alfa') {
-          const issues = test.result;
+        }
+        else if (which === 'alfa') {
+          const issues = test.result && test.result.items;
           if (issues && Array.isArray(issues)) {
             issues.forEach(issue => {
-              const {rule} = issue;
-              if (rule) {
+              const {verdict, rule} = issue;
+              if (verdict && rule) {
                 const {ruleID} = rule;
                 if (ruleID) {
-                  addDetail(which, ruleID);
+                  // Add 4 per failure, 1 per warning (“cantTell”).
+                  addDetail(which, ruleID, verdict === 'failed' ? 4 : 1);
                 }
               }
             });
           }
-        } else if (which === 'axe') {
-          const tests = test.result && test.result.items;
-          if (tests && Array.isArray(tests)) {
-            tests.forEach(test => {
-              const {rule, elements} = test;
-              if (rule && Array.isArray(elements) && elements.length) {
-                addDetail(which, rule, elements.length);
+        }
+        else if (which === 'axe') {
+          const impactScores = {
+            minor: 1,
+            moderate: 2,
+            serious: 3,
+            critical: 4
+          };
+          const tests = test.result && test.result.details;
+          if (tests) {
+            const warnings = tests.incomplete;
+            const {violations} = tests;
+            [[warnings, 0.25], [violations, 1]].forEach(issueClass => {
+              if (issueClass[0] && Array.isArray(issueClass[0])) {
+                issueClass[0].forEach(issueType => {
+                  const {id, nodes} = issueType;
+                  if (id && nodes && Array.isArray(nodes)) {
+                    nodes.forEach(node => {
+                      const {impact} = node;
+                      if (impact) {
+                        // Add the impact score for a violation or 25% of it for a warning.
+                        addDetail(which, id, issueClass[1] * impactScores[impact]);
+                      }
+                    });
+                  }
+                });
               }
             });
           }
-        } else if (which === 'ibm') {
+        }
+        else if (which === 'ibm') {
           const envs = test.result;
           const {content, url} = envs;
           if (content && url) {
@@ -1233,7 +1256,8 @@ exports.scorer = async report => {
               });
             }
           }
-        } else if (which === 'tenon') {
+        }
+        else if (which === 'tenon') {
           const issues =
             test.result && test.result.data && test.result.data.resultSet;
           if (issues && Array.isArray(issues) && issues.length) {
@@ -1244,7 +1268,8 @@ exports.scorer = async report => {
               }
             });
           }
-        } else if (which === 'wave') {
+        }
+        else if (which === 'wave') {
           const issueClasses = test.result && test.result.categories;
           if (issueClasses) {
             ['error', 'contrast', 'alert'].forEach(issueClass => {
@@ -1262,25 +1287,29 @@ exports.scorer = async report => {
               }
             });
           }
-        } else if (which === 'bulk') {
+        }
+        else if (which === 'bulk') {
           const count = test.result && test.result.visibleElements;
           if (typeof count === 'number') {
             const faultCount = Math.round(count / 300);
             addDetail('testaro', which, faultCount);
           }
-        } else if (which === 'embAc') {
+        }
+        else if (which === 'embAc') {
           const issueCounts = test.result && test.result.totals;
           if (issueCounts) {
             const counts = Object.values(issueCounts);
             const total = counts.reduce((sum, current) => sum + current);
             addDetail('testaro', which, total);
           }
-        } else if (which === 'focAll') {
+        }
+        else if (which === 'focAll') {
           const discrepancy = test.result && test.result.discrepancy;
           if (discrepancy) {
             addDetail('testaro', which, Math.abs(discrepancy));
           }
-        } else if (which === 'focInd') {
+        }
+        else if (which === 'focInd') {
           const issueTypes =
             test.result && test.result.totals && test.result.totals.types;
           if (issueTypes) {
@@ -1294,7 +1323,8 @@ exports.scorer = async report => {
               addDetail('testaro', which, faultCount);
             }
           }
-        } else if (which === 'focOp') {
+        }
+        else if (which === 'focOp') {
           const issueTypes =
             test.result && test.result.totals && test.result.totals.types;
           if (issueTypes) {
@@ -1307,7 +1337,8 @@ exports.scorer = async report => {
               addDetail('testaro', which, faultCount);
             }
           }
-        } else if (which === 'hover') {
+        }
+        else if (which === 'hover') {
           const issues = test.result && test.result.totals;
           if (issues) {
             const {
@@ -1328,19 +1359,22 @@ exports.scorer = async report => {
               addDetail('testaro', which, faultCount);
             }
           }
-        } else if (which === 'labClash') {
+        }
+        else if (which === 'labClash') {
           const mislabeledCount =
             test.result && test.result.totals && test.result.totals.mislabeled;
           if (mislabeledCount) {
             addDetail('testaro', which, mislabeledCount);
           }
-        } else if (which === 'linkUl') {
+        }
+        else if (which === 'linkUl') {
           const issues =
             test.result && test.result.items && test.result.items.notUnderlined;
           if (issues && issues.length) {
             addDetail('testaro', which, issues.length);
           }
-        } else if (which === 'menuNav') {
+        }
+        else if (which === 'menuNav') {
           const issueCount =
             test.result &&
             test.result.totals &&
@@ -1350,7 +1384,8 @@ exports.scorer = async report => {
           if (issueCount && typeof issueCount === 'number') {
             addDetail('testaro', which, issueCount);
           }
-        } else if (which === 'motion') {
+        }
+        else if (which === 'motion') {
           const data = test.result;
           if (data && data.bytes) {
             const faultCount = Math.floor(
@@ -1364,18 +1399,21 @@ exports.scorer = async report => {
             );
             addDetail('testaro', which, faultCount);
           }
-        } else if (which === 'radioSet') {
+        }
+        else if (which === 'radioSet') {
           const counts = test.result && test.result.totals;
           const {total, inSet} = counts;
           if (total && typeof inSet === 'number' && total >= inSet) {
             addDetail('testaro', which, total - inSet);
           }
-        } else if (which === 'role') {
+        }
+        else if (which === 'role') {
           const issueCount = test.result && test.result.badRoleElements;
           if (issueCount && typeof issueCount === 'number') {
             addDetail('testaro', which, issueCount);
           }
-        } else if (which === 'styleDiff') {
+        }
+        else if (which === 'styleDiff') {
           const counts = test.result && test.result.totals;
           if (counts) {
             // Identify objects having the tag-name totals and style distributions as properties.
@@ -1395,7 +1433,8 @@ exports.scorer = async report => {
             );
             addDetail('testaro', which, faultCount);
           }
-        } else if (which === 'tabNav') {
+        }
+        else if (which === 'tabNav') {
           const issueCount =
             test.result &&
             test.result.totals &&
@@ -1405,7 +1444,8 @@ exports.scorer = async report => {
           if (issueCount && typeof issueCount === 'number') {
             addDetail('testaro', which, issueCount);
           }
-        } else if (which === 'zIndex') {
+        }
+        else if (which === 'zIndex') {
           const issueCount = test.result && test.result.totals;
           if (issueCount && typeof issueCount === 'number') {
             addDetail('testaro', which, issueCount);
@@ -1417,7 +1457,8 @@ exports.scorer = async report => {
       actsPrevented.forEach(act => {
         if (otherPackages.includes(act.which)) {
           preventionScores[act.which] = preventionWeights.other;
-        } else {
+        }
+        else {
           preventionScores[`testaro-${act.which}`] = preventionWeights.testaro;
         }
       });

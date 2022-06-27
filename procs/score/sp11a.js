@@ -1309,72 +1309,70 @@ exports.scorer = async report => {
           if (issueCounts) {
             const counts = Object.values(issueCounts);
             const total = counts.reduce((sum, current) => sum + current);
-            addDetail('testaro', which, total);
+            // Add 3 per embedded element.
+            addDetail('testaro', which, 3 * total);
           }
         }
         else if (which === 'focAll') {
           const discrepancy = test.result && test.result.discrepancy;
           if (discrepancy) {
-            addDetail('testaro', which, Math.abs(discrepancy));
+            addDetail('testaro', which, 2 * Math.abs(discrepancy));
           }
         }
         else if (which === 'focInd') {
           const issueTypes =
             test.result && test.result.totals && test.result.totals.types;
           if (issueTypes) {
-            const missingCount =
-              issueTypes.indicatorMissing && issueTypes.indicatorMissing.total;
-            const badCount =
-              issueTypes.nonOutlinePresent &&
-              issueTypes.nonOutlinePresent.total;
-            const faultCount = Math.round(missingCount + badCount / 2);
-            if (faultCount) {
-              addDetail('testaro', which, faultCount);
-            }
+            const missingCount = issueTypes.indicatorMissing
+            && issueTypes.indicatorMissing.total
+            || 0;
+            const badCount = issueTypes.nonOutlinePresent
+            && issueTypes.nonOutlinePresent.total
+            || 0;
+            // Add 3 per missing, 1 per non-outline focus indicator.
+            addDetail('testaro', which, badCount + 3 * missingCount);
           }
         }
         else if (which === 'focOp') {
           const issueTypes =
             test.result && test.result.totals && test.result.totals.types;
           if (issueTypes) {
-            const noOpCount =
-              issueTypes.onlyFocusable && issueTypes.onlyFocusable.total;
-            const noFocCount =
-              issueTypes.onlyOperable && issueTypes.onlyOperable.total;
-            const faultCount = Math.round(noFocCount + noOpCount / 2);
-            if (faultCount) {
-              addDetail('testaro', which, faultCount);
-            }
+            const noOpCount = issueTypes.onlyFocusable && issueTypes.onlyFocusable.total || 0;
+            const noFocCount = issueTypes.onlyOperable && issueTypes.onlyOperable.total || 0;
+            // Add 3 per unfocusable, 1 per inoperable element.
+            addDetail('testaro', which, 3 * noFocCount + noOpCount);
           }
         }
         else if (which === 'hover') {
           const issues = test.result && test.result.totals;
           if (issues) {
             const {
-              triggers,
-              madeVisible,
-              opacityChanged,
-              opacityAffected,
+              impactTriggers,
+              additions,
+              removals,
+              opacityChanges,
+              opacityImpact,
               unhoverables
             } = issues;
-            const faultCount = Math.round(
-              1 * triggers +
-                0.5 * madeVisible +
-                0.2 * opacityChanged +
-                0.2 * opacityAffected +
-                1 * unhoverables
-            );
+            // Add score with weights on hover-impact types.
+            const score = 2 * impactTriggers
+            + 0.5 * additions
+            + removals
+            + 0.3 * opacityChanges
+            + 0.2 * opacityImpact
+            + unhoverables;
             if (faultCount) {
-              addDetail('testaro', which, faultCount);
+              addDetail('testaro', which, score);
             }
           }
         }
         else if (which === 'labClash') {
-          const mislabeledCount =
-            test.result && test.result.totals && test.result.totals.mislabeled;
-          if (mislabeledCount) {
-            addDetail('testaro', which, mislabeledCount);
-          }
+          const mislabeledCount = test.result
+          && test.result.totals
+          && test.result.totals.mislabeled
+          || 0;
+          // Add 1 per element with conflicting labels (ignoring unlabeled elements).
+          addDetail('testaro', which, mislabeledCount);
         }
         else if (which === 'linkUl') {
           const issues =

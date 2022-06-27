@@ -45,7 +45,7 @@ const summary = {
   log: 0,
   preventions: 0,
   solos: 0,
-  groups: {}
+  groups: []
 };
 const otherPackages = ['aatt', 'alfa', 'axe', 'ibm', 'tenon', 'wave'];
 const preventionScores = {};
@@ -1160,7 +1160,7 @@ const addDetail = (actWhich, testID, addition = 1) => {
   if (!packageDetails[actWhich][testID]) {
     packageDetails[actWhich][testID] = 0;
   }
-  packageDetails[actWhich][testID] += addition;
+  packageDetails[actWhich][testID] += Math.round(addition);
 };
 // Scores a report.
 exports.scorer = async report => {
@@ -1361,7 +1361,7 @@ exports.scorer = async report => {
             + 0.3 * opacityChanges
             + 0.2 * opacityImpact
             + unhoverables;
-            if (faultCount) {
+            if (score) {
               addDetail('testaro', which, score);
             }
           }
@@ -1416,7 +1416,7 @@ exports.scorer = async report => {
         else if (which === 'radioSet') {
           const totals = test.result && test.result.totals;
           const {total, inSet} = totals;
-          const score = total - inset || 0;
+          const score = total - inSet || 0;
           // Add 1 per misgrouped radio button.
           addDetail('testaro', which, score);
         }
@@ -1473,8 +1473,9 @@ exports.scorer = async report => {
         (sum, current) => sum + current,
         0
       );
-      summary.preventions = preventionScore;
-      summary.total += preventionScore;
+      const roundedScore = Math.round(preventionScore);
+      summary.preventions = roundedScore;
+      summary.total += roundedScore;
       // Reorganize the group data.
       const testGroups = {
         testaro: {},
@@ -1492,9 +1493,10 @@ exports.scorer = async report => {
           });
         });
       });
-      // Populate the group details.
+      // Populate the group details with group and solo test scores.
       Object.keys(packageDetails).forEach(packageName => {
         Object.keys(packageDetails[packageName]).forEach(testID => {
+          const roundedScore = Math.round(packageDetails[packageName][testID]);
           const groupName = testGroups[packageName][testID];
           if (groupName) {
             if (! groupDetails.groups[groupName]) {
@@ -1503,77 +1505,76 @@ exports.scorer = async report => {
             if (! groupDetails.groups[groupName][packageName]) {
               groupDetails.groups[groupName][packageName] = {};
             }
-            groupDetails.groups[groupName][packageName][testID] = packageDetails[packageName][testID];
+            groupDetails.groups[groupName][packageName][testID] = roundedScore;
           }
           else {
-            groupDetails.solos[packageID][testID] = packageDetails[packageName][testID];
+            if (! groupDetails.solos[packageName]) {
+              groupDetails.solos[packageName] = {};
+            }
+            groupDetails.solos[packageName][testID] = roundedScore;
           }
         });
       });
-      // Delete from the group details groups without any issues.
-      const groupIDs = Object.keys(groupDetails.groups);
-      groupIDs.forEach(groupID => {
-        const groupPackageData = Object.values(groupDetails.groups[groupID]);
-        if (
-          groupPackageData.every(datum =>
-            Object.values(datum).every(test => test.issueCount === 0)
-          )
-        ) {
-          delete groupDetails.groups[groupID];
-        }
-      });
-      // Get the group scores and add them to the summary.
-      const issueGroupIDs = Object.keys(groupDetails.groups);
+      // Determine the group scores and add them to the summary.
+      const groupNames = Object.keys(groupDetails.groups);
       const {absolute, largest, smaller} = countWeights;
-      issueGroupIDs.forEach(groupID => {
-        const issueCounts = [];
-        const groupPackageData = Object.values(groupDetails.groups[groupID]);
-        groupPackageData.forEach(packageDatum => {
-          const issueCountSum = Object.values(packageDatum).reduce(
-            (sum, current) => sum + current.issueCount,
+      // For each group with any scores:
+      groupNames.forEach(groupName => {
+        const scores = [];
+        // For each package with any scores in the group:
+        const groupPackageData = Object.values(groupDetails.groups[groupName]);
+        groupPackageData.forEach(packageObj => {
+          // Get the sum of the scores of the tests of the package in the group.
+          const scoreSum = Object.values(packageObj).reduce(
+            (sum, current) => sum + current,
             0
           );
-          issueCounts.push(issueCountSum);
+          // Add the sum to the list of package scores in the group.
+          scores.push(scoreSum);
         });
-        issueCounts.sort((a, b) => b - a);
-        const groupScore =
-          groupWeights[groupID] *
-          (absolute +
-            largest * issueCounts[0] +
-            smaller *
-              issueCounts.slice(1).reduce((sum, current) => sum + current, 0));
-        const roundedScore = Math.round(groupScore);
-        summary.groups[groupID] = roundedScore;
-        summary.total += roundedScore;
+        // Sort the scores in descending order.
+        scores.sort((a, b) => b - a);
+        // Compute the sum of the absolute score and the weighted largest and other scores.
+        const groupScore = absolute
+        + largest * scores[0]
+        + smaller * scores.slice(1).reduce((sum, current) => sum + current, 0);
+        const roundedGroupScore = Math.round(groupScore);
+        summary.groups.push({
+          groupName,
+          score: roundedGroupScore
+        });
+        summary.total += roundedGroupScore;
       });
-      // Get the solo scores and add them to the summary.
-      const issueSoloPackageIDs = Object.keys(groupDetails.solos);
-      issueSoloPackageIDs.forEach(packageID => {
-        const testIDs = Object.keys(groupDetails.solos[packageID]);
+      summary.groups.sort((a, b) => b.score - a.score);
+      // Determine the solo score and add it to the summary.
+      const soloPackageNames = Object.keys(groupDetails.solos);
+      soloPackageNames.forEach(packageName => {
+        const testIDs = Object.keys(groupDetails.solos[packageName]);
         testIDs.forEach(testID => {
-          const issueCount = groupDetails.solos[packageID][testID];
-          const issueScore = Math.round(soloWeight * issueCount);
-          summary.solos += issueScore;
-          summary.total += issueScore;
+          const score = soloWeight * groupDetails.solos[packageName][testID];
+          summary.solos += score;
+          summary.total += score;
         });
       });
+      summary.solos = Math.round(summary.solos);
+      summary.total = Math.round(summary.total);
     }
   }
   // Get the log score.
-  logScore = Math.floor(
-    logWeights.count * report.logCount +
-      logWeights.size * report.logSize +
-      logWeights.prohibited * report.prohibitedCount +
-      logWeights.visitTimeout * report.visitTimeoutCount +
-      logWeights.visitRejection * report.visitRejectionCount
-  );
-  summary.log = logScore;
-  summary.total += logScore;
+  const logScore = logWeights.logCount * report.logCount
+  + logWeights.logSize * report.logSize +
+  + logWeights.errorLogCount * report.errorLogCount
+  + logWeights.errorLogSize * report.errorLogSize
+  + logWeights.prohibitedCount * report.prohibitedCount +
+  + logWeights.visitTimeoutCount * report.visitTimeoutCount +
+  + logWeights.visitRejectionCount * report.visitRejectionCount;
+  const roundedLogScore = Math.round(logScore);
+  summary.log = roundedLogScore;
+  summary.total += roundedLogScore;
   // Add the score facts to the report.
   report.score = {
     scoreProcID,
     logWeights,
-    groupWeights,
     soloWeight,
     countWeights,
     preventionWeights,

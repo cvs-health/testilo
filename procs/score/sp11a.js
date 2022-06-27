@@ -33,6 +33,22 @@ const preventionWeights = {
   testaro: 50,
   other: 100
 };
+// Initialize the score details on test packages and test groups.
+const packageDetails = {};
+const groupDetails = {
+  groups: {},
+  solos: {}
+};
+// Initialize a score summary.
+const summary = {
+  total: 0,
+  log: 0,
+  preventions: 0,
+  solos: 0,
+  groups: {}
+};
+const otherPackages = ['aatt', 'alfa', 'axe', 'ibm', 'tenon', 'wave'];
+const preventionScores = {};
 // Define the test groups.
 const groups = {
   duplicateID: {
@@ -1133,22 +1149,6 @@ const groups = {
     }
   }
 };
-// Initialize the score details on test packages and test groups.
-const packageDetails = {};
-const groupDetails = {
-  groups: {},
-  solos: {}
-};
-// Initialize a score summary.
-const summary = {
-  total: 0,
-  log: 0,
-  preventions: 0,
-  solos: 0,
-  groups: {}
-};
-const otherPackages = ['aatt', 'alfa', 'axe', 'ibm', 'tenon', 'wave'];
-const preventionScores = {};
 
 // FUNCTIONS
 
@@ -1375,88 +1375,88 @@ exports.scorer = async report => {
           addDetail('testaro', which, mislabeledCount);
         }
         else if (which === 'linkUl') {
-          const issues =
-            test.result && test.result.items && test.result.items.notUnderlined;
-          if (issues && issues.length) {
-            addDetail('testaro', which, issues.length);
+          const totals = test.result && test.result.totals && test.result.totals.adjacent;
+          if (totals) {
+            const nonUl = totals.total - totals.underlined || 0;
+            // Add 2 per non-underlined adjacent link.
+            addDetail('testaro', which, 2 * nonUl);
           }
         }
         else if (which === 'menuNav') {
-          const issueCount =
-            test.result &&
-            test.result.totals &&
-            test.result.totals.navigations &&
-            test.result.totals.navigations.all &&
-            test.result.totals.navigations.all.incorrect;
-          if (issueCount && typeof issueCount === 'number') {
-            addDetail('testaro', which, issueCount);
-          }
+          const issueCount = test.result
+          && test.result.totals
+          && test.result.totals.navigations
+          && test.result.totals.navigations.all
+          && test.result.totals.navigations.all.incorrect
+          || 0;
+          // Add 2 per defect.
+          addDetail('testaro', which, 2 * issueCount);
         }
         else if (which === 'motion') {
           const data = test.result;
-          if (data && data.bytes) {
-            const faultCount = Math.floor(
-              5 * (data.meanLocalRatio - 1) +
-                2 * (data.maxLocalRatio - 1) +
-                data.globalRatio -
-                1 +
-                data.meanPixelChange / 10000 +
-                data.maxPixelChange / 25000 +
-                30 * data.changeFrequency
-            );
-            addDetail('testaro', which, faultCount);
+          if (data) {
+            const {
+              meanLocalRatio,
+              maxLocalRatio,
+              globalRatio,
+              meanPixelChange,
+              maxPixelChange,
+              changeFrequency
+            } = data;
+            const score = 2 * (meanLocalRatio - 1)
+            + (maxLocalRatio - 1)
+            + globalRatio - 1
+            + meanPixelChange / 10000
+            + maxPixelChange / 25000
+            + 3 * changeFrequency
+            || 0;
+            addDetail('testaro', which, score);
           }
         }
         else if (which === 'radioSet') {
-          const counts = test.result && test.result.totals;
-          const {total, inSet} = counts;
-          if (total && typeof inSet === 'number' && total >= inSet) {
-            addDetail('testaro', which, total - inSet);
-          }
+          const totals = test.result && test.result.totals;
+          const {total, inSet} = totals;
+          const score = total - inset || 0;
+          // Add 1 per misgrouped radio button.
+          addDetail('testaro', which, score);
         }
         else if (which === 'role') {
-          const issueCount = test.result && test.result.badRoleElements;
-          if (issueCount && typeof issueCount === 'number') {
-            addDetail('testaro', which, issueCount);
-          }
+          const issueCount = test.result && test.result.badRoleElements || 0;
+          // Add 1 per misassigned role.
+          addDetail('testaro', which, issueCount);
         }
         else if (which === 'styleDiff') {
-          const counts = test.result && test.result.totals;
-          if (counts) {
-            // Identify objects having the tag-name totals and style distributions as properties.
-            const tagNameCounts = Object.values(counts);
-            // Identify an array of pairs of counts of excess styles and of nonplurality elements.
-            const faults = tagNameCounts.map(item => {
-              const subtotals = item.subtotals ? item.subtotals : [item.total];
-              return [subtotals.length - 1, item.total - subtotals[0]];
+          const totals = test.result && test.result.totals;
+          if (totals) {
+            let score = 0;
+            // For each element type that has any style diversity:
+            Object.values(totals).forEach(typeData => {
+              const {total, subtotals} = typeData;
+              if (subtotals) {
+                const styleCount = subtotals.length;
+                const plurality = subtotals[0];
+                const minorities = total - plurality;
+                // Add 1 per style, 0.2 per element with any nonplurality style.
+                score += styleCount + 0.2 * minorities;
+              }
             });
-            // Fault count: 2 per excess style + 0.2 per nonplurality element.
-            const faultCount = Math.floor(
-              faults.reduce(
-                (total, currentPair) =>
-                  total + 2 * currentPair[0] + 0.2 * currentPair[1],
-                0
-              )
-            );
-            addDetail('testaro', which, faultCount);
+            addDetail('testaro', which, score);
           }
         }
         else if (which === 'tabNav') {
-          const issueCount =
-            test.result &&
-            test.result.totals &&
-            test.result.totals.navigations &&
-            test.result.totals.navigations.all &&
-            test.result.totals.navigations.all.incorrect;
-          if (issueCount && typeof issueCount === 'number') {
-            addDetail('testaro', which, issueCount);
-          }
+          const issueCount = test.result
+          && test.result.totals
+          && test.result.totals.navigations
+          && test.result.totals.navigations.all
+          && test.result.totals.navigations.all.incorrect
+          || 0;
+          // Add 2 per defect.
+          addDetail('testaro', which, 2 * issueCount);
         }
         else if (which === 'zIndex') {
-          const issueCount = test.result && test.result.totals;
-          if (issueCount && typeof issueCount === 'number') {
-            addDetail('testaro', which, issueCount);
-          }
+          const issueCount = test.result && test.result.totals && test.result.totals.total || 0;
+          // Add 1 per non-auto zIndex.
+          addDetail('testaro', which, issueCount);
         }
       });
       // Get the prevention scores and add them to the summary.
@@ -1475,14 +1475,36 @@ exports.scorer = async report => {
       );
       summary.preventions = preventionScore;
       summary.total += preventionScore;
-      // Get data on test groups.
-      const testGroupsJSON = await fs.readFile(
-        'scoring/data/testGroups.json',
-        'utf8'
-      );
-      const testGroups = JSON.parse(testGroupsJSON);
-      // Use the data to populate groupDetails.groups.
-      const {tests} = testGroups;
+      // Reorganize the group data.
+      const testGroups = {
+        testaro: {},
+        aatt: {},
+        alfa: {},
+        axe: {},
+        ibm: {},
+        tenon: {},
+        wave: {}
+      };
+      Object.keys(groups).forEach(groupName => {
+        Object.keys(groups[groupName].packages).forEach(packageName => {
+          Object.keys(groups[groupName].packages[packageName]).forEach(testID => {
+            testGroups[packageName][testID] = groupName;
+          });
+        });
+      });
+      // Populate the group details.
+      Object.keys(packageDetails).forEach(packageName => {
+        Object.keys(packageDetails[packageName]).forEach(testID => {
+          const groupName = testGroups[packageName][testID];
+          if (! groupDetails.groups[groupName]) {
+            groupDetails.groups[groupName] = {};
+          }
+          if (! groupDetails.groups[groupName][packageName]) {
+            groupDetails.groups[groupName][packageName] = {};
+          }
+          groupDetails.groups[groupName][packageName][testID] = packageDetails[packageName][testID];
+        });
+      });
       const groupPackageIDs = Object.keys(tests);
       groupPackageIDs.forEach(packageID => {
         const packageTestIDs = Object.keys(tests[packageID]);

@@ -1232,10 +1232,10 @@ exports.scorer = async report => {
           }
         }
         else if (which === 'ibm') {
-          const envs = test.result;
-          const {content, url} = envs;
+          const {result} = test;
+          const {content, url} = result;
           if (content && url) {
-            let preferredEnv = 'content';
+            let preferredMode = 'content';
             if (
               content.error ||
               (content.totals &&
@@ -1244,14 +1244,15 @@ exports.scorer = async report => {
                 url.totals.violation &&
                 url.totals.violation > content.totals.violation)
             ) {
-              preferredEnv = 'url';
+              preferredMode = 'url';
             }
-            const {items} = envs[preferredEnv];
-            if (items && Array.isArray(items) && items.length) {
+            const {items} = result[preferredMode];
+            if (items && Array.isArray(items)) {
               items.forEach(issue => {
-                const {ruleID} = issue;
-                if (ruleID) {
-                  addDetail(which, ruleID);
+                const {ruleID, level} = issue;
+                if (ruleID && level) {
+                  // Add 4 per violation, 1 per warning (“recommendation”).
+                  addDetail(which, ruleID, level === 'violation' ? 4 : 1);
                 }
               });
             }
@@ -1260,16 +1261,22 @@ exports.scorer = async report => {
         else if (which === 'tenon') {
           const issues =
             test.result && test.result.data && test.result.data.resultSet;
-          if (issues && Array.isArray(issues) && issues.length) {
+          if (issues && Array.isArray(issues)) {
             issues.forEach(issue => {
-              const {tID} = issue;
-              if (tID) {
-                addDetail(which, tID);
+              const {tID, priority, certainty} = issue;
+              if (tID && priority && certainty) {
+                // Add 4 per issue if certainty and priority 100, less if less.
+                addDetail(which, tID, certainty * priority / 2500);
               }
             });
           }
         }
         else if (which === 'wave') {
+          const classScores = {
+            error: 4,
+            contrast: 3,
+            alert: 1
+          };
           const issueClasses = test.result && test.result.categories;
           if (issueClasses) {
             ['error', 'contrast', 'alert'].forEach(issueClass => {
@@ -1280,7 +1287,9 @@ exports.scorer = async report => {
                   testIDs.forEach(testID => {
                     const {count} = items[testID];
                     if (count) {
-                      addDetail(which, `${issueClass[0]}:${testID}`, count);
+                      addDetail(
+                        which, `${issueClass[0]}:${testID}`, count * classScores[issueClass]
+                      );
                     }
                   });
                 }
@@ -1291,8 +1300,8 @@ exports.scorer = async report => {
         else if (which === 'bulk') {
           const count = test.result && test.result.visibleElements;
           if (typeof count === 'number') {
-            const faultCount = Math.round(count / 300);
-            addDetail('testaro', which, faultCount);
+            // Add 1 per 300 visible elements beyond 300.
+            addDetail('testaro', which, Math.max(0, count / 300 - 1));
           }
         }
         else if (which === 'embAc') {

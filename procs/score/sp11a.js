@@ -1496,58 +1496,17 @@ exports.scorer = async report => {
       Object.keys(packageDetails).forEach(packageName => {
         Object.keys(packageDetails[packageName]).forEach(testID => {
           const groupName = testGroups[packageName][testID];
-          if (! groupDetails.groups[groupName]) {
-            groupDetails.groups[groupName] = {};
-          }
-          if (! groupDetails.groups[groupName][packageName]) {
-            groupDetails.groups[groupName][packageName] = {};
-          }
-          groupDetails.groups[groupName][packageName][testID] = packageDetails[packageName][testID];
-        });
-      });
-      const groupPackageIDs = Object.keys(tests);
-      groupPackageIDs.forEach(packageID => {
-        const packageTestIDs = Object.keys(tests[packageID]);
-        packageTestIDs.forEach(testID => {
-          const testData = tests[packageID][testID];
-          const {groupID, what} = testData;
-          if (!groupDetails.groups[groupID]) {
-            groupDetails.groups[groupID] = {};
-          }
-          if (!groupDetails.groups[groupID][packageID]) {
-            groupDetails.groups[groupID][packageID] = {};
-          }
-          groupDetails.groups[testData.groupID][packageID][testID] = {
-            what,
-            issueCount: 0
-          };
-        });
-      });
-      // Get the IDs of the packages whose tests report any issues.
-      const issuePackageIDs = Object.keys(packageDetails);
-      // For each such package:
-      issuePackageIDs.forEach(packageID => {
-        // Get the IDs of the tests in the package that report issues.
-        const issueTestIDs = Object.keys(packageDetails[packageID]);
-        // For each such test:
-        issueTestIDs.forEach(testID => {
-          // Get its group data, if any.
-          const testGroupData = tests[packageID][testID];
-          const issueCount = packageDetails[packageID][testID];
-          // If it is in a group:
-          if (testGroupData) {
-            // Add the issue count to the group details.
-            const {groupID} = testGroupData;
-            groupDetails.groups[groupID][packageID][testID].issueCount =
-              issueCount;
-          }
-          // Otherwise, i.e. if the test is solo:
-          else {
-            // Add the issue count to the solo details.
-            if (!groupDetails.solos[packageID]) {
-              groupDetails.solos[packageID] = {};
+          if (groupName) {
+            if (! groupDetails.groups[groupName]) {
+              groupDetails.groups[groupName] = {};
             }
-            groupDetails.solos[packageID][testID] = issueCount;
+            if (! groupDetails.groups[groupName][packageName]) {
+              groupDetails.groups[groupName][packageName] = {};
+            }
+            groupDetails.groups[groupName][packageName][testID] = packageDetails[packageName][testID];
+          }
+          else {
+            groupDetails.solos[packageID][testID] = packageDetails[packageName][testID];
           }
         });
       });

@@ -1,8 +1,34 @@
 /*
   sp11a
   Testilo score proc 11a
+
   Computes scores from Testaro script tp11 and adds them to a report.
   Usage example: node score 35k1r sp11a
+
+  This proc applies specified weights to the component scores before summing them. An issue reported
+  by a test is given a score. That score is determined by:
+    Whether the issue is reported as an error or a warning.
+    How important the issue is, if the test package is “pre-weighted” (axe, tenon, and testaro)
+    Whether the test belongs to a group or is a “solo” test.
+    How heavily the group is weighted, if the test package is not pre-weighted and the test belongs
+      to a group
+
+  The scores of solo tests are added together, multiplied by the soloWeight multiplier, and
+    contributed to the total score.
+
+  The scores of grouped tests are aggregated into a group score before being contributed to the
+    total score. The group score is the sum of (1) an absolute score, assigned because the group has
+    at least one test with a non-zero score, (2) the largest score among the tests of the group
+    multiplied by a multiplier, and (3) the sum of the scores from the other tests of the group
+    multiplied by a smaller multiplier. These three amounts are given by the groupWeights object.
+
+  Browser logging produces a log score, and the prevention of tests produces a prevention score.
+  They, too, are added to the total score.
+
+  Each grouped test has a “quality” property, currently set to 1. The values of these properties
+  can be modified if experience indicates that particular tests are higher or lower in quality than
+  usual. Such modification will require a revision of the proc to take the quality property into
+  account.
 */
 
 // ########## IMPORTS
@@ -23,8 +49,8 @@ const logWeights = {
   visitTimeoutCount: 10,
   visitRejectionCount: 10
 };
-const soloWeight = 1;
-const countWeights = {
+const soloWeight = 2;
+const groupWeights = {
   absolute: 2,
   largest: 1,
   smaller: 0.4
@@ -48,33 +74,34 @@ const summary = {
   groups: []
 };
 const otherPackages = ['aatt', 'alfa', 'axe', 'ibm', 'tenon', 'wave'];
+const preWeightedPackages = ['axe', 'tenon', 'testaro'];
 const preventionScores = {};
 // Define the test groups.
 const groups = {
   duplicateID: {
-    weight: 2,
+    weight: 3,
     packages: {
       aatt: {
         'e:F77': {
-          weight: 1,
+          quality: 1,
           what: 'Duplicate id attribute value'
         }
       },
       alfa: {
         r3: {
-          weight: 1,
+          quality: 1,
           what: 'Element ID is not unique'
         }
       },
       axe: {
         'duplicate-id': {
-          weight: 1,
+          quality: 1,
           what: 'ID attribute value must be unique'
         }
       },
       ibm: {
         RPT_Elem_UniqueId: {
-          weight: 1,
+          quality: 1,
           what: 'Element id attribute values must be unique within a document'
         }
       }
@@ -85,31 +112,31 @@ const groups = {
     packages: {
       aatt: {
         'e:H36': {
-          weight: 1,
+          quality: 1,
           what: 'Image submit button missing an alt attribute'
         }
       },
       alfa: {
         r28: {
-          weight: 1,
+          quality: 1,
           what: 'Image input element has no accessible name'
         }
       },
       axe: {
         'input-image-alt': {
-          weight: 1,
+          quality: 1,
           what: 'Image buttons must have alternate text'
         }
       },
       ibm: {
         'v:WCAG20_Input_ExplicitLabelImage': {
-          weight: 1,
+          quality: 1,
           what: 'Input element of type image should have a text alternative'
         }
       },
       wave: {
         'e:alt_input_missing': {
-          weight: 1,
+          quality: 1,
           what: 'Image button missing alternative text'
         }
       }
@@ -120,112 +147,112 @@ const groups = {
     packages: {
       aatt: {
         'e:H37': {
-          weight: 1,
+          quality: 1,
           what: 'Img element missing an alt attribute'
         }
       },
       alfa: {
         r2: {
-          weight: 1,
+          quality: 1,
           what: 'Image has no accessible name'
         }
       },
       axe: {
         'image-alt': {
-          weight: 1,
+          quality: 1,
           what: 'Images must have alternate text'
         }
       },
       ibm: {
         'v:WCAG20_Img_HasAlt': {
-          weight: 1,
+          quality: 1,
           what: 'Images must have an alt attribute if they convey meaning, or alt="" if decorative'
         }
       },
       wave: {
         'e:alt_missing': {
-          weight: 1,
+          quality: 1,
           what: 'Missing alternative text'
         }
       }
     }
   },
   pageLanguage: {
-    weight: 3,
+    weight: 4,
     packages: {
       aatt: {
         'e:H57': {
-          weight: 1,
+          quality: 1,
           what: 'Lang attribute of the document element'
         }
       },
       alfa: {
         r4: {
-          weight: 1,
+          quality: 1,
           what: 'Lang attribute missing, empty, or only whitespace'
         }
       },
       axe: {
         'html-has-lang': {
-          weight: 1,
+          quality: 1,
           what: 'Html element must have a lang attribute'
         }
       },
       ibm: {
         WCAG20_Html_HasLang: {
-          weight: 1,
+          quality: 1,
           what: 'Page detected as HTML, but has no lang attribute'
         }
       },
       wave: {
         'e:language_missing': {
-          weight: 1,
+          quality: 1,
           what: 'Language missing or invalid'
         }
       }
     }
   },
   pageLanguageBad: {
-    weight: 3,
+    weight: 4,
     packages: {
       alfa: {
         r5: {
-          weight: 1,
+          quality: 1,
           what: 'Lang attribute has no valid primary language tag'
         }
       },
       axe: {
         'html-lang-valid': {
-          weight: 1,
+          quality: 1,
           what: 'Html element must have a valid value for the lang attribute'
         }
       },
       ibm: {
         'v:WCAG20_Elem_Lang_Valid': {
-          weight: 1,
+          quality: 1,
           what: 'Lang attribute does not include a valid primary language'
         }
       }
     }
   },
   languageChange: {
-    weight: 2,
+    weight: 3,
     packages: {
       aatt: {
         'e:H58': {
-          weight: 1,
+          quality: 1,
           what: 'Change in language is not marked'
         }
       },
       alfa: {
         r7: {
-          weight: 1,
+          quality: 1,
           what: 'Lang attribute has no valid primary language subtag'
         }
       },
       axe: {
         'valid-lang': {
-          weight: 1,
+          quality: 1,
           what: 'Lang attribute must have a valid value'
         }
       }
@@ -236,110 +263,110 @@ const groups = {
     packages: {
       aatt: {
         'w:G141': {
-          weight: 1,
+          quality: 1,
           what: 'Heading structure is not logically nested'
         }
       },
       alfa: {
         r53: {
-          weight: 1,
+          quality: 1,
           what: 'Heading skips one or more levels'
         }
       },
       axe: {
         'heading-order': {
-          weight: 1,
+          quality: 1,
           what: 'Heading levels should only increase by one'
         }
       },
       tenon: {
         155: {
-          weight: 1,
+          quality: 1,
           what: 'These headings are not structured in a hierarchical manner'
         }
       },
       wave: {
         'a:heading_skipped': {
-          weight: 1,
+          quality: 1,
           what: 'Skipped heading level'
         }
       }
     }
   },
   objectNoText: {
-    weight: 2,
+    weight: 4,
     packages: {
       aatt: {
         'e:ARIA6+H53': {
-          weight: 1,
+          quality: 1,
           what: 'Object elements must contain a text alternative'
         }
       },
       axe: {
         'object-alt': {
-          weight: 1,
+          quality: 1,
           what: 'Object elements must have alternate text'
         }
       },
       ibm: {
         'v:WCAG20_Object_HasText': {
-          weight: 1,
+          quality: 1,
           what: 'Object elements must have a text alternative'
         }
       },
       wave: {
         'a:plugin': {
-          weight: 1,
+          quality: 1,
           what: 'An unidentified plugin is present'
         }
       }
     }
   },
   imageMapAreaNoText: {
-    weight: 3,
+    weight: 4,
     packages: {
       aatt: {
         'e:H24': {
-          weight: 1,
+          quality: 1,
           what: 'Area element in an image map missing an alt attribute'
         }
       },
       axe: {
         'area-alt': {
-          weight: 1,
+          quality: 1,
           what: 'Active area elements must have alternate text'
         }
       },
       ibm: {
         'v:HAAC_Img_UsemapAlt': {
-          weight: 1,
+          quality: 1,
           what: 'Image map or child area has no text alternative'
         },
         'v:WCAG20_Area_HasAlt': {
-          weight: 1,
+          quality: 1,
           what: 'Area element in an image map has no text alternative'
         }
       },
       wave: {
         'e:alt_area_missing': {
-          weight: 1,
+          quality: 1,
           what: 'Image map area missing alternative text'
         }
       }
     }
   },
   eventKeyboard: {
-    weight: 3,
+    weight: 4,
     packages: {
       aatt: {
         'w:G90': {
-          weight: 1,
+          quality: 1,
           what: 'Event handler functionality not available by keyboard'
         }
       },
       wave: {
         'a:event_handler': {
-          weight: 1,
+          quality: 1,
           what: 'Device-dependent event handler'
         }
       }
@@ -350,13 +377,13 @@ const groups = {
     packages: {
       aatt: {
         'w:H44': {
-          weight: 1,
+          quality: 1,
           what: 'Label for attribute is bad ID'
         }
       },
       wave: {
         'a:label_orphaned': {
-          weight: 1,
+          quality: 1,
           what: 'Orphaned form label'
         }
       }
@@ -367,31 +394,31 @@ const groups = {
     packages: {
       alfa: {
         r11: {
-          weight: 1,
+          quality: 1,
           what: 'Link has no accessible name'
         }
       },
       axe: {
         'link-name': {
-          weight: 1,
+          quality: 1,
           what: 'Links must have discernible text'
         }
       },
       ibm: {
         'v:WCAG20_A_HasText': {
-          weight: 1,
+          quality: 1,
           what: 'Hyperlinks must have a text description'
         }
       },
       tenon: {
         57: {
-          weight: 1,
+          quality: 1,
           what: 'Link has no text inside it'
         }
       },
       wave: {
         'e:link_empty': {
-          weight: 1,
+          quality: 1,
           what: 'Link contains no text'
         }
       }
@@ -402,29 +429,29 @@ const groups = {
     packages: {
       tenon: {
         98: {
-          weight: 1,
+          quality: 1,
           what: 'These links have the same text but different destinations'
         }
       }
     }
   },
   linkPair: {
-    weight: 1,
+    weight: 2,
     packages: {
       wave: {
         'a:link_redundant': {
-          weight: 1,
+          quality: 1,
           what: 'Adjacent links go to same URL'
         }
       }
     }
   },
   linkForcesNewWindow: {
-    weight: 2,
+    weight: 3,
     packages: {
       tenon: {
         218: {
-          weight: 1,
+          quality: 1,
           what: 'Link opens in a new window without user control'
         }
       }
@@ -435,36 +462,36 @@ const groups = {
     packages: {
       alfa: {
         r12: {
-          weight: 1,
+          quality: 1,
           what: 'Button has no accessible name'
         }
       },
       axe: {
         'aria-command-name': {
-          weight: 1,
+          quality: 1,
           what: 'ARIA commands must have an accessible name'
         }
       },
       wave: {
         'e:button_empty': {
-          weight: 1,
+          quality: 1,
           what: 'Button is empty or has no value text'
         }
       }
     }
   },
   parentMissing: {
-    weight: 3,
+    weight: 4,
     packages: {
       alfa: {
         r42: {
-          weight: 1,
+          quality: 1,
           what: 'Element is not owned by an element of its required context role'
         }
       },
       axe: {
         'aria-required-parent': {
-          weight: 1,
+          quality: 1,
           what: 'Certain ARIA roles must be contained by particular parents'
         }
       }
@@ -475,109 +502,120 @@ const groups = {
     packages: {
       alfa: {
         r43: {
-          weight: 1,
+          quality: 1,
           what: 'SVG image element has no accessible name'
         }
       },
       axe: {
         'svg-img-alt': {
-          weight: 1,
+          quality: 1,
           what: 'SVG elements with an img role must have an alternative text'
         }
       }
     }
   },
   metaBansZoom: {
-    weight: 3,
+    weight: 4,
     packages: {
       alfa: {
         r47: {
-          weight: 1,
+          quality: 1,
           what: 'Meta element restricts zooming'
         }
       },
       axe: {
         'meta-viewport': {
-          weight: 1,
+          quality: 1,
           what: 'Zooming and scaling should not be disabled'
         }
       }
     }
   },
   childMissing: {
-    weight: 3,
+    weight: 4,
     packages: {
       alfa: {
         r68: {
-          weight: 1,
+          quality: 1,
           what: 'Element owns no elements as required by its semantic role'
         }
       },
       axe: {
         'aria-required-children': {
-          weight: 1,
+          quality: 1,
           what: 'Certain ARIA roles must contain particular children'
         }
       }
     }
   },
   leadingFrozen: {
-    weight: 3,
+    weight: 4,
     packages: {
       alfa: {
         r93: {
-          weight: 1,
+          quality: 1,
           what: 'Style attribute with !important prevents adjusting line height'
         }
       },
       axe: {
         'avoid-inline-spacing': {
-          weight: 1,
+          quality: 1,
           what: 'Inline text spacing must be adjustable with custom stylesheets'
         }
       }
     }
   },
-  noLeading: {
+  leadingAbsolute: {
     weight: 2,
     packages: {
       alfa: {
+        r80: {
+          quality: 1,
+          what: 'Paragraphs of text have absolute line heights'
+        }
+      }
+    }
+  },
+  noLeading: {
+    weight: 3,
+    packages: {
+      alfa: {
         r73: {
-          weight: 1,
+          quality: 1,
           what: 'Paragraphs of text have insufficient line height'
         }
       }
     }
   },
   leadingClipsText: {
-    weight: 3,
+    weight: 4,
     packages: {
       tenon: {
         144: {
-          weight: 1,
+          quality: 1,
           what: 'Line height insufficent to properly display computed font size'
         }
       }
     }
   },
   iframeNoText: {
-    weight: 3,
+    weight: 4,
     packages: {
       alfa: {
         r13: {
-          weight: 1,
+          quality: 1,
           what: 'Iframe has no accessible name'
         }
       },
       axe: {
         'frame-title': {
-          weight: 1,
+          quality: 1,
           what: 'Frames must have an accessible name'
         }
       },
       ibm: {
         'v:WCAG20_Frame_HasTitle': {
-          weight: 1,
+          quality: 1,
           what: 'Inline frames must have a unique, non-empty title attribute'
         }
       }
@@ -588,59 +626,59 @@ const groups = {
     packages: {
       axe: {
         'aria-allowed-role': {
-          weight: 1,
+          quality: 1,
           what: 'ARIA role should be appropriate for the element'
         }
       },
       ibm: {
         'v:aria_semantics_role': {
-          weight: 1,
+          quality: 1,
           what: 'ARIA roles must be valid for the element to which they are assigned'
         }
       },
       testaro: {
         role: {
-          weight: 1,
+          quality: 1,
           what: 'Nonexistent or implicit-overriding role'
         }
       }
     }
   },
   roleMissingAttribute: {
-    weight: 3,
+    weight: 4,
     packages: {
       axe: {
         'aria-required-attr': {
-          weight: 1,
+          quality: 1,
           what: 'Required ARIA attributes must be provided'
         }
       },
       ibm: {
         'v:Rpt_Aria_RequiredProperties': {
-          weight: 1,
+          quality: 1,
           what: 'ARIA role on an element must have required attributes'
         }
       }
     }
   },
   roleBadAttribute: {
-    weight: 3,
+    weight: 4,
     packages: {
       alfa: {
         r20: {
-          weight: 1,
+          quality: 1,
           what: 'Aria- attribute is not defined'
         }
       },
       axe: {
         'aria-valid-attr': {
-          weight: 1,
+          quality: 1,
           what: 'ARIA attributes must conform to valid names'
         }
       },
       ibm: {
         'v:Rpt_Aria_ValidProperty': {
-          weight: 1,
+          quality: 1,
           what: 'ARIA attributes must be valid for the role'
         }
       }
@@ -651,25 +689,25 @@ const groups = {
     packages: {
       aatt: {
         'w:H98': {
-          weight: 1,
+          quality: 1,
           what: 'Autocomplete attribute wrong'
         }
       },
       alfa: {
         r10: {
-          weight: 1,
+          quality: 1,
           what: 'Autocomplete attribute has no valid value'
         }
       },
       axe: {
         'autocomplete-valid': {
-          weight: 1,
+          quality: 1,
           what: 'Autocomplete attribute must be used correctly'
         }
       },
       ibm: {
         'v:WCAG21_Input_Autocomplete': {
-          weight: 1,
+          quality: 1,
           what: 'Autocomplete attribute token(s) must be appropriate for the input form field'
         }
       }
@@ -678,27 +716,33 @@ const groups = {
   contrastAA: {
     weight: 3,
     packages: {
+      aatt: {
+        'e:G18': {
+          quality: 1,
+          what: 'Insufficient contrast'
+        }
+      },
       alfa: {
         r69: {
-          weight: 1,
+          quality: 1,
           what: 'Text outside widget has subminimum contrast'
         }
       },
       axe: {
         'color-contrast': {
-          weight: 1,
+          quality: 1,
           what: 'Elements must have sufficient color contrast'
         }
       },
       ibm: {
         'v:IBMA_Color_Contrast_WCAG2AA': {
-          weight: 1,
+          quality: 1,
           what: 'Contrast ratio of text with background must meet WCAG 2.1 AA'
         }
       },
       wave: {
         'c:contrast': {
-          weight: 1,
+          quality: 1,
           what: 'Very low contrast'
         }
       }
@@ -707,15 +751,27 @@ const groups = {
   contrastAAA: {
     weight: 1,
     packages: {
+      aatt: {
+        'e:G17': {
+          quality: 1,
+          what: 'Insufficient contrast'
+        }
+      },
       alfa: {
         r66: {
-          weight: 1,
+          quality: 1,
           what: 'Text contrast less than AAA requires'
+        }
+      },
+      axe: {
+        'color-contrast-enhanced': {
+          quality: 1,
+          what: 'Elements must have sufficient color contrast (Level AAA)'
         }
       },
       tenon: {
         95: {
-          weight: 1,
+          quality: 1,
           what: 'Element has insufficient color contrast (Level AAA)'
         }
       }
@@ -726,11 +782,11 @@ const groups = {
     packages: {
       aatt: {
         'w:F24': {
-          weight: 1,
+          quality: 1,
           what: 'Inline background color needs complementary foreground color'
         },
         'w:G18': {
-          weight: 1,
+          quality: 1,
           what: 'Contrast adequacy not determinable'
         }
       }
@@ -741,19 +797,19 @@ const groups = {
     packages: {
       axe: {
         'empty-heading': {
-          weight: 1,
+          quality: 1,
           what: 'Headings should not be empty'
         }
       },
       ibm: {
         'v:RPT_Header_HasContent': {
-          weight: 1,
+          quality: 1,
           what: 'Heading elements must provide descriptive text'
         }
       },
       wave: {
         'e:heading_empty': {
-          weight: 1,
+          quality: 1,
           what: 'Empty heading'
         }
       }
@@ -764,13 +820,13 @@ const groups = {
     packages: {
       axe: {
         'image-redundant-alt': {
-          weight: 1,
+          quality: 1,
           what: 'Text of buttons and links should not be repeated in the image alternative'
         }
       },
       ibm: {
         'v:WCAG20_Img_LinkTextNotRedundant': {
-          weight: 1,
+          quality: 1,
           what: 'Text alternative for image within link should not repeat link text or adjacent link text'
         }
       }
@@ -781,7 +837,7 @@ const groups = {
     packages: {
       tenon: {
         79: {
-          weight: 1,
+          quality: 1,
           what: 'Link has a title attribute that is the same as the text inside the link'
         }
       }
@@ -792,13 +848,13 @@ const groups = {
     packages: {
       axe: {
         'document-title': {
-          weight: 1,
+          quality: 1,
           what: 'Documents must contain a title element'
         }
       },
       wave: {
         'e:title_invalid': {
-          weight: 1,
+          quality: 1,
           what: 'Missing or uninformative page title'
         }
       }
@@ -809,13 +865,13 @@ const groups = {
     packages: {
       axe: {
         'page-has-heading-one': {
-          weight: 1,
+          quality: 1,
           what: 'Page should contain a level-one heading'
         }
       },
       wave: {
         'a:h1_missing': {
-          weight: 1,
+          quality: 1,
           what: 'Missing first level heading'
         }
       }
@@ -826,18 +882,18 @@ const groups = {
     packages: {
       aatt: {
         'w:H42': {
-          weight: 1,
+          quality: 1,
           what: 'Heading coding should be used if intended as a heading'
         }
       }
     }
   },
   pseudoLinkRisk: {
-    weight: 2,
+    weight: 1,
     packages: {
       tenon: {
         129: {
-          weight: 1,
+          quality: 1,
           what: 'CSS underline on text that is not a link'
         }
       }
@@ -848,7 +904,7 @@ const groups = {
     packages: {
       aatt: {
         'w:H48': {
-          weight: 1,
+          quality: 1,
           what: 'Navigation links should be coded as list'
         }
       }
@@ -859,19 +915,19 @@ const groups = {
     packages: {
       aatt: {
         'w:H91': {
-          weight: 1,
+          quality: 1,
           what: 'Select element has no value available to an accessibility API'
         }
       },
       axe: {
         'select-name': {
-          weight: 1,
+          quality: 1,
           what: 'Select element must have an accessible name'
         }
       },
       wave: {
         'a:select_missing_label': {
-          weight: 1,
+          quality: 1,
           what: 'Select missing label'
         }
       }
@@ -882,7 +938,7 @@ const groups = {
     packages: {
       aatt: {
         'w:H85': {
-          weight: 1,
+          quality: 1,
           what: 'If selection list contains groups of related options, they should be grouped with optgroup'
         }
       }
@@ -893,13 +949,13 @@ const groups = {
     packages: {
       ibm: {
         'v:Rpt_Aria_ValidIdRef': {
-          weight: 1,
+          quality: 1,
           what: 'ARIA property must reference non-empty unique id of visible element'
         }
       },
       wave: {
         'e:aria_reference_broken': {
-          weight: 1,
+          quality: 1,
           what: 'Broken ARIA reference'
         }
       }
@@ -910,13 +966,13 @@ const groups = {
     packages: {
       ibm: {
         'v:WCAG20_Elem_UniqueAccessKey': {
-          weight: 1,
+          quality: 1,
           what: 'Accesskey attribute values on each element must be unique for the page'
         }
       },
       wave: {
         'a:accesskey': {
-          weight: 1,
+          quality: 1,
           what: 'Accesskey'
         }
       }
@@ -927,40 +983,40 @@ const groups = {
     packages: {
       ibm: {
         'v:WCAG20_Input_RadioChkInFieldSet': {
-          weight: 1,
+          quality: 1,
           what: 'Input is in a different group than another with the name'
         }
       },
       testaro: {
         radioSet: {
-          weight: 1,
+          quality: 1,
           what: 'No or invalid grouping of radio buttons in fieldsets'
         }
       },
       wave: {
         'a:fieldset_missing': {
-          weight: 1,
+          quality: 1,
           what: 'Missing fieldset'
         }
       }
     }
   },
   nameValue: {
-    weight: 3,
+    weight: 4,
     packages: {
       aatt: {
         'e:F68': {
-          weight: 1,
+          quality: 1,
           what: 'Form control wrongly labeled or unlabeled'
         },
         'e:H91': {
-          weight: 1,
+          quality: 1,
           what: 'Missing name or value of form control or link'
         }
       },
       wave: {
         'e:label_missing': {
-          weight: 1,
+          quality: 1,
           what: 'Missing form label'
         }
       }
@@ -971,7 +1027,7 @@ const groups = {
     packages: {
       tenon: {
         152: {
-          weight: 1,
+          quality: 1,
           what: 'Actionable element is smaller than the minimum required size'
         }
       }
@@ -982,18 +1038,18 @@ const groups = {
     packages: {
       testaro: {
         bulk: {
-          weight: 1,
-          what: 'Count of visible elements as a multiple of 300'
+          quality: 1,
+          what: 'Page contains many visible elements'
         }
       }
     }
   },
   activeEmbedding: {
-    weight: 2,
+    weight: 3,
     packages: {
       testaro: {
         embAc: {
-          weight: 1,
+          quality: 1,
           what: 'Active elements embedded in links or buttons'
         }
       }
@@ -1004,24 +1060,24 @@ const groups = {
     packages: {
       testaro: {
         focAll: {
-          weight: 1,
+          quality: 1,
           what: 'Discrepancy between elements that should be and that are Tab-focusable'
         }
       }
     }
   },
   focusIndication: {
-    weight: 3,
+    weight: 4,
     packages: {
       alfa: {
         r65: {
-          weight: 1,
+          quality: 1,
           what: 'Element in sequential focus order has no visible focus'
         }
       },
       testaro: {
         focInd: {
-          weight: 1,
+          quality: 1,
           what: 'Focused element displaying no or nostandard focus indicator'
         }
       }
@@ -1032,18 +1088,18 @@ const groups = {
     packages: {
       tenon: {
         153: {
-          weight: 1,
+          quality: 1,
           what: 'Long string of text is in all caps'
         }
       }
     }
   },
   textBeyondLandmarks: {
-    weight: 1,
+    weight: 2,
     packages: {
       alfa: {
         r57: {
-          weight: 1,
+          quality: 1,
           what: 'Perceivable text content not included in any landmark'
         }
       }
@@ -1054,8 +1110,19 @@ const groups = {
     packages: {
       testaro: {
         focOp: {
-          weight: 1,
+          quality: 1,
           what: 'Operable elements that cannot be Tab-focused and vice versa'
+        }
+      }
+    }
+  },
+  focusableHidden: {
+    weight: 4,
+    packages: {
+      alfa: {
+        r17: {
+          quality: 1,
+          what: 'Tab-focusable elements that are or have ancestors that are aria-hidden'
         }
       }
     }
@@ -1065,7 +1132,7 @@ const groups = {
     packages: {
       testaro: {
         hover: {
-          weight: 1,
+          quality: 1,
           what: 'Content changes caused by hovering'
         }
       }
@@ -1076,7 +1143,7 @@ const groups = {
     packages: {
       testaro: {
         labClash: {
-          weight: 1,
+          quality: 1,
           what: 'Incompatible label types'
         }
       }
@@ -1087,7 +1154,7 @@ const groups = {
     packages: {
       testaro: {
         linkUl: {
-          weight: 1,
+          quality: 1,
           what: 'Non-underlined inline links'
         }
       }
@@ -1098,7 +1165,7 @@ const groups = {
     packages: {
       testaro: {
         menuNav: {
-          weight: 1,
+          quality: 1,
           what: 'Nonstandard keyboard navigation among focusable menu items'
         }
       }
@@ -1109,7 +1176,7 @@ const groups = {
     packages: {
       testaro: {
         tabNav: {
-          weight: 1,
+          quality: 1,
           what: 'Nonstandard keyboard navigation among tabs'
         }
       }
@@ -1120,7 +1187,7 @@ const groups = {
     packages: {
       testaro: {
         motion: {
-          weight: 1,
+          quality: 1,
           what: 'Change of visible content not requested by user'
         }
       }
@@ -1131,7 +1198,7 @@ const groups = {
     packages: {
       testaro: {
         styleDiff: {
-          weight: 1,
+          quality: 1,
           what: 'Heading, link, and button style inconsistencies'
         }
       }
@@ -1142,7 +1209,7 @@ const groups = {
     packages: {
       testaro: {
         zIndex: {
-          weight: 1,
+          quality: 1,
           what: 'Layering with nondefault z-index values'
         }
       }
@@ -1154,13 +1221,15 @@ const groups = {
 
 // Adds a score to the package details.
 const addDetail = (actWhich, testID, addition = 1) => {
-  if (!packageDetails[actWhich]) {
-    packageDetails[actWhich] = {};
+  if (addition) {
+    if (!packageDetails[actWhich]) {
+      packageDetails[actWhich] = {};
+    }
+    if (!packageDetails[actWhich][testID]) {
+      packageDetails[actWhich][testID] = 0;
+    }
+    packageDetails[actWhich][testID] += Math.round(addition);
   }
-  if (!packageDetails[actWhich][testID]) {
-    packageDetails[actWhich][testID] = 0;
-  }
-  packageDetails[actWhich][testID] += Math.round(addition);
 };
 // Scores a report.
 exports.scorer = async report => {
@@ -1287,6 +1356,7 @@ exports.scorer = async report => {
                   testIDs.forEach(testID => {
                     const {count} = items[testID];
                     if (count) {
+                      // Add 4 per error, 3 per contrast error, 1 per warning (“alert”).
                       addDetail(
                         which, `${issueClass[0]}:${testID}`, count * classScores[issueClass]
                       );
@@ -1339,8 +1409,8 @@ exports.scorer = async report => {
           if (issueTypes) {
             const noOpCount = issueTypes.onlyFocusable && issueTypes.onlyFocusable.total || 0;
             const noFocCount = issueTypes.onlyOperable && issueTypes.onlyOperable.total || 0;
-            // Add 3 per unfocusable, 1 per inoperable element.
-            addDetail('testaro', which, 3 * noFocCount + noOpCount);
+            // Add 2 per unfocusable, 0.5 per inoperable element.
+            addDetail('testaro', which, 2 * noFocCount + 0.5 * noOpCount);
           }
         }
         else if (which === 'hover') {
@@ -1356,10 +1426,10 @@ exports.scorer = async report => {
             } = issues;
             // Add score with weights on hover-impact types.
             const score = 2 * impactTriggers
-            + 0.5 * additions
+            + 0.3 * additions
             + removals
-            + 0.3 * opacityChanges
-            + 0.2 * opacityImpact
+            + 0.2 * opacityChanges
+            + 0.1 * opacityImpact
             + unhoverables;
             if (score) {
               addDetail('testaro', which, score);
@@ -1496,7 +1566,6 @@ exports.scorer = async report => {
       // Populate the group details with group and solo test scores.
       Object.keys(packageDetails).forEach(packageName => {
         Object.keys(packageDetails[packageName]).forEach(testID => {
-          const roundedScore = Math.round(packageDetails[packageName][testID]);
           const groupName = testGroups[packageName][testID];
           if (groupName) {
             if (! groupDetails.groups[groupName]) {
@@ -1505,19 +1574,25 @@ exports.scorer = async report => {
             if (! groupDetails.groups[groupName][packageName]) {
               groupDetails.groups[groupName][packageName] = {};
             }
+            let weightedScore = packageDetails[packageName][testID];
+            if (!preWeightedPackages.includes(groupName)) {
+              weightedScore *= groups[groupName].weight / 4;
+            }
+            const roundedScore = Math.round(weightedScore);
             groupDetails.groups[groupName][packageName][testID] = roundedScore;
           }
           else {
             if (! groupDetails.solos[packageName]) {
               groupDetails.solos[packageName] = {};
             }
+            const roundedScore = Math.round(packageDetails[packageName][testID]);
             groupDetails.solos[packageName][testID] = roundedScore;
           }
         });
       });
       // Determine the group scores and add them to the summary.
       const groupNames = Object.keys(groupDetails.groups);
-      const {absolute, largest, smaller} = countWeights;
+      const {absolute, largest, smaller} = groupWeights;
       // For each group with any scores:
       groupNames.forEach(groupName => {
         const scores = [];
@@ -1576,7 +1651,7 @@ exports.scorer = async report => {
     scoreProcID,
     logWeights,
     soloWeight,
-    countWeights,
+    groupWeights,
     preventionWeights,
     packageDetails,
     groupDetails,

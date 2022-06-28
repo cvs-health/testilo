@@ -3,7 +3,7 @@ Scorer and digester of Testaro reports
 
 ## Introduction
 
-This application enriches [Testaro](https://www.npmjs.com/package/testaro) reports. Testaro performs digital accessibility tests on Web resources and creates reports in JSON format. To make those reports more useful, this application, Testilo, computes scores and converts the scored reports to human-readable web pages (_digests_).
+This application enriches [Testaro](https://www.npmjs.com/package/testaro) reports. Testaro performs digital accessibility tests on web artifacts and creates reports in JSON format. To make those reports more useful, this application, Testilo, computes scores, converts the scored reports to human-readable web pages (_digests_), and compiles human-readable web pages comparing the scores of multiple artifacts.
 
 ## Dependencies
 
@@ -11,11 +11,13 @@ The `dotenv` dependency lets you set environment variables in an untracked `.env
 
 ## Architecture
 
-The routines that perform scoring and digesting are _procs_ and are located in the `procs` directory.
+The routines that perform scoring, digesting, and comparing are _procs_ and are located in the `procs` directory.
 
-To score a report, Testilo needs to be told where to find the report, and also which scoring procedure (or _score proc_) to use. There could be multiple score procs differently aggregating the same report into scores.
+To score reports, Testilo needs to be told which reports to score and which scoring procedure (or _score proc_) to use.
 
-Similarly, once a report has been scored, Testilo can digest it, provided that Testilo is told where to find the scored report and which _digest proc_ to use. Different digest procs could produce different human-oriented explanations of the same scored report, such as for different audiences.
+Similarly, once reports have been scored, Testilo can digest them. For this purpose, Testilo needs to be told which scored reports to digest and which _digest proc_ to use.
+
+Likewise, Testilo can compare scored reports. It needs to be told which reports to compare and which _comparison proc_ to use.
 
 Testilo includes some score procs, digest procs, and comparison procs. You can add others.
 
@@ -25,74 +27,33 @@ Testilo includes some score procs, digest procs, and comparison procs. You can a
 
 #### Process
 
-To score Testaro reports, execute the statement `node score abc xyz`. Replace (here and below) `abc` with the base of the name of the file containing the report, or the prefix of the file name. Replace `xyz` with the base of the name of the score proc.
+To score Testaro reports, execute the statement `node score procID reportNameStart`. Replace (here and below) `procID` with the base of the name of the score proc. An environment variable named `REPORTDIR_RAW` defines a directory (i.e. a filesystem path, relative to the project directory of Testilo) where Testilo will look for the raw (i.e. not-yet-scored) reports. If you want Testilo to score all of the reports in that directory, you can omit the `reportNameStart` argument. If, instead, you want Testilo to score only the reports in that directory whose names begin with a certain string, replace `reportNameStart` with that string. So, for example, suppose the raw reports are in the `reports/raw` directory of a project, `testing`, that sits alongside of Testilo in your filesystem. Then you would assign the value `'../testing/reports/raw'` to the environment variable `REPORTDIR_RAW`. Now, to score all of the reports in that directory with score proc `sp11a`, execute `node score sp11a`. Or, to score only the reports in that directory whose filenames begin with `4rper`, execute  node score sp11a `4rper`.
 
-If you replace `abc` with the entire name base, Testilo will score one report. If you replace `abc` with a prefix (such as `35k1r-`), Testilo will score all the reports whose names begin with that prefix.
+This procedure has two preconditions:
+- The score proc is compatible with the script (or _test proc_) that produced the report(s).
+- You have defined environment variables `REPORTDIR_RAW` and (for the scored reports that Testilo will write) `REPORTDIR_SCORED`.
 
-This procedure has some preconditions:
-- The score proc is compatible with the script that produced the report(s).
-- The filename extension is `.json`.
-- Testilo can find the report file(s) in the directory whose relative path (relative to the project directory of Testilo) is the value of the `REPORTDIR_RAW` environment variable.
-- Testilo can read in the `REPORTDIR_RAW` directory.
-- There is a `REPORTDIR_SCORED` environment variable, whose value is the relative path of a directory that Testilo can write to.
-- The `procs/score` directory contains a file named `xyz.js`.
-
-When Testilo scores a report, Testilo saves the scored report in the directory whose relative path is the value of the `REPORTDIR_SCORED`. The scored report file has the same name as the original. The scored report has the same content as the original, plus a new property named `score`.
+The scored report file has the same name as the original. The scored report has the same content as the original, plus new properties named `score` and `scoreProcID`.
 
 #### Procedures
 
-Score proc `tsp09a` implements one possible algorithm for scoring results from Testaro sample script `tsp09`.
+The score procs included with Testilo represent milestones in the refinement of a scoring methodology.
 
-Score proc `sp10a` implements an algorithm similar to `tsp09a`, except for Testaro sample script `tp10`, which, unlike `tsp09`, includes the Tenon package.
+One development has been an expansion of the set of packages. The progression from score proc `sp09a` to `sp10a` included the addition of the Tenon package.
 
-Score proc `sp10b` likewise scores results from Testaro script `tp10`, but, unlike score proc `sp10a`, bases scores on _issues_ rather than tests. Here, an issue is a case of a fault or a suspected fault of a particular kind. For example, if there are 7 informative images without text alternatives, the count of issues of that kind is 7.
+The main development has been a change from package-based to issue-based scoring. With package-based scoring, each package yielded a score, and the scores were summed into a total score. With issue-based scoring, the individual tests in each package are classified into groups, such that the tests from various packages in any particular group all seek to discover approximately the same type of accessibility issue. An artifact gets a score on each group, and the group scores are summed into a total score. The change from package-based to issue-based scoring took place in the progression from score proc `sp10a` to `sp10b`.
 
-Because packages differ in how they identify the locations of issues, score proc `sp10b` does not try to establish whether an issue discovered by one test is the same as an issue discovered by another test. Instead, its algorithm is based on the presumption that the issues of a kind discovered by different tests are typically, but not always, subsets or supersets of one another. For example, if test A discovers 4 issues of kind X and test B discovers 6 issues of kind X, it is likely that the 4 discovered by A are also among the 6 discovered by B.
-
-Reflecting this presumption, the contribution of any issue kind to a total score is based substantially on the largest count of issues of that kind discovered by any test. The first issue of a kind is weighted more heavily than each additional issue, because the existence of any issues of a particular kind, regardless of how many, tends to create usability barriers, remediation costs, and liability risks.
-
-To a smaller extent, the total score is also affected by the counts of issues of the same kind discovered by other tests. This is because, when multiple tests discover a kind of issue:
-- we can be more confident that there really are issues of that kind.
-- the issues discovered by different tests might not fully overlap.
-- there is less excuse for allowing issues of that kind to appear.
-- the website owner is more likely to receive complaints or claims about issues of that kind.
-
-Score proc `sp10b` uses the data in `scoring/data/testGroups.json` to identify _groups_ of tests, where the tests in any group are deemed to test for the same kind of issue.
-
-Some tests have not been grouped. The proper treatment of those tests may be:
-- to treat them as a group of 1, because they alone discover issues of some kind.
-- to insert them into an existing group.
-
-As long as they are not grouped, each issue discovered by one of those tests contributes a small amount to the total score.
-
-The contribution also depends on how serious each kind of issue is deemed to be. Score proc `sp10b` assigns a weight to each test group. Weighting could be even more granular: The Axe-core package attributes a seriousness to each issue, so that two issues of the same kind can differ in seriousness. But score proc `sp10b` ignores that Axe-core rating.
+The problem of combining partly similar tests from different packages and producing an appropriate accessibility score has no perfect solution, and each successive score proc embodies efforts to make the result more appropriate.
 
 #### Prevention
 
-Testaro reports an error when it is unable to perform a test on a host. A score proc can take such errors into account. Score procs `sp10a`, `sp10b`, and `sp10c` presume that a failure of Testaro to perform a test is caused by the host. Thus, it treats such a failure as a case of the host preventing Testaro from performing a test. These score procs add amounts for such presumed preventions to total scores, guessing the score contributions of the tests if they had not been prevented plus an amount representing the estimated impact on accessibility of the prevention _per se_.
-
-One motivation for penalizing prevention is the assumption that measurement of success is an essential contributor to success, so preventing measurement of accessibility interferes with the achievement of accessibility.
-
-A second motivation is the presumtion that assistive technologies are unpredictable, changing, and not fundamentally different from testing technologies. Therefore, a host that prevents a testing technology is at risk for preventing an assistive technology, too, and thereby interfering with accessibility.
-
-Users who prefer to disregard prevention in scoring can create score procs that do that. It is not obvious what it means to disregard a test that could not be performed. Treating it as contributing 0 to a score arguably is not neutral, but rather rewards prevention.
+Testaro reports an error when it is unable to perform a test on a host. A score proc can take such errors into account. The score procs included with Testilo do that by estimating scores when a package cannot be run.
 
 ### Digesting
 
 To make scored Testaro reports more useful for humans, Testilo can create digests of scored reports. A digest is an HTML document (a web page) summarizing and explaining the findings, with the scored report appended to it.
 
-To make Testilo digest reports, execute the statement `node digest abc xyz`, replacing `abc` (here and below) with a whole base name or prefix, as with scoring, and `xyz` with the base of the name of the digest proc.
-
-This procedure has some preconditions:
-- The digest proc is compatible with the score proc that scored the report.
-- The filename extension is `.json`.
-- Testilo can find the scored report file(s) in the directory whose relative path (relative to the project directory of Testilo) is the value of the `REPORTDIR_SCORED` environment variable.
-- Testilo can read in the `REPORTDIR_SCORED` directory.
-- There is a `REPORTDIR_DIGESTED` environment variable, whose value is the relative path of a directory that Testilo can write to.
-- The `procs/digest` directory contains a subdirectory named `xyz`, which in turn contains files named `index.html` and `index.js`.
-- You have copied the `reports/digested/style.css` file into the `REPORTDIR_DIGESTED` directory.
-
-When Testilo digests a report, Testilo saves the digest in the directory whose relative path is the value of the `REPORTDIR_DIGESTED` environment variable. The digest has the same name as the report on which it is based, except with `.html` as the extension.
+To make Testilo digest reports, execute the statement `node digest procID reportNameStart`. The rules for this statement are the same as for the `score` statement, except that the directory where Testilo finds the reports in the one referenced by the `REPORTDIR_SCORED` environment variable, and the directory where Testilo will write the digests is the one referenced by `REPORTDIR_DIGESTED`. In order to make the digests appear correct in a browser, you must copy the `reports/digested/style.css` file into the `REPORTDIR_DIGESTED` directory.
 
 ### Comparing
 

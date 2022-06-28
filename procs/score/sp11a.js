@@ -25,10 +25,8 @@
   Browser logging produces a log score, and the prevention of tests produces a prevention score.
   They, too, are added to the total score.
 
-  Each grouped test has a “quality” property, currently set to 1. The values of these properties
-  can be modified if experience indicates that particular tests are higher or lower in quality than
-  usual. Such modification will require a revision of the proc to take the quality property into
-  account.
+  Each grouped test has a “quality” property, typically set to 1. The value of this property can be
+  modified when the test is found to be higher or lower in quality than usual.
 */
 
 // ########## IMPORTS
@@ -195,7 +193,7 @@ const groups = {
       axe: {
         'html-has-lang': {
           quality: 1,
-          what: 'Html element must have a lang attribute'
+          what: 'html element must have a lang attribute'
         }
       },
       ibm: {
@@ -218,19 +216,19 @@ const groups = {
       alfa: {
         r5: {
           quality: 1,
-          what: 'Lang attribute has no valid primary language tag'
+          what: 'lang attribute has no valid primary language tag'
         }
       },
       axe: {
         'html-lang-valid': {
           quality: 1,
-          what: 'Html element must have a valid value for the lang attribute'
+          what: 'html element must have a valid value for the lang attribute'
         }
       },
       ibm: {
         'v:WCAG20_Elem_Lang_Valid': {
           quality: 1,
-          what: 'Lang attribute does not include a valid primary language'
+          what: 'lang attribute does not include a valid primary language'
         }
       }
     }
@@ -247,13 +245,13 @@ const groups = {
       alfa: {
         r7: {
           quality: 1,
-          what: 'Lang attribute has no valid primary language subtag'
+          what: 'lang attribute has no valid primary language subtag'
         }
       },
       axe: {
         'valid-lang': {
           quality: 1,
-          what: 'Lang attribute must have a valid value'
+          what: 'lang attribute must have a valid value'
         }
       }
     }
@@ -430,7 +428,18 @@ const groups = {
       tenon: {
         98: {
           quality: 1,
-          what: 'These links have the same text but different destinations'
+          what: 'Links have the same text but different destinations'
+        }
+      }
+    }
+  },
+  linkConfusionRisk: {
+    weight: 1,
+    packages: {
+      axe: {
+        'identical-links-same-purpose': {
+          quality: 1,
+          what: 'Links with the same accessible name may serve dissimilar purposes'
         }
       }
     }
@@ -441,7 +450,7 @@ const groups = {
       wave: {
         'a:link_redundant': {
           quality: 1,
-          what: 'Adjacent links go to same URL'
+          what: 'Adjacent links go to the same URL'
         }
       }
     }
@@ -453,6 +462,17 @@ const groups = {
         218: {
           quality: 1,
           what: 'Link opens in a new window without user control'
+        }
+      }
+    }
+  },
+  newWindowSurpriseRisk: {
+    weight: 1,
+    packages: {
+      aatt: {
+        'w:H83': {
+          quality: 1,
+          what: 'Link may open in a new window without notice'
         }
       }
     }
@@ -548,6 +568,17 @@ const groups = {
       }
     }
   },
+  fontSizeAbsolute: {
+    weight: 2,
+    packages: {
+      alfa: {
+        r74: {
+          quality: 1,
+          what: 'Paragraph text has absolute font size'
+        }
+      }
+    }
+  },
   leadingFrozen: {
     weight: 4,
     packages: {
@@ -571,7 +602,7 @@ const groups = {
       alfa: {
         r80: {
           quality: 1,
-          what: 'Paragraphs of text have absolute line heights'
+          what: 'Paragraph text has absolute line height'
         }
       }
     }
@@ -598,7 +629,7 @@ const groups = {
       }
     }
   },
-  iframeNoText: {
+  iframeTitleBad: {
     weight: 4,
     packages: {
       alfa: {
@@ -610,13 +641,17 @@ const groups = {
       axe: {
         'frame-title': {
           quality: 1,
-          what: 'Frames must have an accessible name'
+          what: 'Frames has no accessible name'
+        },
+        'frame-title-unique': {
+          quality: 1,
+          what: 'Frame title attribute is not unique'
         }
       },
       ibm: {
         'v:WCAG20_Frame_HasTitle': {
           quality: 1,
-          what: 'Inline frames must have a unique, non-empty title attribute'
+          what: 'Inline frame has an empty or nonunique title attribute'
         }
       }
     }
@@ -661,25 +696,61 @@ const groups = {
       }
     }
   },
-  roleBadAttribute: {
+  ariaBadAttribute: {
     weight: 4,
     packages: {
       alfa: {
         r20: {
           quality: 1,
-          what: 'Aria- attribute is not defined'
+          what: 'ARIA attribute is not defined'
         }
       },
       axe: {
         'aria-valid-attr': {
           quality: 1,
-          what: 'ARIA attributes must conform to valid names'
+          what: 'ARIA attribute has an invalid name'
+        },
+        'aria-valid-attr-value': {
+          quality: 1,
+          what: 'ARIA attribute has an invalid value'
+        },
+        'aria-allowed-attr': {
+          quality: 1,
+          what: 'ARIA attribute is invalid for the role of its element'
         }
       },
       ibm: {
         'v:Rpt_Aria_ValidProperty': {
           quality: 1,
-          what: 'ARIA attributes must be valid for the role'
+          what: 'ARIA attribute is invalid for the role'
+        }
+      }
+    }
+  },
+  ariaReferenceBad: {
+    weight: 4,
+    packages: {
+      ibm: {
+        'v:Rpt_Aria_ValidIdRef': {
+          quality: 1,
+          what: 'ARIA property must reference non-empty unique id of visible element'
+        }
+      },
+      wave: {
+        'e:aria_reference_broken': {
+          quality: 1,
+          what: 'Broken ARIA reference'
+        }
+      }
+    }
+  },
+  ariaRoleDescriptionBad: {
+    weight: 3,
+    packages: {
+      axe: {
+        'aria-roledescription': {
+          quality: 1,
+          what: 'aria-roledescription is on an element with no semantic role'
         }
       }
     }
@@ -777,7 +848,7 @@ const groups = {
       }
     }
   },
-  contrastRisk: {
+  contrastRiskAA: {
     weight: 1,
     packages: {
       aatt: {
@@ -786,6 +857,17 @@ const groups = {
           what: 'Inline background color needs complementary foreground color'
         },
         'w:G18': {
+          quality: 1,
+          what: 'Contrast adequacy not determinable'
+        }
+      }
+    }
+  },
+  contrastRiskAAA: {
+    weight: 1,
+    packages: {
+      aatt: {
+        'w:G17': {
           quality: 1,
           what: 'Contrast adequacy not determinable'
         }
@@ -832,13 +914,19 @@ const groups = {
       }
     }
   },
-  linkTitleRedundant: {
+  titleRedundant: {
     weight: 1,
     packages: {
       tenon: {
         79: {
           quality: 1,
           what: 'Link has a title attribute that is the same as the text inside the link'
+        }
+      },
+      wave: {
+        'a:title_redundant': {
+          quality: 1,
+          what: 'Title attribute text is the same as text or alternative text'
         }
       }
     }
@@ -861,8 +949,14 @@ const groups = {
     }
   },
   h1Missing: {
-    weight: 1,
+    weight: 2,
     packages: {
+      aatt: {
+        'e:G141': {
+          quality: 1,
+          what: 'h2 heading should be h1'
+        }
+      },
       axe: {
         'page-has-heading-one': {
           quality: 1,
@@ -940,23 +1034,6 @@ const groups = {
         'w:H85': {
           quality: 1,
           what: 'If selection list contains groups of related options, they should be grouped with optgroup'
-        }
-      }
-    }
-  },
-  ariaReferenceBad: {
-    weight: 4,
-    packages: {
-      ibm: {
-        'v:Rpt_Aria_ValidIdRef': {
-          quality: 1,
-          what: 'ARIA property must reference non-empty unique id of visible element'
-        }
-      },
-      wave: {
-        'e:aria_reference_broken': {
-          quality: 1,
-          what: 'Broken ARIA reference'
         }
       }
     }
@@ -1105,6 +1182,28 @@ const groups = {
       }
     }
   },
+  mainTopLandmark: {
+    weight: 2,
+    packages: {
+      axe: {
+        'landmark-main-is-top-level': {
+          quality: 1,
+          what: 'main landmark is contained in another landmark'
+        }
+      }
+    }
+  },
+  multipleMain: {
+    weight: 2,
+    packages: {
+      axe: {
+        'landmark-no-duplicate-main': {
+          quality: 1,
+          what: 'page has more than 1 main landmark'
+        }
+      }
+    }
+  },
   focusableOperable: {
     weight: 3,
     packages: {
@@ -1116,13 +1215,52 @@ const groups = {
       }
     }
   },
+  focusableRole: {
+    weight: 3,
+    packages: {
+      axe: {
+        'focus-order-semantics': {
+          quality: 1,
+          what: 'Focusable element has no active role'
+        }
+      }
+    }
+  },
   focusableHidden: {
     weight: 4,
     packages: {
       alfa: {
         r17: {
           quality: 1,
-          what: 'Tab-focusable elements that are or have ancestors that are aria-hidden'
+          what: 'Tab-focusable element is or has an ancestor that is aria-hidden'
+        }
+      },
+      axe: {
+        'aria-hidden-focus': {
+          quality: 1,
+          what: 'ARIA hidden element is focusable or contains a focusable element'
+        }
+      }
+    }
+  },
+  hiddenContentRisk: {
+    weight: 1,
+    packages: {
+      axe: {
+        'hidden-content': {
+          quality: 1,
+          what: 'Some content is hidden and therefore may not be testable for accessibility'
+        }
+      }
+    }
+  },
+  frameContentRisk: {
+    weight: 1,
+    packages: {
+      axe: {
+        'frame-tested': {
+          quality: 0.2,
+          what: 'Some content is in an iframe and therefore may not be testable for accessibility'
         }
       }
     }
@@ -1211,6 +1349,17 @@ const groups = {
         zIndex: {
           quality: 1,
           what: 'Layering with nondefault z-index values'
+        }
+      }
+    }
+  },
+  videoCaptionMissing: {
+    weight: 4,
+    packages: {
+      axe: {
+        'video-caption': {
+          quality: 1,
+          what: 'video element has no captions'
         }
       }
     }
@@ -1564,10 +1713,14 @@ exports.scorer = async report => {
         });
       });
       // Populate the group details with group and solo test scores.
+      // For each package with any scores:
       Object.keys(packageDetails).forEach(packageName => {
+        // For each test with any scores in the package:
         Object.keys(packageDetails[packageName]).forEach(testID => {
+          // If the test is in a group:
           const groupName = testGroups[packageName][testID];
           if (groupName) {
+            // Determine the preweighted or group-weighted score.
             if (! groupDetails.groups[groupName]) {
               groupDetails.groups[groupName] = {};
             }
@@ -1578,9 +1731,13 @@ exports.scorer = async report => {
             if (!preWeightedPackages.includes(groupName)) {
               weightedScore *= groups[groupName].weight / 4;
             }
-            const roundedScore = Math.round(weightedScore);
+            // Adjust the score for the quality of the test.
+            weightedScore *= groups[groupName].packages[packageName][testID].quality;
+            // Round the score, but not to less than 1.
+            const roundedScore = Math.max(Math.round(weightedScore), 1);
             groupDetails.groups[groupName][packageName][testID] = roundedScore;
           }
+          // Otherwise, i.e. if the test is solo:
           else {
             if (! groupDetails.solos[packageName]) {
               groupDetails.solos[packageName] = {};

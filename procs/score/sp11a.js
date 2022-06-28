@@ -175,6 +175,39 @@ const groups = {
       }
     }
   },
+  imageTextBad: {
+    weight: 3,
+    packages: {
+      alfa: {
+        'r39': {
+          quality: 1,
+          what: 'Image text alternative is the filename instead'
+        }
+      }
+    }
+  },
+  imageTextRisk: {
+    weight: 1,
+    packages: {
+      wave: {
+        'a:alt_suspicious': {
+          quality: 1,
+          what: 'Image alternate text is suspicious'
+        }
+      }
+    }
+  },
+  decorativeImageRisk: {
+    weight: 1,
+    packages: {
+      aatt: {
+        'w:H67': {
+          quality: 1,
+          what: 'Image marked as decorative may be informative'
+        }
+      }
+    }
+  },
   pageLanguage: {
     weight: 4,
     packages: {
@@ -579,6 +612,23 @@ const groups = {
       }
     }
   },
+  fontSmall: {
+    weight: 3,
+    packages: {
+      tenon: {
+        134: {
+          quality: 1,
+          what: 'Text is very small'
+        }
+      },
+      wave: {
+        'a:text_small': {
+          quality: 1,
+          what: 'Text is very small'
+        }
+      }
+    }
+  },
   leadingFrozen: {
     weight: 4,
     packages: {
@@ -624,7 +674,18 @@ const groups = {
       tenon: {
         144: {
           quality: 1,
-          what: 'Line height insufficent to properly display computed font size'
+          what: 'Line height is insufficent to properly display the computed font size'
+        }
+      }
+    }
+  },
+  overflowHidden: {
+    weight: 4,
+    packages: {
+      alfa: {
+        r83: {
+          quality: 1,
+          what: 'Overflow is hidden or clipped if the text is enlarged'
         }
       }
     }
@@ -864,7 +925,7 @@ const groups = {
     }
   },
   contrastRiskAAA: {
-    weight: 1,
+    weight: 0.5,
     packages: {
       aatt: {
         'w:G17': {
@@ -875,7 +936,7 @@ const groups = {
     }
   },
   headingEmpty: {
-    weight: 2,
+    weight: 3,
     packages: {
       axe: {
         'empty-heading': {
@@ -957,6 +1018,12 @@ const groups = {
           what: 'h2 heading should be h1'
         }
       },
+      alfa: {
+        'r61': {
+          quality: 1,
+          what: 'First heading is not h1'
+        }
+      },
       axe: {
         'page-has-heading-one': {
           quality: 1,
@@ -978,6 +1045,12 @@ const groups = {
         'w:H42': {
           quality: 1,
           what: 'Heading coding should be used if intended as a heading'
+        }
+      },
+      wave: {
+        'a:heading_possible': {
+          quality: 1,
+          what: 'Possible heading'
         }
       }
     }
@@ -1360,6 +1433,72 @@ const groups = {
         'video-caption': {
           quality: 1,
           what: 'video element has no captions'
+        }
+      }
+    }
+  },
+  videoCaptionRisk: {
+    weight: 1,
+    packages: {
+      wave: {
+        'a:youtube_video': {
+          quality: 1,
+          what: 'YouTube video may fail to be captioned'
+        }
+      }
+    }
+  },
+  notScrollable: {
+    weight: 4,
+    packages: {
+      alfa: {
+        r84: {
+          quality: 1,
+          what: 'Element is scrollable but not by keyboard'
+        }
+      }
+    }
+  },
+  horizontalScrolling: {
+    weight: 3,
+    packages: {
+      tenon: {
+        28: {
+          quality: 1,
+          what: 'Layout or sizing of the page causes horizontal scrolling'
+        }
+      }
+    }
+  },
+  scrollRisk: {
+    weight: 1,
+    packages: {
+      aatt: {
+        'w:C31+C32+C33+C38+G206+SCR34': {
+          quality: 1,
+          what: 'Fixed-position element may force bidirectional scrolling'
+        }
+      }
+    }
+  },
+  skipRepeatedContent: {
+    weight: 3,
+    packages: {
+      alfa: {
+        'r87': {
+          quality: 0.5,
+          what: 'First focusable element is not a link to the main content'
+        }
+      }
+    }
+  },
+  noScriptRisk: {
+    weight: 1,
+    packages: {
+      wave: {
+        'a:noscript': {
+          quality: 1,
+          what: 'noscript element may fail to contain an accessible equivalent or alternative'
         }
       }
     }

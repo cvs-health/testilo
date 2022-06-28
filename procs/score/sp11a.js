@@ -57,23 +57,8 @@ const preventionWeights = {
   testaro: 50,
   other: 100
 };
-// Initialize the score details on test packages and test groups.
-const packageDetails = {};
-const groupDetails = {
-  groups: {},
-  solos: {}
-};
-// Initialize a score summary.
-const summary = {
-  total: 0,
-  log: 0,
-  preventions: 0,
-  solos: 0,
-  groups: []
-};
 const otherPackages = ['aatt', 'alfa', 'axe', 'ibm', 'tenon', 'wave'];
 const preWeightedPackages = ['axe', 'tenon', 'testaro'];
-const preventionScores = {};
 // Define the test groups.
 const groups = {
   duplicateID: {
@@ -1505,7 +1490,31 @@ const groups = {
   }
 };
 
+// VARIABLES
+
+let packageDetails = {};
+let groupDetails = {};
+let summary = {};
+let preventionScores = {};
+
 // FUNCTIONS
+
+// Initialize the variables.
+const init = () => {
+  packageDetails = {};
+  groupDetails = {
+    groups: {},
+    solos: {}
+  };
+  summary = {
+    total: 0,
+    log: 0,
+    preventions: 0,
+    solos: 0,
+    groups: []
+  };
+  preventionScores = {};
+};
 
 // Adds a score to the package details.
 const addDetail = (actWhich, testID, addition = 1) => {
@@ -1521,6 +1530,8 @@ const addDetail = (actWhich, testID, addition = 1) => {
 };
 // Scores a report.
 exports.scorer = async report => {
+  // Initialize the variables.
+  init();
   // If there are any acts in the report:
   const {acts} = report;
   if (Array.isArray(acts)) {

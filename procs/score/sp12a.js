@@ -128,12 +128,6 @@ const groups = {
   imageNoText: {
     weight: 4,
     packages: {
-      htmlcs: {
-        'e:WCAG2A.Principle1.Guideline1_1.1_1_1.H37': {
-          quality: 1,
-          what: 'Img element missing an alt attribute'
-        }
-      },
       alfa: {
         r2: {
           quality: 1,
@@ -144,6 +138,12 @@ const groups = {
         'image-alt': {
           quality: 1,
           what: 'Images must have alternate text'
+        }
+      },
+      htmlcs: {
+        'e:AA.1_1_1.H37': {
+          quality: 1,
+          what: 'img element has no alt attribute'
         }
       },
       ibm: {
@@ -186,7 +186,7 @@ const groups = {
     weight: 1,
     packages: {
       htmlcs: {
-        'w:WCAG2AAA.Principle1.Guideline1_1.1_1_1.H67.2': {
+        'w:AA.1_1_1.H67.2': {
           quality: 1,
           what: 'Image marked as decorative may be informative'
         }
@@ -385,6 +385,24 @@ const groups = {
           what: 'Links must have discernible text'
         }
       },
+      htmlcs: {
+        'e:AA.1_1_1.H30.2': {
+          quality: 1,
+          what: 'img element is the only link content but has no text alternative'
+        },
+        'w:AA.4_1_2.H91.A.Empty': {
+          quality: 1,
+          what: 'Link element has an id attribute but no href attribute or text'
+        },
+        'e:AA.4_1_2.H91.A.EmptyNoId': {
+          quality: 1,
+          what: 'Link is missing a name, a value, and an id attribute'
+        },
+        'w:AA.4_1_2.H91.A.EmptyWithName': {
+          quality: 1,
+          what: 'Link has a name attribute but no href attribute or text'
+        }
+      },
       ibm: {
         'v:WCAG20_A_HasText': {
           quality: 1,
@@ -401,6 +419,17 @@ const groups = {
         'e:link_empty': {
           quality: 1,
           what: 'Link contains no text'
+        }
+      }
+    }
+  },
+  textAreaNoText: {
+    weight: 4,
+    packages: {
+      htmlcs: {
+        'e:AA.4_1_2.H91.Textarea.Name': {
+          quality: 1,
+          what: 'textarea element has no accessible name'
         }
       }
     }
@@ -473,6 +502,12 @@ const groups = {
         'aria-command-name': {
           quality: 1,
           what: 'ARIA commands must have an accessible name'
+        }
+      },
+      htmlcs: {
+        'e:AA.4_1_2.H91.Button.Name': {
+          quality: 1,
+          what: 'button element has no accessible name'
         }
       },
       wave: {
@@ -646,7 +681,7 @@ const groups = {
       alfa: {
         r13: {
           quality: 1,
-          what: 'Iframe has no accessible name'
+          what: 'iframe has no accessible name'
         }
       },
       axe: {
@@ -657,6 +692,12 @@ const groups = {
         'frame-title-unique': {
           quality: 1,
           what: 'Frame title attribute is not unique'
+        }
+      },
+      htmlcs: {
+        'e:AA.2_4_1.H64.1': {
+          quality: 1,
+          what: 'iframe element requires a non-empty title attribute'
         }
       },
       ibm: {
@@ -770,7 +811,7 @@ const groups = {
     weight: 2,
     packages: {
       htmlcs: {
-        'w:WCAG2AA.Principle1.Guideline1_3.1_3_5.H98': {
+        'w:AA.1_3_5.H98': {
           quality: 1,
           what: 'Autocomplete attribute wrong'
         }
@@ -799,7 +840,7 @@ const groups = {
     weight: 3,
     packages: {
       htmlcs: {
-        'e:WCAG2AA.Principle1.Guideline1_4.1_4_3.G18': {
+        'e:AA.1_4_3.G18': {
           quality: 1,
           what: 'Insufficient contrast'
         }
@@ -859,28 +900,25 @@ const groups = {
       }
     }
   },
-  contrastRiskAA: {
+  contrastRisk: {
     weight: 1,
     packages: {
       htmlcs: {
-        'w:WCAG2AA.Principle1.Guideline1_4.1_4_3_F24.F24.BGColour': {
+        'w:AA.1_4_3_F24.F24.BGColour': {
           quality: 1,
-          what: 'Inline background color needs complementary foreground color'
+          what: 'Inline background color needs a complementary foreground color'
         },
-        'w:G18': {
+        'w:AA.1_4_3.G18.Abs': {
           quality: 1,
-          what: 'Contrast adequacy not determinable'
-        }
-      }
-    }
-  },
-  contrastRiskAAA: {
-    weight: 0.5,
-    packages: {
-      htmlcs: {
-        'w:"WCAG2AAA.Principle1.Guideline1_4.1_4_6.G17.Abs': {
+          what: 'Contrast between the absolutely positioned small text and its background is unknown'
+        },
+        'w:AA.1_4_3.G18.Alpha': {
           quality: 1,
-          what: 'Contrast adequacy not determinable'
+          what: 'Contrast between the small text and its background is unknown because of transparency'
+        },
+        'w:AA.1_4_3.G145.Abs': {
+          quality: 1,
+          what: 'Contrast between the absolutely positioned large text and its background is unknown'
         }
       }
     }
@@ -892,6 +930,12 @@ const groups = {
         'empty-heading': {
           quality: 1,
           what: 'Headings should not be empty'
+        }
+      },
+      htmlcs: {
+        'e:AA.1_3_1.H42.2': {
+          quality: 1,
+          what: 'Heading empty'
         }
       },
       ibm: {
@@ -974,6 +1018,12 @@ const groups = {
           what: 'Heading levels should only increase by one'
         }
       },
+      htmlcs: {
+        'w:AA.1_3_1_A.G141': {
+          quality: 1,
+          what: 'Heading level is incorrect'
+        }
+      },
       tenon: {
         155: {
           quality: 1,
@@ -991,16 +1041,6 @@ const groups = {
   h1Missing: {
     weight: 2,
     packages: {
-      htmlcs: {
-        'e:WCAG2AAA.Principle1.Guideline1_3.1_3_1_AAA.G141': {
-          quality: 1,
-          what: 'h2 heading should be the h1'
-        },
-        'w:WCAG2A.Principle1.Guideline1_3.1_3_1_A.G141': {
-          quality: 1,
-          what: 'h2 heading should be the h1'
-        }
-      },
       alfa: {
         'r61': {
           quality: 1,
@@ -1025,7 +1065,7 @@ const groups = {
     weight: 1,
     packages: {
       htmlcs: {
-        'w:WCAG2A.Principle1.Guideline1_3.1_3_1.H42': {
+        'w:AA.1_3_1.H42': {
           quality: 1,
           what: 'Heading coding should be used if intended as a heading'
         }
@@ -1053,9 +1093,9 @@ const groups = {
     weight: 1,
     packages: {
       htmlcs: {
-        'w:H48': {
+        'w:AA.1_3_1.H48': {
           quality: 1,
-          what: 'Navigation links should be coded as list'
+          what: 'Navigation links should best be coded as a list'
         }
       }
     }
@@ -1063,16 +1103,16 @@ const groups = {
   selectNoText: {
     weight: 3,
     packages: {
-      htmlcs: {
-        'w:H91': {
-          quality: 1,
-          what: 'Select element has no value available to an accessibility API'
-        }
-      },
       axe: {
         'select-name': {
           quality: 1,
           what: 'Select element must have an accessible name'
+        }
+      },
+      htmlcs: {
+        'w:H91': {
+          quality: 1,
+          what: 'Select element has no value available to an accessibility API'
         }
       },
       wave: {
@@ -1138,19 +1178,26 @@ const groups = {
     weight: 4,
     packages: {
       htmlcs: {
-        'e:WCAG2A.Principle1.Guideline1_3.1_3_1.F68': {
+        'e:AA.1_3_1.F68': {
           quality: 1,
-          what: 'Form control wrongly labeled or unlabeled'
-        },
-        'e:WCAG2A.Principle4.Guideline4_1.4_1_2.H91.A.EmptyNoId': {
-          quality: 1,
-          what: 'Missing name or value of form control or link'
+          what: 'Form control has no label'
         }
       },
       wave: {
         'e:label_missing': {
           quality: 1,
           what: 'Missing form label'
+        }
+      }
+    }
+  },
+  invisibleLabel: {
+    weight: 3,
+    packages: {
+      htmlcs: {
+        'AA.2_5_3.F96': {
+          quality: 1,
+          what: 'Visible label is not in the accessible name'
         }
       }
     }
@@ -1457,7 +1504,7 @@ const groups = {
     weight: 1,
     packages: {
       htmlcs: {
-        'w:C31+C32+C33+C38+G206+SCR34': {
+        'w:AA.1_4_10.C32,C31,C33,C38,SCR34,G206': {
           quality: 1,
           what: 'Fixed-position element may force bidirectional scrolling'
         }
@@ -1471,6 +1518,17 @@ const groups = {
         'r87': {
           quality: 0.5,
           what: 'First focusable element is not a link to the main content'
+        }
+      }
+    }
+  },
+  nubmitButton: {
+    weight: 3,
+    packages: {
+      htmlcs: {
+        'AA.3_2_2.H32.2': {
+          quality: 1,
+          what: 'Form has no submit button'
         }
       }
     }

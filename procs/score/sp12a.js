@@ -65,7 +65,7 @@ const groups = {
     weight: 3,
     packages: {
       htmlcs: {
-        'e:F77': {
+        'e:AA.4_1_1.F77': {
           quality: 1,
           what: 'Duplicate id attribute value'
         }
@@ -396,11 +396,15 @@ const groups = {
         },
         'e:AA.4_1_2.H91.A.EmptyNoId': {
           quality: 1,
-          what: 'Link is missing a name, a value, and an id attribute'
+          what: 'Link has no name or id attribute or value'
         },
         'w:AA.4_1_2.H91.A.EmptyWithName': {
           quality: 1,
           what: 'Link has a name attribute but no href attribute or text'
+        },
+        'e:AA.4_1_2.H91.A.NoContent': {
+          quality: 1,
+          what: 'Link has an href attribute but no text'
         }
       },
       ibm: {
@@ -419,6 +423,17 @@ const groups = {
         'e:link_empty': {
           quality: 1,
           what: 'Link contains no text'
+        }
+      }
+    }
+  },
+  linkBrokenRisk: {
+    weight: 2,
+    packages: {
+      htmlcs: {
+        'w:AA.4_1_2.H91.A.Placeholder': {
+          quality: 1,
+          what: 'Link has text but no href, id, or name attribute'
         }
       }
     }
@@ -811,9 +826,9 @@ const groups = {
     weight: 2,
     packages: {
       htmlcs: {
-        'w:AA.1_3_5.H98': {
+        'e:AA.1_3_5.H98': {
           quality: 1,
-          what: 'Autocomplete attribute wrong'
+          what: 'Autocomplete attribute and the input type are mismatched'
         }
       },
       alfa: {
@@ -840,9 +855,13 @@ const groups = {
     weight: 3,
     packages: {
       htmlcs: {
-        'e:AA.1_4_3.G18': {
+        'e:AA.1_4_3.G145.Fail': {
           quality: 1,
-          what: 'Insufficient contrast'
+          what: 'Contrast between the text and its background is less than 3:1.'
+        },
+        'e:AA.1_4_3.G18.Fail': {
+          quality: 1,
+          what: 'Contrast between the text and its background is less than 4.5:1'
         }
       },
       alfa: {
@@ -906,19 +925,35 @@ const groups = {
       htmlcs: {
         'w:AA.1_4_3_F24.F24.BGColour': {
           quality: 1,
-          what: 'Inline background color needs a complementary foreground color'
+          what: 'Inline background color may lack a complementary foreground color'
+        },
+        'w:AA.1_4_3_F24.F24.FGColour': {
+          quality: 1,
+          what: 'Inline foreground color may lack a complementary background color'
         },
         'w:AA.1_4_3.G18.Abs': {
           quality: 1,
-          what: 'Contrast between the absolutely positioned small text and its background is unknown'
+          what: 'Contrast between the absolutely positioned text and its background may be inadequate'
         },
         'w:AA.1_4_3.G18.Alpha': {
           quality: 1,
-          what: 'Contrast between the small text and its background is unknown because of transparency'
+          what: 'Contrast between the text and its background may be less than 4.5:1, given the transparency'
         },
         'w:AA.1_4_3.G145.Abs': {
           quality: 1,
-          what: 'Contrast between the absolutely positioned large text and its background is unknown'
+          what: 'Contrast between the absolutely positioned large text and its background may be less than 3:1'
+        },
+        'w:AA.1_4_3.G145.Alpha': {
+          quality: 1,
+          what: 'Contrast between the text and its background may be less than 3:1, given the transparency'
+        },
+        'w:AA.1_4_3.G145.BgImage': {
+          quality: 1,
+          what: 'Contrast between the text and its background image may be less than 3:1'
+        },
+        'w:AA.1_4_3.G18.BgImage': {
+          quality: 1,
+          what: 'Contrast between the text and its background image may be less than 4.5:1'
         }
       }
     }
@@ -982,6 +1017,21 @@ const groups = {
         'a:title_redundant': {
           quality: 1,
           what: 'Title attribute text is the same as text or alternative text'
+        }
+      }
+    }
+  },
+  titleEmpty: {
+    weight: 1,
+    packages: {
+      htmlcs: {
+        'w:AA.1_3_1.H65': {
+          quality: 0.5,
+          what: 'Value of the title attribute of the form control is empty or only whitespace'
+        },
+        'w:AA.4_1_2.H65': {
+          quality: 0.5,
+          what: 'Value of the title attribute of the form control is empty or only whitespace'
         }
       }
     }
@@ -1127,7 +1177,7 @@ const groups = {
     weight: 1,
     packages: {
       htmlcs: {
-        'w:H85': {
+        'w:AA.1_3_1.H85.2': {
           quality: 1,
           what: 'If selection list contains groups of related options, they should be grouped with optgroup'
         }
@@ -1195,7 +1245,7 @@ const groups = {
     weight: 3,
     packages: {
       htmlcs: {
-        'AA.2_5_3.F96': {
+        'w:AA.2_5_3.F96': {
           quality: 1,
           what: 'Visible label is not in the accessible name'
         }
@@ -1390,6 +1440,17 @@ const groups = {
       }
     }
   },
+  labelEmpty: {
+    weight: 3,
+    packages: {
+      htmlcs: {
+        'w:AA.1_3_1.ARIA6': {
+          quality: 1,
+          what: 'Value of the aria-label attribute of the form control is empty or only whitespace'
+        }
+      }
+    }
+  },
   linkUnderlines: {
     weight: 2,
     packages: {
@@ -1522,11 +1583,11 @@ const groups = {
       }
     }
   },
-  nubmitButton: {
+  submitButton: {
     weight: 3,
     packages: {
       htmlcs: {
-        'AA.3_2_2.H32.2': {
+        'e:AA.3_2_2.H32.2': {
           quality: 1,
           what: 'Form has no submit button'
         }
@@ -1540,6 +1601,17 @@ const groups = {
         'a:noscript': {
           quality: 1,
           what: 'noscript element may fail to contain an accessible equivalent or alternative'
+        }
+      }
+    }
+  },
+  noScriptRisk: {
+    weight: 1,
+    packages: {
+      htmlcs: {
+        'e:AA.1_3_1.H49.Center': {
+          quality: 1,
+          what: 'The center element is obsolete'
         }
       }
     }

@@ -15,8 +15,8 @@ const fs = require('fs/promises');
 
 const reportDirScored = process.env.REPORTDIR_SCORED || 'reports/scored';
 const reportDirDigested = process.env.REPORTDIR_DIGESTED || 'reports/digested';
-const reportIDStart = process.argv[2];
-const digesterID = process.argv[3];
+const digesterID = process.argv[2];
+const reportIDStart = process.argv[3];
 
 // ########## FUNCTIONS
 
@@ -26,11 +26,14 @@ const replaceHolders = (content, query) => content
 // Creates a digest.
 const digest = async () => {
   const reportDirScoredAbs = `${__dirname}/${reportDirScored}`;
-  const allReportFileNames = await fs.readdir(reportDirScoredAbs);
-  const sourceReportFileNames = allReportFileNames
-  .filter(fileName => fileName.startsWith(reportIDStart) && fileName.endsWith('.json'));
+  let reportFileNames = await fs.readdir(reportDirScoredAbs);
+  reportFileNames = reportFileNames.filter(fileName => fileName.endsWith('.json'));
+  if (reportIDStart) {
+    reportFileNames = reportFileNames
+    .filter(fileName => fileName.startsWith(reportIDStart));
+  }
   const {makeQuery} = require(`${__dirname}/procs/digest/${digesterID}/index.js`);
-  for (const fileName of sourceReportFileNames) {
+  for (const fileName of reportFileNames) {
     const reportJSON = await fs.readFile(`${reportDirScoredAbs}/${fileName}`, 'utf8');
     const report = JSON.parse(reportJSON);
     const query = {};

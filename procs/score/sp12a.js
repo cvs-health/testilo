@@ -319,7 +319,7 @@ const groups = {
         }
       },
       htmlcs: {
-        'e:H24': {
+        'e:AA.1_1_1.H24': {
           quality: 1,
           what: 'Area element in an image map missing an alt attribute'
         }
@@ -556,7 +556,7 @@ const groups = {
       htmlcs: {
         'e:AA.4_1_2.H91.Button.Name': {
           quality: 1,
-          what: 'button element has no accessible name'
+          what: 'Button element has no accessible name'
         }
       },
       wave: {
@@ -747,7 +747,7 @@ const groups = {
       axe: {
         'frame-title': {
           quality: 1,
-          what: 'Frames has no accessible name'
+          what: 'Frame has no accessible name'
         },
         'frame-title-unique': {
           quality: 1,
@@ -868,7 +868,7 @@ const groups = {
     }
   },
   autocompleteBad: {
-    weight: 2,
+    weight: 3,
     packages: {
       alfa: {
         r10: {
@@ -2120,7 +2120,11 @@ exports.scorer = async report => {
             weightedScore *= groups[groupName].packages[packageName][testID].quality;
             // Round the score, but not to less than 1.
             const roundedScore = Math.max(Math.round(weightedScore), 1);
-            groupDetails.groups[groupName][packageName][testID] = roundedScore;
+            // Add the rounded score and the test description to the group details.
+            groupDetails.groups[groupName][packageName][testID] = {
+              score: roundedScore,
+              what: groups[groupName].packages[packageName][testID].what
+            };
           }
           // Otherwise, i.e. if the test is solo:
           else {
@@ -2143,7 +2147,7 @@ exports.scorer = async report => {
         groupPackageData.forEach(packageObj => {
           // Get the sum of the scores of the tests of the package in the group.
           const scoreSum = Object.values(packageObj).reduce(
-            (sum, current) => sum + current,
+            (sum, current) => sum + current.score,
             0
           );
           // Add the sum to the list of package scores in the group.

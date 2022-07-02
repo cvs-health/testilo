@@ -29,11 +29,6 @@
   modified when the test is found to be higher or lower in quality than usual.
 */
 
-// ########## IMPORTS
-
-// Module to read and write files.
-const fs = require('fs/promises');
-
 // CONSTANTS
 
 const scoreProcID = 'sp12a';
@@ -64,12 +59,6 @@ const groups = {
   duplicateID: {
     weight: 3,
     packages: {
-      htmlcs: {
-        'e:AA.4_1_1.F77': {
-          quality: 1,
-          what: 'Duplicate id attribute value'
-        }
-      },
       alfa: {
         r3: {
           quality: 1,
@@ -82,6 +71,12 @@ const groups = {
           what: 'ID attribute value must be unique'
         }
       },
+      htmlcs: {
+        'e:AA.4_1_1.F77': {
+          quality: 1,
+          what: 'Duplicate id attribute value'
+        }
+      },
       ibm: {
         RPT_Elem_UniqueId: {
           quality: 1,
@@ -90,15 +85,20 @@ const groups = {
       }
     }
   },
-  imageInputNoText: {
+  textInputNoText: {
     weight: 4,
     packages: {
       htmlcs: {
-        'e:H36': {
+        'e:AA.4_1_2.H91.InputText.Name': {
           quality: 1,
-          what: 'Image submit button missing an alt attribute'
+          what: 'Text input has no accessible name'
         }
-      },
+      }
+    }
+  },
+  imageInputNoText: {
+    weight: 4,
+    packages: {
       alfa: {
         r28: {
           quality: 1,
@@ -109,6 +109,12 @@ const groups = {
         'input-image-alt': {
           quality: 1,
           what: 'Image buttons must have alternate text'
+        }
+      },
+      htmlcs: {
+        'e:H36': {
+          quality: 1,
+          what: 'Image submit button has no alt attribute'
         }
       },
       ibm: {
@@ -196,12 +202,6 @@ const groups = {
   pageLanguage: {
     weight: 4,
     packages: {
-      htmlcs: {
-        'e:H57': {
-          quality: 1,
-          what: 'Lang attribute of the document element'
-        }
-      },
       alfa: {
         r4: {
           quality: 1,
@@ -212,6 +212,12 @@ const groups = {
         'html-has-lang': {
           quality: 1,
           what: 'html element must have a lang attribute'
+        }
+      },
+      htmlcs: {
+        'e:H57': {
+          quality: 1,
+          what: 'Lang attribute of the document element'
         }
       },
       ibm: {
@@ -254,12 +260,6 @@ const groups = {
   languageChange: {
     weight: 3,
     packages: {
-      htmlcs: {
-        'e:WCAG2AAA.Principle3.Guideline3_1.3_1_2.H58': {
-          quality: 1,
-          what: 'Change in language is not marked'
-        }
-      },
       alfa: {
         r7: {
           quality: 1,
@@ -271,22 +271,28 @@ const groups = {
           quality: 1,
           what: 'lang attribute must have a valid value'
         }
+      },
+      htmlcs: {
+        'e:WCAG2AAA.Principle3.Guideline3_1.3_1_2.H58': {
+          quality: 1,
+          what: 'Change in language is not marked'
+        }
       }
     }
   },
   objectNoText: {
     weight: 4,
     packages: {
-      htmlcs: {
-        'e:ARIA6+H53': {
-          quality: 1,
-          what: 'Object elements must contain a text alternative'
-        }
-      },
       axe: {
         'object-alt': {
           quality: 1,
           what: 'Object elements must have alternate text'
+        }
+      },
+      htmlcs: {
+        'e:ARIA6+H53': {
+          quality: 1,
+          what: 'Object elements must contain a text alternative'
         }
       },
       ibm: {
@@ -306,16 +312,16 @@ const groups = {
   imageMapAreaNoText: {
     weight: 4,
     packages: {
-      htmlcs: {
-        'e:H24': {
-          quality: 1,
-          what: 'Area element in an image map missing an alt attribute'
-        }
-      },
       axe: {
         'area-alt': {
           quality: 1,
           what: 'Active area elements must have alternate text'
+        }
+      },
+      htmlcs: {
+        'e:H24': {
+          quality: 1,
+          what: 'Area element in an image map missing an alt attribute'
         }
       },
       ibm: {
@@ -353,13 +359,30 @@ const groups = {
       }
     }
   },
+  internalLinkBroken: {
+    weight: 4,
+    packages: {
+      htmlcs: {
+        'e:AA.2_4_1.G1,G123,G124.NoSuchID': {
+          quality: 1,
+          what: 'Internal link references a nonexistent destination'
+        }
+      },
+      wave: {
+        'a:label_orphaned': {
+          quality: 1,
+          what: 'Orphaned form label'
+        }
+      }
+    }
+  },
   labelForBadID: {
     weight: 4,
     packages: {
       htmlcs: {
-        'w:H44': {
+        'w:AA.1_3_1.H44.NonExistentFragment': {
           quality: 1,
-          what: 'Label for attribute is bad ID'
+          what: 'Label for attribute references a nonexistent element'
         }
       },
       wave: {
@@ -434,6 +457,17 @@ const groups = {
         'w:AA.4_1_2.H91.A.Placeholder': {
           quality: 1,
           what: 'Link has text but no href, id, or name attribute'
+        }
+      }
+    }
+  },
+  destinationLink: {
+    weight: 2,
+    packages: {
+      htmlcs: {
+        'w:AA.4_1_2.H91.A.NoHref': {
+          quality: 1,
+          what: 'Link misused as link destination'
         }
       }
     }
@@ -597,6 +631,17 @@ const groups = {
         'aria-required-children': {
           quality: 1,
           what: 'Certain ARIA roles must contain particular children'
+        }
+      }
+    }
+  },
+  presentationChild: {
+    weight: 4,
+    packages: {
+      htmlcs: {
+        'e:AA.1_3_1.F92,ARIA4': {
+          quality: 1,
+          what: 'Element has presentation role but semantic child'
         }
       }
     }
@@ -825,12 +870,6 @@ const groups = {
   autocompleteBad: {
     weight: 2,
     packages: {
-      htmlcs: {
-        'e:AA.1_3_5.H98': {
-          quality: 1,
-          what: 'Autocomplete attribute and the input type are mismatched'
-        }
-      },
       alfa: {
         r10: {
           quality: 1,
@@ -841,6 +880,12 @@ const groups = {
         'autocomplete-valid': {
           quality: 1,
           what: 'Autocomplete attribute must be used correctly'
+        }
+      },
+      htmlcs: {
+        'e:AA.1_3_5.H98': {
+          quality: 1,
+          what: 'Autocomplete attribute and the input type are mismatched'
         }
       },
       ibm: {
@@ -854,16 +899,6 @@ const groups = {
   contrastAA: {
     weight: 3,
     packages: {
-      htmlcs: {
-        'e:AA.1_4_3.G145.Fail': {
-          quality: 1,
-          what: 'Contrast between the text and its background is less than 3:1.'
-        },
-        'e:AA.1_4_3.G18.Fail': {
-          quality: 1,
-          what: 'Contrast between the text and its background is less than 4.5:1'
-        }
-      },
       alfa: {
         r69: {
           quality: 1,
@@ -874,6 +909,16 @@ const groups = {
         'color-contrast': {
           quality: 1,
           what: 'Elements must have sufficient color contrast'
+        }
+      },
+      htmlcs: {
+        'e:AA.1_4_3.G145.Fail': {
+          quality: 1,
+          what: 'Contrast between the text and its background is less than 3:1.'
+        },
+        'e:AA.1_4_3.G18.Fail': {
+          quality: 1,
+          what: 'Contrast between the text and its background is less than 4.5:1'
         }
       },
       ibm: {
@@ -893,12 +938,6 @@ const groups = {
   contrastAAA: {
     weight: 1,
     packages: {
-      htmlcs: {
-        'e:WCAG2AAA.Principle1.Guideline1_4.1_4_3.G18': {
-          quality: 1,
-          what: 'Insufficient contrast'
-        }
-      },
       alfa: {
         r66: {
           quality: 1,
@@ -909,6 +948,12 @@ const groups = {
         'color-contrast-enhanced': {
           quality: 1,
           what: 'Elements must have sufficient color contrast (Level AAA)'
+        }
+      },
+      htmlcs: {
+        'e:WCAG2AAA.Principle1.Guideline1_4.1_4_3.G18': {
+          quality: 1,
+          what: 'Insufficient contrast'
         }
       },
       tenon: {
@@ -1139,7 +1184,18 @@ const groups = {
       }
     }
   },
-  pseudoListRisk: {
+  pseudoOrderedListRisk: {
+    weight: 1,
+    packages: {
+      htmlcs: {
+        'w:AA.1_3_1.H48.2': {
+          quality: 1,
+          what: 'Ordered list may fail to be coded as such'
+        }
+      }
+    }
+  },
+  pseudoNavListRisk: {
     weight: 1,
     packages: {
       htmlcs: {
@@ -1220,6 +1276,39 @@ const groups = {
         'a:fieldset_missing': {
           quality: 1,
           what: 'Missing fieldset'
+        }
+      }
+    }
+  },
+  legendMissing: {
+    weight: 2,
+    packages: {
+      htmlcs: {
+        'e:AA.1_3_1.H71.NoLegend': {
+          quality: 1,
+          what: 'Fieldset has no legend element'
+        }
+      }
+    }
+  },
+  fieldSetName: {
+    weight: 3,
+    packages: {
+      htmlcs: {
+        'e:AA.4_1_2.H91.Fieldset.Name': {
+          quality: 1,
+          what: 'Fieldset has no accessible name'
+        }
+      }
+    }
+  },
+  tableCaption: {
+    weight: 1,
+    packages: {
+      htmlcs: {
+        'w:AA.1_3_1.H39.3.NoCaption': {
+          quality: 1,
+          what: 'Table has no caption element'
         }
       }
     }
@@ -1605,13 +1694,24 @@ const groups = {
       }
     }
   },
-  noScriptRisk: {
+  obsoleteElement: {
     weight: 1,
     packages: {
       htmlcs: {
         'e:AA.1_3_1.H49.Center': {
           quality: 1,
           what: 'The center element is obsolete'
+        }
+      }
+    }
+  },
+  obsoleteAttribute: {
+    weight: 1,
+    packages: {
+      htmlcs: {
+        'e:AA.1_3_1.H49.AlignAttr': {
+          quality: 1,
+          what: 'The align attribute is obsolete'
         }
       }
     }

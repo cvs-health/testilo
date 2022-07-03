@@ -62,13 +62,17 @@ const groups = {
       alfa: {
         r3: {
           quality: 1,
-          what: 'Element ID is not unique'
+          what: 'Element id attribute value is not unique'
         }
       },
       axe: {
         'duplicate-id': {
           quality: 1,
-          what: 'ID attribute value must be unique'
+          what: 'id attribute value is not unique'
+        },
+        'duplicate-id-active': {
+          quality: 1,
+          what: 'id attribute value of the active element is not unique'
         }
       },
       htmlcs: {
@@ -80,18 +84,43 @@ const groups = {
       ibm: {
         RPT_Elem_UniqueId: {
           quality: 1,
-          what: 'Element id attribute values must be unique within a document'
+          what: 'Element id attribute value is not unique within the document'
         }
       }
     }
   },
-  textInputNoText: {
+  formFieldNoText: {
     weight: 4,
     packages: {
+      alfa: {
+        r8: {
+          quality: 1,
+          what: 'Form field has no accessible name'
+        }
+      }
+    }
+  },
+  inputNoText: {
+    weight: 4,
+    packages: {
+      axe: {
+        'aria-input-field-name': {
+          quality: 1,
+          what: 'ARIA input field has no accessible name'
+        }
+      },
       htmlcs: {
         'e:AA.4_1_2.H91.InputText.Name': {
           quality: 1,
           what: 'Text input has no accessible name'
+        },
+        'e:AA.4_1_2.H91.InputEmail.Name': {
+          quality: 1,
+          what: 'Email input has no accessible name'
+        },
+        'e:AA.4_1_2.H91.InputNumber.Name': {
+          quality: 1,
+          what: 'Number input has no accessible name'
         }
       }
     }
@@ -120,7 +149,7 @@ const groups = {
       ibm: {
         'v:WCAG20_Input_ExplicitLabelImage': {
           quality: 1,
-          what: 'Input element of type image should have a text alternative'
+          what: 'Input element of type image has no text alternative'
         }
       },
       wave: {
@@ -177,6 +206,17 @@ const groups = {
       }
     }
   },
+  imageTextLong: {
+    weight: 2,
+    packages: {
+      wave: {
+        'a:alt_long': {
+          quality: 1,
+          what: 'Long text alternative'
+        }
+      }
+    }
+  },
   imageTextRisk: {
     weight: 1,
     packages: {
@@ -199,6 +239,32 @@ const groups = {
       }
     }
   },
+  presentationConflict: {
+    weight: 4,
+    packages: {
+      axe: {
+        'presentation-role-conflict': {
+          quality: 1,
+          what: 'Element has a none/presentation role but is focusable or has a global ARIA state or property'
+        }
+      }
+    }
+  },
+  decorativeElementExposed: {
+    weight: 1,
+    packages: {
+      alfa: {
+        r67: {
+          quality: 1,
+          what: 'Image marked as decorative is in the accessibility tree or has no none/presentation role'
+        },
+        r86: {
+          quality: 1,
+          what: 'Element marked as decorative is in the accessibility tree or has no none/presentation role'
+        }
+      }
+    }
+  },
   pageLanguage: {
     weight: 4,
     packages: {
@@ -215,9 +281,9 @@ const groups = {
         }
       },
       htmlcs: {
-        'e:H57': {
+        'e:AA.3_1_1.H57.2': {
           quality: 1,
-          what: 'Lang attribute of the document element'
+          what: 'html element has no lang or xml:lang attribute'
         }
       },
       ibm: {
@@ -342,13 +408,13 @@ const groups = {
       }
     }
   },
-  eventKeyboard: {
-    weight: 4,
+  eventKeyboardRisk: {
+    weight: 1,
     packages: {
       htmlcs: {
-        'w:G90': {
+        'w:AA.2_1_1.G90': {
           quality: 1,
-          what: 'Event handler functionality not available by keyboard'
+          what: 'Event handler functionality may not be available by keyboard'
         }
       },
       wave: {
@@ -372,6 +438,10 @@ const groups = {
         'a:label_orphaned': {
           quality: 1,
           what: 'Orphaned form label'
+        },
+        'a:link_internal_broken': {
+          quality: 1,
+          what: 'Broken same-page link'
         }
       }
     }
@@ -433,7 +503,7 @@ const groups = {
       ibm: {
         'v:WCAG20_A_HasText': {
           quality: 1,
-          what: 'Hyperlinks must have a text description'
+          what: 'Hyperlink has no text description'
         }
       },
       tenon: {
@@ -446,7 +516,11 @@ const groups = {
         'e:link_empty': {
           quality: 1,
           what: 'Link contains no text'
-        }
+        },
+        'e:alt_link_missing': {
+          quality: 1,
+          what: 'Linked image has no text alternative'
+        },
       }
     }
   },
@@ -457,6 +531,17 @@ const groups = {
         'w:AA.4_1_2.H91.A.Placeholder': {
           quality: 1,
           what: 'Link has text but no href, id, or name attribute'
+        }
+      }
+    }
+  },
+  pdfLink: {
+    weight: 1,
+    packages: {
+      wave: {
+        'a:link_pdf': {
+          quality: 1,
+          what: 'Link to PDF document'
         }
       }
     }
@@ -494,6 +579,17 @@ const groups = {
       }
     }
   },
+  linkDestinationsSame: {
+    weight: 2,
+    packages: {
+      tenon: {
+        184: {
+          quality: 1,
+          what: 'Adjacent links point to the same destination'
+        }
+      }
+    }
+  },
   linkConfusionRisk: {
     weight: 1,
     packages: {
@@ -516,6 +612,17 @@ const groups = {
       }
     }
   },
+  formNewWindow: {
+    weight: 2,
+    packages: {
+      tenon: {
+        214: {
+          quality: 1,
+          what: 'Form submission opens a new window'
+        }
+      }
+    }
+  },
   linkForcesNewWindow: {
     weight: 3,
     packages: {
@@ -527,7 +634,7 @@ const groups = {
       }
     }
   },
-  newWindowSurpriseRisk: {
+  linkWindowSurpriseRisk: {
     weight: 1,
     packages: {
       htmlcs: {
@@ -550,10 +657,18 @@ const groups = {
       axe: {
         'aria-command-name': {
           quality: 1,
-          what: 'ARIA commands must have an accessible name'
+          what: 'ARIA command has no accessible name'
+        },
+        'button-name': {
+          quality: 1,
+          what: 'Button has no discernible text'
         }
       },
       htmlcs: {
+        'e:AA.4_1_2.H91.A.Name': {
+          quality: 1,
+          what: 'Link with button role has no accessible name'
+        },
         'e:AA.4_1_2.H91.Button.Name': {
           quality: 1,
           what: 'Button element has no accessible name'
@@ -635,7 +750,11 @@ const groups = {
       axe: {
         'meta-viewport': {
           quality: 1,
-          what: 'Zooming and scaling should not be disabled'
+          what: 'Zooming and scaling are disabled'
+        },
+        'meta-viewport-large': {
+          quality: 1,
+          what: 'User cannot zoom and scale the text up to 500%'
         }
       }
     }
@@ -1028,10 +1147,16 @@ const groups = {
   headingEmpty: {
     weight: 3,
     packages: {
+      alfa: {
+        r64: {
+          quality: 1,
+          what: 'Heading has no non-empty accessible name'
+        }
+      },
       axe: {
         'empty-heading': {
           quality: 1,
-          what: 'Headings should not be empty'
+          what: 'Heading empty'
         }
       },
       htmlcs: {
@@ -1054,6 +1179,17 @@ const groups = {
       }
     }
   },
+  headingOfNothing: {
+    weight: 2,
+    packages: {
+      alfa: {
+        r78: {
+          quality: 1,
+          what: 'No content between two headings of the same level'
+        }
+      }
+    }
+  },
   imageTextRedundant: {
     weight: 1,
     packages: {
@@ -1066,7 +1202,19 @@ const groups = {
       ibm: {
         'v:WCAG20_Img_LinkTextNotRedundant': {
           quality: 1,
-          what: 'Text alternative for image within link should not repeat link text or adjacent link text'
+          what: 'Text alternative for the image in a link repeats text of the same or an adjacent link'
+        }
+      },
+      tenon: {
+        138: {
+          quality: 1,
+          what: 'Image link alternative text repeats text in the link'
+        }
+      },
+      wave: {
+        'a:alt_redundant': {
+          quality: 1,
+          what: 'Redundant text alternative'
         }
       }
     }
@@ -1178,13 +1326,30 @@ const groups = {
       }
     }
   },
+  pseudoParagraphRisk: {
+    weight: 1,
+    packages: {
+      tenon: {
+        242: {
+          quality: 1,
+          what: 'Multiple consecutive br elements may simulate paragraphs'
+        }
+      }
+    }
+  },
   pseudoHeadingRisk: {
     weight: 1,
     packages: {
+      axe: {
+        'p-as-heading': {
+          quality: 1,
+          what: 'Styled p element may be misused as a heading'
+        }
+      },
       htmlcs: {
         'w:AA.1_3_1.H42': {
           quality: 1,
-          what: 'Heading coding should be used if intended as a heading'
+          what: 'Heading coding is not used but the element may be intended as a heading'
         }
       },
       wave: {
@@ -1207,12 +1372,23 @@ const groups = {
     }
   },
   listChild: {
-    weight: 1,
+    weight: 4,
     packages: {
       axe: {
         'list': {
           quality: 1,
           what: 'List element ul or ol has a child element other than li, script, and template'
+        }
+      }
+    }
+  },
+  listItemOrphan: {
+    weight: 4,
+    packages: {
+      axe: {
+        listitem: {
+          quality: 1,
+          what: 'li element is not contained by a ul or ol element'
         }
       }
     }
@@ -1252,6 +1428,10 @@ const groups = {
         'e:AA.4_1_2.H91.Select.Name': {
           quality: 1,
           what: 'Select element has no accessible name'
+        },
+        'w:AA.4_1_2.H91.Select.Value': {
+          quality: 1,
+          what: 'Select element value has no accessible name'
         }
       },
       wave: {
@@ -1321,12 +1501,24 @@ const groups = {
           quality: 1,
           what: 'Fieldset has no legend element'
         }
+      },
+      wave: {
+        'a:legend_missing': {
+          quality: 1,
+          what: 'Fieldset has no legend element'
+        }
       }
     }
   },
-  fieldSetName: {
+  groupName: {
     weight: 3,
     packages: {
+      alfa: {
+        r60: {
+          quality: 1,
+          what: 'Form-control group has no accessible name'
+        }
+      },
       htmlcs: {
         'e:AA.4_1_2.H91.Fieldset.Name': {
           quality: 1,
@@ -1366,6 +1558,18 @@ const groups = {
   invisibleLabel: {
     weight: 3,
     packages: {
+      alfa: {
+        r14: {
+          quality: 1,
+          what: 'Visible label is not in the accessible name'
+        }
+      },
+      axe: {
+        'label-content-name-mismatch': {
+          quality: 1,
+          what: 'Element visible text is not part of its accessible name'
+        }
+      },
       htmlcs: {
         'w:AA.2_5_3.F96': {
           quality: 1,
@@ -1438,6 +1642,12 @@ const groups = {
   allCaps: {
     weight: 1,
     packages: {
+      alfa: {
+        r72: {
+          quality: 1,
+          what: 'Paragraph text is uppercased'
+        }
+      },
       tenon: {
         153: {
           quality: 1,
@@ -1446,13 +1656,52 @@ const groups = {
       }
     }
   },
-  textBeyondLandmarks: {
+  allItalics: {
+    weight: 1,
+    packages: {
+      tenon: {
+        154: {
+          quality: 1,
+          what: 'Long string of text is italic'
+        }
+      }
+    }
+  },
+  contentBeyondLandmarks: {
     weight: 2,
     packages: {
       alfa: {
         r57: {
           quality: 1,
-          what: 'Perceivable text content not included in any landmark'
+          what: 'Perceivable text content is not included in any landmark'
+        }
+      },
+      axe: {
+        region: {
+          quality: 1,
+          what: 'Some page content is not contained by landmarks'
+        }
+      }
+    }
+  },
+  footerTopLandmark: {
+    weight: 1,
+    packages: {
+      axe: {
+        'landmark-contentinfo-is-top-level': {
+          quality: 1,
+          what: 'contentinfo landmark (footer) is contained in another landmark'
+        }
+      }
+    }
+  },
+  asideTopLandmark: {
+    weight: 2,
+    packages: {
+      axe: {
+        'landmark-complementary-is-top-level': {
+          quality: 1,
+          what: 'complementary landmark (aside) is contained in another landmark'
         }
       }
     }
@@ -1468,13 +1717,28 @@ const groups = {
       }
     }
   },
-  multipleMain: {
+  mainLandmark: {
     weight: 2,
     packages: {
       axe: {
+        'landmark-one-main': {
+          quality: 1,
+          what: 'page has no main landmark'
+        },
         'landmark-no-duplicate-main': {
           quality: 1,
           what: 'page has more than 1 main landmark'
+        }
+      }
+    }
+  },
+  footerMultiple: {
+    weight: 2,
+    packages: {
+      axe: {
+        'landmark-no-duplicate-contentinfo': {
+          quality: 1,
+          what: 'page has more than 1 contentinfo landmark (footer)'
         }
       }
     }
@@ -1595,6 +1859,17 @@ const groups = {
       }
     }
   },
+  linkComprehensionRisk: {
+    weight: 1,
+    packages: {
+      wave: {
+        'a:link_suspicious': {
+          quality: 1,
+          what: 'Suspicious link text'
+        }
+      }
+    }
+  },
   linkVague: {
     weight: 3,
     packages: {
@@ -1606,13 +1881,25 @@ const groups = {
       }
     }
   },
-  linkUnderlines: {
+  linkIndication: {
     weight: 2,
     packages: {
+      alfa: {
+        r62: {
+          quality: 1,
+          what: 'Inline link is not distinct from the surrounding text except by color'
+        }
+      },
+      axe: {
+        'link-in-text-block': {
+          quality: 1,
+          what: 'Link is not distinct from surrounding text without reliance on color'
+        }
+      },
       testaro: {
         linkUl: {
           quality: 1,
-          what: 'Non-underlined inline links'
+          what: 'Non-underlined adjacent links'
         }
       }
     }
@@ -1679,6 +1966,12 @@ const groups = {
         tabindex: {
           quality: 1,
           what: 'Positive tabIndex risks creating a confusing focus order'
+        }
+      },
+      wave: {
+        'a:tabindex': {
+          quality: 1,
+          what: 'tabIndex value positive'
         }
       }
     }
@@ -1785,10 +2078,16 @@ const groups = {
   obsoleteElement: {
     weight: 1,
     packages: {
+      alfa: {
+        r70: {
+          quality: 1,
+          what: 'Element is obsolete or deprecated'
+        }
+      },
       htmlcs: {
         'e:AA.1_3_1.H49.Center': {
           quality: 1,
-          what: 'The center element is obsolete'
+          what: 'Element is obsolete'
         }
       }
     }

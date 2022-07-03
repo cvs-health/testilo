@@ -1,7 +1,7 @@
 /*
   compare.js
   Testilo comparison script.
-  Usage example: node compare 35k1r cp0
+  Usage example: node compare cp12a candidates
 */
 
 // ########## IMPORTS
@@ -14,8 +14,8 @@ const fs = require('fs/promises');
 // ########## CONSTANTS
 
 const comparisonDir = process.env.COMPARISONDIR || 'reports/comparative';
-const comparisonNameBase = process.argv[2];
-const compareProcID = process.argv[3];
+const compareProcID = process.argv[2];
+const comparisonNameBase = process.argv[3];
 
 // ########## FUNCTIONS
 

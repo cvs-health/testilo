@@ -601,6 +601,28 @@ const groups = {
       }
     }
   },
+  cssBansRotate: {
+    weight: 4,
+    packages: {
+      axe: {
+        'css-orientation-lock': {
+          quality: 1,
+          what: 'CSS media query locks display orientation'
+        }
+      }
+    }
+  },
+  textRotated: {
+    weight: 2,
+    packages: {
+      tenon: {
+        271: {
+          quality: 1,
+          what: 'Text is needlessly rotated 60+ degrees or more, hurting comprehension'
+        }
+      }
+    }
+  },
   metaBansZoom: {
     weight: 4,
     packages: {
@@ -1184,6 +1206,17 @@ const groups = {
       }
     }
   },
+  listChild: {
+    weight: 1,
+    packages: {
+      axe: {
+        'list': {
+          quality: 1,
+          what: 'List element ul or ol has a child element other than li, script, and template'
+        }
+      }
+    }
+  },
   pseudoOrderedListRisk: {
     weight: 1,
     packages: {
@@ -1212,13 +1245,13 @@ const groups = {
       axe: {
         'select-name': {
           quality: 1,
-          what: 'Select element must have an accessible name'
+          what: 'Select element has no accessible name'
         }
       },
       htmlcs: {
-        'w:H91': {
+        'e:AA.4_1_2.H91.Select.Name': {
           quality: 1,
-          what: 'Select element has no value available to an accessibility API'
+          what: 'Select element has no accessible name'
         }
       },
       wave: {
@@ -1446,6 +1479,17 @@ const groups = {
       }
     }
   },
+  landmarkConfusion: {
+    weight: 3,
+    packages: {
+      axe: {
+        'landmark-unique': {
+          quality: 1,
+          what: 'Landmark has a role and an accessible name that are identical to another'
+        }
+      }
+    }
+  },
   focusableOperable: {
     weight: 3,
     packages: {
@@ -1481,6 +1525,17 @@ const groups = {
         'aria-hidden-focus': {
           quality: 1,
           what: 'ARIA hidden element is focusable or contains a focusable element'
+        }
+      }
+    }
+  },
+  labeledHidden: {
+    weight: 2,
+    packages: {
+      htmlcs: {
+        'w:AA.1_3_1.F68.Hidden': {
+          quality: 1,
+          what: 'Hidden form field is needlessly labeled.'
         }
       }
     }
@@ -1536,6 +1591,17 @@ const groups = {
         'w:AA.1_3_1.ARIA6': {
           quality: 1,
           what: 'Value of the aria-label attribute of the form control is empty or only whitespace'
+        }
+      }
+    }
+  },
+  linkVague: {
+    weight: 3,
+    packages: {
+      tenon: {
+        73: {
+          quality: 1,
+          what: 'Link text is too generic to communicate the purpose or destination'
         }
       }
     }
@@ -1602,6 +1668,28 @@ const groups = {
         zIndex: {
           quality: 1,
           what: 'Layering with nondefault z-index values'
+        }
+      }
+    }
+  },
+  tabIndexPositive: {
+    weight: 1,
+    packages: {
+      axe: {
+        tabindex: {
+          quality: 1,
+          what: 'Positive tabIndex risks creating a confusing focus order'
+        }
+      }
+    }
+  },
+  tabIndexMissing: {
+    weight: 4,
+    packages: {
+      tenon: {
+        190: {
+          quality: 1,
+          what: 'Interactive item is not natively actionable, but has no tabindex=0 attribute'
         }
       }
     }

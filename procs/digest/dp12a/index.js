@@ -1,36 +1,37 @@
 /*
-  index: digester for scoring procedure sp11a.
+  index: digester for scoring procedure sp12a.
   Creator of parameters for substitution into index.html.
-  Usage example: node digest 35k1r-railpass dp11a
+  Usage example for selected files: node digest dp12a 35k1r
+  Usage example for all files in REPORTDIR_SCORED: node digest dp12a
 */
 
 // CONSTANTS
 
-// Newlines with indentations.
-const joiner = '\n      ';
-const innerJoiner = '\n        ';
-const specialMessages = {
-  log: 'This is based on the amount of browser logging during the tests. Browsers usually log messages only when pages contain erroneous code.',
-  preventions: 'This is based on tests that the page did not allow to be run. That impedes accessibility progress and risks interfering with tools that users with disabilities need.',
-  solos: 'This is based on issues reported by unclassified tests. Details are in the report.'
-};
+  // Newlines with indentations.
+  const joiner = '\n      ';
+  const innerJoiner = '\n        ';
+  const specialMessages = {
+    log: 'This is based on the amount of browser error logging and miscellaneous logging during the tests.',
+    preventions: 'This is based on tests that the page did not allow to be run. That impedes accessibility progress and risks interfering with tools that users with disabilities need.',
+    solos: 'This is based on issues reported by unclassified tests. Details are in the report.'
+  };
 
 // FUNCTIONS
 
 // Makes strings HTML-safe.
 const htmlEscape = textOrNumber => textOrNumber
-  .toString()
-  .replace(/&/g, '&amp;')
-  .replace(/</g, '&lt;');
+.toString()
+.replace(/&/g, '&amp;')
+.replace(/</g, '&lt;');
 // Gets a row of the score-summary table.
 const getScoreRow = (component, score) => `<tr><th>${component}</th><td>${score}</td></tr>`;
 // Gets the start of a paragraph about a special score.
 const getSpecialPStart = (summary, scoreID) =>
-  `<p><span class="componentID">${scoreID}</span>: Score ${summary[scoreID]}.`;
+`<p><span class="componentID">${scoreID}</span>: Score ${summary[scoreID]}.`;
 // Adds parameters to a query for a digest.
 exports.makeQuery = (report, query) => {
   // Add an HTML-safe copy of the host report to the query to be appended to the digest.
-  const { script, host, score } = report;
+  const {script, host, score} = report;
   const reportJSON = JSON.stringify(report, null, 2);
   const reportJSONSafe = htmlEscape(reportJSON);
   query.report = reportJSONSafe;
@@ -52,9 +53,10 @@ exports.makeQuery = (report, query) => {
       return;
     }
   }
-  const { groupDetails, summary } = score;
-  if (typeof summary.total === 'number') {
-    query.totalScore = summary.total;
+  const {groupDetails, summary} = score;
+  const {total, groups} = summary;
+  if (typeof total === 'number') {
+    query.totalScore = total;
   }
   else {
     console.log('ERROR: missing or invalid total score');
@@ -69,11 +71,8 @@ exports.makeQuery = (report, query) => {
     }
   });
   // Add the group rows of the score-summary table to the query.
-  const { groups } = summary;
-  const groupIDs = Object.keys(groups);
-  groupIDs.sort((a, b) => groups[b] - groups[a]);
-  groupIDs.forEach(groupID => {
-    scoreRows.push(getScoreRow(`${groupID}`, groups[groupID]));
+  groups.forEach(group => {
+    scoreRows.push(getScoreRow(`${group.groupName}`, group.score));
   });
   query.scoreRows = scoreRows.join(innerJoiner);
   // If the score has any special components:
@@ -89,24 +88,24 @@ exports.makeQuery = (report, query) => {
   // Otherwise, i.e. if the score has no special components:
   else {
     // Add a paragraph stating this for the issue summary to the query.
-    query.specialSummary = '<p>No special issues contributed to the score.</p>';
+    query.specialSummary = '<p>No special issues contributed to the score.</p>'
   }
   // If the score has any classified issues as components:
-  if (groupIDs.length) {
+  if (groups.length) {
     // Add paragraphs about them for the special summary to the query.
     const groupSummaryItems = [];
-    groupIDs.forEach(id => {
-      const groupP = `<p><span class="componentID">${id}</span>: Score ${summary.groups[id]}. Issues reported by tests in this category:</p>`;
+    groups.forEach(group => {
+      const {groupName, score} = group;
+      const groupP = `<p><span class="componentID">${groupName}</span>: Score ${score}. Issues reported by tests in this category:</p>`;
       const groupListItems = [];
-      const groupData = groupDetails.groups[id];
+      const groupData = groupDetails.groups[groupName];
       const packageIDs = Object.keys(groupData);
       packageIDs.forEach(packageID => {
         const testIDs = Object.keys(groupData[packageID]);
         testIDs.forEach(testID => {
           const testData = groupData[packageID][testID];
-          const { issueCount } = testData;
-          const issueNoun = issueCount !== 1 ? 'issues' : 'issue';
-          const listItem = `<li>${issueCount} ${issueNoun} reported by package <code>${packageID}</code>, test <code>${testID}</code> (${testData.what})</li>`;
+          const {score, what} = testData;
+          const listItem = `<li>Package <code>${packageID}</code>, test <code>${testID}</code>, score ${score} (${what})</li>`;
           groupListItems.push(listItem);
         });
       });
@@ -122,6 +121,6 @@ exports.makeQuery = (report, query) => {
   // Otherwise, i.e. if the score has no classified issues as components:
   else {
     // Add a paragraph stating this for the group summary to the query.
-    query.groupSummary = '<p>No classified issues contributed to the score.</p>';
+    query.groupSummary = '<p>No classified issues contributed to the score.</p>'
   }
 };

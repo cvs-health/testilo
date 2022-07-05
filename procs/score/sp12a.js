@@ -172,7 +172,7 @@ const groups = {
       axe: {
         'image-alt': {
           quality: 1,
-          what: 'Images must have alternate text'
+          what: 'Image has no text alternative'
         }
       },
       htmlcs: {
@@ -190,7 +190,7 @@ const groups = {
       wave: {
         'e:alt_missing': {
           quality: 1,
-          what: 'Missing alternative text'
+          what: 'Text alternative is missing'
         }
       }
     }
@@ -202,6 +202,17 @@ const groups = {
         'r39': {
           quality: 1,
           what: 'Image text alternative is the filename instead'
+        }
+      }
+    }
+  },
+  imagesSameAlt: {
+    weight: 1,
+    packages: {
+      wave: {
+        'a:alt_duplicate': {
+          quality: 1,
+          what: 'Two images near each other have the same text alternative'
         }
       }
     }
@@ -235,17 +246,6 @@ const groups = {
         'w:AA.1_1_1.H67.2': {
           quality: 1,
           what: 'Image marked as decorative may be informative'
-        }
-      }
-    }
-  },
-  presentationConflict: {
-    weight: 4,
-    packages: {
-      axe: {
-        'presentation-role-conflict': {
-          quality: 1,
-          what: 'Element has a none/presentation role but is focusable or has a global ARIA state or property'
         }
       }
     }
@@ -510,6 +510,10 @@ const groups = {
         57: {
           quality: 1,
           what: 'Link has no text inside it'
+        },
+        91: {
+          quality: 1,
+          what: 'Link has a background image but no text inside it'
         }
       },
       wave: {
@@ -953,6 +957,10 @@ const groups = {
     weight: 4,
     packages: {
       alfa: {
+        r19: {
+          quality: 1,
+          what: 'ARIA state or property has an invalid value'
+        },
         r20: {
           quality: 1,
           what: 'ARIA attribute is not defined'
@@ -1326,6 +1334,32 @@ const groups = {
       }
     }
   },
+  justification: {
+    weight: 1,
+    packages: {
+      wave: {
+        'a:text_justified': {
+          quality: 1,
+          what: 'Text is justified'
+        }
+      }
+    }
+  },
+  nonSemanticText: {
+    weight: 2,
+    packages: {
+      htmlcs: {
+        'w:AA.1_3_1.H49.B': {
+          quality: 1,
+          what: 'Bold text is coded nonsemantically'
+        },
+        'w:AA.1_3_1.H49.Small': {
+          quality: 1,
+          what: 'Small text is coded nonsemantically'
+        }
+      }
+    }
+  },
   pseudoParagraphRisk: {
     weight: 1,
     packages: {
@@ -1365,6 +1399,12 @@ const groups = {
     packages: {
       tenon: {
         129: {
+          quality: 1,
+          what: 'CSS underline on text that is not a link'
+        }
+      },
+      wave: {
+        'a:underline': {
           quality: 1,
           what: 'CSS underline on text that is not a link'
         }
@@ -1527,6 +1567,17 @@ const groups = {
       }
     }
   },
+  layoutTable: {
+    weight: 2,
+    packages: {
+      wave: {
+        'a:table_layout': {
+          quality: 1,
+          what: 'Table element is misused to arrange content'
+        }
+      }
+    }
+  },
   tableCaption: {
     weight: 1,
     packages: {
@@ -1538,7 +1589,18 @@ const groups = {
       }
     }
   },
-  nameValue: {
+  tableCellHeaderless: {
+    weight: 4,
+    packages: {
+      alfa: {
+        r77: {
+          quality: 1,
+          what: 'Table cell has no header'
+        }
+      }
+    }
+  },
+  controlLabel: {
     weight: 4,
     packages: {
       htmlcs: {
@@ -1551,6 +1613,17 @@ const groups = {
         'e:label_missing': {
           quality: 1,
           what: 'Missing form label'
+        }
+      }
+    }
+  },
+  titleAsLabel: {
+    weight: 3,
+    packages: {
+      wave: {
+        'a:label_title': {
+          quality: 1,
+          what: 'Form control has a title but no label'
         }
       }
     }
@@ -1603,10 +1676,16 @@ const groups = {
   activeEmbedding: {
     weight: 3,
     packages: {
+      axe: {
+        'nested-interactive': {
+          quality: 1,
+          what: 'Interactive controls are nested'
+        }
+      },
       testaro: {
         embAc: {
           quality: 1,
-          what: 'Active elements embedded in links or buttons'
+          what: 'Active element is embedded in a link or button'
         }
       }
     }
@@ -1732,6 +1811,17 @@ const groups = {
       }
     }
   },
+  bannerLandmark: {
+    weight: 2,
+    packages: {
+      axe: {
+        'landmark-no-duplicate-banner': {
+          quality: 1,
+          what: 'page has more than 1 banner landmark'
+        }
+      }
+    }
+  },
   footerMultiple: {
     weight: 2,
     packages: {
@@ -1789,6 +1879,20 @@ const groups = {
         'aria-hidden-focus': {
           quality: 1,
           what: 'ARIA hidden element is focusable or contains a focusable element'
+        },
+        'presentation-role-conflict': {
+          quality: 1,
+          what: 'Element has a none/presentation role but is focusable or has a global ARIA state or property'
+        }
+      },
+      tenon: {
+        189: {
+          quality: 1,
+          what: 'Element is typically used for interaction but has a presentation role'
+        },
+        194: {
+          quality: 1,
+          what: 'Visible element is focusable but has a presentation role or aria-hidden=true attribute'
         }
       }
     }
@@ -2002,9 +2106,13 @@ const groups = {
     weight: 1,
     packages: {
       wave: {
+        'a:html5_video_audio': {
+          quality: 1,
+          what: 'video or audio element may have no or incorrect captions, transcript, or audio description'
+        },
         'a:youtube_video': {
           quality: 1,
-          what: 'YouTube video may fail to be captioned'
+          what: 'YouTube video may have no or incorrect captions'
         }
       }
     }
@@ -2049,6 +2157,12 @@ const groups = {
         'r87': {
           quality: 0.5,
           what: 'First focusable element is not a link to the main content'
+        }
+      },
+      axe: {
+        'skip-link': {
+          quality: 1,
+          what: 'Skip-link target is not focusable or does not exist'
         }
       }
     }

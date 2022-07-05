@@ -6,31 +6,31 @@
 
 // CONSTANTS
 
-  // Newlines with indentations.
-  const joiner = '\n      ';
-  const innerJoiner = '\n        ';
-  const specialMessages = {
-    log: 'This is based on the amount of browser logging during the tests. Browsers usually log messages only when pages contain erroneous code.',
-    preventions: 'This is based on tests that the page did not allow to be run. That impedes accessibility progress and risks interfering with tools that users with disabilities need.',
-    solos: 'This is based on issues reported by unclassified tests. Details are in the report.'
-  };
+// Newlines with indentations.
+const joiner = '\n      ';
+const innerJoiner = '\n        ';
+const specialMessages = {
+  log: 'This is based on the amount of browser logging during the tests. Browsers usually log messages only when pages contain erroneous code.',
+  preventions: 'This is based on tests that the page did not allow to be run. That impedes accessibility progress and risks interfering with tools that users with disabilities need.',
+  solos: 'This is based on issues reported by unclassified tests. Details are in the report.'
+};
 
 // FUNCTIONS
 
 // Makes strings HTML-safe.
 const htmlEscape = textOrNumber => textOrNumber
-.toString()
-.replace(/&/g, '&amp;')
-.replace(/</g, '&lt;');
+  .toString()
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;');
 // Gets a row of the score-summary table.
 const getScoreRow = (component, score) => `<tr><th>${component}</th><td>${score}</td></tr>`;
 // Gets the start of a paragraph about a special score.
 const getSpecialPStart = (summary, scoreID) =>
-`<p><span class="componentID">${scoreID}</span>: Score ${summary[scoreID]}.`;
+  `<p><span class="componentID">${scoreID}</span>: Score ${summary[scoreID]}.`;
 // Adds parameters to a query for a digest.
 exports.makeQuery = (report, query) => {
   // Add an HTML-safe copy of the host report to the query to be appended to the digest.
-  const {script, host, score} = report;
+  const { script, host, score } = report;
   const reportJSON = JSON.stringify(report, null, 2);
   const reportJSONSafe = htmlEscape(reportJSON);
   query.report = reportJSONSafe;
@@ -52,7 +52,7 @@ exports.makeQuery = (report, query) => {
       return;
     }
   }
-  const {groupDetails, summary} = score;
+  const { groupDetails, summary } = score;
   if (typeof summary.total === 'number') {
     query.totalScore = summary.total;
   }
@@ -69,7 +69,7 @@ exports.makeQuery = (report, query) => {
     }
   });
   // Add the group rows of the score-summary table to the query.
-  const {groups} = summary;
+  const { groups } = summary;
   const groupIDs = Object.keys(groups);
   groupIDs.sort((a, b) => groups[b] - groups[a]);
   groupIDs.forEach(groupID => {
@@ -104,7 +104,7 @@ exports.makeQuery = (report, query) => {
         const testIDs = Object.keys(groupData[packageID]);
         testIDs.forEach(testID => {
           const testData = groupData[packageID][testID];
-          const {issueCount} = testData;
+          const { issueCount } = testData;
           const issueNoun = issueCount !== 1 ? 'issues' : 'issue';
           const listItem = `<li>${issueCount} ${issueNoun} reported by package <code>${packageID}</code>, test <code>${testID}</code> (${testData.what})</li>`;
           groupListItems.push(listItem);

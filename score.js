@@ -1,7 +1,9 @@
 /*
   score.js
   Testilo scoring script.
-  Usage example: node score 35k1r-railpass sp10a
+  Usage examples:
+    node score sp12b 35k1r-railpass
+    node score sp12b
 */
 
 // ########## IMPORTS

@@ -746,6 +746,10 @@ const groups = {
         'button-name': {
           quality: 1,
           what: 'Button has no discernible text'
+        },
+        'input-button-name': {
+          quality: 1,
+          what: 'Input button has no discernible text'
         }
       },
       htmlcs: {
@@ -756,6 +760,10 @@ const groups = {
         'e:AA.4_1_2.H91.Button.Name': {
           quality: 1,
           what: 'Button element has no accessible name'
+        },
+        'e:AA.4_1_2.H91.InputButton.Name': {
+          quality: 1,
+          what: 'Button input element has no accessible name'
         }
       },
       wave: {

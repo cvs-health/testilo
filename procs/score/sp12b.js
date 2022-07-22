@@ -2814,10 +2814,12 @@ exports.scorer = async report => {
         }
         else if (which === 'radioSet') {
           const totals = test.result && test.result.totals;
-          const {total, inSet} = totals;
-          const score = total - inSet || 0;
-          // Add 1 per misgrouped radio button.
-          addDetail('testaro', which, score);
+          if (totals) {
+            const {total, inSet} = totals;
+            const score = total - inSet || 0;
+            // Add 1 per misgrouped radio button.
+            addDetail('testaro', which, score);
+          }
         }
         else if (which === 'role') {
           const badCount = test.result && test.result.badRoleElements || 0;

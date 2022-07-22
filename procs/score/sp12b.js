@@ -202,6 +202,10 @@ const groups = {
         'image-alt': {
           quality: 1,
           what: 'Image has no text alternative'
+        },
+        'role-img-alt': {
+          quality: 1,
+          what: 'Element with role img has no text alternative'
         }
       },
       htmlcs: {
@@ -476,6 +480,18 @@ const groups = {
         'w:AA.2_1_1.G90': {
           quality: 1,
           what: 'Event handler functionality may not be available by keyboard'
+        },
+        'w:AA.2_1_1.SCR20.MouseOut': {
+          quality: 1,
+          what: 'Mousing-out functionality may not be available by keyboard'
+        },
+        'w:AA.2_1_1.SCR20.MouseOver': {
+          quality: 1,
+          what: 'Mousing-over functionality may not be available by keyboard'
+        },
+        'w:AA.2_1_1.SCR20.MouseDown': {
+          quality: 1,
+          what: 'Mousing-down functionality may not be available by keyboard'
         }
       },
       wave: {
@@ -619,6 +635,28 @@ const groups = {
       }
     }
   },
+  acronymNoTitle: {
+    weight: 4,
+    packages: {
+      tenon: {
+        117: {
+          quality: 1,
+          what: 'acronym element has no useful title value (and is deprecated; use abbr)'
+        }
+      }
+    }
+  },
+  abbreviationNoTitle: {
+    weight: 4,
+    packages: {
+      tenon: {
+        233: {
+          quality: 1,
+          what: 'abbr element is first for its abbreviation but has no useful title value'
+        }
+      }
+    }
+  },
   pdfLink: {
     weight: 1,
     packages: {
@@ -729,6 +767,17 @@ const groups = {
       }
     }
   },
+  selectNavSurpriseRisk: {
+    weight: 1,
+    packages: {
+      wave: {
+        'a:javascript_jumpmenu': {
+          quality: 1,
+          what: 'selection change may navigate to another page without notice'
+        }
+      }
+    }
+  },
   buttonNoText: {
     weight: 4,
     packages: {
@@ -756,6 +805,10 @@ const groups = {
         'e:AA.4_1_2.H91.A.Name': {
           quality: 1,
           what: 'Link with button role has no accessible name'
+        },
+        'e:AA.4_1_2.H91.Div.Name': {
+          quality: 1,
+          what: 'div element with button role has no accessible name'
         },
         'e:AA.4_1_2.H91.Button.Name': {
           quality: 1,
@@ -1017,6 +1070,10 @@ const groups = {
         }
       },
       axe: {
+        'aria-roles': {
+          quality: 1,
+          what: 'ARIA role has an invalid value'
+        },
         'aria-allowed-role': {
           quality: 1,
           what: 'ARIA role is not appropriate for the element'
@@ -1787,6 +1844,28 @@ const groups = {
       }
     }
   },
+  cellHeadersNotInferrable: {
+    weight: 4,
+    packages: {
+      htmlcs: {
+        'e:AA.1_3_1.H43.HeadersRequired': {
+          quality: 1,
+          what: 'Complex table requires headers attributes of cells'
+        }
+      }
+    }
+  },
+  cellHeadersAmbiguityRisk: {
+    weight: 3,
+    packages: {
+      htmlcs: {
+        'w:AA.1_3_1.H43.ScopeAmbiguous': {
+          quality: 1,
+          what: 'Complex table requires headers attributes of cells instead of header scopes'
+        }
+      }
+    }
+  },
   tableCellHeaderless: {
     weight: 4,
     packages: {
@@ -1794,6 +1873,17 @@ const groups = {
         r77: {
           quality: 1,
           what: 'Table cell has no header'
+        }
+      }
+    }
+  },
+  tableHeaderCelless: {
+    weight: 4,
+    packages: {
+      axe: {
+        'th-has-data-cells': {
+          quality: 1,
+          what: 'Table header refers to no cell'
         }
       }
     }
@@ -1843,6 +1933,17 @@ const groups = {
       }
     }
   },
+  controlLabelInvisible: {
+    weight: 4,
+    packages: {
+      axe: {
+        'label-title-only': {
+          quality: 1,
+          what: 'Form element has no visible label'
+        }
+      }
+    }
+  },
   titleAsLabel: {
     weight: 3,
     packages: {
@@ -1854,7 +1955,7 @@ const groups = {
       }
     }
   },
-  invisibleLabel: {
+  visibleLabelNotName: {
     weight: 3,
     packages: {
       alfa: {
@@ -2017,7 +2118,7 @@ const groups = {
       }
     }
   },
-  asideTopLandmark: {
+  asideNotTop: {
     weight: 2,
     packages: {
       axe: {
@@ -2028,7 +2129,7 @@ const groups = {
       }
     }
   },
-  mainTopLandmark: {
+  mainNotTop: {
     weight: 2,
     packages: {
       axe: {
@@ -2039,7 +2140,7 @@ const groups = {
       }
     }
   },
-  mainLandmark: {
+  mainNot1: {
     weight: 2,
     packages: {
       axe: {
@@ -2054,13 +2155,24 @@ const groups = {
       }
     }
   },
-  bannerLandmark: {
+  banners: {
     weight: 2,
     packages: {
       axe: {
         'landmark-no-duplicate-banner': {
           quality: 1,
           what: 'page has more than 1 banner landmark'
+        }
+      }
+    }
+  },
+  bannerNotTop: {
+    weight: 2,
+    packages: {
+      axe: {
+        'landmark-banner-is-top-level': {
+          quality: 1,
+          what: 'banner landmark is contained in another landmark'
         }
       }
     }
@@ -2202,6 +2314,12 @@ const groups = {
         labClash: {
           quality: 1,
           what: 'Incompatible label types'
+        }
+      },
+      wave: {
+        'e:label_multiple': {
+          quality: 1,
+          what: 'Form control has more than one label associated with it'
         }
       }
     }
@@ -2399,6 +2517,12 @@ const groups = {
         r84: {
           quality: 1,
           what: 'Element is scrollable but not by keyboard'
+        }
+      },
+      axe: {
+        'scrollable-region-focusable': {
+          quality: 1,
+          what: 'Element is scrollable but has no keyboard access'
         }
       }
     }

@@ -135,6 +135,10 @@ const groups = {
           quality: 1,
           what: 'Email input has no accessible name'
         },
+        'e:AA.4_1_2.H91.InputFile.Name': {
+          quality: 1,
+          what: 'File input element has no accessible name'
+        },
         'e:AA.4_1_2.H91.InputTel.Name': {
           quality: 1,
           what: 'Telephone input has no accessible name'
@@ -414,6 +418,12 @@ const groups = {
   objectNoText: {
     weight: 4,
     packages: {
+      alfa: {
+        r63: {
+          quality: 1,
+          what: 'Object element has no accessible name'
+        }
+      },
       axe: {
         'object-alt': {
           quality: 1,
@@ -440,13 +450,24 @@ const groups = {
       }
     }
   },
+  imageMapNoText: {
+    weight: 4,
+    packages: {
+      wave: {
+        'e:alt_map_missing': {
+          quality: 1,
+          what: 'Image that has hot spots has no alt attribute'
+        }
+      }
+    }
+  },
   imageMapAreaNoText: {
     weight: 4,
     packages: {
       axe: {
         'area-alt': {
           quality: 1,
-          what: 'Active area elements has no text alternative'
+          what: 'Active area element has no text alternative'
         }
       },
       htmlcs: {
@@ -469,6 +490,28 @@ const groups = {
         'e:alt_area_missing': {
           quality: 1,
           what: 'Image map area missing alternative text'
+        }
+      }
+    }
+  },
+  objectBlurKeyboardRisk: {
+    weight: 1,
+    packages: {
+      htmlcs: {
+        'w:AA.2_1_2.F10': {
+          quality: 1,
+          what: 'Applet or plugin may fail to enable moving the focus away with the keyboard'
+        }
+      }
+    }
+  },
+  keyboardAccess: {
+    weight: 4,
+    packages: {
+      tenon: {
+        180: {
+          quality: 1,
+          what: 'Element is interactive but has a negative tabindex value'
         }
       }
     }
@@ -693,6 +736,12 @@ const groups = {
   linkTextsSame: {
     weight: 2,
     packages: {
+      htmlcs: {
+        'e:AA.1_1_1.H2.EG3': {
+          quality: 1,
+          what: 'alt value of the link img element duplicates the text of a link beside it'
+        }
+      },
       tenon: {
         98: {
           quality: 1,
@@ -701,13 +750,24 @@ const groups = {
       }
     }
   },
-  linkDestinationsSame: {
+  nextLinkDestinationSame: {
     weight: 2,
     packages: {
       tenon: {
         184: {
           quality: 1,
           what: 'Adjacent links point to the same destination'
+        }
+      }
+    }
+  },
+  linkDestinationsSame: {
+    weight: 2,
+    packages: {
+      tenon: {
+        132: {
+          quality: 1,
+          what: 'area element has the same href as another but a different alt'
         }
       }
     }
@@ -814,9 +874,17 @@ const groups = {
           quality: 1,
           what: 'Button element has no accessible name'
         },
+        'e:AA.4_1_2.H91.Img.Name': {
+          quality: 1,
+          what: 'img element with button role has no accessible name'
+        },
         'e:AA.4_1_2.H91.InputButton.Name': {
           quality: 1,
           what: 'Button input element has no accessible name'
+        },
+        'e:AA.4_1_2.H91.Span.Name': {
+          quality: 1,
+          what: 'Element with button role has no accessible name'
         }
       },
       wave: {
@@ -1106,6 +1174,23 @@ const groups = {
         'v:Rpt_Aria_RequiredProperties': {
           quality: 1,
           what: 'ARIA role on an element does not have a required attribute'
+        }
+      }
+    }
+  },
+  ariaMissing: {
+    weight: 4,
+    packages: {
+      alfa: {
+        r16: {
+          quality: 1,
+          what: 'Element does not have all required states and properties'
+        }
+      },
+      wave: {
+        'e:aria_reference_broken': {
+          quality: 1,
+          what: 'Broken ARIA reference'
         }
       }
     }
@@ -1520,6 +1605,12 @@ const groups = {
           quality: 1,
           what: 'Document has no headings'
         }
+      },
+      wave: {
+        'a:heading_missing': {
+          quality: 1,
+          what: 'Page has no headings'
+        }
       }
     }
   },
@@ -1596,6 +1687,14 @@ const groups = {
         'w:AA.1_3_1.H49.U': {
           quality: 1,
           what: 'Special text is underlined nonsemantically'
+        },
+        'w:AA.1_3_1.H49.Center': {
+          quality: 1,
+          what: 'Special text is centered nonsemantically'
+        },
+        'w:AA.1_3_1.H49.Font': {
+          quality: 1,
+          what: 'Special text is designated nonsemantically with a (deprecated) font element'
         }
       }
     }
@@ -1740,10 +1839,22 @@ const groups = {
   accessKeyDuplicate: {
     weight: 3,
     packages: {
+      axe: {
+        accesskeys: {
+          quality: 1,
+          what: 'accesskey attribute value is not unique'
+        }
+      },
       ibm: {
         'v:WCAG20_Elem_UniqueAccessKey': {
           quality: 1,
           what: 'Accesskey attribute value on an element is not unique for the page'
+        }
+      },
+      tenon: {
+        101: {
+          quality: 1,
+          what: 'Duplicate accesskey value'
         }
       },
       wave: {
@@ -1836,6 +1947,12 @@ const groups = {
   tableCaption: {
     weight: 1,
     packages: {
+      axe: {
+        'table-fake-caption': {
+          quality: 1,
+          what: 'Data or header cells are used for a table caption instead of a caption element'
+        }
+      },
       htmlcs: {
         'w:AA.1_3_1.H39.3.NoCaption': {
           quality: 1,
@@ -1867,12 +1984,18 @@ const groups = {
     }
   },
   tableCellHeaderless: {
-    weight: 4,
+    weight: 3,
     packages: {
       alfa: {
         r77: {
           quality: 1,
           what: 'Table cell has no header'
+        }
+      },
+      axe: {
+        'td-has-header': {
+          quality: 1,
+          what: 'Cell in table larger than 3 by 3 has no header'
         }
       }
     }
@@ -1880,6 +2003,12 @@ const groups = {
   tableHeaderCelless: {
     weight: 4,
     packages: {
+      alfa: {
+        r46: {
+          quality: 1,
+          what: 'Header cell is not assigned to any cell'
+        }
+      },
       axe: {
         'th-has-data-cells': {
           quality: 1,
@@ -2270,6 +2399,10 @@ const groups = {
         'w:AA.1_3_1.F68.Hidden': {
           quality: 1,
           what: 'Hidden form field is needlessly labeled.'
+        },
+        'w:AA.1_3_1.F68.HiddenAttr': {
+          quality: 1,
+          what: 'Form field with a hidden attribute is needlessly labeled.'
         }
       }
     }
@@ -2356,6 +2489,21 @@ const groups = {
       }
     }
   },
+  nonWebLink: {
+    weight: 1,
+    packages: {
+      wave: {
+        'a:link_excel': {
+          quality: 1,
+          what: 'Link to Microsoft Excel workbook'
+        },
+        'a:link_word': {
+          quality: 1,
+          what: 'Link to Microsoft Word document'
+        }
+      }
+    }
+  },
   linkVague: {
     weight: 3,
     packages: {
@@ -2434,6 +2582,17 @@ const groups = {
       }
     }
   },
+  autoplay: {
+    weight: 2,
+    packages: {
+      axe: {
+        'no-autoplay-audio': {
+          quality: 1,
+          what: 'video or audio element plays automatically'
+        }
+      }
+    }
+  },
   inconsistentStyles: {
     weight: 1,
     packages: {
@@ -2484,6 +2643,17 @@ const groups = {
       }
     }
   },
+  audioCaptionMissing: {
+    weight: 4,
+    packages: {
+      axe: {
+        'audio-caption': {
+          quality: 1,
+          what: 'audio element has no captions track'
+        }
+      }
+    }
+  },
   videoCaptionMissing: {
     weight: 4,
     packages: {
@@ -2503,6 +2673,10 @@ const groups = {
           quality: 1,
           what: 'video or audio element may have no or incorrect captions, transcript, or audio description'
         },
+        'a:audio_video': {
+          quality: 1,
+          what: 'audio or video file or link may have no or incorrect captions, transcript, or audio description'
+        },
         'a:youtube_video': {
           quality: 1,
           what: 'YouTube video may have no or incorrect captions'
@@ -2510,7 +2684,7 @@ const groups = {
       }
     }
   },
-  notScrollable: {
+  notKeyboardScrollable: {
     weight: 4,
     packages: {
       alfa: {
@@ -2559,6 +2733,10 @@ const groups = {
         }
       },
       axe: {
+        'bypass': {
+          quality: 1,
+          what: 'Page has no means to bypass repeated blocks'
+        },
         'skip-link': {
           quality: 1,
           what: 'Skip-link target is not focusable or does not exist'
@@ -2606,7 +2784,7 @@ const groups = {
     }
   },
   obsoleteElement: {
-    weight: 1,
+    weight: 3,
     packages: {
       alfa: {
         r70: {

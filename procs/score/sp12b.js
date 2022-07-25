@@ -2,7 +2,7 @@
   sp12a
   Testilo score proc 12b
 
-  Computes scores from Testaro script tp12 and adds them to a report.
+  Computes scores from Testaro script tp12 or tp13 and adds them to a report.
   Usage examples:
     node score sp12b 35k1r
     node score sp12b

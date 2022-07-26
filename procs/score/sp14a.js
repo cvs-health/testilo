@@ -1,11 +1,11 @@
 /*
-  sp12b
-  Testilo score proc 12b
+  sp14a
+  Testilo score proc 14a
 
-  Computes scores from Testaro script tp12 or tp13 and adds them to a report.
+  Computes scores from Testaro script tp14 and adds them to a report.
   Usage examples:
-    node score sp12b 35k1r
-    node score sp12b
+    node score sp14a 35k1r
+    node score sp14a
 
   This proc applies specified weights to the component scores before summing them. An issue reported
   by a test is given a score. That score is determined by:
@@ -33,7 +33,7 @@
 
 // CONSTANTS
 
-const scoreProcID = 'sp12a';
+const scoreProcID = 'sp14a';
 // Define the configuration disclosures.
 const logWeights = {
   logCount: 0.5,
@@ -54,7 +54,7 @@ const preventionWeights = {
   testaro: 50,
   other: 100
 };
-const otherPackages = ['alfa', 'axe', 'htmlcs', 'ibm', 'tenon', 'wave'];
+const otherPackages = ['alfa', 'axe', 'continuum', 'htmlcs', 'ibm', 'tenon', 'wave'];
 const preWeightedPackages = ['axe', 'tenon', 'testaro'];
 // Define the test groups.
 const groups = {
@@ -2919,6 +2919,15 @@ exports.scorer = async report => {
             });
           }
         }
+        else if (which === 'continuum') {
+          const issues = test.result;
+          if (issues) {
+            issues.forEach(issue => {
+              // Add 4 per violation.
+              addDetail(which, issue.engineTestId, 4);
+            });
+          }
+        }
         else if (which === 'htmlcs') {
           const issues = test.result;
           if (issues) {
@@ -3191,9 +3200,10 @@ exports.scorer = async report => {
       // Reorganize the group data.
       const testGroups = {
         testaro: {},
-        htmlcs: {},
         alfa: {},
         axe: {},
+        continuum: {},
+        htmlcs: {},
         ibm: {},
         tenon: {},
         wave: {}

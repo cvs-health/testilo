@@ -212,6 +212,12 @@ const groups = {
           what: 'Element with role img has no text alternative'
         }
       },
+      continuum: {
+        89: {
+          quality: 1,
+          what: 'img element has no mechanism that allows an accessible name to be calculated'
+        }
+      },
       htmlcs: {
         'e:AA.1_1_1.H37': {
           quality: 1,
@@ -573,6 +579,39 @@ const groups = {
         'w:AA.1_3_1.H44.NotFormControl': {
           quality: 1,
           what: 'Label for attribute may reference the wrong element, because it is not a form control'
+        }
+      }
+    }
+  },
+  activeDescendantBadID: {
+    weight: 4,
+    packages: {
+      continuum: {
+        290: {
+          quality: 1,
+          what: 'aria-activedescendant attribute is set to an invalid or duplicate id'
+        }
+      }
+    }
+  },
+  controlleeBadID: {
+    weight: 4,
+    packages: {
+      continuum: {
+        85: {
+          quality: 1,
+          what: 'aria-controls attribute references an invalid or duplicate ID'
+        }
+      }
+    }
+  },
+  descriptionBadID: {
+    weight: 4,
+    packages: {
+      continuum: {
+        83: {
+          quality: 1,
+          what: 'aria-describedby attribute references an invalid or duplicate ID'
         }
       }
     }
@@ -1112,6 +1151,12 @@ const groups = {
         'frame-title-unique': {
           quality: 1,
           what: 'Frame title attribute is not unique'
+        }
+      },
+      continuum: {
+        228: {
+          quality: 1,
+          what: 'iframe has no mechanism that allows an accessible name to be calculated'
         }
       },
       htmlcs: {
@@ -2921,7 +2966,7 @@ exports.scorer = async report => {
         }
         else if (which === 'continuum') {
           const issues = test.result;
-          if (issues) {
+          if (issues && Array.isArray(issues)) {
             issues.forEach(issue => {
               // Add 4 per violation.
               addDetail(which, issue.engineTestId, 4);

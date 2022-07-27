@@ -81,6 +81,12 @@ const groups = {
           what: 'id attribute used in ARIA or in a label has a value that is not unique'
         }
       },
+      continuum: {
+        94: {
+          quality: 1,
+          what: 'Elements contains an id attribute set to a value that is not unique in the DOM'
+        }
+      },
       htmlcs: {
         'e:AA.4_1_1.F77': {
           quality: 1,
@@ -154,6 +160,17 @@ const groups = {
         'e:AA.4_1_2.H91.InputCheckbox.Name': {
           quality: 1,
           what: 'Checkbox input has no accessible name'
+        }
+      }
+    }
+  },
+  inputOnlyPlaceholder: {
+    weight: 3,
+    packages: {
+      continuum: {
+        863: {
+          quality: 1,
+          what: 'input has an accessible name that depends on a placeholder'
         }
       }
     }
@@ -278,10 +295,16 @@ const groups = {
   imageTextRisk: {
     weight: 1,
     packages: {
+      continuum: {
+        234: {
+          quality: 1,
+          what: 'img element has a suspicious calculated accessible name value'
+        }
+      },
       wave: {
         'a:alt_suspicious': {
           quality: 1,
-          what: 'Image alternate text is suspicious'
+          what: 'Image text alternative is suspicious'
         }
       }
     }
@@ -325,6 +348,12 @@ const groups = {
         'html-has-lang': {
           quality: 1,
           what: 'html element has no lang attribute'
+        }
+      },
+      continuum: {
+        101: {
+          quality: 1,
+          what: 'root html element has no lang attribute'
         }
       },
       htmlcs: {
@@ -656,6 +685,12 @@ const groups = {
           what: 'Link has no discernible text'
         }
       },
+      continuum: {
+        237: {
+          quality: 1,
+          what: 'a element has no mechanism that allows an accessible name value to be calculated'
+        }
+      },
       htmlcs: {
         'e:AA.1_1_1.H30.2': {
           quality: 1,
@@ -963,7 +998,13 @@ const groups = {
       axe: {
         'svg-img-alt': {
           quality: 1,
-          what: 'SVG element with an img role has no text alternative'
+          what: 'svg element with an img role has no text alternative'
+        }
+      },
+      continuum: {
+        123: {
+          quality: 1,
+          what: 'svg element has no mechanism that allows an accessible name to be calculated'
         }
       }
     }
@@ -1275,6 +1316,17 @@ const groups = {
         'v:Rpt_Aria_ValidProperty': {
           quality: 1,
           what: 'ARIA attribute is invalid for the role'
+        }
+      }
+    }
+  },
+  ariaExpandedBad: {
+    weight: 4,
+    packages: {
+      continuum: {
+        281: {
+          quality: 1,
+          what: 'aria-expanded attribute is not allowed on the element'
         }
       }
     }
@@ -1849,7 +1901,13 @@ const groups = {
       axe: {
         'select-name': {
           quality: 1,
-          what: 'Select element has no accessible name'
+          what: 'select element has no accessible name'
+        }
+      },
+      continuum: {
+        114: {
+          quality: 1,
+          what: 'select element has no mechanism that allows an accessible name to be calculated'
         }
       },
       htmlcs: {
@@ -2183,6 +2241,12 @@ const groups = {
           what: 'Interactive controls are nested'
         }
       },
+      continuum: {
+        22: {
+          quality: 1,
+          what: 'Link contains an input, keygen, select, textarea, or button'
+        }
+      },
       testaro: {
         embAc: {
           quality: 1,
@@ -2326,6 +2390,12 @@ const groups = {
           quality: 1,
           what: 'page has more than 1 main landmark'
         }
+      },
+      continuum: {
+        809: {
+          quality: 1,
+          what: 'More than 1 main element is located in the body element'
+        }
       }
     }
   },
@@ -2369,6 +2439,28 @@ const groups = {
         'landmark-unique': {
           quality: 1,
           what: 'Landmark has a role and an accessible name that are identical to another'
+        }
+      }
+    }
+  },
+  navConfusion: {
+    weight: 3,
+    packages: {
+      continuum: {
+        531: {
+          quality: 1,
+          what: 'nav element has an accessible name that is non-unique among the nav elements'
+        }
+      }
+    }
+  },
+  navNoText: {
+    weight: 3,
+    packages: {
+      continuum: {
+        533: {
+          quality: 1,
+          what: 'nav element is not the only nav element but has no accessible name'
         }
       }
     }

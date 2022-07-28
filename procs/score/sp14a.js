@@ -506,6 +506,12 @@ const groups = {
           what: 'Object element has no text alternative'
         }
       },
+      continuum: {
+        249: {
+          quality: 1,
+          what: 'object element has no mechanism that allows an accessible name to be calculated'
+        }
+      },
       htmlcs: {
         'e:ARIA6+H53': {
           quality: 1,
@@ -1434,6 +1440,10 @@ const groups = {
         }
       },
       continuum: {
+        38: {
+          quality: 1,
+          what: 'element has an aria-pressed attribute, which is not allowed'
+        },
         257: {
           quality: 1,
           what: 'element has an aria-checked attribute, which is not allowed'
@@ -1449,6 +1459,14 @@ const groups = {
         281: {
           quality: 1,
           what: 'element has an aria-expanded attribute, which is not allowed'
+        },
+        282: {
+          quality: 1,
+          what: 'element has an aria-autocomplete attribute, which is not allowed'
+        },
+        283: {
+          quality: 1,
+          what: 'element has an aria-activedescendant attribute, which is not allowed'
         },
         1066: {
           quality: 1,
@@ -2979,6 +2997,10 @@ const groups = {
     weight: 4,
     packages: {
       continuum: {
+        337: {
+          quality: 1,
+          what: 'Enabled element with a button role has no nonpositive tabindex attribute'
+        },
         356: {
           quality: 1,
           what: 'Enabled element with a textbox role has no nonpositive tabindex attribute'

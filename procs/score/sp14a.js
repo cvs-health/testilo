@@ -109,6 +109,12 @@ const groups = {
           quality: 1,
           what: 'Region has no accessible name'
         }
+      },
+      continuum: {
+        1010: {
+          quality: 1,
+          what: 'Element with a region role has no mechanism that allows an accessible name to be calculated'
+        }
       }
     }
   },
@@ -130,6 +136,20 @@ const groups = {
         'aria-input-field-name': {
           quality: 1,
           what: 'ARIA input field has no accessible name'
+        }
+      },
+      continuum: {
+        118: {
+          quality: 1,
+          what: 'Text input element has no mechanism that allows an accessible name to be calculated'
+        },
+        370: {
+          quality: 1,
+          what: 'Search input element has no mechanism that allows an accessible name to be calculated'
+        },
+        509: {
+          quality: 1,
+          what: 'element with a textbox role has no mechanism that allows an accessible name to be calculated'
         }
       },
       htmlcs: {
@@ -230,6 +250,10 @@ const groups = {
         }
       },
       continuum: {
+        87: {
+          quality: 1,
+          what: 'element with an image, graphics-symbol, or graphics-document role has no mechanism to calculate an accessible name'
+        },
         89: {
           quality: 1,
           what: 'img element has no mechanism that allows an accessible name to be calculated'
@@ -270,6 +294,17 @@ const groups = {
       }
     }
   },
+  inputAlt: {
+    weight: 4,
+    packages: {
+      continuum: {
+        15: {
+          quality: 1,
+          what: 'input element has an alt attribute'
+        }
+      }
+    }
+  },
   imagesSameAlt: {
     weight: 1,
     packages: {
@@ -299,7 +334,7 @@ const groups = {
         234: {
           quality: 1,
           what: 'img element has a suspicious calculated accessible name value'
-        }
+        },
       },
       wave: {
         'a:alt_suspicious': {
@@ -447,6 +482,12 @@ const groups = {
           quality: 1,
           what: 'ARIA dialog or alertdialog node has no accessible name'
         }
+      },
+      continuum: {
+        736: {
+          quality: 1,
+          what: 'Element with a dialog role has no mechanism that allows an accessible name to be calculated.'
+        }
       }
     }
   },
@@ -481,6 +522,17 @@ const groups = {
         'a:plugin': {
           quality: 1,
           what: 'An unidentified plugin is present'
+        }
+      }
+    }
+  },
+  videoNoText: {
+    weight: 4,
+    packages: {
+      continuum: {
+        252: {
+          quality: 1,
+          what: 'video element has no mechanism that allows an accessible name to be calculated'
         }
       }
     }
@@ -648,6 +700,12 @@ const groups = {
   labelBadID: {
     weight: 4,
     packages: {
+      continuum: {
+        95: {
+          quality: 1,
+          what: 'element has an aria-labelledby value that includes an invalid or duplicate id'
+        }
+      },
       htmlcs: {
         'w:AA.1_3_1.H44.NonExistentFragment': {
           quality: 1,
@@ -666,6 +724,17 @@ const groups = {
         'a:label_orphaned': {
           quality: 1,
           what: 'Orphaned form label'
+        }
+      }
+    }
+  },
+  ownerConflict: {
+    weight: 4,
+    packages: {
+      continuum: {
+        360: {
+          quality: 1,
+          what: 'Element and another element have aria-owns attributes with identical id values'
         }
       }
     }
@@ -935,6 +1004,12 @@ const groups = {
           what: 'Input button has no discernible text'
         }
       },
+      continuum: {
+        224: {
+          quality: 1,
+          what: 'button element has no mechanism that allows an accessible name to be calculated'
+        }
+      },
       htmlcs: {
         'e:AA.4_1_2.H91.A.Name': {
           quality: 1,
@@ -1048,6 +1123,16 @@ const groups = {
         'meta-viewport-large': {
           quality: 1,
           what: 'User cannot zoom and scale the text up to 500%'
+        }
+      },
+      continuum: {
+        55: {
+          quality: 1,
+          what: 'meta element in the head stops a user from scaling the viewport size'
+        },
+        59: {
+          quality: 1,
+          what: 'meta element in the head sets the viewport maximum-scale to less than 2'
         }
       }
     }
@@ -1233,6 +1318,32 @@ const groups = {
           what: 'ARIA role is not appropriate for the element'
         }
       },
+      continuum: {
+        37: {
+          quality: 1,
+          what: 'a element has a role attribute that is not allowed'
+        },
+        44: {
+          quality: 1,
+          what: 'hr element has a role attribute'
+        },
+        176: {
+          quality: 1,
+          what: 'label element has a role attribute'
+        },
+        319: {
+          quality: 1,
+          what: 'ol element has a role attribute that is not allowed'
+        },
+        325: {
+          quality: 1,
+          what: 'ul element has a role attribute that is not allowed'
+        },
+        412: {
+          quality: 1,
+          what: 'element has a role attribute set to an invalid ARIA role value'
+        }
+      },
       ibm: {
         'v:aria_semantics_role': {
           quality: 1,
@@ -1271,6 +1382,16 @@ const groups = {
         r16: {
           quality: 1,
           what: 'Element does not have all required states and properties'
+        }
+      },
+      continuum: {
+        1040: {
+          quality: 1,
+          what: 'element with a combobox role has no aria-controls or no aria-expanded attribute'
+        },
+        1042: {
+          quality: 1,
+          what: 'element with an option role has no aria-selected attribute'
         }
       },
       wave: {
@@ -1312,21 +1433,32 @@ const groups = {
           what: 'ARIA attribute is invalid for the role of its element'
         }
       },
+      continuum: {
+        257: {
+          quality: 1,
+          what: 'element has an aria-checked attribute, which is not allowed'
+        },
+        260: {
+          quality: 1,
+          what: 'element has an aria-level attribute, which is not allowed'
+        },
+        264: {
+          quality: 1,
+          what: 'element has an aria-selected attribute, which is not allowed'
+        },
+        281: {
+          quality: 1,
+          what: 'element has an aria-expanded attribute, which is not allowed'
+        },
+        1066: {
+          quality: 1,
+          what: 'element has an ARIA attribute which is not valid'
+        }
+      },
       ibm: {
         'v:Rpt_Aria_ValidProperty': {
           quality: 1,
           what: 'ARIA attribute is invalid for the role'
-        }
-      }
-    }
-  },
-  ariaExpandedBad: {
-    weight: 4,
-    packages: {
-      continuum: {
-        281: {
-          quality: 1,
-          what: 'aria-expanded attribute is not allowed on the element'
         }
       }
     }
@@ -1645,6 +1777,12 @@ const groups = {
           what: 'Document contains no title element'
         }
       },
+      continuum: {
+        884: {
+          quality: 1,
+          what: 'DOM contains no document title element'
+        }
+      },
       htmlcs: {
         'e:AA.2_4_2.H25.1.NoTitleEl': {
           quality: 1,
@@ -1690,6 +1828,17 @@ const groups = {
         'a:heading_skipped': {
           quality: 1,
           what: 'Skipped heading level'
+        }
+      }
+    }
+  },
+  headingLevelless: {
+    weight: 1,
+    packages: {
+      continuum: {
+        71: {
+          quality: 1,
+          what: 'element with a heading role has no aria-level attribute'
         }
       }
     }
@@ -1859,6 +2008,12 @@ const groups = {
           quality: 1,
           what: 'List element dl has a child element other than properly ordered dt and dt group, script, template, and div'
         }
+      },
+      continuum: {
+        246: {
+          quality: 1,
+          what: 'ul element does not contain only li, script, template, or listitem-role elements as direct child elements'
+        }
       }
     }
   },
@@ -1869,6 +2024,12 @@ const groups = {
         listitem: {
           quality: 1,
           what: 'li element is not contained by a ul or ol element'
+        }
+      },
+      continuum: {
+        99: {
+          quality: 1,
+          what: 'li element has no ul, ol, or list-role parent'
         }
       }
     }
@@ -2082,6 +2243,17 @@ const groups = {
         'w:AA.1_3_1.H43.ScopeAmbiguous': {
           quality: 1,
           what: 'Complex table requires headers attributes of cells instead of header scopes'
+        }
+      }
+    }
+  },
+  tableHeaderless: {
+    weight: 3,
+    packages: {
+      continuum: {
+        387: {
+          quality: 1,
+          what: 'table element contains no th element or element with a rowheader or columnheader role'
         }
       }
     }
@@ -2443,6 +2615,17 @@ const groups = {
       }
     }
   },
+  asideConfusion: {
+    weight: 3,
+    packages: {
+      continuum: {
+        527: {
+          quality: 1,
+          what: 'aside element has an accessible name that is non-unique among the aside elements'
+        }
+      }
+    }
+  },
   navConfusion: {
     weight: 3,
     packages: {
@@ -2450,6 +2633,17 @@ const groups = {
         531: {
           quality: 1,
           what: 'nav element has an accessible name that is non-unique among the nav elements'
+        }
+      }
+    }
+  },
+  asideNoText: {
+    weight: 3,
+    packages: {
+      continuum: {
+        532: {
+          quality: 1,
+          what: 'aside element is not the only aside element but has no accessible name'
         }
       }
     }
@@ -2504,6 +2698,12 @@ const groups = {
         'presentation-role-conflict': {
           quality: 1,
           what: 'Element has a none/presentation role but is focusable or has a global ARIA state or property'
+        }
+      },
+      continuum: {
+        790: {
+          quality: 1,
+          what: 'Element with an explicit or implicit nonnegative tabindex attribute is directly aria-hidden'
         }
       },
       tenon: {
@@ -2629,6 +2829,12 @@ const groups = {
   nonWebLink: {
     weight: 1,
     packages: {
+      continuum: {
+        141: {
+          quality: 1,
+          what: 'a element has an href attribute set to an image file reference'
+        }
+      },
       wave: {
         'a:link_excel': {
           quality: 1,
@@ -2772,10 +2978,31 @@ const groups = {
   tabIndexMissing: {
     weight: 4,
     packages: {
+      continuum: {
+        356: {
+          quality: 1,
+          what: 'Enabled element with a textbox role has no nonpositive tabindex attribute'
+        }
+      },
       tenon: {
         190: {
           quality: 1,
           what: 'Interactive item is not natively actionable, but has no tabindex=0 attribute'
+        }
+      }
+    }
+  },
+  trackNoLabel: {
+    weight: 4,
+    packages: {
+      continuum: {
+        40: {
+          quality: 1,
+          what: 'captions track element has no label attribute set to a text value'
+        },
+        368: {
+          quality: 1,
+          what: 'subtitle track element has no label attribute set to a text value'
         }
       }
     }

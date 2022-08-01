@@ -150,6 +150,10 @@ const groups = {
         509: {
           quality: 1,
           what: 'element with a textbox role has no mechanism that allows an accessible name to be calculated'
+        },
+        510: {
+          quality: 1,
+          what: 'element with a combobox role has no mechanism that allows an accessible name to be calculated'
         }
       },
       htmlcs: {
@@ -180,6 +184,10 @@ const groups = {
         'e:AA.4_1_2.H91.InputCheckbox.Name': {
           quality: 1,
           what: 'Checkbox input has no accessible name'
+        },
+        'e:AA.4_1_2.H91.InputRadio.Name': {
+          quality: 1,
+          what: 'Radio input has no accessible name'
         }
       }
     }
@@ -1398,6 +1406,10 @@ const groups = {
         1042: {
           quality: 1,
           what: 'element with an option role has no aria-selected attribute'
+        },
+        1043: {
+          quality: 1,
+          what: 'element with a radio role has no aria-checked attribute'
         }
       },
       wave: {
@@ -1456,6 +1468,10 @@ const groups = {
           quality: 1,
           what: 'element has an aria-selected attribute, which is not allowed'
         },
+        270: {
+          quality: 1,
+          what: 'element has an aria-required attribute, which is not allowed'
+        },
         281: {
           quality: 1,
           what: 'element has an aria-expanded attribute, which is not allowed'
@@ -1467,6 +1483,10 @@ const groups = {
         283: {
           quality: 1,
           what: 'element has an aria-activedescendant attribute, which is not allowed'
+        },
+        333: {
+          quality: 1,
+          what: 'element with a textbox role has an aria-owns attribute, which is not allowed'
         },
         1066: {
           quality: 1,
@@ -2048,6 +2068,10 @@ const groups = {
         99: {
           quality: 1,
           what: 'li element has no ul, ol, or list-role parent'
+        },
+        385: {
+          quality: 1,
+          what: 'list item has no ul, ol, or list-role parent or owner'
         }
       }
     }

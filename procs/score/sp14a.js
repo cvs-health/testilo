@@ -101,6 +101,17 @@ const groups = {
       }
     }
   },
+  componentNoText: {
+    weight: 4,
+    packages: {
+      ibm: {
+        Rpt_Aria_WidgetLabels_Implicit: {
+          quality: 1,
+          what: 'Interactive component has no programmatically associated name'
+        }
+      }
+    }
+  },
   regionNoText: {
     weight: 4,
     packages: {
@@ -114,6 +125,12 @@ const groups = {
         1010: {
           quality: 1,
           what: 'Element with a region role has no mechanism that allows an accessible name to be calculated'
+        }
+      },
+      ibm: {
+        Rpt_Aria_RegionLabel_Implicit: {
+          quality: 1,
+          what: 'Element with a region role has no label that describes its purpose'
         }
       }
     }
@@ -225,7 +242,7 @@ const groups = {
         }
       },
       ibm: {
-        'v:WCAG20_Input_ExplicitLabelImage': {
+        WCAG20_Input_ExplicitLabelImage: {
           quality: 1,
           what: 'Input element of type image has no text alternative'
         }
@@ -274,7 +291,7 @@ const groups = {
         }
       },
       ibm: {
-        'v:WCAG20_Img_HasAlt': {
+        WCAG20_Img_HasAlt: {
           quality: 1,
           what: 'Image has no alt attribute conveying its meaning, or alt="" if decorative'
         }
@@ -441,7 +458,7 @@ const groups = {
         }
       },
       ibm: {
-        'v:WCAG20_Elem_Lang_Valid': {
+        WCAG20_Elem_Lang_Valid: {
           quality: 1,
           what: 'lang attribute does not include a valid primary language'
         }
@@ -527,7 +544,7 @@ const groups = {
         }
       },
       ibm: {
-        'v:WCAG20_Object_HasText': {
+        WCAG20_Object_HasText: {
           quality: 1,
           what: 'Object element has no text alternative'
         }
@@ -578,11 +595,11 @@ const groups = {
         }
       },
       ibm: {
-        'v:HAAC_Img_UsemapAlt': {
+        HAAC_Img_UsemapAlt: {
           quality: 1,
           what: 'Image map or child area has no text alternative'
         },
-        'v:WCAG20_Area_HasAlt': {
+        'WCAG20_Area_HasAlt': {
           quality: 1,
           what: 'Area element in an image map has no text alternative'
         }
@@ -686,6 +703,12 @@ const groups = {
           quality: 1,
           what: 'aria-activedescendant attribute is set to an invalid or duplicate id'
         }
+      },
+      ibm: {
+        HAAC_ActiveDescendantCheck: {
+          quality: 1,
+          what: 'aria-activedescendant property does not reference the id of a non-empty, non-hidden active child element'
+        }
       }
     }
   },
@@ -707,6 +730,17 @@ const groups = {
         83: {
           quality: 1,
           what: 'aria-describedby attribute references an invalid or duplicate ID'
+        }
+      }
+    }
+  },
+  labelFollows: {
+    weight: 1,
+    packages: {
+      ibm: {
+        WCAG20_Input_LabelBefore: {
+          quality: 1,
+          what: 'Text input or select element label follows the input control'
         }
       }
     }
@@ -734,10 +768,27 @@ const groups = {
           what: 'aria-labelledby attribute references a nonexistent element'
         }
       },
+      ibm: {
+        WCAG20_Label_RefValid: {
+          quality: 1,
+          what: 'for attribute does not reference a non-empty, unique id attribute of an input element'
+        }
+      },
       wave: {
         'a:label_orphaned': {
           quality: 1,
           what: 'Orphaned form label'
+        }
+      }
+    }
+  },
+  haspopupBad: {
+    weight: 4,
+    packages: {
+      ibm: {
+        combobox_haspopup: {
+          quality: 1,
+          what: 'aria-haspopup value is invalid for the role of the controlled or owned element'
         }
       }
     }
@@ -797,7 +848,7 @@ const groups = {
         }
       },
       ibm: {
-        'v:WCAG20_A_HasText': {
+        WCAG20_A_HasText: {
           quality: 1,
           what: 'Hyperlink has no text description'
         }
@@ -1072,6 +1123,12 @@ const groups = {
           quality: 1,
           what: 'ARIA role is not contained by a required parent'
         }
+      },
+      ibm: {
+        Rpt_Aria_RequiredParent_Native_Host_Sematics: {
+          quality: 1,
+          what: 'Element is not contained within a role-valid element'
+        }
       }
     }
   },
@@ -1306,7 +1363,7 @@ const groups = {
         }
       },
       ibm: {
-        'v:WCAG20_Frame_HasTitle': {
+        WCAG20_Frame_HasTitle: {
           quality: 1,
           what: 'Inline frame has an empty or nonunique title attribute'
         }
@@ -1359,9 +1416,29 @@ const groups = {
         }
       },
       ibm: {
-        'v:aria_semantics_role': {
+        aria_role_redundant: {
+          quality: 1,
+          what: 'Explicitly assigned ARIA role is redundant with the implicit role of the element'
+        },
+        aria_semantics_role: {
           quality: 1,
           what: 'ARIA role is not valid for the element to which it is assigned'
+        },
+        element_tabbable_role_valid: {
+          quality: 1,
+          what: 'Tabbable element has a non-widget role'
+        },
+        Rpt_Aria_ContentinfoWithNoMain_Implicit: {
+          quality: 1,
+          what: 'Element has a contentinfo role when no element has a main role'
+        },
+        Rpt_Aria_ValidRole: {
+          quality: 1,
+          what: 'Element has an invalid role'
+        },
+        Rpt_Aria_EventHandlerMissingRole_Native_Host_Sematics: {
+          quality: 1,
+          what: 'Element has an event handler but no valid ARIA role'
         }
       },
       testaro: {
@@ -1382,7 +1459,7 @@ const groups = {
         }
       },
       ibm: {
-        'v:Rpt_Aria_RequiredProperties': {
+        Rpt_Aria_RequiredProperties: {
           quality: 1,
           what: 'ARIA role on an element does not have a required attribute'
         }
@@ -1494,9 +1571,24 @@ const groups = {
         }
       },
       ibm: {
-        'v:Rpt_Aria_ValidProperty': {
+        aria_semantics_attribute: {
+          quality: 1,
+          what: 'ARIA attributes is invalid for the element or ARIA role to which it is assigned'
+        },
+        Rpt_Aria_ValidProperty: {
           quality: 1,
           what: 'ARIA attribute is invalid for the role'
+        }
+      }
+    }
+  },
+  ariaRedundant: {
+    weight: 1,
+    packages: {
+      ibm: {
+        aria_attribute_redundant: {
+          quality: 1,
+          what: 'ARIA attribute is used when there is a corresponding HTML attribute'
         }
       }
     }
@@ -1505,7 +1597,7 @@ const groups = {
     weight: 4,
     packages: {
       ibm: {
-        'v:Rpt_Aria_ValidIdRef': {
+        Rpt_Aria_ValidIdRef: {
           quality: 1,
           what: 'ARIA property does not reference the non-empty unique id of a visible element'
         }
@@ -1551,7 +1643,7 @@ const groups = {
         }
       },
       ibm: {
-        'v:WCAG21_Input_Autocomplete': {
+        WCAG21_Input_Autocomplete: {
           quality: 1,
           what: 'Autocomplete attribute token is not appropriate for the input form field'
         }
@@ -1595,7 +1687,7 @@ const groups = {
         }
       },
       ibm: {
-        'v:IBMA_Color_Contrast_WCAG2AA': {
+        IBMA_Color_Contrast_WCAG2AA: {
           quality: 1,
           what: 'Contrast ratio of text with background does not meet WCAG 2.1 AA'
         }
@@ -1698,7 +1790,7 @@ const groups = {
         }
       },
       ibm: {
-        'v:RPT_Header_HasContent': {
+        RPT_Header_HasContent: {
           quality: 1,
           what: 'Heading element provides no descriptive text'
         }
@@ -1732,7 +1824,7 @@ const groups = {
         }
       },
       ibm: {
-        'v:WCAG20_Img_LinkTextNotRedundant': {
+        WCAG20_Img_LinkTextNotRedundant: {
           quality: 1,
           what: 'Text alternative for the image in a link repeats text of the same or an adjacent link'
         }
@@ -2152,7 +2244,7 @@ const groups = {
         }
       },
       ibm: {
-        'v:WCAG20_Elem_UniqueAccessKey': {
+        WCAG20_Elem_UniqueAccessKey: {
           quality: 1,
           what: 'Accesskey attribute value on an element is not unique for the page'
         }
@@ -2175,7 +2267,7 @@ const groups = {
     weight: 2,
     packages: {
       ibm: {
-        'v:WCAG20_Input_RadioChkInFieldSet': {
+        WCAG20_Input_RadioChkInFieldSet: {
           quality: 1,
           what: 'Input is in a different group than another with the name'
         }
@@ -2212,6 +2304,12 @@ const groups = {
         'e:AA.1_3_1.H71.NoLegend': {
           quality: 1,
           what: 'Fieldset has no legend element'
+        }
+      },
+      ibm: {
+        WCAG20_Fieldset_HasLegend: {
+          quality: 1,
+          what: 'fieldset element has no single, non-empty legend as a label'
         }
       },
       wave: {
@@ -2297,6 +2395,12 @@ const groups = {
           quality: 1,
           what: 'table element contains no th element or element with a rowheader or columnheader role'
         }
+      },
+      ibm: {
+        RPT_Table_DataHeadingsAria: {
+          quality: 1,
+          what: 'Data table does not identify headers'
+        }
       }
     }
   },
@@ -2356,7 +2460,7 @@ const groups = {
       }
     }
   },
-  controlLabel: {
+  controlNoText: {
     weight: 4,
     packages: {
       axe: {
@@ -2369,6 +2473,12 @@ const groups = {
         'e:AA.1_3_1.F68': {
           quality: 1,
           what: 'Form control has no label'
+        }
+      },
+      ibm: {
+        WCAG20_Input_ExplicitLabel: {
+          quality: 1,
+          what: 'Form control has no associated label'
         }
       },
       wave: {
@@ -2421,6 +2531,12 @@ const groups = {
           quality: 1,
           what: 'Visible label is not in the accessible name'
         }
+      },
+      ibm: {
+        WCAG21_Label_Accessible: {
+          quality: 1,
+          what: 'Accessible name does not match or contain the visible label text'
+        }
       }
     }
   },
@@ -2470,11 +2586,17 @@ const groups = {
     }
   },
   tabFocusability: {
-    weight: 3,
+    weight: 4,
     packages: {
+      ibm: {
+        Rpt_Aria_MissingFocusableChild: {
+          quality: 1,
+          what: 'UI component has no focusable child element for keyboard access'
+        }
+      },
       testaro: {
         focAll: {
-          quality: 1,
+          quality: 0.5,
           what: 'Discrepancy between elements that should be and that are Tab-focusable'
         }
       }
@@ -2555,6 +2677,12 @@ const groups = {
         region: {
           quality: 1,
           what: 'Some page content is not contained by landmarks'
+        }
+      },
+      ibm: {
+        Rpt_Aria_OrphanedContent_Native_Host_Sematics: {
+          quality: 1,
+          what: 'Content does not reside within an element with a landmark role'
         }
       }
     }
@@ -2654,6 +2782,12 @@ const groups = {
           quality: 1,
           what: 'Landmark has a role and an accessible name that are identical to another'
         }
+      },
+      ibm: {
+        landmark_name_unique: {
+          quality: 1,
+          what: 'Landmark has no unique aria-labelledby or aria-label among landmarks in the same parent region'
+        }
       }
     }
   },
@@ -2668,6 +2802,17 @@ const groups = {
       }
     }
   },
+  bannerConfusion: {
+    weight: 3,
+    packages: {
+      ibm: {
+        Rpt_Aria_MultipleBannerLandmarks_Implicit: {
+          quality: 1,
+          what: 'Element with a banner role has no unique purpose label among the banner-role elements'
+        }
+      }
+    }
+  },
   navConfusion: {
     weight: 3,
     packages: {
@@ -2675,6 +2820,34 @@ const groups = {
         531: {
           quality: 1,
           what: 'nav element has an accessible name that is non-unique among the nav elements'
+        }
+      },
+      ibm: {
+        Rpt_Aria_MultipleNavigationLandmarks_Implicit: {
+          quality: 1,
+          what: 'Element with a navigation role has no unique purpose label among the navigation-role elements'
+        }
+      }
+    }
+  },
+  regionConfusion: {
+    weight: 3,
+    packages: {
+      ibm: {
+        Rpt_Aria_MultipleRegionsUniqueLabel_Implicit: {
+          quality: 1,
+          what: 'Element with a region role has no unique label among the region-role elements'
+        }
+      }
+    }
+  },
+  searchConfusion: {
+    weight: 3,
+    packages: {
+      ibm: {
+        Rpt_Aria_MultipleSearchLandmarks: {
+          quality: 1,
+          what: 'Element with a search role has no unique purpose label among the search-role elements'
         }
       }
     }
@@ -2697,6 +2870,17 @@ const groups = {
         533: {
           quality: 1,
           what: 'nav element is not the only nav element but has no accessible name'
+        }
+      }
+    }
+  },
+  labelNoText: {
+    weight: 4,
+    packages: {
+      ibm: {
+        Valerie_Label_HasContent: {
+          quality: 1,
+          what: 'label element has no non-empty purpose-descriptive text'
         }
       }
     }
@@ -2746,6 +2930,12 @@ const groups = {
         790: {
           quality: 1,
           what: 'Element with an explicit or implicit nonnegative tabindex attribute is directly aria-hidden'
+        }
+      },
+      ibm: {
+        aria_hidden_focus_misuse: {
+          quality: 1,
+          what: 'Focusable element is within the subtree of an element with aria-hidden set to true'
         }
       },
       tenon: {
@@ -3152,6 +3342,12 @@ const groups = {
           what: 'Skip-link target is not focusable or does not exist'
         }
       },
+      ibm: {
+        WCAG20_Body_FirstASkips_Native_Host_Sematics: {
+          quality: 0.5,
+          what: 'Page provides no way to skip directly to the main content'
+        }
+      },
       wave: {
         'e:link_skip_broken': {
           quality: 1,
@@ -3193,7 +3389,7 @@ const groups = {
       }
     }
   },
-  obsoleteElement: {
+  obsolete: {
     weight: 3,
     packages: {
       alfa: {
@@ -3203,6 +3399,10 @@ const groups = {
         }
       },
       htmlcs: {
+        'e:AA.1_3_1.H49.AlignAttr': {
+          quality: 1,
+          what: 'align attribute is obsolete'
+        },
         'e:AA.1_3_1.H49.Center': {
           quality: 1,
           what: 'center element is obsolete'
@@ -3211,22 +3411,21 @@ const groups = {
           quality: 1,
           what: 'font element is obsolete'
         }
-      }
-    }
-  },
-  obsoleteAttribute: {
-    weight: 3,
-    packages: {
-      htmlcs: {
-        'e:AA.1_3_1.H49.AlignAttr': {
+      },
+      ibm: {
+        combobox_version: {
           quality: 1,
-          what: 'The align attribute is obsolete'
+          what: 'combobox design pattern is invalid for ARIA 1.2'
+        },
+        element_attribute_deprecated: {
+          quality: 1,
+          what: 'Element or attribute is obsolete'
         }
       },
       wave: {
         'a:longdesc': {
           quality: 1,
-          what: 'The longdesc attribute is obsolete'
+          what: 'longdesc attribute is obsolete'
         }
       }
     }

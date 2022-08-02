@@ -3376,10 +3376,10 @@ exports.scorer = async report => {
             const {items} = result[preferredMode];
             if (items && Array.isArray(items)) {
               items.forEach(issue => {
-                const {ruleID, level} = issue;
-                if (ruleID && level) {
+                const {ruleId, level} = issue;
+                if (ruleId && level) {
                   // Add 4 per violation, 1 per warning (“recommendation”).
-                  addDetail(which, ruleID, level === 'violation' ? 4 : 1);
+                  addDetail(which, ruleId, level === 'violation' ? 4 : 1);
                 }
               });
             }

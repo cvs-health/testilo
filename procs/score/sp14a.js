@@ -1439,6 +1439,10 @@ const groups = {
         Rpt_Aria_EventHandlerMissingRole_Native_Host_Sematics: {
           quality: 1,
           what: 'Element has an event handler but no valid ARIA role'
+        },
+        table_aria_descendants: {
+          quality: 1,
+          what: 'Table structure element specifies an explicit role within the table container'
         }
       },
       testaro: {
@@ -1917,6 +1921,12 @@ const groups = {
         'e:AA.2_4_2.H25.1.NoTitleEl': {
           quality: 1,
           what: 'Document head element contains no non-empty title element'
+        }
+      },
+      ibm: {
+        WCAG20_Doc_HasTitle: {
+          quality: 1,
+          what: 'Page has no subject-identifying title'
         }
       },
       wave: {
@@ -2720,6 +2730,21 @@ const groups = {
       }
     }
   },
+  mainConfusion: {
+    weight: 3,
+    packages: {
+      ibm: {
+        Rpt_Aria_MultipleMainsRequireLabel_Implicit_2: {
+          quality: 1,
+          what: 'Element with main role has no unique label among the main-role elements'
+        },
+        Rpt_Aria_MultipleMainsVisibleLabel_Implicit: {
+          quality: 1,
+          what: 'Element with main role has no unique visible label among the main-role elements'
+        }
+      }
+    }
+  },
   mainNot1: {
     weight: 2,
     packages: {
@@ -2747,7 +2772,13 @@ const groups = {
       axe: {
         'landmark-no-duplicate-banner': {
           quality: 1,
-          what: 'page has more than 1 banner landmark'
+          what: 'Page has more than 1 banner landmark'
+        }
+      },
+      ibm: {
+        Rpt_Aria_OneBannerInSiblingSet_Implicit: {
+          quality: 1,
+          what: 'Multiple elements with a banner role are on the page'
         }
       }
     }
@@ -2759,6 +2790,17 @@ const groups = {
         'landmark-banner-is-top-level': {
           quality: 1,
           what: 'banner landmark is contained in another landmark'
+        }
+      }
+    }
+  },
+  footerConfusion: {
+    weight: 3,
+    packages: {
+      ibm: {
+        Rpt_Aria_MultipleContentinfoLandmarks_Implicit: {
+          quality: 1,
+          what: 'Element with a contentinfo role has no unique purpose label among the contentinfo-role elements'
         }
       }
     }
@@ -2859,6 +2901,17 @@ const groups = {
         532: {
           quality: 1,
           what: 'aside element is not the only aside element but has no accessible name'
+        }
+      }
+    }
+  },
+  complementaryNoText: {
+    weight: 1,
+    packages: {
+      ibm: {
+        Rpt_Aria_ComplementaryRequiredLabel_Implicit: {
+          quality: 1,
+          what: 'Element has a complementary role but has no label'
         }
       }
     }

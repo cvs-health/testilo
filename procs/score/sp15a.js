@@ -1,11 +1,11 @@
 /*
-  sp14a
-  Testilo score proc 14a
+  sp15a
+  Testilo score proc 15a
 
-  Computes scores from Testaro script tp14 and adds them to a report.
+  Computes scores from Testaro script tp15 and adds them to a report.
   Usage examples:
-    node score sp14a 35k1r
-    node score sp14a
+    node score sp15a 35k1r
+    node score sp15a
 
   This proc applies specified weights to the component scores before summing them. An issue reported
   by a test is given a score. That score is determined by:
@@ -33,7 +33,7 @@
 
 // CONSTANTS
 
-const scoreProcID = 'sp14a';
+const scoreProcID = 'sp15a';
 // Define the configuration disclosures.
 const logWeights = {
   logCount: 0.5,
@@ -964,6 +964,12 @@ const groups = {
           quality: 1,
           what: 'Link is misused as a link destination'
         }
+      },
+      testaro: {
+        linkTo: {
+          quality: 1,
+          what: 'Link has no href attribute'
+        }
       }
     }
   },
@@ -1299,6 +1305,12 @@ const groups = {
           what: 'Text is very small'
         }
       },
+      testaro: {
+        miniText: {
+          quality: 1,
+          what: 'Text node has a font smaller than 11 pixels'
+        }
+      },
       wave: {
         'a:text_small': {
           quality: 1,
@@ -1620,6 +1632,12 @@ const groups = {
           quality: 1,
           what: 'ARIA attribute is invalid for the role'
         }
+      },
+      testaro: {
+        titleEl: {
+          quality: 1,
+          what: 'title attribute belongs to an inappropriate element'
+        }
       }
     }
   },
@@ -1935,6 +1953,17 @@ const groups = {
         'w:AA.4_1_2.H65': {
           quality: 0.5,
           what: 'Value of the title attribute of the form control is empty or only whitespace'
+        }
+      }
+    }
+  },
+  docType: {
+    weight: 1,
+    packages: {
+      testaro: {
+        docType: {
+          quality: 1,
+          what: 'document has no doctype property'
         }
       }
     }
@@ -2399,10 +2428,16 @@ const groups = {
   layoutTable: {
     weight: 2,
     packages: {
+      testaro: {
+        nonTable: {
+          quality: 1,
+          what: 'table element is missing structural requirements for tabular data'
+        }
+      },
       wave: {
         'a:table_layout': {
           quality: 1,
-          what: 'Table element is misused to arrange content'
+          what: 'table element is misused to arrange content'
         }
       }
     }
@@ -3107,6 +3142,17 @@ const groups = {
       }
     }
   },
+  focusedAway: {
+    weight: 3,
+    packages: {
+      testaro: {
+        focVis: {
+          quality: 1,
+          what: 'Element when focused is off the display'
+        }
+      }
+    }
+  },
   focusableDescendants: {
     weight: 4,
     packages: {
@@ -3749,6 +3795,16 @@ exports.scorer = async report => {
                 }
               });
             }
+          }
+        }
+        else if (which === 'nuVal') {
+          const issues = test.result && test.result.messages;
+          if (issues) {
+            issues.forEach(issue => {
+              // Add 4 per error, 1 per warning.
+              const weight = issue.type === 'error' ? 4 : 1;
+              addDetail(which, issue.message, weight);
+            });
           }
         }
         else if (which === 'tenon') {

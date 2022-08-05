@@ -54,7 +54,7 @@ const preventionWeights = {
   testaro: 50,
   other: 100
 };
-const otherPackages = ['alfa', 'axe', 'continuum', 'htmlcs', 'ibm', 'tenon', 'wave'];
+const otherPackages = ['alfa', 'axe', 'continuum', 'htmlcs', 'ibm', 'nuVal', 'tenon', 'wave'];
 const preWeightedPackages = ['axe', 'tenon', 'testaro'];
 // Define the test groups.
 const groups = {
@@ -1380,6 +1380,40 @@ const groups = {
       }
     }
   },
+  attributeBad: {
+    weight: 4,
+    packages: {
+      testaro: {
+        titleEl: {
+          quality: 1,
+          what: 'title attribute belongs to an inappropriate element'
+        }
+      }
+    }
+  },
+  metaBad: {
+    weight: 3,
+    packages: {
+      nuVal: {
+        'Attribute “rel” not allowed on element “meta” at this point.': {
+          quality: 1,
+          what: 'Attribute rel not allowed on a meta element here'
+        },
+        'Attribute “href” not allowed on element “meta” at this point.': {
+          quality: 1,
+          what: 'Attribute href not allowed on a meta element here'
+        },
+        'Element “meta” is missing one or more of the following attributes: “charset”, “content”, “http-equiv”, “itemprop”, “name”, “property”.': {
+          quality: 1,
+          what: 'meta element is missing a charset, content, http-equiv, itemprop, name, or property attribute'
+        },
+        'A document must not include more than one “meta” element with its “name” attribute set to the value “description”.': {
+          quality: 1,
+          what: 'meta element with name="description" is not the only one'
+        }
+      }
+    }
+  },
   iframeTitleBad: {
     weight: 4,
     packages: {
@@ -1582,45 +1616,57 @@ const groups = {
         }
       },
       continuum: {
+        16: {
+          quality: 1,
+          what: 'Element has an aria-multiline attribute, which is not allowed'
+        },
         38: {
           quality: 1,
-          what: 'element has an aria-pressed attribute, which is not allowed'
+          what: 'Element has an aria-pressed attribute, which is not allowed'
+        },
+        64: {
+          quality: 1,
+          what: 'Element has an aria-valuemax attribute that is not set to an integer'
         },
         257: {
           quality: 1,
-          what: 'element has an aria-checked attribute, which is not allowed'
+          what: 'Element has an aria-checked attribute, which is not allowed'
         },
         260: {
           quality: 1,
-          what: 'element has an aria-level attribute, which is not allowed'
+          what: 'Element has an aria-level attribute, which is not allowed'
         },
         264: {
           quality: 1,
-          what: 'element has an aria-selected attribute, which is not allowed'
+          what: 'Element has an aria-selected attribute, which is not allowed'
         },
         270: {
           quality: 1,
-          what: 'element has an aria-required attribute, which is not allowed'
+          what: 'Element has an aria-required attribute, which is not allowed'
         },
         281: {
           quality: 1,
-          what: 'element has an aria-expanded attribute, which is not allowed'
+          what: 'Element has an aria-expanded attribute, which is not allowed'
         },
         282: {
           quality: 1,
-          what: 'element has an aria-autocomplete attribute, which is not allowed'
+          what: 'Element has an aria-autocomplete attribute, which is not allowed'
         },
         283: {
           quality: 1,
-          what: 'element has an aria-activedescendant attribute, which is not allowed'
+          what: 'Element has an aria-activedescendant attribute, which is not allowed'
+        },
+        331: {
+          quality: 1,
+          what: 'Element has an aria-owns attribute set to a non-null value'
         },
         333: {
           quality: 1,
-          what: 'element with a textbox role has an aria-owns attribute, which is not allowed'
+          what: 'Element with a textbox role has an aria-owns attribute, which is not allowed'
         },
         1066: {
           quality: 1,
-          what: 'element has an ARIA attribute which is not valid'
+          what: 'Element has an ARIA attribute which is not valid'
         }
       },
       ibm: {
@@ -1631,12 +1677,10 @@ const groups = {
         Rpt_Aria_ValidProperty: {
           quality: 1,
           what: 'ARIA attribute is invalid for the role'
-        }
-      },
-      testaro: {
-        titleEl: {
+        },
+        Rpt_Aria_ValidPropertyValue: {
           quality: 1,
-          what: 'title attribute belongs to an inappropriate element'
+          what: 'ARIA property value is invalid'
         }
       }
     }
@@ -1869,6 +1913,17 @@ const groups = {
         r78: {
           quality: 1,
           what: 'No content between two headings of the same level'
+        }
+      }
+    }
+  },
+  typeRedundant: {
+    weight: 1,
+    packages: {
+      nuVal: {
+        'The “type” attribute is unnecessary for JavaScript resources.': {
+          quality: 1,
+          what: 'type attribute is unnecessary for a JavaScript resource'
         }
       }
     }
@@ -4037,6 +4092,7 @@ exports.scorer = async report => {
         continuum: {},
         htmlcs: {},
         ibm: {},
+        nuVal: {},
         tenon: {},
         wave: {}
       };

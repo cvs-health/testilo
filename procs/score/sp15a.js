@@ -58,9 +58,22 @@ const otherPackages = ['alfa', 'axe', 'continuum', 'htmlcs', 'ibm', 'nuVal', 'te
 const preWeightedPackages = ['axe', 'tenon', 'testaro'];
 const testMatchers = {
   nuVal: [
+    /^CSS: “background-image”: .+ is not a “background-image” value.*$/,
+    /^CSS: “background”: .+ is not a “color” value.*$/,
+    /^CSS: “cursor”: .+ is not a “cursor” value.*$/,
+    /^CSS: “transform”: .+ is not a “transform” value.*$/,
+    /^Duplicate ID .+$|^The first occurrence of ID .+ was here.*$/,
+    /^Start tag .+ seen but an element of the same type was already open.*$/,
+    /^End tag .+ violates nesting rules.*$/,
+    /^Attribute .+ is not serializable as XML 1\.0.*$/,
+    /^Attribute .+ not allowed on element “meta” at this point.*$/,
     /^Attribute .+ not allowed on element .+ at this point.*$/,
     /^Bad value .+ for attribute .+ on element “meta”.*$/,
-    /^CSS: “background-image”: .+ is not a “background-image” value.*$/
+    /^Bad value .+ for attribute .+ on element .+$/,
+    /^Attribute .+ not allowed here.*$/,
+    /^CSS: .+: Property .+ doesn't exist.*$/,
+    /^CSS: .+: only “0” can be a “length”. You must put a unit after your number.*$/,
+    /^Element .+ not allowed as child of element .+ in this context.*$/
   ]
 };
 const groups = {
@@ -114,6 +127,12 @@ const groups = {
         RPT_Elem_UniqueId: {
           quality: 1,
           what: 'Element id attribute value is not unique within the document'
+        }
+      },
+      nuVal: {
+        '^Duplicate ID .+$|^The first occurrence of ID .+ was here.*$': {
+          quality: 1,
+          what: 'Duplicate id'
         }
       }
     }
@@ -375,6 +394,17 @@ const groups = {
         'Element “img” is missing required attribute “src”.': {
           quality: 1,
           what: 'img element has no src attribute'
+        }
+      }
+    }
+  },
+  backgroundBad: {
+    weight: 4,
+    packages: {
+      nuVal: {
+        '^CSS: “background”: .+ is not a “color” value.*$': {
+          quality: 1,
+          what: 'CSS background color is misdefined'
         }
       }
     }
@@ -1485,17 +1515,9 @@ const groups = {
     weight: 3,
     packages: {
       nuVal: {
-        'Attribute “name” not allowed on element “meta” at this point.': {
+        '^Attribute .+ not allowed on element “meta” at this point.*$': {
           quality: 1,
-          what: 'name attribute is not allowed on a meta element here'
-        },
-        'Attribute “rel” not allowed on element “meta” at this point.': {
-          quality: 1,
-          what: 'rel attribute is not allowed on a meta element here'
-        },
-        'Attribute “href” not allowed on element “meta” at this point.': {
-          quality: 1,
-          what: 'href attribute is not allowed on a meta element here'
+          what: 'Attribute is not allowed on a meta element here'
         },
         'Element “meta” is missing one or more of the following attributes: “charset”, “content”, “http-equiv”, “itemprop”, “name”, “property”.': {
           quality: 1,
@@ -1505,10 +1527,6 @@ const groups = {
           quality: 1,
           what: 'meta element with name="description" is not the only one'
         },
-        'Attribute “http-equiv” not allowed on element “meta” at this point.': {
-          quality: 1,
-          what: 'http-equiv attribute is not allowed on a meta element here'
-        },
         'A “meta” element with an “http-equiv” attribute whose value is “X-UA-Compatible” must have a “content” attribute with the value “IE=edge”.': {
           quality: 1,
           what: 'meta element with http-equiv="X-UA-Compatible" has no content="IE=edge"'
@@ -1516,6 +1534,10 @@ const groups = {
         'Element “meta” is missing one or more of the following attributes: “itemprop”, “property”.': {
           quality: 1,
           what: 'meta element is missing an itemprop or property attribute'
+        },
+        'A “charset” attribute on a “meta” element found after the first 1024 bytes.': {
+          quality: 1,
+          what: 'charset attribute on a meta element appears after 1024 bytes'
         },
         '^Bad value .+ for attribute .+ on element “meta”.*$': {
           quality: 1,
@@ -1855,6 +1877,12 @@ const groups = {
           quality: 1,
           what: 'ARIA property value is invalid'
         }
+      },
+      nuVal: {
+        'The “aria-hidden” attribute must not be specified on the “noscript” element.': {
+          quality: 1,
+          what: 'noscript element has an aria-hidden attribute'
+        }
       }
     }
   },
@@ -2071,6 +2099,12 @@ const groups = {
           what: 'Heading element provides no descriptive text'
         }
       },
+      nuVal: {
+        'Empty heading.': {
+          quality: 1,
+          what: 'Empty heading'
+        }
+      },
       wave: {
         'e:heading_empty': {
           quality: 1,
@@ -2266,6 +2300,12 @@ const groups = {
         'w:AA.1_3_1_A.G141': {
           quality: 1,
           what: 'Heading level is incorrect'
+        }
+      },
+      nuVal: {
+        'Consider using the “h1” element as a top-level heading only (all “h1” elements are treated as top-level headings by many screen readers and other tools).': {
+          quality: 1,
+          what: 'Page contains more than 1 h1 element'
         }
       },
       tenon: {
@@ -3540,6 +3580,18 @@ const groups = {
         '^Attribute .+ not allowed on element .+ at this point.*$': {
           quality: 1,
           what: 'attribute not allowed on this element'
+        },
+        '^Bad value .+ for attribute .+ on element .+$': {
+          quality: 1,
+          what: 'attribute on this element has an invalid value'
+        },
+        '^Attribute .+ not allowed here.*$': {
+          quality: 1,
+          what: 'Attribute not allowed here'
+        },
+        '^Attribute .+ is not serializable as XML 1\\.0.*$': {
+          quality: 1,
+          what: 'Attribute is invalidly nonserializable'
         }
       }
     }
@@ -3966,6 +4018,14 @@ const groups = {
           quality: 1,
           what: 'charset attribute has a value other than utf-8 and is unnecessary'
         },
+        'The “language” attribute on the “script” element is obsolete. You can safely omit it.': {
+          quality: 1,
+          what: 'language attribute is obsolete on a script element'
+        },
+        'The “language” attribute on the “script” element is obsolete. Use the “type” attribute instead.': {
+          quality: 1,
+          what: 'language attribute is obsolete on a script element'
+        },
         'The “frameborder” attribute on the “iframe” element is obsolete. Use CSS instead.': {
           quality: 1,
           what: 'frameborder attribute is obsolete'
@@ -3973,6 +4033,14 @@ const groups = {
         'The “name” attribute is obsolete. Consider putting an “id” attribute on the nearest container instead.': {
           quality: 1,
           what: 'name attribute is obsolete'
+        },
+        'The “allowtransparency” attribute on the “iframe” element is obsolete. Use CSS instead.': {
+          quality: 1,
+          what: 'allowtransparency attribute on an iframe element is obsolete'
+        },
+        'The “scrolling” attribute on the “iframe” element is obsolete. Use CSS instead.': {
+          quality: 1,
+          what: 'scrolling attribute on an iframe element is obsolete'
         }
       },
       wave: {
@@ -4007,13 +4075,41 @@ const groups = {
           quality: 1,
           what: 'Invalid flex in CSS'
         },
+        '^CSS: “cursor”: .+ is not a “cursor” value.*$': {
+          quality: 1,
+          what: 'Invalid cursor in CSS'
+        },
+        '^CSS: “transform”: .+ is not a “transform” value.*$': {
+          quality: 1,
+          what: 'Invalid transform in CSS'
+        },
+        '^CSS: .+: Property .+ doesn\'t exist.*$': {
+          quality: 1,
+          what: 'Invalid property in CSS'
+        },
+        '^CSS: .+: only “0” can be a “length”. You must put a unit after your number.*$': {
+          quality: 1,
+          what: 'Length in CSS is nonzero but has no unit'
+        },
+        'CSS: Parse Error.': {
+          quality: 1,
+          what: 'Invalid CSS'
+        },
         'Stray end tag “head”.': {
           quality: 1,
           what: 'Invalid closing head tag'
         },
-        'Start tag “body” seen but an element of the same type was already open.': {
+        '^Start tag .+ seen but an element of the same type was already open.*$': {
           quality: 1,
-          what: 'body element is a descendant of a body element'
+          what: 'Element is invalidly a descendant of another such element'
+        },
+        '^End tag .+ violates nesting rules.*$': {
+          quality: 1,
+          what: 'End tag violates nesting rules'
+        },
+        '^Element .+ not allowed as child of element .+ in this context.*$': {
+          quality: 1,
+          what: 'Element not allowed as a child of its parent here'
         }
       }
     }

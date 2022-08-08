@@ -1464,6 +1464,17 @@ const groups = {
       }
     }
   },
+  itemTypeBad: {
+    weight: 4,
+    packages: {
+      nuVal: {
+        'The “itemtype” attribute must not be specified on elements that do not have an “itemscope” attribute specified.': {
+          quality: 1,
+          what: 'Element has an itemtype attribute without an itemscope attribute'
+        }
+      }
+    }
+  },
   iframeTitleBad: {
     weight: 4,
     packages: {
@@ -1599,6 +1610,14 @@ const groups = {
         'The “contentinfo” role is unnecessary for element “footer”.': {
           quality: 1,
           what: 'contentinfo role is redundant for a footer element'
+        },
+        'The “main” role is unnecessary for element “main”.': {
+          quality: 1,
+          what: 'main role is redundant for a main element'
+        },
+        'The “navigation” role is unnecessary for element “nav”.': {
+          quality: 1,
+          what: 'navigation role is redundant for a nav element'
         }
       }
     }
@@ -1686,6 +1705,10 @@ const groups = {
         'aria-allowed-attr': {
           quality: 1,
           what: 'ARIA attribute is invalid for the role of its element'
+        },
+        'aria-roledescription': {
+          quality: 1,
+          what: 'aria-roledescription is on an element with no semantic role'
         }
       },
       continuum: {
@@ -1782,17 +1805,6 @@ const groups = {
         'e:aria_reference_broken': {
           quality: 1,
           what: 'Broken ARIA reference'
-        }
-      }
-    }
-  },
-  ariaRoleDescriptionBad: {
-    weight: 3,
-    packages: {
-      axe: {
-        'aria-roledescription': {
-          quality: 1,
-          what: 'aria-roledescription is on an element with no semantic role'
         }
       }
     }
@@ -1997,6 +2009,10 @@ const groups = {
         'The “type” attribute is unnecessary for JavaScript resources.': {
           quality: 1,
           what: 'type attribute is unnecessary for a JavaScript resource'
+        },
+        'The “type” attribute for the “style” element is not needed and should be omitted.': {
+          quality: 1,
+          what: 'type attribute is unnecessary for a style element'
         }
       }
     }
@@ -2219,6 +2235,17 @@ const groups = {
         'a:h1_missing': {
           quality: 1,
           what: 'Missing first level heading'
+        }
+      }
+    }
+  },
+  sectionHeadingless: {
+    weight: 1,
+    packages: {
+      nuVal: {
+        'Section lacks heading. Consider using “h2”-“h6” elements to add identifying headings to all sections.': {
+          quality: 1,
+          what: 'section has no heading'
         }
       }
     }
@@ -3794,6 +3821,10 @@ const groups = {
         }
       },
       nuVal: {
+        'The “frameborder” attribute on the “iframe” element is obsolete. Use CSS instead.': {
+          quality: 1,
+          what: 'frameborder attribute is obsolete'
+        },
         'The “name” attribute is obsolete. Consider putting an “id” attribute on the nearest container instead.': {
           quality: 1,
           what: 'name attribute is obsolete'
@@ -3833,7 +3864,18 @@ const groups = {
         }
       }
     }
-  }
+  },
+  encodingBad: {
+    weight: 4,
+    packages: {
+      nuVal: {
+        'Document uses the Unicode Private Use Area(s), which should not be used in publicly exchanged documents. (Charmod C073)': {
+          quality: 1,
+          what: 'Page includes a Unicode PUA character'
+        }
+      }
+    }
+  },
 };
 
 // VARIABLES

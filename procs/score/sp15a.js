@@ -58,6 +58,17 @@ const otherPackages = ['alfa', 'axe', 'continuum', 'htmlcs', 'ibm', 'nuVal', 'te
 const preWeightedPackages = ['axe', 'tenon', 'testaro'];
 // Define the test groups.
 const groups = {
+  ignorable: {
+    weight: 0,
+    packages: {
+      nuVal: {
+        'Element “mediaelementwrapper” not allowed as child of element “div” in this context. (Suppressing further errors from this subtree.)': {
+          quality: 0,
+          what: 'Bug in nuVal'
+        }
+      }
+    }
+  },
   duplicateID: {
     weight: 3,
     packages: {
@@ -250,7 +261,7 @@ const groups = {
       wave: {
         'e:alt_input_missing': {
           quality: 1,
-          what: 'Image button missing alternative text'
+          what: 'Image button has no alternative text'
         }
       }
     }
@@ -311,6 +322,12 @@ const groups = {
           what: 'Image has no alt attribute conveying its meaning, or alt="" if decorative'
         }
       },
+      nuVal: {
+        'An “img” element must have an “alt” attribute, except under certain conditions. For details, consult guidance on providing text alternatives for images.': {
+          quality: 1,
+          what: 'img element has no alt attribute'
+        }
+      },
       wave: {
         'e:alt_missing': {
           quality: 1,
@@ -341,6 +358,17 @@ const groups = {
         r39: {
           quality: 1,
           what: 'Image text alternative is the filename instead'
+        }
+      }
+    }
+  },
+  imageNoSource: {
+    weight: 4,
+    packages: {
+      nuVal: {
+        'Element “img” is missing required attribute “src”.': {
+          quality: 1,
+          what: 'img element has no src attribute'
         }
       }
     }
@@ -628,7 +656,7 @@ const groups = {
       htmlcs: {
         'e:AA.1_1_1.H24': {
           quality: 1,
-          what: 'Area element in an image map missing an alt attribute'
+          what: 'Area element in an image map has no alt attribute'
         }
       },
       ibm: {
@@ -644,7 +672,7 @@ const groups = {
       wave: {
         'e:alt_area_missing': {
           quality: 1,
-          what: 'Image map area missing alternative text'
+          what: 'Image map area has no alternative text'
         }
       }
     }
@@ -728,6 +756,17 @@ const groups = {
         'w:AA.1_3_1.H44.NotFormControl': {
           quality: 1,
           what: 'Label for attribute may reference the wrong element, because it is not a form control'
+        }
+      }
+    }
+  },
+  ariaLabelWrongRisk: {
+    weight: 1,
+    packages: {
+      nuVal: {
+        'Possible misuse of “aria-label”. (If you disagree with this warning, file an issue report or send e-mail to www-validator@w3.org.)': {
+          quality: 1,
+          what: 'aria-label attribute may be misused'
         }
       }
     }
@@ -1380,7 +1419,7 @@ const groups = {
       }
     }
   },
-  attributeBad: {
+  titleBad: {
     weight: 4,
     packages: {
       testaro: {
@@ -1410,6 +1449,17 @@ const groups = {
         'A document must not include more than one “meta” element with its “name” attribute set to the value “description”.': {
           quality: 1,
           what: 'meta element with name="description" is not the only one'
+        }
+      }
+    }
+  },
+  scriptDeferBad: {
+    weight: 4,
+    packages: {
+      nuVal: {
+        'Element “script” must not have attribute “defer” unless attribute “src” is also specified.': {
+          quality: 1,
+          what: 'script element has a defer attribute without a src attribute'
         }
       }
     }
@@ -1499,10 +1549,6 @@ const groups = {
         }
       },
       ibm: {
-        aria_role_redundant: {
-          quality: 1,
-          what: 'Explicitly assigned ARIA role is redundant with the implicit role of the element'
-        },
         aria_semantics_role: {
           quality: 1,
           what: 'ARIA role is not valid for the element to which it is assigned'
@@ -1536,6 +1582,27 @@ const groups = {
       }
     }
   },
+  roleRedundant: {
+    weight: 1,
+    packages: {
+      ibm: {
+        aria_role_redundant: {
+          quality: 1,
+          what: 'Explicitly assigned ARIA role is redundant with the implicit role of the element'
+        }
+      },
+      nuVal: {
+        'The “banner” role is unnecessary for element “header”.': {
+          quality: 1,
+          what: 'banner role is redundant for a header element'
+        },
+        'The “contentinfo” role is unnecessary for element “footer”.': {
+          quality: 1,
+          what: 'contentinfo role is redundant for a footer element'
+        }
+      }
+    }
+  },
   roleMissingAttribute: {
     weight: 4,
     packages: {
@@ -1549,6 +1616,12 @@ const groups = {
         Rpt_Aria_RequiredProperties: {
           quality: 1,
           what: 'ARIA role on an element does not have a required attribute'
+        }
+      },
+      nuVal: {
+        'Element “a” is missing required attribute “aria-valuenow”.': {
+          quality: 1,
+          what: 'a element has no aria-valuenow attribute'
         }
       }
     }
@@ -2361,7 +2434,7 @@ const groups = {
       wave: {
         'a:select_missing_label': {
           quality: 1,
-          what: 'Select missing label'
+          what: 'Select element has no label'
         }
       }
     }
@@ -2424,7 +2497,7 @@ const groups = {
       wave: {
         'a:fieldset_missing': {
           quality: 1,
-          what: 'Missing fieldset'
+          what: 'fieldset element is missing'
         }
       }
     }
@@ -2486,7 +2559,7 @@ const groups = {
       testaro: {
         nonTable: {
           quality: 1,
-          what: 'table element is missing structural requirements for tabular data'
+          what: 'table element fails the structural requirements for tabular data'
         }
       },
       wave: {
@@ -2639,7 +2712,7 @@ const groups = {
       wave: {
         'e:label_missing': {
           quality: 1,
-          what: 'Missing form label'
+          what: 'form element has no label'
         }
       }
     }
@@ -3322,6 +3395,17 @@ const groups = {
       }
     }
   },
+  linkHrefBad: {
+    weight: 4,
+    packages: {
+      nuVal: {
+        'Attribute “href” not allowed on element “a” at this point.': {
+          quality: 1,
+          what: 'href not allowed on this a element'
+        }
+      }
+    }
+  },
   nonWebLink: {
     weight: 1,
     packages: {
@@ -3428,6 +3512,25 @@ const groups = {
         'no-autoplay-audio': {
           quality: 1,
           what: 'video or audio element plays automatically'
+        }
+      }
+    }
+  },
+  styleParentBad: {
+    weight: 4,
+    packages: {
+      nuVal: {
+        'Element “style” not allowed as child of element “div” in this context. (Suppressing further errors from this subtree.)': {
+          quality: 1,
+          what: 'style element not allowed as a child of this div element'
+        },
+        'Element “style” not allowed as child of element “main” in this context. (Suppressing further errors from this subtree.)': {
+          quality: 1,
+          what: 'style element not allowed as a child of this main element'
+        },
+        'Element “style” not allowed as child of element “footer” in this context. (Suppressing further errors from this subtree.)': {
+          quality: 1,
+          what: 'style element not allowed as a child of this footer element'
         }
       }
     }
@@ -3690,10 +3793,43 @@ const groups = {
           what: 'Element or attribute is obsolete'
         }
       },
+      nuVal: {
+        'The “name” attribute is obsolete. Consider putting an “id” attribute on the nearest container instead.': {
+          quality: 1,
+          what: 'name attribute is obsolete'
+        }
+      },
       wave: {
         'a:longdesc': {
           quality: 1,
           what: 'longdesc attribute is obsolete'
+        }
+      }
+    }
+  },
+  parseError: {
+    weight: 3,
+    packages: {
+      nuVal: {
+        'CSS: “-webkit-box-flex”: Parse Error.': {
+          quality: 1,
+          what: 'Invalid -webkit-box-flex in CSS'
+        },
+        'CSS: “-webkit-flex”: Parse Error.': {
+          quality: 1,
+          what: 'Invalid -webkit-flex in CSS'
+        },
+        'CSS: “-ms-flex”: Parse Error.': {
+          quality: 1,
+          what: 'Invalid -ms-flex in CSS'
+        },
+        'CSS: “-moz-box-flex”: Parse Error.': {
+          quality: 1,
+          what: 'Invalid -moz-box-flex in CSS'
+        },
+        'CSS: “flex”: Parse Error.': {
+          quality: 1,
+          what: 'Invalid flex in CSS'
         }
       }
     }

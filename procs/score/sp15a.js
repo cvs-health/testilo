@@ -56,7 +56,12 @@ const preventionWeights = {
 };
 const otherPackages = ['alfa', 'axe', 'continuum', 'htmlcs', 'ibm', 'nuVal', 'tenon', 'wave'];
 const preWeightedPackages = ['axe', 'tenon', 'testaro'];
-// Define the test groups.
+const testMatchers = {
+  nuVal: [
+    /^Attribute .+ not allowed on element .+ at this point.*$/,
+    /^CSS: “background-image”: .+ is not a “background-image” value.*$/
+  ]
+};
 const groups = {
   ignorable: {
     weight: 0,
@@ -369,6 +374,17 @@ const groups = {
         'Element “img” is missing required attribute “src”.': {
           quality: 1,
           what: 'img element has no src attribute'
+        }
+      }
+    }
+  },
+  backgroundImageBad: {
+    weight: 4,
+    packages: {
+      nuVal: {
+        '^CSS: “background-image”: .+ is not a “background-image” value.*$': {
+          quality: 1,
+          what: 'CSS background image is misdefined'
         }
       }
     }
@@ -3516,17 +3532,9 @@ const groups = {
     weight: 4,
     packages: {
       nuVal: {
-        'Attribute “href” not allowed on element “a” at this point.': {
+        '^Attribute .+ not allowed on element .+ at this point.*$': {
           quality: 1,
-          what: 'href attribute not allowed on this a element'
-        },
-        'Attribute “value” not allowed on element “a” at this point.': {
-          quality: 1,
-          what: 'value attribute not allowed on this a element'
-        },
-        'Attribute “value” not allowed on element “li” at this point.': {
-          quality: 1,
-          what: 'value attribute not allowed on this li element'
+          what: 'attribute not allowed on this element'
         }
       }
     }
@@ -4424,8 +4432,18 @@ exports.scorer = async report => {
       // Populate the group details with group and solo test scores.
       // For each package with any scores:
       Object.keys(packageDetails).forEach(packageName => {
+        const matchers = testMatchers[packageName];
         // For each test with any scores in the package:
         Object.keys(packageDetails[packageName]).forEach(testID => {
+          // If the package has varying test names:
+          if (matchers) {
+            // If the test name belongs to a class:
+            const testCode = matchers.find(matcher => matcher.test(testID));
+            if (testCode) {
+              // Change the test name to the name of its class.
+              testID = testCode.source;
+            }
+          }
           // If the test is in a group:
           const groupName = testGroups[packageName][testID];
           if (groupName) {

@@ -59,6 +59,7 @@ const preWeightedPackages = ['axe', 'tenon', 'testaro'];
 const testMatchers = {
   nuVal: [
     /^Attribute .+ not allowed on element .+ at this point.*$/,
+    /^Bad value .+ for attribute .+ on element “meta”.*$/,
     /^CSS: “background-image”: .+ is not a “background-image” value.*$/
   ]
 };
@@ -1515,6 +1516,10 @@ const groups = {
         'Element “meta” is missing one or more of the following attributes: “itemprop”, “property”.': {
           quality: 1,
           what: 'meta element is missing an itemprop or property attribute'
+        },
+        '^Bad value .+ for attribute .+ on element “meta”.*$': {
+          quality: 1,
+          what: 'attribute of a meta element has an invalid value'
         }
       }
     }
@@ -4024,6 +4029,17 @@ const groups = {
       }
     }
   },
+  fatalError: {
+    weight: 50,
+    packages: {
+      nuVal: {
+        'Cannot recover after last error. Any further errors will be ignored.': {
+          quality: 1,
+          what: 'Testing was interrupted by a fatal error'
+        }
+      }
+    }
+  }
 };
 
 // VARIABLES
@@ -4433,19 +4449,21 @@ exports.scorer = async report => {
       // For each package with any scores:
       Object.keys(packageDetails).forEach(packageName => {
         const matchers = testMatchers[packageName];
+        let testClass = '';
         // For each test with any scores in the package:
         Object.keys(packageDetails[packageName]).forEach(testID => {
-          // If the package has varying test names:
-          if (matchers) {
-            // If the test name belongs to a class:
-            const testCode = matchers.find(matcher => matcher.test(testID));
-            if (testCode) {
-              // Change the test name to the name of its class.
-              testID = testCode.source;
+          // Determine whether the test is in a group.
+          let groupName = testGroups[packageName][testID];
+          // If not:
+          if (! groupName) {
+            // Determine whether the package has test classes and the class is in a group.
+            testClass = matchers && matchers.find(matcher => matcher.test(testID));
+            if (testClass) {
+              testID = testClass.source;
+              groupName = testGroups[packageName][testID];
             }
           }
-          // If the test is in a group:
-          const groupName = testGroups[packageName][testID];
+          // If the test or its class is in a group:
           if (groupName) {
             // Determine the preweighted or group-weighted score.
             if (! groupDetails.groups[groupName]) {
@@ -4467,6 +4485,10 @@ exports.scorer = async report => {
               score: roundedScore,
               what: groups[groupName].packages[packageName][testID].what
             };
+          }
+          // Otherwise, if the package has varying test names and the test belongs to a class:
+          else if (matchers && (testCode = matchers.find(matcher => matcher.test(testID)))) {
+
           }
           // Otherwise, i.e. if the test is solo:
           else {

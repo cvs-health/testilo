@@ -850,6 +850,12 @@ const groups = {
           what: 'for attribute does not reference a non-empty, unique id attribute of an input element'
         }
       },
+      nuVal: {
+        'The “aria-labelledby” attribute must point to an element in the same document.': {
+          quality: 1,
+          what: 'aria-labelledby attribute references an element not in the document'
+        }
+      },
       wave: {
         'a:label_orphaned': {
           quality: 1,
@@ -1124,6 +1130,17 @@ const groups = {
         'a:javascript_jumpmenu': {
           quality: 1,
           what: 'selection change may navigate to another page without notice'
+        }
+      }
+    }
+  },
+  buttonAlt: {
+    weight: 4,
+    packages: {
+      nuVal: {
+        'Attribute “alt” not allowed on element “button” at this point.': {
+          quality: 1,
+          what: 'button element has an alt attribute'
         }
       }
     }
@@ -1422,6 +1439,12 @@ const groups = {
   titleBad: {
     weight: 4,
     packages: {
+      nuVal: {
+        'Element “title” not allowed as child of element “body” in this context. (Suppressing further errors from this subtree.)': {
+          quality: 1,
+          what: 'title element is a child of the body element'
+        }
+      },
       testaro: {
         titleEl: {
           quality: 1,
@@ -1430,17 +1453,32 @@ const groups = {
       }
     }
   },
+  linkElementBad: {
+    weight: 4,
+    packages: {
+      nuVal: {
+        'A “link” element must not appear as a descendant of a “body” element unless the “link” element has an “itemprop” attribute or has a “rel” attribute whose value contains “dns-prefetch”, “modulepreload”, “pingback”, “preconnect”, “prefetch”, “preload”, “prerender”, or “stylesheet”.': {
+          quality: 1,
+          what: 'link element with a body ancestor has no itemprop or valid rel attribute'
+        }
+      }
+    }
+  },
   metaBad: {
     weight: 3,
     packages: {
       nuVal: {
+        'Attribute “name” not allowed on element “meta” at this point.': {
+          quality: 1,
+          what: 'name attribute is not allowed on a meta element here'
+        },
         'Attribute “rel” not allowed on element “meta” at this point.': {
           quality: 1,
-          what: 'Attribute rel not allowed on a meta element here'
+          what: 'rel attribute is not allowed on a meta element here'
         },
         'Attribute “href” not allowed on element “meta” at this point.': {
           quality: 1,
-          what: 'Attribute href not allowed on a meta element here'
+          what: 'href attribute is not allowed on a meta element here'
         },
         'Element “meta” is missing one or more of the following attributes: “charset”, “content”, “http-equiv”, “itemprop”, “name”, “property”.': {
           quality: 1,
@@ -1449,6 +1487,18 @@ const groups = {
         'A document must not include more than one “meta” element with its “name” attribute set to the value “description”.': {
           quality: 1,
           what: 'meta element with name="description" is not the only one'
+        },
+        'Attribute “http-equiv” not allowed on element “meta” at this point.': {
+          quality: 1,
+          what: 'http-equiv attribute is not allowed on a meta element here'
+        },
+        'A “meta” element with an “http-equiv” attribute whose value is “X-UA-Compatible” must have a “content” attribute with the value “IE=edge”.': {
+          quality: 1,
+          what: 'meta element with http-equiv="X-UA-Compatible" has no content="IE=edge"'
+        },
+        'Element “meta” is missing one or more of the following attributes: “itemprop”, “property”.': {
+          quality: 1,
+          what: 'meta element is missing an itemprop or property attribute'
         }
       }
     }
@@ -1583,6 +1633,12 @@ const groups = {
         table_aria_descendants: {
           quality: 1,
           what: 'Table structure element specifies an explicit role within the table container'
+        }
+      },
+      nuVal: {
+        'Bad value “dialog” for attribute “role” on element “li”.': {
+          quality: 1,
+          what: 'dialog role is not valid for an li element'
         }
       },
       testaro: {
@@ -1956,6 +2012,17 @@ const groups = {
       }
     }
   },
+  idEmpty: {
+    weight: 4,
+    packages: {
+      nuVal: {
+        'Bad value “” for attribute “id” on element “a”: An ID must not be the empty string.': {
+          quality: 1,
+          what: 'id attribute has an empty value'
+        }
+      }
+    }
+  },
   headingEmpty: {
     weight: 3,
     packages: {
@@ -2143,6 +2210,12 @@ const groups = {
         WCAG20_Doc_HasTitle: {
           quality: 1,
           what: 'Page has no subject-identifying title'
+        }
+      },
+      nuVal: {
+        'Element “head” is missing a required instance of child element “title”.': {
+          quality: 1,
+          what: 'head element has no child title element'
         }
       },
       wave: {
@@ -2407,6 +2480,12 @@ const groups = {
         385: {
           quality: 1,
           what: 'list item has no ul, ol, or list-role parent or owner'
+        }
+      },
+      nuVal: {
+        'Element “li” not allowed as child of element “div” in this context. (Suppressing further errors from this subtree.)': {
+          quality: 1,
+          what: 'li element is a child of a div element'
         }
       }
     }
@@ -3356,6 +3435,17 @@ const groups = {
       }
     }
   },
+  frameSandboxRisk: {
+    weight: 2,
+    packages: {
+      nuVal: {
+        'Potentially bad value “allow-scripts allow-same-origin” for attribute “sandbox” on element “iframe”: Setting both “allow-scripts” and “allow-same-origin” is not recommended, because it effectively enables an embedded page to break out of all sandboxing.': {
+          quality: 1,
+          what: 'iframe element has vulnerable sandbox="allow-scripts allow-same-origin"'
+        }
+      }
+    }
+  },
   hoverSurprise: {
     weight: 1,
     packages: {
@@ -3422,13 +3512,21 @@ const groups = {
       }
     }
   },
-  linkHrefBad: {
+  attributeBad: {
     weight: 4,
     packages: {
       nuVal: {
         'Attribute “href” not allowed on element “a” at this point.': {
           quality: 1,
-          what: 'href not allowed on this a element'
+          what: 'href attribute not allowed on this a element'
+        },
+        'Attribute “value” not allowed on element “a” at this point.': {
+          quality: 1,
+          what: 'value attribute not allowed on this a element'
+        },
+        'Attribute “value” not allowed on element “li” at this point.': {
+          quality: 1,
+          what: 'value attribute not allowed on this li element'
         }
       }
     }
@@ -3543,10 +3641,36 @@ const groups = {
       }
     }
   },
+  divParentBad: {
+    weight: 4,
+    packages: {
+      nuVal: {
+        'Element “div” not allowed as child of element “button” in this context. (Suppressing further errors from this subtree.)': {
+          quality: 1,
+          what: 'div element has a button element as its parent'
+        }
+      }
+    }
+  },
+  pParentBad: {
+    weight: 4,
+    packages: {
+      nuVal: {
+        'Element “p” not allowed as child of element “strong” in this context. (Suppressing further errors from this subtree.)': {
+          quality: 1,
+          what: 'p element has a strong element as its parent'
+        }
+      }
+    }
+  },
   styleParentBad: {
     weight: 4,
     packages: {
       nuVal: {
+        'Element “style” not allowed as child of element “body” in this context. (Suppressing further errors from this subtree.)': {
+          quality: 1,
+          what: 'style element not allowed as a child of the body element'
+        },
         'Element “style” not allowed as child of element “div” in this context. (Suppressing further errors from this subtree.)': {
           quality: 1,
           what: 'style element not allowed as a child of this div element'
@@ -3821,6 +3945,14 @@ const groups = {
         }
       },
       nuVal: {
+        'The “charset” attribute on the “script” element is obsolete.': {
+          quality: 1,
+          what: 'charset attribute is obsolete on a script element'
+        },
+        'The only allowed value for the “charset” attribute for the “script” element is “utf-8”. (But the attribute is not needed and should be omitted altogether.)': {
+          quality: 1,
+          what: 'charset attribute has a value other than utf-8 and is unnecessary'
+        },
         'The “frameborder” attribute on the “iframe” element is obsolete. Use CSS instead.': {
           quality: 1,
           what: 'frameborder attribute is obsolete'
@@ -3861,6 +3993,14 @@ const groups = {
         'CSS: “flex”: Parse Error.': {
           quality: 1,
           what: 'Invalid flex in CSS'
+        },
+        'Stray end tag “head”.': {
+          quality: 1,
+          what: 'Invalid closing head tag'
+        },
+        'Start tag “body” seen but an element of the same type was already open.': {
+          quality: 1,
+          what: 'body element is a descendant of a body element'
         }
       }
     }

@@ -10,8 +10,8 @@
   This proc applies specified weights to the component scores before summing them. An issue reported
   by a test is given a score. That score is determined by:
     Whether the issue is reported as an error or a warning.
-    How important the issue is, if the test package is “pre-weighted” (axe, tenon, and testaro)
-    Whether the test belongs to a group or is a “solo” test.
+    How important the issue is, if the test package is pre-weighted (axe, tenon, and testaro)
+    Whether the test belongs to a group or is a solo test.
     How heavily the group is weighted, if the test package is not pre-weighted and the test belongs
       to a group
 
@@ -27,7 +27,7 @@
   Browser logging produces a log score, and the prevention of tests produces a prevention score.
   They, too, are added to the total score.
 
-  Each grouped test has a “quality” property, typically set to 1. The value of this property can be
+  Each grouped test has a quality property, typically set to 1. The value of this property can be
   modified when the test is found to be higher or lower in quality than usual.
 */
 
@@ -58,23 +58,24 @@ const otherPackages = ['alfa', 'axe', 'continuum', 'htmlcs', 'ibm', 'nuVal', 'te
 const preWeightedPackages = ['axe', 'tenon', 'testaro'];
 const testMatchers = {
   nuVal: [
-    /^CSS: “background-image”: .+ is not a “background-image” value.*$/,
-    /^CSS: “background”: .+ is not a “color” value.*$/,
-    /^CSS: “cursor”: .+ is not a “cursor” value.*$/,
-    /^CSS: “transform”: .+ is not a “transform” value.*$/,
-    /^Duplicate ID .+$|^The first occurrence of ID .+ was here.*$/,
+    /^CSS: background-image: .+ is not a background-image value.*$/,
+    /^CSS: background: .+ is not a color value.*$/,
+    /^CSS: cursor: .+ is not a cursor value.*$/,
+    /^CSS: transform: .+ is not a transform value.*$/,
+    /^Bad value  for attribute id on element .+: An ID must not be the empty string.+$/,
+    /^Duplicate ID .+$|^The first occurrence of ID .* was here.*$/,
     /^Start tag .+ seen but an element of the same type was already open.*$/,
     /^End tag .+ violates nesting rules.*$/,
     /^Attribute .+ is not serializable as XML 1\.0.*$/,
-    /^Attribute .+ not allowed on element “meta” at this point.*$/,
+    /^Attribute .+ not allowed on element meta at this point.*$/,
     /^Attribute .+ not allowed on element .+ at this point.*$/,
-    /^Bad value .+ for attribute .+ on element “meta”.*$/,
+    /^Bad value .+ for attribute .+ on element meta.*$/,
     /^Bad value .+ for attribute .+ on element .+$/,
     /^Bad value .+ for the attribute .+$/,
     /^Attribute .+ not allowed here.*$/,
     /^The .+ role is unnecessary for element .+$/,
     /^CSS: .+: Property .+ doesn't exist.*$/,
-    /^CSS: .+: only “0” can be a “length”. You must put a unit after your number.*$/,
+    /^CSS: .+: only 0 can be a length. You must put a unit after your number.*$/,
     /^Element .+ not allowed as child of element .+ in this context.*$/
   ]
 };
@@ -83,7 +84,7 @@ const groups = {
     weight: 0,
     packages: {
       nuVal: {
-        'Element “mediaelementwrapper” not allowed as child of element “div” in this context. (Suppressing further errors from this subtree.)': {
+        'Element mediaelementwrapper not allowed as child of element div in this context. (Suppressing further errors from this subtree.)': {
           quality: 0,
           what: 'Bug in nuVal'
         }
@@ -132,7 +133,7 @@ const groups = {
         }
       },
       nuVal: {
-        '^Duplicate ID .+$|^The first occurrence of ID .+ was here.*$': {
+        '^Duplicate ID .+$|^The first occurrence of ID .* was here.*$': {
           quality: 1,
           what: 'Duplicate id'
         }
@@ -350,7 +351,7 @@ const groups = {
         }
       },
       nuVal: {
-        'An “img” element must have an “alt” attribute, except under certain conditions. For details, consult guidance on providing text alternatives for images.': {
+        'An img element must have an alt attribute, except under certain conditions. For details, consult guidance on providing text alternatives for images.': {
           quality: 1,
           what: 'img element has no alt attribute'
         }
@@ -393,7 +394,7 @@ const groups = {
     weight: 4,
     packages: {
       nuVal: {
-        'Element “img” is missing required attribute “src”.': {
+        'Element img is missing required attribute src.': {
           quality: 1,
           what: 'img element has no src attribute'
         }
@@ -404,7 +405,7 @@ const groups = {
     weight: 4,
     packages: {
       nuVal: {
-        '^CSS: “background”: .+ is not a “color” value.*$': {
+        '^CSS: background: .+ is not a color value.*$': {
           quality: 1,
           what: 'CSS background color is misdefined'
         }
@@ -415,7 +416,7 @@ const groups = {
     weight: 4,
     packages: {
       nuVal: {
-        '^CSS: “background-image”: .+ is not a “background-image” value.*$': {
+        '^CSS: background-image: .+ is not a background-image value.*$': {
           quality: 1,
           what: 'CSS background image is misdefined'
         }
@@ -813,7 +814,7 @@ const groups = {
     weight: 1,
     packages: {
       nuVal: {
-        'Possible misuse of “aria-label”. (If you disagree with this warning, file an issue report or send e-mail to www-validator@w3.org.)': {
+        'Possible misuse of aria-label. (If you disagree with this warning, file an issue report or send e-mail to www-validator@w3.org.)': {
           quality: 1,
           what: 'aria-label attribute may be misused'
         }
@@ -900,7 +901,7 @@ const groups = {
         }
       },
       nuVal: {
-        'The “aria-labelledby” attribute must point to an element in the same document.': {
+        'The aria-labelledby attribute must point to an element in the same document.': {
           quality: 1,
           what: 'aria-labelledby attribute references an element not in the document'
         }
@@ -1187,7 +1188,7 @@ const groups = {
     weight: 4,
     packages: {
       nuVal: {
-        'Attribute “alt” not allowed on element “button” at this point.': {
+        'Attribute alt not allowed on element button at this point.': {
           quality: 1,
           what: 'button element has an alt attribute'
         }
@@ -1489,7 +1490,7 @@ const groups = {
     weight: 4,
     packages: {
       nuVal: {
-        'Element “title” not allowed as child of element “body” in this context. (Suppressing further errors from this subtree.)': {
+        'Element title not allowed as child of element body in this context. (Suppressing further errors from this subtree.)': {
           quality: 1,
           what: 'title element is a child of the body element'
         }
@@ -1506,7 +1507,7 @@ const groups = {
     weight: 4,
     packages: {
       nuVal: {
-        'A “link” element must not appear as a descendant of a “body” element unless the “link” element has an “itemprop” attribute or has a “rel” attribute whose value contains “dns-prefetch”, “modulepreload”, “pingback”, “preconnect”, “prefetch”, “preload”, “prerender”, or “stylesheet”.': {
+        'A link element must not appear as a descendant of a body element unless the link element has an itemprop attribute or has a rel attribute whose value contains dns-prefetch, modulepreload, pingback, preconnect, prefetch, preload, prerender, or stylesheet.': {
           quality: 1,
           what: 'link element with a body ancestor has no itemprop or valid rel attribute'
         }
@@ -1517,31 +1518,31 @@ const groups = {
     weight: 3,
     packages: {
       nuVal: {
-        '^Attribute .+ not allowed on element “meta” at this point.*$': {
+        '^Attribute .+ not allowed on element meta at this point.*$': {
           quality: 1,
           what: 'Attribute is not allowed on a meta element here'
         },
-        'Element “meta” is missing one or more of the following attributes: “charset”, “content”, “http-equiv”, “itemprop”, “name”, “property”.': {
+        'Element meta is missing one or more of the following attributes: charset, content, http-equiv, itemprop, name, property.': {
           quality: 1,
           what: 'meta element is missing a charset, content, http-equiv, itemprop, name, or property attribute'
         },
-        'A document must not include more than one “meta” element with its “name” attribute set to the value “description”.': {
+        'A document must not include more than one meta element with its name attribute set to the value description.': {
           quality: 1,
           what: 'meta element with name="description" is not the only one'
         },
-        'A “meta” element with an “http-equiv” attribute whose value is “X-UA-Compatible” must have a “content” attribute with the value “IE=edge”.': {
+        'A meta element with an http-equiv attribute whose value is X-UA-Compatible must have a content attribute with the value IE=edge.': {
           quality: 1,
           what: 'meta element with http-equiv="X-UA-Compatible" has no content="IE=edge"'
         },
-        'Element “meta” is missing one or more of the following attributes: “itemprop”, “property”.': {
+        'Element meta is missing one or more of the following attributes: itemprop, property.': {
           quality: 1,
           what: 'meta element is missing an itemprop or property attribute'
         },
-        'A “charset” attribute on a “meta” element found after the first 1024 bytes.': {
+        'A charset attribute on a meta element found after the first 1024 bytes.': {
           quality: 1,
           what: 'charset attribute on a meta element appears after 1024 bytes'
         },
-        '^Bad value .+ for attribute .+ on element “meta”.*$': {
+        '^Bad value .+ for attribute .+ on element meta.*$': {
           quality: 1,
           what: 'attribute of a meta element has an invalid value'
         }
@@ -1552,7 +1553,7 @@ const groups = {
     weight: 4,
     packages: {
       nuVal: {
-        'Element “script” must not have attribute “defer” unless attribute “src” is also specified.': {
+        'Element script must not have attribute defer unless attribute src is also specified.': {
           quality: 1,
           what: 'script element has a defer attribute without a src attribute'
         }
@@ -1563,7 +1564,7 @@ const groups = {
     weight: 4,
     packages: {
       nuVal: {
-        'The “itemtype” attribute must not be specified on elements that do not have an “itemscope” attribute specified.': {
+        'The itemtype attribute must not be specified on elements that do not have an itemscope attribute specified.': {
           quality: 1,
           what: 'Element has an itemtype attribute without an itemscope attribute'
         }
@@ -1681,7 +1682,7 @@ const groups = {
         }
       },
       nuVal: {
-        'Bad value “dialog” for attribute “role” on element “li”.': {
+        'Bad value dialog for attribute role on element li.': {
           quality: 1,
           what: 'dialog role is not valid for an li element'
         }
@@ -1727,7 +1728,7 @@ const groups = {
         }
       },
       nuVal: {
-        'Element “a” is missing required attribute “aria-valuenow”.': {
+        'Element a is missing required attribute aria-valuenow.': {
           quality: 1,
           what: 'a element has no aria-valuenow attribute'
         }
@@ -1869,7 +1870,7 @@ const groups = {
         }
       },
       nuVal: {
-        'The “aria-hidden” attribute must not be specified on the “noscript” element.': {
+        'The aria-hidden attribute must not be specified on the noscript element.': {
           quality: 1,
           what: 'noscript element has an aria-hidden attribute'
         }
@@ -2055,7 +2056,7 @@ const groups = {
     weight: 4,
     packages: {
       nuVal: {
-        'Bad value “” for attribute “id” on element “a”: An ID must not be the empty string.': {
+        '^Bad value  for attribute id on element .+: An ID must not be the empty string.+$': {
           quality: 1,
           what: 'id attribute has an empty value'
         }
@@ -2118,11 +2119,11 @@ const groups = {
     weight: 1,
     packages: {
       nuVal: {
-        'The “type” attribute is unnecessary for JavaScript resources.': {
+        'The type attribute is unnecessary for JavaScript resources.': {
           quality: 1,
           what: 'type attribute is unnecessary for a JavaScript resource'
         },
-        'The “type” attribute for the “style” element is not needed and should be omitted.': {
+        'The type attribute for the style element is not needed and should be omitted.': {
           quality: 1,
           what: 'type attribute is unnecessary for a style element'
         }
@@ -2217,7 +2218,7 @@ const groups = {
     weight: 3,
     packages: {
       nuVal: {
-        'Start tag seen without seeing a doctype first. Expected “<!DOCTYPE html>”.': {
+        'Start tag seen without seeing a doctype first. Expected <!DOCTYPE html>.': {
           quality: 1,
           what: 'Page does not start with <!DOCTYPE html>'
         }
@@ -2264,7 +2265,7 @@ const groups = {
         }
       },
       nuVal: {
-        'Element “head” is missing a required instance of child element “title”.': {
+        'Element head is missing a required instance of child element title.': {
           quality: 1,
           what: 'head element has no child title element'
         }
@@ -2299,7 +2300,7 @@ const groups = {
         }
       },
       nuVal: {
-        'Consider using the “h1” element as a top-level heading only (all “h1” elements are treated as top-level headings by many screen readers and other tools).': {
+        'Consider using the h1 element as a top-level heading only (all h1 elements are treated as top-level headings by many screen readers and other tools).': {
           quality: 1,
           what: 'Page contains more than 1 h1 element'
         }
@@ -2373,7 +2374,7 @@ const groups = {
     weight: 1,
     packages: {
       nuVal: {
-        'Article lacks heading. Consider using “h2”-“h6” elements to add identifying headings to all articles.': {
+        'Article lacks heading. Consider using h2-h6 elements to add identifying headings to all articles.': {
           quality: 1,
           what: 'article has no heading'
         }
@@ -2384,11 +2385,11 @@ const groups = {
     weight: 1,
     packages: {
       nuVal: {
-        'Section lacks heading. Consider using “h2”-“h6” elements to add identifying headings to all sections.': {
+        'Section lacks heading. Consider using h2-h6 elements to add identifying headings to all sections.': {
           quality: 1,
           what: 'section has no heading'
         },
-        'Section lacks heading. Consider using “h2”-“h6” elements to add identifying headings to all sections, or else use a “div” element instead for any cases where no heading is needed.': {
+        'Section lacks heading. Consider using h2-h6 elements to add identifying headings to all sections, or else use a div element instead for any cases where no heading is needed.': {
           quality: 1,
           what: 'section has no heading'
         }
@@ -2555,7 +2556,7 @@ const groups = {
         }
       },
       nuVal: {
-        'Element “li” not allowed as child of element “div” in this context. (Suppressing further errors from this subtree.)': {
+        'Element li not allowed as child of element div in this context. (Suppressing further errors from this subtree.)': {
           quality: 1,
           what: 'li element is a child of a div element'
         }
@@ -3511,7 +3512,7 @@ const groups = {
     weight: 2,
     packages: {
       nuVal: {
-        'Potentially bad value “allow-scripts allow-same-origin” for attribute “sandbox” on element “iframe”: Setting both “allow-scripts” and “allow-same-origin” is not recommended, because it effectively enables an embedded page to break out of all sandboxing.': {
+        'Potentially bad value allow-scripts allow-same-origin for attribute sandbox on element iframe: Setting both allow-scripts and allow-same-origin is not recommended, because it effectively enables an embedded page to break out of all sandboxing.': {
           quality: 1,
           what: 'iframe element has vulnerable sandbox="allow-scripts allow-same-origin"'
         }
@@ -3725,7 +3726,7 @@ const groups = {
     weight: 4,
     packages: {
       nuVal: {
-        'Element “div” not allowed as child of element “button” in this context. (Suppressing further errors from this subtree.)': {
+        'Element div not allowed as child of element button in this context. (Suppressing further errors from this subtree.)': {
           quality: 1,
           what: 'div element has a button element as its parent'
         }
@@ -3736,7 +3737,7 @@ const groups = {
     weight: 4,
     packages: {
       nuVal: {
-        'Element “p” not allowed as child of element “strong” in this context. (Suppressing further errors from this subtree.)': {
+        'Element p not allowed as child of element strong in this context. (Suppressing further errors from this subtree.)': {
           quality: 1,
           what: 'p element has a strong element as its parent'
         }
@@ -3747,19 +3748,19 @@ const groups = {
     weight: 4,
     packages: {
       nuVal: {
-        'Element “style” not allowed as child of element “body” in this context. (Suppressing further errors from this subtree.)': {
+        'Element style not allowed as child of element body in this context. (Suppressing further errors from this subtree.)': {
           quality: 1,
           what: 'style element not allowed as a child of the body element'
         },
-        'Element “style” not allowed as child of element “div” in this context. (Suppressing further errors from this subtree.)': {
+        'Element style not allowed as child of element div in this context. (Suppressing further errors from this subtree.)': {
           quality: 1,
           what: 'style element not allowed as a child of this div element'
         },
-        'Element “style” not allowed as child of element “main” in this context. (Suppressing further errors from this subtree.)': {
+        'Element style not allowed as child of element main in this context. (Suppressing further errors from this subtree.)': {
           quality: 1,
           what: 'style element not allowed as a child of this main element'
         },
-        'Element “style” not allowed as child of element “footer” in this context. (Suppressing further errors from this subtree.)': {
+        'Element style not allowed as child of element footer in this context. (Suppressing further errors from this subtree.)': {
           quality: 1,
           what: 'style element not allowed as a child of this footer element'
         }
@@ -4025,39 +4026,39 @@ const groups = {
         }
       },
       nuVal: {
-        'The “charset” attribute on the “script” element is obsolete.': {
+        'The charset attribute on the script element is obsolete.': {
           quality: 1,
           what: 'charset attribute is obsolete on a script element'
         },
-        'The only allowed value for the “charset” attribute for the “script” element is “utf-8”. (But the attribute is not needed and should be omitted altogether.)': {
+        'The only allowed value for the charset attribute for the script element is utf-8. (But the attribute is not needed and should be omitted altogether.)': {
           quality: 1,
           what: 'charset attribute has a value other than utf-8 and is unnecessary'
         },
-        'The “language” attribute on the “script” element is obsolete. You can safely omit it.': {
+        'The language attribute on the script element is obsolete. You can safely omit it.': {
           quality: 1,
           what: 'language attribute is obsolete on a script element'
         },
-        'The “language” attribute on the “script” element is obsolete. Use the “type” attribute instead.': {
+        'The language attribute on the script element is obsolete. Use the type attribute instead.': {
           quality: 1,
           what: 'language attribute is obsolete on a script element'
         },
-        'Using the “meta” element to specify the document-wide default language is obsolete. Consider specifying the language on the root element instead.': {
+        'Using the meta element to specify the document-wide default language is obsolete. Consider specifying the language on the root element instead.': {
           quality: 1,
           what: 'language declaration in a meta element is obsolete'
         },
-        'The “frameborder” attribute on the “iframe” element is obsolete. Use CSS instead.': {
+        'The frameborder attribute on the iframe element is obsolete. Use CSS instead.': {
           quality: 1,
           what: 'frameborder attribute is obsolete'
         },
-        'The “name” attribute is obsolete. Consider putting an “id” attribute on the nearest container instead.': {
+        'The name attribute is obsolete. Consider putting an id attribute on the nearest container instead.': {
           quality: 1,
           what: 'name attribute is obsolete'
         },
-        'The “allowtransparency” attribute on the “iframe” element is obsolete. Use CSS instead.': {
+        'The allowtransparency attribute on the iframe element is obsolete. Use CSS instead.': {
           quality: 1,
           what: 'allowtransparency attribute on an iframe element is obsolete'
         },
-        'The “scrolling” attribute on the “iframe” element is obsolete. Use CSS instead.': {
+        'The scrolling attribute on the iframe element is obsolete. Use CSS instead.': {
           quality: 1,
           what: 'scrolling attribute on an iframe element is obsolete'
         }
@@ -4074,31 +4075,31 @@ const groups = {
     weight: 3,
     packages: {
       nuVal: {
-        'CSS: “-webkit-box-flex”: Parse Error.': {
+        'CSS: -webkit-box-flex: Parse Error.': {
           quality: 1,
           what: 'Invalid -webkit-box-flex in CSS'
         },
-        'CSS: “-webkit-flex”: Parse Error.': {
+        'CSS: -webkit-flex: Parse Error.': {
           quality: 1,
           what: 'Invalid -webkit-flex in CSS'
         },
-        'CSS: “-ms-flex”: Parse Error.': {
+        'CSS: -ms-flex: Parse Error.': {
           quality: 1,
           what: 'Invalid -ms-flex in CSS'
         },
-        'CSS: “-moz-box-flex”: Parse Error.': {
+        'CSS: -moz-box-flex: Parse Error.': {
           quality: 1,
           what: 'Invalid -moz-box-flex in CSS'
         },
-        'CSS: “flex”: Parse Error.': {
+        'CSS: flex: Parse Error.': {
           quality: 1,
           what: 'Invalid flex in CSS'
         },
-        '^CSS: “cursor”: .+ is not a “cursor” value.*$': {
+        '^CSS: cursor: .+ is not a cursor value.*$': {
           quality: 1,
           what: 'Invalid cursor in CSS'
         },
-        '^CSS: “transform”: .+ is not a “transform” value.*$': {
+        '^CSS: transform: .+ is not a transform value.*$': {
           quality: 1,
           what: 'Invalid transform in CSS'
         },
@@ -4106,7 +4107,7 @@ const groups = {
           quality: 1,
           what: 'Invalid property in CSS'
         },
-        '^CSS: .+: only “0” can be a “length”. You must put a unit after your number.*$': {
+        '^CSS: .+: only 0 can be a length. You must put a unit after your number.*$': {
           quality: 1,
           what: 'Length in CSS is nonzero but has no unit'
         },
@@ -4114,7 +4115,7 @@ const groups = {
           quality: 1,
           what: 'Invalid CSS'
         },
-        'Stray end tag “head”.': {
+        'Stray end tag head.': {
           quality: 1,
           what: 'Invalid closing head tag'
         },
@@ -4217,7 +4218,7 @@ exports.scorer = async report => {
               if (verdict && rule) {
                 const {ruleID} = rule;
                 if (ruleID) {
-                  // Add 4 per failure, 1 per warning (“cantTell”).
+                  // Add 4 per failure, 1 per warning (cantTell).
                   addDetail(which, ruleID, verdict === 'failed' ? 4 : 1);
                 }
               }
@@ -4302,7 +4303,7 @@ exports.scorer = async report => {
               items.forEach(issue => {
                 const {ruleId, level} = issue;
                 if (ruleId && level) {
-                  // Add 4 per violation, 1 per warning (“recommendation”).
+                  // Add 4 per violation, 1 per warning (recommendation).
                   addDetail(which, ruleId, level === 'violation' ? 4 : 1);
                 }
               });
@@ -4348,7 +4349,7 @@ exports.scorer = async report => {
                   testIDs.forEach(testID => {
                     const {count} = items[testID];
                     if (count) {
-                      // Add 4 per error, 3 per contrast error, 1 per warning (“alert”).
+                      // Add 4 per error, 3 per contrast error, 1 per warning (alert).
                       addDetail(
                         which, `${issueClass[0]}:${testID}`, count * classScores[issueClass]
                       );

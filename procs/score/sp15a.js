@@ -70,7 +70,9 @@ const testMatchers = {
     /^Attribute .+ not allowed on element .+ at this point.*$/,
     /^Bad value .+ for attribute .+ on element “meta”.*$/,
     /^Bad value .+ for attribute .+ on element .+$/,
+    /^Bad value .+ for the attribute .+$/,
     /^Attribute .+ not allowed here.*$/,
+    /^The .+ role is unnecessary for element .+$/,
     /^CSS: .+: Property .+ doesn't exist.*$/,
     /^CSS: .+: only “0” can be a “length”. You must put a unit after your number.*$/,
     /^Element .+ not allowed as child of element .+ in this context.*$/
@@ -1702,21 +1704,9 @@ const groups = {
         }
       },
       nuVal: {
-        'The “banner” role is unnecessary for element “header”.': {
+        '^The .+ role is unnecessary for element .+$': {
           quality: 1,
-          what: 'banner role is redundant for a header element'
-        },
-        'The “contentinfo” role is unnecessary for element “footer”.': {
-          quality: 1,
-          what: 'contentinfo role is redundant for a footer element'
-        },
-        'The “main” role is unnecessary for element “main”.': {
-          quality: 1,
-          what: 'main role is redundant for a main element'
-        },
-        'The “navigation” role is unnecessary for element “nav”.': {
-          quality: 1,
-          what: 'navigation role is redundant for a nav element'
+          what: 'explicit role is redundant for its element'
         }
       }
     }
@@ -2224,8 +2214,14 @@ const groups = {
     }
   },
   docType: {
-    weight: 1,
+    weight: 3,
     packages: {
+      nuVal: {
+        'Start tag seen without seeing a doctype first. Expected “<!DOCTYPE html>”.': {
+          quality: 1,
+          what: 'Page does not start with <!DOCTYPE html>'
+        }
+      },
       testaro: {
         docType: {
           quality: 1,
@@ -2373,11 +2369,26 @@ const groups = {
       }
     }
   },
+  articleHeadingless: {
+    weight: 1,
+    packages: {
+      nuVal: {
+        'Article lacks heading. Consider using “h2”-“h6” elements to add identifying headings to all articles.': {
+          quality: 1,
+          what: 'article has no heading'
+        }
+      }
+    }
+  },
   sectionHeadingless: {
     weight: 1,
     packages: {
       nuVal: {
         'Section lacks heading. Consider using “h2”-“h6” elements to add identifying headings to all sections.': {
+          quality: 1,
+          what: 'section has no heading'
+        },
+        'Section lacks heading. Consider using “h2”-“h6” elements to add identifying headings to all sections, or else use a “div” element instead for any cases where no heading is needed.': {
           quality: 1,
           what: 'section has no heading'
         }
@@ -3585,6 +3596,10 @@ const groups = {
           quality: 1,
           what: 'attribute on this element has an invalid value'
         },
+        '^Bad value .+ for the attribute .+$': {
+          quality: 1,
+          what: 'attribute has an invalid value'
+        },
         '^Attribute .+ not allowed here.*$': {
           quality: 1,
           what: 'Attribute not allowed here'
@@ -4025,6 +4040,10 @@ const groups = {
         'The “language” attribute on the “script” element is obsolete. Use the “type” attribute instead.': {
           quality: 1,
           what: 'language attribute is obsolete on a script element'
+        },
+        'Using the “meta” element to specify the document-wide default language is obsolete. Consider specifying the language on the root element instead.': {
+          quality: 1,
+          what: 'language declaration in a meta element is obsolete'
         },
         'The “frameborder” attribute on the “iframe” element is obsolete. Use CSS instead.': {
           quality: 1,

@@ -2062,7 +2062,7 @@ const groups = {
     }
   },
   contrastAA: {
-    weight: 3,
+    weight: 4,
     packages: {
       alfa: {
         r69: {
@@ -2943,7 +2943,7 @@ const groups = {
     }
   },
   cellHeadersAmbiguityRisk: {
-    weight: 3,
+    weight: 2,
     packages: {
       htmlcs: {
         'w:AA.1_3_1.H43.ScopeAmbiguous': {
@@ -3107,7 +3107,7 @@ const groups = {
     }
   },
   targetSize: {
-    weight: 2,
+    weight: 3,
     packages: {
       tenon: {
         152: {
@@ -3336,7 +3336,7 @@ const groups = {
       }
     }
   },
-  banners: {
+  bannerNot1: {
     weight: 2,
     packages: {
       axe: {
@@ -3375,7 +3375,7 @@ const groups = {
       }
     }
   },
-  footerMultiple: {
+  footerNot1: {
     weight: 2,
     packages: {
       axe: {

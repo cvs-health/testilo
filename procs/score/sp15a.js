@@ -58,14 +58,22 @@ const otherPackages = ['alfa', 'axe', 'continuum', 'htmlcs', 'ibm', 'nuVal', 'te
 const preWeightedPackages = ['axe', 'tenon', 'testaro'];
 const testMatchers = {
   nuVal: [
-    /^CSS: background-image: .+ is not a background-image value.*$/,
-    /^CSS: background: .+ is not a color value.*$/,
-    /^CSS: cursor: .+ is not a cursor value.*$/,
-    /^CSS: transform: .+ is not a transform value.*$/,
-    /^Bad value  for attribute id on element .+: An ID must not be the empty string.+$/,
+    /^CSS: .+: .+ is not a .+ value.*$/,
+    /^CSS: .+: Too many values or values are not recognized.+$/,
+    /^CSS: .+: Parse Error.*$/,
+    /^CSS: .+: Invalid type: .+$/,
+    /^CSS: .+: The types are incompatible.*$/,
+    /^CSS: .+: Unknown dimension.*$/,
+    /^Bad value  for attribute .+ on element .+: An ID must not be the empty string.+$/,
+    /^Bad value  for attribute src on element .+: Must be non-empty.*$/,
+    /^Bad value  for attribute tabindex on element .+: The empty string is not a valid integer.*$/,
+    /^The aria-hidden attribute must not be specified on the .+ element.*$/,
+    /^Element meta is missing one or more of the following attributes: .+$/,
     /^Duplicate ID .+$|^The first occurrence of ID .* was here.*$/,
     /^Start tag .+ seen but an element of the same type was already open.*$/,
+    /^Bad start tag in .+$/,
     /^End tag .+ violates nesting rules.*$/,
+    /^Stray end tag .+$/,
     /^Attribute .+ is not serializable as XML 1\.0.*$/,
     /^Attribute .+ not allowed on element meta at this point.*$/,
     /^Attribute .+ not allowed on element .+ at this point.*$/,
@@ -73,10 +81,15 @@ const testMatchers = {
     /^Bad value .+ for attribute .+ on element .+$/,
     /^Bad value .+ for the attribute .+$/,
     /^Attribute .+ not allowed here.*$/,
+    /^Attribute .+ is only allowed when .+$/,
+    /^The .+ attribute on the .+ element is obsolete.+$/,
     /^The .+ role is unnecessary for element .+$/,
     /^CSS: .+: Property .+ doesn't exist.*$/,
     /^CSS: .+: only 0 can be a length. You must put a unit after your number.*$/,
-    /^Element .+ not allowed as child of element .+ in this context.*$/
+    /^CSS: .+: only 0 can be a unit. You must put a unit after your number.*$/,
+    /^Element .+ not allowed as child of element .+ in this context.*$/,
+    /^Forbidden code point U+.+$/,
+    /^Internal encoding declaration .+ disagrees with the actual encoding of the document.*$/
   ]
 };
 const groups = {
@@ -401,6 +414,17 @@ const groups = {
       }
     }
   },
+  sourceEmpty: {
+    weight: 4,
+    packages: {
+      nuVal: {
+        '^Bad value  for attribute src on element .+: Must be non-empty.*$': {
+          quality: 1,
+          what: 'src attribute is empty'
+        }
+      }
+    }
+  },
   backgroundBad: {
     weight: 4,
     packages: {
@@ -485,7 +509,7 @@ const groups = {
     }
   },
   decorativeElementExposed: {
-    weight: 1,
+    weight: 2,
     packages: {
       alfa: {
         r67: {
@@ -495,6 +519,12 @@ const groups = {
         r86: {
           quality: 1,
           what: 'Element marked as decorative is in the accessibility tree or has no none/presentation role'
+        }
+      },
+      nuVal: {
+        'An img element which has an alt attribute whose value is the empty string must not have a role attribute.': {
+          quality: 1,
+          what: 'img element with alt="" has a role attribute'
         }
       }
     }
@@ -530,6 +560,12 @@ const groups = {
         WCAG20_Html_HasLang: {
           quality: 1,
           what: 'Page detected as HTML, but has no lang attribute'
+        }
+      },
+      nuVal: {
+        'Consider adding a lang attribute to the html start tag to declare the language of this document.': {
+          quality: 1,
+          what: 'html start tag has no lang attribute to declare the language of the page'
         }
       },
       wave: {
@@ -799,13 +835,19 @@ const groups = {
       }
     }
   },
-  labelForWrongRisk: {
-    weight: 1,
+  labelForBad: {
+    weight: 3,
     packages: {
       htmlcs: {
         'w:AA.1_3_1.H44.NotFormControl': {
           quality: 1,
-          what: 'Label for attribute may reference the wrong element, because it is not a form control'
+          what: 'referent of the for attribute of the label is not a form control, so may be wrong'
+        }
+      },
+      nuVal: {
+        'The value of the for attribute of the label element must be the ID of a non-hidden form control.': {
+          quality: 1,
+          what: 'for attribute of the label element does not reference a non-hidden form control'
         }
       }
     }
@@ -845,6 +887,12 @@ const groups = {
         85: {
           quality: 1,
           what: 'aria-controls attribute references an invalid or duplicate ID'
+        }
+      },
+      nuVal: {
+        'The aria-controls attribute must point to an element in the same document.': {
+          quality: 1,
+          what: 'aria-controls attribute references an element not in the document'
         }
       }
     }
@@ -904,6 +952,10 @@ const groups = {
         'The aria-labelledby attribute must point to an element in the same document.': {
           quality: 1,
           what: 'aria-labelledby attribute references an element not in the document'
+        },
+        'The aria-describedby attribute must point to an element in the same document.': {
+          quality: 1,
+          what: 'aria-describedby attribute references an element not in the document'
         }
       },
       wave: {
@@ -983,6 +1035,12 @@ const groups = {
         WCAG20_A_HasText: {
           quality: 1,
           what: 'Hyperlink has no text description'
+        }
+      },
+      nuVal: {
+        'Bad value  for attribute href on element link: Must be non-empty.': {
+          quality: 1,
+          what: 'link element has an empty href attribute'
         }
       },
       tenon: {
@@ -1354,6 +1412,12 @@ const groups = {
           quality: 1,
           what: 'meta element in the head sets the viewport maximum-scale to less than 2'
         }
+      },
+      nuVal: {
+        'Consider avoiding viewport values that prevent users from resizing documents.': {
+          quality: 1,
+          what: 'viewport value prevents users from resizing the document'
+        }
       }
     }
   },
@@ -1522,21 +1586,29 @@ const groups = {
           quality: 1,
           what: 'Attribute is not allowed on a meta element here'
         },
-        'Element meta is missing one or more of the following attributes: charset, content, http-equiv, itemprop, name, property.': {
+        '^Element meta is missing one or more of the following attributes: .+$': {
           quality: 1,
-          what: 'meta element is missing a charset, content, http-equiv, itemprop, name, or property attribute'
+          what: 'meta element is missing a required attribute'
         },
         'A document must not include more than one meta element with its name attribute set to the value description.': {
           quality: 1,
           what: 'meta element with name="description" is not the only one'
         },
+        'A document must not include both a meta element with an http-equiv attribute whose value is content-type, and a meta element with a charset attribute.': {
+          quality: 1,
+          what: 'meta element with http-equiv="content-type" is incompatible with the meta element with a charset attribute'
+        },
+        'A document must not include more than one meta element with a http-equiv attribute whose value is content-type.': {
+          quality: 1,
+          what: 'Page has more than 1 meta element with http-equiv="content-type"'
+        },
         'A meta element with an http-equiv attribute whose value is X-UA-Compatible must have a content attribute with the value IE=edge.': {
           quality: 1,
           what: 'meta element with http-equiv="X-UA-Compatible" has no content="IE=edge"'
         },
-        'Element meta is missing one or more of the following attributes: itemprop, property.': {
+        'A document must not include more than one meta element with a charset attribute.': {
           quality: 1,
-          what: 'meta element is missing an itemprop or property attribute'
+          what: 'More than 1 meta element has a charset attribute'
         },
         'A charset attribute on a meta element found after the first 1024 bytes.': {
           quality: 1,
@@ -1685,6 +1757,10 @@ const groups = {
         'Bad value dialog for attribute role on element li.': {
           quality: 1,
           what: 'dialog role is not valid for an li element'
+        },
+        'An img element with no alt attribute must not have a role attribute.': {
+          quality: 1,
+          what: 'img element has a role attribute but no alt attribute'
         }
       },
       testaro: {
@@ -1885,6 +1961,12 @@ const groups = {
           quality: 1,
           what: 'ARIA attribute is used when there is a corresponding HTML attribute'
         }
+      },
+      nuVal: {
+        'Attribute aria-required is unnecessary for elements that have attribute required.': {
+          quality: 1,
+          what: 'aria-required attribute is redundant with required attribute'
+        }
       }
     }
   },
@@ -1917,19 +1999,25 @@ const groups = {
       axe: {
         'autocomplete-valid': {
           quality: 1,
-          what: 'Autocomplete attribute is used incorrectly'
+          what: 'autocomplete attribute is used incorrectly'
         }
       },
       htmlcs: {
         'e:AA.1_3_5.H98': {
           quality: 1,
-          what: 'Autocomplete attribute and the input type are mismatched'
+          what: 'autocomplete attribute and the input type are mismatched'
         }
       },
       ibm: {
         WCAG21_Input_Autocomplete: {
           quality: 1,
-          what: 'Autocomplete attribute token is not appropriate for the input form field'
+          what: 'autocomplete attribute token is not appropriate for the input form field'
+        }
+      },
+      nuVal: {
+        'Bad value  for attribute autocomplete on element input: Must not be empty.': {
+          quality: 1,
+          what: 'autocomplete attribute has an empty value'
         }
       }
     }
@@ -2056,9 +2144,20 @@ const groups = {
     weight: 4,
     packages: {
       nuVal: {
-        '^Bad value  for attribute id on element .+: An ID must not be the empty string.+$': {
+        '^Bad value  for attribute .+ on element .+: An ID must not be the empty string.+$': {
           quality: 1,
           what: 'id attribute has an empty value'
+        }
+      }
+    }
+  },
+  targetEmpty: {
+    weight: 4,
+    packages: {
+      nuVal: {
+        'Bad value  for attribute target on element a: Browsing context name must be at least one character long.': {
+          quality: 1,
+          what: 'target attribute on an a element is empty'
         }
       }
     }
@@ -2533,6 +2632,12 @@ const groups = {
           quality: 1,
           what: 'List component with a group role has a non-listitem child'
         }
+      },
+      nuVal: {
+        'Element dl is missing a required child element.': {
+          quality: 1,
+          what: 'dl element has no child element.'
+        }
       }
     }
   },
@@ -2614,6 +2719,17 @@ const groups = {
         'a:select_missing_label': {
           quality: 1,
           what: 'Select element has no label'
+        }
+      }
+    }
+  },
+  optionNoText: {
+    weight: 4,
+    packages: {
+      nuVal: {
+        'Element option without attribute label must not be empty.': {
+          quality: 1,
+          what: 'option element is empty but has no label attribute'
         }
       }
     }
@@ -2982,6 +3098,20 @@ const groups = {
         22: {
           quality: 1,
           what: 'Link contains an input, keygen, select, textarea, or button'
+        }
+      },
+      nuVal: {
+        'The element a must not appear as a descendant of an element with the attribute role=link.': {
+          quality: 1,
+          what: 'a element is a descendant of an element with a link role'
+        },
+        'An element with the attribute tabindex must not appear as a descendant of the a element.': {
+          quality: 1,
+          what: 'descendant of an a element has a tabindex attribute'
+        },
+        'An element with the attribute tabindex must not appear as a descendant of an element with the attribute role=link.': {
+          quality: 1,
+          what: 'descendant of an element with a link role has a tabindex attribute'
         }
       },
       testaro: {
@@ -3608,6 +3738,10 @@ const groups = {
         '^Attribute .+ is not serializable as XML 1\\.0.*$': {
           quality: 1,
           what: 'Attribute is invalidly nonserializable'
+        },
+        '^Attribute .+ is only allowed when .+$': {
+          quality: 1,
+          what: 'Attribute is invalid here'
         }
       }
     }
@@ -3802,6 +3936,17 @@ const groups = {
         'a:tabindex': {
           quality: 1,
           what: 'tabIndex value positive'
+        }
+      }
+    }
+  },
+  tabIndexBad: {
+    weight: 4,
+    packages: {
+      nuVal: {
+        '^Bad value  for attribute tabindex on element .+: The empty string is not a valid integer.*$': {
+          quality: 1,
+          what: 'tabindex attribute has an empty value instead of an integer'
         }
       }
     }
@@ -4026,41 +4171,25 @@ const groups = {
         }
       },
       nuVal: {
-        'The charset attribute on the script element is obsolete.': {
+        'The font element is obsolete. Use CSS instead.': {
           quality: 1,
-          what: 'charset attribute is obsolete on a script element'
+          what: 'font element is obsolete'
+        },
+        '^The .+ attribute on the .+ element is obsolete.+$': {
+          quality: 1,
+          what: 'attribute is obsolete on its element'
         },
         'The only allowed value for the charset attribute for the script element is utf-8. (But the attribute is not needed and should be omitted altogether.)': {
           quality: 1,
           what: 'charset attribute has a value other than utf-8 and is unnecessary'
         },
-        'The language attribute on the script element is obsolete. You can safely omit it.': {
-          quality: 1,
-          what: 'language attribute is obsolete on a script element'
-        },
-        'The language attribute on the script element is obsolete. Use the type attribute instead.': {
-          quality: 1,
-          what: 'language attribute is obsolete on a script element'
-        },
         'Using the meta element to specify the document-wide default language is obsolete. Consider specifying the language on the root element instead.': {
           quality: 1,
           what: 'language declaration in a meta element is obsolete'
         },
-        'The frameborder attribute on the iframe element is obsolete. Use CSS instead.': {
-          quality: 1,
-          what: 'frameborder attribute is obsolete'
-        },
         'The name attribute is obsolete. Consider putting an id attribute on the nearest container instead.': {
           quality: 1,
           what: 'name attribute is obsolete'
-        },
-        'The allowtransparency attribute on the iframe element is obsolete. Use CSS instead.': {
-          quality: 1,
-          what: 'allowtransparency attribute on an iframe element is obsolete'
-        },
-        'The scrolling attribute on the iframe element is obsolete. Use CSS instead.': {
-          quality: 1,
-          what: 'scrolling attribute on an iframe element is obsolete'
         }
       },
       wave: {
@@ -4075,33 +4204,17 @@ const groups = {
     weight: 3,
     packages: {
       nuVal: {
-        'CSS: -webkit-box-flex: Parse Error.': {
+        'CSS: font-size: One operand must be a number.': {
           quality: 1,
-          what: 'Invalid -webkit-box-flex in CSS'
+          what: 'CSS font-size property has no numeric operand'
         },
-        'CSS: -webkit-flex: Parse Error.': {
+        '^CSS: .+: Parse Error.*$': {
           quality: 1,
-          what: 'Invalid -webkit-flex in CSS'
+          what: 'Invalid CSS'
         },
-        'CSS: -ms-flex: Parse Error.': {
+        '^CSS: .+: .+ is not a .+ value.*$': {
           quality: 1,
-          what: 'Invalid -ms-flex in CSS'
-        },
-        'CSS: -moz-box-flex: Parse Error.': {
-          quality: 1,
-          what: 'Invalid -moz-box-flex in CSS'
-        },
-        'CSS: flex: Parse Error.': {
-          quality: 1,
-          what: 'Invalid flex in CSS'
-        },
-        '^CSS: cursor: .+ is not a cursor value.*$': {
-          quality: 1,
-          what: 'Invalid cursor in CSS'
-        },
-        '^CSS: transform: .+ is not a transform value.*$': {
-          quality: 1,
-          what: 'Invalid transform in CSS'
+          what: 'Invalid value in CSS'
         },
         '^CSS: .+: Property .+ doesn\'t exist.*$': {
           quality: 1,
@@ -4111,17 +4224,49 @@ const groups = {
           quality: 1,
           what: 'Length in CSS is nonzero but has no unit'
         },
+        '^CSS: .+: only 0 can be a unit. You must put a unit after your number.*$': {
+          quality: 1,
+          what: 'Number in CSS is nonzero but has no unit'
+        },
         'CSS: Parse Error.': {
           quality: 1,
           what: 'Invalid CSS'
         },
-        'Stray end tag head.': {
+        '^CSS: .+: Too many values or values are not recognized.+$': {
           quality: 1,
-          what: 'Invalid closing head tag'
+          what: 'Invalid CSS value or too many values'
+        },
+        '^CSS: .+: Invalid type: .+$': {
+          quality: 1,
+          what: 'Invalid type of CSS value'
+        },
+        '^CSS: .+: The types are incompatible.*$': {
+          quality: 1,
+          what: 'Incompatible types of CSS values'
+        },
+        '^CSS: .+: Unknown dimension.*$': {
+          quality: 1,
+          what: 'Unknown CSS dimension'
+        },
+        '^The aria-hidden attribute must not be specified on the .+ element.*$': {
+          quality: 1,
+          what: 'aria-hidden attribute is invalid for its element'
+        },
+        'The aria-hidden attribute must not be specified on an input element whose type attribute has the value hidden.': {
+          quality: 1,
+          what: 'aria-hidden attribute is invalid for an input element with type="hidden"'
+        },
+        '^Stray end tag .+$': {
+          quality: 1,
+          what: 'Invalid closing tag'
         },
         '^Start tag .+ seen but an element of the same type was already open.*$': {
           quality: 1,
           what: 'Element is invalidly a descendant of another such element'
+        },
+        '^Bad start tag in .+$': {
+          quality: 1,
+          what: 'Invalid start tag'
         },
         '^End tag .+ violates nesting rules.*$': {
           quality: 1,
@@ -4130,6 +4275,22 @@ const groups = {
         '^Element .+ not allowed as child of element .+ in this context.*$': {
           quality: 1,
           what: 'Element not allowed as a child of its parent here'
+        },
+        'Saw <!-- within a comment. Probable cause: Nested comment (not allowed).': {
+          quality: 1,
+          what: 'Comment is nested within a comment'
+        },
+        'The document is not mappable to XML 1.0 due to two consecutive hyphens in a comment.': {
+          quality: 1,
+          what: 'Comment contains --'
+        },
+        '^Forbidden code point U+.+$': {
+          quality: 1,
+          what: 'Invalid Unicode code point'
+        },
+        '^Internal encoding declaration .+ disagrees with the actual encoding of the document.*$': {
+          quality: 1,
+          what: 'Encoding declaration disagrees with the actual encoding of the page'
         }
       }
     }

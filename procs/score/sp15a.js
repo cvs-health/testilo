@@ -64,7 +64,9 @@ const testMatchers = {
     /^CSS: .+: Invalid type: .+$/,
     /^CSS: .+: The types are incompatible.*$/,
     /^CSS: .+: Unknown dimension.*$/,
+    /^The role attribute must not be used on a .+ element which has a table ancestor with no role attribute, or with a role attribute whose value is table, grid, or treegrid.*$/,
     /^Bad value  for attribute .+ on element .+: An ID must not be the empty string.+$/,
+    /^Bad value  for attribute aria-owns on element .+: An IDREFS value must contain at least one non-whitespace character.*$/,
     /^Bad value  for attribute src on element .+: Must be non-empty.*$/,
     /^Bad value  for attribute tabindex on element .+: The empty string is not a valid integer.*$/,
     /^The aria-hidden attribute must not be specified on the .+ element.*$/,
@@ -74,6 +76,7 @@ const testMatchers = {
     /^Bad start tag in .+$/,
     /^End tag .+ violates nesting rules.*$/,
     /^Stray end tag .+$/,
+    /^Element name .+ cannot be represented as XML 1\.0.*$/,
     /^Attribute .+ is not serializable as XML 1\.0.*$/,
     /^Attribute .+ not allowed on element meta at this point.*$/,
     /^Attribute .+ not allowed on element .+ at this point.*$/,
@@ -89,7 +92,8 @@ const testMatchers = {
     /^CSS: .+: only 0 can be a unit. You must put a unit after your number.*$/,
     /^Element .+ not allowed as child of element .+ in this context.*$/,
     /^Forbidden code point U+.+$/,
-    /^Internal encoding declaration .+ disagrees with the actual encoding of the document.*$/
+    /^Internal encoding declaration .+ disagrees with the actual encoding of the document.*$/,
+    /^Potentially bad value .+ for attribute sandbox on element iframe: Setting both allow-scripts and allow-same-origin is not recommended, because it effectively enables an embedded page to break out of all sandboxing.*$/
   ]
 };
 const groups = {
@@ -824,10 +828,6 @@ const groups = {
         }
       },
       wave: {
-        'a:label_orphaned': {
-          quality: 1,
-          what: 'Orphaned form label'
-        },
         'a:link_internal_broken': {
           quality: 1,
           what: 'Broken same-page link'
@@ -1574,6 +1574,10 @@ const groups = {
         'A link element must not appear as a descendant of a body element unless the link element has an itemprop attribute or has a rel attribute whose value contains dns-prefetch, modulepreload, pingback, preconnect, prefetch, preload, prerender, or stylesheet.': {
           quality: 1,
           what: 'link element with a body ancestor has no itemprop or valid rel attribute'
+        },
+        'A link element with an as attribute must have a rel attribute that contains the value preload or the value modulepreload or the value prefetch.': {
+          quality: 1,
+          what: 'link element with an as attribute has no rel attribute with preload, modulepreload, or prefetch as its value'
         }
       }
     }
@@ -1621,13 +1625,17 @@ const groups = {
       }
     }
   },
-  scriptDeferBad: {
+  scriptElementBad: {
     weight: 4,
     packages: {
       nuVal: {
         'Element script must not have attribute defer unless attribute src is also specified.': {
           quality: 1,
           what: 'script element has a defer attribute without a src attribute'
+        },
+        'A script element with a src attribute must not have a type attribute whose value is anything other than the empty string, a JavaScript MIME type, or module.': {
+          quality: 1,
+          what: 'script element has a src attribute but its type is not empty, a JS MIME type, or module'
         }
       }
     }
@@ -1761,6 +1769,10 @@ const groups = {
         'An img element with no alt attribute must not have a role attribute.': {
           quality: 1,
           what: 'img element has a role attribute but no alt attribute'
+        },
+        '^The role attribute must not be used on a .+ element which has a table ancestor with no role attribute, or with a role attribute whose value is table, grid, or treegrid.*$': {
+          quality: 1,
+          what: 'Table cell has a role attribute'
         }
       },
       testaro: {
@@ -1784,6 +1796,10 @@ const groups = {
         '^The .+ role is unnecessary for element .+$': {
           quality: 1,
           what: 'explicit role is redundant for its element'
+        },
+        'The textbox role is unnecessary for an input element that has no list attribute and whose type is text.': {
+          quality: 1,
+          what: 'explicit role is redundant for a text-type input element without a list attribute'
         }
       }
     }
@@ -1807,6 +1823,10 @@ const groups = {
         'Element a is missing required attribute aria-valuenow.': {
           quality: 1,
           what: 'a element has no aria-valuenow attribute'
+        },
+        'Element a is missing one or more of the following attributes: aria-checked, role.': {
+          quality: 1,
+          what: 'a element has no aria-checked attribute or has no role attribute'
         }
       }
     }
@@ -1949,6 +1969,14 @@ const groups = {
         'The aria-hidden attribute must not be specified on the noscript element.': {
           quality: 1,
           what: 'noscript element has an aria-hidden attribute'
+        },
+        'Attribute aria-activedescendant value should either refer to a descendant element, or should be accompanied by attribute aria-owns.': {
+          quality: 1,
+          what: 'element has no aria-owns attribute but its aria-activedescendant attribute references a non-descendant'
+        },
+        'The aria-checked attribute should not be used on an input element which has a type attribute whose value is checkbox.': {
+          quality: 1,
+          what: 'input element with type="checkbox" has an aria-checked attribute'
         }
       }
     }
@@ -2147,6 +2175,10 @@ const groups = {
         '^Bad value  for attribute .+ on element .+: An ID must not be the empty string.+$': {
           quality: 1,
           what: 'id attribute has an empty value'
+        },
+        '^Bad value  for attribute aria-owns on element .+: An IDREFS value must contain at least one non-whitespace character.*$': {
+          quality: 1,
+          what: 'aria-owns attribute has an empty value'
         }
       }
     }
@@ -2719,6 +2751,17 @@ const groups = {
         'a:select_missing_label': {
           quality: 1,
           what: 'Select element has no label'
+        }
+      }
+    }
+  },
+  optionOrphan: {
+    weight: 4,
+    packages: {
+      nuVal: {
+        'An element with role=option must be contained in, or owned by, an element with role=listbox.': {
+          quality: 1,
+          what: 'element with an option role is not contained by an element with a listbox role'
         }
       }
     }
@@ -3642,9 +3685,9 @@ const groups = {
     weight: 2,
     packages: {
       nuVal: {
-        'Potentially bad value allow-scripts allow-same-origin for attribute sandbox on element iframe: Setting both allow-scripts and allow-same-origin is not recommended, because it effectively enables an embedded page to break out of all sandboxing.': {
+        '^Potentially bad value .+ for attribute sandbox on element iframe: Setting both allow-scripts and allow-same-origin is not recommended, because it effectively enables an embedded page to break out of all sandboxing.*$': {
           quality: 1,
-          what: 'iframe element has vulnerable sandbox="allow-scripts allow-same-origin"'
+          what: 'iframe element has a vulnerable sandbox value containing both allow-scripts and allow-same-origin'
         }
       }
     }
@@ -4171,6 +4214,10 @@ const groups = {
         }
       },
       nuVal: {
+        'The center element is obsolete. Use CSS instead.': {
+          quality: 1,
+          what: 'center element is obsolete'
+        },
         'The font element is obsolete. Use CSS instead.': {
           quality: 1,
           what: 'font element is obsolete'
@@ -4283,6 +4330,10 @@ const groups = {
         'The document is not mappable to XML 1.0 due to two consecutive hyphens in a comment.': {
           quality: 1,
           what: 'Comment contains --'
+        },
+        '^Element name .+ cannot be represented as XML 1\\.0.*$': {
+          quality: 1,
+          what: 'Invalid element name'
         },
         '^Forbidden code point U+.+$': {
           quality: 1,

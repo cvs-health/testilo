@@ -78,6 +78,7 @@ const testMatchers = {
     /^Start tag .+ seen but an element of the same type was already open.*$/,
     /^Bad start tag in .+$/,
     /^End tag .+ violates nesting rules.*$/,
+    /^Stray start tag .+$/,
     /^Stray end tag .+$/,
     /^Element name .+ cannot be represented as XML 1\.0.*$/,
     /^Attribute .+ is not serializable as XML 1\.0.*$/,
@@ -96,7 +97,9 @@ const testMatchers = {
     /^Element .+ not allowed as child of element .+ in this context.*$/,
     /^Forbidden code point U+.+$/,
     /^Internal encoding declaration .+ disagrees with the actual encoding of the document.*$/,
-    /^Potentially bad value .+ for attribute sandbox on element iframe: Setting both allow-scripts and allow-same-origin is not recommended, because it effectively enables an embedded page to break out of all sandboxing.*$/
+    /^Potentially bad value .+ for attribute sandbox on element iframe: Setting both allow-scripts and allow-same-origin is not recommended, because it effectively enables an embedded page to break out of all sandboxing.*$/,
+    /^Element .+ is missing one or more of the following attributes: role.*$/,
+    /^No .+ element in scope but a .+ end tag seen.*$/
   ]
 };
 const groups = {
@@ -1830,6 +1833,17 @@ const groups = {
         'Element a is missing one or more of the following attributes: aria-checked, role.': {
           quality: 1,
           what: 'a element has no aria-checked attribute or has no role attribute'
+        }
+      }
+    }
+  },
+  roleMissingRisk: {
+    weight: 1,
+    packages: {
+      nuVal: {
+        '^Element .+ is missing one or more of the following attributes: role.*$': {
+          quality: 1,
+          what: 'Element has no role attribute but may need one'
         }
       }
     }
@@ -3765,6 +3779,10 @@ const groups = {
     weight: 4,
     packages: {
       nuVal: {
+        'The itemprop attribute was specified, but the element is not a property of any item.': {
+          quality: 1,
+          what: 'itemprop attribute is on an element that is not a property of an item'
+        },
         '^Attribute .+ not allowed on element .+ at this point.*$': {
           quality: 1,
           what: 'attribute not allowed on this element'
@@ -4217,6 +4235,10 @@ const groups = {
         }
       },
       nuVal: {
+        'The border attribute is obsolete. Consider specifying img { border: 0; } in CSS instead.': {
+          quality: 1,
+          what: 'border element is obsolete'
+        },
         'The center element is obsolete. Use CSS instead.': {
           quality: 1,
           what: 'center element is obsolete'
@@ -4306,6 +4328,10 @@ const groups = {
           quality: 1,
           what: 'aria-hidden attribute is invalid for an input element with type="hidden"'
         },
+        '^Stray start tag .+$': {
+          quality: 1,
+          what: 'Invalid opening tag'
+        },
         '^Stray end tag .+$': {
           quality: 1,
           what: 'Invalid closing tag'
@@ -4345,6 +4371,14 @@ const groups = {
         '^Internal encoding declaration .+ disagrees with the actual encoding of the document.*$': {
           quality: 1,
           what: 'Encoding declaration disagrees with the actual encoding of the page'
+        },
+        'Quote \" in attribute name. Probable cause: Matching quote missing somewhere earlier.': {
+          quality: 1,
+          what: 'Attribute name includes a double quotation mark'
+        },
+        '^No .+ element in scope but a .+ end tag seen.*$': {
+          quality: 1,
+          what: 'End tag for an element that is not in scope'
         }
       }
     }

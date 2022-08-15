@@ -87,6 +87,7 @@ const testMatchers = {
     /^Bad value .+ for attribute .+ on element meta.*$/,
     /^Bad value .+ for attribute .+ on element .+$/,
     /^Bad value .+ for the attribute .+$/,
+    /^Bad value .* for attribute src on element .+: Illegal character in query: .+ is not allowed.*$/,
     /^Attribute .+ not allowed here.*$/,
     /^Attribute .+ is only allowed when .+$/,
     /^The .+ attribute on the .+ element is obsolete.+$/,
@@ -94,12 +95,17 @@ const testMatchers = {
     /^CSS: .+: Property .+ doesn't exist.*$/,
     /^CSS: .+: only 0 can be a length. You must put a unit after your number.*$/,
     /^CSS: .+: only 0 can be a unit. You must put a unit after your number.*$/,
+    /^CSS: .+: .+ is not a valid color 3 or 6 hexadecimals numbers.*$/,
+    /^CSS: .+: Character array is missing "e" notation exponential mark.*$/,
+    /^CSS: .+:   is an incorrect operator.*$/,
     /^Element .+ not allowed as child of element .+ in this context.*$/,
     /^Forbidden code point U+.+$/,
     /^Internal encoding declaration .+ disagrees with the actual encoding of the document.*$/,
     /^Potentially bad value .+ for attribute sandbox on element iframe: Setting both allow-scripts and allow-same-origin is not recommended, because it effectively enables an embedded page to break out of all sandboxing.*$/,
     /^Element .+ is missing one or more of the following attributes: role.*$/,
-    /^No .+ element in scope but a .+ end tag seen.*$/
+    /^No .+ element in scope but a .+ end tag seen.*$/,
+    /^CSS: Unknown pseudo-element or pseudo-class :.+$/,
+    /^java.util.concurrent.TimeoutException: Idle timeout expired: .+ ms.*$/
   ]
 };
 const groups = {
@@ -2871,6 +2877,12 @@ const groups = {
   legendMissing: {
     weight: 2,
     packages: {
+      continuum: {
+        221: {
+          quality: 1,
+          what: 'Element with a radiogroup role has no mechanism that allows an accessible name to be calculated'
+        }
+      },
       htmlcs: {
         'e:AA.1_3_1.H71.NoLegend': {
           quality: 1,
@@ -3164,6 +3176,14 @@ const groups = {
         'The element a must not appear as a descendant of an element with the attribute role=link.': {
           quality: 1,
           what: 'a element is a descendant of an element with a link role'
+        },
+        'The element a must not appear as a descendant of an element with the attribute role=button.': {
+          quality: 1,
+          what: 'a element is a descendant of an element with a button role'
+        },
+        'The element button must not appear as a descendant of the a element.': {
+          quality: 1,
+          what: 'button element is a descendant of an a element'
         },
         'An element with the attribute tabindex must not appear as a descendant of the a element.': {
           quality: 1,
@@ -4284,6 +4304,10 @@ const groups = {
           quality: 1,
           what: 'Invalid CSS'
         },
+        '^CSS: .+: .+ is not a valid color 3 or 6 hexadecimals numbers.*$': {
+          quality: 1,
+          what: 'Invalid hexadecimal color in CSS'
+        },
         '^CSS: .+: .+ is not a .+ value.*$': {
           quality: 1,
           what: 'Invalid value in CSS'
@@ -4319,6 +4343,18 @@ const groups = {
         '^CSS: .+: Unknown dimension.*$': {
           quality: 1,
           what: 'Unknown CSS dimension'
+        },
+        '^CSS: .+: Character array is missing "e" notation exponential mark.*$': {
+          quality: 1,
+          what: 'Character array has no exponent mark e'
+        },
+        '^CSS: .+:   is an incorrect operator.*$': {
+          quality: 1,
+          what: 'Space is misused as a CSS operator'
+        },
+        '^CSS: Unknown pseudo-element or pseudo-class :.+$': {
+          quality: 1,
+          what: 'Unknown pseudo-element or pseudo-class'
         },
         '^The aria-hidden attribute must not be specified on the .+ element.*$': {
           quality: 1,
@@ -4379,6 +4415,18 @@ const groups = {
         '^No .+ element in scope but a .+ end tag seen.*$': {
           quality: 1,
           what: 'End tag for an element that is not in scope'
+        },
+        'Element script must not have attribute async unless attribute src is also specified or unless attribute type is specified with value module.': {
+          quality: 1,
+          what: 'script element has an async attribute but has no src or value=module attribute'
+        },
+        '^Bad value .* for attribute src on element .+: Illegal character in query: .+ is not allowed.*$': {
+          quality: 1,
+          what: 'src attribute query value contains an invalid character'
+        },
+        '^java.util.concurrent.TimeoutException: Idle timeout expired: .+ ms.*$': {
+          quality: 1,
+          what: 'Idle timeout expired'
         }
       }
     }

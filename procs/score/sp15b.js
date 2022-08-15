@@ -87,7 +87,10 @@ const testMatchers = {
     /^Bad value .+ for attribute .+ on element meta.*$/,
     /^Bad value .+ for attribute .+ on element .+$/,
     /^Bad value .+ for the attribute .+$/,
+    /^Bad value .* for attribute src on element .+: Illegal character in path segment: .+ is not allowed.*$/,
+    /^Bad value .* for attribute href on element .+: Illegal character in path segment: .+ is not allowed.*$/,
     /^Bad value .* for attribute src on element .+: Illegal character in query: .+ is not allowed.*$/,
+    /^Bad value .* for attribute href on element .+: Illegal character in query: .+ is not allowed.*$/,
     /^Attribute .+ not allowed here.*$/,
     /^Attribute .+ is only allowed when .+$/,
     /^The .+ attribute on the .+ element is obsolete.+$/,
@@ -105,6 +108,8 @@ const testMatchers = {
     /^Element .+ is missing one or more of the following attributes: role.*$/,
     /^No .+ element in scope but a .+ end tag seen.*$/,
     /^CSS: Unknown pseudo-element or pseudo-class :.+$/,
+    /^A table row was .+ columns wide, which is .+ than the column count established by the first row \(.+\).*$/,
+    /^This document appears to be written in .+ Consider adding lang=.+ to the html start tag.*$/,
     /^java.util.concurrent.TimeoutException: Idle timeout expired: .+ ms.*$/
   ]
 };
@@ -580,6 +585,10 @@ const groups = {
       },
       nuVal: {
         'Consider adding a lang attribute to the html start tag to declare the language of this document.': {
+          quality: 1,
+          what: 'html start tag has no lang attribute to declare the language of the page'
+        },
+        '^This document appears to be written in .+ Consider adding lang=.+ to the html start tag.*$': {
           quality: 1,
           what: 'html start tag has no lang attribute to declare the language of the page'
         }
@@ -1969,6 +1978,10 @@ const groups = {
           quality: 1,
           what: 'Element with a textbox role has an aria-owns attribute, which is not allowed'
         },
+        609: {
+          quality: 1,
+          what: 'Element has an aria-setsize attribute but has no aria-posinset attribute'
+        },
         1066: {
           quality: 1,
           what: 'Element has an ARIA attribute which is not valid'
@@ -2677,6 +2690,10 @@ const groups = {
         }
       },
       continuum: {
+        244: {
+          quality: 1,
+          what: 'dl element does not contain only dt, dd, script, template, or listitem-role elements as direct child elements'
+        },
         246: {
           quality: 1,
           what: 'ul element does not contain only li, script, template, or listitem-role elements as direct child elements'
@@ -2933,6 +2950,17 @@ const groups = {
         'a:table_layout': {
           quality: 1,
           what: 'table element is misused to arrange content'
+        }
+      }
+    }
+  },
+  tableColumnsVary: {
+    weight: 3,
+    packages: {
+      nuVal: {
+        '^A table row was .+ columns wide, which is .+ than the column count established by the first row \\(.+\\).*$': {
+          quality: 1,
+          what: 'Data or header cells are used for a table caption instead of a caption element'
         }
       }
     }
@@ -3803,6 +3831,10 @@ const groups = {
           quality: 1,
           what: 'itemprop attribute is on an element that is not a property of an item'
         },
+        'An aria-disabled attribute whose value is true should not be specified on an a element that has an href attribute.': {
+          quality: 1,
+          what: 'a element has aria-disabled=true but has an href attribute'
+        },
         '^Attribute .+ not allowed on element .+ at this point.*$': {
           quality: 1,
           what: 'attribute not allowed on this element'
@@ -4419,6 +4451,18 @@ const groups = {
         'Element script must not have attribute async unless attribute src is also specified or unless attribute type is specified with value module.': {
           quality: 1,
           what: 'script element has an async attribute but has no src or value=module attribute'
+        },
+        '^Bad value .* for attribute href on element .+: Illegal character in path segment: .+ is not allowed.*$': {
+          quality: 1,
+          what: 'href attribute path value contains an invalid character in a segment'
+        },
+        '^Bad value .* for attribute src on element .+: Illegal character in path segment: .+ is not allowed.*$': {
+          quality: 1,
+          what: 'src attribute path value contains an invalid character in a segment'
+        },
+        '^Bad value .* for attribute href on element .+: Illegal character in query: .+ is not allowed.*$': {
+          quality: 1,
+          what: 'href attribute query value contains an invalid character'
         },
         '^Bad value .* for attribute src on element .+: Illegal character in query: .+ is not allowed.*$': {
           quality: 1,

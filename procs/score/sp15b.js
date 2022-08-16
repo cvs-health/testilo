@@ -33,7 +33,8 @@
 
 // CONSTANTS
 
-const scoreProcID = 'sp15a';
+// ID of this proc.
+const scoreProcID = 'sp15b';
 // Configuration disclosures.
 const logWeights = {
   logCount: 0.5,
@@ -47,18 +48,26 @@ const logWeights = {
 };
 // Normal latency (1 second per visit).
 const normalLatency = 13;
+// How much each solo issue adds to the score.
 const soloWeight = 2;
+// How much classified issues add to the score.
 const groupWeights = {
+  // Added per issue group.
   absolute: 2,
+  // Added per issue reported by the package with the largest count in the group.
   largest: 1,
+  // Added per issue in the group reported by each other package.
   smaller: 0.4
 };
+// How much each prevention adds to the score.
 const preventionWeights = {
   testaro: 50,
   other: 100
 };
+// Non-preweighted and preweighted packages.
 const otherPackages = ['alfa', 'axe', 'continuum', 'htmlcs', 'ibm', 'nuVal', 'tenon', 'wave'];
 const preWeightedPackages = ['axe', 'tenon', 'testaro'];
+// Identifiers of variable test IDs.
 const testMatchers = {
   nuVal: [
     /^CSS: .+: .+ is not a .+ value.*$/,
@@ -114,9 +123,14 @@ const testMatchers = {
     /^This document appears to be written in .+ Consider adding lang=.+ to the html start tag.*$/,
     /^Text not allowed in element .+ in this context.*$/,
     /^The .+ element must not appear as a descendant of the .+ element.*$/,
+    /^An element with role=.+ must be contained in, or owned by, an element with role=.+$/,
+    /^Attribute aria-.+ is unnecessary for elements that have attribute .+$/,
+    /^Bad value  for attribute .+ on element .+: Must not be empty.*$/,
+    /^CSS: Deprecated media feature .+$/,
     /^java.util.concurrent.TimeoutException: Idle timeout expired: .+ ms.*$/
   ]
 };
+// Test groups.
 const groups = {
   ignorable: {
     weight: 0,
@@ -270,6 +284,10 @@ const groups = {
         'e:AA.4_1_2.H91.InputNumber.Name': {
           quality: 1,
           what: 'Number input has no accessible name'
+        },
+        'e:AA.4_1_2.H91.InputPassword.Name': {
+          quality: 1,
+          what: 'Password input has no accessible name'
         },
         'e:AA.4_1_2.H91.InputSearch.Name': {
           quality: 1,
@@ -2046,9 +2064,9 @@ const groups = {
         }
       },
       nuVal: {
-        'Attribute aria-required is unnecessary for elements that have attribute required.': {
+        '^Attribute aria-.+ is unnecessary for elements that have attribute .+$': {
           quality: 1,
-          what: 'aria-required attribute is redundant with required attribute'
+          what: 'ARIA attribute is redundant with the synonymous native attribute'
         }
       }
     }
@@ -2810,17 +2828,6 @@ const groups = {
         'a:select_missing_label': {
           quality: 1,
           what: 'Select element has no label'
-        }
-      }
-    }
-  },
-  optionOrphan: {
-    weight: 4,
-    packages: {
-      nuVal: {
-        'An element with role=option must be contained in, or owned by, an element with role=listbox.': {
-          quality: 1,
-          what: 'element with an option role is not contained by an element with a listbox role'
         }
       }
     }
@@ -3882,9 +3889,17 @@ const groups = {
           quality: 1,
           what: 'Attribute is invalidly nonserializable'
         },
+        '^Bad value  for attribute .+ on element .+: Must not be empty.*$': {
+          quality: 1,
+          what: 'Attribute has an invalidly empty value'
+        },
         '^Attribute .+ is only allowed when .+$': {
           quality: 1,
           what: 'Attribute is invalid here'
+        },
+        'A document must not include more than one autofocus attribute.': {
+          quality: 1,
+          what: 'Page includes more than one autofocus attribute'
         }
       }
     }
@@ -4325,6 +4340,10 @@ const groups = {
         }
       },
       nuVal: {
+        'Obsolete doctype. Expected <!DOCTYPE html>.': {
+          quality: 1,
+          what: 'DOCTYPE is obsolete instead of html'
+        },
         'The border attribute is obsolete. Consider specifying img { border: 0; } in CSS instead.': {
           quality: 1,
           what: 'border element is obsolete'
@@ -4352,6 +4371,10 @@ const groups = {
         'The name attribute is obsolete. Consider putting an id attribute on the nearest container instead.': {
           quality: 1,
           what: 'name attribute is obsolete'
+        },
+        '^CSS: Deprecated media feature .+$': {
+          quality: 1,
+          what: 'Media feature is deprecated'
         }
       },
       wave: {
@@ -4486,6 +4509,10 @@ const groups = {
           quality: 1,
           what: 'Encoding declaration disagrees with the actual encoding of the page'
         },
+        'Text run is not in Unicode Normalization Form C.': {
+          quality: 1,
+          what: 'Text run is not in Unicode Normalization Form C.'
+        },
         'Quote \" in attribute name. Probable cause: Matching quote missing somewhere earlier.': {
           quality: 1,
           what: 'Attribute name includes a double quotation mark'
@@ -4537,6 +4564,10 @@ const groups = {
         'When the srcset attribute has any image candidate string with a width descriptor, the sizes attribute must also be present.': {
           quality: 1,
           what: 'element with a srcset attribute with a width has no sizes attribute'
+        },
+        '^An element with role=.+ must be contained in, or owned by, an element with role=.+$': {
+          quality: 1,
+          what: 'Element has no required container or owner'
         },
         '^java.util.concurrent.TimeoutException: Idle timeout expired: .+ ms.*$': {
           quality: 1,

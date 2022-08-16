@@ -91,6 +91,7 @@ const testMatchers = {
     /^Bad value .* for attribute href on element .+: Illegal character in path segment: .+ is not allowed.*$/,
     /^Bad value .* for attribute src on element .+: Illegal character in query: .+ is not allowed.*$/,
     /^Bad value .* for attribute href on element .+: Illegal character in query: .+ is not allowed.*$/,
+    /^Bad value .+ for attribute src on element .+: Tab, new line or carriage return found.*$/s,
     /^Attribute .+ not allowed here.*$/,
     /^Attribute .+ is only allowed when .+$/,
     /^The .+ attribute on the .+ element is obsolete.+$/,
@@ -110,6 +111,7 @@ const testMatchers = {
     /^CSS: Unknown pseudo-element or pseudo-class :.+$/,
     /^A table row was .+ columns wide, which is .+ than the column count established by the first row \(.+\).*$/,
     /^This document appears to be written in .+ Consider adding lang=.+ to the html start tag.*$/,
+    /^Text not allowed in element .+ in this context.*$/,
     /^java.util.concurrent.TimeoutException: Idle timeout expired: .+ ms.*$/
   ]
 };
@@ -1742,6 +1744,10 @@ const groups = {
         176: {
           quality: 1,
           what: 'label element has a role attribute'
+        },
+        285: {
+          quality: 1,
+          what: 'button element has a role attribute that is not allowed'
         },
         319: {
           quality: 1,
@@ -4424,6 +4430,10 @@ const groups = {
           quality: 1,
           what: 'Comment is nested within a comment'
         },
+        'Saw < when expecting an attribute name. Probable cause: Missing > immediately before.': {
+          quality: 1,
+          what: '< character appears where an attribute name must appear'
+        },
         'The document is not mappable to XML 1.0 due to two consecutive hyphens in a comment.': {
           quality: 1,
           what: 'Comment contains --'
@@ -4467,6 +4477,14 @@ const groups = {
         '^Bad value .* for attribute src on element .+: Illegal character in query: .+ is not allowed.*$': {
           quality: 1,
           what: 'src attribute query value contains an invalid character'
+        },
+        '^Bad value .+ for attribute src on element .+: Tab, new line or carriage return found.*$': {
+          quality: 1,
+          what: 'src attribute value contains a tab, newline, or return character'
+        },
+        '^Text not allowed in element .+ in this context.*$': {
+          quality: 1,
+          what: 'Element contains text, which is not allowed here'
         },
         '^java.util.concurrent.TimeoutException: Idle timeout expired: .+ ms.*$': {
           quality: 1,

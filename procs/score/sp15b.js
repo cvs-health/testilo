@@ -214,6 +214,11 @@ const groups = {
           quality: 1,
           what: 'Search input element has no mechanism that allows an accessible name to be calculated'
         },
+        376: {
+          variable: false,
+          quality: 1,
+          what: 'input element has no mechanism that allows an accessible name to be calculated'
+        },
         507: {
           variable: false,
           quality: 1,
@@ -654,6 +659,13 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'html element has no valid value for the lang attribute'
+        }
+      },
+      continuum: {
+        647: {
+          variable: false,
+          quality: 1,
+          what: 'html element has no lang attribute starting with an IANA Language Subtag Registry language value'
         }
       },
       htmlcs: {
@@ -1260,6 +1272,13 @@ const groups = {
           what: 'Link is misused as a link destination'
         }
       },
+      nuVal: {
+        'Element a is missing required attribute href.': {
+          variable: false,
+          quality: 1,
+          what: 'a element has no href attribute'
+        }
+      },
       testaro: {
         linkTo: {
           variable: false,
@@ -1272,6 +1291,13 @@ const groups = {
   textAreaNoText: {
     weight: 4,
     packages: {
+      continuum: {
+        872: {
+          variable: false,
+          quality: 1,
+          what: 'textarea element has no accessible name, but only a placeholder attribute'
+        }
+      },
       htmlcs: {
         'e:AA.4_1_2.H91.Textarea.Name': {
           variable: false,
@@ -2150,6 +2176,11 @@ const groups = {
           quality: 1,
           what: 'a element has no aria-valuenow attribute'
         },
+        '^Element image is missing required attribute (?:height|width).*$': {
+          variable: true,
+          quality: 1,
+          what: 'image element has no height attribute or has no width attribute'
+        },
         '^Element .+ is missing one or more of the following attributes: .+$': {
           variable: true,
           quality: 1,
@@ -2293,6 +2324,11 @@ const groups = {
           quality: 1,
           what: 'Element has an aria-level attribute, which is not allowed'
         },
+        261: {
+          variable: false,
+          quality: 1,
+          what: 'Element has an aria-multiselectable attribute, which is not allowed'
+        },
         264: {
           variable: false,
           quality: 1,
@@ -2376,6 +2412,11 @@ const groups = {
           variable: true,
           quality: 1,
           what: 'attribute value is empty'
+        },
+        '^Bad value  for attribute aria-hidden on element .+$': {
+          variable: true,
+          quality: 1,
+          what: 'attribute aria-hidden has an empty value'
         },
         'The form attribute must refer to a form element.': {
           variable: false,
@@ -3752,6 +3793,11 @@ const groups = {
           quality: 1,
           what: 'button element is a descendant of an a element'
         },
+        'The element button must not appear as a descendant of an element with the attribute role=button.': {
+          variable: false,
+          quality: 1,
+          what: 'button element is a descendant of an element with a button role'
+        },
         'An element with the attribute tabindex must not appear as a descendant of the a element.': {
           variable: false,
           quality: 1,
@@ -5091,6 +5137,11 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'CSS @charset at-rule has an invalid format'
+        },
+        '^CSS: .+ is not a :lang\\(\\) value.*$': {
+          variable: true,
+          quality: 1,
+          what: 'CSS pseudo-class :lang() has an invalid value'
         },
         '^The aria-hidden attribute must not be specified on the .+ element.*$': {
           variable: true,

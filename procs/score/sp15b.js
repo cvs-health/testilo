@@ -67,69 +67,6 @@ const preventionWeights = {
 // Non-preweighted and preweighted packages.
 const otherPackages = ['alfa', 'axe', 'continuum', 'htmlcs', 'ibm', 'nuVal', 'tenon', 'wave'];
 const preWeightedPackages = ['axe', 'tenon', 'testaro'];
-// Identifiers of variable test IDs.
-const testMatchers = {
-  nuVal: [
-    /^CSS: .+: .+ is not a .+ value.*$/,
-    /^CSS: .+: Too many values or values are not recognized.+$/,
-    /^CSS: .+: Parse Error.*$/,
-    /^CSS: .+: Invalid type: .+$/,
-    /^CSS: .+: The types are incompatible.*$/,
-    /^CSS: .+: Unknown dimension.*$/,
-    /^The role attribute must not be used on a .+ element which has a table ancestor with no role attribute, or with a role attribute whose value is table, grid, or treegrid.*$/,
-    /^Bad value  for attribute .+ on element .+: An ID must not be the empty string.+$/,
-    /^Bad value  for attribute aria-owns on element .+: An IDREFS value must contain at least one non-whitespace character.*$/,
-    /^Bad value  for attribute src on element .+: Must be non-empty.*$/,
-    /^Bad value  for attribute tabindex on element .+: The empty string is not a valid integer.*$/,
-    /^The aria-hidden attribute must not be specified on the .+ element.*$/,
-    /^Element meta is missing one or more of the following attributes: .+$/,
-    /^Duplicate ID .+$|^The first occurrence of ID .* was here.*$/,
-    /^Start tag .+ seen but an element of the same type was already open.*$/,
-    /^Bad start tag in .+$/,
-    /^End tag .+ violates nesting rules.*$/,
-    /^Stray start tag .+$/,
-    /^Stray end tag .+$/,
-    /^Element name .+ cannot be represented as XML 1\.0.*$/,
-    /^Attribute .+ is not serializable as XML 1\.0.*$/,
-    /^Attribute .+ not allowed on element meta at this point.*$/,
-    /^Attribute .+ not allowed on element .+ at this point.*$/,
-    /^Bad value .+ for attribute .+ on element meta.*$/,
-    /^Bad value .+ for attribute .+ on element .+$/,
-    /^Bad value .+ for the attribute .+$/,
-    /^Bad value .* for attribute src on element .+: Illegal character in path segment: .+ is not allowed.*$/,
-    /^Bad value .* for attribute href on element .+: Illegal character in path segment: .+ is not allowed.*$/,
-    /^Bad value .* for attribute src on element .+: Illegal character in query: .+ is not allowed.*$/,
-    /^Bad value .* for attribute href on element .+: Illegal character in query: .+ is not allowed.*$/,
-    /^Bad value .+ for attribute src on element .+: Tab, new line or carriage return found.*$/s,
-    /^Attribute .+ not allowed here.*$/,
-    /^Attribute .+ is only allowed when .+$/,
-    /^The .+ attribute on the .+ element is obsolete.+$/,
-    /^The .+ role is unnecessary for element .+$/,
-    /^CSS: .+: Property .+ doesn't exist.*$/,
-    /^CSS: .+: only 0 can be a length. You must put a unit after your number.*$/,
-    /^CSS: .+: only 0 can be a unit. You must put a unit after your number.*$/,
-    /^CSS: .+: .+ is not a valid color 3 or 6 hexadecimals numbers.*$/,
-    /^CSS: .+: Character array is missing "e" notation exponential mark.*$/,
-    /^CSS: .+:   is an incorrect operator.*$/,
-    /^Element .+ not allowed as child of element .+ in this context.*$/,
-    /^Forbidden code point U+.+$/,
-    /^Internal encoding declaration .+ disagrees with the actual encoding of the document.*$/,
-    /^Potentially bad value .+ for attribute sandbox on element iframe: Setting both allow-scripts and allow-same-origin is not recommended, because it effectively enables an embedded page to break out of all sandboxing.*$/,
-    /^Element .+ is missing required attribute role.*$/,
-    /^Element .+ is missing one or more of the following attributes: role.*$/,
-    /^No .+ element in scope but a .+ end tag seen.*$/,
-    /^CSS: Unknown pseudo-element or pseudo-class :.+$/,
-    /^A table row was .+ columns wide, which is .+ than the column count established by the first row \(.+\).*$/,
-    /^This document appears to be written in .+ Consider adding lang=.+ to the html start tag.*$/,
-    /^Text not allowed in element .+ in this context.*$/,
-    /^The .+ element must not appear as a descendant of the .+ element.*$/,
-    /^An element with role=.+ must be contained in, or owned by, an element with role=.+$/,
-    /^Attribute aria-.+ is unnecessary for elements that have attribute .+$/,
-    /^Bad value  for attribute .+ on element .+: Must not be empty.*$/,
-    /^CSS: Deprecated media feature .+$/,
-    /^java.util.concurrent.TimeoutException: Idle timeout expired: .+ ms.*$/
-  ]
-};
 // Test groups.
 const groups = {
   ignorable: {
@@ -137,6 +74,7 @@ const groups = {
     packages: {
       nuVal: {
         'Element mediaelementwrapper not allowed as child of element div in this context. (Suppressing further errors from this subtree.)': {
+          variable: false,
           quality: 0,
           what: 'Bug in nuVal'
         }
@@ -148,44 +86,52 @@ const groups = {
     packages: {
       alfa: {
         r3: {
+          variable: false,
           quality: 1,
           what: 'Element id attribute value is not unique'
         }
       },
       axe: {
         'duplicate-id': {
+          variable: false,
           quality: 1,
           what: 'id attribute value is not unique'
         },
         'duplicate-id-active': {
+          variable: false,
           quality: 1,
           what: 'id attribute value of the active element is not unique'
         },
         'duplicate-id-aria': {
+          variable: false,
           quality: 1,
           what: 'id attribute used in ARIA or in a label has a value that is not unique'
         }
       },
       continuum: {
         94: {
+          variable: false,
           quality: 1,
           what: 'Elements contains an id attribute set to a value that is not unique in the DOM'
         }
       },
       htmlcs: {
         'e:AA.4_1_1.F77': {
+          variable: false,
           quality: 1,
           what: 'Duplicate id attribute value'
         }
       },
       ibm: {
         RPT_Elem_UniqueId: {
+          variable: false,
           quality: 1,
           what: 'Element id attribute value is not unique within the document'
         }
       },
       nuVal: {
         '^Duplicate ID .+$|^The first occurrence of ID .* was here.*$': {
+          variable: true,
           quality: 1,
           what: 'Duplicate id'
         }
@@ -197,6 +143,7 @@ const groups = {
     packages: {
       ibm: {
         Rpt_Aria_WidgetLabels_Implicit: {
+          variable: false,
           quality: 1,
           what: 'Interactive component has no programmatically associated name'
         }
@@ -208,18 +155,21 @@ const groups = {
     packages: {
       alfa: {
         r40: {
+          variable: false,
           quality: 1,
           what: 'Region has no accessible name'
         }
       },
       continuum: {
         1010: {
+          variable: false,
           quality: 1,
           what: 'Element with a region role has no mechanism that allows an accessible name to be calculated'
         }
       },
       ibm: {
         Rpt_Aria_RegionLabel_Implicit: {
+          variable: false,
           quality: 1,
           what: 'Element with a region role has no label that describes its purpose'
         }
@@ -231,6 +181,7 @@ const groups = {
     packages: {
       alfa: {
         r8: {
+          variable: false,
           quality: 1,
           what: 'Form field has no accessible name'
         }
@@ -242,62 +193,76 @@ const groups = {
     packages: {
       axe: {
         'aria-input-field-name': {
+          variable: false,
           quality: 1,
           what: 'ARIA input field has no accessible name'
         }
       },
       continuum: {
         118: {
+          variable: false,
           quality: 1,
           what: 'Text input element has no mechanism that allows an accessible name to be calculated'
         },
         370: {
+          variable: false,
           quality: 1,
           what: 'Search input element has no mechanism that allows an accessible name to be calculated'
         },
         509: {
+          variable: false,
           quality: 1,
           what: 'element with a textbox role has no mechanism that allows an accessible name to be calculated'
         },
         510: {
+          variable: false,
           quality: 1,
           what: 'element with a combobox role has no mechanism that allows an accessible name to be calculated'
         }
       },
       htmlcs: {
         'e:AA.4_1_2.H91.InputText.Name': {
+          variable: false,
           quality: 1,
           what: 'Text input has no accessible name'
         },
         'e:AA.4_1_2.H91.InputEmail.Name': {
+          variable: false,
           quality: 1,
           what: 'Email input has no accessible name'
         },
         'e:AA.4_1_2.H91.InputFile.Name': {
+          variable: false,
           quality: 1,
           what: 'File input element has no accessible name'
         },
         'e:AA.4_1_2.H91.InputTel.Name': {
+          variable: false,
           quality: 1,
           what: 'Telephone input has no accessible name'
         },
         'e:AA.4_1_2.H91.InputNumber.Name': {
+          variable: false,
           quality: 1,
           what: 'Number input has no accessible name'
         },
         'e:AA.4_1_2.H91.InputPassword.Name': {
+          variable: false,
           quality: 1,
           what: 'Password input has no accessible name'
         },
         'e:AA.4_1_2.H91.InputSearch.Name': {
+          variable: false,
           quality: 1,
           what: 'Search input has no accessible name'
         },
         'e:AA.4_1_2.H91.InputCheckbox.Name': {
+          variable: false,
           quality: 1,
           what: 'Checkbox input has no accessible name'
         },
         'e:AA.4_1_2.H91.InputRadio.Name': {
+          variable: false,
           quality: 1,
           what: 'Radio input has no accessible name'
         }
@@ -309,6 +274,7 @@ const groups = {
     packages: {
       continuum: {
         863: {
+          variable: false,
           quality: 1,
           what: 'input has an accessible name that depends on a placeholder'
         }
@@ -320,30 +286,35 @@ const groups = {
     packages: {
       alfa: {
         r28: {
+          variable: false,
           quality: 1,
           what: 'Image input element has no accessible name'
         }
       },
       axe: {
         'input-image-alt': {
+          variable: false,
           quality: 1,
           what: 'Image button has no text alternative'
         }
       },
       htmlcs: {
         'e:H36': {
+          variable: false,
           quality: 1,
           what: 'Image submit button has no alt attribute'
         }
       },
       ibm: {
         WCAG20_Input_ExplicitLabelImage: {
+          variable: false,
           quality: 1,
           what: 'Input element of type image has no text alternative'
         }
       },
       wave: {
         'e:alt_input_missing': {
+          variable: false,
           quality: 1,
           what: 'Image button has no alternative text'
         }
@@ -355,6 +326,7 @@ const groups = {
     packages: {
       ibm: {
         HAAC_Figure_label: {
+          variable: false,
           quality: 1,
           what: 'figure element has no associated label'
         }
@@ -366,58 +338,69 @@ const groups = {
     packages: {
       alfa: {
         r2: {
+          variable: false,
           quality: 1,
           what: 'Image has no accessible name'
         }
       },
       axe: {
         'image-alt': {
+          variable: false,
           quality: 1,
           what: 'Image has no text alternative'
         },
         'role-img-alt': {
+          variable: false,
           quality: 1,
           what: 'Element with role img has no text alternative'
         }
       },
       continuum: {
         87: {
+          variable: false,
           quality: 1,
           what: 'element with an image, graphics-symbol, or graphics-document role has no mechanism to calculate an accessible name'
         },
         89: {
+          variable: false,
           quality: 1,
           what: 'img element has no mechanism that allows an accessible name to be calculated'
         }
       },
       htmlcs: {
         'e:AA.1_1_1.H37': {
+          variable: false,
           quality: 1,
           what: 'img element has no alt attribute'
         }
       },
       ibm: {
         HAAC_Aria_ImgAlt: {
+          variable: false,
           quality: 1,
           what: 'Element with an img role has no non-empty label'
         },
         WCAG20_Img_HasAlt: {
+          variable: false,
           quality: 1,
           what: 'Image has no alt attribute conveying its meaning, or alt="" if decorative'
         }
       },
       nuVal: {
         'An img element must have an alt attribute, except under certain conditions. For details, consult guidance on providing text alternatives for images.': {
+          variable: false,
           quality: 1,
           what: 'img element has no alt attribute'
         }
       },
       wave: {
         'e:alt_missing': {
+          variable: false,
           quality: 1,
           what: 'Text alternative is missing'
         },
         'e:alt_spacer_missing': {
+          variable: false,
           quality: 1,
           what: 'Spacer image has no text alternative'
         }
@@ -429,6 +412,7 @@ const groups = {
     packages: {
       ibm: {
         WCAG20_Img_PresentationImgHasNonNullAlt: {
+          variable: false,
           quality: 1,
           what: 'Image designated as decorative has no alt=""'
         }
@@ -440,6 +424,7 @@ const groups = {
     packages: {
       alfa: {
         r39: {
+          variable: false,
           quality: 1,
           what: 'Image text alternative is the filename instead'
         }
@@ -451,6 +436,7 @@ const groups = {
     packages: {
       nuVal: {
         'Element img is missing required attribute src.': {
+          variable: false,
           quality: 1,
           what: 'img element has no src attribute'
         }
@@ -462,6 +448,7 @@ const groups = {
     packages: {
       nuVal: {
         '^Bad value  for attribute src on element .+: Must be non-empty.*$': {
+          variable: true,
           quality: 1,
           what: 'src attribute is empty'
         }
@@ -473,6 +460,7 @@ const groups = {
     packages: {
       nuVal: {
         '^CSS: background: .+ is not a color value.*$': {
+          variable: true,
           quality: 1,
           what: 'CSS background color is misdefined'
         }
@@ -484,6 +472,7 @@ const groups = {
     packages: {
       nuVal: {
         '^CSS: background-image: .+ is not a background-image value.*$': {
+          variable: true,
           quality: 1,
           what: 'CSS background image is misdefined'
         }
@@ -495,6 +484,7 @@ const groups = {
     packages: {
       continuum: {
         15: {
+          variable: false,
           quality: 1,
           what: 'input element has an alt attribute'
         }
@@ -506,6 +496,7 @@ const groups = {
     packages: {
       wave: {
         'a:alt_duplicate': {
+          variable: false,
           quality: 1,
           what: 'Two images near each other have the same text alternative'
         }
@@ -517,6 +508,7 @@ const groups = {
     packages: {
       wave: {
         'a:alt_long': {
+          variable: false,
           quality: 1,
           what: 'Long text alternative'
         }
@@ -528,12 +520,14 @@ const groups = {
     packages: {
       continuum: {
         234: {
+          variable: false,
           quality: 1,
           what: 'img element has a suspicious calculated accessible name value'
         },
       },
       wave: {
         'a:alt_suspicious': {
+          variable: false,
           quality: 1,
           what: 'Image text alternative is suspicious'
         }
@@ -545,6 +539,7 @@ const groups = {
     packages: {
       htmlcs: {
         'w:AA.1_1_1.H67.2': {
+          variable: false,
           quality: 1,
           what: 'Image marked as decorative may be informative'
         }
@@ -556,16 +551,19 @@ const groups = {
     packages: {
       alfa: {
         r67: {
+          variable: false,
           quality: 1,
           what: 'Image marked as decorative is in the accessibility tree or has no none/presentation role'
         },
         r86: {
+          variable: false,
           quality: 1,
           what: 'Element marked as decorative is in the accessibility tree or has no none/presentation role'
         }
       },
       nuVal: {
         'An img element which has an alt attribute whose value is the empty string must not have a role attribute.': {
+          variable: false,
           quality: 1,
           what: 'img element with alt="" has a role attribute'
         }
@@ -577,46 +575,54 @@ const groups = {
     packages: {
       alfa: {
         r4: {
+          variable: false,
           quality: 1,
           what: 'Lang attribute missing, empty, or only whitespace'
         }
       },
       axe: {
         'html-has-lang': {
+          variable: false,
           quality: 1,
           what: 'html element has no lang attribute'
         }
       },
       continuum: {
         101: {
+          variable: false,
           quality: 1,
           what: 'root html element has no lang attribute'
         }
       },
       htmlcs: {
         'e:AA.3_1_1.H57.2': {
+          variable: false,
           quality: 1,
           what: 'html element has no lang or xml:lang attribute'
         }
       },
       ibm: {
         WCAG20_Html_HasLang: {
+          variable: false,
           quality: 1,
           what: 'Page detected as HTML, but has no lang attribute'
         }
       },
       nuVal: {
         'Consider adding a lang attribute to the html start tag to declare the language of this document.': {
+          variable: false,
           quality: 1,
           what: 'html start tag has no lang attribute to declare the language of the page'
         },
         '^This document appears to be written in .+ Consider adding lang=.+ to the html start tag.*$': {
+          variable: true,
           quality: 1,
           what: 'html start tag has no lang attribute to declare the language of the page'
         }
       },
       wave: {
         'e:language_missing': {
+          variable: false,
           quality: 1,
           what: 'Language missing or invalid'
         }
@@ -628,24 +634,28 @@ const groups = {
     packages: {
       alfa: {
         r5: {
+          variable: false,
           quality: 1,
           what: 'lang attribute has no valid primary language tag'
         }
       },
       axe: {
         'html-lang-valid': {
+          variable: false,
           quality: 1,
           what: 'html element has no valid value for the lang attribute'
         }
       },
       htmlcs: {
         'e:AA.3_1_1.H57.3.Lang': {
+          variable: false,
           quality: 1,
           what: 'Language specified in the lang attribute of the document does not appear to be well-formed'
         }
       },
       ibm: {
         WCAG20_Elem_Lang_Valid: {
+          variable: false,
           quality: 1,
           what: 'lang attribute does not include a valid primary language'
         }
@@ -657,6 +667,7 @@ const groups = {
     packages: {
       htmlcs: {
         'e:AA.3_1_2.H58.1.Lang': {
+          variable: false,
           quality: 1,
           what: 'Language specified in the lang attribute of the element does not appear to be well-formed'
         }
@@ -668,18 +679,21 @@ const groups = {
     packages: {
       alfa: {
         r7: {
+          variable: false,
           quality: 1,
           what: 'lang attribute has no valid primary language subtag'
         }
       },
       axe: {
         'valid-lang': {
+          variable: false,
           quality: 1,
           what: 'lang attribute has no valid value'
         }
       },
       htmlcs: {
         'e:WCAG2AAA.Principle3.Guideline3_1.3_1_2.H58': {
+          variable: false,
           quality: 1,
           what: 'Change in language is not marked'
         }
@@ -691,12 +705,14 @@ const groups = {
     packages: {
       axe: {
         'aria-dialog-name': {
+          variable: false,
           quality: 1,
           what: 'ARIA dialog or alertdialog node has no accessible name'
         }
       },
       continuum: {
         736: {
+          variable: false,
           quality: 1,
           what: 'Element with a dialog role has no mechanism that allows an accessible name to be calculated'
         }
@@ -708,6 +724,7 @@ const groups = {
     packages: {
       ibm: {
         Rpt_Aria_ApplicationLandmarkLabel: {
+          variable: false,
           quality: 1,
           what: 'Element with an application role has no purpose label'
         }
@@ -719,36 +736,42 @@ const groups = {
     packages: {
       alfa: {
         r63: {
+          variable: false,
           quality: 1,
           what: 'Object element has no accessible name'
         }
       },
       axe: {
         'object-alt': {
+          variable: false,
           quality: 1,
           what: 'Object element has no text alternative'
         }
       },
       continuum: {
         249: {
+          variable: false,
           quality: 1,
           what: 'object element has no mechanism that allows an accessible name to be calculated'
         }
       },
       htmlcs: {
         'e:ARIA6+H53': {
+          variable: false,
           quality: 1,
           what: 'Object element contains no text alternative'
         }
       },
       ibm: {
         WCAG20_Object_HasText: {
+          variable: false,
           quality: 1,
           what: 'Object element has no text alternative'
         }
       },
       wave: {
         'a:plugin': {
+          variable: false,
           quality: 1,
           what: 'An unidentified plugin is present'
         }
@@ -760,6 +783,7 @@ const groups = {
     packages: {
       continuum: {
         252: {
+          variable: false,
           quality: 1,
           what: 'video element has no mechanism that allows an accessible name to be calculated'
         }
@@ -771,6 +795,7 @@ const groups = {
     packages: {
       wave: {
         'e:alt_map_missing': {
+          variable: false,
           quality: 1,
           what: 'Image that has hot spots has no alt attribute'
         }
@@ -782,28 +807,33 @@ const groups = {
     packages: {
       axe: {
         'area-alt': {
+          variable: false,
           quality: 1,
           what: 'Active area element has no text alternative'
         }
       },
       htmlcs: {
         'e:AA.1_1_1.H24': {
+          variable: false,
           quality: 1,
           what: 'Area element in an image map has no alt attribute'
         }
       },
       ibm: {
         HAAC_Img_UsemapAlt: {
+          variable: false,
           quality: 1,
           what: 'Image map or child area has no text alternative'
         },
         'WCAG20_Area_HasAlt': {
+          variable: false,
           quality: 1,
           what: 'Area element in an image map has no text alternative'
         }
       },
       wave: {
         'e:alt_area_missing': {
+          variable: false,
           quality: 1,
           what: 'Image map area has no alternative text'
         }
@@ -815,6 +845,7 @@ const groups = {
     packages: {
       htmlcs: {
         'w:AA.2_1_2.F10': {
+          variable: false,
           quality: 1,
           what: 'Applet or plugin may fail to enable moving the focus away with the keyboard'
         }
@@ -826,6 +857,7 @@ const groups = {
     packages: {
       tenon: {
         180: {
+          variable: false,
           quality: 1,
           what: 'Element is interactive but has a negative tabindex value'
         }
@@ -837,24 +869,29 @@ const groups = {
     packages: {
       htmlcs: {
         'w:AA.2_1_1.G90': {
+          variable: false,
           quality: 1,
           what: 'Event handler functionality may not be available by keyboard'
         },
         'w:AA.2_1_1.SCR20.MouseOut': {
+          variable: false,
           quality: 1,
           what: 'Mousing-out functionality may not be available by keyboard'
         },
         'w:AA.2_1_1.SCR20.MouseOver': {
+          variable: false,
           quality: 1,
           what: 'Mousing-over functionality may not be available by keyboard'
         },
         'w:AA.2_1_1.SCR20.MouseDown': {
+          variable: false,
           quality: 1,
           what: 'Mousing-down functionality may not be available by keyboard'
         }
       },
       wave: {
         'a:event_handler': {
+          variable: false,
           quality: 1,
           what: 'Device-dependent event handler'
         }
@@ -866,12 +903,14 @@ const groups = {
     packages: {
       htmlcs: {
         'e:AA.2_4_1.G1,G123,G124.NoSuchID': {
+          variable: false,
           quality: 1,
           what: 'Internal link references a nonexistent destination'
         }
       },
       wave: {
         'a:link_internal_broken': {
+          variable: false,
           quality: 1,
           what: 'Broken same-page link'
         }
@@ -883,12 +922,14 @@ const groups = {
     packages: {
       htmlcs: {
         'w:AA.1_3_1.H44.NotFormControl': {
+          variable: false,
           quality: 1,
           what: 'referent of the for attribute of the label is not a form control, so may be wrong'
         }
       },
       nuVal: {
         'The value of the for attribute of the label element must be the ID of a non-hidden form control.': {
+          variable: false,
           quality: 1,
           what: 'for attribute of the label element does not reference a non-hidden form control'
         }
@@ -900,6 +941,7 @@ const groups = {
     packages: {
       nuVal: {
         'Possible misuse of aria-label. (If you disagree with this warning, file an issue report or send e-mail to www-validator@w3.org.)': {
+          variable: false,
           quality: 1,
           what: 'aria-label attribute may be misused'
         }
@@ -911,12 +953,14 @@ const groups = {
     packages: {
       continuum: {
         290: {
+          variable: false,
           quality: 1,
           what: 'aria-activedescendant attribute is set to an invalid or duplicate id'
         }
       },
       ibm: {
         HAAC_ActiveDescendantCheck: {
+          variable: false,
           quality: 1,
           what: 'aria-activedescendant property does not reference the id of a non-empty, non-hidden active child element'
         }
@@ -928,12 +972,14 @@ const groups = {
     packages: {
       continuum: {
         85: {
+          variable: false,
           quality: 1,
           what: 'aria-controls attribute references an invalid or duplicate ID'
         }
       },
       nuVal: {
         'The aria-controls attribute must point to an element in the same document.': {
+          variable: false,
           quality: 1,
           what: 'aria-controls attribute references an element not in the document'
         }
@@ -945,6 +991,7 @@ const groups = {
     packages: {
       continuum: {
         83: {
+          variable: false,
           quality: 1,
           what: 'aria-describedby attribute references an invalid or duplicate ID'
         }
@@ -956,6 +1003,7 @@ const groups = {
     packages: {
       ibm: {
         WCAG20_Input_LabelBefore: {
+          variable: false,
           quality: 1,
           what: 'Text input or select element label follows the input control'
         }
@@ -967,42 +1015,50 @@ const groups = {
     packages: {
       continuum: {
         95: {
+          variable: false,
           quality: 1,
           what: 'element has an aria-labelledby value that includes an invalid or duplicate id'
         }
       },
       htmlcs: {
         'w:AA.1_3_1.H44.NonExistentFragment': {
+          variable: false,
           quality: 1,
           what: 'Label for attribute references a nonexistent element'
         },
         'w:AA.1_3_1.ARIA16,ARIA9': {
+          variable: false,
           quality: 1,
           what: 'aria-labelledby attribute references a nonexistent element'
         },
         'w:AA.4_1_2.ARIA16,ARIA9': {
+          variable: false,
           quality: 1,
           what: 'aria-labelledby attribute references a nonexistent element'
         }
       },
       ibm: {
         WCAG20_Label_RefValid: {
+          variable: false,
           quality: 1,
           what: 'for attribute does not reference a non-empty, unique id attribute of an input element'
         }
       },
       nuVal: {
         'The aria-labelledby attribute must point to an element in the same document.': {
+          variable: false,
           quality: 1,
           what: 'aria-labelledby attribute references an element not in the document'
         },
         'The aria-describedby attribute must point to an element in the same document.': {
+          variable: false,
           quality: 1,
           what: 'aria-describedby attribute references an element not in the document'
         }
       },
       wave: {
         'a:label_orphaned': {
+          variable: false,
           quality: 1,
           what: 'Orphaned form label'
         }
@@ -1014,6 +1070,7 @@ const groups = {
     packages: {
       ibm: {
         combobox_haspopup: {
+          variable: false,
           quality: 1,
           what: 'aria-haspopup value is invalid for the role of the controlled or owned element'
         }
@@ -1025,6 +1082,7 @@ const groups = {
     packages: {
       continuum: {
         360: {
+          variable: false,
           quality: 1,
           what: 'Element and another element have aria-owns attributes with identical id values'
         }
@@ -1036,72 +1094,86 @@ const groups = {
     packages: {
       alfa: {
         r11: {
+          variable: false,
           quality: 1,
           what: 'Link has no accessible name'
         }
       },
       axe: {
         'link-name': {
+          variable: false,
           quality: 1,
           what: 'Link has no discernible text'
         }
       },
       continuum: {
         237: {
+          variable: false,
           quality: 1,
           what: 'a element has no mechanism that allows an accessible name value to be calculated'
         }
       },
       htmlcs: {
         'e:AA.1_1_1.H30.2': {
+          variable: false,
           quality: 1,
           what: 'img element is the only link content but has no text alternative'
         },
         'w:AA.4_1_2.H91.A.Empty': {
+          variable: false,
           quality: 1,
           what: 'Link element has an id attribute but no href attribute or text'
         },
         'e:AA.4_1_2.H91.A.EmptyNoId': {
+          variable: false,
           quality: 1,
           what: 'Link has no name or id attribute or value'
         },
         'w:AA.4_1_2.H91.A.EmptyWithName': {
+          variable: false,
           quality: 1,
           what: 'Link has a name attribute but no href attribute or text'
         },
         'e:AA.4_1_2.H91.A.NoContent': {
+          variable: false,
           quality: 1,
           what: 'Link has an href attribute but no text'
         }
       },
       ibm: {
         WCAG20_A_HasText: {
+          variable: false,
           quality: 1,
           what: 'Hyperlink has no text description'
         }
       },
       nuVal: {
         'Bad value  for attribute href on element link: Must be non-empty.': {
+          variable: false,
           quality: 1,
           what: 'link element has an empty href attribute'
         }
       },
       tenon: {
         57: {
+          variable: false,
           quality: 1,
           what: 'Link has no text inside it'
         },
         91: {
+          variable: false,
           quality: 1,
           what: 'Link has a background image but no text inside it'
         }
       },
       wave: {
         'e:link_empty': {
+          variable: false,
           quality: 1,
           what: 'Link contains no text'
         },
         'e:alt_link_missing': {
+          variable: false,
           quality: 1,
           what: 'Linked image has no text alternative'
         },
@@ -1113,6 +1185,7 @@ const groups = {
     packages: {
       htmlcs: {
         'w:AA.4_1_2.H91.A.Placeholder': {
+          variable: false,
           quality: 1,
           what: 'Link has text but no href, id, or name attribute'
         }
@@ -1124,6 +1197,7 @@ const groups = {
     packages: {
       tenon: {
         117: {
+          variable: false,
           quality: 1,
           what: 'acronym element has no useful title value (and is deprecated; use abbr)'
         }
@@ -1135,6 +1209,7 @@ const groups = {
     packages: {
       tenon: {
         233: {
+          variable: false,
           quality: 1,
           what: 'abbr element is first for its abbreviation but has no useful title value'
         }
@@ -1146,6 +1221,7 @@ const groups = {
     packages: {
       wave: {
         'a:link_pdf': {
+          variable: false,
           quality: 1,
           what: 'Link to PDF document'
         }
@@ -1157,12 +1233,14 @@ const groups = {
     packages: {
       htmlcs: {
         'w:AA.4_1_2.H91.A.NoHref': {
+          variable: false,
           quality: 1,
           what: 'Link is misused as a link destination'
         }
       },
       testaro: {
         linkTo: {
+          variable: false,
           quality: 1,
           what: 'Link has no href attribute'
         }
@@ -1174,6 +1252,7 @@ const groups = {
     packages: {
       htmlcs: {
         'e:AA.4_1_2.H91.Textarea.Name': {
+          variable: false,
           quality: 1,
           what: 'textarea element has no accessible name'
         }
@@ -1185,12 +1264,14 @@ const groups = {
     packages: {
       htmlcs: {
         'e:AA.1_1_1.H2.EG3': {
+          variable: false,
           quality: 1,
           what: 'alt value of the link img element duplicates the text of a link beside it'
         }
       },
       tenon: {
         98: {
+          variable: false,
           quality: 1,
           what: 'Links have the same text but different destinations'
         }
@@ -1202,6 +1283,7 @@ const groups = {
     packages: {
       tenon: {
         184: {
+          variable: false,
           quality: 1,
           what: 'Adjacent links point to the same destination'
         }
@@ -1213,6 +1295,7 @@ const groups = {
     packages: {
       tenon: {
         132: {
+          variable: false,
           quality: 1,
           what: 'area element has the same href as another but a different alt'
         }
@@ -1224,6 +1307,7 @@ const groups = {
     packages: {
       axe: {
         'identical-links-same-purpose': {
+          variable: false,
           quality: 1,
           what: 'Links with the same accessible name may serve dissimilar purposes'
         }
@@ -1235,6 +1319,7 @@ const groups = {
     packages: {
       wave: {
         'a:link_redundant': {
+          variable: false,
           quality: 1,
           what: 'Adjacent links go to the same URL'
         }
@@ -1246,6 +1331,7 @@ const groups = {
     packages: {
       tenon: {
         214: {
+          variable: false,
           quality: 1,
           what: 'Form submission opens a new window'
         }
@@ -1257,6 +1343,7 @@ const groups = {
     packages: {
       tenon: {
         218: {
+          variable: false,
           quality: 1,
           what: 'Link opens in a new window without user control'
         }
@@ -1268,6 +1355,7 @@ const groups = {
     packages: {
       htmlcs: {
         'w:WCAG2AAA.Principle3.Guideline3_2.3_2_5.H83.3': {
+          variable: false,
           quality: 1,
           what: 'Link may open in a new window without notice'
         }
@@ -1279,6 +1367,7 @@ const groups = {
     packages: {
       wave: {
         'a:javascript_jumpmenu': {
+          variable: false,
           quality: 1,
           what: 'selection change may navigate to another page without notice'
         }
@@ -1290,6 +1379,7 @@ const groups = {
     packages: {
       nuVal: {
         'Attribute alt not allowed on element button at this point.': {
+          variable: false,
           quality: 1,
           what: 'button element has an alt attribute'
         }
@@ -1301,58 +1391,70 @@ const groups = {
     packages: {
       alfa: {
         r12: {
+          variable: false,
           quality: 1,
           what: 'Button has no accessible name'
         }
       },
       axe: {
         'aria-command-name': {
+          variable: false,
           quality: 1,
           what: 'ARIA command has no accessible name'
         },
         'button-name': {
+          variable: false,
           quality: 1,
           what: 'Button has no discernible text'
         },
         'input-button-name': {
+          variable: false,
           quality: 1,
           what: 'Input button has no discernible text'
         }
       },
       continuum: {
         224: {
+          variable: false,
           quality: 1,
           what: 'button element has no mechanism that allows an accessible name to be calculated'
         }
       },
       htmlcs: {
         'e:AA.4_1_2.H91.A.Name': {
+          variable: false,
           quality: 1,
           what: 'Link with button role has no accessible name'
         },
         'e:AA.4_1_2.H91.Div.Name': {
+          variable: false,
           quality: 1,
           what: 'div element with button role has no accessible name'
         },
         'e:AA.4_1_2.H91.Button.Name': {
+          variable: false,
           quality: 1,
           what: 'Button element has no accessible name'
         },
         'e:AA.4_1_2.H91.Img.Name': {
+          variable: false,
           quality: 1,
           what: 'img element with button role has no accessible name'
         },
         'e:AA.4_1_2.H91.InputButton.Name': {
+          variable: false,
           quality: 1,
           what: 'Button input element has no accessible name'
         },
         'e:AA.4_1_2.H91.Span.Name': {
+          variable: false,
           quality: 1,
           what: 'Element with button role has no accessible name'
         }
       },
       wave: {
         'e:button_empty': {
+          variable: false,
           quality: 1,
           what: 'Button is empty or has no value text'
         }
@@ -1364,18 +1466,21 @@ const groups = {
     packages: {
       alfa: {
         r42: {
+          variable: false,
           quality: 1,
           what: 'Element is not owned by an element of its required context role'
         }
       },
       axe: {
         'aria-required-parent': {
+          variable: false,
           quality: 1,
           what: 'ARIA role is not contained by a required parent'
         }
       },
       ibm: {
         Rpt_Aria_RequiredParent_Native_Host_Sematics: {
+          variable: false,
           quality: 1,
           what: 'Element is not contained within a role-valid element'
         }
@@ -1387,18 +1492,21 @@ const groups = {
     packages: {
       alfa: {
         r43: {
+          variable: false,
           quality: 1,
           what: 'SVG image element has no accessible name'
         }
       },
       axe: {
         'svg-img-alt': {
+          variable: false,
           quality: 1,
           what: 'svg element with an img role has no text alternative'
         }
       },
       continuum: {
         123: {
+          variable: false,
           quality: 1,
           what: 'svg element has no mechanism that allows an accessible name to be calculated'
         }
@@ -1410,6 +1518,7 @@ const groups = {
     packages: {
       axe: {
         'css-orientation-lock': {
+          variable: false,
           quality: 1,
           what: 'CSS media query locks display orientation'
         }
@@ -1421,6 +1530,7 @@ const groups = {
     packages: {
       tenon: {
         271: {
+          variable: false,
           quality: 1,
           what: 'Text is needlessly rotated 60+ degrees or more, hurting comprehension'
         }
@@ -1432,32 +1542,38 @@ const groups = {
     packages: {
       alfa: {
         r47: {
+          variable: false,
           quality: 1,
           what: 'Meta element restricts zooming'
         }
       },
       axe: {
         'meta-viewport': {
+          variable: false,
           quality: 1,
           what: 'Zooming and scaling are disabled'
         },
         'meta-viewport-large': {
+          variable: false,
           quality: 1,
           what: 'User cannot zoom and scale the text up to 500%'
         }
       },
       continuum: {
         55: {
+          variable: false,
           quality: 1,
           what: 'meta element in the head stops a user from scaling the viewport size'
         },
         59: {
+          variable: false,
           quality: 1,
           what: 'meta element in the head sets the viewport maximum-scale to less than 2'
         }
       },
       nuVal: {
         'Consider avoiding viewport values that prevent users from resizing documents.': {
+          variable: false,
           quality: 1,
           what: 'viewport value prevents users from resizing the document'
         }
@@ -1469,12 +1585,14 @@ const groups = {
     packages: {
       alfa: {
         r68: {
+          variable: false,
           quality: 1,
           what: 'Element does not own an element required by its semantic role'
         }
       },
       axe: {
         'aria-required-children': {
+          variable: false,
           quality: 1,
           what: 'ARIA role does not contain a required child'
         }
@@ -1486,6 +1604,7 @@ const groups = {
     packages: {
       htmlcs: {
         'e:AA.1_3_1.F92,ARIA4': {
+          variable: false,
           quality: 1,
           what: 'Element has presentation role but semantic child'
         }
@@ -1497,6 +1616,7 @@ const groups = {
     packages: {
       alfa: {
         r74: {
+          variable: false,
           quality: 1,
           what: 'Paragraph text has an absolute font size'
         }
@@ -1508,24 +1628,28 @@ const groups = {
     packages: {
       alfa: {
         r75: {
+          variable: false,
           quality: 1,
           what: 'Font size is smaller than 9 pixels'
         }
       },
       tenon: {
         134: {
+          variable: false,
           quality: 1,
           what: 'Text is very small'
         }
       },
       testaro: {
         miniText: {
+          variable: false,
           quality: 1,
           what: 'Text node has a font smaller than 11 pixels'
         }
       },
       wave: {
         'a:text_small': {
+          variable: false,
           quality: 1,
           what: 'Text is very small'
         }
@@ -1537,12 +1661,14 @@ const groups = {
     packages: {
       alfa: {
         r93: {
+          variable: false,
           quality: 1,
           what: 'Style attribute with !important prevents adjusting line height'
         }
       },
       axe: {
         'avoid-inline-spacing': {
+          variable: false,
           quality: 1,
           what: 'Inline text spacing is not adjustable with a custom stylesheet'
         }
@@ -1554,6 +1680,7 @@ const groups = {
     packages: {
       alfa: {
         r80: {
+          variable: false,
           quality: 1,
           what: 'Paragraph text has an absolute line height'
         }
@@ -1565,6 +1692,7 @@ const groups = {
     packages: {
       alfa: {
         r73: {
+          variable: false,
           quality: 1,
           what: 'Paragraph of text has insufficient line height'
         }
@@ -1576,6 +1704,7 @@ const groups = {
     packages: {
       tenon: {
         144: {
+          variable: false,
           quality: 1,
           what: 'Line height is insufficent to properly display the computed font size'
         }
@@ -1587,6 +1716,7 @@ const groups = {
     packages: {
       alfa: {
         r83: {
+          variable: false,
           quality: 1,
           what: 'Overflow is hidden or clipped if the text is enlarged'
         }
@@ -1598,12 +1728,14 @@ const groups = {
     packages: {
       nuVal: {
         'Element title not allowed as child of element body in this context. (Suppressing further errors from this subtree.)': {
+          variable: false,
           quality: 1,
           what: 'title element is a child of the body element'
         }
       },
       testaro: {
         titleEl: {
+          variable: false,
           quality: 1,
           what: 'title attribute belongs to an inappropriate element'
         }
@@ -1615,10 +1747,12 @@ const groups = {
     packages: {
       nuVal: {
         'A link element must not appear as a descendant of a body element unless the link element has an itemprop attribute or has a rel attribute whose value contains dns-prefetch, modulepreload, pingback, preconnect, prefetch, preload, prerender, or stylesheet.': {
+          variable: false,
           quality: 1,
           what: 'link element with a body ancestor has no itemprop or valid rel attribute'
         },
         'A link element with an as attribute must have a rel attribute that contains the value preload or the value modulepreload or the value prefetch.': {
+          variable: false,
           quality: 1,
           what: 'link element with an as attribute has no rel attribute with preload, modulepreload, or prefetch as its value'
         }
@@ -1630,38 +1764,47 @@ const groups = {
     packages: {
       nuVal: {
         '^Attribute .+ not allowed on element meta at this point.*$': {
+          variable: true,
           quality: 1,
           what: 'Attribute is not allowed on a meta element here'
         },
         '^Element meta is missing one or more of the following attributes: .+$': {
+          variable: true,
           quality: 1,
           what: 'meta element is missing a required attribute'
         },
         'A document must not include more than one meta element with its name attribute set to the value description.': {
+          variable: false,
           quality: 1,
           what: 'meta element with name="description" is not the only one'
         },
         'A document must not include both a meta element with an http-equiv attribute whose value is content-type, and a meta element with a charset attribute.': {
+          variable: false,
           quality: 1,
           what: 'meta element with http-equiv="content-type" is incompatible with the meta element with a charset attribute'
         },
         'A document must not include more than one meta element with a http-equiv attribute whose value is content-type.': {
+          variable: false,
           quality: 1,
           what: 'Page has more than 1 meta element with http-equiv="content-type"'
         },
         'A meta element with an http-equiv attribute whose value is X-UA-Compatible must have a content attribute with the value IE=edge.': {
+          variable: false,
           quality: 1,
           what: 'meta element with http-equiv="X-UA-Compatible" has no content="IE=edge"'
         },
         'A document must not include more than one meta element with a charset attribute.': {
+          variable: false,
           quality: 1,
           what: 'More than 1 meta element has a charset attribute'
         },
         'A charset attribute on a meta element found after the first 1024 bytes.': {
+          variable: false,
           quality: 1,
           what: 'charset attribute on a meta element appears after 1024 bytes'
         },
         '^Bad value .+ for attribute .+ on element meta.*$': {
+          variable: true,
           quality: 1,
           what: 'attribute of a meta element has an invalid value'
         }
@@ -1673,10 +1816,12 @@ const groups = {
     packages: {
       nuVal: {
         'Element script must not have attribute defer unless attribute src is also specified.': {
+          variable: false,
           quality: 1,
           what: 'script element has a defer attribute without a src attribute'
         },
         'A script element with a src attribute must not have a type attribute whose value is anything other than the empty string, a JavaScript MIME type, or module.': {
+          variable: false,
           quality: 1,
           what: 'script element has a src attribute but its type is not empty, a JS MIME type, or module'
         }
@@ -1688,6 +1833,7 @@ const groups = {
     packages: {
       nuVal: {
         'The itemtype attribute must not be specified on elements that do not have an itemscope attribute specified.': {
+          variable: false,
           quality: 1,
           what: 'Element has an itemtype attribute without an itemscope attribute'
         }
@@ -1699,34 +1845,40 @@ const groups = {
     packages: {
       alfa: {
         r13: {
+          variable: false,
           quality: 1,
           what: 'iframe has no accessible name'
         }
       },
       axe: {
         'frame-title': {
+          variable: false,
           quality: 1,
           what: 'Frame has no accessible name'
         },
         'frame-title-unique': {
+          variable: false,
           quality: 1,
           what: 'Frame title attribute is not unique'
         }
       },
       continuum: {
         228: {
+          variable: false,
           quality: 1,
           what: 'iframe has no mechanism that allows an accessible name to be calculated'
         }
       },
       htmlcs: {
         'e:AA.2_4_1.H64.1': {
+          variable: false,
           quality: 1,
           what: 'iframe element has no non-empty title attribute'
         }
       },
       ibm: {
         WCAG20_Frame_HasTitle: {
+          variable: false,
           quality: 1,
           what: 'Inline frame has an empty or nonunique title attribute'
         }
@@ -1738,92 +1890,112 @@ const groups = {
     packages: {
       alfa: {
         r21: {
+          variable: false,
           quality: 1,
           what: 'Element does not have a valid role'
         }
       },
       axe: {
         'aria-roles': {
+          variable: false,
           quality: 1,
           what: 'ARIA role has an invalid value'
         },
         'aria-allowed-role': {
+          variable: false,
           quality: 1,
           what: 'ARIA role is not appropriate for the element'
         }
       },
       continuum: {
         37: {
+          variable: false,
           quality: 1,
           what: 'a element has a role attribute that is not allowed'
         },
         44: {
+          variable: false,
           quality: 1,
           what: 'hr element has a role attribute'
         },
         176: {
+          variable: false,
           quality: 1,
           what: 'label element has a role attribute'
         },
         285: {
+          variable: false,
           quality: 1,
           what: 'button element has a role attribute that is not allowed'
         },
         319: {
+          variable: false,
           quality: 1,
           what: 'ol element has a role attribute that is not allowed'
         },
         325: {
+          variable: false,
           quality: 1,
           what: 'ul element has a role attribute that is not allowed'
         },
         412: {
+          variable: false,
           quality: 1,
           what: 'element has a role attribute set to an invalid ARIA role value'
         }
       },
       ibm: {
         aria_semantics_role: {
+          variable: false,
           quality: 1,
           what: 'ARIA role is not valid for the element to which it is assigned'
         },
         element_tabbable_role_valid: {
+          variable: false,
           quality: 1,
           what: 'Tabbable element has a non-widget role'
         },
         Rpt_Aria_ContentinfoWithNoMain_Implicit: {
+          variable: false,
           quality: 1,
           what: 'Element has a contentinfo role when no element has a main role'
         },
         Rpt_Aria_ValidRole: {
+          variable: false,
           quality: 1,
           what: 'Element has an invalid role'
         },
         Rpt_Aria_EventHandlerMissingRole_Native_Host_Sematics: {
+          variable: false,
           quality: 1,
           what: 'Element has an event handler but no valid ARIA role'
         },
         table_aria_descendants: {
+          variable: false,
           quality: 1,
           what: 'Table structure element specifies an explicit role within the table container'
         }
       },
       nuVal: {
         'Bad value dialog for attribute role on element li.': {
+          variable: false,
           quality: 1,
           what: 'dialog role is not valid for an li element'
         },
         'An img element with no alt attribute must not have a role attribute.': {
+          variable: false,
           quality: 1,
           what: 'img element has a role attribute but no alt attribute'
         },
         '^The role attribute must not be used on a .+ element which has a table ancestor with no role attribute, or with a role attribute whose value is table, grid, or treegrid.*$': {
+          variable: true,
           quality: 1,
           what: 'Table cell has a role attribute'
         }
       },
       testaro: {
         role: {
+          variable: false,
           quality: 1,
           what: 'Nonexistent or implicit-overriding role'
         }
@@ -1835,16 +2007,19 @@ const groups = {
     packages: {
       ibm: {
         aria_role_redundant: {
+          variable: false,
           quality: 1,
           what: 'Explicitly assigned ARIA role is redundant with the implicit role of the element'
         }
       },
       nuVal: {
         '^The .+ role is unnecessary for element .+$': {
+          variable: true,
           quality: 1,
           what: 'explicit role is redundant for its element'
         },
         'The textbox role is unnecessary for an input element that has no list attribute and whose type is text.': {
+          variable: false,
           quality: 1,
           what: 'explicit role is redundant for a text-type input element without a list attribute'
         }
@@ -1856,22 +2031,26 @@ const groups = {
     packages: {
       axe: {
         'aria-required-attr': {
+          variable: false,
           quality: 1,
           what: 'Required ARIA attribute is not provided'
         }
       },
       ibm: {
         Rpt_Aria_RequiredProperties: {
+          variable: false,
           quality: 1,
           what: 'ARIA role on an element does not have a required attribute'
         }
       },
       nuVal: {
         'Element a is missing required attribute aria-valuenow.': {
+          variable: false,
           quality: 1,
           what: 'a element has no aria-valuenow attribute'
         },
         'Element a is missing one or more of the following attributes: aria-checked, role.': {
+          variable: false,
           quality: 1,
           what: 'a element has no aria-checked attribute or has no role attribute'
         }
@@ -1883,6 +2062,7 @@ const groups = {
     packages: {
       nuVal: {
         '^Element .+ is missing required attribute role.*$': {
+          variable: true,
           quality: 1,
           what: 'Element has no role attribute'
         }
@@ -1894,6 +2074,7 @@ const groups = {
     packages: {
       nuVal: {
         '^Element .+ is missing one or more of the following attributes: role.*$': {
+          variable: true,
           quality: 1,
           what: 'Element has no role attribute but may need one'
         }
@@ -1905,26 +2086,31 @@ const groups = {
     packages: {
       alfa: {
         r16: {
+          variable: false,
           quality: 1,
           what: 'Element does not have all required states and properties'
         }
       },
       continuum: {
         1040: {
+          variable: false,
           quality: 1,
           what: 'element with a combobox role has no aria-controls or no aria-expanded attribute'
         },
         1042: {
+          variable: false,
           quality: 1,
           what: 'element with an option role has no aria-selected attribute'
         },
         1043: {
+          variable: false,
           quality: 1,
           what: 'element with a radio role has no aria-checked attribute'
         }
       },
       wave: {
         'e:aria_reference_broken': {
+          variable: false,
           quality: 1,
           what: 'Broken ARIA reference'
         }
@@ -1936,118 +2122,145 @@ const groups = {
     packages: {
       alfa: {
         r18: {
+          variable: false,
           quality: 1,
           what: 'ARIA state or property is not allowed for the element on which it is specified'
         },
         r19: {
+          variable: false,
           quality: 1,
           what: 'ARIA state or property has an invalid value'
         },
         r20: {
+          variable: false,
           quality: 1,
           what: 'ARIA attribute is not defined'
         }
       },
       axe: {
         'aria-valid-attr': {
+          variable: false,
           quality: 1,
           what: 'ARIA attribute has an invalid name'
         },
         'aria-valid-attr-value': {
+          variable: false,
           quality: 1,
           what: 'ARIA attribute has an invalid value'
         },
         'aria-allowed-attr': {
+          variable: false,
           quality: 1,
           what: 'ARIA attribute is invalid for the role of its element'
         },
         'aria-roledescription': {
+          variable: false,
           quality: 1,
           what: 'aria-roledescription is on an element with no semantic role'
         }
       },
       continuum: {
         16: {
+          variable: false,
           quality: 1,
           what: 'Element has an aria-multiline attribute, which is not allowed'
         },
         38: {
+          variable: false,
           quality: 1,
           what: 'Element has an aria-pressed attribute, which is not allowed'
         },
         64: {
+          variable: false,
           quality: 1,
           what: 'Element has an aria-valuemax attribute that is not set to an integer'
         },
         257: {
+          variable: false,
           quality: 1,
           what: 'Element has an aria-checked attribute, which is not allowed'
         },
         260: {
+          variable: false,
           quality: 1,
           what: 'Element has an aria-level attribute, which is not allowed'
         },
         264: {
+          variable: false,
           quality: 1,
           what: 'Element has an aria-selected attribute, which is not allowed'
         },
         270: {
+          variable: false,
           quality: 1,
           what: 'Element has an aria-required attribute, which is not allowed'
         },
         281: {
+          variable: false,
           quality: 1,
           what: 'Element has an aria-expanded attribute, which is not allowed'
         },
         282: {
+          variable: false,
           quality: 1,
           what: 'Element has an aria-autocomplete attribute, which is not allowed'
         },
         283: {
+          variable: false,
           quality: 1,
           what: 'Element has an aria-activedescendant attribute, which is not allowed'
         },
         331: {
+          variable: false,
           quality: 1,
           what: 'Element has an aria-owns attribute set to a non-null value'
         },
         333: {
+          variable: false,
           quality: 1,
           what: 'Element with a textbox role has an aria-owns attribute, which is not allowed'
         },
         609: {
+          variable: false,
           quality: 1,
           what: 'Element has an aria-setsize attribute but has no aria-posinset attribute'
         },
         1066: {
+          variable: false,
           quality: 1,
           what: 'Element has an ARIA attribute which is not valid'
         }
       },
       ibm: {
         aria_semantics_attribute: {
+          variable: false,
           quality: 1,
           what: 'ARIA attributes is invalid for the element or ARIA role to which it is assigned'
         },
         Rpt_Aria_ValidProperty: {
+          variable: false,
           quality: 1,
           what: 'ARIA attribute is invalid for the role'
         },
         Rpt_Aria_ValidPropertyValue: {
+          variable: false,
           quality: 1,
           what: 'ARIA property value is invalid'
         }
       },
       nuVal: {
         'The aria-hidden attribute must not be specified on the noscript element.': {
+          variable: false,
           quality: 1,
           what: 'noscript element has an aria-hidden attribute'
         },
         'Attribute aria-activedescendant value should either refer to a descendant element, or should be accompanied by attribute aria-owns.': {
+          variable: false,
           quality: 1,
           what: 'element has no aria-owns attribute but its aria-activedescendant attribute references a non-descendant'
         },
         'The aria-checked attribute should not be used on an input element which has a type attribute whose value is checkbox.': {
+          variable: false,
           quality: 1,
           what: 'input element with type="checkbox" has an aria-checked attribute'
         }
@@ -2059,12 +2272,14 @@ const groups = {
     packages: {
       ibm: {
         aria_attribute_redundant: {
+          variable: false,
           quality: 1,
           what: 'ARIA attribute is used when there is a corresponding HTML attribute'
         }
       },
       nuVal: {
         '^Attribute aria-.+ is unnecessary for elements that have attribute .+$': {
+          variable: true,
           quality: 1,
           what: 'ARIA attribute is redundant with the synonymous native attribute'
         }
@@ -2076,12 +2291,14 @@ const groups = {
     packages: {
       ibm: {
         Rpt_Aria_ValidIdRef: {
+          variable: false,
           quality: 1,
           what: 'ARIA property does not reference the non-empty unique id of a visible element'
         }
       },
       wave: {
         'e:aria_reference_broken': {
+          variable: false,
           quality: 1,
           what: 'Broken ARIA reference'
         }
@@ -2093,30 +2310,35 @@ const groups = {
     packages: {
       alfa: {
         r10: {
+          variable: false,
           quality: 1,
           what: 'Autocomplete attribute has no valid value'
         }
       },
       axe: {
         'autocomplete-valid': {
+          variable: false,
           quality: 1,
           what: 'autocomplete attribute is used incorrectly'
         }
       },
       htmlcs: {
         'e:AA.1_3_5.H98': {
+          variable: false,
           quality: 1,
           what: 'autocomplete attribute and the input type are mismatched'
         }
       },
       ibm: {
         WCAG21_Input_Autocomplete: {
+          variable: false,
           quality: 1,
           what: 'autocomplete attribute token is not appropriate for the input form field'
         }
       },
       nuVal: {
         'Bad value  for attribute autocomplete on element input: Must not be empty.': {
+          variable: false,
           quality: 1,
           what: 'autocomplete attribute has an empty value'
         }
@@ -2128,6 +2350,7 @@ const groups = {
     packages: {
       htmlcs: {
         'w:AA.1_3_5.H98': {
+          variable: false,
           quality: 1,
           what: 'Element contains a potentially faulty value in its autocomplete attribute'
         }
@@ -2139,34 +2362,40 @@ const groups = {
     packages: {
       alfa: {
         r69: {
+          variable: false,
           quality: 1,
           what: 'Text outside widget has subminimum contrast'
         }
       },
       axe: {
         'color-contrast': {
+          variable: false,
           quality: 1,
           what: 'Element has insufficient color contrast'
         }
       },
       htmlcs: {
         'e:AA.1_4_3.G145.Fail': {
+          variable: false,
           quality: 1,
           what: 'Contrast between the text and its background is less than 3:1.'
         },
         'e:AA.1_4_3.G18.Fail': {
+          variable: false,
           quality: 1,
           what: 'Contrast between the text and its background is less than 4.5:1'
         }
       },
       ibm: {
         IBMA_Color_Contrast_WCAG2AA: {
+          variable: false,
           quality: 1,
           what: 'Contrast ratio of text with background does not meet WCAG 2.1 AA'
         }
       },
       wave: {
         'c:contrast': {
+          variable: false,
           quality: 1,
           what: 'Very low contrast'
         }
@@ -2178,24 +2407,28 @@ const groups = {
     packages: {
       alfa: {
         r66: {
+          variable: false,
           quality: 1,
           what: 'Text contrast less than AAA requires'
         }
       },
       axe: {
         'color-contrast-enhanced': {
+          variable: false,
           quality: 1,
           what: 'Element has insufficient color contrast (Level AAA)'
         }
       },
       htmlcs: {
         'e:WCAG2AAA.Principle1.Guideline1_4.1_4_3.G18': {
+          variable: false,
           quality: 1,
           what: 'Insufficient contrast'
         }
       },
       tenon: {
         95: {
+          variable: false,
           quality: 1,
           what: 'Element has insufficient color contrast (Level AAA)'
         }
@@ -2207,34 +2440,42 @@ const groups = {
     packages: {
       htmlcs: {
         'w:AA.1_4_3_F24.F24.BGColour': {
+          variable: false,
           quality: 1,
           what: 'Inline background color may lack a complementary foreground color'
         },
         'w:AA.1_4_3_F24.F24.FGColour': {
+          variable: false,
           quality: 1,
           what: 'Inline foreground color may lack a complementary background color'
         },
         'w:AA.1_4_3.G18.Abs': {
+          variable: false,
           quality: 1,
           what: 'Contrast between the absolutely positioned text and its background may be inadequate'
         },
         'w:AA.1_4_3.G18.Alpha': {
+          variable: false,
           quality: 1,
           what: 'Contrast between the text and its background may be less than 4.5:1, given the transparency'
         },
         'w:AA.1_4_3.G145.Abs': {
+          variable: false,
           quality: 1,
           what: 'Contrast between the absolutely positioned large text and its background may be less than 3:1'
         },
         'w:AA.1_4_3.G145.Alpha': {
+          variable: false,
           quality: 1,
           what: 'Contrast between the text and its background may be less than 3:1, given the transparency'
         },
         'w:AA.1_4_3.G145.BgImage': {
+          variable: false,
           quality: 1,
           what: 'Contrast between the text and its background image may be less than 3:1'
         },
         'w:AA.1_4_3.G18.BgImage': {
+          variable: false,
           quality: 1,
           what: 'Contrast between the text and its background image may be less than 4.5:1'
         }
@@ -2246,10 +2487,12 @@ const groups = {
     packages: {
       nuVal: {
         '^Bad value  for attribute .+ on element .+: An ID must not be the empty string.+$': {
+          variable: true,
           quality: 1,
           what: 'id attribute has an empty value'
         },
         '^Bad value  for attribute aria-owns on element .+: An IDREFS value must contain at least one non-whitespace character.*$': {
+          variable: true,
           quality: 1,
           what: 'aria-owns attribute has an empty value'
         }
@@ -2261,6 +2504,7 @@ const groups = {
     packages: {
       nuVal: {
         'Bad value  for attribute target on element a: Browsing context name must be at least one character long.': {
+          variable: false,
           quality: 1,
           what: 'target attribute on an a element is empty'
         }
@@ -2272,36 +2516,42 @@ const groups = {
     packages: {
       alfa: {
         r64: {
+          variable: false,
           quality: 1,
           what: 'Heading has no non-empty accessible name'
         }
       },
       axe: {
         'empty-heading': {
+          variable: false,
           quality: 1,
           what: 'Heading empty'
         }
       },
       htmlcs: {
         'e:AA.1_3_1.H42.2': {
+          variable: false,
           quality: 1,
           what: 'Heading empty'
         }
       },
       ibm: {
         RPT_Header_HasContent: {
+          variable: false,
           quality: 1,
           what: 'Heading element provides no descriptive text'
         }
       },
       nuVal: {
         'Empty heading.': {
+          variable: false,
           quality: 1,
           what: 'Empty heading'
         }
       },
       wave: {
         'e:heading_empty': {
+          variable: false,
           quality: 1,
           what: 'Empty heading'
         }
@@ -2313,6 +2563,7 @@ const groups = {
     packages: {
       alfa: {
         r78: {
+          variable: false,
           quality: 1,
           what: 'No content between two headings of the same level'
         }
@@ -2324,10 +2575,12 @@ const groups = {
     packages: {
       nuVal: {
         'The type attribute is unnecessary for JavaScript resources.': {
+          variable: false,
           quality: 1,
           what: 'type attribute is unnecessary for a JavaScript resource'
         },
         'The type attribute for the style element is not needed and should be omitted.': {
+          variable: false,
           quality: 1,
           what: 'type attribute is unnecessary for a style element'
         }
@@ -2339,24 +2592,28 @@ const groups = {
     packages: {
       axe: {
         'image-redundant-alt': {
+          variable: false,
           quality: 1,
           what: 'Text of a button or link is repeated in the image alternative'
         }
       },
       ibm: {
         WCAG20_Img_LinkTextNotRedundant: {
+          variable: false,
           quality: 1,
           what: 'Text alternative for the image in a link repeats text of the same or an adjacent link'
         }
       },
       tenon: {
         138: {
+          variable: false,
           quality: 1,
           what: 'Image link alternative text repeats text in the link'
         }
       },
       wave: {
         'a:alt_redundant': {
+          variable: false,
           quality: 1,
           what: 'Redundant text alternative'
         }
@@ -2368,18 +2625,21 @@ const groups = {
     packages: {
       htmlcs: {
         'e:AA.1_1_1.H67.1': {
+          variable: false,
           quality: 1,
           what: 'img element has an empty alt attribute but has a nonempty title attribute'
         }
       },
       ibm: {
         WCAG20_Img_TitleEmptyWhenAltNull: {
+          variable: false,
           quality: 1,
           what: 'Image alt attribute is empty, but its title attribute is not'
         }
       },
       wave: {
         'a:image_title': {
+          variable: false,
           quality: 1,
           what: 'Image has a title attribute value but no alt value'
         }
@@ -2391,12 +2651,14 @@ const groups = {
     packages: {
       tenon: {
         79: {
+          variable: false,
           quality: 1,
           what: 'Link has a title attribute that is the same as the text inside the link'
         }
       },
       wave: {
         'a:title_redundant': {
+          variable: false,
           quality: 1,
           what: 'Title attribute text is the same as text or alternative text'
         }
@@ -2408,10 +2670,12 @@ const groups = {
     packages: {
       htmlcs: {
         'w:AA.1_3_1.H65': {
+          variable: false,
           quality: 0.5,
           what: 'Value of the title attribute of the form control is empty or only whitespace'
         },
         'w:AA.4_1_2.H65': {
+          variable: false,
           quality: 0.5,
           what: 'Value of the title attribute of the form control is empty or only whitespace'
         }
@@ -2423,12 +2687,14 @@ const groups = {
     packages: {
       nuVal: {
         'Start tag seen without seeing a doctype first. Expected <!DOCTYPE html>.': {
+          variable: false,
           quality: 1,
           what: 'Page does not start with <!DOCTYPE html>'
         }
       },
       testaro: {
         docType: {
+          variable: false,
           quality: 1,
           what: 'document has no doctype property'
         }
@@ -2440,42 +2706,49 @@ const groups = {
     packages: {
       alfa: {
         r1: {
+          variable: false,
           quality: 1,
           what: 'Document has no valid title element'
         }
       },
       axe: {
         'document-title': {
+          variable: false,
           quality: 1,
           what: 'Document contains no title element'
         }
       },
       continuum: {
         884: {
+          variable: false,
           quality: 1,
           what: 'DOM contains no document title element'
         }
       },
       htmlcs: {
         'e:AA.2_4_2.H25.1.NoTitleEl': {
+          variable: false,
           quality: 1,
           what: 'Document head element contains no non-empty title element'
         }
       },
       ibm: {
         WCAG20_Doc_HasTitle: {
+          variable: false,
           quality: 1,
           what: 'Page has no subject-identifying title'
         }
       },
       nuVal: {
         'Element head is missing a required instance of child element title.': {
+          variable: false,
           quality: 1,
           what: 'head element has no child title element'
         }
       },
       wave: {
         'e:title_invalid': {
+          variable: false,
           quality: 1,
           what: 'Missing or uninformative page title'
         }
@@ -2487,36 +2760,42 @@ const groups = {
     packages: {
       alfa: {
         r53: {
+          variable: false,
           quality: 1,
           what: 'Heading skips one or more levels'
         }
       },
       axe: {
         'heading-order': {
+          variable: false,
           quality: 1,
           what: 'Heading levels do not increase by only one'
         }
       },
       htmlcs: {
         'w:AA.1_3_1_A.G141': {
+          variable: false,
           quality: 1,
           what: 'Heading level is incorrect'
         }
       },
       nuVal: {
         'Consider using the h1 element as a top-level heading only (all h1 elements are treated as top-level headings by many screen readers and other tools).': {
+          variable: false,
           quality: 1,
           what: 'Page contains more than 1 h1 element'
         }
       },
       tenon: {
         155: {
+          variable: false,
           quality: 1,
           what: 'Headings are not structured in a hierarchical manner'
         }
       },
       wave: {
         'a:heading_skipped': {
+          variable: false,
           quality: 1,
           what: 'Skipped heading level'
         }
@@ -2528,6 +2807,7 @@ const groups = {
     packages: {
       continuum: {
         71: {
+          variable: false,
           quality: 1,
           what: 'element with a heading role has no aria-level attribute'
         }
@@ -2539,12 +2819,14 @@ const groups = {
     packages: {
       alfa: {
         r59: {
+          variable: false,
           quality: 1,
           what: 'Document has no headings'
         }
       },
       wave: {
         'a:heading_missing': {
+          variable: false,
           quality: 1,
           what: 'Page has no headings'
         }
@@ -2556,18 +2838,21 @@ const groups = {
     packages: {
       alfa: {
         r61: {
+          variable: false,
           quality: 1,
           what: 'First heading is not h1'
         }
       },
       axe: {
         'page-has-heading-one': {
+          variable: false,
           quality: 1,
           what: 'Page contains no level-one heading'
         }
       },
       wave: {
         'a:h1_missing': {
+          variable: false,
           quality: 1,
           what: 'Missing first level heading'
         }
@@ -2579,6 +2864,7 @@ const groups = {
     packages: {
       nuVal: {
         'Article lacks heading. Consider using h2-h6 elements to add identifying headings to all articles.': {
+          variable: false,
           quality: 1,
           what: 'article has no heading'
         }
@@ -2590,10 +2876,12 @@ const groups = {
     packages: {
       nuVal: {
         'Section lacks heading. Consider using h2-h6 elements to add identifying headings to all sections.': {
+          variable: false,
           quality: 1,
           what: 'section has no heading'
         },
         'Section lacks heading. Consider using h2-h6 elements to add identifying headings to all sections, or else use a div element instead for any cases where no heading is needed.': {
+          variable: false,
           quality: 1,
           what: 'section has no heading'
         }
@@ -2605,18 +2893,21 @@ const groups = {
     packages: {
       alfa: {
         r71: {
+          variable: false,
           quality: 1,
           what: 'Paragraph text is fully justified'
         }
       },
       tenon: {
         36: {
+          variable: false,
           quality: 1,
           what: 'Text is fully justified'
         }
       },
       wave: {
         'a:text_justified': {
+          variable: false,
           quality: 1,
           what: 'Text is justified'
         }
@@ -2628,34 +2919,42 @@ const groups = {
     packages: {
       htmlcs: {
         'w:AA.1_3_1.H49.AlignAttr': {
+          variable: false,
           quality: 1,
           what: 'Special text is aligned nonsemantically'
         },
         'w:AA.1_3_1.H49.B': {
+          variable: false,
           quality: 1,
           what: 'Special text is bolded nonsemantically'
         },
         'w:AA.1_3_1.H49.I': {
+          variable: false,
           quality: 1,
           what: 'Special text is italicized nonsemantically'
         },
         'w:AA.1_3_1.H49.Big': {
+          variable: false,
           quality: 1,
           what: 'Special text is enlarged nonsemantically'
         },
         'w:AA.1_3_1.H49.Small': {
+          variable: false,
           quality: 1,
           what: 'Special text is made small nonsemantically'
         },
         'w:AA.1_3_1.H49.U': {
+          variable: false,
           quality: 1,
           what: 'Special text is underlined nonsemantically'
         },
         'w:AA.1_3_1.H49.Center': {
+          variable: false,
           quality: 1,
           what: 'Special text is centered nonsemantically'
         },
         'w:AA.1_3_1.H49.Font': {
+          variable: false,
           quality: 1,
           what: 'Special text is designated nonsemantically with a (deprecated) font element'
         }
@@ -2667,6 +2966,7 @@ const groups = {
     packages: {
       tenon: {
         242: {
+          variable: false,
           quality: 1,
           what: 'Multiple consecutive br elements may simulate paragraphs'
         }
@@ -2678,18 +2978,21 @@ const groups = {
     packages: {
       axe: {
         'p-as-heading': {
+          variable: false,
           quality: 1,
           what: 'Styled p element may be misused as a heading'
         }
       },
       htmlcs: {
         'w:AA.1_3_1.H42': {
+          variable: false,
           quality: 1,
           what: 'Heading coding is not used but the element may be intended as a heading'
         }
       },
       wave: {
         'a:heading_possible': {
+          variable: false,
           quality: 1,
           what: 'Possible heading'
         }
@@ -2701,12 +3004,14 @@ const groups = {
     packages: {
       tenon: {
         129: {
+          variable: false,
           quality: 1,
           what: 'CSS underline on text that is not a link'
         }
       },
       wave: {
         'a:underline': {
+          variable: false,
           quality: 1,
           what: 'CSS underline on text that is not a link'
         }
@@ -2718,32 +3023,38 @@ const groups = {
     packages: {
       axe: {
         list: {
+          variable: false,
           quality: 1,
           what: 'List element ul or ol has a child element other than li, script, and template'
         },
         'definition-list': {
+          variable: false,
           quality: 1,
           what: 'List element dl has a child element other than properly ordered dt and dt group, script, template, and div'
         }
       },
       continuum: {
         244: {
+          variable: false,
           quality: 1,
           what: 'dl element does not contain only dt, dd, script, template, or listitem-role elements as direct child elements'
         },
         246: {
+          variable: false,
           quality: 1,
           what: 'ul element does not contain only li, script, template, or listitem-role elements as direct child elements'
         }
       },
       ibm: {
         HAAC_List_Group_ListItem: {
+          variable: false,
           quality: 1,
           what: 'List component with a group role has a non-listitem child'
         }
       },
       nuVal: {
         'Element dl is missing a required child element.': {
+          variable: false,
           quality: 1,
           what: 'dl element has no child element.'
         }
@@ -2755,22 +3066,26 @@ const groups = {
     packages: {
       axe: {
         listitem: {
+          variable: false,
           quality: 1,
           what: 'li element is not contained by a ul or ol element'
         }
       },
       continuum: {
         99: {
+          variable: false,
           quality: 1,
           what: 'li element has no ul, ol, or list-role parent'
         },
         385: {
+          variable: false,
           quality: 1,
           what: 'list item has no ul, ol, or list-role parent or owner'
         }
       },
       nuVal: {
         'Element li not allowed as child of element div in this context. (Suppressing further errors from this subtree.)': {
+          variable: false,
           quality: 1,
           what: 'li element is a child of a div element'
         }
@@ -2782,6 +3097,7 @@ const groups = {
     packages: {
       htmlcs: {
         'w:AA.1_3_1.H48.2': {
+          variable: false,
           quality: 1,
           what: 'Ordered list may fail to be coded as such'
         }
@@ -2793,6 +3109,7 @@ const groups = {
     packages: {
       htmlcs: {
         'w:AA.1_3_1.H48': {
+          variable: false,
           quality: 1,
           what: 'Navigation links are not coded as a list'
         }
@@ -2804,28 +3121,33 @@ const groups = {
     packages: {
       axe: {
         'select-name': {
+          variable: false,
           quality: 1,
           what: 'select element has no accessible name'
         }
       },
       continuum: {
         114: {
+          variable: false,
           quality: 1,
           what: 'select element has no mechanism that allows an accessible name to be calculated'
         }
       },
       htmlcs: {
         'e:AA.4_1_2.H91.Select.Name': {
+          variable: false,
           quality: 1,
           what: 'Select element has no accessible name'
         },
         'w:AA.4_1_2.H91.Select.Value': {
+          variable: false,
           quality: 1,
           what: 'Select element value has no accessible name'
         }
       },
       wave: {
         'a:select_missing_label': {
+          variable: false,
           quality: 1,
           what: 'Select element has no label'
         }
@@ -2837,6 +3159,7 @@ const groups = {
     packages: {
       nuVal: {
         'Element option without attribute label must not be empty.': {
+          variable: false,
           quality: 1,
           what: 'option element is empty but has no label attribute'
         }
@@ -2848,6 +3171,7 @@ const groups = {
     packages: {
       htmlcs: {
         'w:AA.1_3_1.H85.2': {
+          variable: false,
           quality: 1,
           what: 'Selection list may contain groups of related options that are not grouped with optgroup'
         }
@@ -2859,24 +3183,28 @@ const groups = {
     packages: {
       axe: {
         accesskeys: {
+          variable: false,
           quality: 1,
           what: 'accesskey attribute value is not unique'
         }
       },
       ibm: {
         WCAG20_Elem_UniqueAccessKey: {
+          variable: false,
           quality: 1,
           what: 'Accesskey attribute value on an element is not unique for the page'
         }
       },
       tenon: {
         101: {
+          variable: false,
           quality: 1,
           what: 'Duplicate accesskey value'
         }
       },
       wave: {
         'a:accesskey': {
+          variable: false,
           quality: 1,
           what: 'Accesskey'
         }
@@ -2888,18 +3216,21 @@ const groups = {
     packages: {
       ibm: {
         WCAG20_Input_RadioChkInFieldSet: {
+          variable: false,
           quality: 1,
           what: 'Input is in a different group than another with the name'
         }
       },
       testaro: {
         radioSet: {
+          variable: false,
           quality: 1,
           what: 'No or invalid grouping of radio buttons in fieldsets'
         }
       },
       wave: {
         'a:fieldset_missing': {
+          variable: false,
           quality: 1,
           what: 'fieldset element is missing'
         }
@@ -2911,6 +3242,7 @@ const groups = {
     packages: {
       htmlcs: {
         'w:AA.1_3_1.H71.SameName': {
+          variable: false,
           quality: 1,
           what: 'Radio buttons or check boxes may require a group description via a fieldset element'
         }
@@ -2922,24 +3254,28 @@ const groups = {
     packages: {
       continuum: {
         221: {
+          variable: false,
           quality: 1,
           what: 'Element with a radiogroup role has no mechanism that allows an accessible name to be calculated'
         }
       },
       htmlcs: {
         'e:AA.1_3_1.H71.NoLegend': {
+          variable: false,
           quality: 1,
           what: 'Fieldset has no legend element'
         }
       },
       ibm: {
         WCAG20_Fieldset_HasLegend: {
+          variable: false,
           quality: 1,
           what: 'fieldset element has no single, non-empty legend as a label'
         }
       },
       wave: {
         'a:legend_missing': {
+          variable: false,
           quality: 1,
           what: 'Fieldset has no legend element'
         }
@@ -2951,12 +3287,14 @@ const groups = {
     packages: {
       alfa: {
         r60: {
+          variable: false,
           quality: 1,
           what: 'Form-control group has no accessible name'
         }
       },
       htmlcs: {
         'e:AA.4_1_2.H91.Fieldset.Name': {
+          variable: false,
           quality: 1,
           what: 'Fieldset has no accessible name'
         }
@@ -2968,12 +3306,14 @@ const groups = {
     packages: {
       testaro: {
         nonTable: {
+          variable: false,
           quality: 1,
           what: 'table element fails the structural requirements for tabular data'
         }
       },
       wave: {
         'a:table_layout': {
+          variable: false,
           quality: 1,
           what: 'table element is misused to arrange content'
         }
@@ -2985,6 +3325,7 @@ const groups = {
     packages: {
       nuVal: {
         '^A table row was .+ columns wide, which is .+ than the column count established by the first row \\(.+\\).*$': {
+          variable: true,
           quality: 1,
           what: 'Data or header cells are used for a table caption instead of a caption element'
         }
@@ -2996,12 +3337,14 @@ const groups = {
     packages: {
       axe: {
         'table-fake-caption': {
+          variable: false,
           quality: 1,
           what: 'Data or header cells are used for a table caption instead of a caption element'
         }
       },
       htmlcs: {
         'w:AA.1_3_1.H39.3.NoCaption': {
+          variable: false,
           quality: 1,
           what: 'Table has no caption element'
         }
@@ -3013,12 +3356,14 @@ const groups = {
     packages: {
       htmlcs: {
         'e:AA.1_3_1.H43.HeadersRequired': {
+          variable: false,
           quality: 1,
           what: 'Complex table requires headers attributes of cells'
         }
       },
       ibm: {
         Valerie_Table_DataCellRelationships: {
+          variable: false,
           quality: 1,
           what: 'Not all th and td elements in the complex table have header or scope attributes'
         }
@@ -3030,6 +3375,7 @@ const groups = {
     packages: {
       htmlcs: {
         'w:AA.1_3_1.H43.ScopeAmbiguous': {
+          variable: false,
           quality: 1,
           what: 'Complex table requires headers attributes of cells instead of header scopes'
         }
@@ -3041,12 +3387,14 @@ const groups = {
     packages: {
       continuum: {
         387: {
+          variable: false,
           quality: 1,
           what: 'table element contains no th element or element with a rowheader or columnheader role'
         }
       },
       ibm: {
         RPT_Table_DataHeadingsAria: {
+          variable: false,
           quality: 1,
           what: 'Data table does not identify headers'
         }
@@ -3058,12 +3406,14 @@ const groups = {
     packages: {
       alfa: {
         r77: {
+          variable: false,
           quality: 1,
           what: 'Table cell has no header'
         }
       },
       axe: {
         'td-has-header': {
+          variable: false,
           quality: 1,
           what: 'Cell in table larger than 3 by 3 has no header'
         }
@@ -3075,12 +3425,14 @@ const groups = {
     packages: {
       alfa: {
         r46: {
+          variable: false,
           quality: 1,
           what: 'Header cell is not assigned to any cell'
         }
       },
       axe: {
         'th-has-data-cells': {
+          variable: false,
           quality: 1,
           what: 'Table header refers to no cell'
         }
@@ -3092,6 +3444,7 @@ const groups = {
     packages: {
       htmlcs: {
         'e:AA.1_3_1.H63.1': {
+          variable: false,
           quality: 1,
           what: 'Not all th elements in the table have a scope attribute, so an inferred scope may be incorrect'
         }
@@ -3103,6 +3456,7 @@ const groups = {
     packages: {
       wave: {
         'e:th_empty': {
+          variable: false,
           quality: 1,
           what: 'th (table header) contains no text'
         }
@@ -3114,24 +3468,28 @@ const groups = {
     packages: {
       axe: {
         label: {
+          variable: false,
           quality: 1,
           what: 'Form element has no label'
         }
       },
       htmlcs: {
         'e:AA.1_3_1.F68': {
+          variable: false,
           quality: 1,
           what: 'Form control has no label'
         }
       },
       ibm: {
         WCAG20_Input_ExplicitLabel: {
+          variable: false,
           quality: 1,
           what: 'Form control has no associated label'
         }
       },
       wave: {
         'e:label_missing': {
+          variable: false,
           quality: 1,
           what: 'form element has no label'
         }
@@ -3143,6 +3501,7 @@ const groups = {
     packages: {
       axe: {
         'label-title-only': {
+          variable: false,
           quality: 1,
           what: 'Form element has no visible label'
         }
@@ -3154,6 +3513,7 @@ const groups = {
     packages: {
       wave: {
         'a:label_title': {
+          variable: false,
           quality: 1,
           what: 'Form control has a title but no label'
         }
@@ -3165,24 +3525,28 @@ const groups = {
     packages: {
       alfa: {
         r14: {
+          variable: false,
           quality: 1,
           what: 'Visible label is not in the accessible name'
         }
       },
       axe: {
         'label-content-name-mismatch': {
+          variable: false,
           quality: 1,
           what: 'Element visible text is not part of its accessible name'
         }
       },
       htmlcs: {
         'w:AA.2_5_3.F96': {
+          variable: false,
           quality: 1,
           what: 'Visible label is not in the accessible name'
         }
       },
       ibm: {
         WCAG21_Label_Accessible: {
+          variable: false,
           quality: 1,
           what: 'Accessible name does not match or contain the visible label text'
         }
@@ -3194,6 +3558,7 @@ const groups = {
     packages: {
       tenon: {
         152: {
+          variable: false,
           quality: 1,
           what: 'Actionable element is smaller than the minimum required size'
         }
@@ -3205,6 +3570,7 @@ const groups = {
     packages: {
       testaro: {
         bulk: {
+          variable: false,
           quality: 1,
           what: 'Page contains many visible elements'
         }
@@ -3216,48 +3582,58 @@ const groups = {
     packages: {
       axe: {
         'nested-interactive': {
+          variable: false,
           quality: 1,
           what: 'Interactive controls are nested'
         }
       },
       continuum: {
         22: {
+          variable: false,
           quality: 1,
           what: 'Link contains an input, keygen, select, textarea, or button'
         }
       },
       nuVal: {
         'The element a must not appear as a descendant of an element with the attribute role=link.': {
+          variable: false,
           quality: 1,
           what: 'a element is a descendant of an element with a link role'
         },
         'The element a must not appear as a descendant of an element with the attribute role=button.': {
+          variable: false,
           quality: 1,
           what: 'a element is a descendant of an element with a button role'
         },
         'The element button must not appear as a descendant of the a element.': {
+          variable: false,
           quality: 1,
           what: 'button element is a descendant of an a element'
         },
         'An element with the attribute tabindex must not appear as a descendant of the a element.': {
+          variable: false,
           quality: 1,
           what: 'descendant of an a element has a tabindex attribute'
         },
         'An element with the attribute tabindex must not appear as a descendant of an element with the attribute role=link.': {
+          variable: false,
           quality: 1,
           what: 'descendant of an element with a link role has a tabindex attribute'
         },
         'An element with the attribute role=menu must not appear as a descendant of the a element.': {
+          variable: false,
           quality: 1,
           what: 'Element with a menu role is a descendant of an a element'
         },
         'An element with the attribute role=menu must not appear as a descendant of an element with the attribute role=button.': {
+          variable: false,
           quality: 1,
           what: 'Element with a menu role is a descendant of an element with a button role'
         }
       },
       testaro: {
         embAc: {
+          variable: false,
           quality: 1,
           what: 'Active element is embedded in a link or button'
         }
@@ -3269,12 +3645,14 @@ const groups = {
     packages: {
       ibm: {
         Rpt_Aria_MissingFocusableChild: {
+          variable: false,
           quality: 1,
           what: 'UI component has no focusable child element for keyboard access'
         }
       },
       testaro: {
         focAll: {
+          variable: false,
           quality: 0.5,
           what: 'Discrepancy between elements that should be and that are Tab-focusable'
         }
@@ -3286,12 +3664,14 @@ const groups = {
     packages: {
       alfa: {
         r65: {
+          variable: false,
           quality: 1,
           what: 'Element in sequential focus order has no visible focus'
         }
       },
       testaro: {
         focInd: {
+          variable: false,
           quality: 1,
           what: 'Focused element displaying no or nostandard focus indicator'
         }
@@ -3303,12 +3683,14 @@ const groups = {
     packages: {
       alfa: {
         r72: {
+          variable: false,
           quality: 1,
           what: 'Paragraph text is uppercased'
         }
       },
       tenon: {
         153: {
+          variable: false,
           quality: 1,
           what: 'Long string of text is in all caps'
         }
@@ -3320,12 +3702,14 @@ const groups = {
     packages: {
       alfa: {
         r85: {
+          variable: false,
           quality: 1,
           what: 'Text of the paragraph is all italic'
         }
       },
       tenon: {
         154: {
+          variable: false,
           quality: 1,
           what: 'Long string of text is italic'
         }
@@ -3337,6 +3721,7 @@ const groups = {
     packages: {
       wave: {
         'a:region_missing': {
+          variable: false,
           quality: 1,
           what: 'Page has no regions or ARIA landmarks'
         }
@@ -3348,18 +3733,21 @@ const groups = {
     packages: {
       alfa: {
         r57: {
+          variable: false,
           quality: 1,
           what: 'Perceivable text content is not included in any landmark'
         }
       },
       axe: {
         region: {
+          variable: false,
           quality: 1,
           what: 'Some page content is not contained by landmarks'
         }
       },
       ibm: {
         Rpt_Aria_OrphanedContent_Native_Host_Sematics: {
+          variable: false,
           quality: 1,
           what: 'Content does not reside within an element with a landmark role'
         }
@@ -3371,6 +3759,7 @@ const groups = {
     packages: {
       axe: {
         'landmark-contentinfo-is-top-level': {
+          variable: false,
           quality: 1,
           what: 'contentinfo landmark (footer) is contained in another landmark'
         }
@@ -3382,6 +3771,7 @@ const groups = {
     packages: {
       axe: {
         'landmark-complementary-is-top-level': {
+          variable: false,
           quality: 1,
           what: 'complementary landmark (aside) is contained in another landmark'
         }
@@ -3393,6 +3783,7 @@ const groups = {
     packages: {
       axe: {
         'landmark-main-is-top-level': {
+          variable: false,
           quality: 1,
           what: 'main landmark is contained in another landmark'
         }
@@ -3404,10 +3795,12 @@ const groups = {
     packages: {
       ibm: {
         Rpt_Aria_MultipleMainsRequireLabel_Implicit_2: {
+          variable: false,
           quality: 1,
           what: 'Element with main role has no unique label among the main-role elements'
         },
         Rpt_Aria_MultipleMainsVisibleLabel_Implicit: {
+          variable: false,
           quality: 1,
           what: 'Element with main role has no unique visible label among the main-role elements'
         }
@@ -3419,16 +3812,19 @@ const groups = {
     packages: {
       axe: {
         'landmark-one-main': {
+          variable: false,
           quality: 1,
           what: 'page has no main landmark'
         },
         'landmark-no-duplicate-main': {
+          variable: false,
           quality: 1,
           what: 'page has more than 1 main landmark'
         }
       },
       continuum: {
         809: {
+          variable: false,
           quality: 1,
           what: 'More than 1 main element is located in the body element'
         }
@@ -3440,12 +3836,14 @@ const groups = {
     packages: {
       axe: {
         'landmark-no-duplicate-banner': {
+          variable: false,
           quality: 1,
           what: 'Page has more than 1 banner landmark'
         }
       },
       ibm: {
         Rpt_Aria_OneBannerInSiblingSet_Implicit: {
+          variable: false,
           quality: 1,
           what: 'Multiple elements with a banner role are on the page'
         }
@@ -3457,6 +3855,7 @@ const groups = {
     packages: {
       axe: {
         'landmark-banner-is-top-level': {
+          variable: false,
           quality: 1,
           what: 'banner landmark is contained in another landmark'
         }
@@ -3468,6 +3867,7 @@ const groups = {
     packages: {
       ibm: {
         Rpt_Aria_MultipleContentinfoLandmarks_Implicit: {
+          variable: false,
           quality: 1,
           what: 'Element with a contentinfo role has no unique purpose label among the contentinfo-role elements'
         }
@@ -3479,12 +3879,14 @@ const groups = {
     packages: {
       axe: {
         'landmark-no-duplicate-contentinfo': {
+          variable: false,
           quality: 1,
           what: 'Page has more than 1 contentinfo landmark (footer)'
         }
       },
       ibm: {
         Rpt_Aria_MultipleContentinfoInSiblingSet_Implicit: {
+          variable: false,
           quality: 1,
           what: 'Page, document, or application has more than one element with a contentinfo role'
         }
@@ -3496,12 +3898,14 @@ const groups = {
     packages: {
       axe: {
         'landmark-unique': {
+          variable: false,
           quality: 1,
           what: 'Landmark has a role and an accessible name that are identical to another'
         }
       },
       ibm: {
         landmark_name_unique: {
+          variable: false,
           quality: 1,
           what: 'Landmark has no unique aria-labelledby or aria-label among landmarks in the same parent region'
         }
@@ -3513,6 +3917,7 @@ const groups = {
     packages: {
       ibm: {
         Rpt_Aria_MultipleArticleRoles_Implicit: {
+          variable: false,
           quality: 1,
           what: 'Element with an article role has no unique purpose label among the article-role elements'
         }
@@ -3524,6 +3929,7 @@ const groups = {
     packages: {
       ibm: {
         Rpt_Aria_MultipleFormLandmarks_Implicit: {
+          variable: false,
           quality: 1,
           what: 'Element with a form role has no unique purpose label among the form-role elements'
         }
@@ -3535,6 +3941,7 @@ const groups = {
     packages: {
       ibm: {
         Rpt_Aria_MultipleApplicationLandmarks: {
+          variable: false,
           quality: 1,
           what: 'Element with an application role has no unique purpose label among the application-role elements'
         }
@@ -3546,12 +3953,14 @@ const groups = {
     packages: {
       continuum: {
         527: {
+          variable: false,
           quality: 1,
           what: 'aside element has an accessible name that is non-unique among the aside elements'
         }
       },
       ibm: {
         Rpt_Aria_MultipleComplementaryLandmarks_Implicit: {
+          variable: false,
           quality: 1,
           what: 'Element with a complementary role has no unique purpose label among the complementary-role elements'
         }
@@ -3563,6 +3972,7 @@ const groups = {
     packages: {
       ibm: {
         Rpt_Aria_MultipleBannerLandmarks_Implicit: {
+          variable: false,
           quality: 1,
           what: 'Element with a banner role has no unique purpose label among the banner-role elements'
         }
@@ -3574,12 +3984,14 @@ const groups = {
     packages: {
       continuum: {
         531: {
+          variable: false,
           quality: 1,
           what: 'nav element has an accessible name that is non-unique among the nav elements'
         }
       },
       ibm: {
         Rpt_Aria_MultipleNavigationLandmarks_Implicit: {
+          variable: false,
           quality: 1,
           what: 'Element with a navigation role has no unique purpose label among the navigation-role elements'
         }
@@ -3591,6 +4003,7 @@ const groups = {
     packages: {
       ibm: {
         Rpt_Aria_MultipleRegionsUniqueLabel_Implicit: {
+          variable: false,
           quality: 1,
           what: 'Element with a region role has no unique label among the region-role elements'
         }
@@ -3602,6 +4015,7 @@ const groups = {
     packages: {
       ibm: {
         Rpt_Aria_MultipleSearchLandmarks: {
+          variable: false,
           quality: 1,
           what: 'Element with a search role has no unique purpose label among the search-role elements'
         }
@@ -3613,6 +4027,7 @@ const groups = {
     packages: {
       continuum: {
         532: {
+          variable: false,
           quality: 1,
           what: 'aside element is not the only aside element but has no accessible name'
         }
@@ -3624,10 +4039,12 @@ const groups = {
     packages: {
       ibm: {
         Rpt_Aria_ComplementaryRequiredLabel_Implicit: {
+          variable: false,
           quality: 1,
           what: 'Element has a complementary role but has no label'
         },
         Rpt_Aria_ComplementaryLandmarkLabel_Implicit: {
+          variable: false,
           quality: 1,
           what: 'Element with a complementary role has no visible purpose label'
         }
@@ -3639,6 +4056,7 @@ const groups = {
     packages: {
       continuum: {
         533: {
+          variable: false,
           quality: 1,
           what: 'nav element is not the only nav element but has no accessible name'
         }
@@ -3650,6 +4068,7 @@ const groups = {
     packages: {
       ibm: {
         Valerie_Label_HasContent: {
+          variable: false,
           quality: 1,
           what: 'label element has no non-empty purpose-descriptive text'
         }
@@ -3661,6 +4080,7 @@ const groups = {
     packages: {
       testaro: {
         focOp: {
+          variable: false,
           quality: 1,
           what: 'Operable elements that cannot be Tab-focused and vice versa'
         }
@@ -3672,6 +4092,7 @@ const groups = {
     packages: {
       axe: {
         'focus-order-semantics': {
+          variable: false,
           quality: 1,
           what: 'Focusable element has no active role'
         }
@@ -3683,38 +4104,45 @@ const groups = {
     packages: {
       alfa: {
         r17: {
+          variable: false,
           quality: 1,
           what: 'Tab-focusable element is or has an ancestor that is aria-hidden'
         }
       },
       axe: {
         'aria-hidden-focus': {
+          variable: false,
           quality: 1,
           what: 'ARIA hidden element is focusable or contains a focusable element'
         },
         'presentation-role-conflict': {
+          variable: false,
           quality: 1,
           what: 'Element has a none/presentation role but is focusable or has a global ARIA state or property'
         }
       },
       continuum: {
         790: {
+          variable: false,
           quality: 1,
           what: 'Element with an explicit or implicit nonnegative tabindex attribute is directly aria-hidden'
         }
       },
       ibm: {
         aria_hidden_focus_misuse: {
+          variable: false,
           quality: 1,
           what: 'Focusable element is within the subtree of an element with aria-hidden set to true'
         }
       },
       tenon: {
         189: {
+          variable: false,
           quality: 1,
           what: 'Element is typically used for interaction but has a presentation role'
         },
         194: {
+          variable: false,
           quality: 1,
           what: 'Visible element is focusable but has a presentation role or aria-hidden=true attribute'
         }
@@ -3726,6 +4154,7 @@ const groups = {
     packages: {
       testaro: {
         focVis: {
+          variable: false,
           quality: 1,
           what: 'Element when focused is off the display'
         }
@@ -3737,6 +4166,7 @@ const groups = {
     packages: {
       alfa: {
         r90: {
+          variable: false,
           quality: 1,
           what: 'Element has a role making its children presentational but contains a focusable element'
         }
@@ -3748,10 +4178,12 @@ const groups = {
     packages: {
       htmlcs: {
         'w:AA.1_3_1.F68.Hidden': {
+          variable: false,
           quality: 1,
           what: 'Hidden form field is needlessly labeled.'
         },
         'w:AA.1_3_1.F68.HiddenAttr': {
+          variable: false,
           quality: 1,
           what: 'Form field with a hidden attribute is needlessly labeled.'
         }
@@ -3763,6 +4195,7 @@ const groups = {
     packages: {
       axe: {
         'hidden-content': {
+          variable: false,
           quality: 1,
           what: 'Some content is hidden and therefore may not be testable for accessibility'
         }
@@ -3774,6 +4207,7 @@ const groups = {
     packages: {
       axe: {
         'frame-tested': {
+          variable: false,
           quality: 0.2,
           what: 'Some content is in an iframe and therefore may not be testable for accessibility'
         }
@@ -3785,6 +4219,7 @@ const groups = {
     packages: {
       nuVal: {
         '^Potentially bad value .+ for attribute sandbox on element iframe: Setting both allow-scripts and allow-same-origin is not recommended, because it effectively enables an embedded page to break out of all sandboxing.*$': {
+          variable: true,
           quality: 1,
           what: 'iframe element has a vulnerable sandbox value containing both allow-scripts and allow-same-origin'
         }
@@ -3796,6 +4231,7 @@ const groups = {
     packages: {
       testaro: {
         hover: {
+          variable: false,
           quality: 1,
           what: 'Content changes caused by hovering'
         }
@@ -3807,18 +4243,21 @@ const groups = {
     packages: {
       testaro: {
         labClash: {
+          variable: false,
           quality: 1,
           what: 'Incompatible label types'
         }
       },
       ibm: {
         RPT_Label_UniqueFor: {
+          variable: false,
           quality: 1,
           what: 'Form control does not have exactly one label'
         }
       },
       wave: {
         'e:label_multiple': {
+          variable: false,
           quality: 1,
           what: 'Form control has more than one label associated with it'
         }
@@ -3830,16 +4269,19 @@ const groups = {
     packages: {
       htmlcs: {
         'w:AA.1_3_1.ARIA6': {
+          variable: false,
           quality: 1,
           what: 'Value of the aria-label attribute of the form control is empty or only whitespace'
         },
         'w:AA.4_1_2.ARIA6': {
+          variable: false,
           quality: 1,
           what: 'Value of the aria-label attribute of the form control is empty or only whitespace'
         }
       },
       wave: {
         'e:label_empty': {
+          variable: false,
           quality: 1,
           what: 'Empty form label'
         }
@@ -3851,6 +4293,7 @@ const groups = {
     packages: {
       wave: {
         'a:link_suspicious': {
+          variable: false,
           quality: 1,
           what: 'Suspicious link text'
         }
@@ -3862,42 +4305,52 @@ const groups = {
     packages: {
       nuVal: {
         'The itemprop attribute was specified, but the element is not a property of any item.': {
+          variable: false,
           quality: 1,
           what: 'itemprop attribute is on an element that is not a property of an item'
         },
         'An aria-disabled attribute whose value is true should not be specified on an a element that has an href attribute.': {
+          variable: false,
           quality: 1,
           what: 'a element has aria-disabled=true but has an href attribute'
         },
         '^Attribute .+ not allowed on element .+ at this point.*$': {
+          variable: true,
           quality: 1,
           what: 'attribute not allowed on this element'
         },
         '^Bad value .+ for attribute .+ on element .+$': {
+          variable: true,
           quality: 1,
           what: 'attribute on this element has an invalid value'
         },
         '^Bad value .+ for the attribute .+$': {
+          variable: true,
           quality: 1,
           what: 'attribute has an invalid value'
         },
         '^Attribute .+ not allowed here.*$': {
+          variable: true,
           quality: 1,
           what: 'Attribute not allowed here'
         },
         '^Attribute .+ is not serializable as XML 1\\.0.*$': {
+          variable: true,
           quality: 1,
           what: 'Attribute is invalidly nonserializable'
         },
         '^Bad value  for attribute .+ on element .+: Must not be empty.*$': {
+          variable: true,
           quality: 1,
           what: 'Attribute has an invalidly empty value'
         },
         '^Attribute .+ is only allowed when .+$': {
+          variable: true,
           quality: 1,
           what: 'Attribute is invalid here'
         },
         'A document must not include more than one autofocus attribute.': {
+          variable: false,
           quality: 1,
           what: 'Page includes more than one autofocus attribute'
         }
@@ -3909,16 +4362,19 @@ const groups = {
     packages: {
       continuum: {
         141: {
+          variable: false,
           quality: 1,
           what: 'a element has an href attribute set to an image file reference'
         }
       },
       wave: {
         'a:link_excel': {
+          variable: false,
           quality: 1,
           what: 'Link to Microsoft Excel workbook'
         },
         'a:link_word': {
+          variable: false,
           quality: 1,
           what: 'Link to Microsoft Word document'
         }
@@ -3930,6 +4386,7 @@ const groups = {
     packages: {
       tenon: {
         73: {
+          variable: false,
           quality: 1,
           what: 'Link text is too generic to communicate the purpose or destination'
         }
@@ -3941,18 +4398,21 @@ const groups = {
     packages: {
       alfa: {
         r62: {
+          variable: false,
           quality: 1,
           what: 'Inline link is not distinct from the surrounding text except by color'
         }
       },
       axe: {
         'link-in-text-block': {
+          variable: false,
           quality: 1,
           what: 'Link is not distinct from surrounding text without reliance on color'
         }
       },
       testaro: {
         linkUl: {
+          variable: false,
           quality: 1,
           what: 'Non-underlined adjacent links'
         }
@@ -3964,6 +4424,7 @@ const groups = {
     packages: {
       testaro: {
         menuNav: {
+          variable: false,
           quality: 1,
           what: 'Nonstandard keyboard navigation among focusable menu items'
         }
@@ -3975,6 +4436,7 @@ const groups = {
     packages: {
       wave: {
         'e:aria_menu_broken': {
+          variable: false,
           quality: 1,
           what: 'ARIA menu does not contain required menu items'
         }
@@ -3986,6 +4448,7 @@ const groups = {
     packages: {
       testaro: {
         tabNav: {
+          variable: false,
           quality: 1,
           what: 'Nonstandard keyboard navigation among tabs'
         }
@@ -3997,6 +4460,7 @@ const groups = {
     packages: {
       testaro: {
         motion: {
+          variable: false,
           quality: 1,
           what: 'Change of visible content not requested by user'
         }
@@ -4008,6 +4472,7 @@ const groups = {
     packages: {
       axe: {
         'no-autoplay-audio': {
+          variable: false,
           quality: 1,
           what: 'video or audio element plays automatically'
         }
@@ -4019,6 +4484,7 @@ const groups = {
     packages: {
       nuVal: {
         'Element div not allowed as child of element button in this context. (Suppressing further errors from this subtree.)': {
+          variable: false,
           quality: 1,
           what: 'div element has a button element as its parent'
         }
@@ -4030,6 +4496,7 @@ const groups = {
     packages: {
       nuVal: {
         'Element p not allowed as child of element strong in this context. (Suppressing further errors from this subtree.)': {
+          variable: false,
           quality: 1,
           what: 'p element has a strong element as its parent'
         }
@@ -4041,18 +4508,22 @@ const groups = {
     packages: {
       nuVal: {
         'Element style not allowed as child of element body in this context. (Suppressing further errors from this subtree.)': {
+          variable: false,
           quality: 1,
           what: 'style element not allowed as a child of the body element'
         },
         'Element style not allowed as child of element div in this context. (Suppressing further errors from this subtree.)': {
+          variable: false,
           quality: 1,
           what: 'style element not allowed as a child of this div element'
         },
         'Element style not allowed as child of element main in this context. (Suppressing further errors from this subtree.)': {
+          variable: false,
           quality: 1,
           what: 'style element not allowed as a child of this main element'
         },
         'Element style not allowed as child of element footer in this context. (Suppressing further errors from this subtree.)': {
+          variable: false,
           quality: 1,
           what: 'style element not allowed as a child of this footer element'
         }
@@ -4064,6 +4535,7 @@ const groups = {
     packages: {
       testaro: {
         styleDiff: {
+          variable: false,
           quality: 1,
           what: 'Heading, link, and button style inconsistencies'
         }
@@ -4075,6 +4547,7 @@ const groups = {
     packages: {
       testaro: {
         zIndex: {
+          variable: false,
           quality: 1,
           what: 'Layering with nondefault z-index values'
         }
@@ -4086,12 +4559,14 @@ const groups = {
     packages: {
       axe: {
         tabindex: {
+          variable: false,
           quality: 1,
           what: 'Positive tabIndex risks creating a confusing focus order'
         }
       },
       wave: {
         'a:tabindex': {
+          variable: false,
           quality: 1,
           what: 'tabIndex value positive'
         }
@@ -4103,6 +4578,7 @@ const groups = {
     packages: {
       nuVal: {
         '^Bad value  for attribute tabindex on element .+: The empty string is not a valid integer.*$': {
+          variable: true,
           quality: 1,
           what: 'tabindex attribute has an empty value instead of an integer'
         }
@@ -4114,16 +4590,19 @@ const groups = {
     packages: {
       continuum: {
         337: {
+          variable: false,
           quality: 1,
           what: 'Enabled element with a button role has no nonpositive tabindex attribute'
         },
         356: {
+          variable: false,
           quality: 1,
           what: 'Enabled element with a textbox role has no nonpositive tabindex attribute'
         }
       },
       tenon: {
         190: {
+          variable: false,
           quality: 1,
           what: 'Interactive item is not natively actionable, but has no tabindex=0 attribute'
         }
@@ -4135,10 +4614,12 @@ const groups = {
     packages: {
       continuum: {
         40: {
+          variable: false,
           quality: 1,
           what: 'captions track element has no label attribute set to a text value'
         },
         368: {
+          variable: false,
           quality: 1,
           what: 'subtitle track element has no label attribute set to a text value'
         }
@@ -4150,6 +4631,7 @@ const groups = {
     packages: {
       axe: {
         'audio-caption': {
+          variable: false,
           quality: 1,
           what: 'audio element has no captions track'
         }
@@ -4161,6 +4643,7 @@ const groups = {
     packages: {
       axe: {
         'video-caption': {
+          variable: false,
           quality: 1,
           what: 'video element has no captions'
         }
@@ -4172,14 +4655,17 @@ const groups = {
     packages: {
       wave: {
         'a:html5_video_audio': {
+          variable: false,
           quality: 1,
           what: 'video or audio element may have no or incorrect captions, transcript, or audio description'
         },
         'a:audio_video': {
+          variable: false,
           quality: 1,
           what: 'audio or video file or link may have no or incorrect captions, transcript, or audio description'
         },
         'a:youtube_video': {
+          variable: false,
           quality: 1,
           what: 'YouTube video may have no or incorrect captions'
         }
@@ -4191,12 +4677,14 @@ const groups = {
     packages: {
       alfa: {
         r84: {
+          variable: false,
           quality: 1,
           what: 'Element is scrollable but not by keyboard'
         }
       },
       axe: {
         'scrollable-region-focusable': {
+          variable: false,
           quality: 1,
           what: 'Element is scrollable but has no keyboard access'
         }
@@ -4208,6 +4696,7 @@ const groups = {
     packages: {
       tenon: {
         28: {
+          variable: false,
           quality: 1,
           what: 'Layout or sizing of the page causes horizontal scrolling'
         }
@@ -4219,6 +4708,7 @@ const groups = {
     packages: {
       htmlcs: {
         'w:AA.1_4_10.C32,C31,C33,C38,SCR34,G206': {
+          variable: false,
           quality: 1,
           what: 'Fixed-position element may force bidirectional scrolling'
         }
@@ -4230,28 +4720,33 @@ const groups = {
     packages: {
       alfa: {
         'r87': {
+          variable: false,
           quality: 0.5,
           what: 'First focusable element is not a link to the main content'
         }
       },
       axe: {
         'bypass': {
+          variable: false,
           quality: 1,
           what: 'Page has no means to bypass repeated blocks'
         },
         'skip-link': {
+          variable: false,
           quality: 1,
           what: 'Skip-link target is not focusable or does not exist'
         }
       },
       ibm: {
         WCAG20_Body_FirstASkips_Native_Host_Sematics: {
+          variable: false,
           quality: 0.5,
           what: 'Page provides no way to skip directly to the main content'
         }
       },
       wave: {
         'e:link_skip_broken': {
+          variable: false,
           quality: 1,
           what: 'Skip-navigation link has no target or is not keyboard accessible'
         }
@@ -4263,6 +4758,7 @@ const groups = {
     packages: {
       htmlcs: {
         'e:AA.3_2_2.H32.2': {
+          variable: false,
           quality: 1,
           what: 'Form has no submit button'
         }
@@ -4274,6 +4770,7 @@ const groups = {
     packages: {
       alfa: {
         r54: {
+          variable: false,
           quality: 1,
           what: 'Assertive region is not atomic'
         }
@@ -4285,6 +4782,7 @@ const groups = {
     packages: {
       wave: {
         'a:noscript': {
+          variable: false,
           quality: 1,
           what: 'noscript element may fail to contain an accessible equivalent or alternative'
         }
@@ -4296,6 +4794,7 @@ const groups = {
     packages: {
       nuVal: {
         'The inputmode attribute is not supported in all browsers. Please be sure to test, and consider using a polyfill.': {
+          variable: false,
           quality: 1,
           what: 'inputmode attribute may be unsupported by some browsers'
         }
@@ -4307,82 +4806,100 @@ const groups = {
     packages: {
       alfa: {
         r70: {
+          variable: false,
           quality: 1,
           what: 'Element is obsolete or deprecated'
         }
       },
       htmlcs: {
         'e:AA.1_3_1.H49.AlignAttr': {
+          variable: false,
           quality: 1,
           what: 'align attribute is obsolete'
         },
         'e:AA.1_3_1.H49.Center': {
+          variable: false,
           quality: 1,
           what: 'center element is obsolete'
         },
         'e:AA.1_3_1.H49.Font': {
+          variable: false,
           quality: 1,
           what: 'font element is obsolete'
         }
       },
       ibm: {
         aria_attribute_deprecated: {
+          variable: false,
           quality: 1,
           what: 'ARIA role or attribute is deprecated'
         },
         combobox_version: {
+          variable: false,
           quality: 1,
           what: 'combobox design pattern is invalid for ARIA 1.2'
         },
         element_attribute_deprecated: {
+          variable: false,
           quality: 1,
           what: 'Element or attribute is obsolete'
         }
       },
       nuVal: {
         'Obsolete doctype. Expected <!DOCTYPE html>.': {
+          variable: false,
           quality: 1,
           what: 'DOCTYPE is obsolete instead of html'
         },
         'The border attribute is obsolete. Consider specifying img { border: 0; } in CSS instead.': {
+          variable: false,
           quality: 1,
           what: 'border element is obsolete'
         },
         'The center element is obsolete. Use CSS instead.': {
+          variable: false,
           quality: 1,
           what: 'center element is obsolete'
         },
         'The font element is obsolete. Use CSS instead.': {
+          variable: false,
           quality: 1,
           what: 'font element is obsolete'
         },
         '^The .+ attribute on the .+ element is obsolete.+$': {
+          variable: true,
           quality: 1,
           what: 'attribute is obsolete on its element'
         },
         'The only allowed value for the charset attribute for the script element is utf-8. (But the attribute is not needed and should be omitted altogether.)': {
+          variable: false,
           quality: 1,
           what: 'charset attribute has a value other than utf-8 and is unnecessary'
         },
         'Using the meta element to specify the document-wide default language is obsolete. Consider specifying the language on the root element instead.': {
+          variable: false,
           quality: 1,
           what: 'language declaration in a meta element is obsolete'
         },
         'The name attribute is obsolete. Consider putting an id attribute on the nearest container instead.': {
+          variable: false,
           quality: 1,
           what: 'name attribute is obsolete'
         },
         '^CSS: Deprecated media feature .+$': {
+          variable: true,
           quality: 1,
           what: 'Media feature is deprecated'
         }
       },
       wave: {
         'a:longdesc': {
+          variable: false,
           quality: 1,
           what: 'longdesc attribute is obsolete'
         },
         'a:flash': {
+          variable: false,
           quality: 1,
           what: 'Flash content is present'
         }
@@ -4394,182 +4911,227 @@ const groups = {
     packages: {
       nuVal: {
         'CSS: font-size: One operand must be a number.': {
+          variable: false,
           quality: 1,
           what: 'CSS font-size property has no numeric operand'
         },
         '^CSS: .+: Parse Error.*$': {
+          variable: true,
           quality: 1,
           what: 'Invalid CSS'
         },
         '^CSS: .+: .+ is not a valid color 3 or 6 hexadecimals numbers.*$': {
+          variable: true,
           quality: 1,
           what: 'Invalid hexadecimal color in CSS'
         },
         '^CSS: .+: .+ is not a .+ value.*$': {
+          variable: true,
           quality: 1,
           what: 'Invalid value in CSS'
         },
         '^CSS: .+: Property .+ doesn\'t exist.*$': {
+          variable: true,
           quality: 1,
           what: 'Invalid property in CSS'
         },
         '^CSS: .+: only 0 can be a length. You must put a unit after your number.*$': {
+          variable: true,
           quality: 1,
           what: 'Length in CSS is nonzero but has no unit'
         },
         '^CSS: .+: only 0 can be a unit. You must put a unit after your number.*$': {
+          variable: true,
           quality: 1,
           what: 'Number in CSS is nonzero but has no unit'
         },
         'CSS: Parse Error.': {
+          variable: false,
           quality: 1,
           what: 'Invalid CSS'
         },
         '^CSS: .+: Too many values or values are not recognized.+$': {
+          variable: true,
           quality: 1,
           what: 'Invalid CSS value or too many values'
         },
         '^CSS: .+: Invalid type: .+$': {
+          variable: true,
           quality: 1,
           what: 'Invalid type of CSS value'
         },
         '^CSS: .+: The types are incompatible.*$': {
+          variable: true,
           quality: 1,
           what: 'Incompatible types of CSS values'
         },
         '^CSS: .+: Unknown dimension.*$': {
+          variable: true,
           quality: 1,
           what: 'Unknown CSS dimension'
         },
         '^CSS: .+: Character array is missing "e" notation exponential mark.*$': {
+          variable: true,
           quality: 1,
           what: 'Character array has no exponent mark e'
         },
         '^CSS: .+:   is an incorrect operator.*$': {
+          variable: true,
           quality: 1,
           what: 'Space is misused as a CSS operator'
         },
         '^CSS: Unknown pseudo-element or pseudo-class :.+$': {
+          variable: true,
           quality: 1,
           what: 'Unknown pseudo-element or pseudo-class'
         },
         '^The aria-hidden attribute must not be specified on the .+ element.*$': {
+          variable: true,
           quality: 1,
           what: 'aria-hidden attribute is invalid for its element'
         },
         'The aria-hidden attribute must not be specified on an input element whose type attribute has the value hidden.': {
+          variable: false,
           quality: 1,
           what: 'aria-hidden attribute is invalid for an input element with type="hidden"'
         },
         '^Stray start tag .+$': {
+          variable: true,
           quality: 1,
           what: 'Invalid opening tag'
         },
         '^Stray end tag .+$': {
+          variable: true,
           quality: 1,
           what: 'Invalid closing tag'
         },
         '^Start tag .+ seen but an element of the same type was already open.*$': {
+          variable: true,
           quality: 1,
           what: 'Element is invalidly a descendant of another such element'
         },
         '^Bad start tag in .+$': {
+          variable: true,
           quality: 1,
           what: 'Invalid start tag'
         },
         '^End tag .+ violates nesting rules.*$': {
+          variable: true,
           quality: 1,
           what: 'End tag violates nesting rules'
         },
         '^Element .+ not allowed as child of element .+ in this context.*$': {
+          variable: true,
           quality: 1,
           what: 'Element not allowed as a child of its parent here'
         },
         'Saw <!-- within a comment. Probable cause: Nested comment (not allowed).': {
+          variable: false,
           quality: 1,
           what: 'Comment is nested within a comment'
         },
         'Saw < when expecting an attribute name. Probable cause: Missing > immediately before.': {
+          variable: false,
           quality: 1,
           what: '< character appears where an attribute name must appear'
         },
         'The document is not mappable to XML 1.0 due to two consecutive hyphens in a comment.': {
+          variable: false,
           quality: 1,
           what: 'Comment contains --'
         },
         '^Element name .+ cannot be represented as XML 1\\.0.*$': {
+          variable: true,
           quality: 1,
           what: 'Invalid element name'
         },
         '^Forbidden code point U+.+$': {
+          variable: true,
           quality: 1,
           what: 'Invalid Unicode code point'
         },
         '^Internal encoding declaration .+ disagrees with the actual encoding of the document.*$': {
+          variable: true,
           quality: 1,
           what: 'Encoding declaration disagrees with the actual encoding of the page'
         },
         'Text run is not in Unicode Normalization Form C.': {
+          variable: false,
           quality: 1,
           what: 'Text run is not in Unicode Normalization Form C.'
         },
         'Quote \" in attribute name. Probable cause: Matching quote missing somewhere earlier.': {
+          variable: false,
           quality: 1,
           what: 'Attribute name includes a double quotation mark'
         },
         '^No .+ element in scope but a .+ end tag seen.*$': {
+          variable: true,
           quality: 1,
           what: 'End tag for an element that is not in scope'
         },
         'Element script must not have attribute async unless attribute src is also specified or unless attribute type is specified with value module.': {
+          variable: false,
           quality: 1,
           what: 'script element has an async attribute but has no src or value=module attribute'
         },
         '^Bad value .* for attribute href on element .+: Illegal character in path segment: .+ is not allowed.*$': {
+          variable: true,
           quality: 1,
           what: 'href attribute path value contains an invalid character in a segment'
         },
         '^Bad value .* for attribute src on element .+: Illegal character in path segment: .+ is not allowed.*$': {
+          variable: true,
           quality: 1,
           what: 'src attribute path value contains an invalid character in a segment'
         },
         '^Bad value .* for attribute href on element .+: Illegal character in query: .+ is not allowed.*$': {
+          variable: true,
           quality: 1,
           what: 'href attribute query value contains an invalid character'
         },
         '^Bad value .* for attribute src on element .+: Illegal character in query: .+ is not allowed.*$': {
+          variable: true,
           quality: 1,
           what: 'src attribute query value contains an invalid character'
         },
         '^Bad value .+ for attribute src on element .+: Tab, new line or carriage return found.*$': {
+          variable: true,
           quality: 1,
           what: 'src attribute value contains a tab, newline, or return character'
         },
         '^Text not allowed in element .+ in this context.*$': {
+          variable: true,
           quality: 1,
           what: 'Element contains text, which is not allowed here'
         },
         'Element source is missing required attribute srcset.': {
+          variable: false,
           quality: 1,
           what: 'source element has no srcset attribute'
         },
         '^The .+ element must not appear as a descendant of the .+ element.*$': {
+          variable: true,
           quality: 1,
           what: 'Element has an invalid ancestor'
         },
         'The first child option element of a select element with a required attribute, and without a multiple attribute, and without a size attribute whose value is greater than 1, must have either an empty value attribute, or must have no text content. Consider either adding a placeholder option label, or adding a size attribute with a value equal to the number of option elements.': {
+          variable: false,
           quality: 1,
           what: 'option element has a nonempty value'
         },
         'When the srcset attribute has any image candidate string with a width descriptor, the sizes attribute must also be present.': {
+          variable: false,
           quality: 1,
           what: 'element with a srcset attribute with a width has no sizes attribute'
         },
         '^An element with role=.+ must be contained in, or owned by, an element with role=.+$': {
+          variable: true,
           quality: 1,
           what: 'Element has no required container or owner'
         },
         '^java.util.concurrent.TimeoutException: Idle timeout expired: .+ ms.*$': {
+          variable: true,
           quality: 1,
           what: 'Idle timeout expired'
         }
@@ -4581,6 +5143,7 @@ const groups = {
     packages: {
       nuVal: {
         'Document uses the Unicode Private Use Area(s), which should not be used in publicly exchanged documents. (Charmod C073)': {
+          variable: false,
           quality: 1,
           what: 'Page includes a Unicode PUA character'
         }
@@ -4592,6 +5155,7 @@ const groups = {
     packages: {
       nuVal: {
         'Cannot recover after last error. Any further errors will be ignored.': {
+          variable: false,
           quality: 1,
           what: 'Testing was interrupted by a fatal error'
         }
@@ -4996,10 +5560,17 @@ exports.scorer = async report => {
         tenon: {},
         wave: {}
       };
+      const testMatchers = {};
       Object.keys(groups).forEach(groupName => {
         Object.keys(groups[groupName].packages).forEach(packageName => {
           Object.keys(groups[groupName].packages[packageName]).forEach(testID => {
             testGroups[packageName][testID] = groupName;
+            if (groups[groupName].packages[packageName][testID].variable) {
+              if (! testMatchers[packageName]) {
+                testMatchers[packageName] = [];
+              }
+              testMatchers[packageName].push(new RegExp(testID));
+            }
           });
         });
       });

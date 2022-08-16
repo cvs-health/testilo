@@ -671,6 +671,13 @@ const groups = {
           quality: 1,
           what: 'Language specified in the lang attribute of the element does not appear to be well-formed'
         }
+      },
+      nuVal: {
+        'When the attribute xml:lang in no namespace is specified, the element must also have the attribute lang present with the same value.': {
+          variable: false,
+          quality: 1,
+          what: 'Element has no lang attrbute matching its xml:lang attribute'
+        }
       }
     }
   },
@@ -998,7 +1005,7 @@ const groups = {
       }
     }
   },
-  labelFollows: {
+  labelConfusionRisk: {
     weight: 1,
     packages: {
       ibm: {
@@ -1006,6 +1013,11 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'Text input or select element label follows the input control'
+        },
+        WCAG20_Input_LabelAfter: {
+          variable: false,
+          quality: 1,
+          what: 'Checkbox or radio button label precedes the input control'
         }
       }
     }
@@ -2026,7 +2038,69 @@ const groups = {
       }
     }
   },
-  roleMissingAttribute: {
+  attributeBad: {
+    weight: 4,
+    packages: {
+      nuVal: {
+        'The itemprop attribute was specified, but the element is not a property of any item.': {
+          variable: false,
+          quality: 1,
+          what: 'itemprop attribute is on an element that is not a property of an item'
+        },
+        'An aria-disabled attribute whose value is true should not be specified on an a element that has an href attribute.': {
+          variable: false,
+          quality: 1,
+          what: 'a element has aria-disabled=true but has an href attribute'
+        },
+        '^Attribute .+ not allowed on element .+ at this point.*$': {
+          variable: true,
+          quality: 1,
+          what: 'attribute not allowed on this element'
+        },
+        '^Bad value .+ for attribute .+ on element .+$': {
+          variable: true,
+          quality: 1,
+          what: 'attribute on this element has an invalid value'
+        },
+        '^Bad value .+ for the attribute .+$': {
+          variable: true,
+          quality: 1,
+          what: 'attribute has an invalid value'
+        },
+        '^Attribute .+ not allowed here.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Attribute not allowed here'
+        },
+        '^Attribute .+ is not serializable as XML 1\\.0.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Attribute is invalidly nonserializable'
+        },
+        '^Bad value  for attribute .+ on element .+: Must not be empty.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Attribute has an invalidly empty value'
+        },
+        '^Attribute .+ is only allowed when .+$': {
+          variable: true,
+          quality: 1,
+          what: 'Attribute is invalid here'
+        },
+        'A document must not include more than one autofocus attribute.': {
+          variable: false,
+          quality: 1,
+          what: 'Page includes more than one autofocus attribute'
+        },
+        '^Bad value  for attribute (?:width|height) on element img: The empty string is not a valid non-negative integer.*$': {
+          variable: true,
+          quality: 1,
+          what: 'attribute has an empty value'
+        }
+      }
+    }
+  },
+  attributeMissing: {
     weight: 4,
     packages: {
       axe: {
@@ -2049,10 +2123,10 @@ const groups = {
           quality: 1,
           what: 'a element has no aria-valuenow attribute'
         },
-        'Element a is missing one or more of the following attributes: aria-checked, role.': {
-          variable: false,
+        '^Element .+ is missing one or more of the following attributes: .+$': {
+          variable: true,
           quality: 1,
-          what: 'a element has no aria-checked attribute or has no role attribute'
+          what: 'Element is missing a required attribute'
         }
       }
     }
@@ -2220,6 +2294,11 @@ const groups = {
           quality: 1,
           what: 'Element with a textbox role has an aria-owns attribute, which is not allowed'
         },
+        334: {
+          variable: false,
+          quality: 1,
+          what: 'Element with a searchbox role has an aria-owns attribute, which is not allowed'
+        },
         609: {
           variable: false,
           quality: 1,
@@ -2259,6 +2338,16 @@ const groups = {
           quality: 1,
           what: 'element has no aria-owns attribute but its aria-activedescendant attribute references a non-descendant'
         },
+        '^Bad value  for attribute .+ on element .+: Must be non-empty.*$': {
+          variable: true,
+          quality: 1,
+          what: 'attribute value is empty'
+        },
+        'The form attribute must refer to a form element.': {
+          variable: false,
+          quality: 1,
+          what: 'form attribute does not reference a form element'
+        },
         'The aria-checked attribute should not be used on an input element which has a type attribute whose value is checkbox.': {
           variable: false,
           quality: 1,
@@ -2270,6 +2359,13 @@ const groups = {
   ariaRedundant: {
     weight: 1,
     packages: {
+      continuum: {
+        205: {
+          variable: false,
+          quality: 1,
+          what: 'aria-disabled attribute is redundant with the disabled attribute'
+        }
+      },
       ibm: {
         aria_attribute_redundant: {
           variable: false,
@@ -3092,6 +3188,18 @@ const groups = {
       }
     }
   },
+  pseudoListRisk: {
+    weight: 1,
+    packages: {
+      wave: {
+        'a:list_possible': {
+          variable: false,
+          quality: 1,
+          what: 'List may fail to be coded as such'
+        }
+      }
+    }
+  },
   pseudoOrderedListRisk: {
     weight: 1,
     packages: {
@@ -3619,6 +3727,11 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'descendant of an element with a link role has a tabindex attribute'
+        },
+        'An element with the attribute tabindex must not appear as a descendant of an element with the attribute role=button.': {
+          variable: false,
+          quality: 1,
+          what: 'descendant of an element with a button role has a tabindex attribute'
         },
         'An element with the attribute role=menu must not appear as a descendant of the a element.': {
           variable: false,
@@ -4300,63 +4413,6 @@ const groups = {
       }
     }
   },
-  attributeBad: {
-    weight: 4,
-    packages: {
-      nuVal: {
-        'The itemprop attribute was specified, but the element is not a property of any item.': {
-          variable: false,
-          quality: 1,
-          what: 'itemprop attribute is on an element that is not a property of an item'
-        },
-        'An aria-disabled attribute whose value is true should not be specified on an a element that has an href attribute.': {
-          variable: false,
-          quality: 1,
-          what: 'a element has aria-disabled=true but has an href attribute'
-        },
-        '^Attribute .+ not allowed on element .+ at this point.*$': {
-          variable: true,
-          quality: 1,
-          what: 'attribute not allowed on this element'
-        },
-        '^Bad value .+ for attribute .+ on element .+$': {
-          variable: true,
-          quality: 1,
-          what: 'attribute on this element has an invalid value'
-        },
-        '^Bad value .+ for the attribute .+$': {
-          variable: true,
-          quality: 1,
-          what: 'attribute has an invalid value'
-        },
-        '^Attribute .+ not allowed here.*$': {
-          variable: true,
-          quality: 1,
-          what: 'Attribute not allowed here'
-        },
-        '^Attribute .+ is not serializable as XML 1\\.0.*$': {
-          variable: true,
-          quality: 1,
-          what: 'Attribute is invalidly nonserializable'
-        },
-        '^Bad value  for attribute .+ on element .+: Must not be empty.*$': {
-          variable: true,
-          quality: 1,
-          what: 'Attribute has an invalidly empty value'
-        },
-        '^Attribute .+ is only allowed when .+$': {
-          variable: true,
-          quality: 1,
-          what: 'Attribute is invalid here'
-        },
-        'A document must not include more than one autofocus attribute.': {
-          variable: false,
-          quality: 1,
-          what: 'Page includes more than one autofocus attribute'
-        }
-      }
-    }
-  },
   nonWebLink: {
     weight: 1,
     packages: {
@@ -4985,6 +5041,11 @@ const groups = {
           quality: 1,
           what: 'Unknown pseudo-element or pseudo-class'
         },
+        '^CSS: unrecognized media .+$': {
+          variable: true,
+          quality: 1,
+          what: 'Unrecognized media value'
+        },
         '^The aria-hidden attribute must not be specified on the .+ element.*$': {
           variable: true,
           quality: 1,
@@ -5115,6 +5176,11 @@ const groups = {
           quality: 1,
           what: 'Element has an invalid ancestor'
         },
+        '^The element .+ must not appear as a descendant of the .+ element.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Element has an invalid ancestor'
+        },
         'The first child option element of a select element with a required attribute, and without a multiple attribute, and without a size attribute whose value is greater than 1, must have either an empty value attribute, or must have no text content. Consider either adding a placeholder option label, or adding a size attribute with a value equal to the number of option elements.': {
           variable: false,
           quality: 1,
@@ -5129,6 +5195,11 @@ const groups = {
           variable: true,
           quality: 1,
           what: 'Element has no required container or owner'
+        },
+        '^The text content of element .+ was not in the required format: Expected .+ but found .+ instead.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Element has text content with invalid format'
         },
         '^java.util.concurrent.TimeoutException: Idle timeout expired: .+ ms.*$': {
           variable: true,
@@ -5569,7 +5640,7 @@ exports.scorer = async report => {
               if (! testMatchers[packageName]) {
                 testMatchers[packageName] = [];
               }
-              testMatchers[packageName].push(new RegExp(testID));
+              testMatchers[packageName].push(new RegExp(testID, 's'));
             }
           });
         });

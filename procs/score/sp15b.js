@@ -196,6 +196,11 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'ARIA input field has no accessible name'
+        },
+        'aria-toggle-field-name': {
+          variable: false,
+          quality: 1,
+          what: 'Toggle field has no accessible name'
         }
       },
       continuum: {
@@ -208,6 +213,11 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'Search input element has no mechanism that allows an accessible name to be calculated'
+        },
+        507: {
+          variable: false,
+          quality: 1,
+          what: 'element with a radio role has no mechanism that allows an accessible name to be calculated'
         },
         509: {
           variable: false,
@@ -1426,10 +1436,20 @@ const groups = {
         }
       },
       continuum: {
+        116: {
+          variable: false,
+          quality: 1,
+          what: 'input element with type=button has no mechanism that allows an accessible name to be calculated'
+        },
         224: {
           variable: false,
           quality: 1,
           what: 'button element has no mechanism that allows an accessible name to be calculated'
+        },
+        511: {
+          variable: false,
+          quality: 1,
+          what: 'Element with a button role has no mechanism that allows an accessible name to be calculated'
         }
       },
       htmlcs: {
@@ -1462,6 +1482,13 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'Element with button role has no accessible name'
+        }
+      },
+      nuVal: {
+        'Element input with attribute type whose value is button must have non-empty attribute value.': {
+          variable: false,
+          quality: 1,
+          what: 'input element with type=button has no nonempty value attribute'
         }
       },
       wave: {
@@ -2180,6 +2207,13 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'element with a radio role has no aria-checked attribute'
+        }
+      },
+      nuVal: {
+        '^Element .+ is missing required attribute aria-.+$': {
+          variable: true,
+          quality: 1,
+          what: 'Element is missing a required ARIA attribute'
         }
       },
       wave: {
@@ -4965,6 +4999,13 @@ const groups = {
   parseError: {
     weight: 3,
     packages: {
+      ibm: {
+        'Rpt_Aria_InvalidTabindexForActivedescendant': {
+          variable: false,
+          quality: 1,
+          what: 'Element with an aria-activedescendant attribute has no nonpositive tabindex attribute'
+        }
+      },
       nuVal: {
         'CSS: font-size: One operand must be a number.': {
           variable: false,
@@ -5045,6 +5086,11 @@ const groups = {
           variable: true,
           quality: 1,
           what: 'Unrecognized media value'
+        },
+        'CSS: This profile has a very specific syntax for @charset: @charset followed by exactly one space, followed by the name of the encoding in quotes, followed immediately by a semicolon.': {
+          variable: false,
+          quality: 1,
+          what: 'CSS @charset at-rule has an invalid format'
         },
         '^The aria-hidden attribute must not be specified on the .+ element.*$': {
           variable: true,
@@ -5200,6 +5246,16 @@ const groups = {
           variable: true,
           quality: 1,
           what: 'Element has text content with invalid format'
+        },
+        'Element script must not have attribute charset unless attribute src is also specified.': {
+          variable: false,
+          quality: 1,
+          what: 'script element has a charset attribute but no src attribute'
+        },
+        '^CSS: .+: Missing a semicolon before the .+$': {
+          variable: true,
+          quality: 1,
+          what: 'semicolon missing in CSS'
         },
         '^java.util.concurrent.TimeoutException: Idle timeout expired: .+ ms.*$': {
           variable: true,

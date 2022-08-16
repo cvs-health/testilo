@@ -106,12 +106,14 @@ const testMatchers = {
     /^Forbidden code point U+.+$/,
     /^Internal encoding declaration .+ disagrees with the actual encoding of the document.*$/,
     /^Potentially bad value .+ for attribute sandbox on element iframe: Setting both allow-scripts and allow-same-origin is not recommended, because it effectively enables an embedded page to break out of all sandboxing.*$/,
+    /^Element .+ is missing required attribute role.*$/,
     /^Element .+ is missing one or more of the following attributes: role.*$/,
     /^No .+ element in scope but a .+ end tag seen.*$/,
     /^CSS: Unknown pseudo-element or pseudo-class :.+$/,
     /^A table row was .+ columns wide, which is .+ than the column count established by the first row \(.+\).*$/,
     /^This document appears to be written in .+ Consider adding lang=.+ to the html start tag.*$/,
     /^Text not allowed in element .+ in this context.*$/,
+    /^The .+ element must not appear as a descendant of the .+ element.*$/,
     /^java.util.concurrent.TimeoutException: Idle timeout expired: .+ ms.*$/
   ]
 };
@@ -1858,6 +1860,17 @@ const groups = {
       }
     }
   },
+  roleMissing: {
+    weight: 3,
+    packages: {
+      nuVal: {
+        '^Element .+ is missing required attribute role.*$': {
+          quality: 1,
+          what: 'Element has no role attribute'
+        }
+      }
+    }
+  },
   roleMissingRisk: {
     weight: 1,
     packages: {
@@ -3226,6 +3239,14 @@ const groups = {
         'An element with the attribute tabindex must not appear as a descendant of an element with the attribute role=link.': {
           quality: 1,
           what: 'descendant of an element with a link role has a tabindex attribute'
+        },
+        'An element with the attribute role=menu must not appear as a descendant of the a element.': {
+          quality: 1,
+          what: 'Element with a menu role is a descendant of an a element'
+        },
+        'An element with the attribute role=menu must not appear as a descendant of an element with the attribute role=button.': {
+          quality: 1,
+          what: 'Element with a menu role is a descendant of an element with a button role'
         }
       },
       testaro: {
@@ -4255,6 +4276,17 @@ const groups = {
       }
     }
   },
+  browserSupportRisk: {
+    weight: 1,
+    packages: {
+      nuVal: {
+        'The inputmode attribute is not supported in all browsers. Please be sure to test, and consider using a polyfill.': {
+          quality: 1,
+          what: 'inputmode attribute may be unsupported by some browsers'
+        }
+      }
+    }
+  },
   obsolete: {
     weight: 3,
     packages: {
@@ -4326,6 +4358,10 @@ const groups = {
         'a:longdesc': {
           quality: 1,
           what: 'longdesc attribute is obsolete'
+        },
+        'a:flash': {
+          quality: 1,
+          what: 'Flash content is present'
         }
       }
     }
@@ -4485,6 +4521,22 @@ const groups = {
         '^Text not allowed in element .+ in this context.*$': {
           quality: 1,
           what: 'Element contains text, which is not allowed here'
+        },
+        'Element source is missing required attribute srcset.': {
+          quality: 1,
+          what: 'source element has no srcset attribute'
+        },
+        '^The .+ element must not appear as a descendant of the .+ element.*$': {
+          quality: 1,
+          what: 'Element has an invalid ancestor'
+        },
+        'The first child option element of a select element with a required attribute, and without a multiple attribute, and without a size attribute whose value is greater than 1, must have either an empty value attribute, or must have no text content. Consider either adding a placeholder option label, or adding a size attribute with a value equal to the number of option elements.': {
+          quality: 1,
+          what: 'option element has a nonempty value'
+        },
+        'When the srcset attribute has any image candidate string with a width descriptor, the sizes attribute must also be present.': {
+          quality: 1,
+          what: 'element with a srcset attribute with a width has no sizes attribute'
         },
         '^java.util.concurrent.TimeoutException: Idle timeout expired: .+ ms.*$': {
           quality: 1,

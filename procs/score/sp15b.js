@@ -246,6 +246,11 @@ const groups = {
           quality: 1,
           what: 'Email input has no accessible name'
         },
+        'e:AA.4_1_2.H91.InputPhone.Name': {
+          variable: false,
+          quality: 1,
+          what: 'Telephone input has no accessible name'
+        },
         'e:AA.4_1_2.H91.InputFile.Name': {
           variable: false,
           quality: 1,
@@ -487,6 +492,11 @@ const groups = {
     packages: {
       nuVal: {
         '^CSS: background-image: .+ is not a background-image value.*$': {
+          variable: true,
+          quality: 1,
+          what: 'CSS background image is misdefined'
+        },
+        '^CSS: background-image: url.+ is an incorrect URL.*$': {
           variable: true,
           quality: 1,
           what: 'CSS background image is misdefined'
@@ -916,6 +926,11 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'Mousing-down functionality may not be available by keyboard'
+        },
+        'w:AA.2_1_1.SCR20.MouseUp': {
+          variable: false,
+          quality: 1,
+          what: 'Mousing-up functionality may not be available by keyboard'
         }
       },
       wave: {
@@ -2003,6 +2018,11 @@ const groups = {
           quality: 1,
           what: 'ul element has a role attribute that is not allowed'
         },
+        361: {
+          variable: false,
+          quality: 1,
+          what: 'Element has an abstract ARIA role'
+        },
         412: {
           variable: false,
           quality: 1,
@@ -2082,6 +2102,11 @@ const groups = {
           variable: true,
           quality: 1,
           what: 'explicit role is redundant for its element'
+        },
+        'The searchbox role is unnecessary for an input element that has no list attribute and whose type is search.': {
+          variable: false,
+          quality: 1,
+          what: 'explicit role is redundant for a search-type input element without a list attribute'
         },
         'The textbox role is unnecessary for an input element that has no list attribute and whose type is text.': {
           variable: false,
@@ -2338,6 +2363,11 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'Element has an aria-required attribute, which is not allowed'
+        },
+        278: {
+          variable: false,
+          quality: 1,
+          what: 'Element has an aria-modal attribute, which is not allowed'
         },
         281: {
           variable: false,
@@ -2839,16 +2869,30 @@ const groups = {
   titleEmpty: {
     weight: 1,
     packages: {
+      continuum: {
+        152: {
+          variable: false,
+          quality: 1,
+          what: 'title attribute is empty'
+        }
+      },
       htmlcs: {
         'w:AA.1_3_1.H65': {
           variable: false,
           quality: 0.5,
-          what: 'Value of the title attribute of the form control is empty or only whitespace'
+          what: 'title attribute of the form control is empty or only whitespace'
         },
         'w:AA.4_1_2.H65': {
           variable: false,
           quality: 0.5,
-          what: 'Value of the title attribute of the form control is empty or only whitespace'
+          what: 'title attribute of the form control is empty or only whitespace'
+        }
+      },
+      nuVal: {
+        'Element title must not be empty.': {
+          variable: false,
+          quality: 1,
+          what: 'Element has an empty title attribute'
         }
       }
     }
@@ -2900,7 +2944,12 @@ const groups = {
         'e:AA.2_4_2.H25.1.NoTitleEl': {
           variable: false,
           quality: 1,
-          what: 'Document head element contains no non-empty title element'
+          what: 'Document head element contains no title element'
+        },
+        'e:AA.2_4_2.H25.1.EmptyTitle': {
+          variable: false,
+          quality: 1,
+          what: 'Document head element contains an empty title element'
         }
       },
       ibm: {
@@ -3209,6 +3258,11 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'dl element does not contain only dt, dd, script, template, or listitem-role elements as direct child elements'
+        },
+        245: {
+          variable: false,
+          quality: 1,
+          what: 'ol element does not contain only li, script, template, or listitem-role elements as direct child elements'
         },
         246: {
           variable: false,
@@ -4434,6 +4488,13 @@ const groups = {
   labelClash: {
     weight: 2,
     packages: {
+      axe: {
+        'form-field-multiple-labels': {
+          variable: false,
+          quality: 1,
+          what: 'Form field has multiple label elements'
+        }
+      },
       testaro: {
         labClash: {
           variable: false,
@@ -5143,6 +5204,11 @@ const groups = {
           quality: 1,
           what: 'CSS pseudo-class :lang() has an invalid value'
         },
+        '^CSS: background: The .+ argument to the .+ function should be .+, not .+$': {
+          variable: true,
+          quality: 1,
+          what: 'CSS function has an invalid argument'
+        },
         '^The aria-hidden attribute must not be specified on the .+ element.*$': {
           variable: true,
           quality: 1,
@@ -5168,6 +5234,16 @@ const groups = {
           quality: 1,
           what: 'Element is invalidly a descendant of another such element'
         },
+        '^End tag for .+ seen, but there were unclosed elements.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Element is closed while an element within it is unclosed'
+        },
+        '^Unclosed element .+$': {
+          variable: true,
+          quality: 1,
+          what: 'Element is unclosed'
+        },
         '^Bad start tag in .+$': {
           variable: true,
           quality: 1,
@@ -5177,6 +5253,11 @@ const groups = {
           variable: true,
           quality: 1,
           what: 'End tag violates nesting rules'
+        },
+        '^Element .+ is missing a required instance of child element .+$': {
+          variable: true,
+          quality: 1,
+          what: 'Element is missing a required child'
         },
         '^Element .+ not allowed as child of element .+ in this context.*$': {
           variable: true,
@@ -5307,6 +5388,11 @@ const groups = {
           variable: true,
           quality: 1,
           what: 'semicolon missing in CSS'
+        },
+        'CSS: The @charset rule may only occur at the start of the style sheet. Please check that there are no spaces before it.': {
+          variable: false,
+          quality: 1,
+          what: 'CSS @charset at-rule is not at the start of its style sheet'
         },
         '^java.util.concurrent.TimeoutException: Idle timeout expired: .+ ms.*$': {
           variable: true,

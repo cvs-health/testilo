@@ -2119,6 +2119,13 @@ const groups = {
   attributeBad: {
     weight: 4,
     packages: {
+      ibm: {
+        Valerie_Elem_DirValid: {
+          variable: false,
+          quality: 1,
+          what: 'dir attribute has a value other than ltr, rtl, or auto'
+        }
+      },
       nuVal: {
         'The itemprop attribute was specified, but the element is not a property of any item.': {
           variable: false,
@@ -2135,7 +2142,7 @@ const groups = {
           quality: 1,
           what: 'attribute not allowed on this element'
         },
-        '^Bad value .+ for attribute .+ on element .+$': {
+        '^Bad value .* for attribute .+ on element .+$': {
           variable: true,
           quality: 1,
           what: 'attribute on this element has an invalid value'
@@ -2196,10 +2203,10 @@ const groups = {
         }
       },
       nuVal: {
-        'Element a is missing required attribute aria-valuenow.': {
-          variable: false,
+        '^Element .+ is missing required attribute .+$': {
+          variable: true,
           quality: 1,
-          what: 'a element has no aria-valuenow attribute'
+          what: 'Element is missing a required attribute'
         },
         '^Element image is missing required attribute (?:height|width).*$': {
           variable: true,
@@ -3872,6 +3879,11 @@ const groups = {
           quality: 1,
           what: 'Element with a menu role is a descendant of an a element'
         },
+        'An element with the attribute role=menuitem must not appear as a descendant of the a element.': {
+          variable: false,
+          quality: 1,
+          what: 'Element with a menuitem role is a descendant of an a element'
+        },
         'An element with the attribute role=menu must not appear as a descendant of an element with the attribute role=button.': {
           variable: false,
           quality: 1,
@@ -3890,6 +3902,13 @@ const groups = {
   tabFocusability: {
     weight: 4,
     packages: {
+      alfa: {
+        r95: {
+          variable: false,
+          quality: 1,
+          what: 'iframe element with a negative tabindex attribute contains an interactive element'
+        }
+      },
       ibm: {
         Rpt_Aria_MissingFocusableChild: {
           variable: false,
@@ -4074,6 +4093,13 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'More than 1 main element is located in the body element'
+        }
+      },
+      nuVal: {
+        'A document must not include more than one visible main element.': {
+          variable: false,
+          quality: 1,
+          what: 'Page includes more than 1 visible main element'
         }
       }
     }
@@ -5269,10 +5295,10 @@ const groups = {
           quality: 1,
           what: 'Comment is nested within a comment'
         },
-        'Saw < when expecting an attribute name. Probable cause: Missing > immediately before.': {
-          variable: false,
+        '^Saw .+ when expecting an attribute name. Probable cause: (?:.+ missing|Missing .+) immediately before.*$': {
+          variable: true,
           quality: 1,
-          what: '< character appears where an attribute name must appear'
+          what: 'Invalid character appears where an attribute name must appear'
         },
         'The document is not mappable to XML 1.0 due to two consecutive hyphens in a comment.': {
           variable: false,

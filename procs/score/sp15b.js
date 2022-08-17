@@ -483,7 +483,17 @@ const groups = {
           variable: true,
           quality: 1,
           what: 'CSS background color is misdefined'
-        }
+        },
+        '^CSS: background: The .+ argument to the .+ function should be .+, not .+$': {
+          variable: true,
+          quality: 1,
+          what: 'CSS background function has an invalid argument'
+        },
+        '^CSS: _background: url.+ is an incorrect URL.*$': {
+          variable: true,
+          quality: 1,
+          what: 'CSS background URL is invalid'
+        },
       }
     }
   },
@@ -639,7 +649,7 @@ const groups = {
           quality: 1,
           what: 'html start tag has no lang attribute to declare the language of the page'
         },
-        '^This document appears to be written in .+ Consider adding lang=.+ to the html start tag.*$': {
+        '^This document appears to be written in .+ Consider .+ing lang=.+$': {
           variable: true,
           quality: 1,
           what: 'html start tag has no lang attribute to declare the language of the page'
@@ -1011,7 +1021,7 @@ const groups = {
       }
     }
   },
-  controlleeBadID: {
+  governedBadID: {
     weight: 4,
     packages: {
       continuum: {
@@ -1021,11 +1031,23 @@ const groups = {
           what: 'aria-controls attribute references an invalid or duplicate ID'
         }
       },
+      ibm: {
+        combobox_popup_reference: {
+          variable: false,
+          quality: 1,
+          what: 'aria-controls or aria-owns attribute of an expanded combobox does not reference a popup'
+        }
+      },
       nuVal: {
         'The aria-controls attribute must point to an element in the same document.': {
           variable: false,
           quality: 1,
           what: 'aria-controls attribute references an element not in the document'
+        },
+        'The aria-owns attribute must point to an element in the same document.': {
+          variable: false,
+          quality: 1,
+          what: 'aria-owns attribute references an element not in the document'
         }
       }
     }
@@ -2003,6 +2025,11 @@ const groups = {
           quality: 1,
           what: 'label element has a role attribute'
         },
+        185: {
+          variable: false,
+          quality: 1,
+          what: 'noscript element has a role attribute'
+        },
         285: {
           variable: false,
           quality: 1,
@@ -2071,6 +2098,11 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'img element has a role attribute but no alt attribute'
+        },
+        'A figure element with a figcaption descendant must not have a role attribute.': {
+          variable: false,
+          quality: 1,
+          what: 'figure element has a figcaption descendant but has a role attribute'
         },
         '^The role attribute must not be used on a .+ element which has a table ancestor with no role attribute, or with a role attribute whose value is table, grid, or treegrid.*$': {
           variable: true,
@@ -2177,10 +2209,25 @@ const groups = {
           quality: 1,
           what: 'Page includes more than one autofocus attribute'
         },
+        'A link element with a sizes attribute must have a rel attribute that contains the value icon or the value apple-touch-icon or the value apple-touch-icon-precomposed.': {
+          variable: false,
+          quality: 1,
+          what: 'link element has a sizes attribute but no icon-type rel attribute'
+        },
+        'The sizes attribute may be specified only if the srcset attribute is also present.': {
+          variable: false,
+          quality: 1,
+          what: 'element has a sizes attribute but no srcset attribute'
+        },
         '^Bad value  for attribute (?:width|height) on element img: The empty string is not a valid non-negative integer.*$': {
           variable: true,
           quality: 1,
           what: 'attribute has an empty value'
+        },
+        '^.+ in an unquoted attribute value. Probable causes: Attributes running together or a URL query string in an unquoted attribute value.*$': {
+          variable: true,
+          quality: 1,
+          what: 'attribute has a value containing invalid punctuation'
         }
       }
     }
@@ -2376,6 +2423,16 @@ const groups = {
           quality: 1,
           what: 'Element has an aria-modal attribute, which is not allowed'
         },
+        279: {
+          variable: false,
+          quality: 1,
+          what: 'element has an aria-posinset attribute without having a compatible role'
+        },
+        280: {
+          variable: false,
+          quality: 1,
+          what: 'element has aria-posinset and aria-setsize attributes without having a compatible role'
+        },
         281: {
           variable: false,
           quality: 1,
@@ -2410,6 +2467,11 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'Element has an aria-setsize attribute but has no aria-posinset attribute'
+        },
+        610: {
+          variable: false,
+          quality: 1,
+          what: 'element has an aria-setsize attribute without having a compatible role'
         },
         1066: {
           variable: false,
@@ -2464,6 +2526,16 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'input element with type="checkbox" has an aria-checked attribute'
+        },
+        'An img element with no alt attribute must not have any aria-* attributes other than aria-hidden.': {
+          variable: false,
+          quality: 1,
+          what: 'img element has no alt attribute but has an ARIA attribute other than aria-hidden'
+        },
+        'An input element with a type attribute whose value is checkbox and with a role attribute whose value is button must have an aria-pressed attribute whose value is true.': {
+          variable: false,
+          quality: 1,
+          what: 'input element with a button role and type="checkbox" has no aria-pressed="true"'
         }
       }
     }
@@ -3200,6 +3272,18 @@ const groups = {
       }
     }
   },
+  pseudoCodeRisk: {
+    weight: 1,
+    packages: {
+      alfa: {
+        r79: {
+          variable: false,
+          quality: 1,
+          what: 'pre element is not used for a figure or for code, kbd, and samp elements'
+        }
+      }
+    }
+  },
   pseudoHeadingRisk: {
     weight: 1,
     packages: {
@@ -3493,6 +3577,18 @@ const groups = {
       }
     }
   },
+  legendMisplaced: {
+    weight: 4,
+    packages: {
+      continuum: {
+        738: {
+          variable: false,
+          quality: 1,
+          what: 'legend element is not the first child of its fieldset element'
+        }
+      }
+    }
+  },
   legendMissing: {
     weight: 2,
     packages: {
@@ -3541,6 +3637,13 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'Fieldset has no accessible name'
+        }
+      },
+      ibm: {
+        group_withInputs_hasName: {
+          variable: false,
+          quality: 1,
+          what: 'Groups with nested inputs has no unique accessible name'
         }
       }
     }
@@ -4849,6 +4952,18 @@ const groups = {
       }
     }
   },
+  trackNoSource: {
+    weight: 4,
+    packages: {
+      continuum: {
+        485: {
+          variable: false,
+          quality: 1,
+          what: 'track element has no src attribute set to a text value'
+        }
+      }
+    }
+  },
   audioCaptionMissing: {
     weight: 4,
     packages: {
@@ -5129,17 +5244,15 @@ const groups = {
       }
     }
   },
-  parseError: {
+  cssInvalid: {
     weight: 3,
     packages: {
-      ibm: {
-        'Rpt_Aria_InvalidTabindexForActivedescendant': {
+      nuVal: {
+        'CSS: Parse Error. Style sheets should not include HTML syntax.': {
           variable: false,
           quality: 1,
-          what: 'Element with an aria-activedescendant attribute has no nonpositive tabindex attribute'
-        }
-      },
-      nuVal: {
+          what: 'CSS style sheet includes HTML syntax'
+        },
         'CSS: font-size: One operand must be a number.': {
           variable: false,
           quality: 1,
@@ -5225,16 +5338,45 @@ const groups = {
           quality: 1,
           what: 'CSS @charset at-rule has an invalid format'
         },
-        '^CSS: .+ is not a :lang\\(\\) value.*$': {
+        '^CSS: .+ is not a :lang.+ value.*$': {
           variable: true,
           quality: 1,
           what: 'CSS pseudo-class :lang() has an invalid value'
         },
-        '^CSS: background: The .+ argument to the .+ function should be .+, not .+$': {
+        '^CSS: .+: Missing a semicolon before the .+$': {
           variable: true,
           quality: 1,
-          what: 'CSS function has an invalid argument'
+          what: 'semicolon missing in CSS'
         },
+        'CSS: The @charset rule may only occur at the start of the style sheet. Please check that there are no spaces before it.': {
+          variable: false,
+          quality: 1,
+          what: 'CSS @charset at-rule is not at the start of its style sheet'
+        },
+        '^CSS: perspective: .+ is not valid, only values greater than 0 allowed.*$': {
+          variable: true,
+          quality: 0.5,
+          what: 'CSS perspective property has a nonpositive value'
+        },
+        '^CSS: transition: .+ is not valid, only values lower than or equal to 1.0 are allowed.*$': {
+          variable: true,
+          quality: 0.5,
+          what: 'CSS transition property has a value greater than 1'
+        }
+      }
+    }
+  },
+  parseError: {
+    weight: 3,
+    packages: {
+      ibm: {
+        'Rpt_Aria_InvalidTabindexForActivedescendant': {
+          variable: false,
+          quality: 1,
+          what: 'Element with an aria-activedescendant attribute has no nonpositive tabindex attribute'
+        }
+      },
+      nuVal: {
         '^The aria-hidden attribute must not be specified on the .+ element.*$': {
           variable: true,
           quality: 1,
@@ -5410,22 +5552,29 @@ const groups = {
           quality: 1,
           what: 'script element has a charset attribute but no src attribute'
         },
-        '^CSS: .+: Missing a semicolon before the .+$': {
-          variable: true,
-          quality: 1,
-          what: 'semicolon missing in CSS'
-        },
-        'CSS: The @charset rule may only occur at the start of the style sheet. Please check that there are no spaces before it.': {
+        'The text content of element time was not in the required format: The literal did not satisfy the time-datetime format.': {
           variable: false,
           quality: 1,
-          what: 'CSS @charset at-rule is not at the start of its style sheet'
+          what: 'time element has text content that is not in the time-datetime format'
+        },
+        'A script element with a defer attribute must not have a type attribute with the value module.': {
+          variable: false,
+          quality: 1,
+          what: 'script element with a defer attribute has type="module"'
         },
         '^java.util.concurrent.TimeoutException: Idle timeout expired: .+ ms.*$': {
           variable: true,
           quality: 1,
           what: 'Idle timeout expired'
         }
-      }
+      },
+      wave: {
+        'e:longdesc_invalid': {
+          variable: false,
+          quality: 1,
+          what: 'longdesc attribute has a value that is not a URL (and is obsolete)'
+        }
+      },
     }
   },
   encodingBad: {
@@ -5448,6 +5597,18 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'Testing was interrupted by a fatal error'
+        }
+      }
+    }
+  },
+  notValidatable: {
+    weight: 1,
+    packages: {
+      nuVal: {
+        'Unsupported SVG version specified. This validator only supports SVG 1.1. The recommended way to suppress this warning is to remove the version attribute altogether.': {
+          variable: false,
+          quality: 1,
+          what: 'SVG version specified is not 1.1 and so nuVal cannot validate it'
         }
       }
     }

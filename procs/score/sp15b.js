@@ -562,8 +562,13 @@ const groups = {
         234: {
           variable: false,
           quality: 1,
-          what: 'img element has a suspicious calculated accessible name value'
+          what: 'img element has a suspicious calculated accessible name'
         },
+        235: {
+          variable: false,
+          quality: 1,
+          what: 'element with an img, graphics-symbol, or graphics-document role has a suspicious calculated accessible name'
+        }
       },
       wave: {
         'a:alt_suspicious': {
@@ -2062,6 +2067,11 @@ const groups = {
           quality: 1,
           what: 'fieldset element has a role other than group and radiogroup'
         },
+        294: {
+          variable: false,
+          quality: 1,
+          what: 'form element has a role other than search and region'
+        },
         297: {
           variable: false,
           quality: 1,
@@ -2306,6 +2316,16 @@ const groups = {
           variable: true,
           quality: 1,
           what: 'Element is missing a required attribute'
+        },
+        'A link element with a rel attribute that contains the value preload must have an as attribute.': {
+          variable: false,
+          quality: 1,
+          what: 'link element with rel="preload" is missing an as attribute'
+        },
+        'A source element that has a following sibling source element or img element with a srcset attribute must have a media attribute and/or type attribute.': {
+          variable: false,
+          quality: 1,
+          what: 'source or img element is missing a media or type attribute'
         }
       }
     }
@@ -4019,6 +4039,16 @@ const groups = {
           quality: 1,
           what: 'button element is a descendant of an element with a button role'
         },
+        'The element label must not appear as a descendant of an element with the attribute role=button.': {
+          variable: false,
+          quality: 1,
+          what: 'label element is a descendant of an element with a button role'
+        },
+        'The element select must not appear as a descendant of an element with the attribute role=button.': {
+          variable: false,
+          quality: 1,
+          what: 'select element is a descendant of an element with a button role'
+        },
         'An element with the attribute tabindex must not appear as a descendant of the a element.': {
           variable: false,
           quality: 1,
@@ -5295,6 +5325,11 @@ const groups = {
           variable: true,
           quality: 1,
           what: 'Media feature is deprecated'
+        },
+        '^Potentially bad value .+ for attribute .+ on element .+: The language subtag .+ is deprecated.+$': {
+          variable: true,
+          quality: 1,
+          what: 'Attribute value is a deprecated language subtag'
         }
       },
       wave: {
@@ -5434,6 +5469,11 @@ const groups = {
           variable: true,
           quality: 0.5,
           what: 'CSS transition property has a value greater than 1'
+        },
+        '^CSS: In CSS1, a class name could start with a digit .+, unless it was a dimension .+ In CSS2, such classes are parsed as unknown dimensions .+ To make .+ a valid class, CSS2 requires the first digit to be escaped: .+$': {
+          variable: true,
+          quality: 0.5,
+          what: 'CSS class name starts with an unescaped digit'
         }
       }
     }

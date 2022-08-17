@@ -214,6 +214,11 @@ const groups = {
           quality: 1,
           what: 'Search input element has no mechanism that allows an accessible name to be calculated'
         },
+        375: {
+          variable: false,
+          quality: 1,
+          what: 'input element with type="checkbox" has no mechanism that allows an accessible name to be calculated'
+        },
         376: {
           variable: false,
           quality: 1,
@@ -1116,6 +1121,11 @@ const groups = {
         }
       },
       nuVal: {
+        'Any input descendant of a label element with a for attribute must have an ID value that matches that for attribute.': {
+          variable: false,
+          quality: 1,
+          what: 'input id differs from the value of the for attribute of the enclosing label element'
+        },
         'The aria-labelledby attribute must point to an element in the same document.': {
           variable: false,
           quality: 1,
@@ -1559,6 +1569,18 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'Button is empty or has no value text'
+        }
+      }
+    }
+  },
+  menuItemNoText: {
+    weight: 4,
+    packages: {
+      alfa: {
+        r94: {
+          variable: false,
+          quality: 1,
+          what: 'element with a menuitem role has no accessible name'
         }
       }
     }
@@ -2035,6 +2057,16 @@ const groups = {
           quality: 1,
           what: 'button element has a role attribute that is not allowed'
         },
+        288: {
+          variable: false,
+          quality: 1,
+          what: 'fieldset element has a role other than group and radiogroup'
+        },
+        297: {
+          variable: false,
+          quality: 1,
+          what: 'iframe element has a role attribute that is not allowed'
+        },
         319: {
           variable: false,
           quality: 1,
@@ -2104,6 +2136,11 @@ const groups = {
           quality: 1,
           what: 'figure element has a figcaption descendant but has a role attribute'
         },
+        '^Discarding unrecognized token .+ from value of attribute role. Browsers ignore any token that is not a defined ARIA non-abstract role.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Invalid role'
+        },
         '^The role attribute must not be used on a .+ element which has a table ancestor with no role attribute, or with a role attribute whose value is table, grid, or treegrid.*$': {
           variable: true,
           quality: 1,
@@ -2134,6 +2171,11 @@ const groups = {
           variable: true,
           quality: 1,
           what: 'explicit role is redundant for its element'
+        },
+        '^Element .+ does not need a role attribute.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Element does not need a role attribute'
         },
         'The searchbox role is unnecessary for an input element that has no list attribute and whose type is search.': {
           variable: false,
@@ -2501,6 +2543,11 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'noscript element has an aria-hidden attribute'
+        },
+        'The aria-checked attribute should not be used on an input element which has a type attribute whose value is radio.': {
+          variable: false,
+          quality: 1,
+          what: 'input element with type="radio" has an aria-checked attribute'
         },
         'Attribute aria-activedescendant value should either refer to a descendant element, or should be accompanied by attribute aria-owns.': {
           variable: false,
@@ -3671,10 +3718,15 @@ const groups = {
     weight: 3,
     packages: {
       nuVal: {
-        '^A table row was .+ columns wide, which is .+ than the column count established by the first row \\(.+\\).*$': {
+        '^A table row was .+ columns wide, which is less than the column count established by the first row.*$': {
           variable: true,
           quality: 1,
-          what: 'Data or header cells are used for a table caption instead of a caption element'
+          what: 'Table row has a column count smaller than that of the first row'
+        },
+        '^A table row was .+ columns wide and exceeded the column count established by the first row.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Table row has a column count larger than that of the first row'
         }
       }
     }
@@ -3957,6 +4009,11 @@ const groups = {
           quality: 1,
           what: 'button element is a descendant of an a element'
         },
+        'An element with the attribute role=button must not appear as a descendant of the a element.': {
+          variable: false,
+          quality: 1,
+          what: 'Element with a button role is a descendant of an a element'
+        },
         'The element button must not appear as a descendant of an element with the attribute role=button.': {
           variable: false,
           quality: 1,
@@ -3986,6 +4043,11 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'Element with a menuitem role is a descendant of an a element'
+        },
+        'An element with the attribute role=option must not appear as a descendant of the a element.': {
+          variable: false,
+          quality: 1,
+          what: 'Element with an option role is a descendant of an a element'
         },
         'An element with the attribute role=menu must not appear as a descendant of an element with the attribute role=button.': {
           variable: false,
@@ -5160,6 +5222,11 @@ const groups = {
           quality: 1,
           what: 'center element is obsolete'
         },
+        'w:AA.1_3_1.H63.2': {
+          variable: false,
+          quality: 1,
+          what: 'scope attribute on a td element, instead of a th element, is obsolete'
+        },
         'e:AA.1_3_1.H49.Font': {
           variable: false,
           quality: 1,
@@ -5358,6 +5425,11 @@ const groups = {
           quality: 0.5,
           what: 'CSS perspective property has a nonpositive value'
         },
+        '^CSS: .+: Lexical error at line .+, column .+ Encountered: .+$': {
+          variable: true,
+          quality: 1,
+          what: 'CSS property has a value with a lexical error'
+        },
         '^CSS: transition: .+ is not valid, only values lower than or equal to 1.0 are allowed.*$': {
           variable: true,
           quality: 0.5,
@@ -5377,6 +5449,11 @@ const groups = {
         }
       },
       nuVal: {
+        'Almost standards mode doctype. Expected <!DOCTYPE html>.': {
+          variable: false,
+          quality: 1,
+          what: 'document type declaration differs from <!DOCTYPE html>'
+        },
         '^The aria-hidden attribute must not be specified on the .+ element.*$': {
           variable: true,
           quality: 1,
@@ -5562,6 +5639,11 @@ const groups = {
           quality: 1,
           what: 'script element with a defer attribute has type="module"'
         },
+        'Non-space character inside noscript inside head.': {
+          variable: false,
+          quality: 1,
+          what: 'noscript element inside the head element has a nonspace text-node child'
+        },
         '^java.util.concurrent.TimeoutException: Idle timeout expired: .+ ms.*$': {
           variable: true,
           quality: 1,
@@ -5597,6 +5679,11 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'Testing was interrupted by a fatal error'
+        },
+        'Too many messages.': {
+          variable: false,
+          quality: 1,
+          what: 'Testing was interrupted by a fatal excess of the message count'
         }
       }
     }

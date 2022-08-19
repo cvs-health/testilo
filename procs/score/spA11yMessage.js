@@ -22,28 +22,32 @@ const scoreProcID = 'a11ymessage';
 exports.scorer = async report => {
   const {acts} = report;
   report.score = {
-    scoreProcID,
+    page: 0,
+    a11yLink: 0,
+    title: 0,
+    heading: 0,
+    contactLinks: 0,
     total: 0
   };
   const {score} = report;
   if (Array.isArray(acts)) {
     // Act 1: page load.
     if (acts[1].result.startsWith('http')) {
-      score.total += 2;
+      score.page = 2;
       // Act 2: click an accessibility link.
       if (acts[2].result.move === 'clicked') {
-        score.total += 2;
+        score.a11yLink = 2;
         // Act 4: next page has an accessibility title.
         const act4Result = acts[4].result;
         if (act4Result && act4Result.toLowerCase().includes('accessibility')) {
-          score.total += 2;
+          score.title = 2;
           // Act 5: page has exactly 1 h1 heading.
           const act5Result = acts[5].result;
           if (act5Result && act5Result.total === 1) {
-            score.total += 2;
+            score.heading = 1;
             // Act 5: h1 is an accessibility heading.
             if (act5Result.items[0].textContent.toLowerCase().includes('accessibility')) {
-              score.total += 2;
+              score.heading += 1;
             }
           }
         }
@@ -58,11 +62,11 @@ exports.scorer = async report => {
           ));
           [mailLinks, telLinks].forEach(linkArray => {
             if (linkArray.length) {
-              score.total += 2;
+              score.contactLinks += 1;
               if (
                 linkArray.some(link => link.textContent.toLowerCase().includes('accessibility'))
               ) {
-                score.total += 2;
+                score.contactLinks += 2;
               }
               else if (
                 linkArray.some(
@@ -73,7 +77,7 @@ exports.scorer = async report => {
                   )
                 )
               ) {
-                score.total += 1;
+                score.contactLinks += 1;
               }
             }
           });
@@ -81,4 +85,5 @@ exports.scorer = async report => {
       }
     }
   }
+  score.total = score.page + score.a11yLink + score.title + score.heading + score.contactLinks;
 };

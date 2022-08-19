@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Testilo">
+    <meta name="creator" content="Testilo">
+    <meta name="publisher" name="Testilo">
+    <meta name="description" content="report of accessibility testing of a web page">
+    <meta name="keywords" content="accessibility a11y web testing">
+    <title>Accessibility test digest</title>
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Accessibility test digest</h1>
+        <h2>Synopsis</h2>
+        <div id="synopsis">
+          <p><strong>Page</strong>: __org__</p>
+          <p><strong>URL</strong>: __url__</p>
+          <p><strong>Score</strong>: __totalScore__</p>
+          <p><strong>Tested by</strong>: Testaro, procedure <code>tpA11yMessage</code></p>
+          <p><strong>Scored by</strong>: Testilo, procedure <code>spA11yMessage</code></p>
+          <p><strong>Digested by</strong>: Testilo, procedure <code>dpA11yMessage</code></p>
+        </div>
+      </header>
+      <h2>Introduction</h2>
+      <p>The <a href="https://www.npmjs.com/package/testaro">Testaro</a> application used its <code>tpA11yMessage</code> testing procedure to test the <a href="https://www.w3.org/WAI/fundamentals/accessibility-intro/"><dfn>accessibility</dfn></a> (barrier-free design and coding) of the __org__ web page at <a href="__url__">__url__</a> on __dateSlash__. The procedure estimated how easily a user who finds an accessibility issue on the page can find a method for reporting that issue to the owner of the page. Testaro produced a report.</p>
+      <p><a href="https://www.npmjs.com/package/testilo">Testilo</a> processed the report and used the <code>spA11yMessage</code> scoring procedure to compute a score for the page. The total score is __totalScore__ (where 0 is the worst and 12 is the best possible score). The scored report is appended below.</p>
+      <p>Finally, Testilo used procedure <code>dpA11yMessage</code> to produce this digest, briefly explaining how <code>spA11yMessage</code> computed the scores.</p>
+      <h2>Score summary</h2>
+      <table class="allBorder secondCellRight">
+        <caption>Score components</caption>
+        <tbody class="headersLeft">
+        __scoreRows__
+        </tbody>
+      </table>
+      <h2>Score components</h2>
+      __scoreComponents__
+      <h2>Discussion</h2>
+      <p>The test assumes that the user, noticing an accessibility issue on the page, will look for a link named <q>Accessibility</q>, <q>Accessibility Statement</q>, or the like. The user will click that link, which will open an accessibility page, whose title and first heading will identify it as such. On that page, the user will expect links that let the user contact the site owner to report the issue. Ideally, there will be an email link and a telephone link, both identifiable as accessibility-related. The more completely all these expectations are fulfilled, the greater the awarded score.</p>
+      <p>Here, in brief, is how <code>spA11yMessage</code> computes a score for a page.</p>
+      <p>Each score component begins as 0.</p>
+      <ul>
+        <li>The <code>page</code> score becomes 2 if the page can be loaded. If it cannot, the test ends.</li>
+        <li>The <code>a11yLink</code> score becomes 2 if there is a clickable link on the page whose text content includes <q>accessibility</q> (case-insensitively). If there is no such link, the test ends.</li>
+        <li>The <code>title</code> score becomes 2 if the link opens a page whose title includes <q>accessibility</q> (case-insensitively).</li>
+        <li>The <code>heading</code> score becomes 1 if that page has exactly 1 first-level heading.</li>
+        <li>If the <code>heading</code> score is 1, it becomes 2 if that heading has text content that includes <q>accessibility</q> (case-insensitively).</li>
+        <li>The <code>contactLinks</code> score increases by 1 if that page contains a link with an email destination (i.e. an <code>href</code> with a value starting with <code>mailto:</code>) and by 1 if the page contains a link with a telephone destination (i.e. an <code>href</code> with a value starting with <code>tel:</code>)</li>
+        <li>The <code>contactLinks</code> score increases by 2 more if one of the email links has text content that includes <q>accessibility</q> (case-insensitively), and by 2 more if one of the telephone links has such text content.</li>
+        <li>If none of the email links has text content including <q>accessibility</q> but <q>accessibility</q> appears in the text content of the parent of any of the email links, i.e. in the context of the link, the <code>contactLinks</code> score increases by 1 more. The same is true for the telephone links.</li>
+        <li>The total score is the sum of the above scores.</li>
+      </ul>
+      <p>The precise rules of <code>spA11yMessage</code> are found in the <a href="https://github.com/jrpool/testilo/blob/main/procs/score/spA11yMessage.js">code itself</a>.</p>
+      <h2>Report</h2>
+      <pre>__report__</pre>
+      <footer>
+        <p class="date">Produced <time itemprop="datePublished" datetime="__dateISO__">__dateSlash__</time></p>
+      </footer>
+    </main>
+  </body>
+</html>

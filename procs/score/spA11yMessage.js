@@ -1,5 +1,5 @@
 /*
-  a11yMessage
+  spA11yMessage
   Testilo score proc a11yMessage
 
   Computes scores from Testaro script a11yMessage and adds them to a report.

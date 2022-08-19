@@ -59,14 +59,16 @@ exports.scorer = async report => {
           [mailLinks, telLinks].forEach(linkArray => {
             if (linkArray.length) {
               score.total += 2;
-              if (linkArray.some(link => link.textContent.toLowerCase().includes('accessibility'))) {
+              if (
+                linkArray.some(link => link.textContent.toLowerCase().includes('accessibility'))
+              ) {
                 score.total += 2;
               }
               else if (
                 linkArray.some(
                   link => ['before', 'after'].some(
                     side => link.siblings[side].some(
-                      sib => sib.text.toLowerCase().includes('accessibility')
+                      sib => sib.type === 3 && sib.text.toLowerCase().includes('accessibility')
                     )
                   )
                 )

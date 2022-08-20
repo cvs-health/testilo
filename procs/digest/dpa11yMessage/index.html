@@ -27,8 +27,18 @@
         </div>
       </header>
       <h2>Introduction</h2>
-      <p>The <a href="https://www.npmjs.com/package/testaro">Testaro</a> application used its <code>tpA11yMessage</code> testing procedure to test the <a href="https://www.w3.org/WAI/fundamentals/accessibility-intro/"><dfn>accessibility</dfn></a> (barrier-free design and coding) of the __org__ web page at <a href="__url__">__url__</a> on __dateSlash__. The procedure estimated how easily a user who finds an accessibility issue on the page can find a method for reporting that issue to the owner of the page. Testaro produced a report.</p>
-      <p><a href="https://www.npmjs.com/package/testilo">Testilo</a> processed the report and used the <code>spA11yMessage</code> scoring procedure to compute a score for the page. The total score is __totalScore__ (where 0 is the worst and 12 is the best possible score). The scored report is appended below.</p>
+      <p>This is a report on transactional <a href="https://www.w3.org/WAI/fundamentals/accessibility-intro/">accessibility</a>. Suppose a person is visiting a website and wants to engage in some transaction with it. Is the transaction easy, predictable, and safe? If so, the website is <dfn>transactionally accessible</dfn>. Some disabilities make it difficult to discover how to do things on a website. Everybody, but especially any person with such a disability, benefits from transactions being designed to conform to the most common and standard conventions.</p>
+      <p>This report deals with an issue-reporting transaction. Specifically, the transaction begins when a person notices an accessibility issue on a page or view of a website or web application and wants to report that issue to whoever is responsible for the website. The simple, standard, and thus predictable transaction is assumed to look like this:</p>
+      <ol>
+        <li>The person finds an accessibility link on the page.</li>
+        <li>The person clicks that link.</li>
+        <li>That link takes the person to an accessibility page.</li>
+        <li>On the accessibility page, there is a link for sending an email message about accessibility, and there is another link for making a telephone call about accessibility.</li>
+      </ol>
+      <p>Thus, instead of the person needing to figure out how this particular website accepts issue reports, the person is assumed already to know how websites normally accept issue reports. So, instead of exploring the site to find its method, the person uses the standard method.</p>
+      <h2>Procedures</h2>
+      <p>The <a href="https://www.npmjs.com/package/testaro">Testaro</a> application used its <code>tpA11yMessage</code> testing procedure to evaluate the accessibility of this transaction on the __org__ web page at <a href="__url__">__url__</a> on __dateSlash__. Testaro produced a report.</p>
+      <p>The <a href="https://www.npmjs.com/package/testilo">Testilo</a> application processed the report and used the <code>spA11yMessage</code> scoring procedure to compute a score for the transaction. The total score is __totalScore__ (where 0 is the worst and 16 is the best possible score). The scored report is appended below.</p>
       <p>Finally, Testilo used procedure <code>dpA11yMessage</code> to produce this digest, briefly explaining how <code>spA11yMessage</code> computed the scores.</p>
       <h2>Score summary</h2>
       <table class="allBorder secondCellRight">
@@ -37,23 +47,15 @@
         __scoreRows__
         </tbody>
       </table>
-      <h2>Score components</h2>
-      __scoreComponents__
       <h2>Discussion</h2>
-      <p>The test assumes that the user, noticing an accessibility issue on the page, will look for a link named <q>Accessibility</q>, <q>Accessibility Statement</q>, or the like. The user will click that link, which will open an accessibility page, whose title and first heading will identify it as such. On that page, the user will expect links that let the user contact the site owner to report the issue. Ideally, there will be an email link and a telephone link, both identifiable as accessibility-related. The more completely all these expectations are fulfilled, the greater the awarded score.</p>
-      <p>Here, in brief, is how <code>spA11yMessage</code> computes a score for a page.</p>
-      <p>Each score component begins as 0.</p>
+      <p>The components of the total score are:</p>
       <ul>
-        <li>The <code>page</code> score becomes 2 if the page can be loaded. If it cannot, the test ends.</li>
-        <li>The <code>a11yLink</code> score becomes 2 if there is a clickable link on the page whose text content includes <q>accessibility</q> (case-insensitively). If there is no such link, the test ends.</li>
-        <li>The <code>title</code> score becomes 2 if the link opens a page whose title includes <q>accessibility</q> (case-insensitively).</li>
-        <li>The <code>heading</code> score becomes 1 if that page has exactly 1 first-level heading.</li>
-        <li>If the <code>heading</code> score is 1, it becomes 2 if that heading has text content that includes <q>accessibility</q> (case-insensitively).</li>
-        <li>The <code>mailLink</code> score increases by 1 if that page contains a link with an email destination (i.e. an <code>href</code> with a value starting with <code>mailto:</code>).</li>
-        <li>The <code>mailLink</code> score increases by 2 more if one of the email links has text content that includes <q>accessibility</q> (case-insensitively).</li>
-        <li>If none of the email links has text content including <q>accessibility</q> but <q>accessibility</q> appears in the text content of the parent of any of the email links, the <code>mailLink</code> score increases by 1 more.</li>
-        <li>The same computations as for the <code>mailLink</code> score are performed on links with telephone destinations (i.e. an <code>href</code> with a value starting with <code>tel:</code>), to determine the <code>telLink</code> score.</li>
-        <li>The total score is the sum of the above scores.</li>
+        <li><code>page</code>: Can the page be visited?</li>
+        <li><code>a11yLink</code>: Does the page have a functioning <q>accessibility</q> link?</li>
+        <li><code>title</code>: Is the page to which the link goes titled to show it is about accessibility?</li>
+        <li><code>heading</code>: Does that page (the accessibility page) have a top heading indicating the page is about accessibility?</li>
+        <li><code>mailLink</code>: Does the accessibility page have a link to send email about accessibility?.</li>
+        <li><code>telLink</code>: Does the accessibility page have a link to make a telephone call about accessibility?</li>
       </ul>
       <p>The precise rules of <code>spA11yMessage</code> are found in the <a href="https://github.com/jrpool/testilo/blob/main/procs/score/spA11yMessage.js">code itself</a>.</p>
       <h2>Report</h2>

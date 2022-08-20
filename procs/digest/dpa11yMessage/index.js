@@ -45,68 +45,11 @@ exports.makeQuery = (report, query) => {
       return;
     }
   }
-  const {groupDetails, summary} = score;
-  const {total, groups} = summary;
-  if (typeof total === 'number') {
-    query.totalScore = total;
-  }
-  else {
-    console.log('ERROR: missing or invalid total score');
-    return;
-  }
-  // Add the total to the query.
-  const scoreRows = [getScoreRow('total', summary(['total']))];
-  // Add the group rows of the score-summary table to the query.
-  groups.forEach(group => {
-    scoreRows.push(getScoreRow(`${group.groupName}`, group.score));
+  // Add the score data to the query.
+  const scoreRows = [];
+  Object.keys(score).forEach(scoreName => {
+    scoreRows.push(getScoreRow(scoreName, score[scoreName]));
   });
+  query.totalScore = score.total;
   query.scoreRows = scoreRows.join(innerJoiner);
-  // If the score has any special components:
-  const scoredSpecialIDs = specialComponentIDs.filter(item => summary[item]);
-  if (scoredSpecialIDs.length) {
-    // Add paragraphs about them for the issue summary to the query.
-    const specialPs = [];
-    scoredSpecialIDs.forEach(id => {
-      specialPs.push(`${getSpecialPStart(summary, id)} ${specialMessages[id]}`);
-    });
-    query.specialSummary = specialPs.join(joiner);
-  }
-  // Otherwise, i.e. if the score has no special components:
-  else {
-    // Add a paragraph stating this for the issue summary to the query.
-    query.specialSummary = '<p>No special issues contributed to the score.</p>'
-  }
-  // If the score has any classified issues as components:
-  if (groups.length) {
-    // Add paragraphs about them for the special summary to the query.
-    const groupSummaryItems = [];
-    groups.forEach(group => {
-      const {groupName, score} = group;
-      const groupP = `<p><span class="componentID">${groupName}</span>: Score ${score}. Issues reported by tests in this category:</p>`;
-      const groupListItems = [];
-      const groupData = groupDetails.groups[groupName];
-      const packageIDs = Object.keys(groupData);
-      packageIDs.forEach(packageID => {
-        const testIDs = Object.keys(groupData[packageID]);
-        testIDs.forEach(testID => {
-          const testData = groupData[packageID][testID];
-          const {score, what} = testData;
-          const listItem = `<li>Package <code>${packageID}</code>, test <code>${testID}</code>, score ${score} (${what})</li>`;
-          groupListItems.push(listItem);
-        });
-      });
-      const groupList = [
-        '<ul>',
-        groupListItems.join('\n  '),
-        '</ul>'
-      ].join(joiner);
-      groupSummaryItems.push(groupP, groupList);
-    });
-    query.groupSummary = groupSummaryItems.join(joiner);
-  }
-  // Otherwise, i.e. if the score has no classified issues as components:
-  else {
-    // Add a paragraph stating this for the group summary to the query.
-    query.groupSummary = '<p>No classified issues contributed to the score.</p>'
-  }
 };

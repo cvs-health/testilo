@@ -8,7 +8,8 @@
     node score a11yMessage
 
   This proc computes a score that is intended to represent how accessibly a web page offers
-    a user an opportunity to report an accessibility issue about that page.
+    a user an opportunity to report an accessibility issue about that page. Scores can range
+    from 0 to 14.
 */
 
 // CONSTANTS
@@ -45,8 +46,8 @@ exports.scorer = async report => {
     a11yLink: 0,
     title: 0,
     heading: 0,
-    mailLinks: 0,
-    telLinks: 0,
+    mailLink: 0,
+    telLink: 0,
     total: 0
   };
   const {score} = report;
@@ -74,12 +75,12 @@ exports.scorer = async report => {
         // Act 6: page has accessibility email and telephone links.
         const act6Result = acts[6].result;
         if (act6Result.total) {
-          contactScorer(act6Result, score, 'mailLinks');
+          contactScorer(act6Result, score, 'mailLink');
         }
         // Act 7: page has accessibility email and telephone links.
         const act7Result = acts[7].result;
         if (act7Result.total) {
-          contactScorer(act7Result, score, 'telLinks');
+          contactScorer(act7Result, score, 'telLink');
         }
       }
     }
@@ -88,6 +89,6 @@ exports.scorer = async report => {
   + score.a11yLink
   + score.title
   + score.heading
-  + score.mailLinks
-  + score.telLinks;
+  + score.mailLink
+  + score.telLink;
 };

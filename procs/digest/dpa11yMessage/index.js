@@ -1,8 +1,8 @@
 /*
-  index: digester for scoring procedure sp14a.
+  index: digester for scoring procedure spA11yMessage.
   Creator of parameters for substitution into index.html.
-  Usage example for selected files in REPORTDIR_SCORED: node digest dp14a 35k1r
-  Usage example for all files in REPORTDIR_SCORED: node digest dp14a
+  Usage example for selected files in REPORTDIR_SCORED: node digest dpA11yMessage 35k1r
+  Usage example for all files in REPORTDIR_SCORED: node digest dpA11yMessage
 */
 
 // CONSTANTS
@@ -10,11 +10,6 @@
   // Newlines with indentations.
   const joiner = '\n      ';
   const innerJoiner = '\n        ';
-  const specialMessages = {
-    log: 'This is based on the amount of browser error logging and miscellaneous logging during the tests.',
-    preventions: 'This is based on tests that the page did not allow to be run. That impedes accessibility progress and risks interfering with tools that users with disabilities need.',
-    solos: 'This is based on issues reported by unclassified tests. Details are in the report.'
-  };
 
 // FUNCTIONS
 
@@ -25,9 +20,6 @@ const htmlEscape = textOrNumber => textOrNumber
 .replace(/</g, '&lt;');
 // Gets a row of the score-summary table.
 const getScoreRow = (component, score) => `<tr><th>${component}</th><td>${score}</td></tr>`;
-// Gets the start of a paragraph about a special score.
-const getSpecialPStart = (summary, scoreID) =>
-`<p><span class="componentID">${scoreID}</span>: Score ${summary[scoreID]}.`;
 // Adds parameters to a query for a digest.
 exports.makeQuery = (report, query) => {
   // Add an HTML-safe copy of the host report to the query to be appended to the digest.
@@ -62,14 +54,8 @@ exports.makeQuery = (report, query) => {
     console.log('ERROR: missing or invalid total score');
     return;
   }
-  // Add the total and any special rows of the score-summary table to the query.
-  const scoreRows = [];
-  const specialComponentIDs = ['log', 'preventions', 'solos'];
-  ['total'].concat(specialComponentIDs).forEach(item => {
-    if (summary[item]) {
-      scoreRows.push(getScoreRow(item, summary[item]));
-    }
-  });
+  // Add the total to the query.
+  const scoreRows = [getScoreRow('total', summary(['total']))];
   // Add the group rows of the score-summary table to the query.
   groups.forEach(group => {
     scoreRows.push(getScoreRow(`${group.groupName}`, group.score));

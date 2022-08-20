@@ -49,9 +49,10 @@
         <li>The <code>title</code> score becomes 2 if the link opens a page whose title includes <q>accessibility</q> (case-insensitively).</li>
         <li>The <code>heading</code> score becomes 1 if that page has exactly 1 first-level heading.</li>
         <li>If the <code>heading</code> score is 1, it becomes 2 if that heading has text content that includes <q>accessibility</q> (case-insensitively).</li>
-        <li>The <code>contactLinks</code> score increases by 1 if that page contains a link with an email destination (i.e. an <code>href</code> with a value starting with <code>mailto:</code>) and by 1 if the page contains a link with a telephone destination (i.e. an <code>href</code> with a value starting with <code>tel:</code>)</li>
-        <li>The <code>contactLinks</code> score increases by 2 more if one of the email links has text content that includes <q>accessibility</q> (case-insensitively), and by 2 more if one of the telephone links has such text content.</li>
-        <li>If none of the email links has text content including <q>accessibility</q> but <q>accessibility</q> appears in the text content of the parent of any of the email links, i.e. in the context of the link, the <code>contactLinks</code> score increases by 1 more. The same is true for the telephone links.</li>
+        <li>The <code>mailLink</code> score increases by 1 if that page contains a link with an email destination (i.e. an <code>href</code> with a value starting with <code>mailto:</code>).</li>
+        <li>The <code>mailLink</code> score increases by 2 more if one of the email links has text content that includes <q>accessibility</q> (case-insensitively).</li>
+        <li>If none of the email links has text content including <q>accessibility</q> but <q>accessibility</q> appears in the text content of the parent of any of the email links, the <code>mailLink</code> score increases by 1 more.</li>
+        <li>The same computations as for the <code>mailLink</code> score are performed on links with telephone destinations (i.e. an <code>href</code> with a value starting with <code>tel:</code>), to determine the <code>telLink</code> score.</li>
         <li>The total score is the sum of the above scores.</li>
       </ul>
       <p>The precise rules of <code>spA11yMessage</code> are found in the <a href="https://github.com/jrpool/testilo/blob/main/procs/score/spA11yMessage.js">code itself</a>.</p>

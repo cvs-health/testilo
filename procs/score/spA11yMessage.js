@@ -18,6 +18,25 @@ const scoreProcID = 'a11ymessage';
 
 // FUNCTIONS
 
+// Scores the contact links of a type.
+const contactScorer = (result, score, type) => {
+  const links = result.items;
+  score[type] += 1;
+  if (
+    links.some(
+      link => link.textContent.toLowerCase().includes('accessibility')
+    )
+  ) {
+    score[type] += 2;
+  }
+  else if (
+    links.some(
+      link => link.parentTextContent.toLowerCase().includes('accessibility')
+    )
+  ) {
+    score[type] += 1;
+  }
+};
 // Scores a report.
 exports.scorer = async report => {
   const {acts} = report;
@@ -26,7 +45,8 @@ exports.scorer = async report => {
     a11yLink: 0,
     title: 0,
     heading: 0,
-    contactLinks: 0,
+    mailLinks: 0,
+    telLinks: 0,
     total: 0
   };
   const {score} = report;
@@ -54,36 +74,20 @@ exports.scorer = async report => {
         // Act 6: page has accessibility email and telephone links.
         const act6Result = acts[6].result;
         if (act6Result.total) {
-          const mailLinks = act6Result.items.filter(item => item.attributes.some(
-            attribute => attribute.name === 'href' && attribute.value.startsWith('mailto:')
-          ));
-          const telLinks = act6Result.items.filter(item => item.attributes.some(
-            attribute => attribute.name === 'href' && attribute.value.startsWith('tel:')
-          ));
-          [mailLinks, telLinks].forEach(linkArray => {
-            if (linkArray.length) {
-              score.contactLinks += 1;
-              if (
-                linkArray.some(link => link.textContent.toLowerCase().includes('accessibility'))
-              ) {
-                score.contactLinks += 2;
-              }
-              else if (
-                linkArray.some(
-                  link => ['before', 'after'].some(
-                    side => link.siblings[side].some(
-                      sib => sib.type === 3 && sib.text.toLowerCase().includes('accessibility')
-                    )
-                  )
-                )
-              ) {
-                score.contactLinks += 1;
-              }
-            }
-          });
+          contactScorer(act6Result, score, 'mailLinks');
+        }
+        // Act 7: page has accessibility email and telephone links.
+        const act7Result = acts[7].result;
+        if (act7Result.total) {
+          contactScorer(act7Result, score, 'telLinks');
         }
       }
     }
   }
-  score.total = score.page + score.a11yLink + score.title + score.heading + score.contactLinks;
+  score.total = score.page
+  + score.a11yLink
+  + score.title
+  + score.heading
+  + score.mailLinks
+  + score.telLinks;
 };

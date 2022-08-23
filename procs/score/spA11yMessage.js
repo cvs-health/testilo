@@ -21,6 +21,7 @@ const scoreProcID = 'a11ymessage';
 
 // Scores the contact links of a type.
 const contactScorer = (result, score, linkProp, linkNameProp) => {
+  // If any of the links is named for accessibility:
   const links = result.items;
   if (links.some(
     link => link.textContent.toLowerCase().includes('accessibility')
@@ -28,6 +29,7 @@ const contactScorer = (result, score, linkProp, linkNameProp) => {
     score[linkProp] = 2
     score[linkNameProp] = 1;
   }
+  // Otherwise, if the link context refers to accessibility:
   else if (links.some(
     link => link.parentTextContent.toLowerCase().includes('accessibility')
   )) {
@@ -55,46 +57,57 @@ exports.scorer = async report => {
   };
   const {score} = report;
   if (Array.isArray(acts)) {
-    // Act 1: page load.
+    // Act 1: If the page loaded:
     if (acts[1].result.startsWith('http')) {
       score.pageLoad = 2;
-      if (acts[1].endTime - acts[1].startTime < 2500) {
+      // If it loaded moderately fast:
+      const loadTime = acts[1].endTime - acts[1].startTime;
+      if (loadTime < 6000) {
         score.pageFast = 1;
       }
-      // Act 2: accessibility link.
+      // If it loaded fast:
+      if (loadTime < 4000) {
+        score.pageFast = 2;
+      }
+      // Act 2: If the page has an accessibility link:
       const {result} = acts[2];
-      // If a link with text content including accessibility was found:
       if (result.found) {
         score.a11yLink = 1;
-        // If it was clickable and the resulting load finished:
+        // If it works:
         if (result.success) {
           score.a11yLinkWork = 2;
-          // If the navigation and load took less than 1.5 seconds:
-          if (acts[2].endTime - acts[2].startTime < 1500) {
+          // If the resulting page loads fast:
+          const loadTime = acts[2].endTime - acts[2].startTime;
+          if (loadTime < 5000) {
             score.a11yLinkFast = 1;
           }
-          // Act 3: next page has an accessibility title.
+          if (loadTime < 3000) {
+            score.a11yLinkFast = 2;
+          }
+          // Act 3: If the resulting page has a title:
           let {result} = acts[3];
           if (result && result.success) {
             score.a11yPageTitle = 1;
+            // If it is an accessibility title:
             if (result.title.toLowerCase().includes('accessibility')) {
               score.a11yTitleGood = 2;
             }
           }
-          // Act 4: page has an accessibility heading.
+          // Act 4: If the resulting page has a top heading:
           result = acts[4].result;
           if (result && result.total === 1) {
             score.a11yPageH1 = 1;
+            // If it is an accessibility heading:
             if (result.items[0].textContent.toLowerCase().includes('accessibility')) {
               score.a11yH1Good = 2;
             }
           }
-          // Act 5: page has an accessibility email link.
+          // Act 5: If the resulting page has an accessibility email link:
           result = acts[5].result;
           if (result.total) {
             contactScorer(result, score, 'mailLink', 'mailLinkName');
           }
-          // Act 6: page has accessibility telephone link.
+          // Act 6: If the resulting page has accessibility telephone link:
           result = acts[6].result;
           if (result.total) {
             contactScorer(result, score, 'telLink', 'telLinkName');

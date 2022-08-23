@@ -108,14 +108,14 @@ exports.makeQuery = (report, query) => {
           suggestions.push(
             [
               'mailLinkName',
-              'Include accessibility in the name of an email link on the accessibility page'
+              'Include accessibility in the name of an email link on the accessibility page.'
             ]
           );
         }
         if (score.telLink === 0) {
           suggestions.push(['telLink', 'Add a telephone (tel:) link to the accessibility page.']);
         }
-        else if (score.mailLinkName === 1) {
+        else if (score.telLinkName === 1) {
           suggestions.push(
             [
               'telLinkName',
@@ -127,11 +127,14 @@ exports.makeQuery = (report, query) => {
           suggestions.push(
             [
               'telLinkName',
-              'Include accessibility in the name of a telephone link on the accessibility page'
+              'Include accessibility in the name of a telephone link on the accessibility page.'
             ]
           );
         }
       }
     }
   }
+  query.suggestions = suggestions
+  .map(pair => `<li><code>${pair[0]}</code>: ${pair[1]}</li>`)
+  .join(innerJoiner);
 };

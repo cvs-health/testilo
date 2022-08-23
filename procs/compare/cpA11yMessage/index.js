@@ -46,7 +46,7 @@ const getMaxScore = tableData => tableData.reduce((max, item) => Math.max(max, i
 const getTableBody = async bodyData => {
   const maxScore = getMaxScore(bodyData);
   const rows = bodyData
-  .sort((a, b) => a.score - b.score)
+  .sort((a, b) => b.score - a.score)
   .map(item => {
     const {id, org, url, score} = item;
     const pageCell = `<th scope="row"><a href="${url}">${org}</a></th>`;

@@ -67,8 +67,11 @@ exports.scorer = async report => {
           }
           // Act 3: next page has an accessibility title.
           let {result} = acts[3];
-          if (result && result.toLowerCase().includes('accessibility')) {
-            score.title -= 3;
+          if (result && result.success) {
+            score.title -= 1;
+            if (result.title.toLowerCase().includes('accessibility')) {
+              score.title -= 2;
+            }
           }
           // Act 4: page has 1 h1 heading, and it is about accessibility.
           result = acts[4].result;

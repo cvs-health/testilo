@@ -10,6 +10,21 @@
   // Newlines with indentations.
   const joiner = '\n      ';
   const innerJoiner = '\n        ';
+  const suggestionData = {
+    pageLoad: [2, 'Make it possible to visit the page.'],
+    pageFast: [2, 'Make the page load fast.'],
+    a11yLink: [1, 'Add a link named Accessibility to the page.'],
+    a11yLinkWork: [2, 'Make the accessibility link open a new page'],
+    a11yLinkFast: [2, 'Make the page opened by the accessibility link load fast'],
+    a11yPageTitle: [1, '',
+    a11yTitleGood: 0,
+    a11yPageH1: 0,
+    a11yH1Good: 0,
+    mailLink: 0,
+    mailLinkName: 0,
+    telLink: 0,
+    telLinkName: 0
+  };
 
 // FUNCTIONS
 
@@ -52,4 +67,86 @@ exports.makeQuery = (report, query) => {
   });
   query.totalScore = score.total;
   query.scoreRows = scoreRows.join(innerJoiner);
+  // Add suggestions to the query.
+  const suggestions = [];
+  if (score.pageLoad === 0) {
+    suggestions.push(['pageLoad', 'Make it possible to visit the page.']);
+  }
+  else {
+    if (score.pageFast < 2) {
+      suggestions.push(['pageFast', 'Make the page load faster.']);
+    }
+    if (score.a11yLink === 0) {
+      suggestions.push(['a11yLink', 'Add a link named Accessibility to the page.']);
+    }
+    else {
+      if (score.a11yLinkWork === 0) {
+        suggestions.push(['a11yLinkWork', 'Make the Accessibility link open a new page.']);
+      }
+      else {
+        if (score.a11yLinkFast < 2) {
+          suggestions.push(
+            ['a11yLinkFast', 'Make the page opened by the Accessibility link load faster.']
+          );
+        }
+        if (score.a11yPageTitle === 0) {
+          suggestions.push(['a11yPageTitle', 'Give the accessibility page a title.']);
+        }
+        else if (score.a11yTitleGood === 0) {
+          suggestions.push(
+            ['a11yTitleGood', 'Include accessibility in the title of the accessibility page.']
+          )
+        }
+        if (score.a11yPageH1 === 0) {
+          suggestions.push(['a11yPageH1', 'Give the accessibility page a single h1 heading.']);
+        }
+        else if (score.a11yH1Good === 0) {
+          suggestions.push(
+            [
+              'a11yH1Good',
+              'Include accessibility in the text of the h1 heading of the accessibility page.'
+            ]
+          );
+        }
+        if (score.mailLink === 0) {
+          suggestions.push(['mailLink', 'Add an email (mailto:) link to the accessibility page.']);
+        }
+        else if (score.mailLinkName === 1) {
+          suggestions.push(
+            [
+              'mailLinkName',
+              'Include accessibility not only around, but within, an email link on the accessibility page.'
+            ]
+          );
+        }
+        else if (score.mailLinkName === 0) {
+          suggestions.push(
+            [
+              'mailLinkName',
+              'Include accessibility in the name of an email link on the accessibility page'
+            ]
+          );
+        }
+        if (score.telLink === 0) {
+          suggestions.push(['telLink', 'Add a telephone (tel:) link to the accessibility page.']);
+        }
+        else if (score.mailLinkName === 1) {
+          suggestions.push(
+            [
+              'telLinkName',
+              'Include accessibility not only around, but within, a telephone link on the accessibility page.'
+            ]
+          );
+        }
+        else if (score.telLinkName === 0) {
+          suggestions.push(
+            [
+              'telLinkName',
+              'Include accessibility in the name of a telephone link on the accessibility page'
+            ]
+          );
+        }
+      }
+    }
+  }
 };

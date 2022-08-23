@@ -21,19 +21,19 @@ const scoreProcID = 'a11ymessage';
 
 // Scores the contact links of a type.
 const contactScorer = (result, score, linkProp, linkNameProp) => {
+  score[linkProp] = 2;
   // If any of the links is named for accessibility:
   const links = result.items;
   if (links.some(
     link => link.textContent.toLowerCase().includes('accessibility')
   )) {
-    score[linkProp] = 2
-    score[linkNameProp] = 1;
+    score[linkNameProp] = 2;
   }
   // Otherwise, if the link context refers to accessibility:
   else if (links.some(
     link => link.parentTextContent.toLowerCase().includes('accessibility')
   )) {
-    score[linkProp] = 2;
+    score[linkNameProp] = 1;
   }
 };
 // Scores a report.

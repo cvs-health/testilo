@@ -9,7 +9,7 @@
 
   This proc computes a score that is intended to represent how accessibly a web page offers
     a user an opportunity to report an accessibility issue about that page. Scores can range
-    from 0 to 16.
+    from perfect 0 to 16.
 */
 
 // CONSTANTS
@@ -22,69 +22,72 @@ const scoreProcID = 'a11ymessage';
 // Scores the contact links of a type.
 const contactScorer = (result, score, type) => {
   const links = result.items;
-  score[type] += 1;
-  if (
-    links.some(
-      link => link.textContent.toLowerCase().includes('accessibility')
-    )
-  ) {
-    score[type] += 2;
+  if (links.some(
+    link => link.textContent.toLowerCase().includes('accessibility')
+  )) {
+    score[type] -= 3;
   }
-  else if (
-    links.some(
-      link => link.parentTextContent.toLowerCase().includes('accessibility')
-    )
-  ) {
-    score[type] += 1;
+  else if (links.some(
+    link => link.parentTextContent.toLowerCase().includes('accessibility')
+  )) {
+    score[type] -= 2;
   }
 };
 // Scores a report.
 exports.scorer = async report => {
   const {acts} = report;
+  report.scoreProcID = scoreProcID;
   report.score = {
-    page: 0,
-    a11yLink: 0,
-    title: 0,
-    heading: 0,
-    mailLink: 0,
-    telLink: 0,
-    total: 0
+    page: 3,
+    a11yLink: 4,
+    title: 3,
+    heading: 3,
+    mailLink: 3,
+    telLink: 3
   };
   const {score} = report;
   if (Array.isArray(acts)) {
     // Act 1: page loads.
     if (acts[1].result.startsWith('http')) {
-      score.page = 2;
+      score.page -= 2;
+      if (acts[1].endTime - acts[1].startTime < 2500) {
+        score.page -= 1;
+      }
       // Act 2: accessibility link exists and loads promptly.
-      if (acts[2].result.move === 'clicked') {
-        score.a11yLink = 2;
-        const loadScore = ['incomplete', 'loaded', 'idle'].indexOf(acts[2].result.loadState);
-        if (loadScore > -1) {
-          score.a11yLink += loadScore;
-        }
-        // Act 3: next page has an accessibility title.
-        const act3Result = acts[3].result;
-        if (act3Result && act3Result.toLowerCase().includes('accessibility')) {
-          score.title = 2;
-          // Act 4: page has exactly 1 h1 heading.
-          const act4Result = acts[4].result;
-          if (act4Result && act4Result.total === 1) {
-            score.heading = 1;
-            // Act 4: h1 is an accessibility heading.
-            if (act4Result.items[0].textContent.toLowerCase().includes('accessibility')) {
-              score.heading += 1;
+      const {result} = acts[2];
+        // If a link with text content including accessibility was found:
+        if (result.found) {
+        score.a11yLink -= 2;
+        // If it was clickable and the resulting load finished:
+        if (result.success) {
+          score.a11yLink -= 1;
+          // If the navigation and load took less than 1.5 seconds:
+          if (acts[2].endTime - acts[2].startTime < 1500) {
+            score.a11yLink -= 1;
+          }
+          // Act 3: next page has an accessibility title.
+          let {result} = acts[3];
+          if (result && result.toLowerCase().includes('accessibility')) {
+            score.title -= 3;
+          }
+          // Act 4: page has 1 h1 heading, and it is about accessibility.
+          result = acts[4].result;
+          if (result && result.total === 1) {
+            score.heading -= 1;
+            if (result.items[0].textContent.toLowerCase().includes('accessibility')) {
+              score.heading -= 2;
             }
           }
-        }
-        // Act 5: page has accessibility email and telephone links.
-        const act5Result = acts[5].result;
-        if (act5Result.total) {
-          contactScorer(act5Result, score, 'mailLink');
-        }
-        // Act 6: page has accessibility email and telephone links.
-        const act6Result = acts[6].result;
-        if (act6Result.total) {
-          contactScorer(act6Result, score, 'telLink');
+          // Act 5: page has an accessibility email link.
+          result = acts[5].result;
+          if (result.total) {
+            contactScorer(result, score, 'mailLink');
+          }
+          // Act 6: page has accessibility telephone link.
+          result = acts[6].result;
+          if (result.total) {
+            contactScorer(result, score, 'telLink');
+          }
         }
       }
     }

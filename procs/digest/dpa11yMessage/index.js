@@ -10,21 +10,6 @@
   // Newlines with indentations.
   const joiner = '\n      ';
   const innerJoiner = '\n        ';
-  const suggestionData = {
-    pageLoad: [2, 'Make it possible to visit the page.'],
-    pageFast: [2, 'Make the page load fast.'],
-    a11yLink: [1, 'Add a link named Accessibility to the page.'],
-    a11yLinkWork: [2, 'Make the accessibility link open a new page'],
-    a11yLinkFast: [2, 'Make the page opened by the accessibility link load fast'],
-    a11yPageTitle: [1, '',
-    a11yTitleGood: 0,
-    a11yPageH1: 0,
-    a11yH1Good: 0,
-    mailLink: 0,
-    mailLinkName: 0,
-    telLink: 0,
-    telLinkName: 0
-  };
 
 // FUNCTIONS
 

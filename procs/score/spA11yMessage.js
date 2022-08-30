@@ -4,12 +4,12 @@
 
   Computes scores from Testaro script a11yMessage and adds them to a report.
   Usage examples:
-    node score a11yMessage 35k1r
-    node score a11yMessage
+    node score spA11yMessage 35k1r
+    node score spA11yMessage
 
   This proc computes a score that is intended to represent how accessibly a web page offers
     a user an opportunity to report an accessibility issue about that page. Scores can range
-    from perfect 0 to 16.
+    from perfect 0 to 23.
 */
 
 // CONSTANTS

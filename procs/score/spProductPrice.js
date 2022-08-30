@@ -20,7 +20,16 @@ const scoreProcID = 'productprice';
 // FUNCTIONS
 
 // Returns whether a text contains a U.S. price.
-const hasPrice = text => /\$ ?\d*(?:,\d{3})?(?:\.\d{2})?(?: *USD)?/.test(text);
+const hasPrice = (text, isAll) => {
+  const matcher = '\\$ ?\\d*(?:,\\d{3})?(?:\\.\\d{2})?(?: *USD)?';
+  const trimText = text.trim();
+  if (isAll) {
+    return new RegExp(`^${matcher}$`).test(trimText);
+  }
+  else {
+    return new RegExp(matcher).test(trimText);
+  }
+};
 // Scores a report.
 exports.scorer = async report => {
   const {acts} = report;
@@ -88,31 +97,47 @@ exports.scorer = async report => {
               }
               // Act 4: If a price appears in the text content of an ancestor:
               const priceInContext = result.items.some(
-                item => item.ancestors.some(ancestor => ancestor.text && hasPrice(ancestor.text))
+                item => item.ancestors.some(
+                  ancestor => ancestor.text && hasPrice(ancestor.text, false)
+                )
               );
               if (priceInContext) {
                 score.price = 1;
                 // Act 4: Proximity and semantic specification of a price.
                 let priceDistance = Infinity;
+                // For each text node containing the product name:
                 result.items.forEach(item => {
+                  // Get the distance to the nearest ancestor with a price in its text content.
                   const itemPriceDistance = item.ancestors.findIndex(
-                    ancestor => ancestor.text && hasPrice(ancestor.text)
+                    ancestor => ancestor.text && hasPrice(ancestor.text, false)
                   );
+                  // If that distance is less than the smallest one found yet:
                   if (itemPriceDistance > -1 && itemPriceDistance < priceDistance) {
+                    // Update the smallest one found.
                     priceDistance = itemPriceDistance;
-                    if (
-                      ancestor.attributes
-                      && ancestor.attributes.some(
-                        attribute => attribute.name === 'itemprop' && attribute.value === 'price'
-                      )
-                    ) {
-                      score.priceProp = 3;
+                    // Seek a descendant of the ancestor with a price as its only text.
+                    const priceWalker = document.createTreeWalker(ancestor, NodeFilter.SHOW_ELEMENT);
+                    let more = true;
+                    while (more) {
+                      const currentNode = priceWalker.nextNode();
+                      if (currentNode) {
+                        // If one is found:
+                        if (hasPrice(currentNode.text, true)) {
+                          // If it semantically marks the price as such:
+                          if (currentNode.attributes.some(
+                            attribute => attribute.name === 'itemprop' && attribute.value === 'price'
+                          )) {
+                            // Add a score and stop seeking a price.
+                            score.priceProp = 3;
+                            more = false;
+                          }
+                        }
+                      }
                     }
                   }
+                  // Update the price-proximity score.
+                  score.priceProximity = Math.max(0, 6 - priceDistance);
                 });
-                if (priceDistance < Infinity) {
-                  score.priceProximity = 6 - priceDistance;
-                }
               }
             }
           }

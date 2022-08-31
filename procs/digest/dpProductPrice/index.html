@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Testilo">
+    <meta name="creator" content="Testilo">
+    <meta name="publisher" name="Testilo">
+    <meta name="description" content="report of accessibility testing of a web page">
+    <meta name="keywords" content="accessibility a11y web testing">
+    <title>Accessibility test digest</title>
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Accessibility test digest</h1>
+        <h2>Synopsis</h2>
+        <div id="synopsis">
+          <p><strong>Page</strong>: __org__</p>
+          <p><strong>URL</strong>: __url__</p>
+          <p><strong>Score</strong>: __totalScore__</p>
+          <p><strong>Tested by</strong>: Testaro, procedure <code>tpProductPrice</code></p>
+          <p><strong>Scored by</strong>: Testilo, procedure <code>spProductPrice</code></p>
+          <p><strong>Digested by</strong>: Testilo, procedure <code>dpProductPrice</code></p>
+        </div>
+      </header>
+      <h2>Introduction</h2>
+      <p>This is a report on transactional <a href="https://www.w3.org/WAI/fundamentals/accessibility-intro/">accessibility</a>. Suppose a person is visiting a website and wants to engage in some transaction with it. Is the transaction easy, predictable, and safe? If so, the website is <dfn>transactionally accessible</dfn>. To achieve transactional accessibility, websites can design transactions that conform to the most common and standard conventions. Then users will correctly guess what to do at each step. Users with some disabilities will especially benefit from being able to use existing knowledge and tools, without the need to discover how to do things on a website.</p>
+      <p>This transaction involves finding the price of a product. The transaction begins when a person opens the home page of a vendor of the product. The user wants to find the price at which the vendor offers the product. The test assumes that there is a standard transaction structure in such a situation:</p>
+      <ol>
+        <li>The user finds a search input on the page.</li>
+        <li>The user enters a quoted query identifying the product into that input.</li>
+        <li>The user presses the Enter key to submit the query.</li>
+        <li>That submission takes the user to a product page.</li>
+        <li>On the product page, there is a description of the product offering, containing both the full name of the product and the price at which the vendor offers the product.</li>
+        <li>The elements containing the product name and price are coded with the <code>itemprop</code> attributes (<code>itemprop="name"</code> and <code>itemprop="price"</code>, respectively) specified by the <a href="https://schema.org/price">Schema.org standard for the price property</a>.</li>
+        <li>As of this version of <code>spProductPrice</code>, the <code>itemprop="priceCurrency"</code> attribute is not considered; Schema.org recommends using <code>USD</code> rather than <code>$</code> as the currency identifier for the United States dollar in association with that <code>itemprop</code> value.</li>
+      </ol>
+      <p>Thus, instead of the user needing to figure out how this particular website discloses product prices, the user is assumed already to know how websites normally do that. Instead of exploring the site to find its method, the person uses the standard method.</p>
+      <h2>Procedures</h2>
+      <p>The <a href="https://www.npmjs.com/package/testaro">Testaro</a> application used its <code>tpProductPrice</code> testing procedure to evaluate the accessibility of this transaction on the __org__ web page at <a href="__url__">__url__</a> on __dateSlash__. Testaro produced a report.</p>
+      <p>The <a href="https://www.npmjs.com/package/testilo">Testilo</a> application processed the report and used the <code>spProductPrice</code> scoring procedure to compute a score for the transaction. The total score is __totalScore__ (where 0 is the worst and 24 is the best possible score). The scored report is appended below.</p>
+      <p>Finally, Testilo used procedure <code>dpProductPrice</code> to produce this digest, briefly explaining how <code>spA11yMessage</code> computed the scores.</p>
+      <h2>Score summary</h2>
+      <table class="allBorder secondCellRight">
+        <caption>Score components</caption>
+        <tbody class="headersLeft">
+        __scoreRows__
+        </tbody>
+      </table>
+      <h2>Explanation</h2>
+      <p>The components of the total score are:</p>
+      <ul>
+        <li><code>pageLoad</code>: 2 points if it was possible to visit the page</li>
+        <li><code>pageFast</code>: 2 points if the page loaded within 4 seconds, or 1 point if it loaded within 6 seconds</li>
+        <li><code>searchInput</code>: 1 point if the page contained a search input</li>
+        <li><code>searchType</code>: 2 points if the search input consisted of an <code>input</code> element with a <code>type="search"</code> attribute rather than an <code>aria-label</code> or <code>placeholder</code> attribute with a value containing <code>search</code>.</li>
+        <li><code>searchWork</code>: 2 points if it was possible to submit the search query by pressing the Enter key</li>
+        <li><code>searchFast</code>: 3 points if the product page is loaded within 3 seconds, 2 points if within 5 seconds, or 1 point if within 7 seconds</li>
+        <li><code>nameInPage</code>: 2 points if the product name is on the product page</li>
+        <li><code>nameInNode</code>: 2 points if the product name is the entire value of a text node on the product page</li>
+        <li><code>nameProp</code>: 3 points if the element containing that text node has an <code>itemprop="name"</code> attribute</li>
+        <li><code>price</code>: 1 point if a price appears in the text content of the new page contained any email (<code>mailto:</code>) link</li>
+        <li><code>priceProximity</code>: 1 to 4 points if a price is the entire value of a text node sharing an ancestor with the product-name text node and the element containing the price text node has an <code>itemprop="price"</code>; 4 if the name and price elements have a common parent, and 1 less for each increment of ancestral distance.</li>
+      </ul>
+      <p>The precise rules of <code>spProductPrice</code> are found in the <a href="https://github.com/jrpool/testilo/blob/main/procs/score/spProductPrice.js">code itself</a>.</p>
+      <h2>Suggestions</h2>
+      <ul>
+        __suggestions__
+      </ul>
+      <h2>Report</h2>
+      <pre>__report__</pre>
+      <footer>
+        <p class="date">Produced <time itemprop="datePublished" datetime="__dateISO__">__dateSlash__</time></p>
+      </footer>
+    </main>
+  </body>
+</html>

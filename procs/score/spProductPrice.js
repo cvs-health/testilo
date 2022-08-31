@@ -61,6 +61,7 @@ exports.scorer = async report => {
     pageLoad: 0,
     pageFast: 0,
     searchInput: 0,
+    searchType: 0,
     searchWork: 0,
     searchFast: 0,
     nameInPage: 0,
@@ -87,6 +88,10 @@ exports.scorer = async report => {
       const {result} = acts[2];
       if (result.found) {
         score.searchInput = 1;
+        // If it is a search-type input:
+        if (result.attributes && result.attributes.type === 'search') {
+          score.searchType = 2;
+        }
         // If it works:
         if (result.success) {
           score.searchWork = 2;

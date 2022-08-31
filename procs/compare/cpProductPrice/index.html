@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Testilo">
+    <meta name="creator" content="Testilo">
+    <meta name="publisher" name="Testilo">
+    <meta name="description" content="comparison of accessibility scores">
+    <meta name="keywords" content="accessibility a11y web testing">
+    <title>Accessibility score comparison</title>
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Transactional accessibility comparison</h1>
+      </header>
+      <h2>Introduction</h2>
+      <p>This report compares __pageCount__ web pages, rating each page on <dfn>transactional accessibility</dfn>. The score given to each page estimates the <a href="https://www.w3.org/WAI/fundamentals/accessibility-intro/">accessibility</a> of one particular transaction. In it, the user finds the price at which a product is offered for sale on the website to which the page belongs.</p>
+      <p>You can find a more detailed explanation of transactional accessibility and how the accessibility of this particular transaction is scored in each of the digests that this report is derived from. The scores in the table below are links to those digests.</p>
+      <p>This comparative report was produced by the <code>cpProductPrice</code> procedure of <a href="https://www.npmjs.com/package/testilo">Testilo</a>.</p>
+      <p>The scores in the table below could range from 0 (complete failure) up to 26 (complete success).</p>
+      <h2>Comparison</h2>
+      <table class="allBorder">
+        <caption>Accessibility scores of product-price-inquiry transactions</caption>
+        <thead>
+          <tr><th scope="col">Page</th><th scope="col" colspan="2">Score (higher is better)</tr>
+        </thead>
+        <tbody class="linkSmaller secondCellRight">
+          __tableBody__
+        </tbody>
+      </table>
+      <footer>
+        <p class="date">Produced <time itemprop="datePublished" datetime="__dateISO__">__dateSlash__</time></p>
+      </footer>
+    </main>
+  </body>
+</html>

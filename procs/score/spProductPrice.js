@@ -31,7 +31,7 @@ const hasPrice = (text, isAll) => {
   }
 };
 // Recursively inspects a subtree for semantic marking.
-const findPriceProp = root => {
+const findPriceProp = (root, score) => {
   // If no semantically marked price has been found yet:
   if (! score.priceProp) {
     // If the text of the root is exactly a price:
@@ -139,7 +139,7 @@ exports.scorer = async report => {
                     // Update the smallest one found.
                     priceDistance = itemPriceDistance;
                     // Inspect its subtree for a semantically marked price.
-                    findPriceProp(item);
+                    findPriceProp(item, score);
                   }
                   // Update the price-proximity score.
                   score.priceProximity = Math.max(0, 6 - priceDistance);

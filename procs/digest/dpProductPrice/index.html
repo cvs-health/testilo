@@ -36,8 +36,8 @@
         <li>That submission takes the user to a product page.</li>
         <li>On the product page, there is a description of the product offering, containing both the full name of the product and the price at which the vendor offers the product.</li>
         <li>The elements containing the product name and price are coded with the <code>itemprop</code> attributes (<code>itemprop="name"</code> and <code>itemprop="price"</code>, respectively) specified by the <a href="https://schema.org/price">Schema.org standard for the price property</a>.</li>
-        <li>As of this version of <code>spProductPrice</code>, the <code>itemprop="priceCurrency"</code> attribute is not considered; Schema.org recommends using <code>USD</code> rather than <code>$</code> as the currency identifier for the United States dollar in association with that <code>itemprop</code> value.</li>
       </ol>
+      <p>As of this version of <code>spProductPrice</code>, the <code>itemprop="priceCurrency"</code> attribute is not considered; Schema.org recommends using <code>USD</code> rather than <code>$</code> as the currency identifier for the United States dollar in association with that <code>itemprop</code> value.</p>
       <p>Thus, instead of the user needing to figure out how this particular website discloses product prices, the user is assumed already to know how websites normally do that. Instead of exploring the site to find its method, the person uses the standard method.</p>
       <h2>Procedures</h2>
       <p>The <a href="https://www.npmjs.com/package/testaro">Testaro</a> application used its <code>tpProductPrice</code> testing procedure to evaluate the accessibility of this transaction on the __org__ web page at <a href="__url__">__url__</a> on __dateSlash__. Testaro produced a report.</p>
@@ -58,12 +58,12 @@
         <li><code>searchInput</code>: 1 point if the page contained a search input</li>
         <li><code>searchType</code>: 2 points if the search input consisted of an <code>input</code> element with a <code>type="search"</code> attribute rather than an <code>aria-label</code> or <code>placeholder</code> attribute with a value containing <code>search</code>.</li>
         <li><code>searchWork</code>: 2 points if it was possible to submit the search query by pressing the Enter key</li>
-        <li><code>searchFast</code>: 3 points if the product page is loaded within 3 seconds, 2 points if within 5 seconds, or 1 point if within 7 seconds</li>
-        <li><code>nameInPage</code>: 2 points if the product name is on the product page</li>
-        <li><code>nameInNode</code>: 2 points if the product name is the entire value of a text node on the product page</li>
-        <li><code>nameProp</code>: 3 points if the element containing that text node has an <code>itemprop="name"</code> attribute</li>
-        <li><code>price</code>: 1 point if a price appears in the text content of the new page contained any email (<code>mailto:</code>) link</li>
-        <li><code>priceProximity</code>: 1 to 4 points if a price is the entire value of a text node sharing an ancestor with the product-name text node and the element containing the price text node has an <code>itemprop="price"</code>; 4 if the name and price elements have a common parent, and 1 less for each increment of ancestral distance.</li>
+        <li><code>searchFast</code>: 3 points if the product page loaded within 3 seconds, 2 points if within 5 seconds, or 1 point if within 7 seconds</li>
+        <li><code>nameInPage</code>: 2 points if the product name was on the product page</li>
+        <li><code>nameInNode</code>: 2 points if the product name was the value of a text node on the product page</li>
+        <li><code>nameProp</code>: 3 points if the element containing that text node had an <code>itemprop="name"</code> attribute</li>
+        <li><code>price</code>: 1 point if a price appeared in the text content of the product page</li>
+        <li><code>priceProximity</code>: 4 points if the parent element of the product-name element has a price in its text content and has a descendant element with an <code>itemprop="price"</code> attribute, or 3 if this is true for a grandparent element, or 2 if true for a great-grandparent element, or 1 if true for a great-great-grandparent element.</li>
       </ul>
       <p>The precise rules of <code>spProductPrice</code> are found in the <a href="https://github.com/jrpool/testilo/blob/main/procs/score/spProductPrice.js">code itself</a>.</p>
       <h2>Suggestions</h2>

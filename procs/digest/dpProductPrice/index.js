@@ -61,75 +61,47 @@ exports.makeQuery = (report, query) => {
     if (score.pageFast < 2) {
       suggestions.push(['pageFast', 'Make the page load faster.']);
     }
-    if (score.a11yLink === 0) {
-      suggestions.push(['a11yLink', 'Add a link named Accessibility to the page.']);
+    if (score.searchInput === 0) {
+      suggestions.push(['searchInput', 'Add a search input to the page.']);
     }
     else {
-      if (score.a11yLinkWork === 0) {
-        suggestions.push(['a11yLinkWork', 'Make the Accessibility link open a new page.']);
+      if (score.searchType === 0) {
+        suggestions.push(['searchType', 'Give the search input the attribute <code>type="search"</code>.']);
+      }
+      if (score.searchWork === 0) {
+        suggestions.push(
+          ['searchWork', 'Make it possible to submit a search query by pressing the Enter key.']
+        );
       }
       else {
-        if (score.a11yLinkFast < 2) {
-          suggestions.push(
-            ['a11yLinkFast', 'Make the page opened by the Accessibility link load faster.']
-          );
+        if (score.searchFast === 0) {
+          suggestions.push(['searchFast', 'Make search queries produce results faster.']);
         }
-        if (score.a11yPageTitle === 0) {
-          suggestions.push(['a11yPageTitle', 'Give the accessibility page a title.']);
+        if (score.nameInPage === 0) {
+          suggestions.push([
+            'nameInPage',
+            'Make the page after a product search contain the full name of the product.'
+          ])
         }
-        else if (score.a11yTitleGood === 0) {
-          suggestions.push(
-            ['a11yTitleGood', 'Include accessibility in the title of the accessibility page.']
-          )
+        else if (score.nameInNode === 0) {
+          suggestions.push([
+            'nameInNode',
+            'Make the text content of an element on the product page be exactly the full name of the product.'
+          ]);
         }
-        if (score.a11yPageH1 === 0) {
-          suggestions.push(['a11yPageH1', 'Give the accessibility page a single h1 heading.']);
-        }
-        else if (score.a11yH1Good === 0) {
+        else if (score.nameProp === 0) {
           suggestions.push(
             [
-              'a11yH1Good',
-              'Include accessibility in the text of the h1 heading of the accessibility page.'
+              'nameProp',
+              'Give the product-name element the attribute <code>itemprop="name"</code>.'
             ]
           );
         }
-        if (score.mailLink === 0) {
-          suggestions.push(['mailLink', 'Add an email (mailto:) link to the accessibility page.']);
+        if (score.price === 0) {
+          suggestions.push(['price', 'Place a price onto the product page.']);
         }
-        else if (score.mailLinkName === 1) {
-          suggestions.push(
-            [
-              'mailLinkName',
-              'Include accessibility not only around, but within, an email link on the accessibility page.'
-            ]
-          );
-        }
-        else if (score.mailLinkName === 0) {
-          suggestions.push(
-            [
-              'mailLinkName',
-              'Include accessibility in the name of an email link on the accessibility page.'
-            ]
-          );
-        }
-        if (score.telLink === 0) {
-          suggestions.push(['telLink', 'Add a telephone (tel:) link to the accessibility page.']);
-        }
-        else if (score.telLinkName === 1) {
-          suggestions.push(
-            [
-              'telLinkName',
-              'Include accessibility not only around, but within, a telephone link on the accessibility page.'
-            ]
-          );
-        }
-        else if (score.telLinkName === 0) {
-          suggestions.push(
-            [
-              'telLinkName',
-              'Include accessibility in the name of a telephone link on the accessibility page.'
-            ]
-          );
+        else if (score.priceProximity < 4) {
+          suggestions.push(['priceProximity', 'Make the price element share a parent with the product-name element and give the price element the attribute <code>itemprop="price"</code>.']);
         }
       }
     }

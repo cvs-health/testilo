@@ -30,6 +30,29 @@ const hasPrice = (text, isAll) => {
     return new RegExp(matcher).test(trimText);
   }
 };
+// Recursively inspects a subtree for semantic marking.
+const findPriceProp = root => {
+  // If no semantically marked price has been found yet:
+  if (! score.priceProp) {
+    // If the text of the root is exactly a price:
+    if (hasPrice(root.text, true)) {
+      // If it semantically marks the price as such:
+      if (root.attributes.some(
+        attribute => attribute.name === 'itemprop' && attribute.value === 'price'
+      )) {
+        // Add a score and stop looking.
+        score.priceProp = 3;
+      }
+      // Otherwise, i.e. if it does not semantically mark the price:
+      else {
+        // Inspect the children of the root.
+        root.children.forEach(child => {
+          findPriceProp(child);
+        });
+      }
+    }
+  }
+};
 // Scores a report.
 exports.scorer = async report => {
   const {acts} = report;
@@ -73,14 +96,14 @@ exports.scorer = async report => {
             score.searchFast = 3;
           }
           else if (loadTime < 5000) {
-            score.a11yLinkFast = 2;
+            score.searchFast = 2;
           }
           else if (loadTime < 7000) {
-            score.a11yLinkFast = 1;
+            score.searchFast = 1;
           }
           // Act 3: If the product is named on the result page:
           let {result} = acts[3];
-          if (result && result.success) {
+          if (result && result.found) {
             score.nameInPage = 2;
             // Act 4: If the product is named by any text node:
             result = acts[4].result;
@@ -115,25 +138,8 @@ exports.scorer = async report => {
                   if (itemPriceDistance > -1 && itemPriceDistance < priceDistance) {
                     // Update the smallest one found.
                     priceDistance = itemPriceDistance;
-                    // Seek a descendant of the ancestor with a price as its only text.
-                    const priceWalker = document.createTreeWalker(ancestor, NodeFilter.SHOW_ELEMENT);
-                    let more = true;
-                    while (more) {
-                      const currentNode = priceWalker.nextNode();
-                      if (currentNode) {
-                        // If one is found:
-                        if (hasPrice(currentNode.text, true)) {
-                          // If it semantically marks the price as such:
-                          if (currentNode.attributes.some(
-                            attribute => attribute.name === 'itemprop' && attribute.value === 'price'
-                          )) {
-                            // Add a score and stop seeking a price.
-                            score.priceProp = 3;
-                            more = false;
-                          }
-                        }
-                      }
-                    }
+                    // Inspect its subtree for a semantically marked price.
+                    findPriceProp(item);
                   }
                   // Update the price-proximity score.
                   score.priceProximity = Math.max(0, 6 - priceDistance);

@@ -6160,19 +6160,21 @@ exports.scorer = async report => {
       // For each package with any scores:
       Object.keys(packageDetails).forEach(packageName => {
         const matchers = testMatchers[packageName];
-        let testClass = '';
         // For each test with any scores in the package:
-        Object.keys(packageDetails[packageName]).forEach(testID => {
+        Object.keys(packageDetails[packageName]).forEach(testMessage => {
+          // Initialize the test ID as the reported test message.
+          let testID = testMessage;
           // Get the group of the test, if it has a fixed name and is in a group.
-          let groupName = testGroups[packageName][testID];
-          // If it has a variable name or is a solo test:
+          let groupName = testGroups[packageName][testMessage];
+          // If the test has a variable name or is a solo test:
           if (! groupName) {
             // Determine whether the package has variably named tests and the test is among them.
-            testRegExp = matchers && matchers.find(matcher => matcher.test(testID));
+            testRegExp = matchers && matchers.find(matcher => matcher.test(testMessage));
             // If so:
             if (testRegExp) {
-              // Get the group of the test.
+              // Make the matching regular expression the test ID.
               testID = testRegExp.source;
+              // Get the group of the test.
               groupName = testGroups[packageName][testID];
             }
           }
@@ -6185,8 +6187,8 @@ exports.scorer = async report => {
             if (! groupDetails.groups[groupName][packageName]) {
               groupDetails.groups[groupName][packageName] = {};
             }
-            let weightedScore = packageDetails[packageName][testID];
-            // Divide that by 4 and multiply the quotient by the group weight.
+            let weightedScore = packageDetails[packageName][testMessage];
+            // Weight that by the group weight and normalize it to a 1–4 scale per instance.
             weightedScore *= groups[groupName].weight / 4;
             // Adjust the score for the quality of the test.
             weightedScore *= groups[groupName].packages[packageName][testID].quality;

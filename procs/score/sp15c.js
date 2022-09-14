@@ -5305,7 +5305,7 @@ const groups = {
         '^The .+ attribute on the .+ element is obsolete.+$': {
           variable: true,
           quality: 1,
-          what: 'attribute is obsolete on its element'
+          what: 'Attribute is obsolete on its element'
         },
         'The only allowed value for the charset attribute for the script element is utf-8. (But the attribute is not needed and should be omitted altogether.)': {
           variable: false,
@@ -5315,7 +5315,7 @@ const groups = {
         'Using the meta element to specify the document-wide default language is obsolete. Consider specifying the language on the root element instead.': {
           variable: false,
           quality: 1,
-          what: 'language declaration in a meta element is obsolete'
+          what: 'Language declaration in a meta element is obsolete'
         },
         'The name attribute is obsolete. Consider putting an id attribute on the nearest container instead.': {
           variable: false,

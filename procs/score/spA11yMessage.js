@@ -2,7 +2,7 @@
   spA11yMessage
   Testilo score proc a11yMessage
 
-  Computes scores from Testaro script a11yMessage and adds them to a report.
+  Computes scores from Testaro script tpA11yMessage and adds them to a report.
   Usage examples:
     node score spA11yMessage 35k1r
     node score spA11yMessage

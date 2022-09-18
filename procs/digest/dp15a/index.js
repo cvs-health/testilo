@@ -1,8 +1,8 @@
 /*
-  index: digester for scoring procedure sp14a.
+  index: digester for scoring procedure sp15c.
   Creator of parameters for substitution into index.html.
-  Usage example for selected files in REPORTDIR_SCORED: node digest dp14a 35k1r
-  Usage example for all files in REPORTDIR_SCORED: node digest dp14a
+  Usage example for selected files in REPORTDIR_SCORED: node digest dp15a 35k1r
+  Usage example for all files in REPORTDIR_SCORED: node digest dp15a
 */
 
 // CONSTANTS

@@ -6029,6 +6029,13 @@ exports.scorer = async report => {
           // Add 1 per element with conflicting labels (ignoring unlabeled elements).
           addDetail('testaro', which, mislabeledCount);
         }
+        else if (which === 'linkTo') {
+          const count = test.result && test.result.total;
+          if (count) {
+            // Add 2 per link with no destination.
+            addDetail('testaro', which, count);
+          }
+        }
         else if (which === 'linkUl') {
           const totals = test.result && test.result.totals && test.result.totals.adjacent;
           if (totals) {

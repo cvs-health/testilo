@@ -6054,6 +6054,14 @@ exports.scorer = async report => {
           // Add 2 per defect.
           addDetail('testaro', which, 2 * issueCount);
         }
+        else if (which === 'miniText') {
+          const items = test.result && test.result.items;
+          if (items.length) {
+            // Add 1 per 100 characters of small-text.
+            const totalLength = items.reduce((total, item) => total + item.length, 0);
+            addDetail('testaro', which, Math.floor(totalLength / 100));
+          }
+        }
         else if (which === 'motion') {
           const data = test.result;
           if (data) {

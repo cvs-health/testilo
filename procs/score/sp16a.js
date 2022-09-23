@@ -6083,6 +6083,13 @@ exports.scorer = async report => {
             addDetail('testaro', which, score);
           }
         }
+        else if (which === 'nonTable') {
+          const total = test.result && test.result.total;
+          if (total) {
+            // Add 2 per pseudotable.
+            addDetail('testaro', which, 2 * total);
+          }
+        }
         else if (which === 'radioSet') {
           const totals = test.result && test.result.totals;
           if (totals) {

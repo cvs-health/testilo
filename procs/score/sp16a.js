@@ -1817,8 +1817,8 @@ const groups = {
       }
     }
   },
-  noLeading: {
-    weight: 3,
+  leadingInsufficient: {
+    weight: 2,
     packages: {
       alfa: {
         r73: {
@@ -1864,7 +1864,7 @@ const groups = {
         }
       },
       testaro: {
-        titleEl: {
+        titledEl: {
           variable: false,
           quality: 1,
           what: 'title attribute belongs to an inappropriate element'
@@ -6132,6 +6132,14 @@ exports.scorer = async report => {
           || 0;
           // Add 2 per defect.
           addDetail('testaro', which, 2 * issueCount);
+        }
+        else if (which === 'titledEl') {
+          const total = test.result && test.result.total;
+          if (total) {
+            const score = 4 * total;
+            // Add 4 per mistitled element.
+            addDetail('testaro', which, score);
+          }
         }
         else if (which === 'zIndex') {
           const issueCount = test.result && test.result.totals && test.result.totals.total || 0;

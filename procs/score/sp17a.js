@@ -1,11 +1,11 @@
 /*
-  sp16a
-  Testilo score proc 16a
+  sp17a
+  Testilo score proc 17a
 
-  Computes scores from Testaro script tp16 and adds them to a report.
+  Computes scores from Testaro script tp17 and adds them to a report.
   Usage examples:
-    node score sp16a 35k1r
-    node score sp16a
+    node score sp17a 35k1r
+    node score sp17a
 
   This proc applies specified weights to the component scores before summing them. An issue reported
   by a test is given a score. That score is determined by:
@@ -34,7 +34,7 @@
 // CONSTANTS
 
 // ID of this proc.
-const scoreProcID = 'sp16a';
+const scoreProcID = 'sp17a';
 // Configuration disclosures.
 const logWeights = {
   logCount: 0.5,
@@ -5837,62 +5837,6 @@ exports.scorer = async report => {
             });
           }
         }
-        else if (which === 'continuum') {
-          const issues = test.result;
-          if (issues && Array.isArray(issues)) {
-            issues.forEach(issue => {
-              // Add 4 per violation.
-              addDetail(which, issue.engineTestId, 4);
-            });
-          }
-        }
-        else if (which === 'htmlcs') {
-          const issues = test.result;
-          if (issues) {
-            ['Error', 'Warning'].forEach(issueSeverityName => {
-              const severityData = issues[issueSeverityName];
-              if (severityData) {
-                const issueTypes = Object.keys(severityData);
-                issueTypes.forEach(issueTypeName => {
-                  const issueArrays = Object.values(severityData[issueTypeName]);
-                  const issueCount = issueArrays.reduce((count, array) => count + array.length, 0);
-                  const severityCode = issueSeverityName[0].toLowerCase();
-                  const code = `${severityCode}:${issueTypeName}`;
-                  // Add 4 per error, 1 per warning.
-                  const weight = severityCode === 'e' ? 4 : 1;
-                  addDetail(which, code, weight * issueCount);
-                });
-              }
-            });
-          }
-        }
-        else if (which === 'ibm') {
-          const {result} = test;
-          const {content, url} = result;
-          if (content && url) {
-            let preferredMode = 'content';
-            if (
-              content.error ||
-              (content.totals &&
-                content.totals.violation &&
-                url.totals &&
-                url.totals.violation &&
-                url.totals.violation > content.totals.violation)
-            ) {
-              preferredMode = 'url';
-            }
-            const {items} = result[preferredMode];
-            if (items && Array.isArray(items)) {
-              items.forEach(issue => {
-                const {ruleId, level} = issue;
-                if (ruleId && level) {
-                  // Add 4 per violation, 1 per warning (recommendation).
-                  addDetail(which, ruleId, level === 'violation' ? 4 : 1);
-                }
-              });
-            }
-          }
-        }
         else if (which === 'nuVal') {
           const issues = test.result && test.result.messages;
           if (issues) {
@@ -5901,68 +5845,6 @@ exports.scorer = async report => {
               const weight = issue.type === 'error' ? 4 : 1;
               addDetail(which, issue.message, weight);
             });
-          }
-        }
-        else if (which === 'tenon') {
-          const issues =
-            test.result && test.result.data && test.result.data.resultSet;
-          if (issues && Array.isArray(issues)) {
-            issues.forEach(issue => {
-              const {tID, priority, certainty} = issue;
-              if (tID && priority && certainty) {
-                // Add 4 per issue if certainty and priority 100, less if less.
-                addDetail(which, tID, certainty * priority / 2500);
-              }
-            });
-          }
-        }
-        else if (which === 'wave') {
-          const severityScores = {
-            error: 4,
-            contrast: 3,
-            alert: 1
-          };
-          const issueSeverities = test.result && test.result.categories;
-          if (issueSeverities) {
-            ['error', 'contrast', 'alert'].forEach(issueSeverity => {
-              const {items} = issueSeverities[issueSeverity];
-              if (items) {
-                const testIDs = Object.keys(items);
-                if (testIDs.length) {
-                  testIDs.forEach(testID => {
-                    const {count} = items[testID];
-                    if (count) {
-                      // Add 4 per error, 3 per contrast error, 1 per warning (alert).
-                      addDetail(
-                        which, `${issueSeverity[0]}:${testID}`, count * severityScores[issueSeverity]
-                      );
-                    }
-                  });
-                }
-              }
-            });
-          }
-        }
-        else if (which === 'bulk') {
-          const count = test.result && test.result.visibleElements;
-          if (typeof count === 'number') {
-            // Add 1 per 300 visible elements beyond 300.
-            addDetail('testaro', which, Math.max(0, count / 300 - 1));
-          }
-        }
-        else if (which === 'embAc') {
-          const issueCounts = test.result && test.result.totals;
-          if (issueCounts) {
-            const counts = Object.values(issueCounts);
-            const total = counts.reduce((sum, current) => sum + current);
-            // Add 3 per embedded element.
-            addDetail('testaro', which, 3 * total);
-          }
-        }
-        else if (which === 'focAll') {
-          const discrepancy = test.result && test.result.discrepancy;
-          if (discrepancy) {
-            addDetail('testaro', which, 2 * Math.abs(discrepancy));
           }
         }
         else if (which === 'focInd') {
@@ -5979,46 +5861,6 @@ exports.scorer = async report => {
             addDetail('testaro', which, badCount + 3 * missingCount);
           }
         }
-        else if (which === 'focOp') {
-          const issueTypes =
-            test.result && test.result.totals && test.result.totals.types;
-          if (issueTypes) {
-            const noOpCount = issueTypes.onlyFocusable && issueTypes.onlyFocusable.total || 0;
-            const noFocCount = issueTypes.onlyOperable && issueTypes.onlyOperable.total || 0;
-            // Add 2 per unfocusable, 0.5 per inoperable element.
-            addDetail('testaro', which, 2 * noFocCount + 0.5 * noOpCount);
-          }
-        }
-        else if (which === 'focVis') {
-          const count = test.result && test.result.total;
-          if (count) {
-            // Add 1 per link outside the viewport.
-            addDetail('testaro', which, count);
-          }
-        }
-        else if (which === 'hover') {
-          const issues = test.result && test.result.totals;
-          if (issues) {
-            const {
-              impactTriggers,
-              additions,
-              removals,
-              opacityChanges,
-              opacityImpact,
-              unhoverables
-            } = issues;
-            // Add score with weights on hover-impact types.
-            const score = 2 * impactTriggers
-            + 0.3 * additions
-            + removals
-            + 0.2 * opacityChanges
-            + 0.1 * opacityImpact
-            + unhoverables;
-            if (score) {
-              addDetail('testaro', which, score);
-            }
-          }
-        }
         else if (which === 'labClash') {
           const mislabeledCount = test.result
           && test.result.totals
@@ -6026,13 +5868,6 @@ exports.scorer = async report => {
           || 0;
           // Add 1 per element with conflicting labels (ignoring unlabeled elements).
           addDetail('testaro', which, mislabeledCount);
-        }
-        else if (which === 'linkTo') {
-          const count = test.result && test.result.total;
-          if (count) {
-            // Add 2 per link with no destination.
-            addDetail('testaro', which, count);
-          }
         }
         else if (which === 'linkUl') {
           const totals = test.result && test.result.totals && test.result.totals.adjacent;
@@ -6060,27 +5895,6 @@ exports.scorer = async report => {
             addDetail('testaro', which, Math.floor(totalLength / 100));
           }
         }
-        else if (which === 'motion') {
-          const data = test.result;
-          if (data) {
-            const {
-              meanLocalRatio,
-              maxLocalRatio,
-              globalRatio,
-              meanPixelChange,
-              maxPixelChange,
-              changeFrequency
-            } = data;
-            const score = 2 * (meanLocalRatio - 1)
-            + (maxLocalRatio - 1)
-            + globalRatio - 1
-            + meanPixelChange / 10000
-            + maxPixelChange / 25000
-            + 3 * changeFrequency
-            || 0;
-            addDetail('testaro', which, score);
-          }
-        }
         else if (which === 'nonTable') {
           const total = test.result && test.result.total;
           if (total) {
@@ -6088,38 +5902,11 @@ exports.scorer = async report => {
             addDetail('testaro', which, 2 * total);
           }
         }
-        else if (which === 'radioSet') {
-          const totals = test.result && test.result.totals;
-          if (totals) {
-            const {total, inSet} = totals;
-            const score = total - inSet || 0;
-            // Add 1 per misgrouped radio button.
-            addDetail('testaro', which, score);
-          }
-        }
         else if (which === 'role') {
           const badCount = test.result && test.result.badRoleElements || 0;
           const redundantCount = test.result && test.result.redundantRoleElements || 0;
           // Add 2 per bad role and 1 per redundant role.
           addDetail('testaro', which, 2 * badCount + redundantCount);
-        }
-        else if (which === 'styleDiff') {
-          const totals = test.result && test.result.totals;
-          if (totals) {
-            let score = 0;
-            // For each element type that has any style diversity:
-            Object.values(totals).forEach(typeData => {
-              const {total, subtotals} = typeData;
-              if (subtotals) {
-                const styleCount = subtotals.length;
-                const plurality = subtotals[0];
-                const minorities = total - plurality;
-                // Add 1 per style, 0.2 per element with any nonplurality style.
-                score += styleCount + 0.2 * minorities;
-              }
-            });
-            addDetail('testaro', which, score);
-          }
         }
         else if (which === 'tabNav') {
           const issueCount = test.result
@@ -6138,11 +5925,6 @@ exports.scorer = async report => {
             // Add 4 per mistitled element.
             addDetail('testaro', which, score);
           }
-        }
-        else if (which === 'zIndex') {
-          const issueCount = test.result && test.result.totals && test.result.totals.total || 0;
-          // Add 1 per non-auto zIndex.
-          addDetail('testaro', which, issueCount);
         }
       });
       // Get the prevention scores and add them to the summary.
@@ -6167,12 +5949,7 @@ exports.scorer = async report => {
         testaro: {},
         alfa: {},
         axe: {},
-        continuum: {},
-        htmlcs: {},
-        ibm: {},
-        nuVal: {},
-        tenon: {},
-        wave: {}
+        nuVal: {}
       };
       // Initialize a table of the regular expressions of variably named tests of packages.
       const testMatchers = {};

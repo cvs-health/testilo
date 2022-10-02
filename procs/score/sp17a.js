@@ -5949,7 +5949,12 @@ exports.scorer = async report => {
         testaro: {},
         alfa: {},
         axe: {},
-        nuVal: {}
+        nuVal: {},
+        continuum: {},
+        htmlcs: {},
+        ibm: {},
+        tenon: {},
+        wave: {}
       };
       // Initialize a table of the regular expressions of variably named tests of packages.
       const testMatchers = {};

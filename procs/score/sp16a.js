@@ -81,7 +81,7 @@ const groups = {
     }
   },
   duplicateID: {
-    weight: 3,
+    weight: 4,
     packages: {
       alfa: {
         r3: {
@@ -3043,7 +3043,7 @@ const groups = {
     }
   },
   docType: {
-    weight: 3,
+    weight: 10,
     packages: {
       nuVal: {
         'Start tag seen without seeing a doctype first. Expected <!DOCTYPE html>.': {
@@ -3056,13 +3056,13 @@ const groups = {
         docType: {
           variable: false,
           quality: 1,
-          what: 'document has no doctype property'
+          what: 'document has no valid doctype property'
         }
       }
     }
   },
   pageTitle: {
-    weight: 3,
+    weight: 10,
     packages: {
       alfa: {
         r1: {
@@ -3199,7 +3199,7 @@ const groups = {
     }
   },
   h1Missing: {
-    weight: 2,
+    weight: 3,
     packages: {
       alfa: {
         r61: {
@@ -4657,6 +4657,18 @@ const groups = {
       }
     }
   },
+  contentHidden: {
+    weight: 10,
+    packages: {
+      testaro: {
+        allHidden: {
+          variable: false,
+          quality: 1,
+          what: 'Content is entirely or mainly hidden'
+        }
+      }
+    }
+  },
   hiddenContentRisk: {
     weight: 1,
     packages: {
@@ -5943,11 +5955,44 @@ exports.scorer = async report => {
             });
           }
         }
+        else if (which === 'allHidden') {
+          const {result} = test;
+          if (
+            ['hidden', 'reallyHidden', 'visHidden', 'ariaHidden']
+            .every(
+              key => (result[key])
+              && ['document', 'body', 'main'].every(element => typeof result[key][element] === 'boolean')
+            )
+          ) {
+            // Get a score for the test.
+            const score = 8 * result.hidden.document
+            + 8 * result.hidden.body
+            + 6 * result.hidden.main
+            + 10 * result.reallyHidden.document
+            + 10 * result.reallyHidden.body
+            + 8 * result.reallyHidden.main
+            + 8 * result.visHidden.document
+            + 8 * result.visHidden.body
+            + 6 * result.visHidden.main
+            + 10 * result.ariaHidden.document
+            + 10 * result.ariaHidden.body
+            + 8 * result.ariaHidden.main;
+            // Add the score.
+            addDetail('testaro', which, score);
+          }
+        }
         else if (which === 'bulk') {
           const count = test.result && test.result.visibleElements;
           if (typeof count === 'number') {
             // Add 1 per 300 visible elements beyond 300.
             addDetail('testaro', which, Math.max(0, count / 300 - 1));
+          }
+        }
+        else if (which === 'docType') {
+          const hasType = test.result && test.result.docHasType;
+          if (typeof hasType === 'boolean') {
+            // Add 10 if document has no doctype.
+            addDetail('testaro', which, 10);
           }
         }
         else if (which === 'embAc') {

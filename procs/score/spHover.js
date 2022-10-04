@@ -67,7 +67,7 @@ const preventionWeights = {
 // Test groups.
 const groups = {
   hoverSurprise: {
-    weight: 1,
+    weight: 2,
     packages: {
       testaro: {
         hover: {

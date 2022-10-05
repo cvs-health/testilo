@@ -1,8 +1,8 @@
 /*
-  index: digester for scoring procedure sp16a.
+  index: digester for scoring procedure sp18a.
   Creator of parameters for substitution into index.html.
-  Usage example for selected files in REPORTDIR_SCORED: node digest dp16a 35k1r
-  Usage example for all files in REPORTDIR_SCORED: node digest dp16a
+  Usage example for selected files in REPORTDIR_SCORED: node digest dp18a 35k1r
+  Usage example for all files in REPORTDIR_SCORED: node digest dp18a
 */
 
 // CONSTANTS
@@ -35,6 +35,9 @@ exports.makeQuery = (report, query) => {
   const reportJSON = JSON.stringify(report, null, 2);
   const reportJSONSafe = htmlEscape(reportJSON);
   query.report = reportJSONSafe;
+  query.tp = 'tp18';
+  query.sp = 'sp18a';
+  query.dp = 'dp18a';
   // Add the job data to the query.
   query.dateISO = report.endTime.slice(0, 10);
   query.dateSlash = query.dateISO.replace(/-/g, '/');

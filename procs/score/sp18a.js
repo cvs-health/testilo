@@ -1,11 +1,11 @@
 /*
-  sp16b
-  Testilo score proc 16b
+  sp18a
+  Testilo score proc 18a
 
-  Computes scores from Testaro script tp16 and adds them to a report.
+  Computes scores from Testaro script tp18 and adds them to a report.
   Usage examples:
-    node score sp16b 35k1r
-    node score sp16b
+    node score sp18a 35k1r
+    node score sp18a
 
   This proc applies specified weights to the component scores before summing them. An issue reported
   by a test is given a score. That score is determined by:
@@ -34,7 +34,7 @@
 // CONSTANTS
 
 // ID of this proc.
-const scoreProcID = 'sp16b';
+const scoreProcID = 'sp18a';
 // Configuration disclosures.
 const logWeights = {
   logCount: 0.5,
@@ -6004,9 +6004,17 @@ exports.scorer = async report => {
             addDetail('testaro', which, 3 * total);
           }
         }
+        else if (which === 'filter') {
+          const totals = test.result && test.result.totals;
+          if (totals) {
+            // Add 2 per filter-styled element, 1 per filter-impacted element.
+            addDetail('testaro', which, 2 * totals.elements + totals.impact);
+          }
+        }
         else if (which === 'focAll') {
           const discrepancy = test.result && test.result.discrepancy;
           if (discrepancy) {
+            // Add 2 per discrepancy.
             addDetail('testaro', which, 2 * Math.abs(discrepancy));
           }
         }

@@ -1,9 +1,13 @@
 /*
   score.js
-  Testilo scoring script.
+  Scores Testaro reports.
+  Reads reports in process.env.REPORTDIR_RAW and outputs into process.env.REPORTDIR_SCORED.
+  Arguments:
+    0. Base of name of score proc located in procs/score.
+    1?. Starting substring of names of reports in process.env.REPORTDIR_RAW.
   Usage examples:
-    node score sp12b 35k1r-railpass
-    node score sp12b
+    node score sp18a 35k1r (to score all reports with names starting with 35k1r)
+    node score sp18a (to score all reports)
 */
 
 // ########## IMPORTS

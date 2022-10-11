@@ -1,7 +1,13 @@
 /*
   digest.js
-  Testilo digesting script.
-  Usage example: node digest 35k1r-railpass dp10a
+  Creates digests from scored reports.
+  Reads reports in process.env.REPORTDIR_SCORED and outputs into process.env.REPORTDIR_DIGESTED.
+  Arguments:
+    0. Base of name of digest proc located in procs/digest.
+    1?. starting substring of names of reports in process.env.REPORTDIR_SCORED.
+  Usage examples:
+    node digest dp18a 35k1r (to digest all scored reports with names starting with 35k1r)
+    node digest dp18a (to digest all scored reports)
 */
 
 // ########## IMPORTS
@@ -23,7 +29,7 @@ const reportIDStart = process.argv[3];
 // Replaces the placeholders in content with eponymous query parameters.
 const replaceHolders = (content, query) => content
 .replace(/__([a-zA-Z]+)__/g, (ph, qp) => query[qp]);
-// Creates a digest.
+// Creates digests.
 const digest = async () => {
   const reportDirScoredAbs = `${__dirname}/${reportDirScored}`;
   let reportFileNames = await fs.readdir(reportDirScoredAbs);

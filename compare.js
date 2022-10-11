@@ -1,7 +1,12 @@
 /*
   compare.js
-  Testilo comparison script.
-  Usage example: node compare cp12a candidates
+  Creates comparisons from scored reports.
+  Reads reports in process.env.REPORTDIR_SCORED and outputs into process.env.COMPARISONDIR.
+  Arguments:
+    0. Base of name of compare proc located in procs/compare.
+    1. Base of name of comparative report to be written.
+  Usage example: node compare cp18a usFedExec
+  Note: Compares all reports in process.env.REPORTDIR_SCORED (but not in its subdirectories).
 */
 
 // ########## IMPORTS

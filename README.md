@@ -3,9 +3,11 @@ Utilities for Testaro
 
 ## Introduction
 
-The Testilo package contains utilities that facilitate the use of the [Testaro package](https://www.npmjs.com/package/testaro).
+The Testilo package contains utilities that facilitate the use of the [Testaro](https://www.npmjs.com/package/testaro) package.
 
 Testaro performs digital accessibility tests on web artifacts and creates reports in JSON format. The utilities in Testilo prepare jobs for Testaro to run and create additional value from the reports that Testaro produces.
+
+Because Testilo supports Testaro, this `README` file presumes that you have access to the Testaro `README` file and therefore does not repeat information provided there.
 
 ## Dependencies
 
@@ -25,23 +27,9 @@ The reason for Testilo being an independent package, rather than part of Testaro
 
 ### `merge`
 
-Testaro runs _jobs_. A job gives Testaro instructions.
+The `merge` utility is useful when you want Testaro to perform the same set of operations on multiple hosts. For example, you may want the same tests run on multiple web pages. You would have a single script, and you would want multiple jobs created from it. Each job would target one host, and, for that purpose, any `url` command in the script would be modified so that its properties are those of that host. The `merge` utility (similar to mail merge in office applications) does this. It creates Testaro jobs out of a script and a _batch_.
 
-Sometimes you may want Testaro to perform a set of tests on multiple targets. The `merge` utility in Testilo facilitates this. It creates Testaro jobs out of a _script_ and a _batch_.
-
-A script tells Testaro where to go and what to do. If the where-to-go part identifies a specific URL, the script can be a job, ready for Testaro to run. But the where-to-go part can also be generic, such as `http://*.*`. Then the script needs to be converted to a job by having its generic destination replaced with a specific URL. A batch is a list of _hosts_ (URLs and metadata). Merging a batch and a script means generating from the script as many jobs as there are hosts in the batch. In each job, one host from the batch becomes the specific target.
-
-A script is a JSON file representing a `script` object, which contains a sequence of _commands_. Scripts are documented in detail in the Testaro `README.md` file.
-
-A batch is a JSON file representing a `batch` object, which contains an array of _hosts_. Each host is an object with three properties:
-- `id`: a string unique in the batch
-- `which`: a URL
-- `what`: a string naming the entity associated with the URL
-
-The batch as a whole also has three properties:
-- `id`: a string composed of ASCII letters and digits
-- `what`: a string describing the batch
-- `hosts`: an array of host objects
+A batch is a JSON-format file representing a `batch` object, which contains an array of _hosts_.
 
 Here is an example of a batch:
 
@@ -83,7 +71,7 @@ Suppose that:
 - There is a script file named `testall.json`.
 - The above batch example is in a file named `usFedExec1.json`.
 
-The statement `node merge testall usFedExec1 allFedExec` would tell Testilo to merge the batch `../testing/batches/usFedExec1.json` and the script `../testing/scripts/testall.json` and write the two job files in `../testing/jobs/allFedExec`.
+The statement `node merge testall usFedExec1 allFedExec` would tell Testilo to merge the batch `../testing/batches/usFedExec1.json` and the script `../testing/scripts/testall.json` into two job files and save those files in the directory `../testing/jobs/allFedExec`. Testilo will create any directories necessary to save the files there.
 
 ### `score`
 

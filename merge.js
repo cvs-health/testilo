@@ -6,7 +6,7 @@
     1. base of name of batch located in process.env.BATCHDIR.
   Usage example:
     node merge tp18 weborgs
-  Note: The subdirectory for host scripts will be created if it does not exist.
+  Note: The subdirectory for host-specific scripts will be created if it does not exist.
 */
 
 // ########## IMPORTS

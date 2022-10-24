@@ -21,24 +21,16 @@ const fs = require('fs/promises');
 // ########## CONSTANTS
 
 const scriptDir = process.env.SCRIPTDIR || 'scripts';
-const scriptName = process.argv[2];
-const host = {
-  id: process.argv[3],
-  which: process.argv[4],
-  what: process.argv[5]
-};
-const requester = process.argv[6];
 
 // ########## FUNCTIONS
 
 // Returns a script, aimed at a host.
-exports.aim = async () => {
+exports.aim = async (scriptName, host, requester) => {
   // Copy the script.
   const scriptFile = await fs.readFile(`${scriptDir}/${scriptName}.json`, 'utf8');
   const script = JSON.parse(scriptFile);
-  const newScript = JSON.parse(JSON.stringify(script));
   // In the copy, make all url commands visit the host.
-  newScript.commands.forEach(command => {
+  script.commands.forEach(command => {
     if (command.type === 'url') {
       command.id = host.id;
       command.which = host.which;
@@ -46,12 +38,13 @@ exports.aim = async () => {
     }
   });
   // Add source information to the script.
-  newScript.source = {
+  script.source = {
     script: script.id,
+    host,
     requester
   }
   // Change the script id property to include the host ID.
-  newScript.id += `-${host.id}`;
+  script.id += `-${host.id}`;
   // Return the host-specific script.
-  return newScript;
+  return script;
 };

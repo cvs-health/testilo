@@ -26,10 +26,14 @@ const batchName = process.argv[3];
 
 // ########## FUNCTIONS
 
+// Returns a string representing the date and time.
+const nowString = () => (new Date()).toISOString().slice(0, 19);
 // Merges a batch into a script and writes host-specific scripts.
 const merge = async (script, batch) => {
   // Create the watch directory if it does not exist.
   await fs.mkdir(watchDir, {recursive: true});
+  // Create a job-creation time stamp.
+  const timeStamp = Math.floor((Date.now() - Date.UTC(2022, 1)) / 2000).toString(36);
   // For each host in the batch:
   const {hosts} = batch;
   const newScripts = hosts.map(host => {
@@ -48,8 +52,12 @@ const merge = async (script, batch) => {
       script: script.id,
       batch: batch.id
     }
-    // Change the script id property to include the host ID.
-    newScript.id += `-${host.id}`;
+    // Add a job-creation time stamp to the script.
+    newScript.timeStamp = timeStamp;
+    // Add the job-creation time to the script.
+    newScript.jobCreationTime = nowString();
+    // Change the script id property to include the time stamp and the host ID.
+    newScript.id = `${timeStamp}-${newScript.id}-${host.id}`;
     // Return the host-specific script.
     return newScript;
   });
@@ -57,7 +65,7 @@ const merge = async (script, batch) => {
   for (const newScript of newScripts) {
     await fs.writeFile(`${watchDir}/${newScript.id}.json`, JSON.stringify(newScript, null, 2));
   };
-  console.log(`Merger completed. Count of scripts created: ${hosts.length}`);
+  console.log(`Merger completed. Script count: ${hosts.length}. Time stamp: ${timeStamp}`);
 };
 
 // ########## OPERATION

@@ -21,8 +21,6 @@ const fs = require('fs/promises');
 
 const reportDirScored = process.env.REPORTDIR_SCORED || 'reports/scored';
 const reportDirDigested = process.env.REPORTDIR_DIGESTED || 'reports/digested';
-const digesterID = process.argv[2];
-const reportIDStart = process.argv[3];
 
 // ########## FUNCTIONS
 
@@ -30,7 +28,7 @@ const reportIDStart = process.argv[3];
 const replaceHolders = (content, query) => content
 .replace(/__([a-zA-Z]+)__/g, (ph, qp) => query[qp]);
 // Creates digests.
-const digest = async () => {
+exports.digest = async (digesterID, reportIDStart) => {
   const reportDirScoredAbs = `${__dirname}/${reportDirScored}`;
   let reportFileNames = await fs.readdir(reportDirScoredAbs);
   reportFileNames = reportFileNames.filter(fileName => fileName.endsWith('.json'));
@@ -52,7 +50,3 @@ const digest = async () => {
     console.log(`Report ${fileNameBase} digested and saved`);
   };
 };
-
-// ########## OPERATION
-
-digest();

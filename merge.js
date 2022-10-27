@@ -21,15 +21,17 @@ const fs = require('fs/promises');
 const scriptDir = process.env.SCRIPTDIR || 'scripts';
 const batchDir = process.env.BATCHDIR || 'batches';
 const watchDir = process.env.WATCHDIR || 'watch';
-const scriptName = process.argv[2];
-const batchName = process.argv[3];
 
 // ########## FUNCTIONS
 
 // Returns a string representing the date and time.
 const nowString = () => (new Date()).toISOString().slice(0, 19);
 // Merges a batch into a script and writes host-specific scripts.
-const merge = async (script, batch) => {
+exports.merge = async (scriptName, batchName) => {
+  const scriptJSON = await fs.readFile(`${scriptDir}/${scriptName}.json`, 'utf8');
+  const batchJSON = await fs.readFile(`${batchDir}/${batchName}.json`, 'utf8');
+  const script = JSON.parse(scriptJSON);
+  const batch = JSON.parse(batchJSON);
   // Create the watch directory if it does not exist.
   await fs.mkdir(watchDir, {recursive: true});
   // Create a job-creation time stamp.
@@ -52,8 +54,6 @@ const merge = async (script, batch) => {
       script: script.id,
       batch: batch.id
     }
-    // Add a job-creation time stamp to the script.
-    newScript.timeStamp = timeStamp;
     // Add the job-creation time to the script.
     newScript.jobCreationTime = nowString();
     // Change the script id property to include the time stamp and the host ID.
@@ -67,15 +67,3 @@ const merge = async (script, batch) => {
   };
   console.log(`Merger completed. Script count: ${hosts.length}. Time stamp: ${timeStamp}`);
 };
-
-// ########## OPERATION
-
-fs.readFile(`${scriptDir}/${scriptName}.json`, 'utf8')
-.then(scriptFile => {
-  fs.readFile(`${batchDir}/${batchName}.json`, 'utf8')
-  .then(async batchFile => {
-    const script = JSON.parse(scriptFile);
-    const batch = JSON.parse(batchFile);
-    await merge(script, batch);
-  });
-});

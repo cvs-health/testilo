@@ -21,13 +21,11 @@ const fs = require('fs/promises');
 
 const reportDirRaw = process.env.REPORTDIR_RAW || 'reports/raw';
 const reportDirScored = process.env.REPORTDIR_SCORED || 'reports/scored';
-const scoreProcID = process.argv[2];
-const reportIDStart = process.argv[3];
 
 // ########## FUNCTIONS
 
-// Score the specified reports.
-const score = async () => {
+// Score the specified reports and return their count.
+exports.score = async (scoreProcID, reportIDStart) => {
   // Identify the reports to be scored.
   const reportDirRawAbs = `${__dirname}/${reportDirRaw}`;
   let reportFileNames = await fs.readdir(reportDirRawAbs);
@@ -48,8 +46,5 @@ const score = async () => {
     await fs.writeFile(`${__dirname}/${reportDirScored}/${fileName}`, `${scoredReportJSON}\n`);
     console.log(`Report ${fileName.slice(0, -5)} scored and saved`);
   };
+  return reportFileNames.length;
 };
-
-// ########## OPERATION
-
-score();

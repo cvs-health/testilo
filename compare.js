@@ -28,7 +28,7 @@ const comparisonNameBase = process.argv[3];
 const replaceHolders = (content, query) => content
 .replace(/__([a-zA-Z]+)__/g, (ph, qp) => query[qp]);
 // Creates and saves a web page containing a comparative table.
-const compare = async () => {
+exports.compare = async () => {
   const comparisonDirAbs = `${__dirname}/${comparisonDir}`;
   const {getQuery} = require(`./procs/compare/${compareProcID}/index`);
   const query = await getQuery();
@@ -37,7 +37,3 @@ const compare = async () => {
   await fs.writeFile(`${comparisonDirAbs}/${comparisonNameBase}.html`, page);
   console.log(`Page ${comparisonNameBase}.html created and saved`);
 };
-
-// ########## OPERATION
-
-compare();

@@ -1,14 +1,6 @@
 /*
   aim.js
-  Returns a script aimed at a host.
-  Arguments:
-    0. base of name of script located in process.env.SCRIPTDIR.
-    1. ID of the host.
-    2. URL of the host.
-    3. Name of the host.
-    4. ID of the requester.
-  Usage example:
-    node aim tp18 w3c https://www.w3.org/ 'World Wide Web Consortium' 
+  Module for aiming a script at a host.
 */
 
 // ########## IMPORTS

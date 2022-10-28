@@ -25,9 +25,40 @@ The reason for Testilo being an independent package, rather than part of Testaro
 
 ## Utilities
 
+### `aim`
+
+The `aim` function allows you to _aim_ a script at a host. That means modifying the script so that it performs its operations on the specified host. The modifications are:
+- Modify the value of the `id` property of the script by:
+   - Prefixing the value with a time stamp.
+   - Suffixing the value with the value of the `id` property of the host.
+- Modify each `url` command of the script by changing the values of its `which`, `what`, and `id` properties to the values of those properties of the host.
+- Add a `source` property to the script, identifying the script, the host, and the requester.
+
+Execution by a module:
+
+```javaScript
+const host = {
+  which: https://w3c.org/,
+  what: 'World Wide Web Consortium',
+  id: w3c
+};
+const fs = require('fs/promises');
+const {aim} = require('testilo/aim');
+const aimedScript = aim('tp25', host, 'developer@w3c.org');
+fs.writeFile(process.env.JOBDIR, JSON.stringify(aimedScript, null, 2));
+```
+
+Execution by a user:
+
+```bash
+node call aim tp25 https://w3.org/ 'World Wide Web Consortium' w3c developer@w3c.org
+```
+
+In these examples, a copy of the script file named `tp25.json` in the `SCRIPTDIR` directory is aimed at the World Wide Web Consortium and then saved in the `JOBDIR` directory.
+
 ### `merge`
 
-The `merge` utility is useful when you want Testaro to perform the same set of operations on multiple hosts. For example, you may want the same tests run on multiple web pages. You would have a single script, and you would want multiple jobs created from it. Each job would target one host, and, for that purpose, any `url` command in the script would be modified so that its properties are those of that host. The `merge` utility (similar to mail merge in office applications) does this. It creates Testaro jobs out of a script and a _batch_.
+The `merge` function is similar to the `aim` function, but it aims a script at multiple hosts, not only one. The hosts are identified in a _batch_, a file in the `BATCHDIR` directory. The output of `merge` is multiple script files, one per host, saved in the `JOBDIR` directory.
 
 A batch is a JSON-format file representing a `batch` object, which contains an array of _hosts_.
 
@@ -52,84 +83,92 @@ Here is an example of a batch:
 }
 ```
 
-The `merge` utility finds all the `url` commands in a script (telling the browser what to visit), replaces them with one of the hosts in the batch, and outputs the modified script as a job. It then does the same with each of the other hosts in the batch.
+Execution by a module:
 
-To execute `merge`, you need to have three environment variables defined to tell `merge` where files are located. You can define the environment variables in the `.env` file. Here is an example:
-
+```javaScript
+const {merge} = require('testilo/merge');
+merge('tp25', 'weborgs')
+.then(() => {
+  console.log('Merger complete');
+});
 ```
-SCRIPTDIR=../testing/scripts
-BATCHDIR=../testing/batches
-JOBDIR=../testing/jobs
+
+Execution by a user:
+
+```bash
+node call merge tp25 weborgs
 ```
-
-In this example, the script, batch, and job files are located in directories named `scripts`, `batches`, and `jobs` within `testing`, which is a sibling directory of the Testilo project directory.
-
-The syntax of the `merge` statement is documented in `merge.js`.
-
-Suppose that:
-- The environment variables are defined as in the above example.
-- There is a script file named `testall.json`.
-- The above batch example is in a file named `usFedExec1.json`.
-
-The statement `node merge testall usFedExec1 allFedExec` would tell Testilo to merge the batch `../testing/batches/usFedExec1.json` and the script `../testing/scripts/testall.json` into two job files and save those files in the directory `../testing/jobs/allFedExec`. Testilo will create any directories necessary to save the files there.
 
 ### `score`
 
 Testaro performs tests and produces reports of test results. Testilo can add scores to those reports. In this way, each report can not only detail successes and failures of individual tests but also assign scores to those results and combine the partial scores into total scores.
 
-The `score` utility performs scoring. It depends on score procs to define the scoring rules. Some score procs are in the Testilo package (in the `procs/score` directory), and you can create more score procs to implement different rules.
+The `score` function performs scoring. It depends on _score procs_ to define the scoring rules. Some score procs are in the Testilo package (in the `procs/score` directory), and you can create more score procs to implement different rules.
 
-You can score multiple reports with a single invocation of `score`.
+Execution by a module:
 
-To execute `score`, you need to have two environment variables defined to tell `score` where files are located. You can define the environment variables in the `.env` file. Here is an example:
-
+```javaScript
+const {score} = require('testilo/score');
+score('sp25a', '756mr')
+.then(hostCount => {
+  console.log(`Scoring complete. Count of reports scored: ${hostCount}`);
+});
 ```
-REPORTDIR_RAW=../testing/reports/raw
-REPORTDIR_SCORED=../testing/reports/scored
+
+Execution by a user:
+
+```bash
+node call score sp25a 756mr
 ```
 
-The named directories must already exist.
-
-The syntax of the `score` statement is documented in `score.js`.
-
-A scored report file is identical to the file it was created from, except that the scored report has new properties named `score` and `scoreProcID`. The `score` property contains the scores.
+The first argument to `score` names the score proc to be used. The second argument is optional. If it is present, then only reports whose names begin with the value of that argument will be scored. Otherwise all reports in the `REPORTDIR_RAW` directory will be scored. The scored reports will be written in the `REPORTDIR_SCORED` directory.
 
 ### `digest`
 
-Testaro reports, both originally and after they are scored, are JSON files. That format is basically designed for machine tractability.
+Testaro reports, both originally and after they are scored, are JSON files. That format is human-readable, but it is basically designed for machine tractability.
 
-The `digest` utility converts scored reports into HTML documents with explanatory content. Thus, it converts machine-oriented reports into human-oriented reports, called _digests_. It depends on digest procs to define the digesting rules. Some digest procs are in the Testilo package (in the `procs/digest` directory), and you can create more digest procs to implement different rules.
+The `digest` function converts scored reports into HTML documents with explanatory content. Thus, it converts machine-oriented reports into human-oriented reports, called _digests_. It depends on _digest procs_ to define the digesting rules. Some digest procs are in the Testilo package (in the `procs/digest` directory), and you can create more digest procs to implement different rules.
 
-You can digest multiple scored reports with a single invocation of `digest`.
+Execution by a module:
 
-To execute  `digest`, you need to have two environment variables defined to tell `digest` where files are located. You can define the environment variables in the `.env` file. Here is an example:
-
+```javaScript
+const {digest} = require('testilo/digest');
+digest('dp25a', '756mr')
+.then(hostCount => {
+  console.log(`Digesting complete. Count of reports digested: ${hostCount}.`);
+});
 ```
-REPORTDIR_SCORED=../testing/reports/scored
-REPORTDIR_DIGESTED=../testing/reports/digested
+
+Execution by a user:
+
+```bash
+node call digest sp25a 756mr
 ```
 
-The named directories must already exist.
+The first argument to `digest` names the digest proc to be used. The second argument is optional. If it is present, then only reports whose names begin with the value of that argument will be digested. Otherwise all reports in the `REPORTDIR_SCORED` directory will be digested. The digested reports will be written in the `REPORTDIR_DIGESTED` directory.
 
-The syntax of the `digest` statement is documented in `digest.js`.
-
-The digests created by `digest` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/digested/style.css` file in Testilo is an appropriate stylesheet to be copied into `process.env.REPORTDIR_DIGESTED`.
+The digests created by `digest` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/digested/style.css` file in Testilo is an appropriate stylesheet to be copied into the `REPORTDIR_DIGESTED` directory.
 
 ### `compare`
 
-You can summarize the results of a multi-host job by producing a document comparing the scores received by the hosts. The `compare` utility does this.
+You can summarize the results of a multi-host job by producing a document comparing the scores received by the hosts. The `compare` function does this. It gathers scores from a set of scored reports and produces an HTML document comparing the scores. It depends on _comparison procs_ to define the rules for making and showing the comparative scores. Some compare procs are in the Testilo package (in the `procs/compare` directory), and you can create more compare procs to implement different rules.
 
-The `compare` utility gathers scores from a set of scored reports and produces an HTML document comparing the scores. It depends on compare procs to define the rules for making and showing the comparative scores. Some compare procs are in the Testilo package (in the `procs/compare` directory), and you can create more compare procs to implement different rules.
+Execution by a module:
 
-To execute  `compare`, you need to have two environment variables defined to tell `digest` where files are located. You can define the environment variables in the `.env` file. Here is an example:
-
+```javaScript
+const {compare} = require('testilo/compare');
+compare('cp25a', 'legislators')
+.then(() => {
+  console.log(`Comparison complete`);
+});
 ```
-REPORTDIR_SCORED=../testing/reports/scored
-COMPARISONDIR=../testing/reports/compared
+
+Execution by a user:
+
+```bash
+node call compare cp25a legislators
 ```
 
-The named directories must already exist.
+The first argument to `compare` names the comparison proc to be used. The second argument specifies a base of the name of the comparative report that will be produced. The scores in all reports in the `REPORTDIR_SCORED` directory will be compared. The comparative report will be written in the `COMPARISONDIR` directory.
 
-The syntax of the `compare` statement is documented in `compare.js`.
-
-The comparisons created by `compare` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/comparative/style.css` file in Testilo is an appropriate stylesheet to be copied into `process.env.COMPARISONDIR`.
+The digests created by `compare` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/comparative/style.css` file in Testilo is an appropriate stylesheet to be copied into the `COMPARISONDIR` directory.

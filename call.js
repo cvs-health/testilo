@@ -32,16 +32,17 @@ const {compare} = require('./compare');
 
 // ########## CONSTANTS
 
-const watchDir = process.env.WATCHDIR;
-const rawDir = process.env.REPORTDIR_RAW;
+const jobDir = process.env.JOBDIR;
 const scoredDir = process.env.REPORTDIR_SCORED;
 const digestedDir = process.env.REPORTDIR_DIGESTED;
 const comparisonDir = process.env.COMPARISONDIR;
+const fn = process.argv[2];
+const fnArgs = process.argv.slice(3);
 
 // ########## FUNCTIONS
 
-// Fulfills a high-level testing request.
-const doAim = async (scriptName, hostURL, hostName, hostID, notifyee) => {
+// Fulfills an aiming request.
+const callAim = async (scriptName, hostURL, hostName, hostID, notifyee) => {
   await aim(
     scriptName,
     {
@@ -51,33 +52,39 @@ const doAim = async (scriptName, hostURL, hostName, hostID, notifyee) => {
     }, 
     notifyee
   );
-  console.log(`Request for aiming ${scriptID}.json at ${hostName} completed`);
+  console.log(`Script ${scriptID}.json has been aimed at ${hostName}`);
 };
 // Fulfills a merger request.
-const doMerge = async (scriptName, batchName) => {
+const callMerge = async (scriptName, batchName) => {
   await merge(scriptName, batchName);
-  console.log(`Batch ${batchName}.json merged into script ${scriptName} in ${watchDir}`);
+  console.log(`Batch ${batchName}.json merged into script ${scriptName} in ${jobDir}`);
 };
 // Fulfills a scoring request.
-const doScore = async (scoreProcID, reportIDStart) => {
+const callScore = async (scoreProcID, reportIDStart) => {
   const reportCount = await score(scoreProcID, reportIDStart);
   console.log(
     `Scoring completed. Score proc: ${scoreProcID}. Report count: ${reportCount}. Directory: ${scoredDir}`
   );
 };
-// Starts a watch.
-const doWatch = async (isDirWatch, isForever, interval) => {
+// Fulfills a digesting request.
+const callDigest = async (digestProcID, reportIDStart) => {
+  const reportCount = await digest(digestProcID, reportIDStart);
   console.log(
-    `Starting a ${isForever ? 'repeating' : 'one-time'} ${isDirWatch ? 'directory' : 'network'} watch`
+    `Digesting completed. Digest proc: ${digestProcID}. Report count: ${reportCount}. Directory: ${digestedDir}`
   );
-  await cycle(isDirWatch, isForever, interval);
-  console.log('Watching ended');
+};
+// Fulfills a comparison request.
+const callCompare = async (compareProcID, comparisonNameBase) => {
+  await compare(compareProcID, comparisonNameBase);
+  console.log(
+    `Comparison completed. Comparison proc: ${compareProcID}. Directory: ${comparisonDir}`
+  );
 };
 
 // ########## OPERATION
 
 // Execute the requested function.
-if (fn === 'high' && fnArgs.length === 1) {
+if (fn === 'aim' && fnArgs.length === 1) {
   doHigh(fnArgs)
   .then(() => {
     console.log('Execution completed');

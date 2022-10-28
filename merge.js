@@ -20,7 +20,7 @@ const fs = require('fs/promises');
 
 const scriptDir = process.env.SCRIPTDIR || 'scripts';
 const batchDir = process.env.BATCHDIR || 'batches';
-const watchDir = process.env.WATCHDIR || 'watch';
+const jobDir = process.env.JOBDIR || 'watch';
 
 // ########## FUNCTIONS
 
@@ -33,7 +33,7 @@ exports.merge = async (scriptName, batchName) => {
   const script = JSON.parse(scriptJSON);
   const batch = JSON.parse(batchJSON);
   // Create the watch directory if it does not exist.
-  await fs.mkdir(watchDir, {recursive: true});
+  await fs.mkdir(jobDir, {recursive: true});
   // Create a job-creation time stamp.
   const timeStamp = Math.floor((Date.now() - Date.UTC(2022, 1)) / 2000).toString(36);
   // For each host in the batch:
@@ -63,7 +63,7 @@ exports.merge = async (scriptName, batchName) => {
   });
   // Write the host-specific scripts.
   for (const newScript of newScripts) {
-    await fs.writeFile(`${watchDir}/${newScript.id}.json`, JSON.stringify(newScript, null, 2));
+    await fs.writeFile(`${jobDir}/${newScript.id}.json`, JSON.stringify(newScript, null, 2));
   };
   console.log(`Merger completed. Script count: ${hosts.length}. Time stamp: ${timeStamp}`);
 };

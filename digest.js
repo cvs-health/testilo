@@ -49,4 +49,5 @@ exports.digest = async (digesterID, reportIDStart) => {
     await fs.writeFile(`${__dirname}/${reportDirDigested}/${fileNameBase}.html`, digest);
     console.log(`Report ${fileNameBase} digested and saved`);
   };
+  return reportFileNames.length;
 };

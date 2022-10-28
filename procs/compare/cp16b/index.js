@@ -19,7 +19,7 @@ const query = {};
 
 // ########## FUNCTIONS
 
-// Returns data on the hosts in the report directory.
+// Returns data on the hosts in the scored-report directory.
 const getData = async () => {
   const reportDirAbs = `${__dirname}/../../../${reportDirScored}`;
   const reportFileNamesAll = await fs.readdir(reportDirAbs);

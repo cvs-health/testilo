@@ -19,8 +19,6 @@ const fs = require('fs/promises');
 // ########## CONSTANTS
 
 const comparisonDir = process.env.COMPARISONDIR || 'reports/comparative';
-const compareProcID = process.argv[2];
-const comparisonNameBase = process.argv[3];
 
 // ########## FUNCTIONS
 
@@ -28,7 +26,7 @@ const comparisonNameBase = process.argv[3];
 const replaceHolders = (content, query) => content
 .replace(/__([a-zA-Z]+)__/g, (ph, qp) => query[qp]);
 // Creates and saves a web page containing a comparative table.
-exports.compare = async () => {
+exports.compare = async (compareProcID, comparisonNameBase) => {
   const comparisonDirAbs = `${__dirname}/${comparisonDir}`;
   const {getQuery} = require(`./procs/compare/${compareProcID}/index`);
   const query = await getQuery();

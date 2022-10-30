@@ -6,13 +6,13 @@
     0. function to execute.
     1+. arguments to pass to the function.
   Usage examples:
-    node do aim script454 https://www.w3c.org/ 'World Wide Web Consortium' w3c
-    node do merge script454 webOrgs
-    node do score sp25a (to score all reports in REPORTDIR_RAW)
-    node do score sp25a 8ep9f- (same, but only if names start with 8ep9f-)
-    node do digest dp25a (to digest all reports in REPORTDIR_SCORED)
-    node do digest dp25a 8ep9f- (same, but only if names start with 8ep9f-)
-    node do compare cp25a weborgs (to write weborgs.html, comparing all reports in REPORTDIR_SCORED)
+    node call aim script454 https://www.w3c.org/ 'World Wide Web Consortium' w3c
+    node call merge script454 webOrgs
+    node call score sp25a (to score all reports in REPORTDIR_RAW)
+    node call score sp25a 8ep9f- (same, but only if names start with 8ep9f-)
+    node call digest dp25a (to digest all reports in REPORTDIR_SCORED)
+    node call digest dp25a 8ep9f- (same, but only if names start with 8ep9f-)
+    node call compare cp25a weborgs (to write weborgs.html, comparing all reports in REPORTDIR_SCORED)
 */
 
 // ########## IMPORTS
@@ -84,14 +84,32 @@ const callCompare = async (compareProcID, comparisonNameBase) => {
 // ########## OPERATION
 
 // Execute the requested function.
-if (fn === 'aim' && fnArgs.length === 1) {
-  doHigh(fnArgs)
+if (fn === 'aim' && fnArgs.length === 5) {
+  callAim(... fnArgs)
   .then(() => {
     console.log('Execution completed');
   });
 }
-else if (fn === 'watch' && fnArgs.length === 3) {
-  doWatch(... fnArgs)
+else if (fn === 'merge' && fnArgs.length === 2) {
+  callMerge(... fnArgs)
+  .then(() => {
+    console.log('Execution completed');
+  });
+}
+else if (fn === 'score' && fnArgs.length > 0 && fnArgs.length < 3) {
+  callScore(... fnArgs)
+  .then(() => {
+    console.log('Execution completed');
+  });
+}
+else if (fn === 'digest' && fnArgs.length > 0 && fnArgs.length < 3) {
+  callDigest(... fnArgs)
+  .then(() => {
+    console.log('Execution completed');
+  });
+}
+else if (fn === 'compare' && fnArgs.length === 2) {
+  callCompare(... fnArgs)
   .then(() => {
     console.log('Execution completed');
   });

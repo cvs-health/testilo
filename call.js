@@ -20,6 +20,7 @@
 // Module to keep secrets.
 require('dotenv').config();
 // Function to process a script aiming.
+const fs = require('fs/promises');
 const {aim} = require('./aim');
 // Function to process a script-batch merger.
 const {merge} = require('./merge');
@@ -43,7 +44,7 @@ const fnArgs = process.argv.slice(3);
 
 // Fulfills an aiming request.
 const callAim = async (scriptName, hostURL, hostName, hostID, notifyee) => {
-  await aim(
+  const aimedScript = await aim(
     scriptName,
     {
       id: hostID,
@@ -52,7 +53,9 @@ const callAim = async (scriptName, hostURL, hostName, hostID, notifyee) => {
     }, 
     notifyee
   );
-  console.log(`Script ${scriptID}.json has been aimed at ${hostName}`);
+  const aimedScriptID = aimedScript.id;
+  await fs.writeFile(`${jobDir}/${aimedScriptID}.json`, JSON.stringify(aimedScript, null, 2));
+  console.log(`Script ${aimedScriptID}.json has been aimed at ${hostName} and saved in ${jobDir}`);
 };
 // Fulfills a merger request.
 const callMerge = async (scriptName, batchName) => {

@@ -27,8 +27,7 @@ const reportDirScored = process.env.REPORTDIR_SCORED || 'reports/scored';
 // Score the specified reports and return their count.
 exports.score = async (scoreProcID, reportIDStart) => {
   // Identify the reports to be scored.
-  const reportDirRawAbs = `${__dirname}/${reportDirRaw}`;
-  let reportFileNames = await fs.readdir(reportDirRawAbs);
+  let reportFileNames = await fs.readdir(reportDirRaw);
   reportFileNames = reportFileNames.filter(fileName => fileName.endsWith('.json'));
   if (reportIDStart) {
     reportFileNames = reportFileNames.filter(fileName => fileName.startsWith(reportIDStart));
@@ -37,13 +36,13 @@ exports.score = async (scoreProcID, reportIDStart) => {
   const {scorer} = require(`./procs/score/${scoreProcID}`);
   for (const fileName of reportFileNames) {
     // Score it.
-    const reportJSON = await fs.readFile(`${reportDirRawAbs}/${fileName}`, 'utf8');
+    const reportJSON = await fs.readFile(`${reportDirRaw}/${fileName}`, 'utf8');
     const report = JSON.parse(reportJSON);
     await scorer(report);
     report.scoreProcID = scoreProcID;
     // Write it to a file.
     const scoredReportJSON = JSON.stringify(report, null, 2);
-    await fs.writeFile(`${__dirname}/${reportDirScored}/${fileName}`, `${scoredReportJSON}\n`);
+    await fs.writeFile(`${reportDirScored}/${fileName}`, `${scoredReportJSON}\n`);
     console.log(`Report ${fileName.slice(0, -5)} scored and saved`);
   };
   return reportFileNames.length;

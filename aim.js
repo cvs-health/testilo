@@ -16,8 +16,6 @@ const scriptDir = process.env.SCRIPTDIR || 'scripts';
 
 // ########## FUNCTIONS
 
-// Returns a string representing the date and time.
-const nowString = () => (new Date()).toISOString().slice(0, 19);
 // Returns a script, aimed at a host.
 exports.aim = async (scriptName, host, requester) => {
   // Copy the script.
@@ -41,8 +39,6 @@ exports.aim = async (scriptName, host, requester) => {
   const timeStamp = Math.floor((Date.now() - Date.UTC(2022, 1)) / 2000).toString(36);
   // Change the script id property to include the time stamp and the host ID.
   script.id = `${timeStamp}-${script.id}-${host.id}`;
-  // Add the job-creation time to the script.
-  script.jobCreationTime = nowString();
   // Return the host-specific script.
   return script;
 };

@@ -21,6 +21,7 @@ const fs = require('fs/promises');
 
 const reportDirRaw = process.env.REPORTDIR_RAW || 'reports/raw';
 const reportDirScored = process.env.REPORTDIR_SCORED || 'reports/scored';
+const scoreProcDir = process.env.SCOREPROCDIR || `${__dirname}/procs/score`;
 
 // ########## FUNCTIONS
 
@@ -33,7 +34,7 @@ exports.score = async (scoreProcID, reportIDStart) => {
     reportFileNames = reportFileNames.filter(fileName => fileName.startsWith(reportIDStart));
   }
   // For each of them:
-  const {scorer} = require(`./procs/score/${scoreProcID}`);
+  const {scorer} = require(`${scoreProcDir}/${scoreProcID}`);
   for (const fileName of reportFileNames) {
     // Score it.
     const reportJSON = await fs.readFile(`${reportDirRaw}/${fileName}`, 'utf8');

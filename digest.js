@@ -21,6 +21,7 @@ const fs = require('fs/promises');
 
 const reportDirScored = process.env.REPORTDIR_SCORED || 'reports/scored';
 const reportDirDigested = process.env.REPORTDIR_DIGESTED || 'reports/digested';
+const digestProcDir = process.env.DIGESTPROCDIR || `${__dirname}/procs/digest`;
 
 // ########## FUNCTIONS
 
@@ -46,7 +47,7 @@ exports.digest = async (digesterID, reportIDStart) => {
     .readFile(`${__dirname}/procs/digest/${digesterID}/index.html`, 'utf8');
     const digest = replaceHolders(template, query);
     const fileNameBase = fileName.slice(0, -5);
-    await fs.writeFile(`${__dirname}/${reportDirDigested}/${fileNameBase}.html`, digest);
+    await fs.writeFile(`${digestProcDir}/${fileNameBase}.html`, digest);
     console.log(`Report ${fileNameBase} digested and saved`);
   };
   return reportFileNames.length;

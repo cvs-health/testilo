@@ -30,24 +30,23 @@ const replaceHolders = (content, query) => content
 .replace(/__([a-zA-Z]+)__/g, (ph, qp) => query[qp]);
 // Creates digests.
 exports.digest = async (digesterID, reportIDStart) => {
-  const reportDirScoredAbs = `${__dirname}/${reportDirScored}`;
-  let reportFileNames = await fs.readdir(reportDirScoredAbs);
+  let reportFileNames = await fs.readdir(reportDirScored);
   reportFileNames = reportFileNames.filter(fileName => fileName.endsWith('.json'));
   if (reportIDStart) {
     reportFileNames = reportFileNames
     .filter(fileName => fileName.startsWith(reportIDStart));
   }
-  const {makeQuery} = require(`${__dirname}/procs/digest/${digesterID}/index.js`);
+  const {makeQuery} = require(`${digestProcDir}/${digesterID}/index.js`);
   for (const fileName of reportFileNames) {
-    const reportJSON = await fs.readFile(`${reportDirScoredAbs}/${fileName}`, 'utf8');
+    const reportJSON = await fs.readFile(`${reportDirScored}/${fileName}`, 'utf8');
     const report = JSON.parse(reportJSON);
     const query = {};
     makeQuery(report, query);
     const template = await fs
-    .readFile(`${__dirname}/procs/digest/${digesterID}/index.html`, 'utf8');
+    .readFile(`${digestProcDir}/${digesterID}/index.html`, 'utf8');
     const digest = replaceHolders(template, query);
     const fileNameBase = fileName.slice(0, -5);
-    await fs.writeFile(`${digestProcDir}/${fileNameBase}.html`, digest);
+    await fs.writeFile(`${reportDirDigested}/${fileNameBase}.html`, digest);
     console.log(`Report ${fileNameBase} digested and saved`);
   };
   return reportFileNames.length;

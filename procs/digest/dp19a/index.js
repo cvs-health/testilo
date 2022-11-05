@@ -12,11 +12,9 @@ const htmlEscape = textOrNumber => textOrNumber
 .toString()
 .replace(/&/g, '&amp;')
 .replace(/</g, '&lt;');
-// Gets a row of the score-summary table.
-const getScoreRow = (component, score) => `<tr><th>${component}</th><td>${score}</td></tr>`;
 // Adds parameters to a query for a digest.
 exports.makeQuery = (report, query) => {
-  // Add an HTML-safe copy of the host report to the query to be appended to the digest.
+  // Add an HTML-safe copy of the report to the query to be appended to the digest.
   const {script, host, score} = report;
   const reportJSON = JSON.stringify(report, null, 2);
   const reportJSONSafe = htmlEscape(reportJSON);
@@ -25,7 +23,7 @@ exports.makeQuery = (report, query) => {
   query.sp = 'sp19a';
   query.dp = 'dp19a';
   // Add the job data to the query.
-  query.dateISO = report.endTime.slice(0, 10);
+  query.dateISO = report.jobData.endTime.slice(0, 10);
   query.dateSlash = query.dateISO.replace(/-/g, '/');
   if (host && host.what && host.which) {
     query.org = host.what;

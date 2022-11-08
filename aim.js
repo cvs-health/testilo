@@ -3,25 +3,11 @@
   Module for aiming a script at a host.
 */
 
-// ########## IMPORTS
-
-// Module to keep secrets.
-require('dotenv').config();
-// Module to read and write files.
-const fs = require('fs/promises');
-
-// ########## CONSTANTS
-
-const scriptDir = process.env.SCRIPTDIR || 'scripts';
-
 // ########## FUNCTIONS
 
 // Returns a script, aimed at a host.
-exports.aim = async (scriptName, host, requester) => {
-  // Copy the script.
-  const scriptFile = await fs.readFile(`${scriptDir}/${scriptName}.json`, 'utf8');
-  const script = JSON.parse(scriptFile);
-  // In the copy, make all url commands visit the host.
+exports.aim = async (script, host, requester) => {
+  // Make all url commands in the script visit the host.
   script.commands.forEach(command => {
     if (command.type === 'url') {
       command.id = host.id;
@@ -37,8 +23,8 @@ exports.aim = async (scriptName, host, requester) => {
   }
   // Create a job-creation time stamp.
   const timeStamp = Math.floor((Date.now() - Date.UTC(2022, 1)) / 2000).toString(36);
-  // Change the script id property to include the time stamp and the host ID.
-  script.id = `${timeStamp}-${script.id}-${host.id}`;
+  // Add a job-ID property to the script, including the time stamp, the script ID, and the host ID.
+  script.jobID = `${timeStamp}-${script.id}-${host.id}`;
   // Return the host-specific script.
   return script;
 };

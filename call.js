@@ -75,7 +75,7 @@ const callMerge = async (scriptName, batchName) => {
   console.log(`Batch ${batchName}.json merged into script ${scriptName} in ${jobDir}`);
 };
 // Fulfills a scoring request.
-const callScore = async (scoreProcID, reportIDStart) => {
+const callScore = async (scoreProcID, reportIDStart = '') => {
   // Identify the raw reports.
   const rawFileNames = await fs.readdir(rawDir);
   const rawReportNames = rawFileNames.filter(fileName => fileName.endsWith('.json'));
@@ -157,9 +157,19 @@ const digestPrep = async digestProcID => {
     digestTemplate,
     scoredReportNames
   };
-}
+};
+// Digests and saves a report.
+const digestReport = async (scoredReportName, prepData) => {
+  // Digest the specified report.
+  const scoredReportJSON = await fs.readFile(`${scoredDir}/${scoredReportName}.json`, 'utf8');
+  const scoredReport = JSON.parse(scoredReportJSON);
+  const digestedReport = digest(prepData.digestTemplate, prepData.makeQuery, scoredReport);
+  // Save it, digested.
+  await fs.writeFile(`${digestedDir}/${digestedReport.id}.html`, digestedReport);
+  console.log(`Report ${scoredReport.id} digested and saved in ${digestedDir}`);
+};
 // Fulfills a digesting request.
-const callDigest = async (digestProcID, reportIDStart) => {
+const callDigest = async (digestProcID, reportIDStart = '') => {
   const prepData = await digestPrep(digestProcID);
   // If any scored reports exist:
   if (prepData.anyScoredReports) {
@@ -175,13 +185,8 @@ const callDigest = async (digestProcID, reportIDStart) => {
     }
     // If it exists:
     if (scoredReportName) {
-      // Digest it.
-      const scoredReportJSON = await fs.readFile(`${scoredDir}/${scoredReportName}.json`, 'utf8');
-      const scoredReport = JSON.parse(scoredReportJSON);
-      const digestedReport = digest(prepData.digestTemplate, makeQuery, scoredReport);
-      // Save it, digested.
-      await fs.writeFile(`${digestedDir}/${digestedReport.id}.html`, digestedReport);
-      console.log(`Report ${scoredReport.id} digested and saved in ${digestedDir}`);
+      // Digest and save it.
+      await digestReport(scoredReportName, prepData);
     }
     // Otherwise, i.e. if it does not exist:
     else {
@@ -202,13 +207,8 @@ const callMultiDigest = async digestProcID => {
   if (prepData.anyScoredReports) {
     // For each of them:
     for (const scoredReportName of prepData.scoredReportNames) {
-      // Digest it.
-      const scoredReportJSON = await fs.readFile(`${scoredDir}/${scoredReportName}.json`, 'utf8');
-      const scoredReport = JSON.parse(scoredReportJSON);
-      const digestedReport = digest(prepData.digestTemplate, makeQuery, scoredReport);
-      // Save it, digested.
-      await fs.writeFile(`${digestedDir}/${digestedReport.id}.html`, digestedReport);
-      console.log(`Report ${scoredReport.id} digested and saved in ${digestedDir}`);
+      // Digest and save it.
+      await digestReport(scoredReportName, prepData);
     }
   }
   // Otherwise, i.e. if no raw report exists:
@@ -249,8 +249,20 @@ else if (fn === 'score' && fnArgs.length > 0 && fnArgs.length < 3) {
     console.log('Execution completed');
   });
 }
+else if (fn === 'multiScore' && fnArgs.length === 1) {
+  callMultiScore(... fnArgs)
+  .then(() => {
+    console.log('Execution completed');
+  });
+}
 else if (fn === 'digest' && fnArgs.length > 0 && fnArgs.length < 3) {
   callDigest(... fnArgs)
+  .then(() => {
+    console.log('Execution completed');
+  });
+}
+else if (fn === 'multiDigest' && fnArgs.length === 1) {
+  callMultiDigest(... fnArgs)
   .then(() => {
     console.log('Execution completed');
   });

@@ -130,22 +130,21 @@ The `score` function performs scoring. It depends on a _score proc_ to define th
 Execution by a module:
 
 ```javaScript
-const fs = require('fs/promises');
-const scoreReport = async rawReport => {
+const scoreReport = async (scoreProcID, rawReportID) => {
+  const fs = require('fs/promises');
   const {score} = require('testilo/score');
-  const procJSON = await fs.readFile(`${process.env.SCOREPROCDIR}/sp25a.json`, 'utf8');
-  const proc = JSON.parse(procJSON);
-  const scoredReport = score(proc, rawReport);
+  const {scorer} = require(`${process.env.SCOREPROCDIR}/${scoreProcID}`);
+  const rawReportJSON = await fs.readFile(
+    `${process.env.REPORTDIR_RAW}/${rawReportID}.json`, 'utf8'
+  );
+  const rawReport = JSON.parse(rawReportJSON);
+  const scoredReport = score(scorer, rawReport);
   await fs.writeFile(
     `${process.env.REPORTDIR_SCORED}/${scoredReport.id}.json`, JSON.stringify(scoredReport, null, 2)
   );
   console.log(`Report ${scoredReport.id} scored`);
 };
-fs.readFile(`${process.env.REPORTDIR_RAW}/756mr-tp25-w3c.json`, 'utf8')
-.then(rawReportJSON => {
-  const rawReport = JSON.parse(rawReportJSON);
-  scoreReport(rawReport);
-});
+scoreReport('sp25a', '756mr-tp25-w3c');
 ```
 
 Execution by a user:
@@ -192,22 +191,19 @@ The `digest` function converts scored reports into HTML documents with explanato
 Execution by a module:
 
 ```javaScript
-const fs = require('fs/promises');
-const digestReport = async scoredReport => {
+const digestReport = async (digestProcID, scoredReportID) => {
+  const fs = require('fs/promises');
   const {digest} = require('testilo/digest');
-  const procJSON = await fs.readFile(`${process.env.DIGESTPROCDIR}/dp25a.json`, 'utf8');
-  const proc = JSON.parse(procJSON);
-  const digest = digest(proc, scoredReport);
-  await fs.writeFile(
-    `${process.env.REPORTDIR_DIGESTED}/${digest.id}.json`, JSON.stringify(digest, null, 2)
+  const {makeQuery} = require(`${process.env.DIGESTPROCDIR}/${digestProcID}/index`);
+  const digestTemplate = await fs.readFile(
+    `${process.env.DIGESTPROCDIR}/${digestProcID}/index.html`
   );
-  console.log(`Report ${digest.id} digested`);
+  const digestedReport = digest(digestTemplate, makeQuery, scoredReport);
+  const digestedReport = digest(makeQuery, scoredReport);
+  await fs.writeFile(`${process.env.REPORTDIR_DIGESTED}/${digestedReport.id}.html`, digestedReport);
+  console.log(`Report ${digestedReport.id} digested`);
 };
-fs.readFile(`${process.env.REPORTDIR_SCORED}/756mr-tp25-w3c.json`, 'utf8')
-.then(scoredReportJSON => {
-  const scoredReport = JSON.parse(scoredReportJSON);
-  digestReport(scoredReport);
-});
+digestReport('dp25a', '756mr-tp25-w3c');
 ```
 
 Execution by a user:

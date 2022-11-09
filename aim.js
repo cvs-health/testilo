@@ -6,7 +6,7 @@
 // ########## FUNCTIONS
 
 // Returns a script, aimed at a host.
-exports.aim = async (script, host, requester) => {
+exports.aim = (script, host, requester) => {
   // Make all url commands in the script visit the host.
   script.commands.forEach(command => {
     if (command.type === 'url') {

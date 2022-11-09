@@ -24,7 +24,7 @@ const scoreProcDir = process.env.SCOREPROCDIR || `${__dirname}/procs/score`;
 // ########## FUNCTIONS
 
 // Score the specified reports and return their count.
-exports.score = async scoreProcID => {
+exports.multiScore = async scoreProcID => {
   // Identify the reports to be scored.
   let reportFileNames = await fs.readdir(reportDirRaw);
   reportFileNames = reportFileNames.filter(fileName => fileName.endsWith('.json'));

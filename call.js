@@ -65,9 +65,10 @@ const callAim = async (scriptName, hostURL, hostName, hostID, requester) => {
     }, 
     requester
   );
-  const aimedScriptID = aimedScript.id;
-  await fs.writeFile(`${jobDir}/${aimedScriptID}.json`, JSON.stringify(aimedScript, null, 2));
-  console.log(`Script ${aimedScriptID}.json has been aimed at ${hostName} and saved in ${jobDir}`);
+  const scriptID = script.sources.script;
+  const jobID = aimedScript.id;
+  await fs.writeFile(`${jobDir}/${jobID}.json`, `${JSON.stringify(aimedScript, null, 2)}\n`);
+  console.log(`Script ${scriptID} aimed at ${hostName} saved as ${jobID}.json in ${jobDir}`);
 };
 // Fulfills a merger request.
 const callMerge = async (scriptName, batchName) => {

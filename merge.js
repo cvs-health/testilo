@@ -56,7 +56,7 @@ exports.merge = async (scriptName, batchName) => {
     }
     // Add the job-creation time to the script.
     newScript.jobCreationTime = nowString();
-    // Change the script id property to include the time stamp and the host ID.
+    // Change the script ID to a job ID.
     newScript.id = `${timeStamp}-${newScript.id}-${host.id}`;
     // Return the host-specific script.
     return newScript;

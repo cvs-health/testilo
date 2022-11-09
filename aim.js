@@ -5,7 +5,9 @@
 
 // ########## FUNCTIONS
 
-// Returns a script, aimed at a host.
+// Returns a string representing the date and time.
+const nowString = () => (new Date()).toISOString().slice(0, 19);
+// Returns a script, aimed at a host, as a job.
 exports.aim = (script, host, requester) => {
   // Make all url commands in the script visit the host.
   script.commands.forEach(command => {
@@ -16,15 +18,17 @@ exports.aim = (script, host, requester) => {
     }
   });
   // Add source information to the script.
-  script.source = {
+  script.sources = {
     script: script.id,
     host,
     requester
   }
   // Create a job-creation time stamp.
   const timeStamp = Math.floor((Date.now() - Date.UTC(2022, 1)) / 2000).toString(36);
-  // Add a job-ID property to the script, including the time stamp, the script ID, and the host ID.
-  script.jobID = `${timeStamp}-${script.id}-${host.id}`;
-  // Return the host-specific script.
+  // Change the script ID to a job ID.
+  script.id = `${timeStamp}-${script.id}-${host.id}`;
+  // Add the job-creation time to the script.
+  script.jobCreationTime = nowString();
+  // Return the job.
   return script;
 };

@@ -14,6 +14,8 @@
 require('dotenv').config();
 // Module to read and write files.
 const fs = require('fs/promises');
+// Module to score reports.
+const {score} = require('./score');
 
 // ########## CONSTANTS
 
@@ -25,21 +27,22 @@ const scoreProcDir = process.env.SCOREPROCDIR || `${__dirname}/procs/score`;
 
 // Score the specified reports and return their count.
 exports.multiScore = async scoreProcID => {
+  // Get the score proc.
+  const {scorer} = require(`${scoreProcDir}/${scoreProcID}`);
   // Identify the reports to be scored.
   let reportFileNames = await fs.readdir(reportDirRaw);
   reportFileNames = reportFileNames.filter(fileName => fileName.endsWith('.json'));
   // For each of them:
-  const {scorer} = require(`${scoreProcDir}/${scoreProcID}`);
   for (const fileName of reportFileNames) {
     // Score it.
-    const reportJSON = await fs.readFile(`${reportDirRaw}/${fileName}`, 'utf8');
-    const report = JSON.parse(reportJSON);
-    await scorer(report);
-    report.scoreProcID = scoreProcID;
+    const rawReportJSON = await fs.readFile(`${reportDirRaw}/${fileName}`, 'utf8');
+    const rawReport = JSON.parse(rawReportJSON);
+    const scoredReport = await score(scorer, rawReport);
     // Write it to a file.
-    const scoredReportJSON = JSON.stringify(report, null, 2);
+    const scoredReportJSON = JSON.stringify(scoredReport, null, 2);
     await fs.writeFile(`${reportDirScored}/${fileName}`, `${scoredReportJSON}\n`);
-    console.log(`Report ${fileName.slice(0, -5)} scored and saved`);
   };
-  return reportFileNames.length;
+  console.log(
+    `Scored reports saved in ${reportDirScored}. Report count: ${reportFileNames.length}.`
+  );
 };

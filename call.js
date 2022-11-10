@@ -117,34 +117,12 @@ const callScore = async (scoreProcID, reportIDStart = '') => {
 };
 // Fulfills a multiple-report scoring request.
 const callMultiScore = async scoreProcID => {
-  // Identify all the raw reports.
-  const rawFileNames = await fs.readdir(rawDir);
-  const rawReportNames = rawFileNames.filter(fileName => fileName.endsWith('.json'));
-  // If any exist:
-  if (rawReportNames.length) {
-    // For each of them:
-    const {scorer} = require(`${scoreProcDir}/${scoreProcID}.js`);
-    for (const rawReportName of rawReportNames) {
-      // Score it.
-      const rawReportJSON = await fs.readFile(`${rawDir}/${rawReportName}.json`);
-      const rawReport = JSON.parse(rawReportJSON);
-      const scoredReport = score(scorer, rawReport);
-      // Save it, scored.
-      await fs.writeFile(
-        `${scoredDir}/${scoredReport.id}.json`, JSON.stringify(scoredReport, null, 2)
-      );
-      console.log(`Report ${rawReport.id} scored and saved in ${scoredDir}`);
-    }
-  }
-  // Otherwise, i.e. if no raw report exists:
-  else {
-    // Report this.
-    console.log('ERROR: No raw report found');
-  }
+  // Score all raw reports.
+  await multiScore(scoreProcID);
 };
 // Prepares to fulfill a digesting request.
 const digestPrep = async digestProcID => {
-  const {digest} = require('testilo/digest');
+  const {digest} = require('./digest');
   const {makeQuery} = require(`${digestProcDir}/${digestProcID}/index`);
   const digestTemplate = await fs.readFile(`${digestProcDir}/${digestProcID}/index.html`, 'utf8');
   // Identify the scored reports.
@@ -162,12 +140,12 @@ const digestPrep = async digestProcID => {
 // Digests and saves a report.
 const digestReport = async (scoredReportName, prepData) => {
   // Digest the specified report.
-  const scoredReportJSON = await fs.readFile(`${scoredDir}/${scoredReportName}.json`, 'utf8');
+  const scoredReportJSON = await fs.readFile(`${scoredDir}/${scoredReportName}`, 'utf8');
   const scoredReport = JSON.parse(scoredReportJSON);
   const digestedReport = digest(prepData.digestTemplate, prepData.makeQuery, scoredReport);
   // Save it, digested.
-  await fs.writeFile(`${digestedDir}/${digestedReport.id}.html`, digestedReport);
-  console.log(`Report ${scoredReport.id} digested and saved in ${digestedDir}`);
+  await fs.writeFile(`${digestedDir}/${scoredReport.job.id}.html`, digestedReport);
+  console.log(`Digested report ${scoredReport.job.id} saved in ${digestedDir}`);
 };
 // Fulfills a digesting request.
 const callDigest = async (digestProcID, reportIDStart = '') => {
@@ -218,14 +196,14 @@ const callMultiDigest = async digestProcID => {
     console.log('ERROR: No raw report found');
   }
   console.log(
-    `Digesting completed. Digest proc: ${digestProcID}. Report count: ${prepData.scoredReportNames.length}. Directory: ${digestedDir}`
+    `Digesting completed. Digest proc: ${digestProcID}. Report count: ${prepData.scoredReportNames.length}. Directory: ${digestedDir}.`
   );
 };
 // Fulfills a comparison request.
 const callCompare = async (compareProcID, comparisonNameBase) => {
   await compare(compareProcID, comparisonNameBase);
   console.log(
-    `Comparison completed. Comparison proc: ${compareProcID}. Directory: ${comparisonDir}`
+    `Comparison completed. Comparison proc: ${compareProcID}. Directory: ${comparisonDir}.`
   );
 };
 

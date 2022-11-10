@@ -9,11 +9,11 @@
 // ########## FUNCTIONS
 
 // Score the specified raw report and return it, scored.
-exports.score = async (scoreProc, rawReport) => {
+exports.score = async (scorer, rawReport) => {
   // Initialize a scored report.
   const scoredReport = JSON.parse(JSON.stringify(rawReport));
   // Score it.
-  await scoreProc(scoredReport);
+  await scorer(scoredReport);
   console.log(`Report ${rawReport.job.id} scored`);
   return scoredReport;
 };

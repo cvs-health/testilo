@@ -71,8 +71,8 @@ const callAim = async (scriptName, hostURL, hostName, hostID, requester) => {
   console.log(`Script ${scriptID} aimed at ${hostName} saved as job ${jobID}.json in ${jobDir}`);
 };
 // Fulfills a merger request.
-const callMerge = async (scriptName, batchName) => {
-  await merge(scriptName, batchName);
+const callMerge = async (scriptName, batchName, requester) => {
+  await merge(scriptName, batchName, requester);
   console.log(`Batch ${batchName}.json merged into script ${scriptName} in ${jobDir}`);
 };
 // Fulfills a scoring request.
@@ -238,7 +238,7 @@ if (fn === 'aim' && fnArgs.length === 5) {
     console.log('Execution completed');
   });
 }
-else if (fn === 'merge' && fnArgs.length === 2) {
+else if (fn === 'merge' && fnArgs.length === 3) {
   callMerge(... fnArgs)
   .then(() => {
     console.log('Execution completed');

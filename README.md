@@ -107,7 +107,7 @@ Execution by a module:
 
 ```javaScript
 const {merge} = require('testilo/merge');
-merge('tp25', 'weborgs')
+merge('tp25', 'weborgs', 'developer@w3.org')
 .then(() => {
   console.log('Merger complete');
 });
@@ -116,10 +116,10 @@ merge('tp25', 'weborgs')
 Execution by a user:
 
 ```bash
-node call merge tp25 weborgs
+node call merge tp25 weborgs developer@w3.org
 ```
 
-In these examples, a copy of the script file named `tp25.json` in the `SCRIPTDIR` directory is aimed at all the hosts in the batch file named `weborgs.json` in the `BATCHDIR` directory, and the resulting host-specific scripts are saved in the `JOBDIR` directory.
+In these examples, a copy of the script file named `tp25.json` in the `SCRIPTDIR` directory is aimed at all the hosts in the batch file named `weborgs.json` in the `BATCHDIR` directory, and the resulting jobs are saved in the `JOBDIR` directory. Each job has a `sources` property that identifies an email address to be notified after the job has been run.
 
 ### `score`
 

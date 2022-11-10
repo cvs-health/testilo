@@ -1,12 +1,13 @@
 /*
   merge.js
-  Merges a batch and a script to produce host-specific scripts.
+  Merges a batch and a script to produce jobs.
   Arguments:
     0. base of name of script located in process.env.SCRIPTDIR.
     1. base of name of batch located in process.env.BATCHDIR.
+    2. email address to be notified of completion.
   Usage example:
-    node merge tp18 weborgs
-  Note: The subdirectory for host-specific scripts will be created if it does not exist.
+    node merge tp25 weborgs developer@w3.org
+  Note: The subdirectory for jobs will be created if it does not exist.
 */
 
 // ########## IMPORTS
@@ -15,6 +16,8 @@
 require('dotenv').config();
 // Module to read and write files.
 const fs = require('fs/promises');
+// Module to aim a script at a host.
+const {aim} = require('./aim');
 
 // ########## CONSTANTS
 
@@ -24,46 +27,25 @@ const jobDir = process.env.JOBDIR || 'watch';
 
 // ########## FUNCTIONS
 
-// Returns a string representing the date and time.
-const nowString = () => (new Date()).toISOString().slice(0, 19);
-// Merges a batch into a script and writes host-specific scripts.
-exports.merge = async (scriptName, batchName) => {
+// Merges a batch into a script and writes jobs.
+exports.merge = async (scriptName, batchName, requester) => {
+  // Get the script and the batch.
   const scriptJSON = await fs.readFile(`${scriptDir}/${scriptName}.json`, 'utf8');
   const batchJSON = await fs.readFile(`${batchDir}/${batchName}.json`, 'utf8');
   const script = JSON.parse(scriptJSON);
   const batch = JSON.parse(batchJSON);
-  // Create the watch directory if it does not exist.
-  await fs.mkdir(jobDir, {recursive: true});
-  // Create a job-creation time stamp.
   const timeStamp = Math.floor((Date.now() - Date.UTC(2022, 1)) / 2000).toString(36);
+  // Create the job directory if it does not exist.
+  await fs.mkdir(jobDir, {recursive: true});
   // For each host in the batch:
   const {hosts} = batch;
-  const newScripts = hosts.map(host => {
-    // Copy the script.
-    const newScript = JSON.parse(JSON.stringify(script));
-    // In the copy, make all url commands visit the host.
-    newScript.commands.forEach(command => {
-      if (command.type === 'url') {
-        command.id = host.id;
-        command.which = host.which;
-        command.what = host.what;
-      }
-    });
-    // Add source information to the script.
-    newScript.sources = {
-      script: script.id,
-      batch: batch.id
-    }
-    // Add the job-creation time to the script.
-    newScript.jobCreationTime = nowString();
-    // Change the script ID to a job ID.
-    newScript.id = `${timeStamp}-${newScript.id}-${host.id}`;
-    // Return the host-specific script.
-    return newScript;
-  });
-  // Write the host-specific scripts.
-  for (const newScript of newScripts) {
-    await fs.writeFile(`${jobDir}/${newScript.id}.json`, JSON.stringify(newScript, null, 2));
+  for (const host of hosts) {
+    // Aim the script at the host.
+    const job = await aim(script, host, requester, timeStamp);
+    // Add the batch name to the job.
+    job.sources.batch = batchName;
+    // Save the job.
+    await fs.writeFile(`${jobDir}/${job.id}.json`, JSON.stringify(job, null, 2));
   };
-  console.log(`Merger completed. Script count: ${hosts.length}. Time stamp: ${timeStamp}`);
+  console.log(`Merger completed. Job count: ${hosts.length}. Time stamp ${timeStamp}.`);
 };

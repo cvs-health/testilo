@@ -14,6 +14,6 @@ exports.score = async (scoreProc, rawReport) => {
   const scoredReport = JSON.parse(JSON.stringify(rawReport));
   // Score it.
   await scoreProc(scoredReport);
-  console.log(`Report ${rawReport.id} scored`);
+  console.log(`Report ${rawReport.job.id} scored`);
   return scoredReport;
 };

@@ -93,15 +93,15 @@ const callScore = async (scoreProcID, reportIDStart = '') => {
     // If it exists:
     if (rawReportName) {
       // Score it.
-      const rawReportJSON = await fs.readFile(`${rawDir}/${rawReportName}.json`);
+      const rawReportJSON = await fs.readFile(`${rawDir}/${rawReportName}`, 'utf8');
       const rawReport = JSON.parse(rawReportJSON);
       const {scorer} = require(`${scoreProcDir}/${scoreProcID}.js`);
-      const scoredReport = score(scorer, rawReport);
+      const scoredReport = await score(scorer, rawReport);
       // Save it, scored.
       await fs.writeFile(
-        `${scoredDir}/${scoredReport.id}.json`, JSON.stringify(scoredReport, null, 2)
+        `${scoredDir}/${scoredReport.job.id}.json`, JSON.stringify(scoredReport, null, 2)
       );
-      console.log(`Report ${rawReport.id} scored and saved in ${scoredDir}`);
+      console.log(`Scored report ${rawReport.job.id} saved in ${scoredDir}`);
     }
     // Otherwise, i.e. if it does not exist:
     else {

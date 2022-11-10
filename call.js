@@ -56,7 +56,7 @@ const fnArgs = process.argv.slice(3);
 const callAim = async (scriptName, hostURL, hostName, hostID, requester) => {
   const scriptJSON = await fs.readFile(`${scriptDir}/${scriptName}.json`, 'utf8');
   const script = JSON.parse(scriptJSON);
-  const aimedScript = aim(
+  const job = aim(
     script,
     {
       id: hostID,
@@ -65,10 +65,10 @@ const callAim = async (scriptName, hostURL, hostName, hostID, requester) => {
     }, 
     requester
   );
-  const scriptID = script.sources.script;
-  const jobID = aimedScript.id;
-  await fs.writeFile(`${jobDir}/${jobID}.json`, `${JSON.stringify(aimedScript, null, 2)}\n`);
-  console.log(`Script ${scriptID} aimed at ${hostName} saved as ${jobID}.json in ${jobDir}`);
+  const scriptID = job.sources.script;
+  const jobID = job.id;
+  await fs.writeFile(`${jobDir}/${jobID}.json`, `${JSON.stringify(job, null, 2)}\n`);
+  console.log(`Script ${scriptID} aimed at ${hostName} saved as job ${jobID}.json in ${jobDir}`);
 };
 // Fulfills a merger request.
 const callMerge = async (scriptName, batchName) => {

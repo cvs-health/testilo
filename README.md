@@ -74,7 +74,7 @@ node call aim tp25 https://w3.org/ 'World Wide Web Consortium' w3c developer@w3c
 
 In these examples, a copy of the script file named `tp25.json` in the `SCRIPTDIR` directory is aimed at the World Wide Web Consortium and then saved in the `JOBDIR` directory.
 
-The `aim` function neither reads nor writes files. Its arguments are a script object, a host object, and a requester-email-address string, and it returns the script object, aimed at the host.
+The `aim` function neither reads nor writes files. Its arguments are a script object, a host object, and a requester-email-address string, and it returns a job object, aimed at the host.
 
 ### `merge`
 

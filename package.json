@@ -1,6 +1,6 @@
 {
   "name": "testilo",
-  "version": "7.0.6",
+  "version": "7.0.7",
   "description": "Client that scores and digests Testaro reports",
   "main": "aim.js",
   "scripts": {

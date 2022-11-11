@@ -18,8 +18,8 @@ exports.digest = (digestTemplate, digestProc, scoredReport) => {
   const query = {};
   digestProc(scoredReport, query);
   // Use it to replace the placeholders in the template.
-  const digest = replaceHolders(digestTemplate, query);
+  const digestedReport = replaceHolders(digestTemplate, query);
   // Return the digest.
   console.log(`Report ${scoredReport.job.id} digested`);
-  return digest;
+  return digestedReport;
 };

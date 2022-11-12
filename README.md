@@ -55,7 +55,7 @@ const aimScript = async () => {
     id: w3c
   };
   const {aim} = require('testilo/aim');
-  const scriptJSON = await fs.readFile(`${process.env.SCRIPTDIR}/tp25.json`, 'utf8');
+  const scriptJSON = await fs.readFile(`${process.env.SCRIPTDIR}/ts25.json`, 'utf8');
   const script = JSON.parse(scriptJSON);
   const aimedScript = aim(script, host, 'developer@w3c.org');
   await fs.writeFile(
@@ -69,10 +69,10 @@ aimScript();
 Execution by a user:
 
 ```bash
-node call aim tp25 https://w3.org/ 'World Wide Web Consortium' w3c developer@w3c.org
+node call aim ts25 https://w3.org/ 'World Wide Web Consortium' w3c developer@w3c.org
 ```
 
-In these examples, a copy of the script file named `tp25.json` in the `SCRIPTDIR` directory is aimed at the World Wide Web Consortium and then saved in the `JOBDIR` directory.
+In these examples, a copy of the script file named `ts25.json` in the `SCRIPTDIR` directory is aimed at the World Wide Web Consortium and then saved in the `JOBDIR` directory.
 
 The `aim` function neither reads nor writes files. Its arguments are a script object, a host object, and a requester-email-address string, and it returns a job object, aimed at the host.
 
@@ -107,7 +107,7 @@ Execution by a module:
 
 ```javaScript
 const {merge} = require('testilo/merge');
-merge('tp25', 'weborgs', 'developer@w3.org')
+merge('ts25', 'weborgs', 'developer@w3.org')
 .then(() => {
   console.log('Merger complete');
 });
@@ -116,10 +116,10 @@ merge('tp25', 'weborgs', 'developer@w3.org')
 Execution by a user:
 
 ```bash
-node call merge tp25 weborgs developer@w3.org
+node call merge ts25 weborgs developer@w3.org
 ```
 
-In these examples, a copy of the script file named `tp25.json` in the `SCRIPTDIR` directory is aimed at all the hosts in the batch file named `weborgs.json` in the `BATCHDIR` directory, and the resulting jobs are saved in the `JOBDIR` directory. Each job has a `sources` property that identifies an email address to be notified after the job has been run.
+In these examples, a copy of the script file named `ts25.json` in the `SCRIPTDIR` directory is aimed at all the hosts in the batch file named `weborgs.json` in the `BATCHDIR` directory, and the resulting jobs are saved in the `JOBDIR` directory. Each job has a `sources` property that identifies an email address to be notified after the job has been run.
 
 ### `score`
 
@@ -144,7 +144,7 @@ const scoreReport = async (scoreProcID, rawReportID) => {
   );
   console.log(`Report ${scoredReport.id} scored`);
 };
-scoreReport('sp25a', '756mr-tp25-w3c');
+scoreReport('sp25a', '756mr-ts25-w3c');
 ```
 
 Execution by a user:
@@ -154,7 +154,7 @@ node call score sp25a
 node call score sp25a 756mr
 ```
 
-In these examples, the `score` function applies a score proc named `sp25a`, of which a copy is in the file `sp25a.json` in the `SCOREPROCDIR` directory, to a raw report `756mr-tp25-w3c.json` in the `REPORTDIR_RAW` directory and returns the same report with score data added. The scored report is saved in the `REPORTDIR_SCORED` directory.
+In these examples, the `score` function applies a score proc named `sp25a`, of which a copy is in the file `sp25a.json` in the `SCOREPROCDIR` directory, to a raw report `756mr-ts25-w3c.json` in the `REPORTDIR_RAW` directory and returns the same report with score data added. The scored report is saved in the `REPORTDIR_SCORED` directory.
 
 The user statement can pass only 2 arguments to `call` if the first report in the `REPORTDIR_RAW` directory is the desired raw report. If there are multiple reports in that directory and the desired one is not the first, the user must pass 3 arguments to `call`, and the third argument must be a string, such that the first report in that directory that begins with that string is the desired report.
 
@@ -203,7 +203,7 @@ const digestReport = async (digestProcID, scoredReportID) => {
   await fs.writeFile(`${process.env.REPORTDIR_DIGESTED}/${digestedReport.id}.html`, digestedReport);
   console.log(`Report ${digestedReport.id} digested`);
 };
-digestReport('dp25a', '756mr-tp25-w3c');
+digestReport('dp25a', '756mr-ts25-w3c');
 ```
 
 Execution by a user:
@@ -213,7 +213,7 @@ node call digest sp25a
 node call digest sp25a 756mr
 ```
 
-In these examples, the `digest` function applies a digest proc named `dp25a`, of which a copy is in the file `dp25a.json` in the `DIGESTPROCDIR` directory, to a scored report `756mr-tp25-w3c.json` in the `REPORTDIR_SCORED` directory and returns an HTML digest for that same report. The digest is saved in the `REPORTDIR_DIGESTED` directory.
+In these examples, the `digest` function applies a digest proc named `dp25a`, of which a copy is in the file `dp25a.json` in the `DIGESTPROCDIR` directory, to a scored report `756mr-ts25-w3c.json` in the `REPORTDIR_SCORED` directory and returns an HTML digest for that same report. The digest is saved in the `REPORTDIR_DIGESTED` directory.
 
 The user statement can pass only 2 arguments to `call` if the first report in the `REPORTDIR_SCORED` directory is the desired scored report. If there are multiple reports in that directory and the desired one is not the first, the user must pass 3 arguments to `call`, and the third argument must be a string, such that the first report in that directory that begins with that string is the desired report.
 

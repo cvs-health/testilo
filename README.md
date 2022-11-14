@@ -209,8 +209,8 @@ digestReport('dp25a', '756mr-ts25-w3c');
 Execution by a user:
 
 ```bash
-node call digest sp25a
-node call digest sp25a 756mr
+node call digest dp25a
+node call digest dp25a 756mr
 ```
 
 In these examples, the `digest` function applies a digest proc named `dp25a`, of which a copy is in the file `dp25a.json` in the `DIGESTPROCDIR` directory, to a scored report `756mr-ts25-w3c.json` in the `REPORTDIR_SCORED` directory and returns an HTML digest for that same report. The digest is saved in the `REPORTDIR_DIGESTED` directory.

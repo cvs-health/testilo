@@ -62,7 +62,7 @@ const callAim = async (scriptName, hostURL, hostName, hostID, requester) => {
       id: hostID,
       which: hostURL,
       what: hostName
-    }, 
+    },
     requester
   );
   const scriptID = job.sources.script;
@@ -95,7 +95,7 @@ const callScore = async (scoreProcID, reportIDStart = '') => {
       // Score it.
       const rawReportJSON = await fs.readFile(`${rawDir}/${rawReportName}`, 'utf8');
       const rawReport = JSON.parse(rawReportJSON);
-      const {scorer} = require(`${scoreProcDir}/${scoreProcID}.js`);
+      const {scorer} = require(`./${scoreProcDir}/${scoreProcID}.js`);
       const scoredReport = await score(scorer, rawReport);
       // Save it, scored.
       await fs.writeFile(
@@ -123,7 +123,7 @@ const callMultiScore = async scoreProcID => {
 // Prepares to fulfill a digesting request.
 const digestPrep = async digestProcID => {
   const {digest} = require('./digest');
-  const {makeQuery} = require(`${digestProcDir}/${digestProcID}/index`);
+  const {makeQuery} = require(`./${digestProcDir}/${digestProcID}/index`);
   const digestTemplate = await fs.readFile(`${digestProcDir}/${digestProcID}/index.html`, 'utf8');
   // Identify the scored reports.
   const scoredFileNames = await fs.readdir(scoredDir);

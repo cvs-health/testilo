@@ -28,9 +28,11 @@ const replaceHolders = (content, query) => content
 // Creates and saves a web page containing a comparative table.
 exports.compare = async (compareProcID, comparisonNameBase) => {
   const comparisonDirAbs = `${__dirname}/${comparisonDir}`;
-  const {getQuery} = require(`./procs/compare/${compareProcID}/index`);
+  const {getQuery} = require(`./${process.env.COMPAREPROCDIR}/${compareProcID}/index`);
   const query = await getQuery();
-  const pageRaw = await fs.readFile(`${__dirname}/procs/compare/${compareProcID}/index.html`, 'utf8');
+  const pageRaw = await fs.readFile(
+    `${__dirname}/${process.env.COMPAREPROCDIR}/${compareProcID}/index.html`, 'utf8'
+  );
   const page = replaceHolders(pageRaw, query);
   await fs.writeFile(`${comparisonDirAbs}/${comparisonNameBase}.html`, page);
   console.log(`Page ${comparisonNameBase}.html created and saved`);

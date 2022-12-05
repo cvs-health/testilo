@@ -6541,7 +6541,7 @@ exports.scorer = async report => {
       groupNames.forEach(groupName => {
         const scores = [];
         // For each package with any scores in the group:
-        const groupPackageData = Object.values(groupDetails.groups[groupName]);
+        const groupPackageData = Object.values(groupDetails.groups[groupName].packages);
         groupPackageData.forEach(packageObj => {
           // Get the sum of the scores of the tests of the package in the group.
           const scoreSum = Object.values(packageObj).reduce(

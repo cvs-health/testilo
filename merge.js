@@ -6,7 +6,7 @@
     1. base of name of batch located in process.env.BATCHDIR.
     2. email address to be notified of completion.
   Usage example:
-    node merge tp25 weborgs developer@w3.org
+    node call merge ts25 weborgs developer@w3.org
   Note: The subdirectory for jobs will be created if it does not exist.
 */
 

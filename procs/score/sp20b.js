@@ -4066,7 +4066,7 @@ const groups = {
       }
     }
   },
-  titleAsLabel: { 
+  titleAsLabel: {
     wcag: '2.4.6',
     weight: 3,
     packages: {
@@ -6340,7 +6340,7 @@ exports.scorer = async report => {
         }
         else if (which === 'miniText') {
           const items = test.result && test.result.items;
-          if (items.length) {
+          if (items && items.length) {
             // Add 1 per 100 characters of small-text.
             const totalLength = items.reduce((total, item) => total + item.length, 0);
             addDetail('testaro', which, Math.floor(totalLength / 100));
@@ -6519,7 +6519,7 @@ exports.scorer = async report => {
             // Round the score, but not to less than 1.
             const roundedScore = Math.max(Math.round(weightedScore), 1);
             // Add the rounded score and the test description to the group details.
-            groupDetails.groups[groupName][packageName][testID] = {
+            groupDetails.groups[groupName].packages[packageName][testID] = {
               score: roundedScore,
               what: groups[groupName].packages[packageName][testID].what
             };

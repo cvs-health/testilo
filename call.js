@@ -216,7 +216,7 @@ if (fn === 'aim' && fnArgs.length === 5) {
     console.log('Execution completed');
   });
 }
-else if (fn === 'merge' && fnArgs.length === 3) {
+else if (fn === 'merge' && fnArgs.length > 1 && fnArgs.length < 4) {
   callMerge(... fnArgs)
   .then(() => {
     console.log('Execution completed');

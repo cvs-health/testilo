@@ -47,15 +47,19 @@ You can create a job for Testaro directly, without using Testilo.
 
 Testilo can, however, make job preparation more efficient in two scenarios:
 - A common use case is to define a battery of tests and to have those tests performed on multiple targets. In that case, you want multiple jobs, one per page. The jobs are identical, except for the target-specific acts (including navigating to targets). If you give Testilo this information, Testilo can create such collections of jobs for you. The `merge` module does this.
-- Some tests operate on a copy of a target and modify that copy. Usually, one wants test isolation: The results of a test do not depend on any previously performed tests. To ensure test isolation, a job containing such target-modifying tests must follow them with acts that restore the target to its desired pre-test state. If you tell Testilo which tests you want performed in which order and how to reach the target, Testilo can insert the required target-restoring acts into a job after target-modifying tests. The `isolate` module does this.
+- Some tests operate on a copy of a target and modify that copy. Usually, one wants test isolation: The results of a test do not depend on any previously performed tests. To ensure test isolation, a job containing such target-modifying tests must follow them with acts that restore the target to its desired pre-test state. If you tell Testilo which tests you want performed in which order and how to reach the target, Testilo can insert the required target-restoring acts into the job after target-modifying tests. The `isolate` module does this.
 
 ### Merging
 
-To use the `merge` module, you need to create a _script_ and a _batch_. The script is an object that specifies a job, except for the targets. The batch is an object that specifies target-specific acts. The script contains an array of acts, with placeholders. The `merge` module creates one job per target, replacing the placeholders with the acts specific to that target.
+To use the `merge` module, you need to create a _script_ and a _batch_:
+- The script is an object that specifies a job, except for the targets.
+- The batch is an object that specifies target-specific acts for targets.
+
+The script contains an array of acts, with placeholders. For each target in the batch, the `merge` module creates a job, in which the placeholders are replaced with the acts specific to that target in the batch.
 
 Here is an example illustrating how merging works.
 
-You have created this script:
+Suppose you have created this script:
 
 ```javaScript
 {
@@ -64,7 +68,7 @@ You have created this script:
   strict: true,
   acts: [
     {
-      type: 'injection',
+      type: 'placeholder',
       browserType: 'webkit'
     },
     {
@@ -76,7 +80,7 @@ You have created this script:
       count: 5
     },
     {
-      type: 'injection',
+      type: 'placeholder',
       browserType: 'chromium'
     },
     {
@@ -95,25 +99,49 @@ You have created this script:
 }
 ```
 
-You have also created this batch:
+Two of the acts in this script, those with type `placeholder`, are placeholders. The other three are tests.
+
+Suppose you have also created this batch:
 
 ```javaScript
 {
-  "id": "weborgs",
-  "what": "Web standards organizations",
-  "hosts": [
+  id: 'weborgs',
+  what: 'Web standards organizations',
+  targets: [
     {
-      "id": "mozilla",
-      "which": "https://www.mozilla.org/en-US/",
-      "what": "Mozilla"
+      id: mozilla,
+      what: 'Mozilla',
+      acts: [
+        {
+          type: 'launch',
+          browserType: ''
+        },
+        {
+          type: 'url',
+          which: 'https://www.w3.org/',
+          what: 'Mozilla'
+        }
+      ]
     },
     {
-      "id": "w3c",
-      "which": "https://www.w3.org/",
-      "what": "W3C"
+      id: 'w3c',
+      what: 'World Wide Web Consortium',
+      acts: [
+        {
+          type: 'launch',
+          browserType: ''
+        },
+        {
+          type: 'url',
+          which: 'https://www.w3.org/',
+          what: 'World Wide Web Consortium'
+        }
+      ]
     }
   ]
 }
+
+
 
 ```
 

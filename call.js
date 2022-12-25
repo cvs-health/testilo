@@ -206,6 +206,18 @@ const callCompare = async (compareProcID, comparisonNameBase) => {
     `Comparison completed. Comparison proc: ${compareProcID}. Directory: ${comparisonDir}.`
   );
 };
+// Fulfills an isolation request.
+const callIsolate = async (jobID, injectorID) => {
+  const jobJSON = await fs.readFile(`${process.env.JOBDIR}/${jobID}.json`, 'utf8');
+  const job = JSON.parse(jobJSON);
+  const injectorJSON = await fs.readFile(`${process.env.INJECTORDIR}/${injectorID}.json`, 'utf8');
+  const injector = JSON.parse(injectorJSON);
+  const expandedJob = Array.from(job);
+  expandedJob.acts = inject(expandedJob.acts, injector);
+  await fs.writeFile(
+    `${process.env.JOBDIR_EXPANDED}/${jobID}.json`, JSON.stringify(expandedJob, null, 2)
+  );
+}
 
 // ########## OPERATION
 

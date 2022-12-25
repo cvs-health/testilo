@@ -26,12 +26,13 @@ const contaminantNames = new Set([
 exports.inject = (acts, injector) => {
   // Initialize the expanded array of acts.
   const expandedActs = [];
+  let actIndex = 0;
   // For each act:
   for (const act of acts) {
     // Append it to the expanded array.
     expandedActs.push(act);
-    // If the act is a contaminant:
-    if (act.type === 'test' && contaminantNames.includes(act.which)) {
+    // If the act is not the last one and is a contaminant:
+    if (actIndex++ < acts.length && act.type === 'test' && contaminantNames.includes(act.which)) {
       // Append the injector to the expanded array.
       expandedActs.push(... injector);
     }

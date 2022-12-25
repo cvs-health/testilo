@@ -5,15 +5,19 @@ Utilities for Testaro
 
 The Testilo package contains utilities that facilitate the use of the [Testaro](https://www.npmjs.com/package/testaro) package.
 
-Testaro performs digital accessibility tests on web artifacts and creates reports in JSON format. The utilities in Testilo prepare jobs for Testaro to run and create additional value from the reports that Testaro produces.
+Testaro performs digital accessibility tests on web artifacts and creates reports in JSON format. The utilities in Testilo fall into two categories:
+- Job preparation
+- Report enhancement
 
 Because Testilo supports Testaro, this `README` file presumes that you have access to the Testaro `README` file and therefore does not repeat information provided there.
 
 ## Branches
 
-The `writer` branch contains the state of Testilo as of 2022-11-07. In that branch, Testilo must read and write files when it aims, scores, or digests. That makes Testilo unusable as a dependency in applications that do not have permission to both read and write files.
+The `writer` branch contains the state of Testilo as of 2022-11-07. In that branch, Testilo must read and write files. That makes Testilo unusable as a dependency in applications that do not have permission to both read and write files.
 
-The `main` branch contains the state of Testilo starting on 2022-11-07. In that branch, Testilo does not need to read or write files when it aims, scores, or digests, so applications without write permission can still use Testilo as a dependency if they need only those functionalities.
+The `simple` branch contains the state of Testilo as of 2022-12-23. In that branch, Testilo does not need to read or write files, so applications without write permission can still use Testilo as a dependency.
+
+The `main` branch contains the state of Testilo from 2022-12-24 until now. In that branch, Testilo can prepare jobs that require multi-step operations to reach and pre-process the pages being tested.
 
 This `README.md` file documents the `main` branch.
 
@@ -27,13 +31,149 @@ When Testilo is a dependency of another application, the `.env` file is not impo
 
 Testilo is written in Node.js. Commands are given to Testilo in a command-line (terminal) interface or programmatically.
 
-Shared routines that perform scoring, digesting, and comparing are _procs_ and are located in the `procs` directory.
+Shared routines are _procs_ and are located in the `procs` directory.
 
 Testilo can be installed wherever Node.js (version 14 or later) is installed. This can be a server or the same workstation on which Testaro is installed.
 
-The reason for Testilo being an independent package, rather than part of Testaro, is that Testilo can be installed on any host, while Testaro can run successfully only on a Windows or Macintosh workstation (and perhaps on some workstations with Ubuntu operating systems). Testaro runs tests similar to those that a human accessibility tester would run, using whatever browsers, input devices, system settings, simulated and attached devices, and assistive technologies tests may require. Thus, Testaro is limited to functionalities that require workstation attributes. For maximum flexibility in the management of Testaro jobs, all other functionalities are located outside of Testaro. You could have software such as Testilo running on a server, communicating with multiple workstations running Testaro, receiving job orders from the server and returning job results to the server for further processing.
+The reason for Testilo being an independent package, rather than part of Testaro, is that Testilo can be installed on any host, while Testaro can run successfully only on a Windows or Macintosh workstation (and perhaps on some workstations with Ubuntu operating systems). Testaro runs tests similar to those that a human accessibility tester would run, using whatever browsers, input devices, system settings, simulated and attached devices, and assistive technologies tests may require. Thus, Testaro is limited to functionalities that require workstation attributes. For maximum flexibility in the management of Testaro jobs, all other functionalities are located outside of Testaro. You could have software such as Testilo running on a server, communicating with multiple workstations running Testaro. The workstations could receive job orders from the server and return job results to the server for further processing.
 
-## Utilities
+## Job preparation
+
+### Introduction
+
+Testilo can prepare jobs for execution by Testaro.
+
+A _job_ is an object with this initial structure:
+
+```javaScript
+{
+  specs: {},
+  acts: []
+}
+```
+
+Testilo can populate the `specs` property with job requirements and the `acts` array with a sequence of _acts_ (operations) to be performed by Testaro.
+
+When Testaro executes a job, Testaro will convert it to a _report_ by adding content to the job:
+- Testaro will add to each act information about the result of the act.
+- Testaro will add a `jobData` object property to the report, containing other information about the execution of the job.
+
+You can create a job for Testaro directly, without using Testilo. Instructions for doing this are in the `README.md` file of the Testaro package.
+
+Using Testilo is more efficient when you wish to perform a battery of tests on multiple _hosts_ (pages). In this situation, you can create a _script_ describing the battery of tests and a _batch_ describing the instructions for reaching the hosts. Then Testilo can combine the batch with the script, creating one job per host.
+
+The `prep` module performs this combination.
+
+### Scripts
+
+Here is an example of a script:
+
+```javaScript
+{
+  id: 'ts25',
+  what: 'Sample test battery',
+  strict: true,
+  commands: [
+    {
+      type: 'injection',
+      browserType: 'webkit'
+    },
+    {
+      type: 'test',
+      which: 'motion',
+      what: 'spontaneous change of content; requires webkit',
+      delay: 2500,
+      interval: 2500,
+      count: 5
+    },
+    {
+      type: 'injection',
+      browserType: 'chromium'
+    },
+    {
+      type: 'test',
+      which: 'axe',
+      withItems: true,
+      rules: [],
+      what: 'Axe core, all rules'
+    },
+    {
+      type: 'test',
+      which: 'bulk',
+      what: 'count of visible elements'
+    }
+  ]
+}
+```
+
+Its four properties provide:
+- `id`: a unique ID for the script, which is saved in a JSON file in the `process.env.SCRIPTDIR` directory.
+- `what`: a description of the script.
+- `script`: whether Testaro should reject server redirections.
+- `commands`: the step-by-step instructions for Testaro.
+
+In this example, there are 3 tests to be performed. There are also 2 commands of the type `injection`. Those commands tell Testilo to replace them with commands stored in a batch.
+
+### Batches
+
+Here is an example of a batch:
+
+```javaScript
+{
+  "id": "weborgs",
+  "what": "Web standards organizations",
+  "hosts": [
+    {
+      "id": "mozilla",
+      "which": "https://www.mozilla.org/en-US/",
+      "what": "Mozilla"
+    },
+    {
+      "id": "w3c",
+      "which": "https://www.w3.org/",
+      "what": "W3C"
+    }
+  ]
+}
+
+```
+
+```javaScript
+{
+  job: {
+    id: 'unique identifier of this job'
+    what: 'description of the job',
+    strict: 'whether to disallow redirections (true or false)',
+    timelimit: 'seconds allowed for job execution (integer)',
+    sources: {
+      script: 'ID of the script',
+      batch: 'ID of the batch',
+      host: {
+        id: 'ID',
+        which: 'URL',
+        what: 'name'
+      },
+      requester: 'email address to be notified'
+    },
+    creationTime: 'when the job was created (string with format 2022-11-20T15:50:27)',
+    timeStamp: 'alphanumeric representation of the creation time'
+  },
+  acts: 'array of the commands to be performed and their results',
+  jobData: 
+}
+```
+- `id`
+- `acts`
+- `jobData`
+
+You can create such an object directly and save it as a JSON file for use by Testaro, without using Testilo.
+
+If, however, you want to create multiple jobs that perform an identical sequence of tests on various pages, Testilo can facilitate the preparation. For this purpose, you must create two artifacts:
+- A script
+- A batch
+
+The script is an object with these properties:
+- 
 
 ### `aim`
 
@@ -78,7 +218,7 @@ The `aim` function neither reads nor writes files. Its arguments are a script ob
 
 ### `merge`
 
-The `merge` function is similar to the `aim` function, but it aims a script at multiple hosts, not only one. The hosts are identified in a _batch_, a file in the `BATCHDIR` directory. The output of `merge` is multiple script files, one per host, saved in the `JOBDIR` directory.
+The `merge` module is similar to the `aim` module, but it aims a script at multiple hosts, not only one. The hosts are identified in a _batch_, a file in the `BATCHDIR` directory. The output of `merge` is multiple script files, one per host, saved in the `JOBDIR` directory.
 
 A batch is a JSON-format file representing a `batch` object, which contains an array of _hosts_.
 
@@ -121,11 +261,42 @@ node call merge ts25 weborgs developer@w3.org
 
 In these examples, a copy of the script file named `ts25.json` in the `SCRIPTDIR` directory is aimed at all the hosts in the batch file named `weborgs.json` in the `BATCHDIR` directory, and the resulting jobs are saved in the `JOBDIR` directory. Each job has a `sources` property that identifies an email address to be notified after the job has been run.
 
+### `isolate`
+
+Some Testaro tests change the pages that they test. By doing so, they could contaminate the results of subsequent tests. To isolate tests, you can launch a browser and navigate again to the page being tested after each potentially contaminating test unless that test is the last act. The `isolate` module does this.
+
+Execution by a module:
+
+```javaScript
+const isolateTests = async (jobID, injectorID) => {
+  const fs = require('fs/promises');
+  const jobJSON = await fs.readFile(`${process.env.JOBDIR}/${jobID}.json`, 'utf8');
+  const job = JSON.parse(jobJSON);
+  const injectorJSON = await fs.readFile(`${process.env.INJECTORDIR}/${injectorID}.json`, 'utf8');
+  const injector = JSON.parse(injectorJSON);
+  const expandedJob = Array.from(job);
+  expandedJob.acts = inject(expandedJob.acts, injector);
+  await fs.writeFile(
+    `${process.env.JOBDIR_EXPANDED}/${jobID}.json`, JSON.stringify(expandedJob, null, 2)
+  );
+  console.log(`Job ${jobID} expanded`);
+};
+isolateTests('6gapx-tp25-wikipedia', 'chromium-simple');
+```
+
+Execution by a user:
+
+```bash
+node call isolate '6gapx-tp25-wikipedia' 'chromium-simple'
+```
+
+In these examples, the `isolate` function expands job `6gapx-tp25-wikipedia` by injecting the acts in the `chromium-simple` injector into the acts of the job wherever an act is a non-final contaminant. The expanded job is saved in the `process.env.JOBDIR_EXPANDED` directory.
+
 ### `score`
 
 Testaro performs tests and produces reports of test results. Testilo can add scores to those reports. In this way, each report can not only detail successes and failures of individual tests but also assign scores to those results and combine the partial scores into total scores.
 
-The `score` function performs scoring. It depends on a _score proc_ to define the scoring rules. Some score procs are in the Testilo package (in the `procs/score` directory), and you can create more score procs to implement different rules.
+The `score` module performs scoring. It depends on a _score proc_ to define the scoring rules. Some score procs are in the Testilo package (in the `procs/score` directory), and you can create more score procs to implement different rules.
 
 Execution by a module:
 

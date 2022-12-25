@@ -27,7 +27,7 @@ const digestProcDir = process.env.DIGESTPROCDIR || `${__dirname}/procs/digest`;
 const replaceHolders = (content, query) => content
 .replace(/__([a-zA-Z]+)__/g, (ph, qp) => query[qp]);
 // Creates digests.
-exports.multiDigest = async (digesterID, reportIDStart) => {
+exports.multiDigest = async digesterID => {
   // Identify the reports to be digested.
   let reportFileNames = await fs.readdir(reportDirScored);
   reportFileNames = reportFileNames.filter(fileName => fileName.endsWith('.json'));

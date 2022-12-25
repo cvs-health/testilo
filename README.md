@@ -41,39 +41,28 @@ The reason for Testilo being an independent package, rather than part of Testaro
 
 ### Introduction
 
-Testilo can prepare jobs for execution by Testaro.
+Testaro executes _jobs_. In a job, Testaro performs _acts_ (tests and other operations) on _targets_ (typically, web pages). The Testaro `README.md` file specifies the requirements for a job.
 
-A _job_ is an object with this initial structure:
+You can create a job for Testaro directly, without using Testilo.
 
-```javaScript
-{
-  specs: {},
-  acts: []
-}
-```
+Testilo can, however, make job preparation more efficient in two scenarios:
+- A common use case is to define a battery of tests and to have those tests performed on multiple targets. In that case, you want multiple jobs, one per page. The jobs are identical, except for the target-specific acts (including navigating to targets). If you give Testilo this information, Testilo can create such collections of jobs for you. The `merge` module does this.
+- Some tests operate on a copy of a target and modify that copy. Usually, one wants test isolation: The results of a test do not depend on any previously performed tests. To ensure test isolation, a job containing such target-modifying tests must follow them with acts that restore the target to its desired pre-test state. If you tell Testilo which tests you want performed in which order and how to reach the target, Testilo can insert the required target-restoring acts into a job after target-modifying tests. The `isolate` module does this.
 
-Testilo can populate the `specs` property with job requirements and the `acts` array with a sequence of _acts_ (operations) to be performed by Testaro.
+### Merging
 
-When Testaro executes a job, Testaro will convert it to a _report_ by adding content to the job:
-- Testaro will add to each act information about the result of the act.
-- Testaro will add a `jobData` object property to the report, containing other information about the execution of the job.
+To use the `merge` module, you need to create a _script_ and a _batch_. The script is an object that specifies a job, except for the targets. The batch is an object that specifies target-specific acts. The script contains an array of acts, with placeholders. The `merge` module creates one job per target, replacing the placeholders with the acts specific to that target.
 
-You can create a job for Testaro directly, without using Testilo. Instructions for doing this are in the `README.md` file of the Testaro package.
+Here is an example illustrating how merging works.
 
-Using Testilo is more efficient when you wish to perform a battery of tests on multiple _hosts_ (pages). In this situation, you can create a _script_ describing the battery of tests and a _batch_ describing the instructions for reaching the hosts. Then Testilo can combine the batch with the script, creating one job per host.
-
-The `prep` module performs this combination.
-
-### Scripts
-
-Here is an example of a script:
+You have created this script:
 
 ```javaScript
 {
   id: 'ts25',
-  what: 'Sample test battery',
+  what: 'Motion, Axe, and bulk',
   strict: true,
-  commands: [
+  acts: [
     {
       type: 'injection',
       browserType: 'webkit'
@@ -95,7 +84,7 @@ Here is an example of a script:
       which: 'axe',
       withItems: true,
       rules: [],
-      what: 'Axe core, all rules'
+      what: 'Axe core, all rules, with details'
     },
     {
       type: 'test',
@@ -106,17 +95,7 @@ Here is an example of a script:
 }
 ```
 
-Its four properties provide:
-- `id`: a unique ID for the script, which is saved in a JSON file in the `process.env.SCRIPTDIR` directory.
-- `what`: a description of the script.
-- `script`: whether Testaro should reject server redirections.
-- `commands`: the step-by-step instructions for Testaro.
-
-In this example, there are 3 tests to be performed. There are also 2 commands of the type `injection`. Those commands tell Testilo to replace them with commands stored in a batch.
-
-### Batches
-
-Here is an example of a batch:
+You have also created this batch:
 
 ```javaScript
 {
@@ -137,6 +116,19 @@ Here is an example of a batch:
 }
 
 ```
+
+Its four properties provide:
+- `id`: a unique ID for the script, which is saved in a JSON file in the `process.env.SCRIPTDIR` directory.
+- `what`: a description of the script.
+- `script`: whether Testaro should reject server redirections.
+- `commands`: the step-by-step instructions for Testaro.
+
+In this example, there are 3 tests to be performed. There are also 2 commands of the type `injection`. Those commands tell Testilo to replace them with commands stored in a batch.
+
+### Batches
+
+Here is an example of a batch:
+
 
 ```javaScript
 {
@@ -437,3 +429,25 @@ node call compare cp25a legislators
 The first argument to `compare`, or the second argument to `call`,  names the comparison proc to be used. The subsequent argument specifies a base of the name of the comparative report that will be produced. The scores in all reports in the `REPORTDIR_SCORED` directory will be compared. The comparative report will be written in the `COMPARISONDIR` directory.
 
 The comparison created by `compare` is an HTML file, and it expects a `style.css` file to exist in its directory. The `reports/comparative/style.css` file in Testilo is an appropriate stylesheet to be copied into the `COMPARISONDIR` directory.
+
+
+
+Testilo can prepare jobs for execution by Testaro.
+
+A _job_ is an object with this initial structure:
+
+```javaScript
+{
+  specs: {},
+  acts: []
+}
+```
+
+Testilo can populate the `specs` property with job requirements and the `acts` array with a sequence of _acts_ (operations) to be performed by Testaro.
+
+When Testaro executes a job, Testaro will convert it to a _report_ by adding content to the job:
+- Testaro will add to each act information about the result of the act.
+- Testaro will add a `jobData` object property to the report, containing other information about the execution of the job.
+
+Using Testilo is more efficient when you wish to perform a battery of tests on multiple _hosts_ (pages). In this situation, you can create a _script_ describing the battery of tests and a _batch_ describing the instructions for reaching the hosts. Then Testilo can combine the batch with the script, creating one job per host.
+

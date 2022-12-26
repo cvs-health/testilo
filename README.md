@@ -75,12 +75,9 @@ Suppose you have created this script:
   timeLimit: 60,
   acts: [
     {
-      type: 'launch',
-      which: 'webkit'
-    },
-    {
       type: 'placeholder',
-      which: 'main'
+      which: 'main',
+      launch: 'webkit'
     },
     {
       type: 'test',
@@ -91,12 +88,9 @@ Suppose you have created this script:
       count: 5
     },
     {
-      type: 'launch',
-      which: 'chromium'
-    },
-    {
       type: 'placeholder',
-      which: 'main'
+      which: 'main',
+      launch: 'chromium'
     },
     {
       type: 'test',
@@ -114,7 +108,7 @@ Suppose you have created this script:
 }
 ```
 
-The `acts` array of this script contains five regular acts and two placeholders. The placeholders are to be replaced with acts from the current target in a batch.
+The `acts` array of this script contains tree regular acts and two placeholders.
 
 #### Batch
 
@@ -131,6 +125,9 @@ Suppose you have also created this batch:
       acts: {
         main: [
           {
+            type: 'launch'
+          },
+          {
             type: 'url',
             which: 'https://foundation.mozilla.org/en/',
             what: 'Mozilla Foundation'
@@ -143,6 +140,9 @@ Suppose you have also created this batch:
       what: 'World Wide Web Consortium',
       acts: {
         main: [
+          {
+            type: 'launch'
+          },
           {
             type: 'url',
             which: 'https://www.w3.org/',
@@ -159,46 +159,11 @@ This batch defines two targets.
 
 #### Isolation option
 
-The `merge` module offers an isolation option. If you exercise it, the `merge` module will inject an array of acts after each target-modifying test unless that test is the last act.
+The `merge` module offers an isolation option. If you exercise it, the `merge` module will act as if the latest placeholder were again inserted after each target-modifying test, except where that test is the last act or the next act after it is a placeholder.
 
+#### Output
 
-
-Suppose you invoke this option and specify `main` as the act array.
-
-### Invocation
-
-There are two ways to use the `merge` module.
-
-#### By a module
-
-A module can invoke `merge` in this way:
-
-```javaScript
-const {merge} = require('testilo/merge');
-const jobs = merge(script, batch);
-```
-
-This invocation references `script` and `batch` variables that the module has already defined. The `merge` function of the `merge` module generates jobs and returns them in an array. The invoking module can further dispose of the jobs as needed.
-
-#### By a user
-
-A user can invoke `merge` in this way:
-
-- Create a script and save it as a JSON file named `ts25.json` in the `process.env.SCRIPTDIR` directory.
-- Create a batch and save it as a JSON file named `weborgs.json` in the `process.env.BATCHDIR` directory.
-- In the Testilo project directory, execute the statement `node call merge ts25 weborgs`.
-
-The `call` module will retrieve the named script and batch from their respective directories.
-The `merge` module will create an array of jobs.
-The `call` module will save the jobs in the `process.env.JOBDIR` directory.
-
-
-
-
-The first job could be:
-
-The `merge` module can merge this batch with the above script, producing two jobs, one for each target.
-
+Suppose you ask for a merger of the above batch and script, **without** the isolation option. Then the first job produced by `merge` could be:
 
 ```javaScript
 {
@@ -260,7 +225,9 @@ The `merge` module can merge this batch with the above script, producing two job
 }
 ```
 
-Most of the properties of this job object come from your script and your batch. The acts of type `placeholder` in the script have been replaced with the specified array of acts of the first target of the batch. In this case, that target has only one array of acts, and that array contains only one act, but a target could have multiple act arrays, and an act array could include more than one act or be empty.
+Most of the properties of this job object come from your script and your batch. The acts of type `placeholder` in the script have been replaced with the specified array of acts of the first target of the batch. In this case, that target has only one array of acts, and that array contains two acts, but a target could have multiple act arrays, and an act array could include any number of acts or be empty.
+
+If the named array of acts includes an act of type `launch`, that act gets a `which` property, identical to the value of the `launch` property of the `placeholder` object. In this way, a placeholder can dictate which browser type is to be launched.
 
 The `merge` module has added other properties to the job:
 - a creation time
@@ -270,40 +237,52 @@ The `merge` module has added other properties to the job:
 
 This job is ready to be executed by Testaro.
 
-### Isolation
+If, however, you requested a merger **with** test isolation, then `merge` would act as if another instance of
 
-Some Testaro tests change the pages that they test. By doing so, they could contaminate the results of subsequent tests. To isolate tests, you can launch a browser and navigate again to the page being tested after each potentially contaminating test unless that test is the last act. The `isolate` module does this.
+    ```javaScript
+    {
+      type: 'placeholder',
+      which: 'main',
+      launch: 'chromium'
+    },
+    ```
 
-Execution by a module:
+were located in the script after the `axe` test, because the `axe` test is target-modifying and could therefore change the result of the `bulk` test that follows it. So, additional acts of type `launch` and `url` would appear after the `axe` test in the job.
+
+### Invocation
+
+There are two ways to use the `merge` module.
+
+#### By a module
+
+A module can invoke `merge` in this way:
 
 ```javaScript
-const isolateTests = async (jobID, injectorID) => {
-  const fs = require('fs/promises');
-  const jobJSON = await fs.readFile(`${process.env.JOBDIR}/${jobID}.json`, 'utf8');
-  const job = JSON.parse(jobJSON);
-  const injectorJSON = await fs.readFile(`${process.env.INJECTORDIR}/${injectorID}.json`, 'utf8');
-  const injector = JSON.parse(injectorJSON);
-  const expandedJob = Array.from(job);
-  expandedJob.acts = inject(expandedJob.acts, injector);
-  await fs.writeFile(
-    `${process.env.JOBDIR_EXPANDED}/${jobID}.json`, JSON.stringify(expandedJob, null, 2)
-  );
-  console.log(`Job ${jobID} expanded`);
-};
-isolateTests('6gapx-tp25-wikipedia', 'chromium-simple');
+const {merge} = require('testilo/merge');
+const jobs = merge(script, batch, true);
 ```
 
-Execution by a user:
+This invocation references `script` and `batch` variables that the module has already defined and invokes the isolation option by specifying `true` as a third argument to `merge()`. To reject the isolation option, the invocation could replace `true` with `false` or omit the third argument. The `merge()` function of the `merge` module generates jobs and returns them in an array. The invoking module can further dispose of the jobs as needed.
 
-```bash
-node call isolate '6gapx-tp25-wikipedia' 'chromium-simple'
-```
+#### By a user
 
-In these examples, the `isolate` function expands job `6gapx-tp25-wikipedia` by injecting the acts in the `chromium-simple` injector into the acts of the job wherever an act is a non-final contaminant. The expanded job is saved in the `process.env.JOBDIR_EXPANDED` directory.
+A user can invoke `merge` in this way:
 
-### `score`
+- Create a script and save it as a JSON file named `ts25.json` in the `process.env.SCRIPTDIR` directory.
+- Create a batch and save it as a JSON file named `weborgs.json` in the `process.env.BATCHDIR` directory.
+- In the Testilo project directory, execute the statement `node call merge ts25 weborgs true`.
 
-Testaro performs tests and produces reports of test results. Testilo can add scores to those reports. In this way, each report can not only detail successes and failures of individual tests but also assign scores to those results and combine the partial scores into total scores.
+The `call` module will retrieve the named script and batch from their respective directories.
+The `merge` module will create an array of jobs.
+The `call` module will save the jobs in the `process.env.JOBDIR` directory.
+
+To reject the isolation option, the user can change the statement to either of these:
+- `node call merge ts25 weborgs false`
+- `node call merge ts25 weborgs`
+
+## Report scoring
+
+Testaro executes jobs and produces reports of test results. Testilo can add scores to those reports. In this way, each report can not only detail successes and failures of individual tests but also assign scores to those results and combine the partial scores into total scores.
 
 The `score` module performs scoring. It depends on a _score proc_ to define the scoring rules. Some score procs are in the Testilo package (in the `procs/score` directory), and you can create more score procs to implement different rules.
 

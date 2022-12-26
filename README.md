@@ -286,7 +286,7 @@ To reject the isolation option, the user can change the statement to either of t
 
 Testaro executes jobs and produces reports of test results. Testilo can add scores to those reports. In this way, each report can not only detail successes and failures of individual tests but also assign scores to those results and combine the partial scores into total scores.
 
-The `score` module scores a report. Its `score` function takes two arguments:
+The `score` module scores a report. Its `score()` function takes two arguments:
 - a scoring function
 - a report object
 
@@ -308,7 +308,7 @@ const {scorer} = require('testilo/procs/score/sp25a');
 const scoredReport = score(scorer, rawReport);
 ```
 
-The first argument to `score()` is a scoring function. In this example, it has been obtained from a JSON file in the Testilo package, but it could be a custom function. The second argument to `score()` is a report object; typically, it would be obtained from 
+The first argument to `score()` is a scoring function. In this example, it has been obtained from a JSON file in the Testilo package, but it could be a custom function. The second argument to `score()` is a report object.
 
 A module can invoke `multiScore` in this way:
 
@@ -344,68 +344,87 @@ When the user invokes `score`, the `call` module allows the user to identify the
 
 ## Report digesting
 
-Testaro reports, both originally and after they are scored, are JavaScript objects. When represented as JSON, they are human-readable, but basically designed for machine tractability.
+### Introduction
 
-The `digest` function converts scored reports into HTML documents with explanatory content. Thus, it converts machine-oriented reports into human-oriented reports, called _digests_. It depends on a _digest proc_ to define the digesting rules. Some digest procs are in the Testilo package (in the `procs/digest` directory), and you can create more digest procs to implement different rules.
+Reports created by Testaro, both originally and after they are scored, are JavaScript objects. When represented as JSON, they are human-readable, but not human-friendly. They are basically designed for machine tractability. Testilo can _digest_ a scored report, converting it to a human-oriented HTML document, or _digest_.
 
-Execution by a module:
+The `digest` module digests a scored report. Its `digest()` function takes two arguments:
+- a digesting function
+- a report object
+
+The `multiDigest` module digests all the reports in the `process.env.REPORTDIR_SCORED` directory. The `multiDigest()` function in that module takes one argument: a digesting function.
+
+The digesting function defines the digesting rules. The Testilo package contains a `procs/digest` directory, in which there are modules that export digesting functions. You can use one of those digesting functions, or you can create your own.
+
+### Invocation
+
+There are two ways to use the `digest` and `multiDigest` modules.
+
+#### By a module
+
+A module can invoke `digest` in this way:
 
 ```javaScript
-const digestReport = async (digestProcID, scoredReportID) => {
-  const fs = require('fs/promises');
-  const {digest} = require('testilo/digest');
-  const {makeQuery} = require(`${process.env.DIGESTPROCDIR}/${digestProcID}/index`);
-  const digestTemplate = await fs.readFile(
-    `${process.env.DIGESTPROCDIR}/${digestProcID}/index.html`
-  );
-  const digestedReport = digest(digestTemplate, makeQuery, scoredReport);
-  const digestedReport = digest(makeQuery, scoredReport);
-  await fs.writeFile(`${process.env.REPORTDIR_DIGESTED}/${digestedReport.id}.html`, digestedReport);
-  console.log(`Report ${digestedReport.id} digested`);
-};
-digestReport('dp25a', '756mr-ts25-w3c');
+const {digest} = require('testilo/digest');
+const {digester} = require('testilo/procs/digest/dp25a');
+const digestedReport = digest(digester, scoredReport);
 ```
 
-Execution by a user:
+The first argument to `digest()` is a digesting function. In this example, it has been obtained from a JSON file in the Testilo package, but it could be a custom function. The second argument to `digest()` is a report object.
 
-```bash
-node call digest dp25a
-node call digest dp25a 756mr
-```
-
-In these examples, the `digest` function applies a digest proc named `dp25a`, of which a copy is in the file `dp25a.json` in the `DIGESTPROCDIR` directory, to a scored report `756mr-ts25-w3c.json` in the `REPORTDIR_SCORED` directory and returns an HTML digest for that same report. The digest is saved in the `REPORTDIR_DIGESTED` directory.
-
-The user statement can pass only 2 arguments to `call` if the first report in the `REPORTDIR_SCORED` directory is the desired scored report. If there are multiple reports in that directory and the desired one is not the first, the user must pass 3 arguments to `call`, and the third argument must be a string, such that the first report in that directory that begins with that string is the desired report.
-
-The `digest` function neither reads nor writes files. Its arguments are a digest-proc string and a scored-report object, and it returns a digest HTML string.
-
-### `multiDigest`
-
-The `multiDigest` function digests all the reports in the `REPORTDIR_SCORED` directory and writes the digests in the `REPORTDIR_DIGESTED` directory.
-
-Execution by a module:
+A module can invoke `multiDigest` in this way:
 
 ```javaScript
 const {multiDigest} = require('testilo/multiDigest');
-multiDigest('dp25a')
-.then(hostCount => {
-  console.log(`Digesting complete. Count of reports digested: ${hostCount}`);
-});
+const {digester} = require('testilo/procs/digest/dp25a');
+const digestedReports = multiDigest(digester, scoredReports);
 ```
 
-Execution by a user:
+The second argument to `multiDigest()` is an array of report objects.
+
+#### By a user
+
+A user can invoke `digest` in this way:
 
 ```bash
-node call multiDigest dp25a
+node call digest dp25a
+node call digest dp25a 75
 ```
 
-The argument to `multiDigest` or the second argument to `call` names the digest proc to be used. The `multiDigest` function digests all the reports in the `REPORTDIR_SCORED` directory and writes the digests in the `REPORTDIR_DIGESTED` directory.
+A user can invoke `multiDigest` in this way:
 
-The digests created by `digest` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/digested/style.css` file in Testilo is an appropriate stylesheet to be copied into the `REPORTDIR_DIGESTED` directory.
+```bash
+node call multiDigest sp25a
+```
 
-### `compare`
+When a user invokes `digest` or `multiDigest`, the `call` module:
+- gets the digesting module `dp25a` from its JSON file `dp25a.json` in the `process.env.DIGESTPROCDIR` directory
+- gets the report(s) from the `process.env.REPORTDIR_SCORED` directory
+- writes the digested report(s) to the `process.env.REPORTDIR__DIGESTED` directory
 
-You can summarize multiple scored reports by producing a document comparing the scores. The `compare` function does this. It gathers scores from a set of scored reports and produces an HTML document comparing the scores. It depends on a _comparison proc_ to define the rules for making and showing the comparative scores. Some compare procs are in the Testilo package (in the `procs/compare` directory), and you can create more compare procs to implement different rules.
+When the user invokes `digest`, the `call` module allows the user to identify the report to be digested with one or more characters at the start of its name, instead of the whole name, as long as the desired report is the first one in the `process.env.REPORTDIR_SCORED` directory that matches.
+
+The digests created by `digest` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/digested/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where digested reports are written.
+
+### Report comparison
+
+If you use Testilo to perform a battery of tests on multiple targets, you may want a single report that compares the total scores received by the targets. Testilo can produce such a _comparative report_.
+
+The `compare` module compares the scores in a collection of scored reports. Its `compare()` function takes two arguments:
+- a comparison function
+- a name to be given to the comparative report
+
+The comparison function defines the comparison rules. The Testilo package contains a `procs/compare` directory, in which there are modules that export comparison functions. You can use one of those comparison functions, or you can create your own.
+
+### Invocation
+
+There are two ways to use the `digest` and `multiDigest` modules.
+
+#### By a module
+
+The `compare` module 
+
+generate and score a collectionYou can summarize multiple scored reports by producing a document comparing the scores. The `compare` function does this. It gathers scores from a set of scored reports and produces an HTML document comparing the scores. It depends on a _comparison proc_ to define the rules for making and showing the comparative scores. Some compare procs are in the Testilo package (in the `procs/compare` directory), and you can create more compare procs to implement different rules.
 
 Execution by a module:
 

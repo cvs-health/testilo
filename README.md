@@ -46,10 +46,12 @@ Testaro executes _jobs_. In a job, Testaro performs _acts_ (tests and other oper
 You can create a job for Testaro directly, without using Testilo.
 
 Testilo can, however, make job preparation more efficient in two scenarios:
-- A common use case is to define a battery of tests and to have those tests performed on multiple targets. In that case, you want multiple jobs, one per page. The jobs are identical, except for the target-specific acts (including navigating to targets). If you give Testilo this information, Testilo can create such collections of jobs for you. The `merge` module does this.
-- Some tests operate on a copy of a target and modify that copy. Usually, one wants test isolation: The results of a test do not depend on any previously performed tests. To ensure test isolation, a job containing such target-modifying tests must follow them with acts that restore the target to its desired pre-test state. If you tell Testilo which tests you want performed in which order and how to reach the target, Testilo can insert the required target-restoring acts into the job after target-modifying tests. The `isolate` module does this.
+- A common use case is to define a battery of tests and to have those tests performed on multiple targets. In that case, you want multiple jobs, one per page. The jobs are identical, except for the target-specific acts (including navigating to targets). If you give Testilo this information, Testilo can create such collections of jobs for you.
+- Some tests operate on a copy of a target and modify that copy. Usually, one wants test isolation: The results of a test do not depend on any previously performed tests. To ensure test isolation, a job containing such target-modifying tests must follow them with acts that restore the target to its desired pre-test state. If you tell Testilo which tests you want performed in which order and how to reach the target, Testilo can insert the required target-restoring acts into the job after target-modifying tests.
 
-### Merging
+The `merge` module merges batches with scripts, with or without test isolation.
+
+### Procedure
 
 To use the `merge` module, you need to create a _script_ and a _batch_:
 - The script is an object that specifies a job, except for the targets.
@@ -57,7 +59,11 @@ To use the `merge` module, you need to create a _script_ and a _batch_:
 
 The script contains an array of acts, with placeholders. For each target in the batch, the `merge` module creates a job, in which the placeholders are replaced with the acts specific to that target in the batch.
 
+### Example
+
 Here is an example illustrating how merging works.
+
+#### Script
 
 Suppose you have created this script:
 
@@ -66,10 +72,15 @@ Suppose you have created this script:
   id: 'ts25',
   what: 'Motion, Axe, and bulk',
   strict: true,
+  timeLimit: 60,
   acts: [
     {
+      type: 'launch',
+      which: 'webkit'
+    },
+    {
       type: 'placeholder',
-      browserType: 'webkit'
+      which: 'main'
     },
     {
       type: 'test',
@@ -80,8 +91,12 @@ Suppose you have created this script:
       count: 5
     },
     {
+      type: 'launch',
+      which: 'chromium'
+    },
+    {
       type: 'placeholder',
-      browserType: 'chromium'
+      which: 'main'
     },
     {
       type: 'test',
@@ -99,7 +114,9 @@ Suppose you have created this script:
 }
 ```
 
-Two of the acts in this script, those with type `placeholder`, are placeholders. The other three are tests.
+The `acts` array of this script contains five regular acts and two placeholders. The placeholders are to be replaced with acts from the current target in a batch.
+
+#### Batch
 
 Suppose you have also created this batch:
 
@@ -109,179 +126,151 @@ Suppose you have also created this batch:
   what: 'Web standards organizations',
   targets: [
     {
-      id: mozilla,
-      what: 'Mozilla',
-      acts: [
-        {
-          type: 'launch',
-          browserType: ''
-        },
-        {
-          type: 'url',
-          which: 'https://www.w3.org/',
-          what: 'Mozilla'
-        }
-      ]
+      id: 'mozilla',
+      what: 'Mozilla Foundation',
+      acts: {
+        main: [
+          {
+            type: 'url',
+            which: 'https://foundation.mozilla.org/en/',
+            what: 'Mozilla Foundation'
+          }
+        ]
+      }
     },
     {
       id: 'w3c',
       what: 'World Wide Web Consortium',
-      acts: [
-        {
-          type: 'launch',
-          browserType: ''
-        },
-        {
-          type: 'url',
-          which: 'https://www.w3.org/',
-          what: 'World Wide Web Consortium'
-        }
-      ]
-    }
-  ]
-}
-
-
-
-```
-
-Its four properties provide:
-- `id`: a unique ID for the script, which is saved in a JSON file in the `process.env.SCRIPTDIR` directory.
-- `what`: a description of the script.
-- `script`: whether Testaro should reject server redirections.
-- `commands`: the step-by-step instructions for Testaro.
-
-In this example, there are 3 tests to be performed. There are also 2 commands of the type `injection`. Those commands tell Testilo to replace them with commands stored in a batch.
-
-### Batches
-
-Here is an example of a batch:
-
-
-```javaScript
-{
-  job: {
-    id: 'unique identifier of this job'
-    what: 'description of the job',
-    strict: 'whether to disallow redirections (true or false)',
-    timelimit: 'seconds allowed for job execution (integer)',
-    sources: {
-      script: 'ID of the script',
-      batch: 'ID of the batch',
-      host: {
-        id: 'ID',
-        which: 'URL',
-        what: 'name'
-      },
-      requester: 'email address to be notified'
-    },
-    creationTime: 'when the job was created (string with format 2022-11-20T15:50:27)',
-    timeStamp: 'alphanumeric representation of the creation time'
-  },
-  acts: 'array of the commands to be performed and their results',
-  jobData: 
-}
-```
-- `id`
-- `acts`
-- `jobData`
-
-You can create such an object directly and save it as a JSON file for use by Testaro, without using Testilo.
-
-If, however, you want to create multiple jobs that perform an identical sequence of tests on various pages, Testilo can facilitate the preparation. For this purpose, you must create two artifacts:
-- A script
-- A batch
-
-The script is an object with these properties:
-- 
-
-### `aim`
-
-The `aim` function allows you to _aim_ a script at a host. That means modifying the script so that it performs its operations on the specified host. The modifications are:
-- Modify the value of the `id` property of the script by:
-   - Prefixing the value with a time stamp.
-   - Suffixing the value with the value of the `id` property of the host.
-- Modify each `url` command of the script by changing the values of its `which`, `what`, and `id` properties to the values of those properties of the host.
-- Add a `source` property to the script, identifying the script, the host, and the requester.
-
-Execution by a module:
-
-```javaScript
-const aimScript = async () => {
-  const fs = require('fs/promises');
-  const host = {
-    which: https://w3c.org/,
-    what: 'World Wide Web Consortium',
-    id: w3c
-  };
-  const {aim} = require('testilo/aim');
-  const scriptJSON = await fs.readFile(`${process.env.SCRIPTDIR}/ts25.json`, 'utf8');
-  const script = JSON.parse(scriptJSON);
-  const aimedScript = aim(script, host, 'developer@w3c.org');
-  await fs.writeFile(
-    `${process.env.JOBDIR}/${aimedScript.id}.json`, JSON.stringify(aimedScript, null, 2)
-  );
-  console.log(`Script ${aimedScript.source.script} aimed at ${aimedScript.host.what}`);
-}
-aimScript();
-```
-
-Execution by a user:
-
-```bash
-node call aim ts25 https://w3.org/ 'World Wide Web Consortium' w3c developer@w3c.org
-```
-
-In these examples, a copy of the script file named `ts25.json` in the `SCRIPTDIR` directory is aimed at the World Wide Web Consortium and then saved in the `JOBDIR` directory.
-
-The `aim` function neither reads nor writes files. Its arguments are a script object, a host object, and a requester-email-address string, and it returns a job object, aimed at the host.
-
-### `merge`
-
-The `merge` module is similar to the `aim` module, but it aims a script at multiple hosts, not only one. The hosts are identified in a _batch_, a file in the `BATCHDIR` directory. The output of `merge` is multiple script files, one per host, saved in the `JOBDIR` directory.
-
-A batch is a JSON-format file representing a `batch` object, which contains an array of _hosts_.
-
-Here is an example of a batch:
-
-```json
-{
-  "id": "usFedExec1",
-  "what": "United States federal executive agencies",
-  "hosts": [
-    {
-      "id": "achp",
-      "which": "https://www.achp.gov/",
-      "what": "Advisory Council on Historic Preservation (ACHP)"
-    },
-    {
-      "id": "agm",
-      "which": "https://www.usagm.gov/",
-      "what": "Agency for Global Media"
+      acts: {
+        main: [
+          {
+            type: 'url',
+            which: 'https://www.w3.org/',
+            what: 'World Wide Web Consortium'
+          }
+        ]
+      }
     }
   ]
 }
 ```
 
-Execution by a module:
+This batch defines two targets.
+
+#### Isolation option
+
+The `merge` module offers an isolation option. If you exercise it, the `merge` module will inject an array of acts after each target-modifying test unless that test is the last act.
+
+
+
+Suppose you invoke this option and specify `main` as the act array.
+
+### Invocation
+
+There are two ways to use the `merge` module.
+
+#### By a module
+
+A module can invoke `merge` in this way:
 
 ```javaScript
 const {merge} = require('testilo/merge');
-merge('ts25', 'weborgs', 'developer@w3.org')
-.then(() => {
-  console.log('Merger complete');
-});
+const jobs = merge(script, batch);
 ```
 
-Execution by a user:
+This invocation references `script` and `batch` variables that the module has already defined. The `merge` function of the `merge` module generates jobs and returns them in an array. The invoking module can further dispose of the jobs as needed.
 
-```bash
-node call merge ts25 weborgs developer@w3.org
+#### By a user
+
+A user can invoke `merge` in this way:
+
+- Create a script and save it as a JSON file named `ts25.json` in the `process.env.SCRIPTDIR` directory.
+- Create a batch and save it as a JSON file named `weborgs.json` in the `process.env.BATCHDIR` directory.
+- In the Testilo project directory, execute the statement `node call merge ts25 weborgs`.
+
+The `call` module will retrieve the named script and batch from their respective directories.
+The `merge` module will create an array of jobs.
+The `call` module will save the jobs in the `process.env.JOBDIR` directory.
+
+
+
+
+The first job could be:
+
+The `merge` module can merge this batch with the above script, producing two jobs, one for each target.
+
+
+```javaScript
+{
+  id: '7izc1-ts25-mozilla',
+  what: 'Motion, Axe, and bulk',
+  strict: true,
+  timeLimit: 60,
+  acts: [
+    {
+      type: 'launch',
+      which: 'webkit'
+    },
+    {
+      type: 'url',
+      which: 'https://foundation.mozilla.org/en/',
+      what: 'Mozilla Foundation'
+    }
+    {
+      type: 'test',
+      which: 'motion',
+      what: 'spontaneous change of content; requires webkit',
+      delay: 2500,
+      interval: 2500,
+      count: 5
+    },
+    {
+      type: 'launch',
+      which: 'chromium'
+    },
+    {
+      type: 'url',
+      which: 'https://foundation.mozilla.org/en/',
+      what: 'Mozilla Foundation'
+    }
+    {
+      type: 'test',
+      which: 'axe',
+      withItems: true,
+      rules: [],
+      what: 'Axe core, all rules, with details'
+    },
+    {
+      type: 'test',
+      which: 'bulk',
+      what: 'count of visible elements'
+    }
+  ],
+  sources: {
+    script: "ts25",
+    batch: "weborgs",
+    target: {
+      id: 'mozilla',
+      what: 'Mozilla Foundation'
+    },
+    requester: 'you@yourdomain.tld'
+  },
+  creationTime: '2023-11-20T15:50:27',
+  timeStamp: 'bizc1'
+}
 ```
 
-In these examples, a copy of the script file named `ts25.json` in the `SCRIPTDIR` directory is aimed at all the hosts in the batch file named `weborgs.json` in the `BATCHDIR` directory, and the resulting jobs are saved in the `JOBDIR` directory. Each job has a `sources` property that identifies an email address to be notified after the job has been run.
+Most of the properties of this job object come from your script and your batch. The acts of type `placeholder` in the script have been replaced with the specified array of acts of the first target of the batch. In this case, that target has only one array of acts, and that array contains only one act, but a target could have multiple act arrays, and an act array could include more than one act or be empty.
 
-### `isolate`
+The `merge` module has added other properties to the job:
+- a creation time
+- a timestamp, derived from the creation time
+- a job ID, composed of the timestamp, the script ID, and the target ID
+- a `sources` property, identifying the script, the batch, the target within the batch, and your email address, which it has obtained from the environment variable `REQUESTER`.
+
+This job is ready to be executed by Testaro.
+
+### Isolation
 
 Some Testaro tests change the pages that they test. By doing so, they could contaminate the results of subsequent tests. To isolate tests, you can launch a browser and navigate again to the page being tested after each potentially contaminating test unless that test is the last act. The `isolate` module does this.
 

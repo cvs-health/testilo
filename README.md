@@ -282,66 +282,67 @@ To reject the isolation option, the user can change the statement to either of t
 
 ## Report scoring
 
+### Introduction
+
 Testaro executes jobs and produces reports of test results. Testilo can add scores to those reports. In this way, each report can not only detail successes and failures of individual tests but also assign scores to those results and combine the partial scores into total scores.
 
-The `score` module performs scoring. It depends on a _score proc_ to define the scoring rules. Some score procs are in the Testilo package (in the `procs/score` directory), and you can create more score procs to implement different rules.
+The `score` module scores a report. Its `score` function takes two arguments:
+- a scoring function
+- a report object
 
-Execution by a module:
+The `multiScore` module scores all the reports in the `process.env.REPORTDIR_RAW` directory. The `multiScore()` function in that module takes one argument: a scoring function.
+
+The scoring function defines the scoring rules. The Testilo package contains a `procs/score` directory, in which there are modules that export scoring functions. You can use one of those scoring functions, or you can create your own.
+
+### Invocation
+
+There are two ways to use the `score` and `multiScore` modules.
+
+#### By a module
+
+A module can invoke `score` in this way:
 
 ```javaScript
-const scoreReport = async (scoreProcID, rawReportID) => {
-  const fs = require('fs/promises');
-  const {score} = require('testilo/score');
-  const {scorer} = require(`${process.env.SCOREPROCDIR}/${scoreProcID}`);
-  const rawReportJSON = await fs.readFile(
-    `${process.env.REPORTDIR_RAW}/${rawReportID}.json`, 'utf8'
-  );
-  const rawReport = JSON.parse(rawReportJSON);
-  const scoredReport = score(scorer, rawReport);
-  await fs.writeFile(
-    `${process.env.REPORTDIR_SCORED}/${scoredReport.id}.json`, JSON.stringify(scoredReport, null, 2)
-  );
-  console.log(`Report ${scoredReport.id} scored`);
-};
-scoreReport('sp25a', '756mr-ts25-w3c');
+const {score} = require('testilo/score');
+const {scorer} = require('testilo/procs/score/sp25a');
+const scoredReport = score(scorer, rawReport);
 ```
 
-Execution by a user:
+The first argument to `score()` is a scoring function. In this example, it has been obtained from a JSON file in the Testilo package, but it could be a custom function. The second argument to `score()` is a report object; typically, it would be obtained from 
 
-```bash
-node call score sp25a
-node call score sp25a 756mr
-```
-
-In these examples, the `score` function applies a score proc named `sp25a`, of which a copy is in the file `sp25a.json` in the `SCOREPROCDIR` directory, to a raw report `756mr-ts25-w3c.json` in the `REPORTDIR_RAW` directory and returns the same report with score data added. The scored report is saved in the `REPORTDIR_SCORED` directory.
-
-The user statement can pass only 2 arguments to `call` if the first report in the `REPORTDIR_RAW` directory is the desired raw report. If there are multiple reports in that directory and the desired one is not the first, the user must pass 3 arguments to `call`, and the third argument must be a string, such that the first report in that directory that begins with that string is the desired report.
-
-The `score` function neither reads nor writes files. Its arguments are a score-proc string and a raw-report object, and it returns a scored-report object.
-
-### `multiScore`
-
-The `multiScore` function scores all the reports in the `REPORTDIR_RAW` directory and writes the scored reports in the `REPORTDIR_SCORED` directory.
-
-Execution by a module:
+A module can invoke `multiScore` in this way:
 
 ```javaScript
 const {multiScore} = require('testilo/multiScore');
-multiScore('sp25a')
-.then(hostCount => {
-  console.log(`Scoring complete. Count of reports scored: ${hostCount}`);
-});
+const {scorer} = require('testilo/procs/score/sp25a');
+const scoredReports = multiScore(scorer, rawReports);
 ```
 
-Execution by a user:
+The second argument to `multiScore()` is an array of report objects.
+
+#### By a user
+
+A user can invoke `score` in this way:
+
+```bash
+node call score sp25a
+node call score sp25a 75
+```
+
+A user can invoke `multiScore` in this way:
 
 ```bash
 node call multiScore sp25a
 ```
 
-The argument to `multiScore` names the score proc to be used. The `multiScore` function scores all the reports in the `REPORTDIR_RAW` directory and writes the scored reports in the `REPORTDIR_SCORED` directory.
+When a user invokes `score` or `multiScore`, the `call` module:
+- gets the scoring module `sp25a` from its JSON file `sp25a.json` in the `process.env.SCOREPROCDIR` directory
+- gets the report(s) from the `process.env.REPORTDIR_RAW` directory
+- writes the scored report(s) to the `process.env.REPORTDIR__SCORED` directory
 
-### `digest`
+When the user invokes `score`, the `call` module allows the user to identify the report to be scored with one or more characters at the start of its name, instead of the whole name, as long as the desired report is the first one in the `process.env.REPORTDIR_RAW` directory that matches.
+
+## Report digesting
 
 Testaro reports, both originally and after they are scored, are JavaScript objects. When represented as JSON, they are human-readable, but basically designed for machine tractability.
 

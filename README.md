@@ -340,7 +340,7 @@ When a user invokes `score` or `multiScore`, the `call` module:
 - gets the report(s) from the `process.env.REPORTDIR_RAW` directory
 - writes the scored report(s) to the `process.env.REPORTDIR__SCORED` directory
 
-When the user invokes `score`, the `call` module allows the user to identify the report to be scored with one or more characters at the start of its name, instead of the whole name, as long as the desired report is the first one in the `process.env.REPORTDIR_RAW` directory that matches.
+When a user invokes `score`, the `call` module allows the user to identify the report to be scored with one or more characters at the start of its name, instead of the whole name, as long as the desired report is the first one in the `process.env.REPORTDIR_RAW` directory that matches. When a user invokes `multiScore`, no selection is possible; all reports in the `process.env.REPORTDIR_RAW` directory are scored.
 
 ## Report digesting
 
@@ -402,7 +402,7 @@ When a user invokes `digest` or `multiDigest`, the `call` module:
 - gets the report(s) from the `process.env.REPORTDIR_SCORED` directory
 - writes the digested report(s) to the `process.env.REPORTDIR__DIGESTED` directory
 
-When the user invokes `digest`, the `call` module allows the user to identify the report to be digested with one or more characters at the start of its name, instead of the whole name, as long as the desired report is the first one in the `process.env.REPORTDIR_SCORED` directory that matches.
+When a user invokes `digest`, the `call` module allows the user to identify the report to be digested with one or more characters at the start of its name, instead of the whole name, as long as the desired report is the first one in the `process.env.REPORTDIR_SCORED` directory that matches. When a user invokes `multiDigest`, no selection is possible; all reports in the `process.env.REPORTDIR_SCORED` directory are scored.
 
 The digests created by `digest` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/digested/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where digested reports are written.
 
@@ -410,60 +410,47 @@ The digests created by `digest` are HTML files, and they expect a `style.css` fi
 
 If you use Testilo to perform a battery of tests on multiple targets, you may want a single report that compares the total scores received by the targets. Testilo can produce such a _comparative report_.
 
-The `compare` module compares the scores in a collection of scored reports. Its `compare()` function takes two arguments:
+The `compare` module compares the scores in a collection of scored reports. Its `compare()` function takes three arguments:
+- a template
 - a comparison function
-- a name to be given to the comparative report
+- an array of scored reports
 
-The comparison function defines the comparison rules. The Testilo package contains a `procs/compare` directory, in which there are modules that export comparison functions. You can use one of those comparison functions, or you can create your own.
+The template is an HTML document containing placeholders. A copy of the template, with its placeholders replaced by texts, becomes the comparative report. The comparison function defines the rules for replacing the placeholders with texts. The Testilo package contains a `procs/compare` directory, in which there are subdirectories containing pairs of templates and modules that export comparison functions. You can use one of those pairs, or you can create your own.
 
 ### Invocation
 
-There are two ways to use the `digest` and `multiDigest` modules.
+There are two ways to use the `compare` module.
 
 #### By a module
 
-The `compare` module 
-
-generate and score a collectionYou can summarize multiple scored reports by producing a document comparing the scores. The `compare` function does this. It gathers scores from a set of scored reports and produces an HTML document comparing the scores. It depends on a _comparison proc_ to define the rules for making and showing the comparative scores. Some compare procs are in the Testilo package (in the `procs/compare` directory), and you can create more compare procs to implement different rules.
-
-Execution by a module:
+A module can invoke `compare` in this way:
 
 ```javaScript
+const fs = require('fs/promises);
 const {compare} = require('testilo/compare');
-compare('cp25a', 'legislators')
-.then(() => {
-  console.log(`Comparison complete`);
+const comparerDir = `${process.env.COMPAREPROCDIR}/cp25a`;
+fs.readFile(`${comparerDir}/index.html`)
+.then(template => {
+  const {comparer} = require(`${comparerDir}/index.js`);
+  const comparisonReport = compare(template, comparer, scoredReports);
 });
 ```
 
-Execution by a user:
+The first two arguments to `compare()` are a template and a comparison function. In this example, they have been obtained from a directory in the Testilo package, but they could be custom-made. The third argument to `compare()` is an array of report objects.
+
+#### By a user
+
+A user can invoke `compare` in this way:
 
 ```bash
 node call compare cp25a legislators
 ```
 
-The first argument to `compare`, or the second argument to `call`,  names the comparison proc to be used. The subsequent argument specifies a base of the name of the comparative report that will be produced. The scores in all reports in the `REPORTDIR_SCORED` directory will be compared. The comparative report will be written in the `COMPARISONDIR` directory.
+When a user invokes `compare` in this example, the `call` module:
+- gets the comparison module `cp25a` from its JSON file `cp25a.json` in the `process.env.COMPAREPROCDIR` directory
+- gets all the reports in the `process.env.REPORTDIR_SCORED` directory
+- writes the comparison report as an HTML file named `legislators.html` to the `process.env.REPORTDIR__COMPARATIVE` directory
 
-The comparison created by `compare` is an HTML file, and it expects a `style.css` file to exist in its directory. The `reports/comparative/style.css` file in Testilo is an appropriate stylesheet to be copied into the `COMPARISONDIR` directory.
+ When a user invokes `compare`, no selection is possible; all reports in the `process.env.REPORTDIR_SCORED` directory are compared.
 
-
-
-Testilo can prepare jobs for execution by Testaro.
-
-A _job_ is an object with this initial structure:
-
-```javaScript
-{
-  specs: {},
-  acts: []
-}
-```
-
-Testilo can populate the `specs` property with job requirements and the `acts` array with a sequence of _acts_ (operations) to be performed by Testaro.
-
-When Testaro executes a job, Testaro will convert it to a _report_ by adding content to the job:
-- Testaro will add to each act information about the result of the act.
-- Testaro will add a `jobData` object property to the report, containing other information about the execution of the job.
-
-Using Testilo is more efficient when you wish to perform a battery of tests on multiple _hosts_ (pages). In this situation, you can create a _script_ describing the battery of tests and a _batch_ describing the instructions for reaching the hosts. Then Testilo can combine the batch with the script, creating one job per host.
-
+The comparative reports created by `compare` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/comparative/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where comparative reports are written.

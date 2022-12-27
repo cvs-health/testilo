@@ -17,7 +17,7 @@ The `writer` branch contains the state of Testilo as of 2022-11-07. In that bran
 
 The `simple` branch contains the state of Testilo as of 2022-12-23. In that branch, Testilo does not need to read or write files, so applications without write permission can still use Testilo as a dependency.
 
-The `main` branch contains the state of Testilo from 2022-12-24 until now. In that branch, Testilo can prepare jobs that require multi-step operations to reach and pre-process the pages being tested.
+The `main` branch contains the state of Testilo from 2022-12-24 until now. In that branch, Testilo can prepare jobs that require multi-step operations to reach and pre-process the targets being tested.
 
 This `README.md` file documents the `main` branch.
 
@@ -46,10 +46,10 @@ Testaro executes _jobs_. In a job, Testaro performs _acts_ (tests and other oper
 You can create a job for Testaro directly, without using Testilo.
 
 Testilo can, however, make job preparation more efficient in two scenarios:
-- A common use case is to define a battery of tests and to have those tests performed on multiple targets. In that case, you want multiple jobs, one per page. The jobs are identical, except for the target-specific acts (including navigating to targets). If you give Testilo this information, Testilo can create such collections of jobs for you.
-- Some tests operate on a copy of a target and modify that copy. Usually, one wants test isolation: The results of a test do not depend on any previously performed tests. To ensure test isolation, a job containing such target-modifying tests must follow them with acts that restore the target to its desired pre-test state. If you tell Testilo which tests you want performed in which order and how to reach the target, Testilo can insert the required target-restoring acts into the job after target-modifying tests.
+- A common use case is to define a battery of tests and to have those tests performed on multiple targets. In that case, you need to create multiple jobs, one per page. The jobs are identical, except for the target-specific acts (including navigating to targets). If you tell Testilo about the tests and the targets, Testilo can create such collections of jobs for you.
+- Some tests operate on a copy of a target and modify that copy. Usually, one wants test isolation: The results of a test do not depend on any previously performed tests. To ensure test isolation, a job containing such target-modifying tests must follow them with acts that restore the target to its desired pre-test state. Testilo can insert the required target-restoring acts into each job after target-modifying tests.
 
-The `merge` module merges batches with scripts, with or without test isolation.
+The `merge` module performs these services.
 
 ### Procedure
 
@@ -225,7 +225,7 @@ Suppose you ask for a merger of the above batch and script, **without** the isol
 }
 ```
 
-Most of the properties of this job object come from your script and your batch. The acts of type `placeholder` in the script have been replaced with the specified array of acts of the first target of the batch. In this case, that target has only one array of acts, and that array contains two acts, but a target could have multiple act arrays, and an act array could include any number of acts or be empty.
+Most of the properties of this job object come from your script and your batch. The acts of type `placeholder` in the script have been replaced with the specified (i.e. `main`) array of acts of the first target of the batch. In this case, that target has only one array of acts, and that array contains two acts, but a target could have multiple act arrays with distinct names, and an act array could include any number of acts or be empty.
 
 If the named array of acts includes an act of type `launch`, that act gets a `which` property, identical to the value of the `launch` property of the `placeholder` object. In this way, a placeholder can dictate which browser type is to be launched.
 
@@ -233,7 +233,7 @@ The `merge` module has added other properties to the job:
 - a creation time
 - a timestamp, derived from the creation time
 - a job ID, composed of the timestamp, the script ID, and the target ID
-- a `sources` property, identifying the script, the batch, the target within the batch, and your email address, which it has obtained from the environment variable `REQUESTER`.
+- a `sources` property, identifying the script, the batch, the target within the batch, and your email address, which it has obtained from the environment variable `process.env.REQUESTER`.
 
 This job is ready to be executed by Testaro.
 
@@ -302,15 +302,13 @@ Testilo can add scores to a report. In this way, a report can not only detail su
 
 The `score` module scores a report. Its `score()` function takes two arguments:
 - a scoring function
-- a report object
-
-The `multiScore` module scores a collection of reports. Its `multiScore()` function takes two arguments: a scoring function and a collection of reports.
+- an array of report objects
 
 A scoring function defines scoring rules. The Testilo package contains a `procs/score` directory, in which there are modules that export scoring functions. You can use one of those scoring functions, or you can create your own.
 
 ### Invocation
 
-There are two ways to use the `score` and `multiScore` modules.
+There are two ways to use the `score` module.
 
 #### By a module
 
@@ -319,20 +317,10 @@ A module can invoke `score` in this way:
 ```javaScript
 const {score} = require('testilo/score');
 const {scorer} = require('testilo/procs/score/sp25a');
-const scoredReport = score(scorer, rawReport);
+const scoredReports = score(scorer, rawReports);
 ```
 
-The first argument to `score()` is a scoring function. In this example, it has been obtained from a JSON file in the Testilo package, but it could be a custom function. The second argument to `score()` is a report object.
-
-A module can invoke `multiScore` in this way:
-
-```javaScript
-const {multiScore} = require('testilo/multiScore');
-const {scorer} = require('testilo/procs/score/sp25a');
-const scoredReports = multiScore(scorer, rawReports);
-```
-
-The second argument to `multiScore()` is an array of report objects.
+The first argument to `score()` is a scoring function. In this example, it has been obtained from a JSON file in the Testilo package, but it could be a custom function. The second argument to `score()` is an array of report objects.
 
 #### By a user
 
@@ -343,18 +331,12 @@ node call score sp25a
 node call score sp25a 75
 ```
 
-A user can invoke `multiScore` in this way:
-
-```bash
-node call multiScore sp25a
-```
-
-When a user invokes `score` or `multiScore`, the `call` module:
+When a user invokes `score` in this example, the `call` module:
 - gets the scoring module `sp25a` from its JSON file `sp25a.json` in the `process.env.SCOREPROCDIR` directory
-- gets the report(s) from the `process.env.REPORTDIR_RAW` directory
-- writes the scored report(s) to the `process.env.REPORTDIR__SCORED` directory
+- gets the reports from the `process.env.REPORTDIR_RAW` directory
+- writes the scored reports to the `process.env.REPORTDIR__SCORED` directory
 
-When a user invokes `score`, the `call` module allows the user to identify the report to be scored with one or more characters at the start of its name, instead of the whole name, as long as the desired report is the first one in the `process.env.REPORTDIR_RAW` directory that matches. When a user invokes `multiScore`, no selection is possible; all reports in the `process.env.REPORTDIR_RAW` directory are scored.
+The optional third argument to call (`75` in this example) is a report selector. Without the argument, `call` gets all the reports in the `process.env.REPORTDIR_RAW` directory. With the argument, `call` gets only those reports whose names begin with the argument string.
 
 ## Report digesting
 
@@ -362,17 +344,16 @@ When a user invokes `score`, the `call` module allows the user to identify the r
 
 Reports created by Testaro, both originally and after they are scored, are JavaScript objects. When represented as JSON, they are human-readable, but not human-friendly. They are basically designed for machine tractability. Testilo can _digest_ a scored report, converting it to a human-oriented HTML document, or _digest_.
 
-The `digest` module digests a scored report. Its `digest()` function takes two arguments:
+The `digest` module digests a scored report. Its `digest()` function takes three arguments:
+- a digest template
 - a digesting function
-- a report object
+- an array of report objects
 
-The `multiDigest` module digests a collection of scored reports. The `multiDigest()` function in that module takes two arguments: a digesting function and a collection of scored reports.
-
-A digesting function defines digesting rules. The Testilo package contains a `procs/digest` directory, in which there are modules that export digesting functions. You can use one of those digesting functions, or you can create your own.
+The template is an HTML document containing placeholders. A copy of the template, with its placeholders replaced by texts, becomes the digest. The digesting function defines the rules for replacing the placeholders with texts. The Testilo package contains a `procs/digest` directory, in which there are subdirectories containing pairs of templates and modules that export digesting functions. You can use one of those pairs, or you can create your own.
 
 ### Invocation
 
-There are two ways to use the `digest` and `multiDigest` modules.
+There are two ways to use the `digest` module.
 
 #### By a module
 
@@ -380,21 +361,15 @@ A module can invoke `digest` in this way:
 
 ```javaScript
 const {digest} = require('testilo/digest');
-const {digester} = require('testilo/procs/digest/dp25a');
-const digestedReport = digest(digester, scoredReport);
+const digesterDir = `${process.env.DIGESTPROCDIR}/dp25a`;
+fs.readFile(`${digesterDir}/index.html`)
+.then(template => {
+  const {digester} = require(`${comparerDir}/index`);
+  const digestedReports = digest(template, digester, scoredReports);
+});
 ```
 
-The first argument to `digest()` is a digesting function. In this example, it has been obtained from a JSON file in the Testilo package, but it could be a custom function. The second argument to `digest()` is a report object.
-
-A module can invoke `multiDigest` in this way:
-
-```javaScript
-const {multiDigest} = require('testilo/multiDigest');
-const {digester} = require('testilo/procs/digest/dp25a');
-const digestedReports = multiDigest(digester, scoredReports);
-```
-
-The second argument to `multiDigest()` is an array of report objects.
+The first argument to `digest()` is a digesting function. In this example, it has been obtained from a JSON file in the Testilo package, but it could be a custom function. The second argument to `digest()` is an array of report objects.
 
 #### By a user
 
@@ -405,18 +380,12 @@ node call digest dp25a
 node call digest dp25a 75
 ```
 
-A user can invoke `multiDigest` in this way:
+When a user invokes `digest` in this example, the `call` module:
+- gets the template and the digesting module from subdirectory `dp25a` in the `process.env.DIGESTPROCDIR` directory
+- gets the reports from the `process.env.REPORTDIR_SCORED` directory
+- writes the digested reports to the `process.env.REPORTDIR__DIGESTED` directory
 
-```bash
-node call multiDigest sp25a
-```
-
-When a user invokes `digest` or `multiDigest`, the `call` module:
-- gets the digesting module `dp25a` from its JSON file `dp25a.json` in the `process.env.DIGESTPROCDIR` directory
-- gets the report(s) from the `process.env.REPORTDIR_SCORED` directory
-- writes the digested report(s) to the `process.env.REPORTDIR__DIGESTED` directory
-
-When a user invokes `digest`, the `call` module allows the user to identify the report to be digested with one or more characters at the start of its name, instead of the whole name, as long as the desired report is the first one in the `process.env.REPORTDIR_SCORED` directory that matches. When a user invokes `multiDigest`, no selection is possible; all reports in the `process.env.REPORTDIR_SCORED` directory are scored.
+The optional third argument to call (`75` in this example) is a report selector. Without the argument, `call` gets all the reports in the `process.env.REPORTDIR_SCORED` directory. With the argument, `call` gets only those reports whose names begin with the argument string.
 
 The digests created by `digest` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/digested/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where digested reports are written.
 
@@ -445,7 +414,7 @@ const {compare} = require('testilo/compare');
 const comparerDir = `${process.env.COMPAREPROCDIR}/cp25a`;
 fs.readFile(`${comparerDir}/index.html`)
 .then(template => {
-  const {comparer} = require(`${comparerDir}/index.js`);
+  const {comparer} = require(`${comparerDir}/index`);
   const comparisonReport = compare(template, comparer, scoredReports);
 });
 ```
@@ -461,10 +430,10 @@ node call compare cp25a legislators
 ```
 
 When a user invokes `compare` in this example, the `call` module:
-- gets the comparison module `cp25a` from its JSON file `cp25a.json` in the `process.env.COMPAREPROCDIR` directory
+- gets the template and the comparison module from subdirectory `cp25a` in the `process.env.COMPAREPROCDIR` directory
 - gets all the reports in the `process.env.REPORTDIR_SCORED` directory
 - writes the comparison report as an HTML file named `legislators.html` to the `process.env.REPORTDIR__COMPARATIVE` directory
 
- When a user invokes `compare`, no selection is possible; all reports in the `process.env.REPORTDIR_SCORED` directory are compared.
+When a user invokes `compare`, no selection is possible; all reports in the `process.env.REPORTDIR_SCORED` directory are compared.
 
 The comparative reports created by `compare` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/comparative/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where comparative reports are written.

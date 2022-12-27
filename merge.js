@@ -2,35 +2,24 @@
   merge.js
   Merges a batch and a script to produce jobs.
   Arguments:
-    0. base of name of script located in process.env.SCRIPTDIR.
-    1. base of name of batch located in process.env.BATCHDIR.
-    2. email address to be notified of completion.
-  Usage examples:
-    node call merge ts25 weborgs developer@w3.org
-    node call merge ts25 weborgs
-  Note: The subdirectory for jobs will be created if it does not exist.
+    0. script
+    1. batch
+    2. whether to provide test isolation (no if omitted)
 */
 
 // ########## IMPORTS
 
 // Module to keep secrets.
 require('dotenv').config();
-// Module to read and write files.
-const fs = require('fs/promises');
-// Module to aim a script at a host.
-const {aim} = require('./aim');
 
 // ########## CONSTANTS
 
-const scriptDir = process.env.SCRIPTDIR || 'scripts';
-const batchDir = process.env.BATCHDIR || 'batches';
-const jobDir = process.env.JOBDIR || 'watch';
 const stdRequester = process.env.REQUESTER;
 
 // ########## FUNCTIONS
 
 // Merges a batch into a script and writes jobs.
-exports.merge = async (scriptName, batchName, requester = stdRequester) => {
+exports.merge = async (script, batch, requester = stdRequester) => {
   // Get the script and the batch.
   const scriptJSON = await fs.readFile(`${scriptDir}/${scriptName}.json`, 'utf8');
   const batchJSON = await fs.readFile(`${batchDir}/${batchName}.json`, 'utf8');

@@ -270,15 +270,17 @@ A user can invoke `merge` in this way:
 
 - Create a script and save it as a JSON file named `ts25.json` in the `process.env.SCRIPTDIR` directory.
 - Create a batch and save it as a JSON file named `weborgs.json` in the `process.env.BATCHDIR` directory.
-- In the Testilo project directory, execute the statement `node call merge ts25 weborgs true`.
+- In the Testilo project directory, execute one of these statement:
+    - `node call merge ts25 weborgs true`
+    - `node call merge ts25 weborgs false`
+    - `node call merge ts25 weborgs`
+
+The first statement will cause a merger with test isolation.
+The second and third statements will cause a merger without test isolation.
 
 The `call` module will retrieve the named script and batch from their respective directories.
 The `merge` module will create an array of jobs.
 The `call` module will save the jobs in the `process.env.JOBDIR` directory.
-
-To reject the isolation option, the user can change the statement to either of these:
-- `node call merge ts25 weborgs false`
-- `node call merge ts25 weborgs`
 
 ## Report scoring
 
@@ -297,6 +299,7 @@ Thus, a report produced by Testaro contains these properties:
 - `sources`
 - `creationTime`
 - `timeStamp`
+- `jobData`
 
 Testilo can add scores to a report. In this way, a report can not only detail successes and failures of individual tests but also assign scores to those results and combine the partial scores into total scores. The scores are contained in a new `score` property that Testilo adds to a report.
 
@@ -349,7 +352,7 @@ The `digest` module digests a scored report. Its `digest()` function takes three
 - a digesting function
 - an array of report objects
 
-The template is an HTML document containing placeholders. A copy of the template, with its placeholders replaced by texts, becomes the digest. The digesting function defines the rules for replacing the placeholders with texts. The Testilo package contains a `procs/digest` directory, in which there are subdirectories containing pairs of templates and modules that export digesting functions. You can use one of those pairs, or you can create your own.
+The digest template is an HTML document containing placeholders. A copy of the template, with its placeholders replaced by texts, becomes the digest. The digesting function defines the rules for replacing the placeholders with texts. The Testilo package contains a `procs/digest` directory, in which there are subdirectories containing pairs of templates and modules that export digesting functions. You can use one of those pairs, or you can create your own.
 
 ### Invocation
 
@@ -364,12 +367,12 @@ const {digest} = require('testilo/digest');
 const digesterDir = `${process.env.DIGESTPROCDIR}/dp25a`;
 fs.readFile(`${digesterDir}/index.html`)
 .then(template => {
-  const {digester} = require(`${comparerDir}/index`);
+  const {digester} = require(`${digesterDir}/index`);
   const digestedReports = digest(template, digester, scoredReports);
 });
 ```
 
-The first argument to `digest()` is a digesting function. In this example, it has been obtained from a JSON file in the Testilo package, but it could be a custom function. The second argument to `digest()` is an array of report objects.
+The first two arguments to `digest()` are a digest template and a digesting function. In this example, they have been obtained from files in the Testilo package, but they could be custom-made. The third argument to `digest()` is an array of report objects.
 
 #### By a user
 
@@ -394,11 +397,11 @@ The digests created by `digest` are HTML files, and they expect a `style.css` fi
 If you use Testilo to perform a battery of tests on multiple targets, you may want a single report that compares the total scores received by the targets. Testilo can produce such a _comparative report_.
 
 The `compare` module compares the scores in a collection of scored reports. Its `compare()` function takes three arguments:
-- a template
+- a comparison template
 - a comparison function
 - an array of scored reports
 
-The template is an HTML document containing placeholders. A copy of the template, with its placeholders replaced by texts, becomes the comparative report. The comparison function defines the rules for replacing the placeholders with texts. The Testilo package contains a `procs/compare` directory, in which there are subdirectories containing pairs of templates and modules that export comparison functions. You can use one of those pairs, or you can create your own.
+The comparison template is an HTML document containing placeholders. A copy of the template, with its placeholders replaced by texts, becomes the comparative report. The comparison function defines the rules for replacing the placeholders with texts. The Testilo package contains a `procs/compare` directory, in which there are subdirectories containing pairs of templates and modules that export comparison functions. You can use one of those pairs, or you can create your own.
 
 ### Invocation
 
@@ -415,11 +418,11 @@ const comparerDir = `${process.env.COMPAREPROCDIR}/cp25a`;
 fs.readFile(`${comparerDir}/index.html`)
 .then(template => {
   const {comparer} = require(`${comparerDir}/index`);
-  const comparisonReport = compare(template, comparer, scoredReports);
+  const comparativeReports = compare(template, comparer, scoredReports);
 });
 ```
 
-The first two arguments to `compare()` are a template and a comparison function. In this example, they have been obtained from a directory in the Testilo package, but they could be custom-made. The third argument to `compare()` is an array of report objects.
+The first two arguments to `compare()` are a template and a comparison function. In this example, they have been obtained from files in the Testilo package, but they could be custom-made. The third argument to `compare()` is an array of report objects.
 
 #### By a user
 
@@ -432,8 +435,6 @@ node call compare cp25a legislators
 When a user invokes `compare` in this example, the `call` module:
 - gets the template and the comparison module from subdirectory `cp25a` in the `process.env.COMPAREPROCDIR` directory
 - gets all the reports in the `process.env.REPORTDIR_SCORED` directory
-- writes the comparison report as an HTML file named `legislators.html` to the `process.env.REPORTDIR__COMPARATIVE` directory
-
-When a user invokes `compare`, no selection is possible; all reports in the `process.env.REPORTDIR_SCORED` directory are compared.
+- writes the comparative report as an HTML file named `legislators.html` to the `process.env.REPORTDIR__COMPARATIVE` directory
 
 The comparative reports created by `compare` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/comparative/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where comparative reports are written.

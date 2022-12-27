@@ -284,15 +284,29 @@ To reject the isolation option, the user can change the statement to either of t
 
 ### Introduction
 
-Testaro executes jobs and produces reports of test results. Testilo can add scores to those reports. In this way, each report can not only detail successes and failures of individual tests but also assign scores to those results and combine the partial scores into total scores.
+Testaro executes jobs and produces reports of test results. A report is identical to a job (see the example above), except that:
+- The acts contain additional data recorded by Testaro to describe the results of the performance of the acts. Acts of type `test` have additional data describing test results (successes, failures, and details).
+- Testaro also adds a `jobData` property, describing information not specific to any particular act.
+
+Thus, a report produced by Testaro contains these properties:
+- `id`
+- `what`
+- `strict`
+- `timeLimit`
+- `acts`
+- `sources`
+- `creationTime`
+- `timeStamp`
+
+Testilo can add scores to a report. In this way, a report can not only detail successes and failures of individual tests but also assign scores to those results and combine the partial scores into total scores. The scores are contained in a new `score` property that Testilo adds to a report.
 
 The `score` module scores a report. Its `score()` function takes two arguments:
 - a scoring function
 - a report object
 
-The `multiScore` module scores all the reports in the `process.env.REPORTDIR_RAW` directory. The `multiScore()` function in that module takes one argument: a scoring function.
+The `multiScore` module scores a collection of reports. Its `multiScore()` function takes two arguments: a scoring function and a collection of reports.
 
-The scoring function defines the scoring rules. The Testilo package contains a `procs/score` directory, in which there are modules that export scoring functions. You can use one of those scoring functions, or you can create your own.
+A scoring function defines scoring rules. The Testilo package contains a `procs/score` directory, in which there are modules that export scoring functions. You can use one of those scoring functions, or you can create your own.
 
 ### Invocation
 
@@ -352,9 +366,9 @@ The `digest` module digests a scored report. Its `digest()` function takes two a
 - a digesting function
 - a report object
 
-The `multiDigest` module digests all the reports in the `process.env.REPORTDIR_SCORED` directory. The `multiDigest()` function in that module takes one argument: a digesting function.
+The `multiDigest` module digests a collection of scored reports. The `multiDigest()` function in that module takes two arguments: a digesting function and a collection of scored reports.
 
-The digesting function defines the digesting rules. The Testilo package contains a `procs/digest` directory, in which there are modules that export digesting functions. You can use one of those digesting functions, or you can create your own.
+A digesting function defines digesting rules. The Testilo package contains a `procs/digest` directory, in which there are modules that export digesting functions. You can use one of those digesting functions, or you can create your own.
 
 ### Invocation
 

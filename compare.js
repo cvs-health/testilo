@@ -1,39 +1,17 @@
 /*
   compare.js
-  Creates comparisons from scored reports.
-  Reads reports in process.env.REPORTDIR_SCORED and outputs into process.env.COMPARISONDIR.
-  Arguments:
-    0. Base of name of compare proc located in procs/compare.
-    1. Base of name of comparative report to be written.
-  Usage example: node compare cp18a usFedExec
-  Note: Compares all reports in process.env.REPORTDIR_SCORED (but not in its subdirectories).
+  Creates a comparative report from scored reports.
 */
-
-// ########## IMPORTS
-
-// Module to keep secrets.
-require('dotenv').config();
-// Module to read and write files.
-const fs = require('fs/promises');
-
-// ########## CONSTANTS
-
-const comparisonDir = process.env.COMPARISONDIR || 'reports/comparative';
 
 // ########## FUNCTIONS
 
-// Replaces the placeholders in content with eponymous query parameters.
-const replaceHolders = (content, query) => content
+// Replaces the placeholders in a template with eponymous query parameters.
+const replaceHolders = (template, query) => template
 .replace(/__([a-zA-Z]+)__/g, (ph, qp) => query[qp]);
-// Creates and saves a web page containing a comparative table.
-exports.compare = async (compareProcID, comparisonNameBase) => {
-  const comparisonDirAbs = `${__dirname}/${comparisonDir}`;
-  const {getQuery} = require(`./${process.env.COMPAREPROCDIR}/${compareProcID}/index`);
-  const query = await getQuery();
-  const pageRaw = await fs.readFile(
-    `${__dirname}/${process.env.COMPAREPROCDIR}/${compareProcID}/index.html`, 'utf8'
-  );
-  const page = replaceHolders(pageRaw, query);
-  await fs.writeFile(`${comparisonDirAbs}/${comparisonNameBase}.html`, page);
-  console.log(`Page ${comparisonNameBase}.html created and saved`);
+// Creates a report comparing the scores of scored reports.
+exports.compare = async (template, comparer, scoredReports) => {
+  const {getQuery} = comparer;
+  const query = getQuery(scoredReports);
+  const comparativeReport = replaceHolders(template, query);
+  return comparativeReport;
 };

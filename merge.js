@@ -1,6 +1,6 @@
 /*
   merge.js
-  Merges a batch and a script to produce jobs.
+  Merges a script and a batch and returns jobs.
   Arguments:
     0. script
     1. batch
@@ -15,28 +15,95 @@ require('dotenv').config();
 // ########## CONSTANTS
 
 const stdRequester = process.env.REQUESTER;
+const contaminantNames = new Set([
+  'axe',
+  'continuum',
+  'focAll',
+  'focInd',
+  'focOp',
+  'hover',
+  'htmlcs',
+  'ibm',
+  'menuNav',
+  'textNodes',
+  'wave'
+]);
 
 // ########## FUNCTIONS
 
-// Merges a batch into a script and writes jobs.
-exports.merge = async (script, batch, requester = stdRequester) => {
-  // Get the script and the batch.
-  const scriptJSON = await fs.readFile(`${scriptDir}/${scriptName}.json`, 'utf8');
-  const batchJSON = await fs.readFile(`${batchDir}/${batchName}.json`, 'utf8');
-  const script = JSON.parse(scriptJSON);
-  const batch = JSON.parse(batchJSON);
+// Merges a script and a batch and returns jobs.
+exports.merge = async (script, batch, requester, isolate = false) => {
+  // If the requester is unspecified, make it the standard requester.
+  requester ||= stdRequester;
+  // Create a timestamp.
   const timeStamp = Math.floor((Date.now() - Date.UTC(2022, 1)) / 2000).toString(36);
-  // Create the job directory if it does not exist.
-  await fs.mkdir(jobDir, {recursive: true});
-  // For each host in the batch:
-  const {hosts} = batch;
-  for (const host of hosts) {
-    // Aim the script at the host.
-    const job = await aim(script, host, requester, timeStamp);
-    // Add the batch name to the job.
-    job.sources.batch = batchName;
-    // Save the job.
-    await fs.writeFile(`${jobDir}/${job.id}.json`, JSON.stringify(job, null, 2));
+  // Create a time description.
+  const creationTime = (new Date()).toISOString().slice(0, 19);
+  // Initialize a target-independent job.
+  const protoJob = JSON.parse(JSON.stringify(script));
+  // Add the timestamp to the ID of the job.
+  protoJob.id = `${timeStamp}-${protoJob.id}-`;
+  // Add a sources property to the job.
+  protoJob.sources = {
+    script: script.id,
+    batch: batch.id,
+    target: {
+      id: '',
+      what: ''
+    },
+    requester
   };
-  console.log(`Merger completed. Job count: ${hosts.length}. Time stamp ${timeStamp}.`);
+  // Add time properties to the job.
+  protoJob.creationTime = creationTime;
+  protoJob.timeStamp = timeStamp;
+  // If isolation was requested:
+  if (isolate) {
+    // Append a copy of the previous placeholder to each eligible contaminating test in the script.
+    let {acts} = protoJob;
+    let lastPlaceholder = {};
+    for (const actIndex in acts) {
+      if (acts[actIndex].type === 'placeholder') {
+        lastPlaceholder = acts[actIndex];
+      }
+      else if (
+        contaminantNames.has(acts[actIndex].type)
+        && actIndex < acts.length - 1
+        && acts[actIndex + 1].type !== 'placeholder'
+      ) {
+        acts[actIndex] = JSON.parse(JSON.stringify([acts[actIndex], lastPlaceholder]));
+      }
+    };
+    acts = acts.flat();
+  }
+  // Initialize an array of jobs.
+  const jobs = [];
+  // For each target in the batch:
+  const {targets} = batch;
+  for (const target of targets) {
+    // Initialize a job.
+    const job = JSON.parse(JSON.stringify(protoJob));
+    // Add the target ID to the job ID.
+    job.id += target.id;
+    // Add data on the target to the sources property of the job.
+    job.sources.target.id = target.id;
+    job.sources.target.what = target.what;
+    // Replace each placeholder in the job with the named replacer of the target.
+    let {acts} = job;
+    for (const act of acts) {
+      if (act.type === 'placeholder') {
+        const replacerName = act.which;
+        act.length = 0;
+        if (replacerName && target.acts && target.acts[replacerName]) {
+          act.push(target.acts[replacerName]);
+        }
+        else {
+          console.log(`ERROR: Placeholder for ${target.id} not replaceable`);
+        }
+      }
+    }
+    acts = acts.flat();
+    // Append the job to the array of jobs.
+    jobs.push(job);
+  };
+  return jobs;
 };

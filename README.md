@@ -212,8 +212,8 @@ Suppose you ask for a merger of the above batch and script, **without** the isol
     }
   ],
   sources: {
-    script: "ts25",
-    batch: "weborgs",
+    script: 'ts25',
+    batch: 'weborgs',
     target: {
       id: 'mozilla',
       what: 'Mozilla Foundation'
@@ -237,7 +237,7 @@ The `merge` module has added other properties to the job:
 
 This job is ready to be executed by Testaro.
 
-If, however, you requested a merger **with** test isolation, then `merge` would act as if another instance of
+If, however, you requested a merger **with** isolation, then `merge` would act as if another instance of
 
     ```javaScript
     {
@@ -259,10 +259,10 @@ A module can invoke `merge` in this way:
 
 ```javaScript
 const {merge} = require('testilo/merge');
-const jobs = merge(script, batch, true);
+const jobs = merge(script, batch, requester, true);
 ```
 
-This invocation references `script` and `batch` variables that the module has already defined and invokes the isolation option by specifying `true` as a third argument to `merge()`. To reject the isolation option, the invocation could replace `true` with `false` or omit the third argument. The `merge()` function of the `merge` module generates jobs and returns them in an array. The invoking module can further dispose of the jobs as needed.
+This invocation references `script`, `batch`, and `requester` variables that the module has already defined. The `script` and `batch` variables are a script object and a batch object, respectively. The `requester` variable is an email address. The fourth argument is a boolean, specifying whether to perform isolation; a missing fourth argument is equivalent to `false`. The `merge()` function of the `merge` module generates jobs and returns them in an array. The invoking module can further dispose of the jobs as needed.
 
 #### By a user
 
@@ -271,12 +271,12 @@ A user can invoke `merge` in this way:
 - Create a script and save it as a JSON file named `ts25.json` in the `process.env.SCRIPTDIR` directory.
 - Create a batch and save it as a JSON file named `weborgs.json` in the `process.env.BATCHDIR` directory.
 - In the Testilo project directory, execute one of these statement:
-    - `node call merge ts25 weborgs true`
-    - `node call merge ts25 weborgs false`
-    - `node call merge ts25 weborgs`
+    - `node call merge ts25 weborgs user@email.tld true`
+    - `node call merge ts25 weborgs user@email.tld false`
+    - `node call merge ts25 weborgs user@email.tld`
 
-The first statement will cause a merger with test isolation.
-The second and third statements will cause a merger without test isolation.
+The first statement will cause a merger with isolation.
+The second and third statements will cause a merger without isolation.
 
 The `call` module will retrieve the named script and batch from their respective directories.
 The `merge` module will create an array of jobs.

@@ -1,13 +1,12 @@
 /*
-  do.js
+  call.js
   Invokes Testilo modules with arguments.
   This is the universal module for use of Testilo from a command line.
   Arguments:
     0. function to execute.
     1+. arguments to pass to the function.
   Usage examples:
-    node call aim tp25 https://www.w3c.org/ 'World Wide Web Consortium' w3c developer@w3.org
-    node call merge script454 webOrgs
+    node call merge ts25 webOrgs true
     node call score sp25a (to score the first raw report)
     node call score sp25a 8ep9f (to score the first raw report whose name starts with 8ep9f)
     node call multiScore sp25a
@@ -21,9 +20,8 @@
 
 // Module to keep secrets.
 require('dotenv').config();
-// Function to process a script aiming.
+// Function to process files.
 const fs = require('fs/promises');
-const {aim} = require('./aim');
 // Function to process a script-batch merger.
 const {merge} = require('./merge');
 // Function to score a report.
@@ -40,40 +38,34 @@ const {compare} = require('./compare');
 // ########## CONSTANTS
 
 const scriptDir = process.env.SCRIPTDIR;
+const batchDir = process.env.BATCHDIR;
 const scoreProcDir = process.env.SCOREPROCDIR;
 const digestProcDir = process.env.DIGESTPROCDIR;
 const jobDir = process.env.JOBDIR;
 const rawDir = process.env.REPORTDIR_RAW;
 const scoredDir = process.env.REPORTDIR_SCORED;
 const digestedDir = process.env.REPORTDIR_DIGESTED;
-const comparisonDir = process.env.COMPARISONDIR;
+const comparisonDir = process.env.REPORTDIR_COMPARED;
 const fn = process.argv[2];
 const fnArgs = process.argv.slice(3);
 
 // ########## FUNCTIONS
 
-// Fulfills an aiming request.
-const callAim = async (scriptName, hostURL, hostName, hostID, requester) => {
+// Fulfills a merger request.
+const callMerge = async (scriptName, batchName, requester, withIsolation = false) => {
+  // Get the script and the batch.
   const scriptJSON = await fs.readFile(`${scriptDir}/${scriptName}.json`, 'utf8');
   const script = JSON.parse(scriptJSON);
-  const job = aim(
-    script,
-    {
-      id: hostID,
-      which: hostURL,
-      what: hostName
-    },
-    requester
-  );
-  const scriptID = job.sources.script;
-  const jobID = job.id;
-  await fs.writeFile(`${jobDir}/${jobID}.json`, `${JSON.stringify(job, null, 2)}\n`);
-  console.log(`Script ${scriptID} aimed at ${hostName} saved as job ${jobID}.json in ${jobDir}`);
-};
-// Fulfills a merger request.
-const callMerge = async (scriptName, batchName, requester) => {
-  await merge(scriptName, batchName, requester);
-  console.log(`Batch ${batchName}.json merged into script ${scriptName} in ${jobDir}`);
+  const batchJSON = await fs.readFile(`${batchDir}/${batchName}.json`);
+  const batch = JSON.parse(batchJSON);
+  // Perform the merger.
+  const jobs = merge(script, batch, requester, withIsolation);
+  // Save the jobs.
+  for (const job of jobs) {
+    const jobJSON = JSON.stringify(job, null, 2);
+    await fs.writeFile(`${jobDir}/${job.id}.json`, jobJSON);
+  }
+  console.log(`Script ${scriptName} and batch ${batchName}.json merged; jobs saved in ${jobDir}`);
 };
 // Fulfills a scoring request.
 const callScore = async (scoreProcID, reportIDStart = '') => {

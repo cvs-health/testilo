@@ -3,6 +3,13 @@
   Validates merge module.
 */
 
+// ########## IMPORTS
+
+// Function to process files.
+const fs = require('fs/promises');
+// Function to merge a batch and a script.
+const {merge} = require('../../merge');
+
 // ########## FUNCTIONS
 
 // Validates the merger module.
@@ -35,8 +42,10 @@ const validate = async () => {
     return;
   }
   if (jobArrays.every(array => [0, 1].every(
-    jobIndex => array[jobIndex].id
-    === `${job.timeStamp}-${job.sources.script}-${job.sources.target.id}`
+    jobIndex => {
+      const job = array[jobIndex];
+      return job.id === `${job.timeStamp}-${job.sources.script}-${job.sources.target.id}`;
+    }
   ))) {
     console.log('Success: Every job has a correct ID');
   }
@@ -167,3 +176,4 @@ const validate = async () => {
     return;
   }
 };
+validate();

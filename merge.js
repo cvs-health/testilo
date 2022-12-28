@@ -61,19 +61,22 @@ exports.merge = async (script, batch, requester, isolate = false) => {
     // Append a copy of the previous placeholder to each eligible contaminating test in the script.
     let {acts} = protoJob;
     let lastPlaceholder = {};
-    for (const actIndex in acts) {
-      if (acts[actIndex].type === 'placeholder') {
-        lastPlaceholder = acts[actIndex];
+    for (const actIndexString in acts) {
+      const actIndex = Number.parseInt(actIndexString);
+      const act = acts[actIndex];
+      if (act.type === 'placeholder') {
+        lastPlaceholder = act;
       }
       else if (
-        contaminantNames.has(acts[actIndex].type)
+        act.type === 'test'
+        && contaminantNames.has(act.which)
         && actIndex < acts.length - 1
         && acts[actIndex + 1].type !== 'placeholder'
       ) {
-        acts[actIndex] = JSON.parse(JSON.stringify([acts[actIndex], lastPlaceholder]));
+        acts[actIndex] = JSON.parse(JSON.stringify([act, lastPlaceholder]));
       }
     };
-    acts = acts.flat();
+    protoJob.acts = acts.flat();
   }
   // Initialize an array of jobs.
   const jobs = [];
@@ -87,21 +90,34 @@ exports.merge = async (script, batch, requester, isolate = false) => {
     // Add data on the target to the sources property of the job.
     job.sources.target.id = target.id;
     job.sources.target.what = target.what;
-    // Replace each placeholder in the job with the named replacer of the target.
+    // Replace each placeholder object in the job with the named replacer array of the target.
     let {acts} = job;
-    for (const act of acts) {
+    for (const actIndex in acts) {
+      const act = acts[actIndex];
       if (act.type === 'placeholder') {
         const replacerName = act.which;
-        act.length = 0;
-        if (replacerName && target.acts && target.acts[replacerName]) {
-          act.push(target.acts[replacerName]);
+        if (replacerName && target.acts) {
+          let replacerActs = target.acts[replacerName];
+          if (replacerActs) {
+            // Add a which property to any launch act in the replacer.
+            replacerActs = JSON.parse(JSON.stringify(replacerActs));
+            for (const replacerAct of replacerActs) {
+              if (replacerAct.type === 'launch') {
+                replacerAct.which = act.launch;
+              }
+            }
+            acts[actIndex] = replacerActs;
+          }
+          else {
+            console.log(`ERROR: Target ${target.id} has no ${replacerName} replacer`);
+          }
         }
         else {
-          console.log(`ERROR: Placeholder for ${target.id} not replaceable`);
+          console.log(`ERROR: Placeholder for target ${target.id} not replaceable`);
         }
       }
     }
-    acts = acts.flat();
+    job.acts = acts.flat();
     // Append the job to the array of jobs.
     jobs.push(job);
   };

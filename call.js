@@ -59,13 +59,16 @@ const callMerge = async (scriptName, batchName, requester, withIsolation = false
   const batchJSON = await fs.readFile(`${batchDir}/${batchName}.json`);
   const batch = JSON.parse(batchJSON);
   // Perform the merger.
-  const jobs = merge(script, batch, requester, withIsolation);
+  const jobs = await merge(script, batch, requester, withIsolation);
   // Save the jobs.
   for (const job of jobs) {
     const jobJSON = JSON.stringify(job, null, 2);
     await fs.writeFile(`${jobDir}/${job.id}.json`, jobJSON);
   }
-  console.log(`Script ${scriptName} and batch ${batchName}.json merged; jobs saved in ${jobDir}`);
+  const {timeStamp} = jobs[0];
+  console.log(
+    `Script ${scriptName} and batch ${batchName} merged; jobs ${timeStamp}… saved in ${jobDir}`
+  );
 };
 // Fulfills a scoring request.
 const callScore = async (scoreProcID, reportIDStart = '') => {
@@ -220,7 +223,7 @@ if (fn === 'aim' && fnArgs.length === 5) {
     console.log('Execution completed');
   });
 }
-else if (fn === 'merge' && fnArgs.length > 1 && fnArgs.length < 4) {
+else if (fn === 'merge' && fnArgs.length > 2 && fnArgs.length < 5) {
   callMerge(... fnArgs)
   .then(() => {
     console.log('Execution completed');

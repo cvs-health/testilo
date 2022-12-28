@@ -144,4 +144,26 @@ const validate = async () => {
     console.log('ERROR: Job 0 of array 0 has an incorrect act 0');
     return;
   }
+  const job01Act3 = jobArrays[0][1].acts[3];
+  if (
+    job01Act3.type === 'test'
+    && job01Act3.which === 'continuum'
+  ) {
+    console.log('Success: Job 1 of array 0 has correct act 3 type and which properties');
+  }
+  else {
+    console.log('ERROR: Job 1 of array 0 has an incorrect act 3 type or which property');
+    return;
+  }
+  const job10Act7 = jobArrays[1][0].acts[7];
+  if (
+    job10Act7.type === 'url'
+    && job10Act7.what === 'example'
+  ) {
+    console.log('Success: Job 0 of array 1 has correct act 7 type and what properties');
+  }
+  else {
+    console.log('ERROR: Job 1 of array 0 has an incorrect act 7 type or what property');
+    return;
+  }
 };

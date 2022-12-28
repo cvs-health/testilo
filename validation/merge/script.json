@@ -1,0 +1,33 @@
+{
+  "id": "script",
+  "what": "merge validation",
+  "strict": false,
+  "timeLimit": 40,
+  "acts": [
+    {
+      "type": "placeholder",
+      "which": "main",
+      "launch": "webkit"
+    },
+    {
+      "type": "test",
+      "which": "continuum",
+      "what": "Continuum"
+    },
+    {
+      "type": "placeholder",
+      "which": "main",
+      "launch": "chromium"
+    },
+    {
+      "type": "test",
+      "which": "focAll",
+      "what": "Tab-focusability"
+    },
+    {
+      "type": "test",
+      "which": "bulk",
+      "what": "count of visible elements"
+    }
+  ]
+}

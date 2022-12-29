@@ -1,0 +1,18 @@
+{
+  "id": "script",
+  "what": "score validation",
+  "strict": false,
+  "timeLimit": 10,
+  "acts": [
+    {
+      "type": "placeholder",
+      "which": "main",
+      "launch": "chromium"
+    },
+    {
+      "type": "test",
+      "which": "bulk",
+      "what": "count of visible elements"
+    }
+  ]
+}

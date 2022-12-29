@@ -6014,7 +6014,7 @@ const addDetail = (actWhich, testID, addition = 1) => {
   }
 };
 // Scores a report.
-exports.scorer = async report => {
+exports.scorer = report => {
   // Initialize the variables.
   init();
   // If there are any acts in the report:

@@ -14,8 +14,8 @@ exports.score = async (scorer, reports) => {
   for (const report of reports) {
     scorer(report);
     scoredReports.push(report);
-    console.log(`Report ${rawReport.id} scored`);
+    console.log(`Report ${report.id} scored`);
   }
-  console.log(`Scoring complete. Report count: ${rawReports.length}`);
+  console.log(`Scoring complete. Report count: ${reports.length}`);
   return scoredReports;
 };

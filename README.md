@@ -233,7 +233,7 @@ The `merge` module has added other properties to the job:
 - a creation time
 - a timestamp, derived from the creation time
 - a job ID, composed of the timestamp, the script ID, and the target ID
-- a `sources` property, identifying the script, the batch, the target within the batch, and your email address, which it has obtained from the environment variable `process.env.REQUESTER`.
+- a `sources` property, identifying the script, the batch, the target within the batch, and an email address obtained from the environment variable `process.env.REQUESTER`.
 
 This job is ready to be executed by Testaro.
 
@@ -262,18 +262,20 @@ const {merge} = require('testilo/merge');
 const jobs = merge(script, batch, requester, true);
 ```
 
-This invocation references `script`, `batch`, and `requester` variables that the module has already defined. The `script` and `batch` variables are a script object and a batch object, respectively. The `requester` variable is an email address. The fourth argument is a boolean, specifying whether to perform isolation; a missing fourth argument is equivalent to `false`. The `merge()` function of the `merge` module generates jobs and returns them in an array. The invoking module can further dispose of the jobs as needed.
+This invocation references `script`, `batch`, and `requester` variables that the module must have already defined. The `script` and `batch` variables are a script object and a batch object, respectively. The `requester` variable is an email address. The fourth argument is a boolean, specifying whether to perform isolation; a missing fourth argument is equivalent to `false`. The `merge()` function of the `merge` module generates jobs and returns them in an array. The invoking module can further dispose of the jobs as needed.
 
 #### By a user
 
 A user can invoke `merge` in this way:
 
-- Create a script and save it as a JSON file named `ts25.json` in the `process.env.SCRIPTDIR` directory.
-- Create a batch and save it as a JSON file named `weborgs.json` in the `process.env.BATCHDIR` directory.
-- In the Testilo project directory, execute one of these statement:
-    - `node call merge ts25 weborgs user@email.tld true`
-    - `node call merge ts25 weborgs user@email.tld false`
-    - `node call merge ts25 weborgs user@email.tld`
+- Create a script and save it as a JSON file in the `process.env.SCRIPTDIR` directory.
+- Create a batch and save it as a JSON file in the `process.env.BATCHDIR` directory.
+- In the Testilo project directory, execute one of these statements:
+    - `node call merge x y z true`
+    - `node call merge x y z false`
+    - `node call merge x y z`
+
+In these statements, replace `x` and `y` with the base names of the script and batch files, respectively. For example, if the script file is named `ts25.json`, then replace `x` with `ts25`. Replace `z` with an email address.
 
 The first statement will cause a merger with isolation.
 The second and third statements will cause a merger without isolation.
@@ -281,6 +283,10 @@ The second and third statements will cause a merger without isolation.
 The `call` module will retrieve the named script and batch from their respective directories.
 The `merge` module will create an array of jobs.
 The `call` module will save the jobs in the `process.env.JOBDIR` directory.
+
+### Validation
+
+To test the `merge` module, in the project directory you can execute the statement `node validation/merge/validate`. All logging statements should begin with “Success” and none should begin with “ERROR”.
 
 ## Report scoring
 

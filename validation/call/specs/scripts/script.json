@@ -1,0 +1,23 @@
+{
+  "id": "script",
+  "what": "call validation",
+  "strict": false,
+  "timeLimit": 30,
+  "acts": [
+    {
+      "type": "placeholder",
+      "which": "main",
+      "launch": "chromium"
+    },
+    {
+      "type": "test",
+      "which": "focAll",
+      "what": "Tab-focusability"
+    },
+    {
+      "type": "test",
+      "which": "bulk",
+      "what": "count of visible elements"
+    }
+  ]
+}

@@ -6,14 +6,10 @@
     0. function to execute.
     1+. arguments to pass to the function.
   Usage examples:
-    node call merge ts25 webOrgs true
-    node call score sp25a (to score the first raw report)
-    node call score sp25a 8ep9f (to score the first raw report whose name starts with 8ep9f)
-    node call multiScore sp25a
-    node call digest dp25a (to digest the first scored report)
-    node call digest dp25a 8ep9f (to digest the first scored report whose name starts with 8ep9f)
-    node call multiDigest dp25a
-    node call compare cp25a weborgs (to write weborgs.html, comparing all scored reports)
+    node call merge ts25 webOrgs user@domain.tld true
+    node call score sp25a
+    node call digest dp25a
+    node call compare cp25a weborgs
 */
 
 // ########## IMPORTS
@@ -22,44 +18,36 @@
 require('dotenv').config();
 // Function to process files.
 const fs = require('fs/promises');
-// Function to process a script-batch merger.
+// Function to process a merger.
 const {merge} = require('./merge');
-// Function to score a report.
+// Function to score reports.
 const {score} = require('./score');
-// Function to score multiple reports.
-const {multiScore} = require('./multiScore');
-// Function to digest a report.
+// Function to digest reports.
 const {digest} = require('./digest');
-// Function to digest multiple reports.
-const {multiDigest} = require('./multiDigest');
 // Function to compare scores.
 const {compare} = require('./compare');
 
 // ########## CONSTANTS
 
-const scriptDir = process.env.SCRIPTDIR;
-const batchDir = process.env.BATCHDIR;
-const scoreProcDir = process.env.SCOREPROCDIR;
-const digestProcDir = process.env.DIGESTPROCDIR;
+const specDir = process.env.SPECDIR;
+const functionDir = process.env.FUNCTIONDIR;
 const jobDir = process.env.JOBDIR;
-const rawDir = process.env.REPORTDIR_RAW;
-const scoredDir = process.env.REPORTDIR_SCORED;
-const digestedDir = process.env.REPORTDIR_DIGESTED;
-const comparisonDir = process.env.REPORTDIR_COMPARED;
+const reportDir = process.env.REPORTDIR;
+const requester = process.env.REQUESTER;
 const fn = process.argv[2];
 const fnArgs = process.argv.slice(3);
 
 // ########## FUNCTIONS
 
-// Fulfills a merger request.
-const callMerge = async (scriptName, batchName, requester, withIsolation = false) => {
+// Fulfills a merging request.
+const callMerge = async (scriptID, batchID, requester, withIsolation = false) => {
   // Get the script and the batch.
-  const scriptJSON = await fs.readFile(`${scriptDir}/${scriptName}.json`, 'utf8');
+  const scriptJSON = await fs.readFile(`${specDir}/scripts/${scriptID}.json`, 'utf8');
   const script = JSON.parse(scriptJSON);
-  const batchJSON = await fs.readFile(`${batchDir}/${batchName}.json`);
+  const batchJSON = await fs.readFile(`${specDir}/batches/${batchID}.json`, 'utf8');
   const batch = JSON.parse(batchJSON);
-  // Perform the merger.
-  const jobs = await merge(script, batch, requester, withIsolation);
+  // Merge them into an array of jobs.
+  const jobs = merge(script, batch, requester, withIsolation);
   // Save the jobs.
   for (const job of jobs) {
     const jobJSON = JSON.stringify(job, null, 2);
@@ -67,47 +55,43 @@ const callMerge = async (scriptName, batchName, requester, withIsolation = false
   }
   const {timeStamp} = jobs[0];
   console.log(
-    `Script ${scriptName} and batch ${batchName} merged; jobs ${timeStamp}… saved in ${jobDir}`
+    `Script ${scriptID} and batch ${batchID} merged; jobs ${timeStamp}… saved in ${jobDir}`
   );
 };
 // Fulfills a scoring request.
-const callScore = async (scoreProcID, reportIDStart = '') => {
-  // Identify the raw reports.
-  const rawFileNames = await fs.readdir(rawDir);
-  const rawReportNames = rawFileNames.filter(fileName => fileName.endsWith('.json'));
+const callScore = async (scorerID, selector = '') => {
+  // Identify the raw reports to be scored.
+  const rawFileNames = await fs.readdir(`${reportDir}/raw`);
+  const reportIDs = rawFileNames
+  .filter(fileName => fileName.endsWith('.json'))
+  .filter(fileName => fileName.startsWith(selector))
+  .map(fileName => fileName.slice(0, -5));
   // If any exist:
-  if (rawReportNames.length) {
-    // Identify the one to be scored.
-    let rawReportName = '';
-    if (reportIDStart) {
-      rawReportName = rawReportNames.find(reportName => reportName.startsWith(reportIDStart));
-    }
-    else {
-      rawReportName = rawReportNames[0];
-    }
-    // If it exists:
-    if (rawReportName) {
-      // Score it.
-      const rawReportJSON = await fs.readFile(`${rawDir}/${rawReportName}`, 'utf8');
+  if (reportIDs.length) {
+    // Get the scorer.
+    const {scorer} = require(`${functionDir}/score/${scorerID}`);
+    // Get the reports.
+    const rawReports = [];
+    for (const reportID of reportIDs) {
+      const rawReportJSON = await fs.readFile(`${reportDir}/raw/${reportID}.json`, 'utf8');
       const rawReport = JSON.parse(rawReportJSON);
-      const {scorer} = require(`./${scoreProcDir}/${scoreProcID}.js`);
-      const scoredReport = await score(scorer, rawReport);
-      // Save it, scored.
+      rawReports.push(rawReport);
+    };
+    // Score them
+    const scoredReports = score(scorer, rawReports);
+    const scoredReportDir = `${reportDir}/scored`;
+    // For each scored report:
+    for (const scoredReport of scoredReports) {
+      // Save it.
       await fs.writeFile(
-        `${scoredDir}/${scoredReport.job.id}.json`, JSON.stringify(scoredReport, null, 2)
+        `${scoredReportDir}/${scoredReport.id}.json`, JSON.stringify(scoredReport, null, 2)
       );
-      console.log(`Scored report ${rawReport.job.id} saved in ${scoredDir}`);
-    }
-    // Otherwise, i.e. if it does not exist:
-    else {
-      // Report this.
-      console.log('ERROR: Specified raw report not found');
-    }
+    };
   }
-  // Otherwise, i.e. if no raw report found:
+  // Otherwise, i.e. if no raw reports are to be scored:
   else {
     // Report this.
-    console.log('ERROR: No raw report found');
+    console.log('ERROR: No raw reports to be scored');
   }
 };
 // Fulfills a multiple-report scoring request.
@@ -201,18 +185,6 @@ const callCompare = async (compareProcID, comparisonNameBase) => {
     `Comparison completed. Comparison proc: ${compareProcID}. Directory: ${comparisonDir}.`
   );
 };
-// Fulfills an isolation request.
-const callIsolate = async (jobID, injectorID) => {
-  const jobJSON = await fs.readFile(`${process.env.JOBDIR}/${jobID}.json`, 'utf8');
-  const job = JSON.parse(jobJSON);
-  const injectorJSON = await fs.readFile(`${process.env.INJECTORDIR}/${injectorID}.json`, 'utf8');
-  const injector = JSON.parse(injectorJSON);
-  const expandedJob = Array.from(job);
-  expandedJob.acts = inject(expandedJob.acts, injector);
-  await fs.writeFile(
-    `${process.env.JOBDIR_EXPANDED}/${jobID}.json`, JSON.stringify(expandedJob, null, 2)
-  );
-}
 
 // ########## OPERATION
 

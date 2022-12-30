@@ -275,7 +275,7 @@ A user can invoke `merge` in this way:
     - `node call merge x y z false`
     - `node call merge x y z`
 
-In these statements, replace `x` and `y` with the base names of the script and batch files, respectively. For example, if the script file is named `ts25.json`, then replace `x` with `ts25`. Replace `z` with an email address.
+In these statements, replace `x` and `y` with the base names of the script and batch files, respectively. For example, if the script file is named `ts25.json`, then replace `x` with `ts25`. Replace `z` with an email address, or with an empty string if the environment variable `process.env.REQUESTER` exists and you want to use it.
 
 The first statement will cause a merger with isolation.
 The second and third statements will cause a merger without isolation.

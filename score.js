@@ -21,6 +21,6 @@ exports.score = (scorer, reports) => {
     console.log(`Report ${report.id} scored`);
   }
   // Return the array of scored reports.
-  console.log(`Scoring complete. Report count: ${reports.length}`);
+  console.log(`Scoring complete; report count ${reports.length}`);
   return scoredReports;
 };

@@ -1,5 +1,5 @@
 /*
-  digest: digest template.
+  digester.
   Creator of parameters for substitution into digest.html.
 */
 

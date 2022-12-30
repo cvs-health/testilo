@@ -8,10 +8,15 @@
 // Replaces the placeholders in a template with eponymous query parameters.
 const replaceHolders = (template, query) => template
 .replace(/__([a-zA-Z]+)__/g, (ph, qp) => query[qp]);
-// Creates a report comparing the scores of scored reports.
-exports.compare = async (template, comparer, scoredReports) => {
-  const {getQuery} = comparer;
-  const query = getQuery(scoredReports);
-  const comparativeReport = replaceHolders(template, query);
-  return comparativeReport;
+// Compares the scored reports and returns a comparison.
+exports.compare = (comparisonTemplate, comparer, reports) => {
+  // Create a query.
+  const query = {};
+  // Populate the query.
+  comparer(reports, query);
+  // Use it to create a comparison.
+  const comparison = replaceHolders(comparisonTemplate, query);
+  // Return the comparison.
+  console.log(`Comparison complete. Report count: ${reports.length}`);
+  return comparison;
 };

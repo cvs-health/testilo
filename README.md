@@ -452,3 +452,7 @@ When a user invokes `compare` in this example, the `call` module:
 - writes the comparative report as an HTML file named `legislators.html` to the `process.env.REPORTDIR__COMPARATIVE` directory
 
 The comparative reports created by `compare` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/comparative/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where comparative reports are written.
+
+### Validation
+
+To test the `compare` module, in the project directory you can execute the statement `node validation/compare/validate`. All logging statements should begin with “Success” and none should begin with “ERROR”.

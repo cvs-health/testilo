@@ -27,7 +27,7 @@ exports.digest = (digestTemplate, digester, reports) => {
     digests.push(digestedReport);
     console.log(`Report ${report.id} digested`);
   };
-  // Return the digest.
+  // Return the digests.
   console.log(`Digesting complete. Report count: ${reports.length}`);
   return digests;
 };

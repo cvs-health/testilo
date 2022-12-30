@@ -33,7 +33,6 @@ const specDir = process.env.SPECDIR;
 const functionDir = process.env.FUNCTIONDIR;
 const jobDir = process.env.JOBDIR;
 const reportDir = process.env.REPORTDIR;
-const requester = process.env.REQUESTER;
 const fn = process.argv[2];
 const fnArgs = process.argv.slice(3);
 

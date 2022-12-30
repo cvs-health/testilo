@@ -33,6 +33,9 @@ const contaminantNames = new Set([
 
 // Merges a script and a batch and returns jobs.
 exports.merge = (script, batch, requester, isolate = false) => {
+  if (isolate === 'false') {
+    isolate = false;
+  }
   // If the requester is unspecified, make it the standard requester.
   requester ||= stdRequester;
   // Create a timestamp.

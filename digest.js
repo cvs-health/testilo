@@ -1,10 +1,10 @@
 /*
   digest.js
-  Creates a digest from a scored report.
+  Creates digests from a scored reports.
   Arguments:
     0. Digest template.
-    1. Digest proc.
-    2. Scored report.
+    1. Digesting function.
+    2. Array of scored reports.
 */
 
 // ########## FUNCTIONS
@@ -12,14 +12,22 @@
 // Replaces the placeholders in content with eponymous query parameters.
 const replaceHolders = (content, query) => content
 .replace(/__([a-zA-Z]+)__/g, (ph, qp) => query[qp]);
-// Creates a digest.
-exports.digest = (digestTemplate, digestProc, scoredReport) => {
+// Digests the scored reports and returns them, digested.
+exports.digest = (digestTemplate, digester, reports) => {
+  const digests = [];
   // Create a query.
   const query = {};
-  digestProc(scoredReport, query);
-  // Use it to replace the placeholders in the template.
-  const digestedReport = replaceHolders(digestTemplate, query);
+  // For each report:
+  for (const report of reports) {
+    // Populate the query.
+    digester(report, query);
+    // Use it to create a digest.
+    const digestedReport = replaceHolders(digestTemplate, query);
+    // Add the digest to the array of digests.
+    digests.push(digestedReport);
+    console.log(`Report ${report.id} digested`);
+  };
   // Return the digest.
-  console.log(`Report ${scoredReport.job.id} digested`);
-  return digestedReport;
+  console.log(`Digesting complete. Report count: ${reports.length}`);
+  return digests;
 };

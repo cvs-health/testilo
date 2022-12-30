@@ -8,14 +8,19 @@
 
 // ########## FUNCTIONS
 
-// Score the specified raw reports and return them, scored.
-exports.score = async (scorer, reports) => {
+// Scores the specified raw reports and returns them, scored.
+exports.score = (scorer, reports) => {
   const scoredReports = [];
+  // For each report:
   for (const report of reports) {
-    scorer(report);
-    scoredReports.push(report);
+    // Score it.
+    const scoredReport = JSON.parse(JSON.stringify(report));
+    scorer(scoredReport);
+    // Append it to the array of scored reports.
+    scoredReports.push(scoredReport);
     console.log(`Report ${report.id} scored`);
   }
+  // Return the array of scored reports.
   console.log(`Scoring complete. Report count: ${reports.length}`);
   return scoredReports;
 };

@@ -32,7 +32,7 @@ const contaminantNames = new Set([
 // ########## FUNCTIONS
 
 // Merges a script and a batch and returns jobs.
-exports.merge = async (script, batch, requester, isolate = false) => {
+exports.merge = (script, batch, requester, isolate = false) => {
   // If the requester is unspecified, make it the standard requester.
   requester ||= stdRequester;
   // Create a timestamp.

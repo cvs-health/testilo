@@ -1,0 +1,75 @@
+{
+  "id": "report",
+  "what": "Report for scoring validation",
+  "strict": true,
+  "timeLimit": 10,
+  "acts": [
+    {
+      "type": "launch",
+      "which": "chromium",
+      "what": "Chromium browser",
+      "startTime": 1662474496075,
+      "endTime": 1662474496453
+    },
+    {
+      "type": "url",
+      "which": "https://example.com",
+      "what": "Example of web page",
+      "startTime": 1662474496453,
+      "result": "https://example.com",
+      "endTime": 1662474501684
+    },
+    {
+      "type": "test",
+      "which": "bulk",
+      "what": "count of visible elements",
+      "startTime": 1662474501684,
+      "url": "https://example.com",
+      "result": {
+        "visibleElements": 100,
+        "success": true
+      },
+      "endTime": 1662474501866
+    }
+  ],
+  "sources": {
+    "script": "script",
+    "batch": "batch",
+    "target": {
+      "id": "example",
+      "what": "Example of web page"
+    },
+    "requester": "user@domain.tld"
+  },
+  "creationTime": "2023-11-20T15:50:27",
+  "timeStamp": "cc3pl",
+  "jobData": {
+    "log": [
+      {
+        "event": "startTime",
+        "value": "2022-09-06T14:27:55"
+      },
+      {
+        "event": "endTime",
+        "value": "2022-09-06T14:30:47"
+      }
+    ],
+    "timeStamp": "5lezg",
+    "testTimes": [
+      [
+        "bulk",
+        0
+      ]
+    ],
+    "logCount": 10,
+    "logSize": 100,
+    "errorLogCount": 1,
+    "errorLogSize": 10,
+    "prohibitedCount": 0,
+    "visitTimeoutCount": 0,
+    "visitRejectionCount": 0,
+    "visitLatency": 3,
+    "endTime": "2022-09-06T14:30:47",
+    "elapsedSeconds": 5
+  }
+}

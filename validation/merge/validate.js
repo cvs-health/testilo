@@ -12,7 +12,7 @@ const {merge} = require('../../merge');
 
 // ########## FUNCTIONS
 
-// Validates the merger module.
+// Validates the merge module.
 const validate = async () => {
   // Get the script and the batch.
   const scriptJSON = await fs.readFile(`${__dirname}/script.json`, 'utf8');
@@ -21,8 +21,8 @@ const validate = async () => {
   const batch = JSON.parse(batchJSON);
   const requester = 'me@mydomain.tld';
   // Perform the merger without and with isolation.
-  const jobsNoIsolation = await merge(script, batch, requester, false);
-  const jobsYesIsolation = await merge(script, batch, requester, true);
+  const jobsNoIsolation = merge(script, batch, requester, false);
+  const jobsYesIsolation = merge(script, batch, requester, true);
   const jobArrays = [jobsNoIsolation, jobsYesIsolation];
   // Validate the jobs.
   if (jobsNoIsolation && jobsYesIsolation) {

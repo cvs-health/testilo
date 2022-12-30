@@ -347,6 +347,10 @@ When a user invokes `score` in this example, the `call` module:
 
 The optional third argument to call (`75` in this example) is a report selector. Without the argument, `call` gets all the reports in the `process.env.REPORTDIR_RAW` directory. With the argument, `call` gets only those reports whose names begin with the argument string.
 
+### Validation
+
+To test the `score` module, in the project directory you can execute the statement `node validation/score/validate`. All logging statements should begin with “Success” and none should begin with “ERROR”.
+
 ## Report digesting
 
 ### Introduction
@@ -397,6 +401,10 @@ When a user invokes `digest` in this example, the `call` module:
 The optional third argument to call (`75` in this example) is a report selector. Without the argument, `call` gets all the reports in the `process.env.REPORTDIR_SCORED` directory. With the argument, `call` gets only those reports whose names begin with the argument string.
 
 The digests created by `digest` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/digested/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where digested reports are written.
+
+### Validation
+
+To test the `digest` module, in the project directory you can execute the statement `node validation/digest/validate`. All logging statements should begin with “Success” and none should begin with “ERROR”.
 
 ### Report comparison
 

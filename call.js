@@ -57,27 +57,31 @@ const callMerge = async (scriptID, batchID, requester, withIsolation = false) =>
     `Script ${scriptID} and batch ${batchID} merged; jobs ${timeStamp}… saved in ${jobDir}`
   );
 };
-// Fulfills a scoring request.
-const callScore = async (scorerID, selector = '') => {
-  // Identify the raw reports to be scored.
-  const rawFileNames = await fs.readdir(`${reportDir}/raw`);
-  const reportIDs = rawFileNames
+// Get selected reports.
+const getReports = async (type, selector = '') => {
+  const allFileNames = await fs.readdir(`${reportDir}/${type}`);
+  const reportIDs = allFileNames
   .filter(fileName => fileName.endsWith('.json'))
   .filter(fileName => fileName.startsWith(selector))
   .map(fileName => fileName.slice(0, -5));
+  const reports = [];
+  for (const reportID of reportIDs) {
+    const reportJSON = await fs.readFile(`${reportDir}/${type}/${reportID}.json`, 'utf8');
+    const report = JSON.parse(reportJSON);
+    reports.push(report);
+  }
+  return reports;
+};
+// Fulfills a scoring request.
+const callScore = async (scorerID, selector = '') => {
+  // Get the raw reports to be scored.
+  const reports = getReports('raw', selector);
   // If any exist:
-  if (reportIDs.length) {
+  if (reports.length) {
     // Get the scorer.
     const {scorer} = require(`${functionDir}/score/${scorerID}`);
-    // Get the reports.
-    const rawReports = [];
-    for (const reportID of reportIDs) {
-      const rawReportJSON = await fs.readFile(`${reportDir}/raw/${reportID}.json`, 'utf8');
-      const rawReport = JSON.parse(rawReportJSON);
-      rawReports.push(rawReport);
-    };
-    // Score them
-    const scoredReports = score(scorer, rawReports);
+    // Score the reports.
+    const scoredReports = score(scorer, reports);
     const scoredReportDir = `${reportDir}/scored`;
     // For each scored report:
     for (const scoredReport of scoredReports) {
@@ -93,89 +97,33 @@ const callScore = async (scorerID, selector = '') => {
     console.log('ERROR: No raw reports to be scored');
   }
 };
-// Fulfills a multiple-report scoring request.
-const callMultiScore = async scoreProcID => {
-  // Score all raw reports.
-  await multiScore(scoreProcID);
-};
-// Prepares to fulfill a digesting request.
-const digestPrep = async digestProcID => {
-  const {digest} = require('./digest');
-  const {makeQuery} = require(`./${digestProcDir}/${digestProcID}/index`);
-  const digestTemplate = await fs.readFile(`${digestProcDir}/${digestProcID}/index.html`, 'utf8');
-  // Identify the scored reports.
-  const scoredFileNames = await fs.readdir(scoredDir);
-  const scoredReportNames = scoredFileNames.filter(fileName => fileName.endsWith('.json'));
-  // Return the data required for the fulfillment of the request.
-  return {
-    anyScoredReports: scoredReportNames.length > 0,
-    digest,
-    makeQuery,
-    digestTemplate,
-    scoredReportNames
-  };
-};
-// Digests and saves a report.
-const digestReport = async (scoredReportName, prepData) => {
-  // Digest the specified report.
-  const scoredReportJSON = await fs.readFile(`${scoredDir}/${scoredReportName}`, 'utf8');
-  const scoredReport = JSON.parse(scoredReportJSON);
-  const digestedReport = digest(prepData.digestTemplate, prepData.makeQuery, scoredReport);
-  // Save it, digested.
-  await fs.writeFile(`${digestedDir}/${scoredReport.job.id}.html`, digestedReport);
-  console.log(`Digested report ${scoredReport.job.id} saved in ${digestedDir}`);
-};
 // Fulfills a digesting request.
-const callDigest = async (digestProcID, reportIDStart = '') => {
-  const prepData = await digestPrep(digestProcID);
-  // If any scored reports exist:
-  if (prepData.anyScoredReports) {
-    // Identify the one to be digested.
-    let scoredReportName = '';
-    if (reportIDStart) {
-      scoredReportName = prepData.scoredReportNames.find(
-        reportName => reportName.startsWith(reportIDStart)
+const callDigest = async (digesterID, selector = '') => {
+  // Get the scored reports to be digested.
+  const reports = getReports('scored', selector);
+  // If any exist:
+  if (reports.length) {
+    const digesterDir = `${functionDir}/digest/${digesterID}`;
+    // Get the digester.
+    const {digester} = require(`${digesterDir}/index`);
+    // Get the template.
+    const template = await fs.readFile(`${digesterDir}/index.html`);
+    // Digest the reports.
+    const digestedReports = digest(template, digester, reports);
+    const digestedReportDir = `${reportDir}/digested`;
+    // For each digested report:
+    for (const digestedReport of digestedReports) {
+      // Save it.
+      await fs.writeFile(
+        `${digestedReportDir}/${digestedReport.id}.json`, JSON.stringify(digestedReport, null, 2)
       );
-    }
-    else {
-      scoredReportName = prepData.scoredReportNames[0];
-    }
-    // If it exists:
-    if (scoredReportName) {
-      // Digest and save it.
-      await digestReport(scoredReportName, prepData);
-    }
-    // Otherwise, i.e. if it does not exist:
-    else {
-      // Report this.
-      console.log('ERROR: Specified scored report not found');
-    }
+    };
   }
-  // Otherwise, i.e. if no scored report exists:
+  // Otherwise, i.e. if no scored reports are to be digested:
   else {
     // Report this.
-    console.log('ERROR: No scored report found');
+    console.log('ERROR: No scored reports to be digested');
   }
-};
-// Fulfills a multiple-report digesting request.
-const callMultiDigest = async digestProcID => {
-  const prepData = await digestPrep(digestProcID);
-  // If any scored reports exist:
-  if (prepData.anyScoredReports) {
-    // For each of them:
-    for (const scoredReportName of prepData.scoredReportNames) {
-      // Digest and save it.
-      await digestReport(scoredReportName, prepData);
-    }
-  }
-  // Otherwise, i.e. if no raw report exists:
-  else {
-    // Report this.
-    console.log('ERROR: No raw report found');
-  }
-  console.log(
-    `Digesting completed. Digest proc: ${digestProcID}. Report count: ${prepData.scoredReportNames.length}. Directory: ${digestedDir}.`
-  );
 };
 // Fulfills a comparison request.
 const callCompare = async (compareProcID, comparisonNameBase) => {

@@ -19,7 +19,9 @@ The `simple` branch contains the state of Testilo as of 2022-12-23. In that bran
 
 The `main` branch contains the state of Testilo from 2022-12-24 until now. In that branch, Testilo can prepare jobs that require multi-step operations to reach and pre-process the targets being tested.
 
-This `README.md` file documents the `main` branch.
+The `complexmerge` branch refactors `main` and is to be merged into `main` when the refactoring is complete.
+
+This `README.md` file documents the `complexmerge` branch and will document the `main` branch when `complexmerge` is merged into `main`.
 
 ## Dependencies
 
@@ -342,10 +344,10 @@ node call score sp25a 75
 
 When a user invokes `score` in this example, the `call` module:
 - gets the scoring module `sp25a` from its JSON file `sp25a.json` in the `process.env.SCOREPROCDIR` directory
-- gets the reports from the `process.env.REPORTDIR_RAW` directory
-- writes the scored reports to the `process.env.REPORTDIR__SCORED` directory
+- gets the reports from the r`raw` subdirectory of the `process.env.REPORTDIR` directory
+- writes the scored reports to the `scored` subdirectory of the `process.env.REPORTDIR` directory
 
-The optional third argument to call (`75` in this example) is a report selector. Without the argument, `call` gets all the reports in the `process.env.REPORTDIR_RAW` directory. With the argument, `call` gets only those reports whose names begin with the argument string.
+The optional third argument to call (`75` in this example) is a report selector. Without the argument, `call` gets all the reports in the `raw` subdirectory. With the argument, `call` gets only those reports whose names begin with the argument string.
 
 ### Validation
 
@@ -374,7 +376,7 @@ A module can invoke `digest` in this way:
 
 ```javaScript
 const {digest} = require('testilo/digest');
-const digesterDir = `${process.env.DIGESTPROCDIR}/dp25a`;
+const digesterDir = `${process.env.FUNCTIONDIR}/digest/dp25a`;
 fs.readFile(`${digesterDir}/index.html`)
 .then(template => {
   const {digester} = require(`${digesterDir}/index`);
@@ -394,11 +396,11 @@ node call digest dp25a 75
 ```
 
 When a user invokes `digest` in this example, the `call` module:
-- gets the template and the digesting module from subdirectory `dp25a` in the `process.env.DIGESTPROCDIR` directory
-- gets the reports from the `process.env.REPORTDIR_SCORED` directory
-- writes the digested reports to the `process.env.REPORTDIR__DIGESTED` directory
+- gets the template and the digesting module from subdirectory `dp25a` in the `digest` subdirectory of the `process.env.FUNCTIONDIR` directory
+- gets the reports from the `scored` subdirectory of the `process.env.REPORTDIR` directory
+- writes the digested reports to the `digested` subdirectory of the `process.env.REPORTDIR` directory
 
-The optional third argument to call (`75` in this example) is a report selector. Without the argument, `call` gets all the reports in the `process.env.REPORTDIR_SCORED` directory. With the argument, `call` gets only those reports whose names begin with the argument string.
+The optional third argument to call (`75` in this example) is a report selector. Without the argument, `call` gets all the reports in the `scored` subdirectory of the `process.env.REPORTDIR` directory. With the argument, `call` gets only those reports whose names begin with the argument string.
 
 The digests created by `digest` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/digested/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where digested reports are written.
 
@@ -428,7 +430,7 @@ A module can invoke `compare` in this way:
 ```javaScript
 const fs = require('fs/promises);
 const {compare} = require('testilo/compare');
-const comparerDir = `${process.env.COMPAREPROCDIR}/cp25a`;
+const comparerDir = `${process.env.FUNCTIONDIR}/compare/cp25a`;
 fs.readFile(`${comparerDir}/index.html`)
 .then(template => {
   const {comparer} = require(`${comparerDir}/index`);
@@ -447,9 +449,9 @@ node call compare cp25a legislators
 ```
 
 When a user invokes `compare` in this example, the `call` module:
-- gets the template and the comparison module from subdirectory `cp25a` in the `process.env.COMPAREPROCDIR` directory
-- gets all the reports in the `process.env.REPORTDIR_SCORED` directory
-- writes the comparative report as an HTML file named `legislators.html` to the `process.env.REPORTDIR__COMPARATIVE` directory
+- gets the template and the comparison module from subdirectory `cp25a` of the subdirectory `compare` in the `process.env.FUNCTIONDIR` directory
+- gets all the reports in the `scored` subdirectory of the `process.env.REPORTDIR` directory
+- writes the comparative report as an HTML file named `legislators.html` to the `comparative` subdirectory of the `process.env.REPORTDIR` directory
 
 The comparative reports created by `compare` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/comparative/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where comparative reports are written.
 

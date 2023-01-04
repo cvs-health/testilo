@@ -1,0 +1,57 @@
+{
+  "id": "8oqso-script-accordion",
+  "what": "call validation",
+  "strict": false,
+  "timeLimit": 30,
+  "acts": [
+    {
+      "type": "launch",
+      "which": "chromium"
+    },
+    {
+      "type": "url",
+      "which": "https://www.w3.org/WAI/ARIA/apg/example-index/accordion/accordion",
+      "what": "Accordion Example"
+    },
+    {
+      "type": "button",
+      "which": "Billing Address",
+      "what": "expand accordion"
+    },
+    {
+      "type": "test",
+      "which": "focAll",
+      "what": "Tab-focusability"
+    },
+    {
+      "type": "launch",
+      "which": "chromium"
+    },
+    {
+      "type": "url",
+      "which": "https://www.w3.org/WAI/ARIA/apg/example-index/accordion/accordion",
+      "what": "Accordion Example"
+    },
+    {
+      "type": "button",
+      "which": "Billing Address",
+      "what": "expand accordion"
+    },
+    {
+      "type": "test",
+      "which": "bulk",
+      "what": "count of visible elements"
+    }
+  ],
+  "sources": {
+    "script": "script",
+    "batch": "batch",
+    "target": {
+      "id": "accordion",
+      "what": "Example of expanded accordion"
+    },
+    "requester": "jonathan.pool@cvshealth.com"
+  },
+  "creationTime": "2023-01-04T18:20:01",
+  "timeStamp": "8oqso"
+}

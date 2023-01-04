@@ -1,0 +1,47 @@
+{
+  "id": "8oqso-script-example",
+  "what": "call validation",
+  "strict": false,
+  "timeLimit": 30,
+  "acts": [
+    {
+      "type": "launch",
+      "which": "chromium"
+    },
+    {
+      "type": "url",
+      "which": "https://example.com",
+      "what": "example"
+    },
+    {
+      "type": "test",
+      "which": "focAll",
+      "what": "Tab-focusability"
+    },
+    {
+      "type": "launch",
+      "which": "chromium"
+    },
+    {
+      "type": "url",
+      "which": "https://example.com",
+      "what": "example"
+    },
+    {
+      "type": "test",
+      "which": "bulk",
+      "what": "count of visible elements"
+    }
+  ],
+  "sources": {
+    "script": "script",
+    "batch": "batch",
+    "target": {
+      "id": "example",
+      "what": "Example"
+    },
+    "requester": "jonathan.pool@cvshealth.com"
+  },
+  "creationTime": "2023-01-04T18:20:01",
+  "timeStamp": "8oqso"
+}

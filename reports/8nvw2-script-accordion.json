@@ -1,0 +1,134 @@
+{
+  "id": "8nvw2-script-accordion",
+  "what": "call validation",
+  "strict": false,
+  "timeLimit": 30,
+  "acts": [
+    {
+      "type": "launch",
+      "which": "chromium",
+      "startTime": 1672783620595,
+      "endTime": 1672783622182
+    },
+    {
+      "type": "url",
+      "which": "https://www.w3.org/WAI/ARIA/apg/example-index/accordion/accordion",
+      "what": "Accordion Example",
+      "startTime": 1672783622182,
+      "result": {
+        "url": "https://www.w3.org/WAI/ARIA/apg/example-index/accordion/accordion"
+      },
+      "endTime": 1672783624164
+    },
+    {
+      "type": "button",
+      "which": "Billing Address",
+      "what": "expand accordion",
+      "startTime": 1672783624164,
+      "url": "https://www.w3.org/WAI/ARIA/apg/example-index/accordion/accordion",
+      "result": {
+        "found": true,
+        "textSpec": "billing address",
+        "textContent": "billing address",
+        "success": true,
+        "move": "clicked"
+      },
+      "endTime": 1672783624228
+    },
+    {
+      "type": "test",
+      "which": "focAll",
+      "what": "focusable and Tab-focused elements",
+      "startTime": 1672783624228,
+      "url": "https://www.w3.org/WAI/ARIA/apg/example-index/accordion/accordion",
+      "result": {
+        "tabFocusables": 57,
+        "tabFocused": 57,
+        "discrepancy": 0,
+        "success": true
+      },
+      "endTime": 1672783624452
+    },
+    {
+      "type": "launch",
+      "which": "chromium",
+      "startTime": 1672783624452,
+      "endTime": 1672783624752
+    },
+    {
+      "type": "url",
+      "which": "https://www.w3.org/WAI/ARIA/apg/example-index/accordion/accordion",
+      "what": "Accordion Example",
+      "startTime": 1672783624752,
+      "result": {
+        "url": "https://www.w3.org/WAI/ARIA/apg/example-index/accordion/accordion"
+      },
+      "endTime": 1672783627128
+    },
+    {
+      "type": "button",
+      "which": "Billing Address",
+      "what": "expand accordion",
+      "startTime": 1672783627128,
+      "url": "https://www.w3.org/WAI/ARIA/apg/example-index/accordion/accordion",
+      "result": {
+        "found": true,
+        "textSpec": "billing address",
+        "textContent": "billing address",
+        "success": true,
+        "move": "clicked"
+      },
+      "endTime": 1672783627193
+    },
+    {
+      "type": "test",
+      "which": "bulk",
+      "what": "count of visible elements",
+      "startTime": 1672783627193,
+      "url": "https://www.w3.org/WAI/ARIA/apg/example-index/accordion/accordion",
+      "result": {
+        "visibleElements": 835,
+        "success": true
+      },
+      "endTime": 1672783627336
+    }
+  ],
+  "sources": {
+    "script": "script",
+    "batch": "batch",
+    "target": {
+      "id": "accordion",
+      "what": "Example of expanded accordion"
+    },
+    "requester": "jonathan.pool@cvshealth.com"
+  },
+  "creationTime": "2023-01-03T20:04:53",
+  "timeStamp": "8nvw2",
+  "jobData": {
+    "startTime": "2023-01-03T22:07:00",
+    "endTime": "2023-01-03T22:07:07",
+    "elapsedSeconds": 6,
+    "visitLatency": 4,
+    "logCount": 2,
+    "logSize": 202,
+    "errorLogCount": 2,
+    "errorLogSize": 202,
+    "prohibitedCount": 0,
+    "visitTimeoutCount": 0,
+    "visitRejectionCount": 0,
+    "aborted": false,
+    "abortedAct": null,
+    "presses": 0,
+    "amountRead": 0,
+    "testTimes": [
+      [
+        "focAll",
+        0
+      ],
+      [
+        "bulk",
+        0
+      ]
+    ]
+  }
+}

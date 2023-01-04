@@ -270,21 +270,21 @@ This invocation references `script`, `batch`, and `requester` variables that the
 
 A user can invoke `merge` in this way:
 
-- Create a script and save it as a JSON file in the `process.env.SCRIPTDIR` directory.
-- Create a batch and save it as a JSON file in the `process.env.BATCHDIR` directory.
+- Create a script and save it as a JSON file in the `scripts` subdirectory of the `process.env.SPECDIR` directory.
+- Create a batch and save it as a JSON file in the `batches` subdirectory of the `process.env.SPECDIR` directory.
 - In the Testilo project directory, execute one of these statements:
-    - `node call merge x y z true`
-    - `node call merge x y z false`
-    - `node call merge x y z`
+    - `node call merge s b e true`
+    - `node call merge s b e false`
+    - `node call merge s b e`
 
-In these statements, replace `x` and `y` with the base names of the script and batch files, respectively. For example, if the script file is named `ts25.json`, then replace `x` with `ts25`. Replace `z` with an email address, or with an empty string if the environment variable `process.env.REQUESTER` exists and you want to use it.
+In these statements, replace `s` and `b` with the base names of the script and batch files, respectively. For example, if the script file is named `ts25.json`, then replace `x` with `ts25`. Replace `e` with an email address, or with an empty string if the environment variable `process.env.REQUESTER` exists and you want to use it.
 
 The first statement will cause a merger with isolation.
 The second and third statements will cause a merger without isolation.
 
 The `call` module will retrieve the named script and batch from their respective directories.
 The `merge` module will create an array of jobs.
-The `call` module will save the jobs in the `process.env.JOBDIR` directory.
+The `call` module will save the jobs in the `todo` subdirectory of the `process.env.JOBDIR` directory.
 
 ### Validation
 

@@ -50,11 +50,11 @@ const callMerge = async (scriptID, batchID, requester, withIsolation = false) =>
   // Save the jobs.
   for (const job of jobs) {
     const jobJSON = JSON.stringify(job, null, 2);
-    await fs.writeFile(`${jobDir}/${job.id}.json`, jobJSON);
+    await fs.writeFile(`${jobDir}/todo/${job.id}.json`, jobJSON);
   }
   const {timeStamp} = jobs[0];
   console.log(
-    `Script ${scriptID} and batch ${batchID} merged; jobs ${timeStamp}… saved in ${jobDir}`
+    `Script ${scriptID} and batch ${batchID} merged; jobs ${timeStamp}… saved in ${jobDir}/todo`
   );
 };
 // Get selected reports.

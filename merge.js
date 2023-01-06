@@ -15,6 +15,7 @@ require('dotenv').config();
 // ########## CONSTANTS
 
 const stdRequester = process.env.REQUESTER;
+// Tests that alter the page.
 const contaminantNames = new Set([
   'axe',
   'continuum',
@@ -27,6 +28,10 @@ const contaminantNames = new Set([
   'menuNav',
   'textNodes',
   'wave'
+]);
+// Tests that are immune to page alteration.
+const immuneNames = new Set([
+  'tenon'
 ]);
 
 // ########## FUNCTIONS
@@ -61,12 +66,13 @@ exports.merge = (script, batch, requester, isolate = false) => {
   protoJob.timeStamp = timeStamp;
   // If isolation was requested:
   if (isolate) {
-    // Append a copy of the previous placeholder to each eligible contaminating test in the script.
+    // Perform it.
     let {acts} = protoJob;
     let lastPlaceholder = {};
     for (const actIndexString in acts) {
       const actIndex = Number.parseInt(actIndexString);
       const act = acts[actIndex];
+      const nextAct = acts[actIndex + 1];
       if (act.type === 'placeholder') {
         lastPlaceholder = act;
       }
@@ -74,7 +80,8 @@ exports.merge = (script, batch, requester, isolate = false) => {
         act.type === 'test'
         && contaminantNames.has(act.which)
         && actIndex < acts.length - 1
-        && acts[actIndex + 1].type !== 'placeholder'
+        && nextAct.type !== 'placeholder'
+        && (nextAct.type !== 'test' || ! immuneNames.has(nextAct.which))
       ) {
         acts[actIndex] = JSON.parse(JSON.stringify([act, lastPlaceholder]));
       }

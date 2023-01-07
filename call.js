@@ -75,7 +75,7 @@ const getReports = async (type, selector = '') => {
 // Fulfills a scoring request.
 const callScore = async (scorerID, selector = '') => {
   // Get the raw reports to be scored.
-  const reports = getReports('raw', selector);
+  const reports = await getReports('raw', selector);
   // If any exist:
   if (reports.length) {
     // Get the scorer.

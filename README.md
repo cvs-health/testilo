@@ -343,7 +343,7 @@ node call score sp25a 75
 ```
 
 When a user invokes `score` in this example, the `call` module:
-- gets the scoring module `sp25a` from its JSON file `sp25a.json` in the `process.env.SCOREPROCDIR` directory
+- gets the scoring module `sp25a` from its JSON file `sp25a.json` in the `score` subdirectory of the `process.env.FUNCTIONDIR` directory
 - gets the reports from the r`raw` subdirectory of the `process.env.REPORTDIR` directory
 - writes the scored reports to the `scored` subdirectory of the `process.env.REPORTDIR` directory
 

@@ -6101,8 +6101,9 @@ exports.scorer = report => {
           }
         }
         else if (which === 'ibm') {
-          const {result} = test;
-          const {content, url} = result;
+          const result = test ? test.result : null;
+          const content = result ? result.content : null;
+          const url = result ? result.url : null;
           if (content && url) {
             let preferredMode = 'content';
             if (
@@ -6432,7 +6433,7 @@ exports.scorer = report => {
         }
       });
       // Get the prevention scores and add them to the summary.
-      const actsPrevented = testActs.filter(test => test.result.prevented);
+      const actsPrevented = testActs.filter(test => test.result && test.result.prevented);
       actsPrevented.forEach(act => {
         if (otherPackages.includes(act.which)) {
           preventionScores[act.which] = preventionWeights.other;

@@ -11,18 +11,6 @@ Testaro performs digital accessibility tests on web artifacts and creates report
 
 Because Testilo supports Testaro, this `README` file presumes that you have access to the Testaro `README` file and therefore does not repeat information provided there.
 
-## Branches
-
-The `writer` branch contains the state of Testilo as of 2022-11-07. In that branch, Testilo must read and write files. That makes Testilo unusable as a dependency in applications that do not have permission to both read and write files.
-
-The `simple` branch contains the state of Testilo as of 2022-12-23. In that branch, Testilo does not need to read or write files, so applications without write permission can still use Testilo as a dependency.
-
-The `main` branch contains the state of Testilo from 2022-12-24 until now. In that branch, Testilo can prepare jobs that require multi-step operations to reach and pre-process the targets being tested.
-
-The `complexmerge` branch refactors `main` and is to be merged into `main` when the refactoring is complete.
-
-This `README.md` file documents the `complexmerge` branch and will document the `main` branch when `complexmerge` is merged into `main`.
-
 ## Dependencies
 
 The `dotenv` dependency lets you set environment variables in an untracked `.env` file. This prevents secret data, such as passwords, from being shared as part of this package.
@@ -110,7 +98,7 @@ Suppose you have created this script:
 }
 ```
 
-The `acts` array of this script contains tree regular acts and two placeholders.
+The `acts` array of this script contains three regular acts and two placeholders.
 
 #### Batch
 

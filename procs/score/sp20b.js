@@ -111,7 +111,7 @@ const groups = {
         94: {
           variable: false,
           quality: 1,
-          what: 'Elements contains an id attribute set to a value that is not unique in the DOM'
+          what: 'Element contains an id attribute set to a value that is not unique in the DOM'
         }
       },
       htmlcs: {

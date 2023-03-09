@@ -98,7 +98,7 @@ Suppose you have created this script:
 }
 ```
 
-The `acts` array of this script contains three regular acts and two placeholders.
+The `acts` array of this script contains three acts of type `test` and two acts of type `placeholder`.
 
 #### Batch
 
@@ -277,6 +277,16 @@ The `call` module will save the jobs in the `todo` subdirectory of the `process.
 ### Validation
 
 To test the `merge` module, in the project directory you can execute the statement `node validation/merge/validate`. All logging statements should begin with “Success” and none should begin with “ERROR”.
+
+### Examples
+
+There are script and batch examples in the `specs` directory.
+
+The script example (with ID `ts21`) performs all of the tests available in Testaro, including the tests of 9 dependent tools. It contains 2 `placeholder` acts, one that specifies the Webkit browser for any `launch` act and one that specifies the Chromium browser for any `launch` act.
+
+The batch example (with ID `orgs`) specifies 2 targets.
+- One of them has the URL `https://example.com` and requires each placeholder to be replaced with 2 acts: a `launch` act and a `url` act.
+- The other has the URL `https://www.w3.org/WAI/ARIA/apg/example-index/accordion/accordion` and requires each placeholder to be replaced with 3 acts: a `launch` act, a `url` act, and a `button` act.
 
 ## Report scoring
 

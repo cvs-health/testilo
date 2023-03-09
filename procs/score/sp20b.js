@@ -2,7 +2,7 @@
   sp20b
   Testilo score proc 20b
 
-  Computes scores from Testaro script ts20 and adds them to a report. Differs from sp20a by
+  Computes scores from Testilo script ts20 and adds them to a report. Differs from sp20a by
   including wcag property in group summary.
 
   This proc applies specified weights to the component scores before summing them. An issue reported

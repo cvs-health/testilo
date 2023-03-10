@@ -27,6 +27,23 @@ const issues = {
           quality: 0,
           what: 'Bug in nuVal'
         }
+      },
+      qualWeb: {
+        'QW-ACT-R52': {
+          variable: false,
+          quality: 1,
+          what: 'video element visual-only content has no description track (description tracks and this ACT rule have been deprecated)'
+        },
+        'QW-ACT-R57': {
+          variable: false,
+          quality: 1,
+          what: 'video element visual content has no description track (description tracks and this ACT rule have been deprecated)'
+        },
+        'QW-WCAG-T20': {
+          variable: false,
+          quality: 1,
+          what: 'Link text is not supplemented with a title attribute'
+        }
       }
     }
   },
@@ -305,6 +322,11 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'Image button has no accessible name'
+        },
+        'QW-WCAG-T5': {
+          variable: false,
+          quality: 1,
+          what: 'alt attribute not used on an image used as a submit button'
         }
       },
       wave: {
@@ -543,8 +565,8 @@ const issues = {
       }
     }
   },
-  imageTextRisk: {
-    wcag: '1.1.1',
+  textAlternativeRisk: {
+    wcag: '1',
     weight: 1,
     packages: {
       continuum: {
@@ -557,6 +579,13 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'element with an img, graphics-symbol, or graphics-document role has a suspicious calculated accessible name'
+        }
+      },
+      qualWeb: {
+        'QW-WCAG-T8': {
+          variable: false,
+          quality: 1,
+          what: 'Text alternative is not an alternative'
         }
       },
       wave: {
@@ -602,6 +631,13 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'img element with alt="" has a role attribute'
+        }
+      },
+      qualWeb: {
+        'QW-ACT-R48': {
+          variable: false,
+          quality: 1,
+          what: 'Element marked as decorative is exposed'
         }
       }
     }
@@ -821,14 +857,14 @@ const issues = {
         r63: {
           variable: false,
           quality: 1,
-          what: 'Object element has no accessible name'
+          what: 'object element has no accessible name'
         }
       },
       axe: {
         'object-alt': {
           variable: false,
           quality: 1,
-          what: 'Object element has no text alternative'
+          what: 'object element has no text alternative'
         }
       },
       continuum: {
@@ -842,14 +878,21 @@ const issues = {
         'e:ARIA6+H53': {
           variable: false,
           quality: 1,
-          what: 'Object element contains no text alternative'
+          what: 'object element contains no text alternative'
         }
       },
       ibm: {
         WCAG20_Object_HasText: {
           variable: false,
           quality: 1,
-          what: 'Object element has no text alternative'
+          what: 'object element has no text alternative'
+        }
+      },
+      qualWeb: {
+        'QW-ACT-R42': {
+          variable: false,
+          quality: 1,
+          what: 'Object element has no non-empty accessible name'
         }
       },
       wave: {
@@ -857,6 +900,19 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'An unidentified plugin is present'
+        }
+      }
+    }
+  },
+  appletNoText: {
+    wcag: '1.1.1',
+    weight: 4,
+    packages: {
+      qualWeb: {
+        'QW-WCAG-T11': {
+          variable: false,
+          quality: 1,
+          what: 'Text alternative not provided on an applet element'
         }
       }
     }
@@ -915,6 +971,13 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'Area element in an image map has no text alternative'
+        }
+      },
+      qualWeb: {
+        'QW-WCAG-T1': {
+          variable: false,
+          quality: 1,
+          what: 'Text alternative for an area element of an image map is not provided'
         }
       },
       wave: {
@@ -981,6 +1044,13 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'Mousing-up functionality may not be available by keyboard'
+        }
+      },
+      qualWeb: {
+        'QW-WCAG-T6': {
+          variable: false,
+          quality: 1,
+          what: 'Both keyboard and other device-specific functions are not used'
         }
       },
       wave: {
@@ -1124,6 +1194,13 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'Checkbox or radio button label precedes the input control'
+        }
+      },
+      qualWeb: {
+        'QW-WCAG-T17': {
+          variable: false,
+          quality: 1,
+          what: 'label not positioned to maximize the predictability of the relationship'
         }
       }
     }
@@ -1286,6 +1363,11 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'Link has no accessible name'
+        },
+        'QW-WCAG-T21': {
+          variable: false,
+          quality: 1,
+          what: 'Accessible name is not provided for an image which is the only content in a link'
         }
       },
       tenon: {
@@ -1349,6 +1431,13 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'abbr element is first for its abbreviation but has no useful title value'
+        }
+      },
+      qualWeb: {
+        'QW-WCAG-T7': {
+          variable: false,
+          quality: 1,
+          what: 'Definition for an abbreviation not provided with an abbr element'
         }
       }
     }
@@ -1435,6 +1524,11 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'Links with identical accessible names have different purposes'
+        },
+        'QW-ACT-R44': {
+          variable: false,
+          quality: 1,
+          what: 'Links with identical accessible names and context serve different purposes'
         }
       },
       tenon: {
@@ -1476,6 +1570,13 @@ const issues = {
     wcag: '2.4.4',
     weight: 2,
     packages: {
+      qualWeb: {
+        'QW-WCAG-T10': {
+          variable: false,
+          quality: 1,
+          what: 'Adjacent image and text links for the same resource are not combined'
+        }
+      },
       tenon: {
         184: {
           variable: false,
@@ -1488,6 +1589,19 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'Adjacent links go to the same URL'
+        }
+      }
+    }
+  },
+  pageNewWindow: {
+    wcag: '3.2.5',
+    weight: 3,
+    packages: {
+      qualWeb: {
+        'QW-WCAG-T22': {
+          variable: false,
+          quality: 1,
+          what: 'New window opens as soon as a new page is loaded'
         }
       }
     }
@@ -1667,6 +1781,13 @@ const issues = {
           quality: 1,
           what: 'element with a menuitem role has no accessible name'
         }
+      },
+      qualWeb: {
+        'QW-ACT-R66': {
+          variable: false,
+          quality: 1,
+          what: 'Menuitem has no non-empty accessible name'
+        }
       }
     }
   },
@@ -1693,6 +1814,60 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'Element is not contained within a role-valid element'
+        }
+      },
+      nuVal: {
+        '^An element with role=.+ must be contained in, or owned by, an element with role=.+$': {
+          variable: true,
+          quality: 1,
+          what: 'Element has no required container or owner'
+        }
+      },
+      qualWeb: {
+        'QW-ACT-R33': {
+          variable: false,
+          quality: 1,
+          what: 'Element has no ARIA required context role'
+        }
+      }
+    }
+  },
+  descendantMissing: {
+    wcag: '1.3.1',
+    weight: 4,
+    packages: {
+      alfa: {
+        r68: {
+          variable: false,
+          quality: 1,
+          what: 'Element does not own an element required by its semantic role'
+        }
+      },
+      axe: {
+        'aria-required-children': {
+          variable: false,
+          quality: 1,
+          what: 'ARIA role does not contain a required child'
+        }
+      },
+      qualWeb: {
+        'QW-ACT-R38': {
+          variable: false,
+          quality: 1,
+          what: 'Element has no ARIA required owned element'
+        }
+      }
+    }
+  },
+  presentationChild: {
+    wcag: '1.3.1',
+    weight: 4,
+    packages: {
+      htmlcs: {
+        'e:AA.1_3_1.F92,ARIA4': {
+          variable: false,
+          quality: 1,
+          what: 'Element has presentation role but semantic child'
         }
       }
     }
@@ -1815,39 +1990,6 @@ const issues = {
       }
     }
   },
-  childMissing: {
-    wcag: '1.3.1',
-    weight: 4,
-    packages: {
-      alfa: {
-        r68: {
-          variable: false,
-          quality: 1,
-          what: 'Element does not own an element required by its semantic role'
-        }
-      },
-      axe: {
-        'aria-required-children': {
-          variable: false,
-          quality: 1,
-          what: 'ARIA role does not contain a required child'
-        }
-      }
-    }
-  },
-  presentationChild: {
-    wcag: '1.3.1',
-    weight: 4,
-    packages: {
-      htmlcs: {
-        'e:AA.1_3_1.F92,ARIA4': {
-          variable: false,
-          quality: 1,
-          what: 'Element has presentation role but semantic child'
-        }
-      }
-    }
-  },
   fontSizeAbsolute: {
     wcag: '1.4.4',
     weight: 2,
@@ -1857,6 +1999,13 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'Paragraph text has an absolute font size'
+        }
+      },
+      qualWeb: {
+        'QW-WCAG-T28': {
+          variable: false,
+          quality: 1,
+          what: 'Percent, em, or name is used for a font size'
         }
       }
     }
@@ -1895,7 +2044,7 @@ const issues = {
       }
     }
   },
-  leadingFrozen: {
+  textSpacingFrozen: {
     wcag: '1.4.12',
     weight: 4,
     packages: {
@@ -1911,6 +2060,23 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'Inline text spacing is not adjustable with a custom stylesheet'
+        }
+      },
+      qualWeb: {
+        'QW-ACT-R67': {
+          variable: false,
+          quality: 1,
+          what: 'Letter spacing in a style attribute is !important'
+        },
+        'QW-ACT-R68': {
+          variable: false,
+          quality: 1,
+          what: 'Line height in a style attribute is !important'
+        },
+        'QW-ACT-R69': {
+          variable: false,
+          quality: 1,
+          what: 'Word spacing in a style attribute is !important'
         }
       }
     }
@@ -1963,6 +2129,13 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'Overflow is hidden or clipped if the text is enlarged'
+        }
+      },
+      qualWeb: {
+        'QW-ACT-R40': {
+          variable: false,
+          quality: 1,
+          what: 'Zoomed text node is clipped by a CSS overflow declaration'
         }
       }
     }
@@ -2770,6 +2943,11 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'aria- attribute is not defined in ARIA 1.1'
+        },
+        'QW-ACT-R34': {
+          variable: false,
+          quality: 1,
+          what: 'ARIA state or property has an invalid value'
         }
       }
     }
@@ -2919,6 +3097,13 @@ const issues = {
           what: 'Contrast ratio of text with background does not meet WCAG 2.1 AA'
         }
       },
+      qualWeb: {
+        'QW-ACT-R37': {
+          variable: false,
+          quality: 1,
+          what: 'Text has less than the minimum contrast'
+        }
+      },
       wave: {
         'c:contrast': {
           variable: false,
@@ -2951,6 +3136,13 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'Insufficient contrast'
+        }
+      },
+      qualWeb: {
+        'QW-ACT-R76': {
+          variable: false,
+          quality: 1,
+          what: 'Text has less than the enhanced minimum contrast'
         }
       },
       tenon: {
@@ -3080,6 +3272,13 @@ const issues = {
           what: 'Empty heading'
         }
       },
+      qualWeb: {
+        'QW-ACT-R33': {
+          variable: false,
+          quality: 1,
+          what: 'Heading has no accessible name'
+        }
+      }
       wave: {
         'e:heading_empty': {
           variable: false,
@@ -3352,6 +3551,13 @@ const issues = {
           what: 'Page contains more than 1 h1 element'
         }
       },
+      qualWeb: {
+        'QW-WCAG-T9': {
+          variable: false,
+          quality: 1,
+          what: 'Page is not organized using headings'
+        }
+      },
       tenon: {
         155: {
           variable: false,
@@ -3475,6 +3681,13 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'Text is fully justified'
+        }
+      },
+      qualWeb: {
+        'QW-WCAG-T27': {
+          variable: false,
+          quality: 1,
+          what: 'Text is justified (aligned to both the left and the right margins)'
         }
       },
       wave: {
@@ -3894,7 +4107,7 @@ const issues = {
         'e:AA.1_3_1.H71.NoLegend': {
           variable: false,
           quality: 1,
-          what: 'Fieldset has no legend element'
+          what: 'fieldset has no legend element'
         }
       },
       ibm: {
@@ -3904,11 +4117,18 @@ const issues = {
           what: 'fieldset element has no single, non-empty legend as a label'
         }
       },
+      qualWeb: {
+        'QW-WCAG-T3': {
+          variable: false,
+          quality: 1,
+          what: 'Description for a group of form controls using fieldset and legend elements is not provided'
+        }
+      },
       wave: {
         'a:legend_missing': {
           variable: false,
           quality: 1,
-          what: 'Fieldset has no legend element'
+          what: 'fieldset has no legend element'
         }
       }
     }
@@ -3944,6 +4164,13 @@ const issues = {
     wcag: '1.3.1',
     weight: 2,
     packages: {
+      qualWeb: {
+        'QW-WCAG-T12': {
+          variable: false,
+          quality: 1,
+          what: 'th or caption element or non-empty summary attribute used in a layout table'
+        }
+      },
       testaro: {
         nonTable: {
           variable: false,
@@ -3956,6 +4183,32 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'table element is misused to arrange content'
+        }
+      }
+    }
+  },
+  tabularTableless: {
+    wcag: '1.3.1',
+    weight: 3,
+    packages: {
+      qualWeb: {
+        'QW-WCAG-T18': {
+          variable: false,
+          quality: 1,
+          what: 'Table markup not used to present tabular information'
+        }
+      }
+    }
+  },
+  tableNoSummary: {
+    wcag: '1.3.1',
+    weight: 2,
+    packages: {
+      qualWeb: {
+        'QW-WCAG-T4': {
+          variable: false,
+          quality: 1,
+          what: 'summary attribute is not used to give an overview of a data table'
         }
       }
     }
@@ -3995,6 +4248,13 @@ const issues = {
           quality: 1,
           what: 'Table has no caption element'
         }
+      },
+      qualWeb: {
+        'QW-WCAG-T2': {
+          variable: false,
+          quality: 1,
+          what: 'caption element not used to associate a caption with a data table'
+        }
       }
     }
   },
@@ -4018,6 +4278,19 @@ const issues = {
       }
     }
   },
+  cellHeadersOutsideTable: {
+    wcag: '1.3.1',
+    weight: 4,
+    packages: {
+      qualWeb: {
+        'QW-ACT-R36': {
+          variable: false,
+          quality: 1,
+          what: 'Headers attribute does not refer to a cell in the same table element'
+        }
+      },
+    }
+  },
   cellHeadersAmbiguityRisk: {
     wcag: '1.3.1',
     weight: 2,
@@ -4027,6 +4300,18 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'Complex table requires headers attributes of cells instead of header scopes'
+        }
+      },
+      qualWeb: {
+        'QW-WCAG-T14': {
+          variable: false,
+          quality: 1,
+          what: 'id and headers attributes not used to associate data cells with header cells in a data table'
+        },
+        'QW-WCAG-T25': {
+          variable: false,
+          quality: 1,
+          what: 'scope attribute not used to associate header cells and data cells in a data table'
         }
       }
     }
@@ -4087,6 +4372,13 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'Table header refers to no cell'
+        }
+      },
+      qualWeb: {
+        'QW-ACT-R39': {
+          variable: false,
+          quality: 1,
+          what: 'Table header cell has no assigned data cell'
         }
       }
     }
@@ -4368,6 +4660,18 @@ const issues = {
           what: 'UI component has no focusable child element for keyboard access'
         }
       },
+      qualWeb: {
+        'QW-ACT-R70': {
+          variable: false,
+          quality: 1,
+          what: 'iframe with negative tabindex has interactive elements'
+        },
+        'QW-WCAG-T24': {
+          variable: false,
+          quality: 1,
+          what: 'Script removes the focus when focus is received'
+        }
+      },
       testaro: {
         focAll: {
           variable: false,
@@ -4385,14 +4689,21 @@ const issues = {
         r65: {
           variable: false,
           quality: 1,
-          what: 'Element in sequential focus order has no visible focus'
+          what: 'Element in the sequential focus order has no visible focus'
+        }
+      },
+      qualWeb: {
+        'QW-ACT-R62': {
+          variable: false,
+          quality: 1,
+          what: 'Element in the sequential focus order has no visible focus'
         }
       },
       testaro: {
         focInd: {
           variable: false,
           quality: 1,
-          what: 'Focused element displaying no or nostandard focus indicator'
+          what: 'Focused element displays no or a nostandard focus indicator'
         }
       }
     }
@@ -4534,7 +4845,7 @@ const issues = {
       }
     }
   },
-  mainNot1: {
+  mainNone: {
     wcag: '1.3.6',
     weight: 2,
     packages: {
@@ -4543,7 +4854,22 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'page has no main landmark'
-        },
+        }
+      },
+      qualWeb: {
+        'QW-ACT-R63': {
+          variable: false,
+          quality: 1,
+          what: 'Document has no landmark with non-repeated content'
+        }
+      }
+    }
+  },
+  mainMultiple: {
+    wcag: '1.3.6',
+    weight: 2,
+    packages: {
+      axe: {
         'landmark-no-duplicate-main': {
           variable: false,
           quality: 1,
@@ -4850,6 +5176,13 @@ const issues = {
           quality: 1,
           what: 'Focusable element has no active role'
         }
+      },
+      qualWeb: {
+        'QW-WCAG-T26': {
+          variable: false,
+          quality: 1,
+          what: 'Script makes a div or span a user interface control without providing a role for the control'
+        }
       }
     }
   },
@@ -4933,6 +5266,13 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'Element has a role making its children presentational but contains a focusable element'
+        }
+      },
+      qualWeb: {
+        'QW-ACT-R65': {
+          variable: false,
+          quality: 1,
+          what: 'Element with presentational children has focusable content'
         }
       }
     }
@@ -5196,6 +5536,19 @@ const issues = {
       }
     }
   },
+  siteNavigation: {
+    wcag: '2.4',
+    weight: 1,
+    packages: {
+      qualWeb: {
+        'QW-WCAG-T15': {
+          variable: false,
+          quality: 1,
+          what: 'link element and navigation tools not used'
+        }
+      }
+    }
+  },
   spontaneousMotion: {
     wcag: '2.2.2',
     weight: 2,
@@ -5205,6 +5558,19 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'Change of visible content not requested by user'
+        }
+      }
+    }
+  },
+  blink: {
+    wcag: '2.2.2',
+    weight: 4,
+    packages: {
+      qualWeb: {
+        'QW-WCAG-T13': {
+          variable: false,
+          quality: 1,
+          what: 'blink element used'
         }
       }
     }
@@ -5229,15 +5595,46 @@ const issues = {
       }
     }
   },
+  autoplayLong: {
+    wcag: '1.4.2',
+    weight: 2,
+    packages: {
+      qualWeb: {
+        'QW-ACT-R49': {
+          variable: false,
+          quality: 1,
+          what: 'audio or video that plays automatically has audio lasting more than 3 seconds'
+        }
+      }
+    }
+  },
+  autoplayControl: {
+    wcag: '1.4.2',
+    weight: 2,
+    packages: {
+      qualWeb: {
+        'QW-ACT-R50': {
+          variable: false,
+          quality: 1,
+          what: 'audio or video that plays automatically has no control mechanism'
+        }
+      }
+    }
+  },
   refresh: {
     wcag: '2.2.1',
-    weight: 4,
+    weight: 3,
     packages: {
       qualWeb: {
         'QW-ACT-R4': {
           variable: false,
           quality: 1,
           what: 'meta element refreshes or redirects with delay'
+        },
+        'QW-ACT-R71': {
+          variable: false,
+          quality: 1,
+          what: 'meta element has a refresh delay (no exception)'
         }
       }
     }
@@ -5432,6 +5829,21 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'audio element content has no text alternative'
+        },
+        'QW-ACT-R58': {
+          variable: false,
+          quality: 1,
+          what: 'audio element content has no transcript'
+        },
+        'QW-ACT-R59': {
+          variable: false,
+          quality: 1,
+          what: 'audio element content is not a media alternative for text'
+        }
+        'QW-ACT-R60': {
+          variable: false,
+          quality: 1,
+          what: 'video element auditory content has no captions'
         }
       }
     }
@@ -5452,6 +5864,44 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'video element visual content has no accessible alternative'
+        },
+        'QW-ACT-R31': {
+          variable: false,
+          quality: 1,
+          what: 'video element visual-only content has no accessible alternative'
+        },
+        'QW-ACT-R32': {
+          variable: false,
+          quality: 1,
+          what: 'video element visual-only content has no strict accessible alternative'
+        },
+        'QW-ACT-R51': {
+          variable: false,
+          quality: 1,
+          what: 'video element visual-only content is not a media alternative for text'
+        },
+        'QW-ACT-R56': {
+          variable: false,
+          quality: 1,
+          what: 'video element content is not a media alternative for text'
+        },
+        'QW-ACT-R61': {
+          variable: false,
+          quality: 1,
+          what: 'video element visual content has no transcript'
+        }
+      }
+    }
+  },
+  videoContentNoTranscript: {
+    wcag: '1.2.2',
+    weight: 4,
+    packages: {
+      qualWeb: {
+        'QW-ACT-R53': {
+          variable: false,
+          quality: 1,
+          what: 'video element visual-only content has no transcript'
         }
       }
     }
@@ -5479,6 +5929,32 @@ const issues = {
       }
     }
   },
+  videoNoAudioDescription: {
+    wcag: '1.2.1',
+    weight: 4,
+    packages: {
+      qualWeb: {
+        'QW-ACT-R55': {
+          variable: false,
+          quality: 1,
+          what: 'video element visual content has no audio description'
+        }
+      }
+    }
+  },
+  videoNoAudioTrack: {
+    wcag: '1.2.1',
+    weight: 4,
+    packages: {
+      qualWeb: {
+        'QW-ACT-R54': {
+          variable: false,
+          quality: 1,
+          what: 'video element visual-only content has no audio track alternative'
+        }
+      }
+    }
+  },
   notKeyboardScrollable: {
     wcag: '2.1.1',
     weight: 4,
@@ -5495,6 +5971,13 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'Element is scrollable but has no keyboard access'
+        }
+      },
+      qualWeb: {
+        'QW-ACT-R43': {
+          variable: false,
+          quality: 1,
+          what: 'Scrollable element is not keyboard accessible'
         }
       }
     }
@@ -5529,13 +6012,6 @@ const issues = {
     wcag: '2.4.1',
     weight: 3,
     packages: {
-      alfa: {
-        'r87': {
-          variable: false,
-          quality: 0.5,
-          what: 'First focusable element is not a link to the main content'
-        }
-      },
       axe: {
         'bypass': {
           variable: false,
@@ -5555,11 +6031,58 @@ const issues = {
           what: 'Page provides no way to skip directly to the main content'
         }
       },
+      qualWeb: {
+        'QW-ACT-R64': {
+          variable: false,
+          quality: 1,
+          what: 'Document has no heading for non-repeated content'
+        },
+        'QW-ACT-R75': {
+          variable: false,
+          quality: 1,
+          what: 'Blocks of repeated content cannot be bypassed'
+        }
+      },
       wave: {
         'e:link_skip_broken': {
           variable: false,
           quality: 1,
           what: 'Skip-navigation link has no target or is not keyboard accessible'
+        }
+      }
+    }
+  },
+  repeatedContentRisk: {
+    wcag: '2.4.1',
+    weight: 1,
+    packages: {
+      alfa: {
+        'r87': {
+          variable: false,
+          quality: 0.5,
+          what: 'First focusable element is not a link to the main content'
+        }
+      },
+      qualWeb: {
+        'QW-ACT-R72': {
+          variable: false,
+          quality: 1,
+          what: 'First focusable element is not a link to the non-repeated content'
+        },
+        'QW-ACT-R73': {
+          variable: false,
+          quality: 1,
+          what: 'Block of repeated content is not collapsible'
+        },
+        'QW-ACT-R74': {
+          variable: false,
+          quality: 1,
+          what: 'Document has no instrument to move focus to non-repeated content'
+        },
+        'QW-WCAG-T23': {
+          variable: false,
+          quality: 1,
+          what: 'No link at the top of the page that goes directly to the main content area'
         }
       }
     }
@@ -5574,6 +6097,13 @@ const issues = {
           quality: 1,
           what: 'Form has no submit button'
         }
+      },
+      qualWeb: {
+        'QW-WCAG-T19': {
+          variable: false,
+          quality: 1,
+          what: 'Submit button not provided'
+        }
       }
     }
   },
@@ -5586,6 +6116,19 @@ const issues = {
           variable: false,
           quality: 1,
           what: 'Assertive region is not atomic'
+        }
+      }
+    }
+  },
+  errorReferenceBad: {
+    wcag: '3.3.1',
+    weight: 4,
+    packages: {
+      qualWeb: {
+        'QW-ACT-R41': {
+          variable: false,
+          quality: 1,
+          what: 'Error message describes no invalid form field value'
         }
       }
     }
@@ -5604,7 +6147,7 @@ const issues = {
     }
   },
   browserSupportRisk: {
-    wcag: '1.3.1',
+    wcag: '4.1',
     weight: 1,
     packages: {
       nuVal: {
@@ -5617,7 +6160,7 @@ const issues = {
     }
   },
   obsolete: {
-    wcag: '1.3.1',
+    wcag: '4.1',
     weight: 3,
     packages: {
       alfa: {
@@ -5733,7 +6276,7 @@ const issues = {
     }
   },
   cssInvalid: {
-    wcag: '1.3.1',
+    wcag: '4.1',
     weight: 3,
     packages: {
       nuVal: {
@@ -5866,7 +6409,7 @@ const issues = {
     }
   },
   parseError: {
-    wcag: '1.3.1',
+    wcag: '4.1',
     weight: 3,
     packages: {
       ibm: {
@@ -6042,11 +6585,6 @@ const issues = {
           quality: 1,
           what: 'element with a srcset attribute with a width has no sizes attribute'
         },
-        '^An element with role=.+ must be contained in, or owned by, an element with role=.+$': {
-          variable: true,
-          quality: 1,
-          what: 'Element has no required container or owner'
-        },
         '^The text content of element .+ was not in the required format: Expected .+ but found .+ instead.*$': {
           variable: true,
           quality: 1,
@@ -6076,6 +6614,13 @@ const issues = {
           variable: true,
           quality: 1,
           what: 'Idle timeout expired'
+        }
+      },
+      qualWeb: {
+        'QW-WCAG-T16': {
+          variable: false,
+          quality: 1,
+          what: 'HTML is not used according to spec'
         }
       },
       wave: {

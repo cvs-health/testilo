@@ -317,7 +317,7 @@ A scoring function defines scoring rules. The Testilo package contains a `procs/
 
 ### Invocation
 
-There are two ways to use the `score` module.
+There are two ways to invoke the `score` module.
 
 #### By a module
 
@@ -336,13 +336,13 @@ The first argument to `score()` is a scoring function. In this example, it has b
 A user can invoke `score` in this way:
 
 ```bash
-node call score sp25a
-node call score sp25a 75
+node call score tsp25a
+node call score tsp25a 75
 ```
 
 When a user invokes `score` in this example, the `call` module:
-- gets the scoring module `sp25a` from its JSON file `sp25a.json` in the `score` subdirectory of the `process.env.FUNCTIONDIR` directory
-- gets the reports from the r`raw` subdirectory of the `process.env.REPORTDIR` directory
+- gets the scoring module `tsp25a` from its JSON file `tsp25a.json` in the `score` subdirectory of the `process.env.FUNCTIONDIR` directory
+- gets the reports from the `raw` subdirectory of the `process.env.REPORTDIR` directory
 - writes the scored reports to the `scored` subdirectory of the `process.env.REPORTDIR` directory
 
 The optional third argument to call (`75` in this example) is a report selector. Without the argument, `call` gets all the reports in the `raw` subdirectory. With the argument, `call` gets only those reports whose names begin with the argument string.
@@ -350,6 +350,18 @@ The optional third argument to call (`75` in this example) is a report selector.
 ### Validation
 
 To test the `score` module, in the project directory you can execute the statement `node validation/score/validate`. All logging statements should begin with “Success” and none should begin with “ERROR”.
+
+### Comprehensive example
+
+The module `procs/score/tsp21.js` is an example of a comprehensive score proc. It is designed to score reports produced by Testaro from jobs that Testilo creates from the `ts21` script. That script causes Testaro to perform 1351 tests belonging to Testaro and nine other tools integrated into Testaro as dependencies.
+
+The `tsp21` score proc combines the results of those tests into a single score for each report. The `score` property that the proc adds to the report shows how the individual test results are aggregated into a score.
+
+The `tsp21` score proc imports the `procs/score/tic21.js` module, which classifies all the tests into 255 “issues”. Any two or more tests classified into the same issue are deemed to be approximately equivalent in intent. Using this classification, the score proc tabulates the test results by issue, so that all instances of the issue, regardless of which tool discovered the instances, are reported together.
+
+The issue classification in `tic21` assigns weights to the issues to reflect their estimated severities,and the scoring algorithm of `tsp21` adopts a compromise between issue-based and tool-based summation. Thus, if 3 tools discover 20 instances of an issue, the score increases (i.e. becomes worse) by more than it would if only 1 tool had discovered them, but less than 3 times as much. The motivations are that discovery of issue instances by multiple tools increases confidence that the issues are real, and passing accessibility tests is per se beneficial because it decreases risks associated with alleged inaccessibility.
+
+The `tsp21` score proc does **not** attempt to identify instances of issues. Thus, if tool A discovers 4 instances and tool B discovers 7 instances of some issue, `tsp21` does not attempt to say which of the 4 discovered by A are a subset of the 7 discovered by B. Instead,`tsp21` naïvely acts as if the 4 are all a subset of the 7, even though in reality the two sets might be entirely disjoint.
 
 ## Report digesting
 

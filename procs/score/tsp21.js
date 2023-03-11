@@ -1,11 +1,8 @@
 /*
-  sp15b
-  Testilo score proc 15b
+  tsp21
+  Testilo score proc 21
 
-  Computes scores from Testaro script tp15 and adds them to a report.
-  Usage examples:
-    node score sp15b 35k1r
-    node score sp15b
+  Computes scores from Testilo script ts21 and adds them to a report.
 
   This proc applies specified weights to the component scores before summing them. An issue reported
   by a test is given a score. That score is determined by:
@@ -34,7 +31,7 @@
 // CONSTANTS
 
 // ID of this proc.
-const scoreProcID = 'sp15b';
+const scoreProcID = 'sp20b';
 // Configuration disclosures.
 const logWeights = {
   logCount: 0.5,
@@ -50,7 +47,7 @@ const logWeights = {
 const normalLatency = 13;
 // How much each solo issue adds to the score.
 const soloWeight = 2;
-// How much classified issues add to the score.
+// How much grouped issues add to the score.
 const groupWeights = {
   // Added per issue group.
   absolute: 2,
@@ -64,12 +61,13 @@ const preventionWeights = {
   testaro: 50,
   other: 100
 };
-// Non-preweighted and preweighted packages.
+// Non-Testaro packages.
 const otherPackages = ['alfa', 'axe', 'continuum', 'htmlcs', 'ibm', 'nuVal', 'tenon', 'wave'];
-const preWeightedPackages = ['axe', 'tenon', 'testaro'];
 // Test groups.
 const groups = {
   ignorable: {
+    what: 'Bug in test; ignore',
+    wcag: '',
     weight: 0,
     packages: {
       nuVal: {
@@ -82,7 +80,9 @@ const groups = {
     }
   },
   duplicateID: {
-    weight: 3,
+    what: 'Element id attribute value is not unique on the page',
+    wcag: '4.1.1',
+    weight: 4,
     packages: {
       alfa: {
         r3: {
@@ -139,6 +139,8 @@ const groups = {
     }
   },
   componentNoText: {
+    what: '',
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       ibm: {
@@ -151,6 +153,8 @@ const groups = {
     }
   },
   regionNoText: {
+    what: '',
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       alfa: {
@@ -177,6 +181,8 @@ const groups = {
     }
   },
   formFieldNoText: {
+    what: '',
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       alfa: {
@@ -189,6 +195,8 @@ const groups = {
     }
   },
   inputNoText: {
+    what: '',
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       axe: {
@@ -295,6 +303,8 @@ const groups = {
     }
   },
   inputOnlyPlaceholder: {
+    what: '',
+    wcag: '4.1.2',
     weight: 3,
     packages: {
       continuum: {
@@ -307,6 +317,8 @@ const groups = {
     }
   },
   imageInputNoText: {
+    what: '',
+    wcag: '1.1.1',
     weight: 4,
     packages: {
       alfa: {
@@ -347,6 +359,8 @@ const groups = {
     }
   },
   figureNoText: {
+    what: '',
+    wcag: '1.1.1',
     weight: 4,
     packages: {
       ibm: {
@@ -359,6 +373,8 @@ const groups = {
     }
   },
   imageNoText: {
+    what: '',
+    wcag: '1.1.1',
     weight: 4,
     packages: {
       alfa: {
@@ -433,6 +449,8 @@ const groups = {
     }
   },
   decorativeImageAltBad: {
+    what: '',
+    wcag: '1.1.1',
     weight: 4,
     packages: {
       ibm: {
@@ -445,6 +463,8 @@ const groups = {
     }
   },
   imageTextBad: {
+    what: '',
+    wcag: '1.1.1',
     weight: 3,
     packages: {
       alfa: {
@@ -457,6 +477,8 @@ const groups = {
     }
   },
   imageNoSource: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -469,6 +491,8 @@ const groups = {
     }
   },
   sourceEmpty: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -481,6 +505,8 @@ const groups = {
     }
   },
   backgroundBad: {
+    what: '',
+    wcag: '4.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -503,6 +529,8 @@ const groups = {
     }
   },
   backgroundImageBad: {
+    what: '',
+    wcag: '4.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -520,6 +548,8 @@ const groups = {
     }
   },
   inputAlt: {
+    what: '',
+    wcag: '4.1',
     weight: 4,
     packages: {
       continuum: {
@@ -532,6 +562,8 @@ const groups = {
     }
   },
   imagesSameAlt: {
+    what: '',
+    wcag: '1.1.1',
     weight: 1,
     packages: {
       wave: {
@@ -544,6 +576,8 @@ const groups = {
     }
   },
   imageTextLong: {
+    what: '',
+    wcag: '1.1.1',
     weight: 2,
     packages: {
       wave: {
@@ -556,6 +590,8 @@ const groups = {
     }
   },
   imageTextRisk: {
+    what: '',
+    wcag: '1.1.1',
     weight: 1,
     packages: {
       continuum: {
@@ -580,6 +616,8 @@ const groups = {
     }
   },
   decorativeImageRisk: {
+    what: '',
+    wcag: '1.1.1',
     weight: 1,
     packages: {
       htmlcs: {
@@ -592,6 +630,8 @@ const groups = {
     }
   },
   decorativeElementExposed: {
+    what: '',
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       alfa: {
@@ -616,6 +656,8 @@ const groups = {
     }
   },
   pageLanguage: {
+    what: '',
+    wcag: '3.1.1',
     weight: 4,
     packages: {
       alfa: {
@@ -675,6 +717,8 @@ const groups = {
     }
   },
   pageLanguageBad: {
+    what: '',
+    wcag: '3.1.1',
     weight: 4,
     packages: {
       alfa: {
@@ -715,6 +759,8 @@ const groups = {
     }
   },
   elementLanguageBad: {
+    what: '',
+    wcag: '3.1.2',
     weight: 4,
     packages: {
       htmlcs: {
@@ -734,6 +780,8 @@ const groups = {
     }
   },
   languageChange: {
+    what: '',
+    wcag: '3.1.2',
     weight: 3,
     packages: {
       alfa: {
@@ -760,6 +808,8 @@ const groups = {
     }
   },
   dialogNoText: {
+    what: '',
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       axe: {
@@ -779,6 +829,8 @@ const groups = {
     }
   },
   applicationNoText: {
+    what: '',
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       ibm: {
@@ -791,6 +843,8 @@ const groups = {
     }
   },
   objectNoText: {
+    what: '',
+    wcag: '1.1.1',
     weight: 4,
     packages: {
       alfa: {
@@ -838,6 +892,8 @@ const groups = {
     }
   },
   videoNoText: {
+    what: '',
+    wcag: '1.1.1',
     weight: 4,
     packages: {
       continuum: {
@@ -850,6 +906,8 @@ const groups = {
     }
   },
   imageMapNoText: {
+    what: '',
+    wcag: '1.1.1',
     weight: 4,
     packages: {
       wave: {
@@ -862,6 +920,8 @@ const groups = {
     }
   },
   imageMapAreaNoText: {
+    what: '',
+    wcag: '1.1.1',
     weight: 4,
     packages: {
       axe: {
@@ -900,6 +960,8 @@ const groups = {
     }
   },
   objectBlurKeyboardRisk: {
+    what: '',
+    wcag: '2.1.1',
     weight: 1,
     packages: {
       htmlcs: {
@@ -912,6 +974,8 @@ const groups = {
     }
   },
   keyboardAccess: {
+    what: '',
+    wcag: '2.1.1',
     weight: 4,
     packages: {
       tenon: {
@@ -924,6 +988,8 @@ const groups = {
     }
   },
   eventKeyboardRisk: {
+    what: '',
+    wcag: '2.1.1',
     weight: 1,
     packages: {
       htmlcs: {
@@ -963,6 +1029,8 @@ const groups = {
     }
   },
   internalLinkBroken: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       htmlcs: {
@@ -982,6 +1050,8 @@ const groups = {
     }
   },
   labelForBad: {
+    what: '',
+    wcag: '1.3.1',
     weight: 3,
     packages: {
       htmlcs: {
@@ -1001,6 +1071,8 @@ const groups = {
     }
   },
   ariaLabelWrongRisk: {
+    what: '',
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       nuVal: {
@@ -1013,6 +1085,8 @@ const groups = {
     }
   },
   activeDescendantBadID: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       continuum: {
@@ -1032,6 +1106,8 @@ const groups = {
     }
   },
   governedBadID: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       continuum: {
@@ -1063,6 +1139,8 @@ const groups = {
     }
   },
   descriptionBadID: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       continuum: {
@@ -1075,6 +1153,8 @@ const groups = {
     }
   },
   labelConfusionRisk: {
+    what: '',
+    wcag: '3.3.2',
     weight: 1,
     packages: {
       ibm: {
@@ -1092,6 +1172,8 @@ const groups = {
     }
   },
   labelBadID: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       continuum: {
@@ -1152,6 +1234,8 @@ const groups = {
     }
   },
   haspopupBad: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       ibm: {
@@ -1164,6 +1248,8 @@ const groups = {
     }
   },
   ownerConflict: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       continuum: {
@@ -1176,6 +1262,8 @@ const groups = {
     }
   },
   linkNoText: {
+    what: '',
+    wcag: '2.4.4',
     weight: 4,
     packages: {
       alfa: {
@@ -1267,6 +1355,8 @@ const groups = {
     }
   },
   linkBrokenRisk: {
+    what: '',
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       htmlcs: {
@@ -1279,6 +1369,8 @@ const groups = {
     }
   },
   acronymNoTitle: {
+    what: '',
+    wcag: '3.1.4',
     weight: 4,
     packages: {
       tenon: {
@@ -1291,6 +1383,8 @@ const groups = {
     }
   },
   abbreviationNoTitle: {
+    what: '',
+    wcag: '3.1.4',
     weight: 4,
     packages: {
       tenon: {
@@ -1303,6 +1397,8 @@ const groups = {
     }
   },
   pdfLink: {
+    what: '',
+    wcag: '1.3.3',
     weight: 1,
     packages: {
       wave: {
@@ -1315,6 +1411,8 @@ const groups = {
     }
   },
   destinationLink: {
+    what: '',
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       htmlcs: {
@@ -1341,6 +1439,8 @@ const groups = {
     }
   },
   textAreaNoText: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       continuum: {
@@ -1360,6 +1460,8 @@ const groups = {
     }
   },
   linkTextsSame: {
+    what: '',
+    wcag: '2.4.4',
     weight: 2,
     packages: {
       htmlcs: {
@@ -1378,19 +1480,9 @@ const groups = {
       }
     }
   },
-  nextLinkDestinationSame: {
-    weight: 2,
-    packages: {
-      tenon: {
-        184: {
-          variable: false,
-          quality: 1,
-          what: 'Adjacent links point to the same destination'
-        }
-      }
-    }
-  },
   linkDestinationsSame: {
+    what: '',
+    wcag: '2.4.4',
     weight: 2,
     packages: {
       tenon: {
@@ -1403,6 +1495,8 @@ const groups = {
     }
   },
   linkConfusionRisk: {
+    what: '',
+    wcag: '2.4.4',
     weight: 1,
     packages: {
       axe: {
@@ -1415,8 +1509,17 @@ const groups = {
     }
   },
   linkPair: {
+    what: '',
+    wcag: '2.4.4',
     weight: 2,
     packages: {
+      tenon: {
+        184: {
+          variable: false,
+          quality: 1,
+          what: 'Adjacent links point to the same destination'
+        }
+      },
       wave: {
         'a:link_redundant': {
           variable: false,
@@ -1427,6 +1530,8 @@ const groups = {
     }
   },
   formNewWindow: {
+    what: '',
+    wcag: '3.2.5',
     weight: 2,
     packages: {
       tenon: {
@@ -1439,6 +1544,8 @@ const groups = {
     }
   },
   linkForcesNewWindow: {
+    what: '',
+    wcag: '3.2.5',
     weight: 3,
     packages: {
       tenon: {
@@ -1451,6 +1558,8 @@ const groups = {
     }
   },
   linkWindowSurpriseRisk: {
+    what: '',
+    wcag: '3.2.5',
     weight: 1,
     packages: {
       htmlcs: {
@@ -1463,6 +1572,8 @@ const groups = {
     }
   },
   selectNavSurpriseRisk: {
+    what: '',
+    wcag: '3.2.5',
     weight: 1,
     packages: {
       wave: {
@@ -1475,6 +1586,8 @@ const groups = {
     }
   },
   buttonAlt: {
+    what: '',
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       nuVal: {
@@ -1487,6 +1600,8 @@ const groups = {
     }
   },
   buttonNoText: {
+    what: '',
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       alfa: {
@@ -1579,6 +1694,8 @@ const groups = {
     }
   },
   menuItemNoText: {
+    what: '',
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       alfa: {
@@ -1591,6 +1708,8 @@ const groups = {
     }
   },
   parentMissing: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       alfa: {
@@ -1617,6 +1736,8 @@ const groups = {
     }
   },
   svgImageNoText: {
+    what: '',
+    wcag: '1.1.1',
     weight: 4,
     packages: {
       alfa: {
@@ -1643,6 +1764,8 @@ const groups = {
     }
   },
   cssBansRotate: {
+    what: '',
+    wcag: '1.3.4',
     weight: 4,
     packages: {
       axe: {
@@ -1655,6 +1778,8 @@ const groups = {
     }
   },
   textRotated: {
+    what: '',
+    wcag: '1.4.8',
     weight: 2,
     packages: {
       tenon: {
@@ -1667,6 +1792,8 @@ const groups = {
     }
   },
   metaBansZoom: {
+    what: '',
+    wcag: '1.4.4',
     weight: 4,
     packages: {
       alfa: {
@@ -1710,6 +1837,8 @@ const groups = {
     }
   },
   childMissing: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       alfa: {
@@ -1729,6 +1858,8 @@ const groups = {
     }
   },
   presentationChild: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       htmlcs: {
@@ -1741,6 +1872,8 @@ const groups = {
     }
   },
   fontSizeAbsolute: {
+    what: '',
+    wcag: '1.4.4',
     weight: 2,
     packages: {
       alfa: {
@@ -1753,6 +1886,8 @@ const groups = {
     }
   },
   fontSmall: {
+    what: '',
+    wcag: '1.4',
     weight: 3,
     packages: {
       alfa: {
@@ -1786,6 +1921,8 @@ const groups = {
     }
   },
   leadingFrozen: {
+    what: '',
+    wcag: '1.4.12',
     weight: 4,
     packages: {
       alfa: {
@@ -1805,6 +1942,8 @@ const groups = {
     }
   },
   leadingAbsolute: {
+    what: '',
+    wcag: '1.4.12',
     weight: 2,
     packages: {
       alfa: {
@@ -1816,8 +1955,10 @@ const groups = {
       }
     }
   },
-  noLeading: {
-    weight: 3,
+  leadingInsufficient: {
+    what: '',
+    wcag: '1.4.8',
+    weight: 2,
     packages: {
       alfa: {
         r73: {
@@ -1829,6 +1970,8 @@ const groups = {
     }
   },
   leadingClipsText: {
+    what: '',
+    wcag: '1.4.8',
     weight: 4,
     packages: {
       tenon: {
@@ -1841,6 +1984,8 @@ const groups = {
     }
   },
   overflowHidden: {
+    what: '',
+    wcag: '1.4.4',
     weight: 4,
     packages: {
       alfa: {
@@ -1853,6 +1998,8 @@ const groups = {
     }
   },
   titleBad: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -1863,7 +2010,7 @@ const groups = {
         }
       },
       testaro: {
-        titleEl: {
+        titledEl: {
           variable: false,
           quality: 1,
           what: 'title attribute belongs to an inappropriate element'
@@ -1872,6 +2019,8 @@ const groups = {
     }
   },
   linkElementBad: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -1889,6 +2038,8 @@ const groups = {
     }
   },
   metaBad: {
+    what: '',
+    wcag: '1.3.1',
     weight: 3,
     packages: {
       nuVal: {
@@ -1935,12 +2086,14 @@ const groups = {
         '^Bad value .+ for attribute .+ on element meta.*$': {
           variable: true,
           quality: 1,
-          what: 'attribute of a meta element has an invalid value'
+          what: 'Attribute of a meta element has an invalid value'
         }
       }
     }
   },
   scriptElementBad: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -1958,6 +2111,8 @@ const groups = {
     }
   },
   itemTypeBad: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -1970,6 +2125,8 @@ const groups = {
     }
   },
   iframeTitleBad: {
+    what: '',
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       alfa: {
@@ -2015,6 +2172,8 @@ const groups = {
     }
   },
   roleBad: {
+    what: '',
+    wcag: '4.1.2',
     weight: 3,
     packages: {
       alfa: {
@@ -2167,6 +2326,8 @@ const groups = {
     }
   },
   roleRedundant: {
+    what: '',
+    wcag: '4.1.2',
     weight: 1,
     packages: {
       ibm: {
@@ -2201,6 +2362,8 @@ const groups = {
     }
   },
   attributeBad: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       ibm: {
@@ -2224,17 +2387,17 @@ const groups = {
         '^Attribute .+ not allowed on element .+ at this point.*$': {
           variable: true,
           quality: 1,
-          what: 'attribute not allowed on this element'
+          what: 'Attribute not allowed on this element'
         },
         '^Bad value .* for attribute .+ on element .+$': {
           variable: true,
           quality: 1,
-          what: 'attribute on this element has an invalid value'
+          what: 'Attribute on this element has an invalid value'
         },
         '^Bad value .+ for the attribute .+$': {
           variable: true,
           quality: 1,
-          what: 'attribute has an invalid value'
+          what: 'Attribute has an invalid value'
         },
         '^Attribute .+ not allowed here.*$': {
           variable: true,
@@ -2274,17 +2437,19 @@ const groups = {
         '^Bad value  for attribute (?:width|height) on element img: The empty string is not a valid non-negative integer.*$': {
           variable: true,
           quality: 1,
-          what: 'attribute has an empty value'
+          what: 'Attribute has an empty value'
         },
         '^.+ in an unquoted attribute value. Probable causes: Attributes running together or a URL query string in an unquoted attribute value.*$': {
           variable: true,
           quality: 1,
-          what: 'attribute has a value containing invalid punctuation'
+          what: 'Attribute has a value containing invalid punctuation'
         }
       }
     }
   },
   attributeMissing: {
+    what: '',
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       axe: {
@@ -2331,6 +2496,8 @@ const groups = {
     }
   },
   roleMissing: {
+    what: '',
+    wcag: '4.1.2',
     weight: 3,
     packages: {
       nuVal: {
@@ -2343,6 +2510,8 @@ const groups = {
     }
   },
   roleMissingRisk: {
+    what: '',
+    wcag: '4.1.2',
     weight: 1,
     packages: {
       nuVal: {
@@ -2355,6 +2524,8 @@ const groups = {
     }
   },
   ariaMissing: {
+    what: '',
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       alfa: {
@@ -2398,6 +2569,8 @@ const groups = {
     }
   },
   ariaBadAttribute: {
+    what: '',
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       alfa: {
@@ -2577,12 +2750,12 @@ const groups = {
         '^Bad value  for attribute .+ on element .+: Must be non-empty.*$': {
           variable: true,
           quality: 1,
-          what: 'attribute value is empty'
+          what: 'Attribute value is empty'
         },
         '^Bad value  for attribute aria-hidden on element .+$': {
           variable: true,
           quality: 1,
-          what: 'attribute aria-hidden has an empty value'
+          what: 'Attribute aria-hidden has an empty value'
         },
         'The form attribute must refer to a form element.': {
           variable: false,
@@ -2608,6 +2781,8 @@ const groups = {
     }
   },
   ariaRedundant: {
+    what: '',
+    wcag: '4.1.2',
     weight: 1,
     packages: {
       continuum: {
@@ -2634,6 +2809,8 @@ const groups = {
     }
   },
   ariaReferenceBad: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       ibm: {
@@ -2653,6 +2830,8 @@ const groups = {
     }
   },
   autocompleteBad: {
+    what: '',
+    wcag: '1.3.5',
     weight: 3,
     packages: {
       alfa: {
@@ -2693,6 +2872,8 @@ const groups = {
     }
   },
   autocompleteRisk: {
+    what: '',
+    wcag: '1.3.5',
     weight: 1,
     packages: {
       htmlcs: {
@@ -2705,6 +2886,8 @@ const groups = {
     }
   },
   contrastAA: {
+    what: '',
+    wcag: '1.4.3',
     weight: 4,
     packages: {
       alfa: {
@@ -2750,6 +2933,8 @@ const groups = {
     }
   },
   contrastAAA: {
+    what: '',
+    wcag: '1.4.6',
     weight: 1,
     packages: {
       alfa: {
@@ -2783,6 +2968,8 @@ const groups = {
     }
   },
   contrastRisk: {
+    what: '',
+    wcag: '1.4.3',
     weight: 1,
     packages: {
       htmlcs: {
@@ -2830,6 +3017,8 @@ const groups = {
     }
   },
   idEmpty: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -2847,6 +3036,8 @@ const groups = {
     }
   },
   targetEmpty: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -2859,6 +3050,8 @@ const groups = {
     }
   },
   headingEmpty: {
+    what: '',
+    wcag: '2.4.6',
     weight: 3,
     packages: {
       alfa: {
@@ -2906,6 +3099,8 @@ const groups = {
     }
   },
   headingOfNothing: {
+    what: '',
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       alfa: {
@@ -2918,6 +3113,8 @@ const groups = {
     }
   },
   typeRedundant: {
+    what: '',
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       nuVal: {
@@ -2935,6 +3132,8 @@ const groups = {
     }
   },
   imageTextRedundant: {
+    what: '',
+    wcag: '1.1.1',
     weight: 1,
     packages: {
       axe: {
@@ -2968,6 +3167,8 @@ const groups = {
     }
   },
   decorativeTitle: {
+    what: '',
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       htmlcs: {
@@ -2994,6 +3195,8 @@ const groups = {
     }
   },
   titleRedundant: {
+    what: '',
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       tenon: {
@@ -3013,6 +3216,8 @@ const groups = {
     }
   },
   titleEmpty: {
+    what: '',
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       continuum: {
@@ -3044,7 +3249,9 @@ const groups = {
     }
   },
   docType: {
-    weight: 3,
+    what: '',
+    wcag: '1.3.1',
+    weight: 10,
     packages: {
       nuVal: {
         'Start tag seen without seeing a doctype first. Expected <!DOCTYPE html>.': {
@@ -3057,13 +3264,15 @@ const groups = {
         docType: {
           variable: false,
           quality: 1,
-          what: 'document has no doctype property'
+          what: 'document has no valid doctype property'
         }
       }
     }
   },
   pageTitle: {
-    weight: 3,
+    what: '',
+    wcag: '2.4.2',
+    weight: 10,
     packages: {
       alfa: {
         r1: {
@@ -3122,6 +3331,8 @@ const groups = {
     }
   },
   headingStructure: {
+    what: '',
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       alfa: {
@@ -3169,6 +3380,8 @@ const groups = {
     }
   },
   headingLevelless: {
+    what: '',
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       continuum: {
@@ -3181,6 +3394,8 @@ const groups = {
     }
   },
   noHeading: {
+    what: '',
+    wcag: '1.3.1',
     weight: 3,
     packages: {
       alfa: {
@@ -3200,7 +3415,9 @@ const groups = {
     }
   },
   h1Missing: {
-    weight: 2,
+    what: '',
+    wcag: '1.3.1',
+    weight: 3,
     packages: {
       alfa: {
         r61: {
@@ -3226,6 +3443,8 @@ const groups = {
     }
   },
   articleHeadingless: {
+    what: '',
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       nuVal: {
@@ -3238,6 +3457,8 @@ const groups = {
     }
   },
   sectionHeadingless: {
+    what: '',
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       nuVal: {
@@ -3255,6 +3476,8 @@ const groups = {
     }
   },
   justification: {
+    what: '',
+    wcag: '1.4.8',
     weight: 1,
     packages: {
       alfa: {
@@ -3281,6 +3504,8 @@ const groups = {
     }
   },
   nonSemanticText: {
+    what: '',
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       htmlcs: {
@@ -3328,6 +3553,8 @@ const groups = {
     }
   },
   pseudoParagraphRisk: {
+    what: '',
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       tenon: {
@@ -3340,6 +3567,8 @@ const groups = {
     }
   },
   pseudoCodeRisk: {
+    what: '',
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       alfa: {
@@ -3352,6 +3581,8 @@ const groups = {
     }
   },
   pseudoHeadingRisk: {
+    what: '',
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       axe: {
@@ -3378,6 +3609,8 @@ const groups = {
     }
   },
   pseudoLinkRisk: {
+    what: '',
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       tenon: {
@@ -3397,6 +3630,8 @@ const groups = {
     }
   },
   listChild: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       axe: {
@@ -3445,6 +3680,8 @@ const groups = {
     }
   },
   listItemOrphan: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       axe: {
@@ -3476,6 +3713,8 @@ const groups = {
     }
   },
   pseudoListRisk: {
+    what: '',
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       wave: {
@@ -3488,6 +3727,8 @@ const groups = {
     }
   },
   pseudoOrderedListRisk: {
+    what: '',
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       htmlcs: {
@@ -3500,6 +3741,8 @@ const groups = {
     }
   },
   pseudoNavListRisk: {
+    what: '',
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       htmlcs: {
@@ -3512,6 +3755,8 @@ const groups = {
     }
   },
   selectNoText: {
+    what: '',
+    wcag: '4.1.2',
     weight: 3,
     packages: {
       axe: {
@@ -3550,6 +3795,8 @@ const groups = {
     }
   },
   optionNoText: {
+    what: '',
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       nuVal: {
@@ -3562,6 +3809,8 @@ const groups = {
     }
   },
   selectFlatRisk: {
+    what: '',
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       htmlcs: {
@@ -3574,6 +3823,8 @@ const groups = {
     }
   },
   accessKeyDuplicate: {
+    what: '',
+    wcag: '1.3.1',
     weight: 3,
     packages: {
       axe: {
@@ -3607,6 +3858,8 @@ const groups = {
     }
   },
   fieldSetMissing: {
+    what: '',
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       ibm: {
@@ -3633,6 +3886,8 @@ const groups = {
     }
   },
   fieldSetRisk: {
+    what: '',
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       htmlcs: {
@@ -3645,6 +3900,8 @@ const groups = {
     }
   },
   legendMisplaced: {
+    what: '',
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       continuum: {
@@ -3657,6 +3914,8 @@ const groups = {
     }
   },
   legendMissing: {
+    what: '',
+    wcag: '4.1.2',
     weight: 2,
     packages: {
       continuum: {
@@ -3690,6 +3949,8 @@ const groups = {
     }
   },
   groupName: {
+    what: '',
+    wcag: '4.1.2',
     weight: 3,
     packages: {
       alfa: {
@@ -3716,6 +3977,8 @@ const groups = {
     }
   },
   layoutTable: {
+    what: '',
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       testaro: {
@@ -3735,6 +3998,8 @@ const groups = {
     }
   },
   tableColumnsVary: {
+    what: '',
+    wcag: '1.3.1',
     weight: 3,
     packages: {
       nuVal: {
@@ -3752,6 +4017,8 @@ const groups = {
     }
   },
   tableCaption: {
+    what: '',
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       axe: {
@@ -3771,6 +4038,8 @@ const groups = {
     }
   },
   cellHeadersNotInferrable: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       htmlcs: {
@@ -3790,6 +4059,8 @@ const groups = {
     }
   },
   cellHeadersAmbiguityRisk: {
+    what: '',
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       htmlcs: {
@@ -3802,6 +4073,8 @@ const groups = {
     }
   },
   tableHeaderless: {
+    what: '',
+    wcag: '1.3.1',
     weight: 3,
     packages: {
       continuum: {
@@ -3821,6 +4094,8 @@ const groups = {
     }
   },
   tableCellHeaderless: {
+    what: '',
+    wcag: '1.3.1',
     weight: 3,
     packages: {
       alfa: {
@@ -3840,6 +4115,8 @@ const groups = {
     }
   },
   tableHeaderCelless: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       alfa: {
@@ -3859,6 +4136,8 @@ const groups = {
     }
   },
   TableHeaderScopeRisk: {
+    what: '',
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       htmlcs: {
@@ -3871,6 +4150,8 @@ const groups = {
     }
   },
   tableHeaderEmpty: {
+    what: '',
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       wave: {
@@ -3883,6 +4164,8 @@ const groups = {
     }
   },
   controlNoText: {
+    what: '',
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       axe: {
@@ -3916,6 +4199,8 @@ const groups = {
     }
   },
   controlLabelInvisible: {
+    what: '',
+    wcag: '2.4.6',
     weight: 4,
     packages: {
       axe: {
@@ -3928,6 +4213,8 @@ const groups = {
     }
   },
   titleAsLabel: {
+    what: '',
+    wcag: '2.4.6',
     weight: 3,
     packages: {
       wave: {
@@ -3940,6 +4227,8 @@ const groups = {
     }
   },
   visibleLabelNotName: {
+    what: '',
+    wcag: '2.5.3',
     weight: 3,
     packages: {
       alfa: {
@@ -3973,6 +4262,8 @@ const groups = {
     }
   },
   targetSize: {
+    what: '',
+    wcag: '2.5.5',
     weight: 3,
     packages: {
       tenon: {
@@ -3985,6 +4276,8 @@ const groups = {
     }
   },
   visibleBulk: {
+    what: '',
+    wcag: '2.4',
     weight: 1,
     packages: {
       testaro: {
@@ -3997,6 +4290,8 @@ const groups = {
     }
   },
   activeEmbedding: {
+    what: '',
+    wcag: '2.5.5',
     weight: 3,
     packages: {
       axe: {
@@ -4095,6 +4390,8 @@ const groups = {
     }
   },
   tabFocusability: {
+    what: '',
+    wcag: '2.1.1',
     weight: 4,
     packages: {
       alfa: {
@@ -4121,6 +4418,8 @@ const groups = {
     }
   },
   focusIndication: {
+    what: '',
+    wcag: '2.4.7',
     weight: 4,
     packages: {
       alfa: {
@@ -4140,6 +4439,8 @@ const groups = {
     }
   },
   allCaps: {
+    what: '',
+    wcag: '3.1.5',
     weight: 1,
     packages: {
       alfa: {
@@ -4159,6 +4460,8 @@ const groups = {
     }
   },
   allItalics: {
+    what: '',
+    wcag: '3.1.5',
     weight: 1,
     packages: {
       alfa: {
@@ -4178,6 +4481,8 @@ const groups = {
     }
   },
   noLandmarks: {
+    what: '',
+    wcag: '1.3.6',
     weight: 2,
     packages: {
       wave: {
@@ -4190,6 +4495,8 @@ const groups = {
     }
   },
   contentBeyondLandmarks: {
+    what: '',
+    wcag: '1.3.6',
     weight: 2,
     packages: {
       alfa: {
@@ -4216,6 +4523,8 @@ const groups = {
     }
   },
   footerTopLandmark: {
+    what: '',
+    wcag: '1.3.6',
     weight: 1,
     packages: {
       axe: {
@@ -4228,6 +4537,8 @@ const groups = {
     }
   },
   asideNotTop: {
+    what: '',
+    wcag: '1.3.6',
     weight: 2,
     packages: {
       axe: {
@@ -4240,6 +4551,8 @@ const groups = {
     }
   },
   mainNotTop: {
+    what: '',
+    wcag: '1.3.6',
     weight: 2,
     packages: {
       axe: {
@@ -4252,6 +4565,8 @@ const groups = {
     }
   },
   mainConfusion: {
+    what: '',
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       ibm: {
@@ -4269,6 +4584,8 @@ const groups = {
     }
   },
   mainNot1: {
+    what: '',
+    wcag: '1.3.6',
     weight: 2,
     packages: {
       axe: {
@@ -4300,6 +4617,8 @@ const groups = {
     }
   },
   bannerNot1: {
+    what: '',
+    wcag: '1.3.6',
     weight: 2,
     packages: {
       axe: {
@@ -4319,6 +4638,8 @@ const groups = {
     }
   },
   bannerNotTop: {
+    what: '',
+    wcag: '1.3.6',
     weight: 2,
     packages: {
       axe: {
@@ -4331,6 +4652,8 @@ const groups = {
     }
   },
   footerConfusion: {
+    what: '',
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       ibm: {
@@ -4343,6 +4666,8 @@ const groups = {
     }
   },
   footerNot1: {
+    what: '',
+    wcag: '1.3.6',
     weight: 2,
     packages: {
       axe: {
@@ -4362,6 +4687,8 @@ const groups = {
     }
   },
   landmarkConfusion: {
+    what: '',
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       axe: {
@@ -4381,6 +4708,8 @@ const groups = {
     }
   },
   articleConfusion: {
+    what: '',
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       ibm: {
@@ -4393,6 +4722,8 @@ const groups = {
     }
   },
   formConfusion: {
+    what: '',
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       ibm: {
@@ -4405,6 +4736,8 @@ const groups = {
     }
   },
   applicationConfusion: {
+    what: '',
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       ibm: {
@@ -4417,6 +4750,8 @@ const groups = {
     }
   },
   asideConfusion: {
+    what: '',
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       continuum: {
@@ -4436,6 +4771,8 @@ const groups = {
     }
   },
   bannerConfusion: {
+    what: '',
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       ibm: {
@@ -4448,6 +4785,8 @@ const groups = {
     }
   },
   navConfusion: {
+    what: '',
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       continuum: {
@@ -4467,6 +4806,8 @@ const groups = {
     }
   },
   regionConfusion: {
+    what: '',
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       ibm: {
@@ -4479,6 +4820,8 @@ const groups = {
     }
   },
   searchConfusion: {
+    what: '',
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       ibm: {
@@ -4491,6 +4834,8 @@ const groups = {
     }
   },
   asideNoText: {
+    what: '',
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       continuum: {
@@ -4503,6 +4848,8 @@ const groups = {
     }
   },
   complementaryNoText: {
+    what: '',
+    wcag: '1.3.6',
     weight: 1,
     packages: {
       ibm: {
@@ -4520,6 +4867,8 @@ const groups = {
     }
   },
   navNoText: {
+    what: '',
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       continuum: {
@@ -4532,6 +4881,8 @@ const groups = {
     }
   },
   labelNoText: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       ibm: {
@@ -4544,6 +4895,8 @@ const groups = {
     }
   },
   focusableOperable: {
+    what: '',
+    wcag: '2.1.1',
     weight: 3,
     packages: {
       testaro: {
@@ -4556,6 +4909,8 @@ const groups = {
     }
   },
   focusableRole: {
+    what: '',
+    wcag: '4.1.2',
     weight: 3,
     packages: {
       axe: {
@@ -4568,6 +4923,8 @@ const groups = {
     }
   },
   focusableHidden: {
+    what: '',
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       alfa: {
@@ -4618,6 +4975,8 @@ const groups = {
     }
   },
   focusedAway: {
+    what: '',
+    wcag: '1.4.10',
     weight: 3,
     packages: {
       testaro: {
@@ -4630,6 +4989,8 @@ const groups = {
     }
   },
   focusableDescendants: {
+    what: '',
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       alfa: {
@@ -4642,6 +5003,8 @@ const groups = {
     }
   },
   labeledHidden: {
+    what: '',
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       htmlcs: {
@@ -4658,7 +5021,23 @@ const groups = {
       }
     }
   },
+  contentHidden: {
+    what: '',
+    wcag: '2.4.7',
+    weight: 10,
+    packages: {
+      testaro: {
+        allHidden: {
+          variable: false,
+          quality: 1,
+          what: 'Content is entirely or mainly hidden'
+        }
+      }
+    }
+  },
   hiddenContentRisk: {
+    what: '',
+    wcag: '4.1',
     weight: 1,
     packages: {
       axe: {
@@ -4671,6 +5050,8 @@ const groups = {
     }
   },
   frameContentRisk: {
+    what: '',
+    wcag: '4.1',
     weight: 1,
     packages: {
       axe: {
@@ -4683,6 +5064,8 @@ const groups = {
     }
   },
   frameSandboxRisk: {
+    what: '',
+    wcag: '4.1',
     weight: 2,
     packages: {
       nuVal: {
@@ -4695,18 +5078,22 @@ const groups = {
     }
   },
   hoverSurprise: {
-    weight: 1,
+    what: '',
+    wcag: '1.4.13',
+    weight: 2,
     packages: {
       testaro: {
         hover: {
           variable: false,
           quality: 1,
-          what: 'Content changes caused by hovering'
+          what: 'Hovering is mis-indicated or changes content'
         }
       }
     }
   },
   labelClash: {
+    what: '',
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       axe: {
@@ -4740,6 +5127,8 @@ const groups = {
     }
   },
   labelEmpty: {
+    what: '',
+    wcag: '1.3.1',
     weight: 3,
     packages: {
       htmlcs: {
@@ -4764,6 +5153,8 @@ const groups = {
     }
   },
   linkComprehensionRisk: {
+    what: '',
+    wcag: '2.4.4',
     weight: 1,
     packages: {
       wave: {
@@ -4776,6 +5167,8 @@ const groups = {
     }
   },
   nonWebLink: {
+    what: '',
+    wcag: '1.3.3',
     weight: 1,
     packages: {
       continuum: {
@@ -4800,6 +5193,8 @@ const groups = {
     }
   },
   linkVague: {
+    what: '',
+    wcag: '2.4.4',
     weight: 3,
     packages: {
       tenon: {
@@ -4812,6 +5207,8 @@ const groups = {
     }
   },
   linkIndication: {
+    what: '',
+    wcag: '1.3.3',
     weight: 2,
     packages: {
       alfa: {
@@ -4838,6 +5235,8 @@ const groups = {
     }
   },
   menuNavigation: {
+    what: '',
+    wcag: '2.1.1',
     weight: 2,
     packages: {
       testaro: {
@@ -4850,6 +5249,8 @@ const groups = {
     }
   },
   menuItemless: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       wave: {
@@ -4862,6 +5263,8 @@ const groups = {
     }
   },
   tabNavigation: {
+    what: '',
+    wcag: '2.1.1',
     weight: 2,
     packages: {
       testaro: {
@@ -4874,6 +5277,8 @@ const groups = {
     }
   },
   spontaneousMotion: {
+    what: '',
+    wcag: '2.2.2',
     weight: 2,
     packages: {
       testaro: {
@@ -4886,6 +5291,8 @@ const groups = {
     }
   },
   autoplay: {
+    what: '',
+    wcag: '1.4.2',
     weight: 2,
     packages: {
       axe: {
@@ -4898,6 +5305,8 @@ const groups = {
     }
   },
   divParentBad: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -4910,6 +5319,8 @@ const groups = {
     }
   },
   pParentBad: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -4922,6 +5333,8 @@ const groups = {
     }
   },
   styleParentBad: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -4949,6 +5362,8 @@ const groups = {
     }
   },
   inconsistentStyles: {
+    what: '',
+    wcag: '3.2.4',
     weight: 1,
     packages: {
       testaro: {
@@ -4961,6 +5376,8 @@ const groups = {
     }
   },
   zIndexNotZero: {
+    what: '',
+    wcag: '1.4',
     weight: 1,
     packages: {
       testaro: {
@@ -4973,6 +5390,8 @@ const groups = {
     }
   },
   tabIndexPositive: {
+    what: '',
+    wcag: '2.4.3',
     weight: 1,
     packages: {
       axe: {
@@ -4992,6 +5411,8 @@ const groups = {
     }
   },
   tabIndexBad: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -5004,6 +5425,8 @@ const groups = {
     }
   },
   tabIndexMissing: {
+    what: '',
+    wcag: '2.1.1',
     weight: 4,
     packages: {
       continuum: {
@@ -5028,6 +5451,8 @@ const groups = {
     }
   },
   trackNoLabel: {
+    what: '',
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       continuum: {
@@ -5045,6 +5470,8 @@ const groups = {
     }
   },
   trackNoSource: {
+    what: '',
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       continuum: {
@@ -5057,6 +5484,8 @@ const groups = {
     }
   },
   audioCaptionMissing: {
+    what: '',
+    wcag: '1.2.1',
     weight: 4,
     packages: {
       axe: {
@@ -5069,6 +5498,8 @@ const groups = {
     }
   },
   videoCaptionMissing: {
+    what: '',
+    wcag: '1.2.2',
     weight: 4,
     packages: {
       axe: {
@@ -5081,6 +5512,8 @@ const groups = {
     }
   },
   videoCaptionRisk: {
+    what: '',
+    wcag: '1.2.2',
     weight: 1,
     packages: {
       wave: {
@@ -5103,6 +5536,8 @@ const groups = {
     }
   },
   notKeyboardScrollable: {
+    what: '',
+    wcag: '2.1.1',
     weight: 4,
     packages: {
       alfa: {
@@ -5122,6 +5557,8 @@ const groups = {
     }
   },
   horizontalScrolling: {
+    what: '',
+    wcag: '1.4.10',
     weight: 3,
     packages: {
       tenon: {
@@ -5134,6 +5571,8 @@ const groups = {
     }
   },
   scrollRisk: {
+    what: '',
+    wcag: '1.4.10',
     weight: 1,
     packages: {
       htmlcs: {
@@ -5146,6 +5585,8 @@ const groups = {
     }
   },
   skipRepeatedContent: {
+    what: '',
+    wcag: '2.4.1',
     weight: 3,
     packages: {
       alfa: {
@@ -5184,6 +5625,8 @@ const groups = {
     }
   },
   submitButton: {
+    what: '',
+    wcag: '2.5.6',
     weight: 3,
     packages: {
       htmlcs: {
@@ -5196,6 +5639,8 @@ const groups = {
     }
   },
   fragmentaryNoticeRisk: {
+    what: '',
+    wcag: '4.1.3',
     weight: 2,
     packages: {
       alfa: {
@@ -5208,6 +5653,8 @@ const groups = {
     }
   },
   noScriptRisk: {
+    what: '',
+    wcag: '4.1',
     weight: 1,
     packages: {
       wave: {
@@ -5220,6 +5667,8 @@ const groups = {
     }
   },
   browserSupportRisk: {
+    what: '',
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       nuVal: {
@@ -5232,6 +5681,8 @@ const groups = {
     }
   },
   obsolete: {
+    what: '',
+    wcag: '1.3.1',
     weight: 3,
     packages: {
       alfa: {
@@ -5304,7 +5755,7 @@ const groups = {
         '^The .+ attribute on the .+ element is obsolete.+$': {
           variable: true,
           quality: 1,
-          what: 'attribute is obsolete on its element'
+          what: 'Attribute is obsolete on its element'
         },
         'The only allowed value for the charset attribute for the script element is utf-8. (But the attribute is not needed and should be omitted altogether.)': {
           variable: false,
@@ -5314,7 +5765,7 @@ const groups = {
         'Using the meta element to specify the document-wide default language is obsolete. Consider specifying the language on the root element instead.': {
           variable: false,
           quality: 1,
-          what: 'language declaration in a meta element is obsolete'
+          what: 'Language declaration in a meta element is obsolete'
         },
         'The name attribute is obsolete. Consider putting an id attribute on the nearest container instead.': {
           variable: false,
@@ -5347,6 +5798,8 @@ const groups = {
     }
   },
   cssInvalid: {
+    what: '',
+    wcag: '1.3.1',
     weight: 3,
     packages: {
       nuVal: {
@@ -5479,6 +5932,8 @@ const groups = {
     }
   },
   parseError: {
+    what: '',
+    wcag: '1.3.1',
     weight: 3,
     packages: {
       ibm: {
@@ -5700,6 +6155,8 @@ const groups = {
     }
   },
   encodingBad: {
+    what: '',
+    wcag: '3.1.3',
     weight: 4,
     packages: {
       nuVal: {
@@ -5712,6 +6169,8 @@ const groups = {
     }
   },
   fatalError: {
+    what: '',
+    wcag: '4.1',
     weight: 50,
     packages: {
       nuVal: {
@@ -5729,6 +6188,8 @@ const groups = {
     }
   },
   notValidatable: {
+    what: '',
+    wcag: '4.1',
     weight: 1,
     packages: {
       nuVal: {
@@ -5820,16 +6281,16 @@ exports.scorer = async report => {
           if (tests) {
             const warnings = tests.incomplete;
             const {violations} = tests;
-            [[warnings, 0.25], [violations, 1]].forEach(issueClass => {
-              if (issueClass[0] && Array.isArray(issueClass[0])) {
-                issueClass[0].forEach(issueType => {
+            [[warnings, 0.25], [violations, 1]].forEach(issueSeverity => {
+              if (issueSeverity[0] && Array.isArray(issueSeverity[0])) {
+                issueSeverity[0].forEach(issueType => {
                   const {id, nodes} = issueType;
                   if (id && nodes && Array.isArray(nodes)) {
                     nodes.forEach(node => {
                       const {impact} = node;
                       if (impact) {
                         // Add the impact score for a violation or 25% of it for a warning.
-                        addDetail(which, id, issueClass[1] * impactScores[impact]);
+                        addDetail(which, id, issueSeverity[1] * impactScores[impact]);
                       }
                     });
                   }
@@ -5850,17 +6311,17 @@ exports.scorer = async report => {
         else if (which === 'htmlcs') {
           const issues = test.result;
           if (issues) {
-            ['Error', 'Warning'].forEach(issueClassName => {
-              const classData = issues[issueClassName];
-              if (classData) {
-                const issueTypes = Object.keys(classData);
+            ['Error', 'Warning'].forEach(issueSeverityName => {
+              const severityData = issues[issueSeverityName];
+              if (severityData) {
+                const issueTypes = Object.keys(severityData);
                 issueTypes.forEach(issueTypeName => {
-                  const issueArrays = Object.values(classData[issueTypeName]);
+                  const issueArrays = Object.values(severityData[issueTypeName]);
                   const issueCount = issueArrays.reduce((count, array) => count + array.length, 0);
-                  const classCode = issueClassName[0].toLowerCase();
-                  const code = `${classCode}:${issueTypeName}`;
+                  const severityCode = issueSeverityName[0].toLowerCase();
+                  const code = `${severityCode}:${issueTypeName}`;
                   // Add 4 per error, 1 per warning.
-                  const weight = classCode === 'e' ? 4 : 1;
+                  const weight = severityCode === 'e' ? 4 : 1;
                   addDetail(which, code, weight * issueCount);
                 });
               }
@@ -5918,15 +6379,15 @@ exports.scorer = async report => {
           }
         }
         else if (which === 'wave') {
-          const classScores = {
+          const severityScores = {
             error: 4,
             contrast: 3,
             alert: 1
           };
-          const issueClasses = test.result && test.result.categories;
-          if (issueClasses) {
-            ['error', 'contrast', 'alert'].forEach(issueClass => {
-              const {items} = issueClasses[issueClass];
+          const issueSeverities = test.result && test.result.categories;
+          if (issueSeverities) {
+            ['error', 'contrast', 'alert'].forEach(issueSeverity => {
+              const {items} = issueSeverities[issueSeverity];
               if (items) {
                 const testIDs = Object.keys(items);
                 if (testIDs.length) {
@@ -5935,7 +6396,7 @@ exports.scorer = async report => {
                     if (count) {
                       // Add 4 per error, 3 per contrast error, 1 per warning (alert).
                       addDetail(
-                        which, `${issueClass[0]}:${testID}`, count * classScores[issueClass]
+                        which, `${issueSeverity[0]}:${testID}`, count * severityScores[issueSeverity]
                       );
                     }
                   });
@@ -5944,11 +6405,47 @@ exports.scorer = async report => {
             });
           }
         }
+        else if (which === 'allHidden') {
+          const {result} = test;
+          if (
+            result
+            && ['hidden', 'reallyHidden', 'visHidden', 'ariaHidden'].every(
+              key => result[key]
+              && ['document', 'body', 'main'].every(
+                element => typeof result[key][element] === 'boolean'
+              )
+            )
+          ) {
+            // Get a score for the test.
+            const score = 8 * result.hidden.document
+            + 8 * result.hidden.body
+            + 6 * result.hidden.main
+            + 10 * result.reallyHidden.document
+            + 10 * result.reallyHidden.body
+            + 8 * result.reallyHidden.main
+            + 8 * result.visHidden.document
+            + 8 * result.visHidden.body
+            + 6 * result.visHidden.main
+            + 10 * result.ariaHidden.document
+            + 10 * result.ariaHidden.body
+            + 8 * result.ariaHidden.main;
+            // Add the score.
+            addDetail('testaro', which, score);
+          }
+        }
         else if (which === 'bulk') {
           const count = test.result && test.result.visibleElements;
           if (typeof count === 'number') {
             // Add 1 per 300 visible elements beyond 300.
             addDetail('testaro', which, Math.max(0, count / 300 - 1));
+          }
+        }
+        else if (which === 'docType') {
+          // If document has no or invalid doctype:
+          const hasType = test.result && test.result.docHasType;
+          if (typeof hasType === 'boolean' && ! hasType) {
+            // Add 10.
+            addDetail('testaro', which, 10);
           }
         }
         else if (which === 'embAc') {
@@ -5960,9 +6457,17 @@ exports.scorer = async report => {
             addDetail('testaro', which, 3 * total);
           }
         }
+        else if (which === 'filter') {
+          const totals = test.result && test.result.totals;
+          if (totals) {
+            // Add 2 per filter-styled element, 1 per filter-impacted element.
+            addDetail('testaro', which, 2 * totals.elements + totals.impact);
+          }
+        }
         else if (which === 'focAll') {
           const discrepancy = test.result && test.result.discrepancy;
           if (discrepancy) {
+            // Add 2 per discrepancy.
             addDetail('testaro', which, 2 * Math.abs(discrepancy));
           }
         }
@@ -5990,6 +6495,13 @@ exports.scorer = async report => {
             addDetail('testaro', which, 2 * noFocCount + 0.5 * noOpCount);
           }
         }
+        else if (which === 'focVis') {
+          const count = test.result && test.result.total;
+          if (count) {
+            // Add 1 per link outside the viewport.
+            addDetail('testaro', which, count);
+          }
+        }
         else if (which === 'hover') {
           const issues = test.result && test.result.totals;
           if (issues) {
@@ -5999,7 +6511,11 @@ exports.scorer = async report => {
               removals,
               opacityChanges,
               opacityImpact,
-              unhoverables
+              unhoverables,
+              noCursors,
+              badCursors,
+              noIndicators,
+              badIndicators
             } = issues;
             // Add score with weights on hover-impact types.
             const score = 2 * impactTriggers
@@ -6007,7 +6523,11 @@ exports.scorer = async report => {
             + removals
             + 0.2 * opacityChanges
             + 0.1 * opacityImpact
-            + unhoverables;
+            + unhoverables
+            + 3 * noCursors
+            + 2 * badCursors
+            + noIndicators
+            + badIndicators;
             if (score) {
               addDetail('testaro', which, score);
             }
@@ -6020,6 +6540,13 @@ exports.scorer = async report => {
           || 0;
           // Add 1 per element with conflicting labels (ignoring unlabeled elements).
           addDetail('testaro', which, mislabeledCount);
+        }
+        else if (which === 'linkTo') {
+          const count = test.result && test.result.total;
+          if (count) {
+            // Add 2 per link with no destination.
+            addDetail('testaro', which, count);
+          }
         }
         else if (which === 'linkUl') {
           const totals = test.result && test.result.totals && test.result.totals.adjacent;
@@ -6038,6 +6565,14 @@ exports.scorer = async report => {
           || 0;
           // Add 2 per defect.
           addDetail('testaro', which, 2 * issueCount);
+        }
+        else if (which === 'miniText') {
+          const items = test.result && test.result.items;
+          if (items && items.length) {
+            // Add 1 per 100 characters of small-text.
+            const totalLength = items.reduce((total, item) => total + item.length, 0);
+            addDetail('testaro', which, Math.floor(totalLength / 100));
+          }
         }
         else if (which === 'motion') {
           const data = test.result;
@@ -6058,6 +6593,13 @@ exports.scorer = async report => {
             + 3 * changeFrequency
             || 0;
             addDetail('testaro', which, score);
+          }
+        }
+        else if (which === 'nonTable') {
+          const total = test.result && test.result.total;
+          if (total) {
+            // Add 2 per pseudotable.
+            addDetail('testaro', which, 2 * total);
           }
         }
         else if (which === 'radioSet') {
@@ -6103,6 +6645,14 @@ exports.scorer = async report => {
           // Add 2 per defect.
           addDetail('testaro', which, 2 * issueCount);
         }
+        else if (which === 'titledEl') {
+          const total = test.result && test.result.total;
+          if (total) {
+            const score = 4 * total;
+            // Add 4 per mistitled element.
+            addDetail('testaro', which, score);
+          }
+        }
         else if (which === 'zIndex') {
           const issueCount = test.result && test.result.totals && test.result.totals.total || 0;
           // Add 1 per non-auto zIndex.
@@ -6123,10 +6673,10 @@ exports.scorer = async report => {
         (sum, current) => sum + current,
         0
       );
-      const roundedScore = Math.round(preventionScore);
-      summary.preventions = roundedScore;
-      summary.total += roundedScore;
-      // Reorganize the group data.
+      const roundedPreventionScore = Math.round(preventionScore);
+      summary.preventions = roundedPreventionScore;
+      summary.total += roundedPreventionScore;
+      // Initialize a table of the groups to which tests belong.
       const testGroups = {
         testaro: {},
         alfa: {},
@@ -6138,12 +6688,16 @@ exports.scorer = async report => {
         tenon: {},
         wave: {}
       };
+      // Initialize a table of the regular expressions of variably named tests of packages.
       const testMatchers = {};
       Object.keys(groups).forEach(groupName => {
         Object.keys(groups[groupName].packages).forEach(packageName => {
           Object.keys(groups[groupName].packages[packageName]).forEach(testID => {
+            // Update the group table.
             testGroups[packageName][testID] = groupName;
+            // If the test is variably named:
             if (groups[groupName].packages[packageName][testID].variable) {
+              // Add its regular expression, as multiline, to the variably-named-test table.
               if (! testMatchers[packageName]) {
                 testMatchers[packageName] = [];
               }
@@ -6152,50 +6706,51 @@ exports.scorer = async report => {
           });
         });
       });
-      // Populate the group details with group and solo test scores.
       // For each package with any scores:
       Object.keys(packageDetails).forEach(packageName => {
         const matchers = testMatchers[packageName];
-        let testClass = '';
         // For each test with any scores in the package:
-        Object.keys(packageDetails[packageName]).forEach(testID => {
-          // Determine whether the test is in a group.
-          let groupName = testGroups[packageName][testID];
-          // If not:
+        Object.keys(packageDetails[packageName]).forEach(testMessage => {
+          // Initialize the test ID as the reported test message.
+          let testID = testMessage;
+          // Get the group of the test, if it has a fixed name and is in a group.
+          let groupName = testGroups[packageName][testMessage];
+          // If the test has a variable name or is a solo test:
           if (! groupName) {
-            // Determine whether the package has test classes and the class is in a group.
-            testClass = matchers && matchers.find(matcher => matcher.test(testID));
-            if (testClass) {
-              testID = testClass.source;
+            // Determine whether the package has variably named tests and the test is among them.
+            testRegExp = matchers && matchers.find(matcher => matcher.test(testMessage));
+            // If so:
+            if (testRegExp) {
+              // Make the matching regular expression the test ID.
+              testID = testRegExp.source;
+              // Get the group of the test.
               groupName = testGroups[packageName][testID];
             }
           }
-          // If the test or its class is in a group:
+          // If the test is in a group:
           if (groupName) {
-            // Determine the preweighted or group-weighted score.
+            // Initialize its score as its score in the package details.
             if (! groupDetails.groups[groupName]) {
-              groupDetails.groups[groupName] = {};
+              groupDetails.groups[groupName] = {
+                wcag: groups[groupName].wcag,
+                packages: {}
+              };
             }
-            if (! groupDetails.groups[groupName][packageName]) {
-              groupDetails.groups[groupName][packageName] = {};
+            if (! groupDetails.groups[groupName].packages[packageName]) {
+              groupDetails.groups[groupName].packages[packageName] = {};
             }
-            let weightedScore = packageDetails[packageName][testID];
-            if (!preWeightedPackages.includes(groupName)) {
-              weightedScore *= groups[groupName].weight / 4;
-            }
+            let weightedScore = packageDetails[packageName][testMessage];
+            // Weight that by the group weight and normalize it to a 1–4 scale per instance.
+            weightedScore *= groups[groupName].weight / 4;
             // Adjust the score for the quality of the test.
             weightedScore *= groups[groupName].packages[packageName][testID].quality;
             // Round the score, but not to less than 1.
             const roundedScore = Math.max(Math.round(weightedScore), 1);
             // Add the rounded score and the test description to the group details.
-            groupDetails.groups[groupName][packageName][testID] = {
+            groupDetails.groups[groupName].packages[packageName][testID] = {
               score: roundedScore,
               what: groups[groupName].packages[packageName][testID].what
             };
-          }
-          // Otherwise, if the package has varying test names and the test belongs to a class:
-          else if (matchers && (testCode = matchers.find(matcher => matcher.test(testID)))) {
-
           }
           // Otherwise, i.e. if the test is solo:
           else {
@@ -6214,7 +6769,7 @@ exports.scorer = async report => {
       groupNames.forEach(groupName => {
         const scores = [];
         // For each package with any scores in the group:
-        const groupPackageData = Object.values(groupDetails.groups[groupName]);
+        const groupPackageData = Object.values(groupDetails.groups[groupName].packages);
         groupPackageData.forEach(packageObj => {
           // Get the sum of the scores of the tests of the package in the group.
           const scoreSum = Object.values(packageObj).reduce(
@@ -6253,15 +6808,16 @@ exports.scorer = async report => {
     }
   }
   // Get the log score.
-  const logScore = logWeights.logCount * report.logCount
-  + logWeights.logSize * report.logSize +
-  + logWeights.errorLogCount * report.errorLogCount
-  + logWeights.errorLogSize * report.errorLogSize
-  + logWeights.prohibitedCount * report.prohibitedCount +
-  + logWeights.visitTimeoutCount * report.visitTimeoutCount +
-  + logWeights.visitRejectionCount * report.visitRejectionCount
-  + logWeights.visitLatency * (report.visitLatency - normalLatency);
-  const roundedLogScore = Math.round(logScore);
+  const {jobData} = report;
+  const logScore = logWeights.logCount * jobData.logCount
+  + logWeights.logSize * jobData.logSize +
+  + logWeights.errorLogCount * jobData.errorLogCount
+  + logWeights.errorLogSize * jobData.errorLogSize
+  + logWeights.prohibitedCount * jobData.prohibitedCount +
+  + logWeights.visitTimeoutCount * jobData.visitTimeoutCount +
+  + logWeights.visitRejectionCount * jobData.visitRejectionCount
+  + logWeights.visitLatency * (jobData.visitLatency - normalLatency);
+  const roundedLogScore = Math.max(0, Math.round(logScore));
   summary.log = roundedLogScore;
   summary.total += roundedLogScore;
   // Add the score facts to the report.
@@ -6277,3 +6833,4 @@ exports.scorer = async report => {
     summary
   };
 };
+exports.groups = groups;

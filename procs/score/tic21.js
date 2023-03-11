@@ -1,74 +1,24 @@
 /*
-  sp16a
-  Testilo score proc 16a
+  tic21
+  Testilo issue classification 21
 
-  Computes scores from Testaro script tp16 and adds them to a report.
-  Usage examples:
-    node score sp16a 35k1r
-    node score sp16a
+  Classifies tests of Testaro and its dependent tools into issues.
 
-  This proc applies specified weights to the component scores before summing them. An issue reported
-  by a test is given a score. That score is determined by:
-    Whether the issue is reported as an error or a warning.
-    How important the issue is, if the test package is pre-weighted (axe, tenon, and testaro)
-    Whether the test belongs to a group or is a solo test.
-    How heavily the group is weighted, if the test package is not pre-weighted and the test belongs
-      to a group
+  Issue properties:
+    wcag: WCAG Principle, Guideline, Success Criterion, or Technique, if any, most closely
+      associated with the issue.
+    weight: weight of the issue in score computation.
+    tools: tools (including Testaro) providing tests in the issue.
 
-  The scores of solo tests are added together, multiplied by the soloWeight multiplier, and
-    contributed to the total score.
-
-  The scores of grouped tests are aggregated into a group score before being contributed to the
-    total score. The group score is the sum of (1) an absolute score, assigned because the group has
-    at least one test with a non-zero score, (2) the largest score among the tests of the group
-    multiplied by a multiplier, and (3) the sum of the scores from the other tests of the group
-    multiplied by a smaller multiplier. These three amounts are given by the groupWeights object.
-
-  Browser logging and navigation statistics produce a log score, and the prevention of tests
-  produces a prevention score. They, too, are added to the total score.
-
-  Each grouped test has a quality property, typically set to 1. The value of this property can be
-  modified when the test is found to be higher or lower in quality than usual.
+  Each property of tools specifies a test of that tool. Its key is the identifier of the test. Its value is an object with these properties:
+  - variable: whether the identifier is a regular expression.
+  - quality: the estimated quality of the test (normally 1).
+  - what: description of the test.
 */
 
-// CONSTANTS
-
-// ID of this proc.
-const scoreProcID = 'sp16a';
-// Configuration disclosures.
-const logWeights = {
-  logCount: 0.5,
-  logSize: 0.01,
-  errorLogCount: 1,
-  errorLogSize: 0.02,
-  prohibitedCount: 15,
-  visitTimeoutCount: 10,
-  visitRejectionCount: 10,
-  visitLatency: 1
-};
-// Normal latency (1 second per visit).
-const normalLatency = 13;
-// How much each solo issue adds to the score.
-const soloWeight = 2;
-// How much grouped issues add to the score.
-const groupWeights = {
-  // Added per issue group.
-  absolute: 2,
-  // Added per issue reported by the package with the largest count in the group.
-  largest: 1,
-  // Added per issue in the group reported by each other package.
-  smaller: 0.4
-};
-// How much each prevention adds to the score.
-const preventionWeights = {
-  testaro: 50,
-  other: 100
-};
-// Non-Testaro packages.
-const otherPackages = ['alfa', 'axe', 'continuum', 'htmlcs', 'ibm', 'nuVal', 'tenon', 'wave'];
-// Test groups.
-const groups = {
+const issues = {
   ignorable: {
+    wcag: '',
     weight: 0,
     packages: {
       nuVal: {
@@ -77,10 +27,28 @@ const groups = {
           quality: 0,
           what: 'Bug in nuVal'
         }
+      },
+      qualWeb: {
+        'QW-ACT-R52': {
+          variable: false,
+          quality: 1,
+          what: 'video element visual-only content has no description track (description tracks and this ACT rule have been deprecated)'
+        },
+        'QW-ACT-R57': {
+          variable: false,
+          quality: 1,
+          what: 'video element visual content has no description track (description tracks and this ACT rule have been deprecated)'
+        },
+        'QW-WCAG-T20': {
+          variable: false,
+          quality: 1,
+          what: 'Link text is not supplemented with a title attribute'
+        }
       }
     }
   },
   duplicateID: {
+    wcag: '4.1.1',
     weight: 4,
     packages: {
       alfa: {
@@ -111,7 +79,7 @@ const groups = {
         94: {
           variable: false,
           quality: 1,
-          what: 'Elements contains an id attribute set to a value that is not unique in the DOM'
+          what: 'Element contains an id attribute set to a value that is not unique in the DOM'
         }
       },
       htmlcs: {
@@ -134,10 +102,18 @@ const groups = {
           quality: 1,
           what: 'Duplicate id'
         }
+      },
+      qualWeb: {
+        'QW-ACT-R18': {
+          variable: false,
+          quality: 1,
+          what: 'id attribute value is not unique'
+        }
       }
     }
   },
   componentNoText: {
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       ibm: {
@@ -150,6 +126,7 @@ const groups = {
     }
   },
   regionNoText: {
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       alfa: {
@@ -175,7 +152,21 @@ const groups = {
       }
     }
   },
+  headingNoText: {
+    wcag: '1.1.1',
+    weight: 4,
+    packages: {
+      qualWeb: {
+        'QW-BP8': {
+          variable: false,
+          quality: 1,
+          what: 'Heading with an image has no accessible name'
+        }
+      }
+    }
+  },
   formFieldNoText: {
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       alfa: {
@@ -188,6 +179,7 @@ const groups = {
     }
   },
   inputNoText: {
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       axe: {
@@ -294,6 +286,7 @@ const groups = {
     }
   },
   inputOnlyPlaceholder: {
+    wcag: '4.1.2',
     weight: 3,
     packages: {
       continuum: {
@@ -306,6 +299,7 @@ const groups = {
     }
   },
   imageInputNoText: {
+    wcag: '1.1.1',
     weight: 4,
     packages: {
       alfa: {
@@ -336,6 +330,18 @@ const groups = {
           what: 'Input element of type image has no text alternative'
         }
       },
+      qualWeb: {
+        'QW-ACT-R6': {
+          variable: false,
+          quality: 1,
+          what: 'Image button has no accessible name'
+        },
+        'QW-WCAG-T5': {
+          variable: false,
+          quality: 1,
+          what: 'alt attribute not used on an image used as a submit button'
+        }
+      },
       wave: {
         'e:alt_input_missing': {
           variable: false,
@@ -346,6 +352,7 @@ const groups = {
     }
   },
   figureNoText: {
+    wcag: '1.1.1',
     weight: 4,
     packages: {
       ibm: {
@@ -358,6 +365,7 @@ const groups = {
     }
   },
   imageNoText: {
+    wcag: '1.1.1',
     weight: 4,
     packages: {
       alfa: {
@@ -417,6 +425,13 @@ const groups = {
           what: 'img element has no alt attribute'
         }
       },
+      qualWeb: {
+        'QW-ACT-R17': {
+          variable: false,
+          quality: 1,
+          what: 'Image has no accessible name'
+        }
+      },
       wave: {
         'e:alt_missing': {
           variable: false,
@@ -432,6 +447,7 @@ const groups = {
     }
   },
   decorativeImageAltBad: {
+    wcag: '1.1.1',
     weight: 4,
     packages: {
       ibm: {
@@ -444,6 +460,7 @@ const groups = {
     }
   },
   imageTextBad: {
+    wcag: '1.1.1',
     weight: 3,
     packages: {
       alfa: {
@@ -456,6 +473,7 @@ const groups = {
     }
   },
   imageNoSource: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -468,6 +486,7 @@ const groups = {
     }
   },
   sourceEmpty: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -480,6 +499,7 @@ const groups = {
     }
   },
   backgroundBad: {
+    wcag: '4.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -502,6 +522,7 @@ const groups = {
     }
   },
   backgroundImageBad: {
+    wcag: '4.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -519,6 +540,7 @@ const groups = {
     }
   },
   inputAlt: {
+    wcag: '4.1',
     weight: 4,
     packages: {
       continuum: {
@@ -531,6 +553,7 @@ const groups = {
     }
   },
   imagesSameAlt: {
+    wcag: '1.1.1',
     weight: 1,
     packages: {
       wave: {
@@ -543,8 +566,16 @@ const groups = {
     }
   },
   imageTextLong: {
+    wcag: '1.1.1',
     weight: 2,
     packages: {
+      qualWeb: {
+        'QW-BP2': {
+          variable: false,
+          quality: 1,
+          what: 'image text alternative is not concise'
+        }
+      },
       wave: {
         'a:alt_long': {
           variable: false,
@@ -554,7 +585,34 @@ const groups = {
       }
     }
   },
-  imageTextRisk: {
+  titleLong: {
+    wcag: '3.1.5',
+    weight: 2,
+    packages: {
+      qualWeb: {
+        'QW-BP6': {
+          variable: false,
+          quality: 1,
+          what: 'title element is too long (more than 64 characters)'
+        }
+      }
+    }
+  },
+  titleNotText: {
+    wcag: '3.1.5',
+    weight: 2,
+    packages: {
+      qualWeb: {
+        'QW-BP7': {
+          variable: false,
+          quality: 1,
+          what: 'Title element contains ASCII-art'
+        }
+      }
+    }
+  },
+  textAlternativeRisk: {
+    wcag: '1',
     weight: 1,
     packages: {
       continuum: {
@@ -569,6 +627,13 @@ const groups = {
           what: 'element with an img, graphics-symbol, or graphics-document role has a suspicious calculated accessible name'
         }
       },
+      qualWeb: {
+        'QW-WCAG-T8': {
+          variable: false,
+          quality: 1,
+          what: 'Text alternative is not an alternative'
+        }
+      },
       wave: {
         'a:alt_suspicious': {
           variable: false,
@@ -579,6 +644,7 @@ const groups = {
     }
   },
   decorativeImageRisk: {
+    wcag: '1.1.1',
     weight: 1,
     packages: {
       htmlcs: {
@@ -591,6 +657,7 @@ const groups = {
     }
   },
   decorativeElementExposed: {
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       alfa: {
@@ -611,10 +678,18 @@ const groups = {
           quality: 1,
           what: 'img element with alt="" has a role attribute'
         }
+      },
+      qualWeb: {
+        'QW-ACT-R48': {
+          variable: false,
+          quality: 1,
+          what: 'Element marked as decorative is exposed'
+        }
       }
     }
   },
   pageLanguage: {
+    wcag: '3.1.1',
     weight: 4,
     packages: {
       alfa: {
@@ -664,6 +739,13 @@ const groups = {
           what: 'html start tag has no lang attribute to declare the language of the page'
         }
       },
+      qualWeb: {
+        'QW-ACT-R2': {
+          variable: false,
+          quality: 1,
+          what: 'HTML page has no lang attribute'
+        }
+      },
       wave: {
         'e:language_missing': {
           variable: false,
@@ -674,6 +756,7 @@ const groups = {
     }
   },
   pageLanguageBad: {
+    wcag: '3.1.1',
     weight: 4,
     packages: {
       alfa: {
@@ -710,10 +793,23 @@ const groups = {
           quality: 1,
           what: 'lang attribute does not include a valid primary language'
         }
+      },
+      qualWeb: {
+        'QW-ACT-R5': {
+          variable: false,
+          quality: 1,
+          what: 'HTML lang attribute is invalid'
+        },
+        'QW-ACT-R3': {
+          variable: false,
+          quality: 1,
+          what: 'HTML lang and xml:lang do not match'
+        }
       }
     }
   },
   elementLanguageBad: {
+    wcag: '3.1.2',
     weight: 4,
     packages: {
       htmlcs: {
@@ -729,10 +825,18 @@ const groups = {
           quality: 1,
           what: 'Element has no lang attrbute matching its xml:lang attribute'
         }
+      },
+      qualWeb: {
+        'QW-ACT-R22': {
+          variable: false,
+          quality: 1,
+          what: 'Element within the body has no valid lang attribute'
+        }
       }
     }
   },
   languageChange: {
+    wcag: '3.1.2',
     weight: 3,
     packages: {
       alfa: {
@@ -759,6 +863,7 @@ const groups = {
     }
   },
   dialogNoText: {
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       axe: {
@@ -778,6 +883,7 @@ const groups = {
     }
   },
   applicationNoText: {
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       ibm: {
@@ -790,20 +896,21 @@ const groups = {
     }
   },
   objectNoText: {
+    wcag: '1.1.1',
     weight: 4,
     packages: {
       alfa: {
         r63: {
           variable: false,
           quality: 1,
-          what: 'Object element has no accessible name'
+          what: 'object element has no accessible name'
         }
       },
       axe: {
         'object-alt': {
           variable: false,
           quality: 1,
-          what: 'Object element has no text alternative'
+          what: 'object element has no text alternative'
         }
       },
       continuum: {
@@ -817,14 +924,21 @@ const groups = {
         'e:ARIA6+H53': {
           variable: false,
           quality: 1,
-          what: 'Object element contains no text alternative'
+          what: 'object element contains no text alternative'
         }
       },
       ibm: {
         WCAG20_Object_HasText: {
           variable: false,
           quality: 1,
-          what: 'Object element has no text alternative'
+          what: 'object element has no text alternative'
+        }
+      },
+      qualWeb: {
+        'QW-ACT-R42': {
+          variable: false,
+          quality: 1,
+          what: 'Object element has no non-empty accessible name'
         }
       },
       wave: {
@@ -836,7 +950,21 @@ const groups = {
       }
     }
   },
+  appletNoText: {
+    wcag: '1.1.1',
+    weight: 4,
+    packages: {
+      qualWeb: {
+        'QW-WCAG-T11': {
+          variable: false,
+          quality: 1,
+          what: 'Text alternative not provided on an applet element'
+        }
+      }
+    }
+  },
   videoNoText: {
+    wcag: '1.1.1',
     weight: 4,
     packages: {
       continuum: {
@@ -849,6 +977,7 @@ const groups = {
     }
   },
   imageMapNoText: {
+    wcag: '1.1.1',
     weight: 4,
     packages: {
       wave: {
@@ -861,6 +990,7 @@ const groups = {
     }
   },
   imageMapAreaNoText: {
+    wcag: '1.1.1',
     weight: 4,
     packages: {
       axe: {
@@ -889,6 +1019,13 @@ const groups = {
           what: 'Area element in an image map has no text alternative'
         }
       },
+      qualWeb: {
+        'QW-WCAG-T1': {
+          variable: false,
+          quality: 1,
+          what: 'Text alternative for an area element of an image map is not provided'
+        }
+      },
       wave: {
         'e:alt_area_missing': {
           variable: false,
@@ -899,6 +1036,7 @@ const groups = {
     }
   },
   objectBlurKeyboardRisk: {
+    wcag: '2.1.1',
     weight: 1,
     packages: {
       htmlcs: {
@@ -911,6 +1049,7 @@ const groups = {
     }
   },
   keyboardAccess: {
+    wcag: '2.1.1',
     weight: 4,
     packages: {
       tenon: {
@@ -923,6 +1062,7 @@ const groups = {
     }
   },
   eventKeyboardRisk: {
+    wcag: '2.1.1',
     weight: 1,
     packages: {
       htmlcs: {
@@ -952,6 +1092,13 @@ const groups = {
           what: 'Mousing-up functionality may not be available by keyboard'
         }
       },
+      qualWeb: {
+        'QW-WCAG-T6': {
+          variable: false,
+          quality: 1,
+          what: 'Both keyboard and other device-specific functions are not used'
+        }
+      },
       wave: {
         'a:event_handler': {
           variable: false,
@@ -962,6 +1109,7 @@ const groups = {
     }
   },
   internalLinkBroken: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       htmlcs: {
@@ -981,6 +1129,7 @@ const groups = {
     }
   },
   labelForBad: {
+    wcag: '1.3.1',
     weight: 3,
     packages: {
       htmlcs: {
@@ -1000,6 +1149,7 @@ const groups = {
     }
   },
   ariaLabelWrongRisk: {
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       nuVal: {
@@ -1012,6 +1162,7 @@ const groups = {
     }
   },
   activeDescendantBadID: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       continuum: {
@@ -1031,6 +1182,7 @@ const groups = {
     }
   },
   governedBadID: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       continuum: {
@@ -1062,6 +1214,7 @@ const groups = {
     }
   },
   descriptionBadID: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       continuum: {
@@ -1074,6 +1227,7 @@ const groups = {
     }
   },
   labelConfusionRisk: {
+    wcag: '3.3.2',
     weight: 1,
     packages: {
       ibm: {
@@ -1087,10 +1241,18 @@ const groups = {
           quality: 1,
           what: 'Checkbox or radio button label precedes the input control'
         }
+      },
+      qualWeb: {
+        'QW-WCAG-T17': {
+          variable: false,
+          quality: 1,
+          what: 'label not positioned to maximize the predictability of the relationship'
+        }
       }
     }
   },
   labelBadID: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       continuum: {
@@ -1151,6 +1313,7 @@ const groups = {
     }
   },
   haspopupBad: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       ibm: {
@@ -1163,6 +1326,7 @@ const groups = {
     }
   },
   ownerConflict: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       continuum: {
@@ -1175,6 +1339,7 @@ const groups = {
     }
   },
   linkNoText: {
+    wcag: '2.4.4',
     weight: 4,
     packages: {
       alfa: {
@@ -1239,6 +1404,18 @@ const groups = {
           what: 'link element has an empty href attribute'
         }
       },
+      qualWeb: {
+        'QW-ACT-R12': {
+          variable: false,
+          quality: 1,
+          what: 'Link has no accessible name'
+        },
+        'QW-WCAG-T21': {
+          variable: false,
+          quality: 1,
+          what: 'Accessible name is not provided for an image which is the only content in a link'
+        }
+      },
       tenon: {
         57: {
           variable: false,
@@ -1266,6 +1443,7 @@ const groups = {
     }
   },
   linkBrokenRisk: {
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       htmlcs: {
@@ -1278,6 +1456,7 @@ const groups = {
     }
   },
   acronymNoTitle: {
+    wcag: '3.1.4',
     weight: 4,
     packages: {
       tenon: {
@@ -1290,6 +1469,7 @@ const groups = {
     }
   },
   abbreviationNoTitle: {
+    wcag: '3.1.4',
     weight: 4,
     packages: {
       tenon: {
@@ -1298,10 +1478,18 @@ const groups = {
           quality: 1,
           what: 'abbr element is first for its abbreviation but has no useful title value'
         }
+      },
+      qualWeb: {
+        'QW-WCAG-T7': {
+          variable: false,
+          quality: 1,
+          what: 'Definition for an abbreviation not provided with an abbr element'
+        }
       }
     }
   },
   pdfLink: {
+    wcag: '1.3.3',
     weight: 1,
     packages: {
       wave: {
@@ -1314,6 +1502,7 @@ const groups = {
     }
   },
   destinationLink: {
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       htmlcs: {
@@ -1340,6 +1529,7 @@ const groups = {
     }
   },
   textAreaNoText: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       continuum: {
@@ -1358,7 +1548,8 @@ const groups = {
       }
     }
   },
-  linkTextsSame: {
+  linkAltSame: {
+    wcag: '1.1.1',
     weight: 2,
     packages: {
       htmlcs: {
@@ -1366,6 +1557,24 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'alt value of the link img element duplicates the text of a link beside it'
+        }
+      }
+    }
+  },
+  linkTextsSame: {
+    wcag: '2.4.4',
+    weight: 2,
+    packages: {
+      qualWeb: {
+        'QW-ACT-R9': {
+          variable: false,
+          quality: 1,
+          what: 'Links with identical accessible names have different purposes'
+        },
+        'QW-ACT-R44': {
+          variable: false,
+          quality: 1,
+          what: 'Links with identical accessible names and context serve different purposes'
         }
       },
       tenon: {
@@ -1377,19 +1586,8 @@ const groups = {
       }
     }
   },
-  nextLinkDestinationSame: {
-    weight: 2,
-    packages: {
-      tenon: {
-        184: {
-          variable: false,
-          quality: 1,
-          what: 'Adjacent links point to the same destination'
-        }
-      }
-    }
-  },
-  linkDestinationsSame: {
+  areaDestinationsSame: {
+    wcag: '2.4.4',
     weight: 2,
     packages: {
       tenon: {
@@ -1401,7 +1599,21 @@ const groups = {
       }
     }
   },
+  linksNoNav: {
+    wcag: '1.3.1',
+    weight: 2,
+    packages: {
+      qualWeb: {
+        'QW-BP4': {
+          variable: false,
+          quality: 1,
+          what: 'Grouped links are not within a nav element'
+        }
+      }
+    }
+  },
   linkConfusionRisk: {
+    wcag: '2.4.4',
     weight: 1,
     packages: {
       axe: {
@@ -1414,8 +1626,28 @@ const groups = {
     }
   },
   linkPair: {
+    wcag: '2.4.4',
     weight: 2,
     packages: {
+      qualWeb: {
+        'QW-WCAG-T10': {
+          variable: false,
+          quality: 1,
+          what: 'Adjacent image and text links for the same resource are not combined'
+        },
+        'QW-BP13': {
+          variable: false,
+          quality: 1,
+          what: 'Consecutive links have the same href and one contains an image'
+        }
+      },
+      tenon: {
+        184: {
+          variable: false,
+          quality: 1,
+          what: 'Adjacent links point to the same destination'
+        }
+      },
       wave: {
         'a:link_redundant': {
           variable: false,
@@ -1425,7 +1657,21 @@ const groups = {
       }
     }
   },
+  pageNewWindow: {
+    wcag: '3.2.5',
+    weight: 3,
+    packages: {
+      qualWeb: {
+        'QW-WCAG-T22': {
+          variable: false,
+          quality: 1,
+          what: 'New window opens as soon as a new page is loaded'
+        }
+      }
+    }
+  },
   formNewWindow: {
+    wcag: '3.2.5',
     weight: 2,
     packages: {
       tenon: {
@@ -1438,6 +1684,7 @@ const groups = {
     }
   },
   linkForcesNewWindow: {
+    wcag: '3.2.5',
     weight: 3,
     packages: {
       tenon: {
@@ -1450,6 +1697,7 @@ const groups = {
     }
   },
   linkWindowSurpriseRisk: {
+    wcag: '3.2.5',
     weight: 1,
     packages: {
       htmlcs: {
@@ -1462,6 +1710,7 @@ const groups = {
     }
   },
   selectNavSurpriseRisk: {
+    wcag: '3.2.5',
     weight: 1,
     packages: {
       wave: {
@@ -1474,6 +1723,7 @@ const groups = {
     }
   },
   buttonAlt: {
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       nuVal: {
@@ -1486,6 +1736,7 @@ const groups = {
     }
   },
   buttonNoText: {
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       alfa: {
@@ -1568,6 +1819,13 @@ const groups = {
           what: 'input element with type=button has no nonempty value attribute'
         }
       },
+      qualWeb: {
+        'QW-ACT-R11': {
+          variable: false,
+          quality: 1,
+          what: 'Button has no accessible name'
+        }
+      },
       wave: {
         'e:button_empty': {
           variable: false,
@@ -1578,6 +1836,7 @@ const groups = {
     }
   },
   menuItemNoText: {
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       alfa: {
@@ -1586,10 +1845,18 @@ const groups = {
           quality: 1,
           what: 'element with a menuitem role has no accessible name'
         }
+      },
+      qualWeb: {
+        'QW-ACT-R66': {
+          variable: false,
+          quality: 1,
+          what: 'Menuitem has no non-empty accessible name'
+        }
       }
     }
   },
   parentMissing: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       alfa: {
@@ -1612,10 +1879,65 @@ const groups = {
           quality: 1,
           what: 'Element is not contained within a role-valid element'
         }
+      },
+      nuVal: {
+        '^An element with role=.+ must be contained in, or owned by, an element with role=.+$': {
+          variable: true,
+          quality: 1,
+          what: 'Element has no required container or owner'
+        }
+      },
+      qualWeb: {
+        'QW-ACT-R33': {
+          variable: false,
+          quality: 1,
+          what: 'Element has no ARIA required context role'
+        }
+      }
+    }
+  },
+  descendantMissing: {
+    wcag: '1.3.1',
+    weight: 4,
+    packages: {
+      alfa: {
+        r68: {
+          variable: false,
+          quality: 1,
+          what: 'Element does not own an element required by its semantic role'
+        }
+      },
+      axe: {
+        'aria-required-children': {
+          variable: false,
+          quality: 1,
+          what: 'ARIA role does not contain a required child'
+        }
+      },
+      qualWeb: {
+        'QW-ACT-R38': {
+          variable: false,
+          quality: 1,
+          what: 'Element has no ARIA required owned element'
+        }
+      }
+    }
+  },
+  presentationChild: {
+    wcag: '1.3.1',
+    weight: 4,
+    packages: {
+      htmlcs: {
+        'e:AA.1_3_1.F92,ARIA4': {
+          variable: false,
+          quality: 1,
+          what: 'Element has presentation role but semantic child'
+        }
       }
     }
   },
   svgImageNoText: {
+    wcag: '1.1.1',
     weight: 4,
     packages: {
       alfa: {
@@ -1638,10 +1960,18 @@ const groups = {
           quality: 1,
           what: 'svg element has no mechanism that allows an accessible name to be calculated'
         }
+      },
+      qualWeb: {
+        'QW-ACT-R21': {
+          variable: false,
+          quality: 1,
+          what: 'svg element with an explicit role has no accessible name'
+        }
       }
     }
   },
   cssBansRotate: {
+    wcag: '1.3.4',
     weight: 4,
     packages: {
       axe: {
@@ -1650,10 +1980,18 @@ const groups = {
           quality: 1,
           what: 'CSS media query locks display orientation'
         }
+      },
+      qualWeb: {
+        'QW-ACT-R7': {
+          variable: false,
+          quality: 1,
+          what: 'Orientation of the page is restricted by a CSS transform property'
+        }
       }
     }
   },
   textRotated: {
+    wcag: '1.4.8',
     weight: 2,
     packages: {
       tenon: {
@@ -1666,6 +2004,7 @@ const groups = {
     }
   },
   metaBansZoom: {
+    wcag: '1.4.4',
     weight: 4,
     packages: {
       alfa: {
@@ -1705,41 +2044,18 @@ const groups = {
           quality: 1,
           what: 'viewport value prevents users from resizing the document'
         }
-      }
-    }
-  },
-  childMissing: {
-    weight: 4,
-    packages: {
-      alfa: {
-        r68: {
-          variable: false,
-          quality: 1,
-          what: 'Element does not own an element required by its semantic role'
-        }
       },
-      axe: {
-        'aria-required-children': {
+      qualWeb: {
+        'QW-ACT-R14': {
           variable: false,
           quality: 1,
-          what: 'ARIA role does not contain a required child'
-        }
-      }
-    }
-  },
-  presentationChild: {
-    weight: 4,
-    packages: {
-      htmlcs: {
-        'e:AA.1_3_1.F92,ARIA4': {
-          variable: false,
-          quality: 1,
-          what: 'Element has presentation role but semantic child'
+          what: 'meta viewport prevents zoom'
         }
       }
     }
   },
   fontSizeAbsolute: {
+    wcag: '1.4.4',
     weight: 2,
     packages: {
       alfa: {
@@ -1748,10 +2064,18 @@ const groups = {
           quality: 1,
           what: 'Paragraph text has an absolute font size'
         }
+      },
+      qualWeb: {
+        'QW-WCAG-T28': {
+          variable: false,
+          quality: 1,
+          what: 'Percent, em, or name is used for a font size'
+        }
       }
     }
   },
   fontSmall: {
+    wcag: '1.4',
     weight: 3,
     packages: {
       alfa: {
@@ -1784,7 +2108,8 @@ const groups = {
       }
     }
   },
-  leadingFrozen: {
+  textSpacingFrozen: {
+    wcag: '1.4.12',
     weight: 4,
     packages: {
       alfa: {
@@ -1800,10 +2125,28 @@ const groups = {
           quality: 1,
           what: 'Inline text spacing is not adjustable with a custom stylesheet'
         }
+      },
+      qualWeb: {
+        'QW-ACT-R67': {
+          variable: false,
+          quality: 1,
+          what: 'Letter spacing in a style attribute is !important'
+        },
+        'QW-ACT-R68': {
+          variable: false,
+          quality: 1,
+          what: 'Line height in a style attribute is !important'
+        },
+        'QW-ACT-R69': {
+          variable: false,
+          quality: 1,
+          what: 'Word spacing in a style attribute is !important'
+        }
       }
     }
   },
   leadingAbsolute: {
+    wcag: '1.4.12',
     weight: 2,
     packages: {
       alfa: {
@@ -1816,6 +2159,7 @@ const groups = {
     }
   },
   leadingInsufficient: {
+    wcag: '1.4.8',
     weight: 2,
     packages: {
       alfa: {
@@ -1828,6 +2172,7 @@ const groups = {
     }
   },
   leadingClipsText: {
+    wcag: '1.4.8',
     weight: 4,
     packages: {
       tenon: {
@@ -1840,6 +2185,7 @@ const groups = {
     }
   },
   overflowHidden: {
+    wcag: '1.4.4',
     weight: 4,
     packages: {
       alfa: {
@@ -1848,10 +2194,36 @@ const groups = {
           quality: 1,
           what: 'Overflow is hidden or clipped if the text is enlarged'
         }
+      },
+      qualWeb: {
+        'QW-ACT-R40': {
+          variable: false,
+          quality: 1,
+          what: 'Zoomed text node is clipped by a CSS overflow declaration'
+        }
+      }
+    }
+  },
+  boxSizeAbsolute: {
+    wcag: '1.4.4',
+    weight: 3,
+    packages: {
+      qualWeb: {
+        'QW-BP14': {
+          variable: false,
+          quality: 1,
+          what: 'Container width is specified in px'
+        },
+        'QW-BP15': {
+          variable: false,
+          quality: 1,
+          what: 'Element width is specified in an absolute value'
+        }
       }
     }
   },
   titleBad: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -1871,6 +2243,7 @@ const groups = {
     }
   },
   linkElementBad: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -1888,6 +2261,7 @@ const groups = {
     }
   },
   metaBad: {
+    wcag: '1.3.1',
     weight: 3,
     packages: {
       nuVal: {
@@ -1940,6 +2314,7 @@ const groups = {
     }
   },
   scriptElementBad: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -1957,6 +2332,7 @@ const groups = {
     }
   },
   itemTypeBad: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -1969,6 +2345,7 @@ const groups = {
     }
   },
   iframeTitleBad: {
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       alfa: {
@@ -2010,10 +2387,23 @@ const groups = {
           quality: 1,
           what: 'Inline frame has an empty or nonunique title attribute'
         }
+      },
+      qualWeb: {
+        'QW-ACT-R10': {
+          variable: false,
+          quality: 1,
+          what: 'iframe elements with identical accessible names have different purposes'
+        },
+        'QW-ACT-R19': {
+          variable: false,
+          quality: 1,
+          what: 'iframe element has no accessible name'
+        }
       }
     }
   },
   roleBad: {
+    wcag: '4.1.2',
     weight: 3,
     packages: {
       alfa: {
@@ -2156,6 +2546,13 @@ const groups = {
           what: 'Table cell has a role attribute'
         }
       },
+      qualWeb: {
+        'QW-ACT-R20': {
+          variable: false,
+          quality: 1,
+          what: 'role attribute has an invalid value'
+        }
+      },
       testaro: {
         role: {
           variable: false,
@@ -2166,6 +2563,7 @@ const groups = {
     }
   },
   roleRedundant: {
+    wcag: '4.1.2',
     weight: 1,
     packages: {
       ibm: {
@@ -2200,6 +2598,7 @@ const groups = {
     }
   },
   attributeBad: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       ibm: {
@@ -2284,6 +2683,7 @@ const groups = {
     }
   },
   attributeMissing: {
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       axe: {
@@ -2330,6 +2730,7 @@ const groups = {
     }
   },
   roleMissing: {
+    wcag: '4.1.2',
     weight: 3,
     packages: {
       nuVal: {
@@ -2342,6 +2743,7 @@ const groups = {
     }
   },
   roleMissingRisk: {
+    wcag: '4.1.2',
     weight: 1,
     packages: {
       nuVal: {
@@ -2354,6 +2756,7 @@ const groups = {
     }
   },
   ariaMissing: {
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       alfa: {
@@ -2387,6 +2790,13 @@ const groups = {
           what: 'Element is missing a required ARIA attribute'
         }
       },
+      qualWeb: {
+        'QW-ACT-R28': {
+          variable: false,
+          quality: 1,
+          what: 'Element with a role attribute does not have the required states and properties'
+        }
+      },
       wave: {
         'e:aria_reference_broken': {
           variable: false,
@@ -2397,6 +2807,7 @@ const groups = {
     }
   },
   ariaBadAttribute: {
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       alfa: {
@@ -2603,10 +3014,28 @@ const groups = {
           quality: 1,
           what: 'input element with a button role and type="checkbox" has no aria-pressed="true"'
         }
+      },
+      qualWeb: {
+        'QW-ACT-R25': {
+          variable: false,
+          quality: 1,
+          what: 'ARIA state or property is not permitted'
+        },
+        'QW-ACT-R27': {
+          variable: false,
+          quality: 1,
+          what: 'aria- attribute is not defined in ARIA 1.1'
+        },
+        'QW-ACT-R34': {
+          variable: false,
+          quality: 1,
+          what: 'ARIA state or property has an invalid value'
+        }
       }
     }
   },
   ariaRedundant: {
+    wcag: '4.1.2',
     weight: 1,
     packages: {
       continuum: {
@@ -2633,6 +3062,7 @@ const groups = {
     }
   },
   ariaReferenceBad: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       ibm: {
@@ -2652,6 +3082,7 @@ const groups = {
     }
   },
   autocompleteBad: {
+    wcag: '1.3.5',
     weight: 3,
     packages: {
       alfa: {
@@ -2688,10 +3119,18 @@ const groups = {
           quality: 1,
           what: 'autocomplete attribute has an empty value'
         }
+      },
+      qualWeb: {
+        'QW-ACT-R24': {
+          variable: false,
+          quality: 1,
+          what: 'autocomplete attribute has no valid value'
+        }
       }
     }
   },
   autocompleteRisk: {
+    wcag: '1.3.5',
     weight: 1,
     packages: {
       htmlcs: {
@@ -2703,7 +3142,8 @@ const groups = {
       }
     }
   },
-  contrastAA: {
+  textContrastAA: {
+    wcag: '1.4.3',
     weight: 4,
     packages: {
       alfa: {
@@ -2739,6 +3179,13 @@ const groups = {
           what: 'Contrast ratio of text with background does not meet WCAG 2.1 AA'
         }
       },
+      qualWeb: {
+        'QW-ACT-R37': {
+          variable: false,
+          quality: 1,
+          what: 'Text has less than the minimum contrast'
+        }
+      },
       wave: {
         'c:contrast': {
           variable: false,
@@ -2748,7 +3195,21 @@ const groups = {
       }
     }
   },
+  colorMissing: {
+    wcag: '1.4.3',
+    weight: 4,
+    packages: {
+      qualWeb: {
+        'QW-WCAG-T31': {
+          variable: false,
+          quality: 1,
+          what: 'Foreground or background color is specified but not both'
+        }
+      }
+    }
+  },
   contrastAAA: {
+    wcag: '1.4.6',
     weight: 1,
     packages: {
       alfa: {
@@ -2772,6 +3233,13 @@ const groups = {
           what: 'Insufficient contrast'
         }
       },
+      qualWeb: {
+        'QW-ACT-R76': {
+          variable: false,
+          quality: 1,
+          what: 'Text has less than the enhanced minimum contrast'
+        }
+      },
       tenon: {
         95: {
           variable: false,
@@ -2782,6 +3250,7 @@ const groups = {
     }
   },
   contrastRisk: {
+    wcag: '1.4.3',
     weight: 1,
     packages: {
       htmlcs: {
@@ -2829,6 +3298,7 @@ const groups = {
     }
   },
   idEmpty: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -2846,6 +3316,7 @@ const groups = {
     }
   },
   targetEmpty: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -2858,6 +3329,7 @@ const groups = {
     }
   },
   headingEmpty: {
+    wcag: '2.4.6',
     weight: 3,
     packages: {
       alfa: {
@@ -2895,6 +3367,13 @@ const groups = {
           what: 'Empty heading'
         }
       },
+      qualWeb: {
+        'QW-ACT-R33': {
+          variable: false,
+          quality: 1,
+          what: 'Heading has no accessible name'
+        }
+      },
       wave: {
         'e:heading_empty': {
           variable: false,
@@ -2905,6 +3384,7 @@ const groups = {
     }
   },
   headingOfNothing: {
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       alfa: {
@@ -2917,6 +3397,7 @@ const groups = {
     }
   },
   typeRedundant: {
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       nuVal: {
@@ -2934,6 +3415,7 @@ const groups = {
     }
   },
   imageTextRedundant: {
+    wcag: '1.1.1',
     weight: 1,
     packages: {
       axe: {
@@ -2967,6 +3449,7 @@ const groups = {
     }
   },
   decorativeTitle: {
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       htmlcs: {
@@ -2993,8 +3476,16 @@ const groups = {
     }
   },
   titleRedundant: {
+    wcag: '1.3.1',
     weight: 1,
     packages: {
+      qualWeb: {
+        'QW-BP3': {
+          variable: false,
+          quality: 1,
+          what: 'Link text content is equal to the title attribute'
+        }
+      },
       tenon: {
         79: {
           variable: false,
@@ -3012,6 +3503,7 @@ const groups = {
     }
   },
   titleEmpty: {
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       continuum: {
@@ -3043,6 +3535,7 @@ const groups = {
     }
   },
   docType: {
+    wcag: '1.3.1',
     weight: 10,
     packages: {
       nuVal: {
@@ -3062,6 +3555,7 @@ const groups = {
     }
   },
   pageTitle: {
+    wcag: '2.4.2',
     weight: 10,
     packages: {
       alfa: {
@@ -3111,6 +3605,13 @@ const groups = {
           what: 'head element has no child title element'
         }
       },
+      qualWeb: {
+        'QW-ACT-R1': {
+          variable: false,
+          quality: 1,
+          what: 'HTML page has no title'
+        }
+      },
       wave: {
         'e:title_invalid': {
           variable: false,
@@ -3121,6 +3622,7 @@ const groups = {
     }
   },
   headingStructure: {
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       alfa: {
@@ -3151,6 +3653,13 @@ const groups = {
           what: 'Page contains more than 1 h1 element'
         }
       },
+      qualWeb: {
+        'QW-WCAG-T9': {
+          variable: false,
+          quality: 1,
+          what: 'Page is not organized using headings'
+        }
+      },
       tenon: {
         155: {
           variable: false,
@@ -3168,6 +3677,7 @@ const groups = {
     }
   },
   headingLevelless: {
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       continuum: {
@@ -3180,6 +3690,7 @@ const groups = {
     }
   },
   noHeading: {
+    wcag: '1.3.1',
     weight: 3,
     packages: {
       alfa: {
@@ -3189,7 +3700,14 @@ const groups = {
           what: 'Document has no headings'
         }
       },
-      wave: {
+      qualWeb: {
+        'QW-BP1': {
+          variable: false,
+          quality: 1,
+          what: 'h1-h6 not used to identify headings'
+        }
+      }
+    wave: {
         'a:heading_missing': {
           variable: false,
           quality: 1,
@@ -3199,6 +3717,7 @@ const groups = {
     }
   },
   h1Missing: {
+    wcag: '1.3.1',
     weight: 3,
     packages: {
       alfa: {
@@ -3225,6 +3744,7 @@ const groups = {
     }
   },
   articleHeadingless: {
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       nuVal: {
@@ -3237,6 +3757,7 @@ const groups = {
     }
   },
   sectionHeadingless: {
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       nuVal: {
@@ -3254,7 +3775,8 @@ const groups = {
     }
   },
   justification: {
-    weight: 1,
+    wcag: '1.4.8',
+    weight: 2,
     packages: {
       alfa: {
         r71: {
@@ -3270,6 +3792,13 @@ const groups = {
           what: 'Text is fully justified'
         }
       },
+      qualWeb: {
+        'QW-WCAG-T27': {
+          variable: false,
+          quality: 1,
+          what: 'Text is justified (aligned to both the left and the right margins)'
+        }
+      },
       wave: {
         'a:text_justified': {
           variable: false,
@@ -3279,7 +3808,20 @@ const groups = {
       }
     }
   },
+  justificationRisk: {
+    wcag: '1.4.8',
+    weight: 1,
+    packages: {
+      qualWeb: {
+        'QW-WCAG-T29': {
+          variable: false,
+          quality: 1,
+          what: 'Alignment either to the left or right is not specified in CSS'
+        }
+      }
+  },
   nonSemanticText: {
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       htmlcs: {
@@ -3327,6 +3869,7 @@ const groups = {
     }
   },
   pseudoParagraphRisk: {
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       tenon: {
@@ -3338,7 +3881,21 @@ const groups = {
       }
     }
   },
+  pseudoList: {
+    wcag: '1.3.1',
+    weight: 1,
+    packages: {
+      qualWeb: {
+        'QW-BP11': {
+          variable: false,
+          quality: 1,
+          what: 'br is used to make a list'
+        }
+      }
+    }
+  },
   pseudoCodeRisk: {
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       alfa: {
@@ -3351,6 +3908,7 @@ const groups = {
     }
   },
   pseudoHeadingRisk: {
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       axe: {
@@ -3377,6 +3935,7 @@ const groups = {
     }
   },
   pseudoLinkRisk: {
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       tenon: {
@@ -3396,6 +3955,7 @@ const groups = {
     }
   },
   listChild: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       axe: {
@@ -3444,6 +4004,7 @@ const groups = {
     }
   },
   listItemOrphan: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       axe: {
@@ -3475,6 +4036,7 @@ const groups = {
     }
   },
   pseudoListRisk: {
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       wave: {
@@ -3487,6 +4049,7 @@ const groups = {
     }
   },
   pseudoOrderedListRisk: {
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       htmlcs: {
@@ -3498,8 +4061,9 @@ const groups = {
       }
     }
   },
-  pseudoNavListRisk: {
-    weight: 1,
+  pseudoNavList: {
+    wcag: '1.3.1',
+    weight: 2,
     packages: {
       htmlcs: {
         'w:AA.1_3_1.H48': {
@@ -3507,10 +4071,18 @@ const groups = {
           quality: 1,
           what: 'Navigation links are not coded as a list'
         }
+      },
+      qualWeb: {
+        'QW-WCAG-T32': {
+          variable: false,
+          quality: 1,
+          what: 'ol, ul or dl is not used for a list or group of links'
+        }
       }
     }
   },
   selectNoText: {
+    wcag: '4.1.2',
     weight: 3,
     packages: {
       axe: {
@@ -3549,6 +4121,7 @@ const groups = {
     }
   },
   optionNoText: {
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       nuVal: {
@@ -3561,6 +4134,7 @@ const groups = {
     }
   },
   selectFlatRisk: {
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       htmlcs: {
@@ -3573,6 +4147,7 @@ const groups = {
     }
   },
   accessKeyDuplicate: {
+    wcag: '1.3.1',
     weight: 3,
     packages: {
       axe: {
@@ -3606,6 +4181,7 @@ const groups = {
     }
   },
   fieldSetMissing: {
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       ibm: {
@@ -3632,6 +4208,7 @@ const groups = {
     }
   },
   fieldSetRisk: {
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       htmlcs: {
@@ -3644,6 +4221,7 @@ const groups = {
     }
   },
   legendMisplaced: {
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       continuum: {
@@ -3656,6 +4234,7 @@ const groups = {
     }
   },
   legendMissing: {
+    wcag: '4.1.2',
     weight: 2,
     packages: {
       continuum: {
@@ -3669,7 +4248,7 @@ const groups = {
         'e:AA.1_3_1.H71.NoLegend': {
           variable: false,
           quality: 1,
-          what: 'Fieldset has no legend element'
+          what: 'fieldset has no legend element'
         }
       },
       ibm: {
@@ -3679,16 +4258,24 @@ const groups = {
           what: 'fieldset element has no single, non-empty legend as a label'
         }
       },
+      qualWeb: {
+        'QW-WCAG-T3': {
+          variable: false,
+          quality: 1,
+          what: 'Description for a group of form controls using fieldset and legend elements is not provided'
+        }
+      },
       wave: {
         'a:legend_missing': {
           variable: false,
           quality: 1,
-          what: 'Fieldset has no legend element'
+          what: 'fieldset has no legend element'
         }
       }
     }
   },
   groupName: {
+    wcag: '4.1.2',
     weight: 3,
     packages: {
       alfa: {
@@ -3715,8 +4302,21 @@ const groups = {
     }
   },
   layoutTable: {
+    wcag: '1.3.1',
     weight: 2,
     packages: {
+      qualWeb: {
+        'QW-WCAG-T12': {
+          variable: false,
+          quality: 1,
+          what: 'th or caption element or non-empty summary attribute used in a layout table'
+        },
+        'QW-BP9': {
+          variable: false,
+          quality: 1,
+          what: 'Table element without header cells has a caption'
+        }
+      },
       testaro: {
         nonTable: {
           variable: false,
@@ -3733,7 +4333,34 @@ const groups = {
       }
     }
   },
+  tabularTableless: {
+    wcag: '1.3.1',
+    weight: 3,
+    packages: {
+      qualWeb: {
+        'QW-WCAG-T18': {
+          variable: false,
+          quality: 1,
+          what: 'Table markup not used to present tabular information'
+        }
+      }
+    }
+  },
+  tableNoSummary: {
+    wcag: '1.3.1',
+    weight: 2,
+    packages: {
+      qualWeb: {
+        'QW-WCAG-T4': {
+          variable: false,
+          quality: 1,
+          what: 'summary attribute is not used to give an overview of a data table'
+        }
+      }
+    }
+  },
   tableColumnsVary: {
+    wcag: '1.3.1',
     weight: 3,
     packages: {
       nuVal: {
@@ -3751,6 +4378,7 @@ const groups = {
     }
   },
   tableCaption: {
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       axe: {
@@ -3766,10 +4394,18 @@ const groups = {
           quality: 1,
           what: 'Table has no caption element'
         }
+      },
+      qualWeb: {
+        'QW-WCAG-T2': {
+          variable: false,
+          quality: 1,
+          what: 'caption element not used to associate a caption with a data table'
+        }
       }
     }
   },
   cellHeadersNotInferrable: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       htmlcs: {
@@ -3788,7 +4424,21 @@ const groups = {
       }
     }
   },
+  cellHeadersOutsideTable: {
+    wcag: '1.3.1',
+    weight: 4,
+    packages: {
+      qualWeb: {
+        'QW-ACT-R36': {
+          variable: false,
+          quality: 1,
+          what: 'Headers attribute does not refer to a cell in the same table element'
+        }
+      },
+    }
+  },
   cellHeadersAmbiguityRisk: {
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       htmlcs: {
@@ -3797,10 +4447,28 @@ const groups = {
           quality: 1,
           what: 'Complex table requires headers attributes of cells instead of header scopes'
         }
+      },
+      qualWeb: {
+        'QW-WCAG-T14': {
+          variable: false,
+          quality: 1,
+          what: 'id and headers attributes not used to associate data cells with header cells in a data table'
+        },
+        'QW-WCAG-T25': {
+          variable: false,
+          quality: 1,
+          what: 'scope attribute not used to associate header cells and data cells in a data table'
+        },
+        'QW-BP12': {
+          variable: false,
+          quality: 1,
+          what: 'scope col and row are not used'
+        }
       }
     }
   },
   tableHeaderless: {
+    wcag: '1.3.1',
     weight: 3,
     packages: {
       continuum: {
@@ -3820,6 +4488,7 @@ const groups = {
     }
   },
   tableCellHeaderless: {
+    wcag: '1.3.1',
     weight: 3,
     packages: {
       alfa: {
@@ -3839,6 +4508,7 @@ const groups = {
     }
   },
   tableHeaderCelless: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       alfa: {
@@ -3854,10 +4524,18 @@ const groups = {
           quality: 1,
           what: 'Table header refers to no cell'
         }
+      },
+      qualWeb: {
+        'QW-ACT-R39': {
+          variable: false,
+          quality: 1,
+          what: 'Table header cell has no assigned data cell'
+        }
       }
     }
   },
   TableHeaderScopeRisk: {
+    wcag: '1.3.1',
     weight: 1,
     packages: {
       htmlcs: {
@@ -3870,6 +4548,7 @@ const groups = {
     }
   },
   tableHeaderEmpty: {
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       wave: {
@@ -3881,7 +4560,21 @@ const groups = {
       }
     }
   },
+  tableEmbedded: {
+    wcag: '1.3.1',
+    weight: 2,
+    packages: {
+      qualWeb: {
+        'QW-BP5': {
+          variable: false,
+          quality: 1,
+          what: 'table element is inside another table element'
+        }
+      }
+    }
+  },
   controlNoText: {
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       axe: {
@@ -3905,6 +4598,13 @@ const groups = {
           what: 'Form control has no associated label'
         }
       },
+      qualWeb: {
+        'QW-ACT-R16': {
+          variable: false,
+          quality: 1,
+          what: 'Form control has no accessible name'
+        }
+      },
       wave: {
         'e:label_missing': {
           variable: false,
@@ -3915,6 +4615,7 @@ const groups = {
     }
   },
   controlLabelInvisible: {
+    wcag: '2.4.6',
     weight: 4,
     packages: {
       axe: {
@@ -3927,6 +4628,7 @@ const groups = {
     }
   },
   titleAsLabel: {
+    wcag: '2.4.6',
     weight: 3,
     packages: {
       wave: {
@@ -3939,6 +4641,7 @@ const groups = {
     }
   },
   visibleLabelNotName: {
+    wcag: '2.5.3',
     weight: 3,
     packages: {
       alfa: {
@@ -3968,10 +4671,18 @@ const groups = {
           quality: 1,
           what: 'Accessible name does not match or contain the visible label text'
         }
+      },
+      qualWeb: {
+        'QW-ACT-R30': {
+          variable: false,
+          quality: 1,
+          what: 'Visible label is not part of the accessible name'
+        }
       }
     }
   },
   targetSize: {
+    wcag: '2.5.5',
     weight: 3,
     packages: {
       tenon: {
@@ -3984,6 +4695,7 @@ const groups = {
     }
   },
   visibleBulk: {
+    wcag: '2.4',
     weight: 1,
     packages: {
       testaro: {
@@ -3996,6 +4708,7 @@ const groups = {
     }
   },
   activeEmbedding: {
+    wcag: '2.5.5',
     weight: 3,
     packages: {
       axe: {
@@ -4094,6 +4807,7 @@ const groups = {
     }
   },
   tabFocusability: {
+    wcag: '2.1.1',
     weight: 4,
     packages: {
       alfa: {
@@ -4110,6 +4824,18 @@ const groups = {
           what: 'UI component has no focusable child element for keyboard access'
         }
       },
+      qualWeb: {
+        'QW-ACT-R70': {
+          variable: false,
+          quality: 1,
+          what: 'iframe with negative tabindex has interactive elements'
+        },
+        'QW-WCAG-T24': {
+          variable: false,
+          quality: 1,
+          what: 'Script removes the focus when focus is received'
+        }
+      },
       testaro: {
         focAll: {
           variable: false,
@@ -4120,25 +4846,34 @@ const groups = {
     }
   },
   focusIndication: {
+    wcag: '2.4.7',
     weight: 4,
     packages: {
       alfa: {
         r65: {
           variable: false,
           quality: 1,
-          what: 'Element in sequential focus order has no visible focus'
+          what: 'Element in the sequential focus order has no visible focus'
+        }
+      },
+      qualWeb: {
+        'QW-ACT-R62': {
+          variable: false,
+          quality: 1,
+          what: 'Element in the sequential focus order has no visible focus'
         }
       },
       testaro: {
         focInd: {
           variable: false,
           quality: 1,
-          what: 'Focused element displaying no or nostandard focus indicator'
+          what: 'Focused element displays no or a nostandard focus indicator'
         }
       }
     }
   },
   allCaps: {
+    wcag: '3.1.5',
     weight: 1,
     packages: {
       alfa: {
@@ -4158,6 +4893,7 @@ const groups = {
     }
   },
   allItalics: {
+    wcag: '3.1.5',
     weight: 1,
     packages: {
       alfa: {
@@ -4177,6 +4913,7 @@ const groups = {
     }
   },
   noLandmarks: {
+    wcag: '1.3.6',
     weight: 2,
     packages: {
       wave: {
@@ -4189,6 +4926,7 @@ const groups = {
     }
   },
   contentBeyondLandmarks: {
+    wcag: '1.3.6',
     weight: 2,
     packages: {
       alfa: {
@@ -4215,6 +4953,7 @@ const groups = {
     }
   },
   footerTopLandmark: {
+    wcag: '1.3.6',
     weight: 1,
     packages: {
       axe: {
@@ -4227,6 +4966,7 @@ const groups = {
     }
   },
   asideNotTop: {
+    wcag: '1.3.6',
     weight: 2,
     packages: {
       axe: {
@@ -4239,6 +4979,7 @@ const groups = {
     }
   },
   mainNotTop: {
+    wcag: '1.3.6',
     weight: 2,
     packages: {
       axe: {
@@ -4251,6 +4992,7 @@ const groups = {
     }
   },
   mainConfusion: {
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       ibm: {
@@ -4267,7 +5009,8 @@ const groups = {
       }
     }
   },
-  mainNot1: {
+  mainNone: {
+    wcag: '1.3.6',
     weight: 2,
     packages: {
       axe: {
@@ -4275,7 +5018,22 @@ const groups = {
           variable: false,
           quality: 1,
           what: 'page has no main landmark'
-        },
+        }
+      },
+      qualWeb: {
+        'QW-ACT-R63': {
+          variable: false,
+          quality: 1,
+          what: 'Document has no landmark with non-repeated content'
+        }
+      }
+    }
+  },
+  mainMultiple: {
+    wcag: '1.3.6',
+    weight: 2,
+    packages: {
+      axe: {
         'landmark-no-duplicate-main': {
           variable: false,
           quality: 1,
@@ -4299,6 +5057,7 @@ const groups = {
     }
   },
   bannerNot1: {
+    wcag: '1.3.6',
     weight: 2,
     packages: {
       axe: {
@@ -4318,6 +5077,7 @@ const groups = {
     }
   },
   bannerNotTop: {
+    wcag: '1.3.6',
     weight: 2,
     packages: {
       axe: {
@@ -4330,6 +5090,7 @@ const groups = {
     }
   },
   footerConfusion: {
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       ibm: {
@@ -4342,6 +5103,7 @@ const groups = {
     }
   },
   footerNot1: {
+    wcag: '1.3.6',
     weight: 2,
     packages: {
       axe: {
@@ -4361,6 +5123,7 @@ const groups = {
     }
   },
   landmarkConfusion: {
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       axe: {
@@ -4380,6 +5143,7 @@ const groups = {
     }
   },
   articleConfusion: {
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       ibm: {
@@ -4392,6 +5156,7 @@ const groups = {
     }
   },
   formConfusion: {
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       ibm: {
@@ -4404,6 +5169,7 @@ const groups = {
     }
   },
   applicationConfusion: {
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       ibm: {
@@ -4416,6 +5182,7 @@ const groups = {
     }
   },
   asideConfusion: {
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       continuum: {
@@ -4435,6 +5202,7 @@ const groups = {
     }
   },
   bannerConfusion: {
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       ibm: {
@@ -4447,6 +5215,7 @@ const groups = {
     }
   },
   navConfusion: {
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       continuum: {
@@ -4466,6 +5235,7 @@ const groups = {
     }
   },
   regionConfusion: {
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       ibm: {
@@ -4478,6 +5248,7 @@ const groups = {
     }
   },
   searchConfusion: {
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       ibm: {
@@ -4490,6 +5261,7 @@ const groups = {
     }
   },
   asideNoText: {
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       continuum: {
@@ -4502,6 +5274,7 @@ const groups = {
     }
   },
   complementaryNoText: {
+    wcag: '1.3.6',
     weight: 1,
     packages: {
       ibm: {
@@ -4519,6 +5292,7 @@ const groups = {
     }
   },
   navNoText: {
+    wcag: '1.3.6',
     weight: 3,
     packages: {
       continuum: {
@@ -4531,6 +5305,7 @@ const groups = {
     }
   },
   labelNoText: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       ibm: {
@@ -4543,6 +5318,7 @@ const groups = {
     }
   },
   focusableOperable: {
+    wcag: '2.1.1',
     weight: 3,
     packages: {
       testaro: {
@@ -4555,6 +5331,7 @@ const groups = {
     }
   },
   focusableRole: {
+    wcag: '4.1.2',
     weight: 3,
     packages: {
       axe: {
@@ -4563,10 +5340,18 @@ const groups = {
           quality: 1,
           what: 'Focusable element has no active role'
         }
+      },
+      qualWeb: {
+        'QW-WCAG-T26': {
+          variable: false,
+          quality: 1,
+          what: 'Script makes a div or span a user interface control without providing a role for the control'
+        }
       }
     }
   },
   focusableHidden: {
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       alfa: {
@@ -4602,6 +5387,13 @@ const groups = {
           what: 'Focusable element is within the subtree of an element with aria-hidden set to true'
         }
       },
+      qualWeb: {
+        'QW-ACT-R13': {
+          variable: false,
+          quality: 1,
+          what: 'Element with aria-hidden has focusable content'
+        }
+      },
       tenon: {
         189: {
           variable: false,
@@ -4617,6 +5409,7 @@ const groups = {
     }
   },
   focusedAway: {
+    wcag: '1.4.10',
     weight: 3,
     packages: {
       testaro: {
@@ -4629,6 +5422,7 @@ const groups = {
     }
   },
   focusableDescendants: {
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       alfa: {
@@ -4637,10 +5431,18 @@ const groups = {
           quality: 1,
           what: 'Element has a role making its children presentational but contains a focusable element'
         }
+      },
+      qualWeb: {
+        'QW-ACT-R65': {
+          variable: false,
+          quality: 1,
+          what: 'Element with presentational children has focusable content'
+        }
       }
     }
   },
   labeledHidden: {
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       htmlcs: {
@@ -4658,6 +5460,7 @@ const groups = {
     }
   },
   contentHidden: {
+    wcag: '2.4.7',
     weight: 10,
     packages: {
       testaro: {
@@ -4670,6 +5473,7 @@ const groups = {
     }
   },
   hiddenContentRisk: {
+    wcag: '4.1',
     weight: 1,
     packages: {
       axe: {
@@ -4682,6 +5486,7 @@ const groups = {
     }
   },
   frameContentRisk: {
+    wcag: '4.1',
     weight: 1,
     packages: {
       axe: {
@@ -4694,6 +5499,7 @@ const groups = {
     }
   },
   frameSandboxRisk: {
+    wcag: '4.1',
     weight: 2,
     packages: {
       nuVal: {
@@ -4706,18 +5512,20 @@ const groups = {
     }
   },
   hoverSurprise: {
-    weight: 1,
+    wcag: '1.4.13',
+    weight: 2,
     packages: {
       testaro: {
         hover: {
           variable: false,
           quality: 1,
-          what: 'Content changes caused by hovering'
+          what: 'Hovering is mis-indicated or changes content'
         }
       }
     }
   },
   labelClash: {
+    wcag: '1.3.1',
     weight: 2,
     packages: {
       axe: {
@@ -4751,6 +5559,7 @@ const groups = {
     }
   },
   labelEmpty: {
+    wcag: '1.3.1',
     weight: 3,
     packages: {
       htmlcs: {
@@ -4775,6 +5584,7 @@ const groups = {
     }
   },
   linkComprehensionRisk: {
+    wcag: '2.4.4',
     weight: 1,
     packages: {
       wave: {
@@ -4787,6 +5597,7 @@ const groups = {
     }
   },
   nonWebLink: {
+    wcag: '1.3.3',
     weight: 1,
     packages: {
       continuum: {
@@ -4811,6 +5622,7 @@ const groups = {
     }
   },
   linkVague: {
+    wcag: '2.4.4',
     weight: 3,
     packages: {
       tenon: {
@@ -4823,6 +5635,7 @@ const groups = {
     }
   },
   linkIndication: {
+    wcag: '1.3.3',
     weight: 2,
     packages: {
       alfa: {
@@ -4849,6 +5662,7 @@ const groups = {
     }
   },
   menuNavigation: {
+    wcag: '2.1.1',
     weight: 2,
     packages: {
       testaro: {
@@ -4861,6 +5675,7 @@ const groups = {
     }
   },
   menuItemless: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       wave: {
@@ -4873,6 +5688,7 @@ const groups = {
     }
   },
   tabNavigation: {
+    wcag: '2.1.1',
     weight: 2,
     packages: {
       testaro: {
@@ -4884,7 +5700,21 @@ const groups = {
       }
     }
   },
+  siteNavigation: {
+    wcag: '2.4',
+    weight: 1,
+    packages: {
+      qualWeb: {
+        'QW-WCAG-T15': {
+          variable: false,
+          quality: 1,
+          what: 'link element and navigation tools not used'
+        }
+      }
+    }
+  },
   spontaneousMotion: {
+    wcag: '2.2.2',
     weight: 2,
     packages: {
       testaro: {
@@ -4896,7 +5726,26 @@ const groups = {
       }
     }
   },
+  blink: {
+    wcag: '2.2.2',
+    weight: 4,
+    packages: {
+      qualWeb: {
+        'QW-WCAG-T13': {
+          variable: false,
+          quality: 1,
+          what: 'blink element used'
+        },
+        'QW-WCAG-T30': {
+          variable: false,
+          quality: 1,
+          what: 'text-decoration:blink is used without a mechanism to stop it in less than five seconds'
+        }
+      }
+    }
+  },
   autoplay: {
+    wcag: '1.4.2',
     weight: 2,
     packages: {
       axe: {
@@ -4905,10 +5754,62 @@ const groups = {
           quality: 1,
           what: 'video or audio element plays automatically'
         }
+      },
+      qualWeb: {
+        'QW-ACT-R15': {
+          variable: false,
+          quality: 1,
+          what: 'audio or video has audio that plays automatically'
+        }
+      }
+    }
+  },
+  autoplayLong: {
+    wcag: '1.4.2',
+    weight: 2,
+    packages: {
+      qualWeb: {
+        'QW-ACT-R49': {
+          variable: false,
+          quality: 1,
+          what: 'audio or video that plays automatically has audio lasting more than 3 seconds'
+        }
+      }
+    }
+  },
+  autoplayControl: {
+    wcag: '1.4.2',
+    weight: 2,
+    packages: {
+      qualWeb: {
+        'QW-ACT-R50': {
+          variable: false,
+          quality: 1,
+          what: 'audio or video that plays automatically has no control mechanism'
+        }
+      }
+    }
+  },
+  refresh: {
+    wcag: '2.2.1',
+    weight: 3,
+    packages: {
+      qualWeb: {
+        'QW-ACT-R4': {
+          variable: false,
+          quality: 1,
+          what: 'meta element refreshes or redirects with delay'
+        },
+        'QW-ACT-R71': {
+          variable: false,
+          quality: 1,
+          what: 'meta element has a refresh delay (no exception)'
+        }
       }
     }
   },
   divParentBad: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -4921,6 +5822,7 @@ const groups = {
     }
   },
   pParentBad: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -4933,6 +5835,7 @@ const groups = {
     }
   },
   styleParentBad: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -4960,6 +5863,7 @@ const groups = {
     }
   },
   inconsistentStyles: {
+    wcag: '3.2.4',
     weight: 1,
     packages: {
       testaro: {
@@ -4972,6 +5876,7 @@ const groups = {
     }
   },
   zIndexNotZero: {
+    wcag: '1.4',
     weight: 1,
     packages: {
       testaro: {
@@ -4984,6 +5889,7 @@ const groups = {
     }
   },
   tabIndexPositive: {
+    wcag: '2.4.3',
     weight: 1,
     packages: {
       axe: {
@@ -5003,6 +5909,7 @@ const groups = {
     }
   },
   tabIndexBad: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       nuVal: {
@@ -5015,6 +5922,7 @@ const groups = {
     }
   },
   tabIndexMissing: {
+    wcag: '2.1.1',
     weight: 4,
     packages: {
       continuum: {
@@ -5039,6 +5947,7 @@ const groups = {
     }
   },
   trackNoLabel: {
+    wcag: '4.1.2',
     weight: 4,
     packages: {
       continuum: {
@@ -5056,6 +5965,7 @@ const groups = {
     }
   },
   trackNoSource: {
+    wcag: '1.3.1',
     weight: 4,
     packages: {
       continuum: {
@@ -5067,7 +5977,8 @@ const groups = {
       }
     }
   },
-  audioCaptionMissing: {
+  audioContentNoText: {
+    wcag: '1.2.1',
     weight: 4,
     packages: {
       axe: {
@@ -5076,10 +5987,38 @@ const groups = {
           quality: 1,
           what: 'audio element has no captions track'
         }
+      },
+      qualWeb: {
+        'QW-ACT-R26': {
+          variable: false,
+          quality: 1,
+          what: 'video element auditory content has no accessible alternative'
+        },
+        'QW-ACT-R29': {
+          variable: false,
+          quality: 1,
+          what: 'audio element content has no text alternative'
+        },
+        'QW-ACT-R58': {
+          variable: false,
+          quality: 1,
+          what: 'audio element content has no transcript'
+        },
+        'QW-ACT-R59': {
+          variable: false,
+          quality: 1,
+          what: 'audio element content is not a media alternative for text'
+        },
+        'QW-ACT-R60': {
+          variable: false,
+          quality: 1,
+          what: 'video element auditory content has no captions'
+        }
       }
     }
   },
-  videoCaptionMissing: {
+  videoContentNoText: {
+    wcag: '1.2.2',
     weight: 4,
     packages: {
       axe: {
@@ -5088,10 +6027,56 @@ const groups = {
           quality: 1,
           what: 'video element has no captions'
         }
+      },
+      qualWeb: {
+        'QW-ACT-R23': {
+          variable: false,
+          quality: 1,
+          what: 'video element visual content has no accessible alternative'
+        },
+        'QW-ACT-R31': {
+          variable: false,
+          quality: 1,
+          what: 'video element visual-only content has no accessible alternative'
+        },
+        'QW-ACT-R32': {
+          variable: false,
+          quality: 1,
+          what: 'video element visual-only content has no strict accessible alternative'
+        },
+        'QW-ACT-R51': {
+          variable: false,
+          quality: 1,
+          what: 'video element visual-only content is not a media alternative for text'
+        },
+        'QW-ACT-R56': {
+          variable: false,
+          quality: 1,
+          what: 'video element content is not a media alternative for text'
+        },
+        'QW-ACT-R61': {
+          variable: false,
+          quality: 1,
+          what: 'video element visual content has no transcript'
+        }
+      }
+    }
+  },
+  videoContentNoTranscript: {
+    wcag: '1.2.2',
+    weight: 4,
+    packages: {
+      qualWeb: {
+        'QW-ACT-R53': {
+          variable: false,
+          quality: 1,
+          what: 'video element visual-only content has no transcript'
+        }
       }
     }
   },
   videoCaptionRisk: {
+    wcag: '1.2.2',
     weight: 1,
     packages: {
       wave: {
@@ -5113,7 +6098,34 @@ const groups = {
       }
     }
   },
+  videoNoAudioDescription: {
+    wcag: '1.2.1',
+    weight: 4,
+    packages: {
+      qualWeb: {
+        'QW-ACT-R55': {
+          variable: false,
+          quality: 1,
+          what: 'video element visual content has no audio description'
+        }
+      }
+    }
+  },
+  videoNoAudioTrack: {
+    wcag: '1.2.1',
+    weight: 4,
+    packages: {
+      qualWeb: {
+        'QW-ACT-R54': {
+          variable: false,
+          quality: 1,
+          what: 'video element visual-only content has no audio track alternative'
+        }
+      }
+    }
+  },
   notKeyboardScrollable: {
+    wcag: '2.1.1',
     weight: 4,
     packages: {
       alfa: {
@@ -5129,10 +6141,18 @@ const groups = {
           quality: 1,
           what: 'Element is scrollable but has no keyboard access'
         }
+      },
+      qualWeb: {
+        'QW-ACT-R43': {
+          variable: false,
+          quality: 1,
+          what: 'Scrollable element is not keyboard accessible'
+        }
       }
     }
   },
   horizontalScrolling: {
+    wcag: '1.4.10',
     weight: 3,
     packages: {
       tenon: {
@@ -5145,6 +6165,7 @@ const groups = {
     }
   },
   scrollRisk: {
+    wcag: '1.4.10',
     weight: 1,
     packages: {
       htmlcs: {
@@ -5153,19 +6174,20 @@ const groups = {
           quality: 1,
           what: 'Fixed-position element may force bidirectional scrolling'
         }
+      },
+      qualWeb: {
+        'QW-BP18': {
+          variable: false,
+          quality: 1,
+          what: 'Percentage is not used in CSS for a container size'
+        }
       }
     }
   },
   skipRepeatedContent: {
+    wcag: '2.4.1',
     weight: 3,
     packages: {
-      alfa: {
-        'r87': {
-          variable: false,
-          quality: 0.5,
-          what: 'First focusable element is not a link to the main content'
-        }
-      },
       axe: {
         'bypass': {
           variable: false,
@@ -5185,6 +6207,18 @@ const groups = {
           what: 'Page provides no way to skip directly to the main content'
         }
       },
+      qualWeb: {
+        'QW-ACT-R64': {
+          variable: false,
+          quality: 1,
+          what: 'Document has no heading for non-repeated content'
+        },
+        'QW-ACT-R75': {
+          variable: false,
+          quality: 1,
+          what: 'Blocks of repeated content cannot be bypassed'
+        }
+      },
       wave: {
         'e:link_skip_broken': {
           variable: false,
@@ -5194,7 +6228,48 @@ const groups = {
       }
     }
   },
+  repeatedContentRisk: {
+    wcag: '2.4.1',
+    weight: 1,
+    packages: {
+      alfa: {
+        'r87': {
+          variable: false,
+          quality: 0.5,
+          what: 'First focusable element is not a link to the main content'
+        }
+      },
+      qualWeb: {
+        'QW-ACT-R72': {
+          variable: false,
+          quality: 1,
+          what: 'First focusable element is not a link to the non-repeated content'
+        },
+        'QW-ACT-R73': {
+          variable: false,
+          quality: 1,
+          what: 'Block of repeated content is not collapsible'
+        },
+        'QW-ACT-R74': {
+          variable: false,
+          quality: 1,
+          what: 'Document has no instrument to move focus to non-repeated content'
+        },
+        'QW-WCAG-T23': {
+          variable: false,
+          quality: 1,
+          what: 'No link at the top of the page that goes directly to the main content area'
+        },
+        'QW-BP17': {
+          variable: false,
+          quality: 1,
+          what: 'No link at the beginning of a block of repeated content goes to the end of the block'
+        }
+      }
+    }
+  },
   submitButton: {
+    wcag: '2.5.6',
     weight: 3,
     packages: {
       htmlcs: {
@@ -5203,10 +6278,18 @@ const groups = {
           quality: 1,
           what: 'Form has no submit button'
         }
+      },
+      qualWeb: {
+        'QW-WCAG-T19': {
+          variable: false,
+          quality: 1,
+          what: 'Submit button not provided'
+        }
       }
     }
   },
   fragmentaryNoticeRisk: {
+    wcag: '4.1.3',
     weight: 2,
     packages: {
       alfa: {
@@ -5218,7 +6301,21 @@ const groups = {
       }
     }
   },
+  errorReferenceBad: {
+    wcag: '3.3.1',
+    weight: 4,
+    packages: {
+      qualWeb: {
+        'QW-ACT-R41': {
+          variable: false,
+          quality: 1,
+          what: 'Error message describes no invalid form field value'
+        }
+      }
+    }
+  },
   noScriptRisk: {
+    wcag: '4.1',
     weight: 1,
     packages: {
       wave: {
@@ -5231,6 +6328,7 @@ const groups = {
     }
   },
   browserSupportRisk: {
+    wcag: '4.1',
     weight: 1,
     packages: {
       nuVal: {
@@ -5243,6 +6341,7 @@ const groups = {
     }
   },
   obsolete: {
+    wcag: '4.1',
     weight: 3,
     packages: {
       alfa: {
@@ -5343,6 +6442,13 @@ const groups = {
           what: 'Attribute value is a deprecated language subtag'
         }
       },
+      qualWeb: {
+        'QW-BP10': {
+          variable: false,
+          quality: 1,
+          what: 'HTML element is used to control the visual presentation of content'
+        }
+      },
       wave: {
         'a:longdesc': {
           variable: false,
@@ -5358,6 +6464,7 @@ const groups = {
     }
   },
   cssInvalid: {
+    wcag: '4.1',
     weight: 3,
     packages: {
       nuVal: {
@@ -5490,6 +6597,7 @@ const groups = {
     }
   },
   parseError: {
+    wcag: '4.1',
     weight: 3,
     packages: {
       ibm: {
@@ -5665,11 +6773,6 @@ const groups = {
           quality: 1,
           what: 'element with a srcset attribute with a width has no sizes attribute'
         },
-        '^An element with role=.+ must be contained in, or owned by, an element with role=.+$': {
-          variable: true,
-          quality: 1,
-          what: 'Element has no required container or owner'
-        },
         '^The text content of element .+ was not in the required format: Expected .+ but found .+ instead.*$': {
           variable: true,
           quality: 1,
@@ -5701,6 +6804,13 @@ const groups = {
           what: 'Idle timeout expired'
         }
       },
+      qualWeb: {
+        'QW-WCAG-T16': {
+          variable: false,
+          quality: 1,
+          what: 'HTML is not used according to spec'
+        }
+      },
       wave: {
         'e:longdesc_invalid': {
           variable: false,
@@ -5711,6 +6821,7 @@ const groups = {
     }
   },
   encodingBad: {
+    wcag: '3.1.3',
     weight: 4,
     packages: {
       nuVal: {
@@ -5723,6 +6834,7 @@ const groups = {
     }
   },
   fatalError: {
+    wcag: '4.1',
     weight: 50,
     packages: {
       nuVal: {
@@ -5740,6 +6852,7 @@ const groups = {
     }
   },
   notValidatable: {
+    wcag: '4.1',
     weight: 1,
     packages: {
       nuVal: {
@@ -5751,612 +6864,4 @@ const groups = {
       }
     }
   }
-};
-
-// VARIABLES
-
-let packageDetails = {};
-let groupDetails = {};
-let summary = {};
-let preventionScores = {};
-
-// FUNCTIONS
-
-// Initialize the variables.
-const init = () => {
-  packageDetails = {};
-  groupDetails = {
-    groups: {},
-    solos: {}
-  };
-  summary = {
-    total: 0,
-    log: 0,
-    preventions: 0,
-    solos: 0,
-    groups: []
-  };
-  preventionScores = {};
-};
-
-// Adds a score to the package details.
-const addDetail = (actWhich, testID, addition = 1) => {
-  if (addition) {
-    if (!packageDetails[actWhich]) {
-      packageDetails[actWhich] = {};
-    }
-    if (!packageDetails[actWhich][testID]) {
-      packageDetails[actWhich][testID] = 0;
-    }
-    packageDetails[actWhich][testID] += Math.round(addition);
-  }
-};
-// Scores a report.
-exports.scorer = async report => {
-  // Initialize the variables.
-  init();
-  // If there are any acts in the report:
-  const {acts} = report;
-  if (Array.isArray(acts)) {
-    // If any of them are test acts:
-    const testActs = acts.filter(act => act.type === 'test');
-    if (testActs.length) {
-      // For each test act:
-      testActs.forEach(test => {
-        const {which} = test;
-        // Add scores to the package details.
-        if (which === 'alfa') {
-          const issues = test.result && test.result.items;
-          if (issues && Array.isArray(issues)) {
-            issues.forEach(issue => {
-              const {verdict, rule} = issue;
-              if (verdict && rule) {
-                const {ruleID} = rule;
-                if (ruleID) {
-                  // Add 4 per failure, 1 per warning (cantTell).
-                  addDetail(which, ruleID, verdict === 'failed' ? 4 : 1);
-                }
-              }
-            });
-          }
-        }
-        else if (which === 'axe') {
-          const impactScores = {
-            minor: 1,
-            moderate: 2,
-            serious: 3,
-            critical: 4
-          };
-          const tests = test.result && test.result.details;
-          if (tests) {
-            const warnings = tests.incomplete;
-            const {violations} = tests;
-            [[warnings, 0.25], [violations, 1]].forEach(issueSeverity => {
-              if (issueSeverity[0] && Array.isArray(issueSeverity[0])) {
-                issueSeverity[0].forEach(issueType => {
-                  const {id, nodes} = issueType;
-                  if (id && nodes && Array.isArray(nodes)) {
-                    nodes.forEach(node => {
-                      const {impact} = node;
-                      if (impact) {
-                        // Add the impact score for a violation or 25% of it for a warning.
-                        addDetail(which, id, issueSeverity[1] * impactScores[impact]);
-                      }
-                    });
-                  }
-                });
-              }
-            });
-          }
-        }
-        else if (which === 'continuum') {
-          const issues = test.result;
-          if (issues && Array.isArray(issues)) {
-            issues.forEach(issue => {
-              // Add 4 per violation.
-              addDetail(which, issue.engineTestId, 4);
-            });
-          }
-        }
-        else if (which === 'htmlcs') {
-          const issues = test.result;
-          if (issues) {
-            ['Error', 'Warning'].forEach(issueSeverityName => {
-              const severityData = issues[issueSeverityName];
-              if (severityData) {
-                const issueTypes = Object.keys(severityData);
-                issueTypes.forEach(issueTypeName => {
-                  const issueArrays = Object.values(severityData[issueTypeName]);
-                  const issueCount = issueArrays.reduce((count, array) => count + array.length, 0);
-                  const severityCode = issueSeverityName[0].toLowerCase();
-                  const code = `${severityCode}:${issueTypeName}`;
-                  // Add 4 per error, 1 per warning.
-                  const weight = severityCode === 'e' ? 4 : 1;
-                  addDetail(which, code, weight * issueCount);
-                });
-              }
-            });
-          }
-        }
-        else if (which === 'ibm') {
-          const {result} = test;
-          const {content, url} = result;
-          if (content && url) {
-            let preferredMode = 'content';
-            if (
-              content.error ||
-              (content.totals &&
-                content.totals.violation &&
-                url.totals &&
-                url.totals.violation &&
-                url.totals.violation > content.totals.violation)
-            ) {
-              preferredMode = 'url';
-            }
-            const {items} = result[preferredMode];
-            if (items && Array.isArray(items)) {
-              items.forEach(issue => {
-                const {ruleId, level} = issue;
-                if (ruleId && level) {
-                  // Add 4 per violation, 1 per warning (recommendation).
-                  addDetail(which, ruleId, level === 'violation' ? 4 : 1);
-                }
-              });
-            }
-          }
-        }
-        else if (which === 'nuVal') {
-          const issues = test.result && test.result.messages;
-          if (issues) {
-            issues.forEach(issue => {
-              // Add 4 per error, 1 per warning.
-              const weight = issue.type === 'error' ? 4 : 1;
-              addDetail(which, issue.message, weight);
-            });
-          }
-        }
-        else if (which === 'tenon') {
-          const issues =
-            test.result && test.result.data && test.result.data.resultSet;
-          if (issues && Array.isArray(issues)) {
-            issues.forEach(issue => {
-              const {tID, priority, certainty} = issue;
-              if (tID && priority && certainty) {
-                // Add 4 per issue if certainty and priority 100, less if less.
-                addDetail(which, tID, certainty * priority / 2500);
-              }
-            });
-          }
-        }
-        else if (which === 'wave') {
-          const severityScores = {
-            error: 4,
-            contrast: 3,
-            alert: 1
-          };
-          const issueSeverities = test.result && test.result.categories;
-          if (issueSeverities) {
-            ['error', 'contrast', 'alert'].forEach(issueSeverity => {
-              const {items} = issueSeverities[issueSeverity];
-              if (items) {
-                const testIDs = Object.keys(items);
-                if (testIDs.length) {
-                  testIDs.forEach(testID => {
-                    const {count} = items[testID];
-                    if (count) {
-                      // Add 4 per error, 3 per contrast error, 1 per warning (alert).
-                      addDetail(
-                        which, `${issueSeverity[0]}:${testID}`, count * severityScores[issueSeverity]
-                      );
-                    }
-                  });
-                }
-              }
-            });
-          }
-        }
-        else if (which === 'allHidden') {
-          const {result} = test;
-          if (
-            ['hidden', 'reallyHidden', 'visHidden', 'ariaHidden']
-            .every(
-              key => (result[key])
-              && ['document', 'body', 'main'].every(element => typeof result[key][element] === 'boolean')
-            )
-          ) {
-            // Get a score for the test.
-            const score = 8 * result.hidden.document
-            + 8 * result.hidden.body
-            + 6 * result.hidden.main
-            + 10 * result.reallyHidden.document
-            + 10 * result.reallyHidden.body
-            + 8 * result.reallyHidden.main
-            + 8 * result.visHidden.document
-            + 8 * result.visHidden.body
-            + 6 * result.visHidden.main
-            + 10 * result.ariaHidden.document
-            + 10 * result.ariaHidden.body
-            + 8 * result.ariaHidden.main;
-            // Add the score.
-            addDetail('testaro', which, score);
-          }
-        }
-        else if (which === 'bulk') {
-          const count = test.result && test.result.visibleElements;
-          if (typeof count === 'number') {
-            // Add 1 per 300 visible elements beyond 300.
-            addDetail('testaro', which, Math.max(0, count / 300 - 1));
-          }
-        }
-        else if (which === 'docType') {
-          const hasType = test.result && test.result.docHasType;
-          if (typeof hasType === 'boolean') {
-            // Add 10 if document has no doctype.
-            addDetail('testaro', which, 10);
-          }
-        }
-        else if (which === 'embAc') {
-          const issueCounts = test.result && test.result.totals;
-          if (issueCounts) {
-            const counts = Object.values(issueCounts);
-            const total = counts.reduce((sum, current) => sum + current);
-            // Add 3 per embedded element.
-            addDetail('testaro', which, 3 * total);
-          }
-        }
-        else if (which === 'focAll') {
-          const discrepancy = test.result && test.result.discrepancy;
-          if (discrepancy) {
-            addDetail('testaro', which, 2 * Math.abs(discrepancy));
-          }
-        }
-        else if (which === 'focInd') {
-          const issueTypes =
-            test.result && test.result.totals && test.result.totals.types;
-          if (issueTypes) {
-            const missingCount = issueTypes.indicatorMissing
-            && issueTypes.indicatorMissing.total
-            || 0;
-            const badCount = issueTypes.nonOutlinePresent
-            && issueTypes.nonOutlinePresent.total
-            || 0;
-            // Add 3 per missing, 1 per non-outline focus indicator.
-            addDetail('testaro', which, badCount + 3 * missingCount);
-          }
-        }
-        else if (which === 'focOp') {
-          const issueTypes =
-            test.result && test.result.totals && test.result.totals.types;
-          if (issueTypes) {
-            const noOpCount = issueTypes.onlyFocusable && issueTypes.onlyFocusable.total || 0;
-            const noFocCount = issueTypes.onlyOperable && issueTypes.onlyOperable.total || 0;
-            // Add 2 per unfocusable, 0.5 per inoperable element.
-            addDetail('testaro', which, 2 * noFocCount + 0.5 * noOpCount);
-          }
-        }
-        else if (which === 'focVis') {
-          const count = test.result && test.result.total;
-          if (count) {
-            // Add 1 per link outside the viewport.
-            addDetail('testaro', which, count);
-          }
-        }
-        else if (which === 'hover') {
-          const issues = test.result && test.result.totals;
-          if (issues) {
-            const {
-              impactTriggers,
-              additions,
-              removals,
-              opacityChanges,
-              opacityImpact,
-              unhoverables
-            } = issues;
-            // Add score with weights on hover-impact types.
-            const score = 2 * impactTriggers
-            + 0.3 * additions
-            + removals
-            + 0.2 * opacityChanges
-            + 0.1 * opacityImpact
-            + unhoverables;
-            if (score) {
-              addDetail('testaro', which, score);
-            }
-          }
-        }
-        else if (which === 'labClash') {
-          const mislabeledCount = test.result
-          && test.result.totals
-          && test.result.totals.mislabeled
-          || 0;
-          // Add 1 per element with conflicting labels (ignoring unlabeled elements).
-          addDetail('testaro', which, mislabeledCount);
-        }
-        else if (which === 'linkTo') {
-          const count = test.result && test.result.total;
-          if (count) {
-            // Add 2 per link with no destination.
-            addDetail('testaro', which, count);
-          }
-        }
-        else if (which === 'linkUl') {
-          const totals = test.result && test.result.totals && test.result.totals.adjacent;
-          if (totals) {
-            const nonUl = totals.total - totals.underlined || 0;
-            // Add 2 per non-underlined adjacent link.
-            addDetail('testaro', which, 2 * nonUl);
-          }
-        }
-        else if (which === 'menuNav') {
-          const issueCount = test.result
-          && test.result.totals
-          && test.result.totals.navigations
-          && test.result.totals.navigations.all
-          && test.result.totals.navigations.all.incorrect
-          || 0;
-          // Add 2 per defect.
-          addDetail('testaro', which, 2 * issueCount);
-        }
-        else if (which === 'miniText') {
-          const items = test.result && test.result.items;
-          if (items.length) {
-            // Add 1 per 100 characters of small-text.
-            const totalLength = items.reduce((total, item) => total + item.length, 0);
-            addDetail('testaro', which, Math.floor(totalLength / 100));
-          }
-        }
-        else if (which === 'motion') {
-          const data = test.result;
-          if (data) {
-            const {
-              meanLocalRatio,
-              maxLocalRatio,
-              globalRatio,
-              meanPixelChange,
-              maxPixelChange,
-              changeFrequency
-            } = data;
-            const score = 2 * (meanLocalRatio - 1)
-            + (maxLocalRatio - 1)
-            + globalRatio - 1
-            + meanPixelChange / 10000
-            + maxPixelChange / 25000
-            + 3 * changeFrequency
-            || 0;
-            addDetail('testaro', which, score);
-          }
-        }
-        else if (which === 'nonTable') {
-          const total = test.result && test.result.total;
-          if (total) {
-            // Add 2 per pseudotable.
-            addDetail('testaro', which, 2 * total);
-          }
-        }
-        else if (which === 'radioSet') {
-          const totals = test.result && test.result.totals;
-          if (totals) {
-            const {total, inSet} = totals;
-            const score = total - inSet || 0;
-            // Add 1 per misgrouped radio button.
-            addDetail('testaro', which, score);
-          }
-        }
-        else if (which === 'role') {
-          const badCount = test.result && test.result.badRoleElements || 0;
-          const redundantCount = test.result && test.result.redundantRoleElements || 0;
-          // Add 2 per bad role and 1 per redundant role.
-          addDetail('testaro', which, 2 * badCount + redundantCount);
-        }
-        else if (which === 'styleDiff') {
-          const totals = test.result && test.result.totals;
-          if (totals) {
-            let score = 0;
-            // For each element type that has any style diversity:
-            Object.values(totals).forEach(typeData => {
-              const {total, subtotals} = typeData;
-              if (subtotals) {
-                const styleCount = subtotals.length;
-                const plurality = subtotals[0];
-                const minorities = total - plurality;
-                // Add 1 per style, 0.2 per element with any nonplurality style.
-                score += styleCount + 0.2 * minorities;
-              }
-            });
-            addDetail('testaro', which, score);
-          }
-        }
-        else if (which === 'tabNav') {
-          const issueCount = test.result
-          && test.result.totals
-          && test.result.totals.navigations
-          && test.result.totals.navigations.all
-          && test.result.totals.navigations.all.incorrect
-          || 0;
-          // Add 2 per defect.
-          addDetail('testaro', which, 2 * issueCount);
-        }
-        else if (which === 'titledEl') {
-          const total = test.result && test.result.total;
-          if (total) {
-            const score = 4 * total;
-            // Add 4 per mistitled element.
-            addDetail('testaro', which, score);
-          }
-        }
-        else if (which === 'zIndex') {
-          const issueCount = test.result && test.result.totals && test.result.totals.total || 0;
-          // Add 1 per non-auto zIndex.
-          addDetail('testaro', which, issueCount);
-        }
-      });
-      // Get the prevention scores and add them to the summary.
-      const actsPrevented = testActs.filter(test => test.result.prevented);
-      actsPrevented.forEach(act => {
-        if (otherPackages.includes(act.which)) {
-          preventionScores[act.which] = preventionWeights.other;
-        }
-        else {
-          preventionScores[`testaro-${act.which}`] = preventionWeights.testaro;
-        }
-      });
-      const preventionScore = Object.values(preventionScores).reduce(
-        (sum, current) => sum + current,
-        0
-      );
-      const roundedPreventionScore = Math.round(preventionScore);
-      summary.preventions = roundedPreventionScore;
-      summary.total += roundedPreventionScore;
-      // Initialize a table of the groups to which tests belong.
-      const testGroups = {
-        testaro: {},
-        alfa: {},
-        axe: {},
-        continuum: {},
-        htmlcs: {},
-        ibm: {},
-        nuVal: {},
-        tenon: {},
-        wave: {}
-      };
-      // Initialize a table of the regular expressions of variably named tests of packages.
-      const testMatchers = {};
-      Object.keys(groups).forEach(groupName => {
-        Object.keys(groups[groupName].packages).forEach(packageName => {
-          Object.keys(groups[groupName].packages[packageName]).forEach(testID => {
-            // Update the group table.
-            testGroups[packageName][testID] = groupName;
-            // If the test is variably named:
-            if (groups[groupName].packages[packageName][testID].variable) {
-              // Add its regular expression, as multiline, to the variably-named-test table.
-              if (! testMatchers[packageName]) {
-                testMatchers[packageName] = [];
-              }
-              testMatchers[packageName].push(new RegExp(testID, 's'));
-            }
-          });
-        });
-      });
-      // For each package with any scores:
-      Object.keys(packageDetails).forEach(packageName => {
-        const matchers = testMatchers[packageName];
-        // For each test with any scores in the package:
-        Object.keys(packageDetails[packageName]).forEach(testMessage => {
-          // Initialize the test ID as the reported test message.
-          let testID = testMessage;
-          // Get the group of the test, if it has a fixed name and is in a group.
-          let groupName = testGroups[packageName][testMessage];
-          // If the test has a variable name or is a solo test:
-          if (! groupName) {
-            // Determine whether the package has variably named tests and the test is among them.
-            testRegExp = matchers && matchers.find(matcher => matcher.test(testMessage));
-            // If so:
-            if (testRegExp) {
-              // Make the matching regular expression the test ID.
-              testID = testRegExp.source;
-              // Get the group of the test.
-              groupName = testGroups[packageName][testID];
-            }
-          }
-          // If the test is in a group:
-          if (groupName) {
-            // Initialize its score as its score in the package details.
-            if (! groupDetails.groups[groupName]) {
-              groupDetails.groups[groupName] = {};
-            }
-            if (! groupDetails.groups[groupName][packageName]) {
-              groupDetails.groups[groupName][packageName] = {};
-            }
-            let weightedScore = packageDetails[packageName][testMessage];
-            // Weight that by the group weight and normalize it to a 1–4 scale per instance.
-            weightedScore *= groups[groupName].weight / 4;
-            // Adjust the score for the quality of the test.
-            weightedScore *= groups[groupName].packages[packageName][testID].quality;
-            // Round the score, but not to less than 1.
-            const roundedScore = Math.max(Math.round(weightedScore), 1);
-            // Add the rounded score and the test description to the group details.
-            groupDetails.groups[groupName][packageName][testID] = {
-              score: roundedScore,
-              what: groups[groupName].packages[packageName][testID].what
-            };
-          }
-          // Otherwise, i.e. if the test is solo:
-          else {
-            if (! groupDetails.solos[packageName]) {
-              groupDetails.solos[packageName] = {};
-            }
-            const roundedScore = Math.round(packageDetails[packageName][testID]);
-            groupDetails.solos[packageName][testID] = roundedScore;
-          }
-        });
-      });
-      // Determine the group scores and add them to the summary.
-      const groupNames = Object.keys(groupDetails.groups);
-      const {absolute, largest, smaller} = groupWeights;
-      // For each group with any scores:
-      groupNames.forEach(groupName => {
-        const scores = [];
-        // For each package with any scores in the group:
-        const groupPackageData = Object.values(groupDetails.groups[groupName]);
-        groupPackageData.forEach(packageObj => {
-          // Get the sum of the scores of the tests of the package in the group.
-          const scoreSum = Object.values(packageObj).reduce(
-            (sum, current) => sum + current.score,
-            0
-          );
-          // Add the sum to the list of package scores in the group.
-          scores.push(scoreSum);
-        });
-        // Sort the scores in descending order.
-        scores.sort((a, b) => b - a);
-        // Compute the sum of the absolute score and the weighted largest and other scores.
-        const groupScore = absolute
-        + largest * scores[0]
-        + smaller * scores.slice(1).reduce((sum, current) => sum + current, 0);
-        const roundedGroupScore = Math.round(groupScore);
-        summary.groups.push({
-          groupName,
-          score: roundedGroupScore
-        });
-        summary.total += roundedGroupScore;
-      });
-      summary.groups.sort((a, b) => b.score - a.score);
-      // Determine the solo score and add it to the summary.
-      const soloPackageNames = Object.keys(groupDetails.solos);
-      soloPackageNames.forEach(packageName => {
-        const testIDs = Object.keys(groupDetails.solos[packageName]);
-        testIDs.forEach(testID => {
-          const score = soloWeight * groupDetails.solos[packageName][testID];
-          summary.solos += score;
-          summary.total += score;
-        });
-      });
-      summary.solos = Math.round(summary.solos);
-      summary.total = Math.round(summary.total);
-    }
-  }
-  // Get the log score.
-  const logScore = logWeights.logCount * report.logCount
-  + logWeights.logSize * report.logSize +
-  + logWeights.errorLogCount * report.errorLogCount
-  + logWeights.errorLogSize * report.errorLogSize
-  + logWeights.prohibitedCount * report.prohibitedCount +
-  + logWeights.visitTimeoutCount * report.visitTimeoutCount +
-  + logWeights.visitRejectionCount * report.visitRejectionCount
-  + logWeights.visitLatency * (report.visitLatency - normalLatency);
-  const roundedLogScore = Math.round(logScore);
-  summary.log = roundedLogScore;
-  summary.total += roundedLogScore;
-  // Add the score facts to the report.
-  report.score = {
-    scoreProcID,
-    logWeights,
-    soloWeight,
-    groupWeights,
-    preventionWeights,
-    packageDetails,
-    groupDetails,
-    preventionScores,
-    summary
-  };
 };

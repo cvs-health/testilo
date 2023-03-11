@@ -224,15 +224,24 @@ exports.scorer = async report => {
           if (issueTypes) {
             ['act-rules', 'wcag-techniques', 'best-practices'].forEach(type => {
               const {assertions} = issueTypes[type];
-              if (assertions){
+              if (assertions) {
                 const issueIDs = Object.keys(assertions);
-                issueIDs.forEach(issueID=> {
+                issueIDs.forEach(issueID => {
                   const {results} = assertions[issueID];
                   results.forEach(result => {
                     // Add 4 error, 1 per warning.
-                    const weight = result.verdict === 'error' ? 4 : 1;
-                    addDetail(which, )
-                  })
+                    let weight = 0;
+                    const {verdict} = result;
+                    if (verdict === 'error') {
+                      weight = 4;
+                    }
+                    else if (verdict === 'warning') {
+                      weight = 1;
+                    }
+                    if (weight) {
+                      addDetail(which, result.description, weight);
+                    }
+                  });
                 });
               }
             });

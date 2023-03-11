@@ -3706,8 +3706,8 @@ exports.issues = {
           quality: 1,
           what: 'h1-h6 not used to identify headings'
         }
-      }
-    wave: {
+      },
+      wave: {
         'a:heading_missing': {
           variable: false,
           quality: 1,
@@ -3819,6 +3819,7 @@ exports.issues = {
           what: 'Alignment either to the left or right is not specified in CSS'
         }
       }
+    }
   },
   nonSemanticText: {
     wcag: '1.3.1',

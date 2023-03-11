@@ -16,7 +16,7 @@
   - what: description of the test.
 */
 
-const issues = {
+exports.issues = {
   ignorable: {
     wcag: '',
     weight: 0,

@@ -363,6 +363,8 @@ The issue classification in `tic21` assigns weights to the issues to reflect the
 
 The `tsp21` score proc does **not** attempt to identify instances of issues. Thus, if tool A discovers 4 instances and tool B discovers 7 instances of some issue, `tsp21` does not attempt to say which of the 4 discovered by A are a subset of the 7 discovered by B. Instead,`tsp21` naïvely acts as if the 4 are all a subset of the 7, even though in reality the two sets might be entirely disjoint.
 
+In the `tsp21` scoring algorithm, the failure of a tool or of a Testaro test to run on a page increases the score of the page, and messages logged by the browser while tests are being performed on a page, especially error messages, also increase the score.
+
 ## Report digesting
 
 ### Introduction

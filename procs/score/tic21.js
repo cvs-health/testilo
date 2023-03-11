@@ -20,7 +20,7 @@ exports.issues = {
   ignorable: {
     wcag: '',
     weight: 0,
-    packages: {
+    tools: {
       nuVal: {
         'Element mediaelementwrapper not allowed as child of element div in this context. (Suppressing further errors from this subtree.)': {
           variable: false,
@@ -50,7 +50,7 @@ exports.issues = {
   duplicateID: {
     wcag: '4.1.1',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r3: {
           variable: false,
@@ -115,7 +115,7 @@ exports.issues = {
   componentNoText: {
     wcag: '4.1.2',
     weight: 4,
-    packages: {
+    tools: {
       ibm: {
         Rpt_Aria_WidgetLabels_Implicit: {
           variable: false,
@@ -128,7 +128,7 @@ exports.issues = {
   regionNoText: {
     wcag: '4.1.2',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r40: {
           variable: false,
@@ -155,7 +155,7 @@ exports.issues = {
   headingNoText: {
     wcag: '1.1.1',
     weight: 4,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-BP8': {
           variable: false,
@@ -168,7 +168,7 @@ exports.issues = {
   formFieldNoText: {
     wcag: '4.1.2',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r8: {
           variable: false,
@@ -181,7 +181,7 @@ exports.issues = {
   inputNoText: {
     wcag: '4.1.2',
     weight: 4,
-    packages: {
+    tools: {
       axe: {
         'aria-input-field-name': {
           variable: false,
@@ -288,7 +288,7 @@ exports.issues = {
   inputOnlyPlaceholder: {
     wcag: '4.1.2',
     weight: 3,
-    packages: {
+    tools: {
       continuum: {
         863: {
           variable: false,
@@ -301,7 +301,7 @@ exports.issues = {
   imageInputNoText: {
     wcag: '1.1.1',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r28: {
           variable: false,
@@ -354,7 +354,7 @@ exports.issues = {
   figureNoText: {
     wcag: '1.1.1',
     weight: 4,
-    packages: {
+    tools: {
       ibm: {
         HAAC_Figure_label: {
           variable: false,
@@ -367,7 +367,7 @@ exports.issues = {
   imageNoText: {
     wcag: '1.1.1',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r2: {
           variable: false,
@@ -449,7 +449,7 @@ exports.issues = {
   decorativeImageAltBad: {
     wcag: '1.1.1',
     weight: 4,
-    packages: {
+    tools: {
       ibm: {
         WCAG20_Img_PresentationImgHasNonNullAlt: {
           variable: false,
@@ -462,7 +462,7 @@ exports.issues = {
   imageTextBad: {
     wcag: '1.1.1',
     weight: 3,
-    packages: {
+    tools: {
       alfa: {
         r39: {
           variable: false,
@@ -475,7 +475,7 @@ exports.issues = {
   imageNoSource: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       nuVal: {
         'Element img is missing required attribute src.': {
           variable: false,
@@ -488,7 +488,7 @@ exports.issues = {
   sourceEmpty: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       nuVal: {
         '^Bad value  for attribute src on element .+: Must be non-empty.*$': {
           variable: true,
@@ -501,7 +501,7 @@ exports.issues = {
   backgroundBad: {
     wcag: '4.1',
     weight: 4,
-    packages: {
+    tools: {
       nuVal: {
         '^CSS: background: .+ is not a color value.*$': {
           variable: true,
@@ -524,7 +524,7 @@ exports.issues = {
   backgroundImageBad: {
     wcag: '4.1',
     weight: 4,
-    packages: {
+    tools: {
       nuVal: {
         '^CSS: background-image: .+ is not a background-image value.*$': {
           variable: true,
@@ -542,7 +542,7 @@ exports.issues = {
   inputAlt: {
     wcag: '4.1',
     weight: 4,
-    packages: {
+    tools: {
       continuum: {
         15: {
           variable: false,
@@ -555,7 +555,7 @@ exports.issues = {
   imagesSameAlt: {
     wcag: '1.1.1',
     weight: 1,
-    packages: {
+    tools: {
       wave: {
         'a:alt_duplicate': {
           variable: false,
@@ -568,7 +568,7 @@ exports.issues = {
   imageTextLong: {
     wcag: '1.1.1',
     weight: 2,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-BP2': {
           variable: false,
@@ -588,7 +588,7 @@ exports.issues = {
   titleLong: {
     wcag: '3.1.5',
     weight: 2,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-BP6': {
           variable: false,
@@ -601,7 +601,7 @@ exports.issues = {
   titleNotText: {
     wcag: '3.1.5',
     weight: 2,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-BP7': {
           variable: false,
@@ -614,7 +614,7 @@ exports.issues = {
   textAlternativeRisk: {
     wcag: '1',
     weight: 1,
-    packages: {
+    tools: {
       continuum: {
         234: {
           variable: false,
@@ -646,7 +646,7 @@ exports.issues = {
   decorativeImageRisk: {
     wcag: '1.1.1',
     weight: 1,
-    packages: {
+    tools: {
       htmlcs: {
         'w:AA.1_1_1.H67.2': {
           variable: false,
@@ -659,7 +659,7 @@ exports.issues = {
   decorativeElementExposed: {
     wcag: '1.3.1',
     weight: 2,
-    packages: {
+    tools: {
       alfa: {
         r67: {
           variable: false,
@@ -691,7 +691,7 @@ exports.issues = {
   pageLanguage: {
     wcag: '3.1.1',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r4: {
           variable: false,
@@ -758,7 +758,7 @@ exports.issues = {
   pageLanguageBad: {
     wcag: '3.1.1',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r5: {
           variable: false,
@@ -811,7 +811,7 @@ exports.issues = {
   elementLanguageBad: {
     wcag: '3.1.2',
     weight: 4,
-    packages: {
+    tools: {
       htmlcs: {
         'e:AA.3_1_2.H58.1.Lang': {
           variable: false,
@@ -838,7 +838,7 @@ exports.issues = {
   languageChange: {
     wcag: '3.1.2',
     weight: 3,
-    packages: {
+    tools: {
       alfa: {
         r7: {
           variable: false,
@@ -865,7 +865,7 @@ exports.issues = {
   dialogNoText: {
     wcag: '4.1.2',
     weight: 4,
-    packages: {
+    tools: {
       axe: {
         'aria-dialog-name': {
           variable: false,
@@ -885,7 +885,7 @@ exports.issues = {
   applicationNoText: {
     wcag: '4.1.2',
     weight: 4,
-    packages: {
+    tools: {
       ibm: {
         Rpt_Aria_ApplicationLandmarkLabel: {
           variable: false,
@@ -898,7 +898,7 @@ exports.issues = {
   objectNoText: {
     wcag: '1.1.1',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r63: {
           variable: false,
@@ -953,7 +953,7 @@ exports.issues = {
   appletNoText: {
     wcag: '1.1.1',
     weight: 4,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-WCAG-T11': {
           variable: false,
@@ -966,7 +966,7 @@ exports.issues = {
   videoNoText: {
     wcag: '1.1.1',
     weight: 4,
-    packages: {
+    tools: {
       continuum: {
         252: {
           variable: false,
@@ -979,7 +979,7 @@ exports.issues = {
   imageMapNoText: {
     wcag: '1.1.1',
     weight: 4,
-    packages: {
+    tools: {
       wave: {
         'e:alt_map_missing': {
           variable: false,
@@ -992,7 +992,7 @@ exports.issues = {
   imageMapAreaNoText: {
     wcag: '1.1.1',
     weight: 4,
-    packages: {
+    tools: {
       axe: {
         'area-alt': {
           variable: false,
@@ -1038,7 +1038,7 @@ exports.issues = {
   objectBlurKeyboardRisk: {
     wcag: '2.1.1',
     weight: 1,
-    packages: {
+    tools: {
       htmlcs: {
         'w:AA.2_1_2.F10': {
           variable: false,
@@ -1051,7 +1051,7 @@ exports.issues = {
   keyboardAccess: {
     wcag: '2.1.1',
     weight: 4,
-    packages: {
+    tools: {
       tenon: {
         180: {
           variable: false,
@@ -1064,7 +1064,7 @@ exports.issues = {
   eventKeyboardRisk: {
     wcag: '2.1.1',
     weight: 1,
-    packages: {
+    tools: {
       htmlcs: {
         'w:AA.2_1_1.G90': {
           variable: false,
@@ -1111,7 +1111,7 @@ exports.issues = {
   internalLinkBroken: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       htmlcs: {
         'e:AA.2_4_1.G1,G123,G124.NoSuchID': {
           variable: false,
@@ -1131,7 +1131,7 @@ exports.issues = {
   labelForBad: {
     wcag: '1.3.1',
     weight: 3,
-    packages: {
+    tools: {
       htmlcs: {
         'w:AA.1_3_1.H44.NotFormControl': {
           variable: false,
@@ -1151,7 +1151,7 @@ exports.issues = {
   ariaLabelWrongRisk: {
     wcag: '1.3.1',
     weight: 1,
-    packages: {
+    tools: {
       nuVal: {
         'Possible misuse of aria-label. (If you disagree with this warning, file an issue report or send e-mail to www-validator@w3.org.)': {
           variable: false,
@@ -1164,7 +1164,7 @@ exports.issues = {
   activeDescendantBadID: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       continuum: {
         290: {
           variable: false,
@@ -1184,7 +1184,7 @@ exports.issues = {
   governedBadID: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       continuum: {
         85: {
           variable: false,
@@ -1216,7 +1216,7 @@ exports.issues = {
   descriptionBadID: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       continuum: {
         83: {
           variable: false,
@@ -1229,7 +1229,7 @@ exports.issues = {
   labelConfusionRisk: {
     wcag: '3.3.2',
     weight: 1,
-    packages: {
+    tools: {
       ibm: {
         WCAG20_Input_LabelBefore: {
           variable: false,
@@ -1254,7 +1254,7 @@ exports.issues = {
   labelBadID: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       continuum: {
         95: {
           variable: false,
@@ -1315,7 +1315,7 @@ exports.issues = {
   haspopupBad: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       ibm: {
         combobox_haspopup: {
           variable: false,
@@ -1328,7 +1328,7 @@ exports.issues = {
   ownerConflict: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       continuum: {
         360: {
           variable: false,
@@ -1341,7 +1341,7 @@ exports.issues = {
   linkNoText: {
     wcag: '2.4.4',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r11: {
           variable: false,
@@ -1445,7 +1445,7 @@ exports.issues = {
   linkBrokenRisk: {
     wcag: '1.3.1',
     weight: 2,
-    packages: {
+    tools: {
       htmlcs: {
         'w:AA.4_1_2.H91.A.Placeholder': {
           variable: false,
@@ -1458,7 +1458,7 @@ exports.issues = {
   acronymNoTitle: {
     wcag: '3.1.4',
     weight: 4,
-    packages: {
+    tools: {
       tenon: {
         117: {
           variable: false,
@@ -1471,7 +1471,7 @@ exports.issues = {
   abbreviationNoTitle: {
     wcag: '3.1.4',
     weight: 4,
-    packages: {
+    tools: {
       tenon: {
         233: {
           variable: false,
@@ -1491,7 +1491,7 @@ exports.issues = {
   pdfLink: {
     wcag: '1.3.3',
     weight: 1,
-    packages: {
+    tools: {
       wave: {
         'a:link_pdf': {
           variable: false,
@@ -1504,7 +1504,7 @@ exports.issues = {
   destinationLink: {
     wcag: '1.3.1',
     weight: 2,
-    packages: {
+    tools: {
       htmlcs: {
         'w:AA.4_1_2.H91.A.NoHref': {
           variable: false,
@@ -1531,7 +1531,7 @@ exports.issues = {
   textAreaNoText: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       continuum: {
         872: {
           variable: false,
@@ -1551,7 +1551,7 @@ exports.issues = {
   linkAltSame: {
     wcag: '1.1.1',
     weight: 2,
-    packages: {
+    tools: {
       htmlcs: {
         'e:AA.1_1_1.H2.EG3': {
           variable: false,
@@ -1564,7 +1564,7 @@ exports.issues = {
   linkTextsSame: {
     wcag: '2.4.4',
     weight: 2,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-ACT-R9': {
           variable: false,
@@ -1589,7 +1589,7 @@ exports.issues = {
   areaDestinationsSame: {
     wcag: '2.4.4',
     weight: 2,
-    packages: {
+    tools: {
       tenon: {
         132: {
           variable: false,
@@ -1602,7 +1602,7 @@ exports.issues = {
   linksNoNav: {
     wcag: '1.3.1',
     weight: 2,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-BP4': {
           variable: false,
@@ -1615,7 +1615,7 @@ exports.issues = {
   linkConfusionRisk: {
     wcag: '2.4.4',
     weight: 1,
-    packages: {
+    tools: {
       axe: {
         'identical-links-same-purpose': {
           variable: false,
@@ -1628,7 +1628,7 @@ exports.issues = {
   linkPair: {
     wcag: '2.4.4',
     weight: 2,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-WCAG-T10': {
           variable: false,
@@ -1660,7 +1660,7 @@ exports.issues = {
   pageNewWindow: {
     wcag: '3.2.5',
     weight: 3,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-WCAG-T22': {
           variable: false,
@@ -1673,7 +1673,7 @@ exports.issues = {
   formNewWindow: {
     wcag: '3.2.5',
     weight: 2,
-    packages: {
+    tools: {
       tenon: {
         214: {
           variable: false,
@@ -1686,7 +1686,7 @@ exports.issues = {
   linkForcesNewWindow: {
     wcag: '3.2.5',
     weight: 3,
-    packages: {
+    tools: {
       tenon: {
         218: {
           variable: false,
@@ -1699,7 +1699,7 @@ exports.issues = {
   linkWindowSurpriseRisk: {
     wcag: '3.2.5',
     weight: 1,
-    packages: {
+    tools: {
       htmlcs: {
         'w:WCAG2AAA.Principle3.Guideline3_2.3_2_5.H83.3': {
           variable: false,
@@ -1712,7 +1712,7 @@ exports.issues = {
   selectNavSurpriseRisk: {
     wcag: '3.2.5',
     weight: 1,
-    packages: {
+    tools: {
       wave: {
         'a:javascript_jumpmenu': {
           variable: false,
@@ -1725,7 +1725,7 @@ exports.issues = {
   buttonAlt: {
     wcag: '4.1.2',
     weight: 4,
-    packages: {
+    tools: {
       nuVal: {
         'Attribute alt not allowed on element button at this point.': {
           variable: false,
@@ -1738,7 +1738,7 @@ exports.issues = {
   buttonNoText: {
     wcag: '4.1.2',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r12: {
           variable: false,
@@ -1838,7 +1838,7 @@ exports.issues = {
   menuItemNoText: {
     wcag: '4.1.2',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r94: {
           variable: false,
@@ -1858,7 +1858,7 @@ exports.issues = {
   parentMissing: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r42: {
           variable: false,
@@ -1899,7 +1899,7 @@ exports.issues = {
   descendantMissing: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r68: {
           variable: false,
@@ -1926,7 +1926,7 @@ exports.issues = {
   presentationChild: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       htmlcs: {
         'e:AA.1_3_1.F92,ARIA4': {
           variable: false,
@@ -1939,7 +1939,7 @@ exports.issues = {
   svgImageNoText: {
     wcag: '1.1.1',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r43: {
           variable: false,
@@ -1973,7 +1973,7 @@ exports.issues = {
   cssBansRotate: {
     wcag: '1.3.4',
     weight: 4,
-    packages: {
+    tools: {
       axe: {
         'css-orientation-lock': {
           variable: false,
@@ -1993,7 +1993,7 @@ exports.issues = {
   textRotated: {
     wcag: '1.4.8',
     weight: 2,
-    packages: {
+    tools: {
       tenon: {
         271: {
           variable: false,
@@ -2006,7 +2006,7 @@ exports.issues = {
   metaBansZoom: {
     wcag: '1.4.4',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r47: {
           variable: false,
@@ -2057,7 +2057,7 @@ exports.issues = {
   fontSizeAbsolute: {
     wcag: '1.4.4',
     weight: 2,
-    packages: {
+    tools: {
       alfa: {
         r74: {
           variable: false,
@@ -2077,7 +2077,7 @@ exports.issues = {
   fontSmall: {
     wcag: '1.4',
     weight: 3,
-    packages: {
+    tools: {
       alfa: {
         r75: {
           variable: false,
@@ -2111,7 +2111,7 @@ exports.issues = {
   textSpacingFrozen: {
     wcag: '1.4.12',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r93: {
           variable: false,
@@ -2148,7 +2148,7 @@ exports.issues = {
   leadingAbsolute: {
     wcag: '1.4.12',
     weight: 2,
-    packages: {
+    tools: {
       alfa: {
         r80: {
           variable: false,
@@ -2161,7 +2161,7 @@ exports.issues = {
   leadingInsufficient: {
     wcag: '1.4.8',
     weight: 2,
-    packages: {
+    tools: {
       alfa: {
         r73: {
           variable: false,
@@ -2174,7 +2174,7 @@ exports.issues = {
   leadingClipsText: {
     wcag: '1.4.8',
     weight: 4,
-    packages: {
+    tools: {
       tenon: {
         144: {
           variable: false,
@@ -2187,7 +2187,7 @@ exports.issues = {
   overflowHidden: {
     wcag: '1.4.4',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r83: {
           variable: false,
@@ -2207,7 +2207,7 @@ exports.issues = {
   boxSizeAbsolute: {
     wcag: '1.4.4',
     weight: 3,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-BP14': {
           variable: false,
@@ -2225,7 +2225,7 @@ exports.issues = {
   titleBad: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       nuVal: {
         'Element title not allowed as child of element body in this context. (Suppressing further errors from this subtree.)': {
           variable: false,
@@ -2245,7 +2245,7 @@ exports.issues = {
   linkElementBad: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       nuVal: {
         'A link element must not appear as a descendant of a body element unless the link element has an itemprop attribute or has a rel attribute whose value contains dns-prefetch, modulepreload, pingback, preconnect, prefetch, preload, prerender, or stylesheet.': {
           variable: false,
@@ -2263,7 +2263,7 @@ exports.issues = {
   metaBad: {
     wcag: '1.3.1',
     weight: 3,
-    packages: {
+    tools: {
       nuVal: {
         '^Attribute .+ not allowed on element meta at this point.*$': {
           variable: true,
@@ -2316,7 +2316,7 @@ exports.issues = {
   scriptElementBad: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       nuVal: {
         'Element script must not have attribute defer unless attribute src is also specified.': {
           variable: false,
@@ -2334,7 +2334,7 @@ exports.issues = {
   itemTypeBad: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       nuVal: {
         'The itemtype attribute must not be specified on elements that do not have an itemscope attribute specified.': {
           variable: false,
@@ -2347,7 +2347,7 @@ exports.issues = {
   iframeTitleBad: {
     wcag: '4.1.2',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r13: {
           variable: false,
@@ -2405,7 +2405,7 @@ exports.issues = {
   roleBad: {
     wcag: '4.1.2',
     weight: 3,
-    packages: {
+    tools: {
       alfa: {
         r21: {
           variable: false,
@@ -2565,7 +2565,7 @@ exports.issues = {
   roleRedundant: {
     wcag: '4.1.2',
     weight: 1,
-    packages: {
+    tools: {
       ibm: {
         aria_role_redundant: {
           variable: false,
@@ -2600,7 +2600,7 @@ exports.issues = {
   attributeBad: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       ibm: {
         Valerie_Elem_DirValid: {
           variable: false,
@@ -2685,7 +2685,7 @@ exports.issues = {
   attributeMissing: {
     wcag: '4.1.2',
     weight: 4,
-    packages: {
+    tools: {
       axe: {
         'aria-required-attr': {
           variable: false,
@@ -2732,7 +2732,7 @@ exports.issues = {
   roleMissing: {
     wcag: '4.1.2',
     weight: 3,
-    packages: {
+    tools: {
       nuVal: {
         '^Element .+ is missing required attribute role.*$': {
           variable: true,
@@ -2745,7 +2745,7 @@ exports.issues = {
   roleMissingRisk: {
     wcag: '4.1.2',
     weight: 1,
-    packages: {
+    tools: {
       nuVal: {
         '^Element .+ is missing one or more of the following attributes: role.*$': {
           variable: true,
@@ -2758,7 +2758,7 @@ exports.issues = {
   ariaMissing: {
     wcag: '4.1.2',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r16: {
           variable: false,
@@ -2809,7 +2809,7 @@ exports.issues = {
   ariaBadAttribute: {
     wcag: '4.1.2',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r18: {
           variable: false,
@@ -3037,7 +3037,7 @@ exports.issues = {
   ariaRedundant: {
     wcag: '4.1.2',
     weight: 1,
-    packages: {
+    tools: {
       continuum: {
         205: {
           variable: false,
@@ -3064,7 +3064,7 @@ exports.issues = {
   ariaReferenceBad: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       ibm: {
         Rpt_Aria_ValidIdRef: {
           variable: false,
@@ -3084,7 +3084,7 @@ exports.issues = {
   autocompleteBad: {
     wcag: '1.3.5',
     weight: 3,
-    packages: {
+    tools: {
       alfa: {
         r10: {
           variable: false,
@@ -3132,7 +3132,7 @@ exports.issues = {
   autocompleteRisk: {
     wcag: '1.3.5',
     weight: 1,
-    packages: {
+    tools: {
       htmlcs: {
         'w:AA.1_3_5.H98': {
           variable: false,
@@ -3145,7 +3145,7 @@ exports.issues = {
   textContrastAA: {
     wcag: '1.4.3',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r69: {
           variable: false,
@@ -3198,7 +3198,7 @@ exports.issues = {
   colorMissing: {
     wcag: '1.4.3',
     weight: 4,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-WCAG-T31': {
           variable: false,
@@ -3211,7 +3211,7 @@ exports.issues = {
   contrastAAA: {
     wcag: '1.4.6',
     weight: 1,
-    packages: {
+    tools: {
       alfa: {
         r66: {
           variable: false,
@@ -3252,7 +3252,7 @@ exports.issues = {
   contrastRisk: {
     wcag: '1.4.3',
     weight: 1,
-    packages: {
+    tools: {
       htmlcs: {
         'w:AA.1_4_3_F24.F24.BGColour': {
           variable: false,
@@ -3300,7 +3300,7 @@ exports.issues = {
   idEmpty: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       nuVal: {
         '^Bad value  for attribute .+ on element .+: An ID must not be the empty string.+$': {
           variable: true,
@@ -3318,7 +3318,7 @@ exports.issues = {
   targetEmpty: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       nuVal: {
         'Bad value  for attribute target on element a: Browsing context name must be at least one character long.': {
           variable: false,
@@ -3331,7 +3331,7 @@ exports.issues = {
   headingEmpty: {
     wcag: '2.4.6',
     weight: 3,
-    packages: {
+    tools: {
       alfa: {
         r64: {
           variable: false,
@@ -3386,7 +3386,7 @@ exports.issues = {
   headingOfNothing: {
     wcag: '1.3.1',
     weight: 2,
-    packages: {
+    tools: {
       alfa: {
         r78: {
           variable: false,
@@ -3399,7 +3399,7 @@ exports.issues = {
   typeRedundant: {
     wcag: '1.3.1',
     weight: 1,
-    packages: {
+    tools: {
       nuVal: {
         'The type attribute is unnecessary for JavaScript resources.': {
           variable: false,
@@ -3417,7 +3417,7 @@ exports.issues = {
   imageTextRedundant: {
     wcag: '1.1.1',
     weight: 1,
-    packages: {
+    tools: {
       axe: {
         'image-redundant-alt': {
           variable: false,
@@ -3451,7 +3451,7 @@ exports.issues = {
   decorativeTitle: {
     wcag: '1.3.1',
     weight: 1,
-    packages: {
+    tools: {
       htmlcs: {
         'e:AA.1_1_1.H67.1': {
           variable: false,
@@ -3478,7 +3478,7 @@ exports.issues = {
   titleRedundant: {
     wcag: '1.3.1',
     weight: 1,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-BP3': {
           variable: false,
@@ -3505,7 +3505,7 @@ exports.issues = {
   titleEmpty: {
     wcag: '1.3.1',
     weight: 1,
-    packages: {
+    tools: {
       continuum: {
         152: {
           variable: false,
@@ -3537,7 +3537,7 @@ exports.issues = {
   docType: {
     wcag: '1.3.1',
     weight: 10,
-    packages: {
+    tools: {
       nuVal: {
         'Start tag seen without seeing a doctype first. Expected <!DOCTYPE html>.': {
           variable: false,
@@ -3557,7 +3557,7 @@ exports.issues = {
   pageTitle: {
     wcag: '2.4.2',
     weight: 10,
-    packages: {
+    tools: {
       alfa: {
         r1: {
           variable: false,
@@ -3624,7 +3624,7 @@ exports.issues = {
   headingStructure: {
     wcag: '1.3.1',
     weight: 2,
-    packages: {
+    tools: {
       alfa: {
         r53: {
           variable: false,
@@ -3679,7 +3679,7 @@ exports.issues = {
   headingLevelless: {
     wcag: '1.3.1',
     weight: 1,
-    packages: {
+    tools: {
       continuum: {
         71: {
           variable: false,
@@ -3692,7 +3692,7 @@ exports.issues = {
   noHeading: {
     wcag: '1.3.1',
     weight: 3,
-    packages: {
+    tools: {
       alfa: {
         r59: {
           variable: false,
@@ -3719,7 +3719,7 @@ exports.issues = {
   h1Missing: {
     wcag: '1.3.1',
     weight: 3,
-    packages: {
+    tools: {
       alfa: {
         r61: {
           variable: false,
@@ -3746,7 +3746,7 @@ exports.issues = {
   articleHeadingless: {
     wcag: '1.3.1',
     weight: 1,
-    packages: {
+    tools: {
       nuVal: {
         'Article lacks heading. Consider using h2-h6 elements to add identifying headings to all articles.': {
           variable: false,
@@ -3759,7 +3759,7 @@ exports.issues = {
   sectionHeadingless: {
     wcag: '1.3.1',
     weight: 1,
-    packages: {
+    tools: {
       nuVal: {
         'Section lacks heading. Consider using h2-h6 elements to add identifying headings to all sections.': {
           variable: false,
@@ -3777,7 +3777,7 @@ exports.issues = {
   justification: {
     wcag: '1.4.8',
     weight: 2,
-    packages: {
+    tools: {
       alfa: {
         r71: {
           variable: false,
@@ -3811,7 +3811,7 @@ exports.issues = {
   justificationRisk: {
     wcag: '1.4.8',
     weight: 1,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-WCAG-T29': {
           variable: false,
@@ -3824,7 +3824,7 @@ exports.issues = {
   nonSemanticText: {
     wcag: '1.3.1',
     weight: 2,
-    packages: {
+    tools: {
       htmlcs: {
         'w:AA.1_3_1.H49.AlignAttr': {
           variable: false,
@@ -3872,7 +3872,7 @@ exports.issues = {
   pseudoParagraphRisk: {
     wcag: '1.3.1',
     weight: 1,
-    packages: {
+    tools: {
       tenon: {
         242: {
           variable: false,
@@ -3885,7 +3885,7 @@ exports.issues = {
   pseudoList: {
     wcag: '1.3.1',
     weight: 1,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-BP11': {
           variable: false,
@@ -3898,7 +3898,7 @@ exports.issues = {
   pseudoCodeRisk: {
     wcag: '1.3.1',
     weight: 1,
-    packages: {
+    tools: {
       alfa: {
         r79: {
           variable: false,
@@ -3911,7 +3911,7 @@ exports.issues = {
   pseudoHeadingRisk: {
     wcag: '1.3.1',
     weight: 1,
-    packages: {
+    tools: {
       axe: {
         'p-as-heading': {
           variable: false,
@@ -3938,7 +3938,7 @@ exports.issues = {
   pseudoLinkRisk: {
     wcag: '1.3.1',
     weight: 1,
-    packages: {
+    tools: {
       tenon: {
         129: {
           variable: false,
@@ -3958,7 +3958,7 @@ exports.issues = {
   listChild: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       axe: {
         list: {
           variable: false,
@@ -4007,7 +4007,7 @@ exports.issues = {
   listItemOrphan: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       axe: {
         listitem: {
           variable: false,
@@ -4039,7 +4039,7 @@ exports.issues = {
   pseudoListRisk: {
     wcag: '1.3.1',
     weight: 1,
-    packages: {
+    tools: {
       wave: {
         'a:list_possible': {
           variable: false,
@@ -4052,7 +4052,7 @@ exports.issues = {
   pseudoOrderedListRisk: {
     wcag: '1.3.1',
     weight: 1,
-    packages: {
+    tools: {
       htmlcs: {
         'w:AA.1_3_1.H48.2': {
           variable: false,
@@ -4065,7 +4065,7 @@ exports.issues = {
   pseudoNavList: {
     wcag: '1.3.1',
     weight: 2,
-    packages: {
+    tools: {
       htmlcs: {
         'w:AA.1_3_1.H48': {
           variable: false,
@@ -4085,7 +4085,7 @@ exports.issues = {
   selectNoText: {
     wcag: '4.1.2',
     weight: 3,
-    packages: {
+    tools: {
       axe: {
         'select-name': {
           variable: false,
@@ -4124,7 +4124,7 @@ exports.issues = {
   optionNoText: {
     wcag: '4.1.2',
     weight: 4,
-    packages: {
+    tools: {
       nuVal: {
         'Element option without attribute label must not be empty.': {
           variable: false,
@@ -4137,7 +4137,7 @@ exports.issues = {
   selectFlatRisk: {
     wcag: '1.3.1',
     weight: 1,
-    packages: {
+    tools: {
       htmlcs: {
         'w:AA.1_3_1.H85.2': {
           variable: false,
@@ -4150,7 +4150,7 @@ exports.issues = {
   accessKeyDuplicate: {
     wcag: '1.3.1',
     weight: 3,
-    packages: {
+    tools: {
       axe: {
         accesskeys: {
           variable: false,
@@ -4184,7 +4184,7 @@ exports.issues = {
   fieldSetMissing: {
     wcag: '1.3.1',
     weight: 2,
-    packages: {
+    tools: {
       ibm: {
         WCAG20_Input_RadioChkInFieldSet: {
           variable: false,
@@ -4211,7 +4211,7 @@ exports.issues = {
   fieldSetRisk: {
     wcag: '1.3.1',
     weight: 1,
-    packages: {
+    tools: {
       htmlcs: {
         'w:AA.1_3_1.H71.SameName': {
           variable: false,
@@ -4224,7 +4224,7 @@ exports.issues = {
   legendMisplaced: {
     wcag: '4.1.2',
     weight: 4,
-    packages: {
+    tools: {
       continuum: {
         738: {
           variable: false,
@@ -4237,7 +4237,7 @@ exports.issues = {
   legendMissing: {
     wcag: '4.1.2',
     weight: 2,
-    packages: {
+    tools: {
       continuum: {
         221: {
           variable: false,
@@ -4278,7 +4278,7 @@ exports.issues = {
   groupName: {
     wcag: '4.1.2',
     weight: 3,
-    packages: {
+    tools: {
       alfa: {
         r60: {
           variable: false,
@@ -4305,7 +4305,7 @@ exports.issues = {
   layoutTable: {
     wcag: '1.3.1',
     weight: 2,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-WCAG-T12': {
           variable: false,
@@ -4337,7 +4337,7 @@ exports.issues = {
   tabularTableless: {
     wcag: '1.3.1',
     weight: 3,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-WCAG-T18': {
           variable: false,
@@ -4350,7 +4350,7 @@ exports.issues = {
   tableNoSummary: {
     wcag: '1.3.1',
     weight: 2,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-WCAG-T4': {
           variable: false,
@@ -4363,7 +4363,7 @@ exports.issues = {
   tableColumnsVary: {
     wcag: '1.3.1',
     weight: 3,
-    packages: {
+    tools: {
       nuVal: {
         '^A table row was .+ columns wide, which is less than the column count established by the first row.*$': {
           variable: true,
@@ -4381,7 +4381,7 @@ exports.issues = {
   tableCaption: {
     wcag: '1.3.1',
     weight: 1,
-    packages: {
+    tools: {
       axe: {
         'table-fake-caption': {
           variable: false,
@@ -4408,7 +4408,7 @@ exports.issues = {
   cellHeadersNotInferrable: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       htmlcs: {
         'e:AA.1_3_1.H43.HeadersRequired': {
           variable: false,
@@ -4428,7 +4428,7 @@ exports.issues = {
   cellHeadersOutsideTable: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-ACT-R36': {
           variable: false,
@@ -4441,7 +4441,7 @@ exports.issues = {
   cellHeadersAmbiguityRisk: {
     wcag: '1.3.1',
     weight: 2,
-    packages: {
+    tools: {
       htmlcs: {
         'w:AA.1_3_1.H43.ScopeAmbiguous': {
           variable: false,
@@ -4471,7 +4471,7 @@ exports.issues = {
   tableHeaderless: {
     wcag: '1.3.1',
     weight: 3,
-    packages: {
+    tools: {
       continuum: {
         387: {
           variable: false,
@@ -4491,7 +4491,7 @@ exports.issues = {
   tableCellHeaderless: {
     wcag: '1.3.1',
     weight: 3,
-    packages: {
+    tools: {
       alfa: {
         r77: {
           variable: false,
@@ -4511,7 +4511,7 @@ exports.issues = {
   tableHeaderCelless: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r46: {
           variable: false,
@@ -4538,7 +4538,7 @@ exports.issues = {
   TableHeaderScopeRisk: {
     wcag: '1.3.1',
     weight: 1,
-    packages: {
+    tools: {
       htmlcs: {
         'e:AA.1_3_1.H63.1': {
           variable: false,
@@ -4551,7 +4551,7 @@ exports.issues = {
   tableHeaderEmpty: {
     wcag: '1.3.1',
     weight: 2,
-    packages: {
+    tools: {
       wave: {
         'e:th_empty': {
           variable: false,
@@ -4564,7 +4564,7 @@ exports.issues = {
   tableEmbedded: {
     wcag: '1.3.1',
     weight: 2,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-BP5': {
           variable: false,
@@ -4577,7 +4577,7 @@ exports.issues = {
   controlNoText: {
     wcag: '4.1.2',
     weight: 4,
-    packages: {
+    tools: {
       axe: {
         label: {
           variable: false,
@@ -4618,7 +4618,7 @@ exports.issues = {
   controlLabelInvisible: {
     wcag: '2.4.6',
     weight: 4,
-    packages: {
+    tools: {
       axe: {
         'label-title-only': {
           variable: false,
@@ -4631,7 +4631,7 @@ exports.issues = {
   titleAsLabel: {
     wcag: '2.4.6',
     weight: 3,
-    packages: {
+    tools: {
       wave: {
         'a:label_title': {
           variable: false,
@@ -4644,7 +4644,7 @@ exports.issues = {
   visibleLabelNotName: {
     wcag: '2.5.3',
     weight: 3,
-    packages: {
+    tools: {
       alfa: {
         r14: {
           variable: false,
@@ -4685,7 +4685,7 @@ exports.issues = {
   targetSize: {
     wcag: '2.5.5',
     weight: 3,
-    packages: {
+    tools: {
       tenon: {
         152: {
           variable: false,
@@ -4698,7 +4698,7 @@ exports.issues = {
   visibleBulk: {
     wcag: '2.4',
     weight: 1,
-    packages: {
+    tools: {
       testaro: {
         bulk: {
           variable: false,
@@ -4711,7 +4711,7 @@ exports.issues = {
   activeEmbedding: {
     wcag: '2.5.5',
     weight: 3,
-    packages: {
+    tools: {
       axe: {
         'nested-interactive': {
           variable: false,
@@ -4810,7 +4810,7 @@ exports.issues = {
   tabFocusability: {
     wcag: '2.1.1',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r95: {
           variable: false,
@@ -4849,7 +4849,7 @@ exports.issues = {
   focusIndication: {
     wcag: '2.4.7',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r65: {
           variable: false,
@@ -4876,7 +4876,7 @@ exports.issues = {
   allCaps: {
     wcag: '3.1.5',
     weight: 1,
-    packages: {
+    tools: {
       alfa: {
         r72: {
           variable: false,
@@ -4896,7 +4896,7 @@ exports.issues = {
   allItalics: {
     wcag: '3.1.5',
     weight: 1,
-    packages: {
+    tools: {
       alfa: {
         r85: {
           variable: false,
@@ -4916,7 +4916,7 @@ exports.issues = {
   noLandmarks: {
     wcag: '1.3.6',
     weight: 2,
-    packages: {
+    tools: {
       wave: {
         'a:region_missing': {
           variable: false,
@@ -4929,7 +4929,7 @@ exports.issues = {
   contentBeyondLandmarks: {
     wcag: '1.3.6',
     weight: 2,
-    packages: {
+    tools: {
       alfa: {
         r57: {
           variable: false,
@@ -4956,7 +4956,7 @@ exports.issues = {
   footerTopLandmark: {
     wcag: '1.3.6',
     weight: 1,
-    packages: {
+    tools: {
       axe: {
         'landmark-contentinfo-is-top-level': {
           variable: false,
@@ -4969,7 +4969,7 @@ exports.issues = {
   asideNotTop: {
     wcag: '1.3.6',
     weight: 2,
-    packages: {
+    tools: {
       axe: {
         'landmark-complementary-is-top-level': {
           variable: false,
@@ -4982,7 +4982,7 @@ exports.issues = {
   mainNotTop: {
     wcag: '1.3.6',
     weight: 2,
-    packages: {
+    tools: {
       axe: {
         'landmark-main-is-top-level': {
           variable: false,
@@ -4995,7 +4995,7 @@ exports.issues = {
   mainConfusion: {
     wcag: '1.3.6',
     weight: 3,
-    packages: {
+    tools: {
       ibm: {
         Rpt_Aria_MultipleMainsRequireLabel_Implicit_2: {
           variable: false,
@@ -5013,7 +5013,7 @@ exports.issues = {
   mainNone: {
     wcag: '1.3.6',
     weight: 2,
-    packages: {
+    tools: {
       axe: {
         'landmark-one-main': {
           variable: false,
@@ -5033,7 +5033,7 @@ exports.issues = {
   mainMultiple: {
     wcag: '1.3.6',
     weight: 2,
-    packages: {
+    tools: {
       axe: {
         'landmark-no-duplicate-main': {
           variable: false,
@@ -5060,7 +5060,7 @@ exports.issues = {
   bannerNot1: {
     wcag: '1.3.6',
     weight: 2,
-    packages: {
+    tools: {
       axe: {
         'landmark-no-duplicate-banner': {
           variable: false,
@@ -5080,7 +5080,7 @@ exports.issues = {
   bannerNotTop: {
     wcag: '1.3.6',
     weight: 2,
-    packages: {
+    tools: {
       axe: {
         'landmark-banner-is-top-level': {
           variable: false,
@@ -5093,7 +5093,7 @@ exports.issues = {
   footerConfusion: {
     wcag: '1.3.6',
     weight: 3,
-    packages: {
+    tools: {
       ibm: {
         Rpt_Aria_MultipleContentinfoLandmarks_Implicit: {
           variable: false,
@@ -5106,7 +5106,7 @@ exports.issues = {
   footerNot1: {
     wcag: '1.3.6',
     weight: 2,
-    packages: {
+    tools: {
       axe: {
         'landmark-no-duplicate-contentinfo': {
           variable: false,
@@ -5126,7 +5126,7 @@ exports.issues = {
   landmarkConfusion: {
     wcag: '1.3.6',
     weight: 3,
-    packages: {
+    tools: {
       axe: {
         'landmark-unique': {
           variable: false,
@@ -5146,7 +5146,7 @@ exports.issues = {
   articleConfusion: {
     wcag: '1.3.6',
     weight: 3,
-    packages: {
+    tools: {
       ibm: {
         Rpt_Aria_MultipleArticleRoles_Implicit: {
           variable: false,
@@ -5159,7 +5159,7 @@ exports.issues = {
   formConfusion: {
     wcag: '1.3.6',
     weight: 3,
-    packages: {
+    tools: {
       ibm: {
         Rpt_Aria_MultipleFormLandmarks_Implicit: {
           variable: false,
@@ -5172,7 +5172,7 @@ exports.issues = {
   applicationConfusion: {
     wcag: '1.3.6',
     weight: 3,
-    packages: {
+    tools: {
       ibm: {
         Rpt_Aria_MultipleApplicationLandmarks: {
           variable: false,
@@ -5185,7 +5185,7 @@ exports.issues = {
   asideConfusion: {
     wcag: '1.3.6',
     weight: 3,
-    packages: {
+    tools: {
       continuum: {
         527: {
           variable: false,
@@ -5205,7 +5205,7 @@ exports.issues = {
   bannerConfusion: {
     wcag: '1.3.6',
     weight: 3,
-    packages: {
+    tools: {
       ibm: {
         Rpt_Aria_MultipleBannerLandmarks_Implicit: {
           variable: false,
@@ -5218,7 +5218,7 @@ exports.issues = {
   navConfusion: {
     wcag: '1.3.6',
     weight: 3,
-    packages: {
+    tools: {
       continuum: {
         531: {
           variable: false,
@@ -5238,7 +5238,7 @@ exports.issues = {
   regionConfusion: {
     wcag: '1.3.6',
     weight: 3,
-    packages: {
+    tools: {
       ibm: {
         Rpt_Aria_MultipleRegionsUniqueLabel_Implicit: {
           variable: false,
@@ -5251,7 +5251,7 @@ exports.issues = {
   searchConfusion: {
     wcag: '1.3.6',
     weight: 3,
-    packages: {
+    tools: {
       ibm: {
         Rpt_Aria_MultipleSearchLandmarks: {
           variable: false,
@@ -5264,7 +5264,7 @@ exports.issues = {
   asideNoText: {
     wcag: '1.3.6',
     weight: 3,
-    packages: {
+    tools: {
       continuum: {
         532: {
           variable: false,
@@ -5277,7 +5277,7 @@ exports.issues = {
   complementaryNoText: {
     wcag: '1.3.6',
     weight: 1,
-    packages: {
+    tools: {
       ibm: {
         Rpt_Aria_ComplementaryRequiredLabel_Implicit: {
           variable: false,
@@ -5295,7 +5295,7 @@ exports.issues = {
   navNoText: {
     wcag: '1.3.6',
     weight: 3,
-    packages: {
+    tools: {
       continuum: {
         533: {
           variable: false,
@@ -5308,7 +5308,7 @@ exports.issues = {
   labelNoText: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       ibm: {
         Valerie_Label_HasContent: {
           variable: false,
@@ -5321,7 +5321,7 @@ exports.issues = {
   focusableOperable: {
     wcag: '2.1.1',
     weight: 3,
-    packages: {
+    tools: {
       testaro: {
         focOp: {
           variable: false,
@@ -5334,7 +5334,7 @@ exports.issues = {
   focusableRole: {
     wcag: '4.1.2',
     weight: 3,
-    packages: {
+    tools: {
       axe: {
         'focus-order-semantics': {
           variable: false,
@@ -5354,7 +5354,7 @@ exports.issues = {
   focusableHidden: {
     wcag: '4.1.2',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r17: {
           variable: false,
@@ -5412,7 +5412,7 @@ exports.issues = {
   focusedAway: {
     wcag: '1.4.10',
     weight: 3,
-    packages: {
+    tools: {
       testaro: {
         focVis: {
           variable: false,
@@ -5425,7 +5425,7 @@ exports.issues = {
   focusableDescendants: {
     wcag: '4.1.2',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r90: {
           variable: false,
@@ -5445,7 +5445,7 @@ exports.issues = {
   labeledHidden: {
     wcag: '1.3.1',
     weight: 2,
-    packages: {
+    tools: {
       htmlcs: {
         'w:AA.1_3_1.F68.Hidden': {
           variable: false,
@@ -5463,7 +5463,7 @@ exports.issues = {
   contentHidden: {
     wcag: '2.4.7',
     weight: 10,
-    packages: {
+    tools: {
       testaro: {
         allHidden: {
           variable: false,
@@ -5476,7 +5476,7 @@ exports.issues = {
   hiddenContentRisk: {
     wcag: '4.1',
     weight: 1,
-    packages: {
+    tools: {
       axe: {
         'hidden-content': {
           variable: false,
@@ -5489,7 +5489,7 @@ exports.issues = {
   frameContentRisk: {
     wcag: '4.1',
     weight: 1,
-    packages: {
+    tools: {
       axe: {
         'frame-tested': {
           variable: false,
@@ -5502,7 +5502,7 @@ exports.issues = {
   frameSandboxRisk: {
     wcag: '4.1',
     weight: 2,
-    packages: {
+    tools: {
       nuVal: {
         '^Potentially bad value .+ for attribute sandbox on element iframe: Setting both allow-scripts and allow-same-origin is not recommended, because it effectively enables an embedded page to break out of all sandboxing.*$': {
           variable: true,
@@ -5515,7 +5515,7 @@ exports.issues = {
   hoverSurprise: {
     wcag: '1.4.13',
     weight: 2,
-    packages: {
+    tools: {
       testaro: {
         hover: {
           variable: false,
@@ -5528,7 +5528,7 @@ exports.issues = {
   labelClash: {
     wcag: '1.3.1',
     weight: 2,
-    packages: {
+    tools: {
       axe: {
         'form-field-multiple-labels': {
           variable: false,
@@ -5562,7 +5562,7 @@ exports.issues = {
   labelEmpty: {
     wcag: '1.3.1',
     weight: 3,
-    packages: {
+    tools: {
       htmlcs: {
         'w:AA.1_3_1.ARIA6': {
           variable: false,
@@ -5587,7 +5587,7 @@ exports.issues = {
   linkComprehensionRisk: {
     wcag: '2.4.4',
     weight: 1,
-    packages: {
+    tools: {
       wave: {
         'a:link_suspicious': {
           variable: false,
@@ -5600,7 +5600,7 @@ exports.issues = {
   nonWebLink: {
     wcag: '1.3.3',
     weight: 1,
-    packages: {
+    tools: {
       continuum: {
         141: {
           variable: false,
@@ -5625,7 +5625,7 @@ exports.issues = {
   linkVague: {
     wcag: '2.4.4',
     weight: 3,
-    packages: {
+    tools: {
       tenon: {
         73: {
           variable: false,
@@ -5638,7 +5638,7 @@ exports.issues = {
   linkIndication: {
     wcag: '1.3.3',
     weight: 2,
-    packages: {
+    tools: {
       alfa: {
         r62: {
           variable: false,
@@ -5665,7 +5665,7 @@ exports.issues = {
   menuNavigation: {
     wcag: '2.1.1',
     weight: 2,
-    packages: {
+    tools: {
       testaro: {
         menuNav: {
           variable: false,
@@ -5678,7 +5678,7 @@ exports.issues = {
   menuItemless: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       wave: {
         'e:aria_menu_broken': {
           variable: false,
@@ -5691,7 +5691,7 @@ exports.issues = {
   tabNavigation: {
     wcag: '2.1.1',
     weight: 2,
-    packages: {
+    tools: {
       testaro: {
         tabNav: {
           variable: false,
@@ -5704,7 +5704,7 @@ exports.issues = {
   siteNavigation: {
     wcag: '2.4',
     weight: 1,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-WCAG-T15': {
           variable: false,
@@ -5717,7 +5717,7 @@ exports.issues = {
   spontaneousMotion: {
     wcag: '2.2.2',
     weight: 2,
-    packages: {
+    tools: {
       testaro: {
         motion: {
           variable: false,
@@ -5730,7 +5730,7 @@ exports.issues = {
   blink: {
     wcag: '2.2.2',
     weight: 4,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-WCAG-T13': {
           variable: false,
@@ -5748,7 +5748,7 @@ exports.issues = {
   autoplay: {
     wcag: '1.4.2',
     weight: 2,
-    packages: {
+    tools: {
       axe: {
         'no-autoplay-audio': {
           variable: false,
@@ -5768,7 +5768,7 @@ exports.issues = {
   autoplayLong: {
     wcag: '1.4.2',
     weight: 2,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-ACT-R49': {
           variable: false,
@@ -5781,7 +5781,7 @@ exports.issues = {
   autoplayControl: {
     wcag: '1.4.2',
     weight: 2,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-ACT-R50': {
           variable: false,
@@ -5794,7 +5794,7 @@ exports.issues = {
   refresh: {
     wcag: '2.2.1',
     weight: 3,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-ACT-R4': {
           variable: false,
@@ -5812,7 +5812,7 @@ exports.issues = {
   divParentBad: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       nuVal: {
         'Element div not allowed as child of element button in this context. (Suppressing further errors from this subtree.)': {
           variable: false,
@@ -5825,7 +5825,7 @@ exports.issues = {
   pParentBad: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       nuVal: {
         'Element p not allowed as child of element strong in this context. (Suppressing further errors from this subtree.)': {
           variable: false,
@@ -5838,7 +5838,7 @@ exports.issues = {
   styleParentBad: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       nuVal: {
         'Element style not allowed as child of element body in this context. (Suppressing further errors from this subtree.)': {
           variable: false,
@@ -5866,7 +5866,7 @@ exports.issues = {
   inconsistentStyles: {
     wcag: '3.2.4',
     weight: 1,
-    packages: {
+    tools: {
       testaro: {
         styleDiff: {
           variable: false,
@@ -5879,7 +5879,7 @@ exports.issues = {
   zIndexNotZero: {
     wcag: '1.4',
     weight: 1,
-    packages: {
+    tools: {
       testaro: {
         zIndex: {
           variable: false,
@@ -5892,7 +5892,7 @@ exports.issues = {
   tabIndexPositive: {
     wcag: '2.4.3',
     weight: 1,
-    packages: {
+    tools: {
       axe: {
         tabindex: {
           variable: false,
@@ -5912,7 +5912,7 @@ exports.issues = {
   tabIndexBad: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       nuVal: {
         '^Bad value  for attribute tabindex on element .+: The empty string is not a valid integer.*$': {
           variable: true,
@@ -5925,7 +5925,7 @@ exports.issues = {
   tabIndexMissing: {
     wcag: '2.1.1',
     weight: 4,
-    packages: {
+    tools: {
       continuum: {
         337: {
           variable: false,
@@ -5950,7 +5950,7 @@ exports.issues = {
   trackNoLabel: {
     wcag: '4.1.2',
     weight: 4,
-    packages: {
+    tools: {
       continuum: {
         40: {
           variable: false,
@@ -5968,7 +5968,7 @@ exports.issues = {
   trackNoSource: {
     wcag: '1.3.1',
     weight: 4,
-    packages: {
+    tools: {
       continuum: {
         485: {
           variable: false,
@@ -5981,7 +5981,7 @@ exports.issues = {
   audioContentNoText: {
     wcag: '1.2.1',
     weight: 4,
-    packages: {
+    tools: {
       axe: {
         'audio-caption': {
           variable: false,
@@ -6021,7 +6021,7 @@ exports.issues = {
   videoContentNoText: {
     wcag: '1.2.2',
     weight: 4,
-    packages: {
+    tools: {
       axe: {
         'video-caption': {
           variable: false,
@@ -6066,7 +6066,7 @@ exports.issues = {
   videoContentNoTranscript: {
     wcag: '1.2.2',
     weight: 4,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-ACT-R53': {
           variable: false,
@@ -6079,7 +6079,7 @@ exports.issues = {
   videoCaptionRisk: {
     wcag: '1.2.2',
     weight: 1,
-    packages: {
+    tools: {
       wave: {
         'a:html5_video_audio': {
           variable: false,
@@ -6102,7 +6102,7 @@ exports.issues = {
   videoNoAudioDescription: {
     wcag: '1.2.1',
     weight: 4,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-ACT-R55': {
           variable: false,
@@ -6115,7 +6115,7 @@ exports.issues = {
   videoNoAudioTrack: {
     wcag: '1.2.1',
     weight: 4,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-ACT-R54': {
           variable: false,
@@ -6128,7 +6128,7 @@ exports.issues = {
   notKeyboardScrollable: {
     wcag: '2.1.1',
     weight: 4,
-    packages: {
+    tools: {
       alfa: {
         r84: {
           variable: false,
@@ -6155,7 +6155,7 @@ exports.issues = {
   horizontalScrolling: {
     wcag: '1.4.10',
     weight: 3,
-    packages: {
+    tools: {
       tenon: {
         28: {
           variable: false,
@@ -6168,7 +6168,7 @@ exports.issues = {
   scrollRisk: {
     wcag: '1.4.10',
     weight: 1,
-    packages: {
+    tools: {
       htmlcs: {
         'w:AA.1_4_10.C32,C31,C33,C38,SCR34,G206': {
           variable: false,
@@ -6188,7 +6188,7 @@ exports.issues = {
   skipRepeatedContent: {
     wcag: '2.4.1',
     weight: 3,
-    packages: {
+    tools: {
       axe: {
         'bypass': {
           variable: false,
@@ -6232,7 +6232,7 @@ exports.issues = {
   repeatedContentRisk: {
     wcag: '2.4.1',
     weight: 1,
-    packages: {
+    tools: {
       alfa: {
         'r87': {
           variable: false,
@@ -6272,7 +6272,7 @@ exports.issues = {
   submitButton: {
     wcag: '2.5.6',
     weight: 3,
-    packages: {
+    tools: {
       htmlcs: {
         'e:AA.3_2_2.H32.2': {
           variable: false,
@@ -6292,7 +6292,7 @@ exports.issues = {
   fragmentaryNoticeRisk: {
     wcag: '4.1.3',
     weight: 2,
-    packages: {
+    tools: {
       alfa: {
         r54: {
           variable: false,
@@ -6305,7 +6305,7 @@ exports.issues = {
   errorReferenceBad: {
     wcag: '3.3.1',
     weight: 4,
-    packages: {
+    tools: {
       qualWeb: {
         'QW-ACT-R41': {
           variable: false,
@@ -6318,7 +6318,7 @@ exports.issues = {
   noScriptRisk: {
     wcag: '4.1',
     weight: 1,
-    packages: {
+    tools: {
       wave: {
         'a:noscript': {
           variable: false,
@@ -6331,7 +6331,7 @@ exports.issues = {
   browserSupportRisk: {
     wcag: '4.1',
     weight: 1,
-    packages: {
+    tools: {
       nuVal: {
         'The inputmode attribute is not supported in all browsers. Please be sure to test, and consider using a polyfill.': {
           variable: false,
@@ -6344,7 +6344,7 @@ exports.issues = {
   obsolete: {
     wcag: '4.1',
     weight: 3,
-    packages: {
+    tools: {
       alfa: {
         r70: {
           variable: false,
@@ -6467,7 +6467,7 @@ exports.issues = {
   cssInvalid: {
     wcag: '4.1',
     weight: 3,
-    packages: {
+    tools: {
       nuVal: {
         'CSS: Parse Error. Style sheets should not include HTML syntax.': {
           variable: false,
@@ -6600,7 +6600,7 @@ exports.issues = {
   parseError: {
     wcag: '4.1',
     weight: 3,
-    packages: {
+    tools: {
       ibm: {
         'Rpt_Aria_InvalidTabindexForActivedescendant': {
           variable: false,
@@ -6824,7 +6824,7 @@ exports.issues = {
   encodingBad: {
     wcag: '3.1.3',
     weight: 4,
-    packages: {
+    tools: {
       nuVal: {
         'Document uses the Unicode Private Use Area(s), which should not be used in publicly exchanged documents. (Charmod C073)': {
           variable: false,
@@ -6837,7 +6837,7 @@ exports.issues = {
   fatalError: {
     wcag: '4.1',
     weight: 50,
-    packages: {
+    tools: {
       nuVal: {
         'Cannot recover after last error. Any further errors will be ignored.': {
           variable: false,
@@ -6855,7 +6855,7 @@ exports.issues = {
   notValidatable: {
     wcag: '4.1',
     weight: 1,
-    packages: {
+    tools: {
       nuVal: {
         'Unsupported SVG version specified. This validator only supports SVG 1.1. The recommended way to suppress this warning is to remove the version attribute altogether.': {
           variable: false,

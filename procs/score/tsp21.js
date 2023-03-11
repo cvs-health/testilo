@@ -34,7 +34,7 @@ const issueWeights = {
   absolute: 2,
   // Added per instance reported by the tool with the largest count.
   largest: 1,
-  // Added per instance reported by each other package.
+  // Added per instance reported by each other tool.
   smaller: 0.4
 };
 // How much each prevention adds to the score.
@@ -42,8 +42,8 @@ const preventionWeights = {
   testaro: 50,
   other: 100
 };
-// Non-Testaro packages.
-const otherPackages = [
+// Non-Testaro tools.
+const otherTools = [
   'alfa',
   'axe',
   'continuum',
@@ -57,8 +57,8 @@ const otherPackages = [
 
 // VARIABLES
 
-let packageDetails = {};
-let groupDetails = {};
+let toolDetails = {};
+let issueDetails = {};
 let summary = {};
 let preventionScores = {};
 
@@ -66,9 +66,9 @@ let preventionScores = {};
 
 // Initialize the variables.
 const init = () => {
-  packageDetails = {};
-  groupDetails = {
-    groups: {},
+  toolDetails = {};
+  issueDetails = {
+    issues: {},
     solos: {}
   };
   summary = {
@@ -84,13 +84,13 @@ const init = () => {
 // Adds a score to the tool details.
 const addDetail = (actWhich, testID, addition = 1) => {
   if (addition) {
-    if (!packageDetails[actWhich]) {
-      packageDetails[actWhich] = {};
+    if (!toolDetails[actWhich]) {
+      toolDetails[actWhich] = {};
     }
-    if (!packageDetails[actWhich][testID]) {
-      packageDetails[actWhich][testID] = 0;
+    if (!toolDetails[actWhich][testID]) {
+      toolDetails[actWhich][testID] = 0;
     }
-    packageDetails[actWhich][testID] += Math.round(addition);
+    toolDetails[actWhich][testID] += Math.round(addition);
   }
 };
 // Scores a report.
@@ -106,7 +106,7 @@ exports.scorer = async report => {
       // For each test act:
       testActs.forEach(test => {
         const {which} = test;
-        // Add scores to the package details.
+        // Add scores to the tool details.
         if (which === 'alfa') {
           const issues = test.result && test.result.items;
           if (issues && Array.isArray(issues)) {
@@ -218,18 +218,19 @@ exports.scorer = async report => {
           }
         }
         else if (which === 'qualWeb') {
-          const issueTypes = test.result
-          && test.result.customHtml
-          && test.result.customHtml.modules;
-          if (issueTypes) {
+          // For each section of the results:
+          const modules = test.result && test.result.modules;
+          if (modules) {
             ['act-rules', 'wcag-techniques', 'best-practices'].forEach(type => {
-              const {assertions} = issueTypes[type];
+              // For each test in the section:
+              const {assertions} = modules[type];
               if (assertions) {
                 const issueIDs = Object.keys(assertions);
                 issueIDs.forEach(issueID => {
+                  // For each error or warning from the test:
                   const {results} = assertions[issueID];
                   results.forEach(result => {
-                    // Add 4 error, 1 per warning.
+                    // Add 4 per error, 1 per warning, per element.
                     let weight = 0;
                     const {verdict} = result;
                     if (verdict === 'error') {
@@ -239,16 +240,11 @@ exports.scorer = async report => {
                       weight = 1;
                     }
                     if (weight) {
-                      addDetail(which, result.description, weight);
+                      addDetail(which, issueID, result.elements.length * weight);
                     }
                   });
                 });
               }
-            });
-            issues.forEach(issue => {
-              // Add 4 per error, 1 per warning.
-              const weight = issue.type === 'error' ? 4 : 1;
-              addDetail(which, issue.message, weight);
             });
           }
         }
@@ -494,7 +490,7 @@ exports.scorer = async report => {
           if (totals) {
             const {total, inSet} = totals;
             const score = total - inSet || 0;
-            // Add 1 per misgrouped radio button.
+            // Add 1 per misissueed radio button.
             addDetail('testaro', which, score);
           }
         }
@@ -549,7 +545,7 @@ exports.scorer = async report => {
       // Get the prevention scores and add them to the summary.
       const actsPrevented = testActs.filter(test => test.result.prevented);
       actsPrevented.forEach(act => {
-        if (otherPackages.includes(act.which)) {
+        if (otherTools.includes(act.which)) {
           preventionScores[act.which] = preventionWeights.other;
         }
         else {
@@ -563,8 +559,8 @@ exports.scorer = async report => {
       const roundedPreventionScore = Math.round(preventionScore);
       summary.preventions = roundedPreventionScore;
       summary.total += roundedPreventionScore;
-      // Initialize a table of the groups to which tests belong.
-      const testGroups = {
+      // Initialize a table of the issues to which tests belong.
+      const toolIssues = {
         testaro: {},
         alfa: {},
         axe: {},
@@ -572,120 +568,121 @@ exports.scorer = async report => {
         htmlcs: {},
         ibm: {},
         nuVal: {},
+        qualWeb: {},
         tenon: {},
         wave: {}
       };
-      // Initialize a table of the regular expressions of variably named tests of packages.
+      // Initialize a table of the regular expressions of variably named tests of tools.
       const testMatchers = {};
-      Object.keys(groups).forEach(groupName => {
-        Object.keys(groups[groupName].packages).forEach(packageName => {
-          Object.keys(groups[groupName].packages[packageName]).forEach(testID => {
-            // Update the group table.
-            testGroups[packageName][testID] = groupName;
+      Object.keys(issues).forEach(issueName => {
+        Object.keys(issues[issueName].tools).forEach(toolName => {
+          Object.keys(issues[issueName].tools[toolName]).forEach(testID => {
+            // Update the issue table.
+            toolIssues[toolName][testID] = issueName;
             // If the test is variably named:
-            if (groups[groupName].packages[packageName][testID].variable) {
+            if (issues[issueName].tools[toolName][testID].variable) {
               // Add its regular expression, as multiline, to the variably-named-test table.
-              if (! testMatchers[packageName]) {
-                testMatchers[packageName] = [];
+              if (! testMatchers[toolName]) {
+                testMatchers[toolName] = [];
               }
-              testMatchers[packageName].push(new RegExp(testID, 's'));
+              testMatchers[toolName].push(new RegExp(testID, 's'));
             }
           });
         });
       });
-      // For each package with any scores:
-      Object.keys(packageDetails).forEach(packageName => {
-        const matchers = testMatchers[packageName];
-        // For each test with any scores in the package:
-        Object.keys(packageDetails[packageName]).forEach(testMessage => {
+      // For each tool with any scores:
+      Object.keys(toolDetails).forEach(toolName => {
+        const matchers = testMatchers[toolName];
+        // For each test with any scores in the tool:
+        Object.keys(toolDetails[toolName]).forEach(testMessage => {
           // Initialize the test ID as the reported test message.
           let testID = testMessage;
-          // Get the group of the test, if it has a fixed name and is in a group.
-          let groupName = testGroups[packageName][testMessage];
+          // Get the issue of the test, if it has a fixed name and is in a issue.
+          let issueName = toolIssues[toolName][testMessage];
           // If the test has a variable name or is a solo test:
-          if (! groupName) {
-            // Determine whether the package has variably named tests and the test is among them.
+          if (! issueName) {
+            // Determine whether the tool has variably named tests and the test is among them.
             testRegExp = matchers && matchers.find(matcher => matcher.test(testMessage));
             // If so:
             if (testRegExp) {
               // Make the matching regular expression the test ID.
               testID = testRegExp.source;
-              // Get the group of the test.
-              groupName = testGroups[packageName][testID];
+              // Get the issue of the test.
+              issueName = testIssues[toolName][testID];
             }
           }
-          // If the test is in a group:
-          if (groupName) {
-            // Initialize its score as its score in the package details.
-            if (! groupDetails.groups[groupName]) {
-              groupDetails.groups[groupName] = {
-                wcag: groups[groupName].wcag,
-                packages: {}
+          // If the test is in a issue:
+          if (issueName) {
+            // Initialize its score as its score in the tool details.
+            if (! issueDetails.issues[issueName]) {
+              issueDetails.issues[issueName] = {
+                wcag: issues[issueName].wcag,
+                tools: {}
               };
             }
-            if (! groupDetails.groups[groupName].packages[packageName]) {
-              groupDetails.groups[groupName].packages[packageName] = {};
+            if (! issueDetails.issues[issueName].tools[toolName]) {
+              issueDetails.issues[issueName].tools[toolName] = {};
             }
-            let weightedScore = packageDetails[packageName][testMessage];
-            // Weight that by the group weight and normalize it to a 1–4 scale per instance.
-            weightedScore *= groups[groupName].weight / 4;
+            let weightedScore = toolDetails[toolName][testMessage];
+            // Weight that by the issue weight and normalize it to a 1–4 scale per instance.
+            weightedScore *= issues[issueName].weight / 4;
             // Adjust the score for the quality of the test.
-            weightedScore *= groups[groupName].packages[packageName][testID].quality;
+            weightedScore *= issues[issueName].tools[toolName][testID].quality;
             // Round the score, but not to less than 1.
             const roundedScore = Math.max(Math.round(weightedScore), 1);
-            // Add the rounded score and the test description to the group details.
-            groupDetails.groups[groupName].packages[packageName][testID] = {
+            // Add the rounded score and the test description to the issue details.
+            issueDetails.issues[issueName].tools[toolName][testID] = {
               score: roundedScore,
-              what: groups[groupName].packages[packageName][testID].what
+              what: issues[issueName].tools[toolName][testID].what
             };
           }
           // Otherwise, i.e. if the test is solo:
           else {
-            if (! groupDetails.solos[packageName]) {
-              groupDetails.solos[packageName] = {};
+            if (! issueDetails.solos[toolName]) {
+              issueDetails.solos[toolName] = {};
             }
-            const roundedScore = Math.round(packageDetails[packageName][testID]);
-            groupDetails.solos[packageName][testID] = roundedScore;
+            const roundedScore = Math.round(toolDetails[toolName][testID]);
+            issueDetails.solos[toolName][testID] = roundedScore;
           }
         });
       });
-      // Determine the group scores and add them to the summary.
-      const groupNames = Object.keys(groupDetails.groups);
-      const {absolute, largest, smaller} = groupWeights;
-      // For each group with any scores:
-      groupNames.forEach(groupName => {
+      // Determine the issue scores and add them to the summary.
+      const issueNames = Object.keys(issueDetails.issues);
+      const {absolute, largest, smaller} = issueWeights;
+      // For each issue with any scores:
+      issueNames.forEach(issueName => {
         const scores = [];
-        // For each package with any scores in the group:
-        const groupPackageData = Object.values(groupDetails.groups[groupName].packages);
-        groupPackageData.forEach(packageObj => {
-          // Get the sum of the scores of the tests of the package in the group.
-          const scoreSum = Object.values(packageObj).reduce(
+        // For each tool with any scores in the issue:
+        const issueToolData = Object.values(issueDetails.issues[issueName].tools);
+        issueToolData.forEach(toolObj => {
+          // Get the sum of the scores of the tests of the tool in the issue.
+          const scoreSum = Object.values(toolObj).reduce(
             (sum, current) => sum + current.score,
             0
           );
-          // Add the sum to the list of package scores in the group.
+          // Add the sum to the list of tool scores in the issue.
           scores.push(scoreSum);
         });
         // Sort the scores in descending order.
         scores.sort((a, b) => b - a);
         // Compute the sum of the absolute score and the weighted largest and other scores.
-        const groupScore = absolute
+        const issueScore = absolute
         + largest * scores[0]
         + smaller * scores.slice(1).reduce((sum, current) => sum + current, 0);
-        const roundedGroupScore = Math.round(groupScore);
-        summary.groups.push({
-          groupName,
-          score: roundedGroupScore
+        const roundedIssueScore = Math.round(issueScore);
+        summary.issues.push({
+          issueName,
+          score: roundedIssueScore
         });
-        summary.total += roundedGroupScore;
+        summary.total += roundedIssueScore;
       });
-      summary.groups.sort((a, b) => b.score - a.score);
+      summary.issues.sort((a, b) => b.score - a.score);
       // Determine the solo score and add it to the summary.
-      const soloPackageNames = Object.keys(groupDetails.solos);
-      soloPackageNames.forEach(packageName => {
-        const testIDs = Object.keys(groupDetails.solos[packageName]);
+      const soloToolNames = Object.keys(issueDetails.solos);
+      soloToolNames.forEach(toolName => {
+        const testIDs = Object.keys(issueDetails.solos[toolName]);
         testIDs.forEach(testID => {
-          const score = soloWeight * groupDetails.solos[packageName][testID];
+          const score = soloWeight * issueDetails.solos[toolName][testID];
           summary.solos += score;
           summary.total += score;
         });
@@ -712,12 +709,12 @@ exports.scorer = async report => {
     scoreProcID,
     logWeights,
     soloWeight,
-    groupWeights,
+    issueWeights,
     preventionWeights,
-    packageDetails,
-    groupDetails,
+    toolDetails,
+    issueDetails,
     preventionScores,
     summary
   };
 };
-exports.groups = groups;
+exports.issues = issues;

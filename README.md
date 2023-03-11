@@ -265,7 +265,7 @@ A user can invoke `merge` in this way:
     - `node call merge s b e false`
     - `node call merge s b e`
 
-In these statements, replace `s` and `b` with the base names of the script and batch files, respectively. For example, if the script file is named `ts25.json`, then replace `x` with `ts25`. Replace `e` with an email address, or with an empty string if the environment variable `process.env.REQUESTER` exists and you want to use it.
+In these statements, replace `s` and `b` with the base names of the script and batch files, respectively. For example, if the script file is named `ts25.json`, then replace `s` with `ts25`. Replace `e` with an email address, or with an empty string if the environment variable `process.env.REQUESTER` exists and you want to use it.
 
 The first statement will cause a merger with isolation.
 The second and third statements will cause a merger without isolation.

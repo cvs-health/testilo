@@ -608,7 +608,7 @@ exports.scorer = async report => {
               // Make the matching regular expression the test ID.
               testID = testRegExp.source;
               // Get the issue of the test.
-              issueName = testIssues[toolName][testID];
+              issueName = toolIssues[toolName][testID];
             }
           }
           // If the test is in a issue:

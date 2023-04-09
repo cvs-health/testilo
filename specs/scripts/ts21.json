@@ -194,6 +194,7 @@
     {
       "type": "test",
       "which": "qualWeb",
+      "withNewContent": true,
       "what": "QualWeb"
     },
     {

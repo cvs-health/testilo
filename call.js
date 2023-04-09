@@ -100,7 +100,7 @@ const callScore = async (scorerID, selector = '') => {
 // Fulfills a digesting request.
 const callDigest = async (digesterID, selector = '') => {
   // Get the scored reports to be digested.
-  const reports = getReports('scored', selector);
+  const reports = await getReports('scored', selector);
   // If any exist:
   if (reports.length) {
     const digesterDir = `${functionDir}/digest/${digesterID}`;

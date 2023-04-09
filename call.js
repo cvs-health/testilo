@@ -105,18 +105,16 @@ const callDigest = async (digesterID, selector = '') => {
   if (reports.length) {
     const digesterDir = `${functionDir}/digest/${digesterID}`;
     // Get the digester.
-    const {digester} = require(`${digesterDir}/index`);
+    const digester = require(`${digesterDir}/index`).makeQuery;
     // Get the template.
-    const template = await fs.readFile(`${digesterDir}/index.html`);
+    const template = await fs.readFile(`${digesterDir}/index.html`, 'utf8');
     // Digest the reports.
     const digestedReports = digest(template, digester, reports);
     const digestedReportDir = `${reportDir}/digested`;
     // For each digested report:
-    for (const digestedReport of digestedReports) {
+    for (const reportID of Object.keys(digestedReports)) {
       // Save it.
-      await fs.writeFile(
-        `${digestedReportDir}/${digestedReport.id}.json`, JSON.stringify(digestedReport, null, 2)
-      );
+      await fs.writeFile(`${digestedReportDir}/${reportID}.html`, digestedReports[reportID]);
     };
   }
   // Otherwise, i.e. if no scored reports are to be digested:

@@ -14,7 +14,7 @@ const replaceHolders = (content, query) => content
 .replace(/__([a-zA-Z]+)__/g, (ph, qp) => query[qp]);
 // Digests the scored reports and returns them, digested.
 exports.digest = (digestTemplate, digester, reports) => {
-  const digests = [];
+  const digests = {};
   // Create a query.
   const query = {};
   // For each report:
@@ -24,7 +24,7 @@ exports.digest = (digestTemplate, digester, reports) => {
     // Use it to create a digest.
     const digestedReport = replaceHolders(digestTemplate, query);
     // Add the digest to the array of digests.
-    digests.push(digestedReport);
+    digests[report.id] = digestedReport;
     console.log(`Report ${report.id} digested`);
   };
   // Return the digests.

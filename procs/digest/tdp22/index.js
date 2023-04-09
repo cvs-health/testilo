@@ -29,9 +29,8 @@ const getSpecialPStart = (summary, scoreID) =>
 // Adds parameters to a query for a digest.
 exports.makeQuery = (report, query) => {
   // Add an HTML-safe copy of the report to the query to be appended to the digest.
-  const {job, jobData, score} = report;
-  const {sources} = job;
-  const {host, requester} = sources;
+  const {acts, sources, jobData, score} = report;
+  const {target, requester} = sources;
   const reportJSON = JSON.stringify(report, null, 2);
   const reportJSONSafe = htmlEscape(reportJSON);
   query.report = reportJSONSafe;
@@ -41,11 +40,11 @@ exports.makeQuery = (report, query) => {
   // Add the job data to the query.
   query.dateISO = jobData.endTime.slice(0, 10);
   query.dateSlash = query.dateISO.replace(/-/g, '/');
-  query.org = host.what;
-  query.url = host.which;
+  query.org = target.what;
+  query.url = acts && acts.length > 1 && acts[1].which;
   query.requester = requester;
-  const {groupDetails, summary} = score;
-  const {total, groups} = summary;
+  const {issueDetails, summary} = score;
+  const {total, issues} = summary;
   if (typeof total === 'number') {
     query.totalScore = total;
   }
@@ -62,8 +61,8 @@ exports.makeQuery = (report, query) => {
     }
   });
   // Add the group rows of the score-summary table to the query.
-  groups.forEach(group => {
-    scoreRows.push(getScoreRow(`${group.groupName}`, group.score));
+  issues.forEach(issue => {
+    scoreRows.push(getScoreRow(`${issue.issueName}`, issue.score));
   });
   query.scoreRows = scoreRows.join(innerJoiner);
   // If the score has any special components:
@@ -82,40 +81,40 @@ exports.makeQuery = (report, query) => {
     query.specialSummary = '<p>No special issues contributed to the score.</p>'
   }
   // If the score has any classified issues as components:
-  if (groups.length) {
+  if (issues.length) {
     // Add paragraphs about them for the group summary to the query.
-    const groupSummaryItems = [];
-    groups.forEach(group => {
-      const {groupName, score} = group;
-      const groupHeading = `<h4>Issue ${groupName}</h4>`;
-      const wcagP = `<p>WCAG: ${groupDetails.groups[groupName].wcag || 'N/A'}</p>`;
+    const issueSummaryItems = [];
+    issues.forEach(issue => {
+      const {issueName, score} = issue;
+      const issueHeading = `<h4>Issue ${issueName}</h4>`;
+      const wcagP = `<p>WCAG: ${issueDetails.issues[issueName].wcag || 'N/A'}</p>`;
       const scoreP = `<p>Score: ${score}</p>`;
       const issueIntroP = '<p>Issue reports in this category:</p>';
-      const groupListItems = [];
-      const groupData = groupDetails.groups[groupName];
-      const packageIDs = Object.keys(groupData);
-      packageIDs.forEach(packageID => {
-        const testIDs = Object.keys(groupData.packages[packageID]);
+      const issueListItems = [];
+      const issueData = issueDetails.issues[issueName];
+      const toolIDs = Object.keys(issueData.tools);
+      toolIDs.forEach(toolID => {
+        const testIDs = Object.keys(issueData.tools[toolID]);
         testIDs.forEach(testID => {
-          const testData = groupData.packages[packageID][testID];
+          const testData = issueData.tools[toolID][testID];
           const {score, what} = testData;
           const listItem =
-            `<li>Package <code>${packageID}</code>, test <code>${testID}</code>, score ${score} (${what})</li>`;
-          groupListItems.push(listItem);
+            `<li>Package <code>${toolID}</code>, test <code>${testID}</code>, score ${score} (${what})</li>`;
+          issueListItems.push(listItem);
         });
       });
-      const groupList = [
+      const issueList = [
         '<ul>',
-        groupListItems.join('\n  '),
+        issueListItems.join('\n  '),
         '</ul>'
       ].join(joiner);
-      groupSummaryItems.push(groupHeading, wcagP, scoreP, issueIntroP, groupList);
+      issueSummaryItems.push(issueHeading, wcagP, scoreP, issueIntroP, issueList);
     });
-    query.groupSummary = groupSummaryItems.join(joiner);
+    query.issueSummary = issueSummaryItems.join(joiner);
   }
   // Otherwise, i.e. if the score has no classified issues as components:
   else {
-    // Add a paragraph stating this for the group summary to the query.
-    query.groupSummary = '<p>No classified issues contributed to the score.</p>'
+    // Add a paragraph stating this for the issue summary to the query.
+    query.issueSummary = '<p>No classified issues contributed to the score.</p>'
   }
 };

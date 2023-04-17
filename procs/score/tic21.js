@@ -4623,7 +4623,7 @@ exports.issues = {
         'label-title-only': {
           variable: false,
           quality: 1,
-          what: 'Form element has no visible label'
+          what: 'Form control element has no visible label'
         }
       }
     }

@@ -1,18 +1,18 @@
 /*
   tsp23
-  Testilo score proc 23
+  Testilo score proc 24
 
   Computes scores from Testilo script ts23 and adds them to a report.
 */
 
 // IMPORTS
 
-const {issues} = require('./tic23');
+const {issues} = require('./tic24');
 
 // CONSTANTS
 
 // ID of this proc.
-const scoreProcID = 'tsp23';
+const scoreProcID = 'tsp24';
 // Configuration disclosures.
 const logWeights = {
   logCount: 0.5,
@@ -329,6 +329,13 @@ exports.scorer = async report => {
           if (typeof hasType === 'boolean' && ! hasType) {
             // Add 10.
             addDetail('testaro', which, 10);
+          }
+        }
+        else if (which === 'dupAtt') {
+          const count = test.result && test.result.total;
+          if (typeof count === 'number') {
+            // Add 2 per element with duplicate attributes.
+            addDetail('testaro', which, 2 * count);
           }
         }
         else if (which === 'embAc') {

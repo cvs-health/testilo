@@ -316,6 +316,13 @@ exports.scorer = async report => {
             addDetail('testaro', which, score);
           }
         }
+        else if (which === 'autocomplete') {
+          const count = test.result && test.result.total;
+          if (typeof count === 'number') {
+            // Add 4 per autocomplete violation.
+            addDetail('testaro', which, 4 * count);
+          }
+        }
         else if (which === 'bulk') {
           const count = test.result && test.result.visibleElements;
           if (typeof count === 'number') {

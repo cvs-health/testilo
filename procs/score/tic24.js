@@ -3112,7 +3112,7 @@ exports.issues = {
       }
     }
   },
-  autocompleteBad: {
+  autocompleteInvalid: {
     wcag: '1.3.5',
     weight: 3,
     tools: {
@@ -3160,14 +3160,14 @@ exports.issues = {
       }
     }
   },
-  autocompleteNone: {
+  autocompleteBad: {
     wcag: '1.3.5',
-    weight: 1,
+    weight: 4,
     tools: {
       testaro: {
         autocomplete: {
           variable: false,
-          quality: 1,
+          quality: 0.7,
           what: 'Name or email input is missing its required autocomplete attribute'
         }
       }

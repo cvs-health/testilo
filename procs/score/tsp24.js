@@ -105,6 +105,12 @@ exports.scorer = async report => {
     if (testActs.length) {
       // For each test act:
       testActs.forEach(test => {
+        // Add a prevented result if no result exists.
+        if (! test.result) {
+          test.result = {
+            prevented: true
+          };
+        }
         const {which} = test;
         // Add scores to the tool details.
         if (which === 'alfa') {

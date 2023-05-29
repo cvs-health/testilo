@@ -1,8 +1,8 @@
 /*
-  tsp23
+  tsp24
   Testilo score proc 24
 
-  Computes scores from Testilo script ts23 and adds them to a report.
+  Computes scores from Testilo script ts23 or ts24 and adds them to a report.
 */
 
 // IMPORTS

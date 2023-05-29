@@ -124,11 +124,16 @@ const callDigest = async (digesterID, selector = '') => {
   }
 };
 // Fulfills a comparison request.
+// Get the scored reports to be scored.
 const callCompare = async (compareProcID, comparisonNameBase) => {
-  await compare(compareProcID, comparisonNameBase);
-  console.log(
-    `Comparison completed. Comparison proc: ${compareProcID}. Directory: ${comparisonDir}.`
-  );
+  const reports = await getReports('scored');
+  const comparerDir = `${functionDir}/compare/${compareProcID}`;
+  const comparisonTemplate = await fs.readFile(`${comparerDir}/index.html`, 'utf8');
+  const comparer = require(`${comparerDir}/index`).getQuery;
+  const comparison = await compare(comparisonTemplate, comparer, reports);
+  const comparisonDir = `${reportDir}/comparative`;
+  await fs.writeFile(`${comparisonDir}/${comparisonNameBase}.html`, comparison);
+  console.log(`Comparison completed. Proc: ${compareProcID}. Directory: ${comparisonDir}.`);
 };
 
 // ########## OPERATION

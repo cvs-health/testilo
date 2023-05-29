@@ -9,11 +9,11 @@
 const replaceHolders = (template, query) => template
 .replace(/__([a-zA-Z]+)__/g, (ph, qp) => query[qp]);
 // Compares the scored reports and returns a comparison.
-exports.compare = (comparisonTemplate, comparer, reports) => {
+exports.compare = async (comparisonTemplate, comparer, reports) => {
   // Create a query.
   const query = {};
   // Populate the query.
-  comparer(reports, query);
+  await comparer(reports, query);
   // Use it to create a comparison.
   const comparison = replaceHolders(comparisonTemplate, query);
   // Return the comparison.

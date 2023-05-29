@@ -14,26 +14,24 @@ const fs = require('fs/promises');
 
 // ########## CONSTANTS
 
-const reportDirScored = process.env.REPORTDIR_SCORED || 'reports/scored';
 const query = {};
 
 // ########## FUNCTIONS
 
 // Returns data on the targets.
 const getData = async scoredReports => {
-  const reportCount = scoredReports.length;
   const bodyData = [];
   for (const report of scoredReports) {
-    const {id, host, score} = report;
+    const {id, acts, sources, score} = report;
     bodyData.push({
       id,
-      org: host.what,
-      url: host.which,
+      org: sources.target.what,
+      url: acts[1].which,
       score: score.summary.total
     });
   };
   return {
-    pageCount,
+    pageCount: scoredReports.length,
     bodyData
   }
 };
@@ -57,13 +55,12 @@ const getTableBody = async bodyData => {
   });
   return rows.join('\n          ');
 };
-// Returns a query for a comparative table.
-exports.getQuery = async () => {
-  const data = await getData();
+// Populates a query for a comparative table.
+exports.getQuery = async (scoredReports, query) => {
+  const data = await getData(scoredReports);
   query.pageCount = data.pageCount;
   query.tableBody = await getTableBody(data.bodyData);
   const date = new Date();
   query.dateISO = date.toISOString().slice(0, 10);
   query.dateSlash = query.dateISO.replace(/-/g, '/');
-  return query;
 };

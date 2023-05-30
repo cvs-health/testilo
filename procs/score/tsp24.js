@@ -483,7 +483,7 @@ exports.scorer = async report => {
               changeFrequency
             } = data;
             const score = 2 * (meanLocalRatio - 1)
-            + (maxLocalRatio - 1)
+            + maxLocalRatio - 1
             + globalRatio - 1
             + meanPixelChange / 10000
             + maxPixelChange / 25000

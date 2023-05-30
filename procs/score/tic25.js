@@ -48,7 +48,7 @@ exports.issues = {
       }
     }
   },
-  duplicateAttribute:{
+  duplicateAttribute: {
     wcag: '4.1.1',
     weight: 2,
     tools: {

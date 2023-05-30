@@ -1,39 +1,54 @@
 /*
-  merge.js
-  Merges a script and a batch and returns jobs.
+  batch.js
+  Converts a target list to a batch.
   Arguments:
-    0. script
-    1. batch
-    2. whether to provide test isolation (no if omitted)
+    0. batch ID
+    1. batch description
+    2. target list
 */
-
-// ########## IMPORTS
-
-// Module to keep secrets.
-require('dotenv').config();
-
-// ########## CONSTANTS
-
-const stdRequester = process.env.REQUESTER;
-// Tests that alter the page.
-const contaminantNames = new Set([
-  'axe',
-  'continuum',
-  'htmlcs',
-  'ibm',
-  'wave'
-]);
-// Tests that are immune to page alteration.
-const immuneNames = new Set([
-  'tenon'
-]);
 
 // ########## FUNCTIONS
 
-// Merges a script and a batch and returns jobs.
-exports.merge = (script, batch, requester, isolate = false) => {
-  if (isolate === 'false') {
-    isolate = false;
+// Converts a target list to a batch and returns the batch.
+exports.batch = (id, what, targetList) => {
+  // If the arguments are valid:
+  if (
+    typeof id === 'string'
+    && id.length
+    && typeof what === 'string'
+    && what.length
+    && Array.isArray(targetList)
+    && targetList.length
+    && targetList.every(
+      target => Array.isArray(target) && target.every(item => typeof item === string && item.length)
+    )
+  ) {
+    // Initialize the batch.
+    const batch = {
+      id,
+      what,
+      targets: []
+    };
+    // For each target:
+    targetList.forEach(target => {
+      // Add it to the batch.
+      batch.targets.push({
+        id: target[0],
+        what: target[1],
+        acts: {
+          main: [
+            {
+              type: 'launch'
+            },
+            {
+              type: 'url',
+              which: target[2],
+              what: target[1]
+            }
+          ]
+        }
+      });
+    });
   }
   // If the requester is unspecified, make it the standard requester.
   requester ||= stdRequester;

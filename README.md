@@ -36,95 +36,34 @@ Testaro executes _jobs_. In a job, Testaro performs _acts_ (tests and other oper
 You can create a job for Testaro directly, without using Testilo.
 
 Testilo can, however, make job preparation more efficient in two scenarios:
-- A common use case is to define a battery of tests and to have those tests performed on multiple targets. In that case, you need to create multiple jobs, one per page. The jobs are identical, except for the target-specific acts (including navigating to targets). If you tell Testilo about the tests and the targets, Testilo can create such collections of jobs for you.
-- Some tests operate on a copy of a target and modify that copy. Usually, one wants test isolation: The results of a test do not depend on any previously performed tests. To ensure test isolation, a job containing such target-modifying tests must follow them with acts that restore the target to its desired pre-test state. Testilo can insert the required target-restoring acts into each job after target-modifying tests.
+- A common use case is to define a battery of tests and to have those same tests performed on multiple targets. In that case, it is efficient to create multiple jobs, one per target. The jobs are identical, except for the target-specific acts (including navigating to targets). If you tell Testilo about the tests and the targets, Testilo can create such collections of jobs for you.
+- Some tests operate on a copy of a target and modify that copy. Usually, one wants test isolation: The results of a test do not depend on any previously performed tests. To ensure test isolation, a job containing such target-modifying tests must follow them with acts that restore the target to its pre-test state. Testilo can insert the required target-restoring acts into each job after target-modifying tests.
 
-The `merge` module performs these services.
+The `batch` and `merge` modules performs these services.
 
-### Procedure
+### Target lists
 
-To use the `merge` module, you need to create a _script_ and a _batch_:
-- The script is an object that specifies a job, except for the targets.
-- The batch is an object that specifies target-specific acts for targets.
+The simplest version of a list of targets is _target list_. It is stored as a tab-delimited text file, with one line per target. Each line contains 3 items, with tabs between them:
+- An ID for the target
+- A description of the target
+- The URL of the target
 
-The script contains an array of acts, with placeholders. For each target in the batch, the `merge` module creates a job, in which the placeholders are replaced with the acts specific to that target in the batch.
+For example, a target list (with “→” representing the Tab character) might be:
 
-### Example
-
-Here is an example illustrating how merging works.
-
-#### Script
-
-Suppose you have created this script:
-
-```javaScript
-{
-  id: 'ts25',
-  what: 'Motion, Axe, and bulk',
-  strict: true,
-  timeLimit: 60,
-  acts: [
-    {
-      type: 'placeholder',
-      which: 'main',
-      launch: 'webkit'
-    },
-    {
-      type: 'test',
-      which: 'motion',
-      what: 'spontaneous change of content; requires webkit',
-      delay: 2500,
-      interval: 2500,
-      count: 5
-    },
-    {
-      type: 'placeholder',
-      which: 'main',
-      launch: 'chromium'
-    },
-    {
-      type: 'test',
-      which: 'axe',
-      withItems: true,
-      rules: [],
-      what: 'Axe core, all rules, with details'
-    },
-    {
-      type: 'test',
-      which: 'bulk',
-      what: 'count of visible elements'
-    }
-  ]
-}
+```text
+w3c→World Wide Web Consortium→https://www.w3.org/
+moz→Mozilla Foundation→https://foundation.mozilla.org/en/
 ```
 
-The `acts` array of this script contains three acts of type `test` and two acts of type `placeholder`.
+### Batches
 
-#### Batch
-
-Suppose you have also created this batch:
+Targets can be specified in a more complex way, too. That allows you to create jobs in which particular targets are handled distinctively. The more complex representation of a set of targets is a _batch_. Here is a basic example of a batch:
 
 ```javaScript
 {
   id: 'weborgs',
   what: 'Web standards organizations',
   targets: [
-    {
-      id: 'mozilla',
-      what: 'Mozilla Foundation',
-      acts: {
-        main: [
-          {
-            type: 'launch'
-          },
-          {
-            type: 'url',
-            which: 'https://foundation.mozilla.org/en/',
-            what: 'Mozilla Foundation'
-          }
-        ]
-      }
-    },
     {
       id: 'w3c',
       what: 'World Wide Web Consortium',
@@ -138,6 +77,40 @@ Suppose you have also created this batch:
             which: 'https://www.w3.org/',
             what: 'World Wide Web Consortium'
           }
+        ],
+        about: [
+          {
+            type: 'url',
+            which: 'https://www.w3.org/Consortium/',
+            what: 'About the World Wide Web Consortium'
+          }
+        ]
+      }
+    },
+    {
+      id: 'mozilla',
+      what: 'Mozilla Foundation',
+      acts: {
+        main: [
+          {
+            type: 'launch'
+          },
+          {
+            type: 'url',
+            which: 'https://foundation.mozilla.org/en/',
+            what: 'Mozilla Foundation'
+          }
+        ],
+        about: [
+          {
+            type: 'url',
+            which: 'https://foundation.mozilla.org/en/who-we-are/',
+            what: 'Who the Mozilla Foundation is'
+          },
+          {
+            type: 'reveal',
+            what: 'make everything visible'
+          }
         ]
       }
     }
@@ -145,11 +118,69 @@ Suppose you have also created this batch:
 }
 ```
 
-This batch defines two targets.
+This batch gives the same information about its targets as a target list, plus more. It defines named sequences of acts. They can be plugged into jobs, so somewhat complex operations can be performed on each target.
 
-#### Isolation option
+### Scripts
 
-The `merge` module offers an isolation option. If you exercise it, the `merge` module will act as if the latest placeholder were again inserted after each target-modifying test, except where that test is the last act or the next act after it is a placeholder.
+You can formulate the instructions for a job as a _script_. A script can contain _placeholders_ that Testilo replaces with acts from a batch, creating one job per target. Thus, one script plus one batch can generate an unlimited number of jobs.
+
+Here is a script:
+
+```javaScript
+{
+  id: 'ts25',
+  what: 'Axe on one page and QualWeb on another',
+  strict: true,
+  timeLimit: 60,
+  acts: [
+    {
+      type: 'placeholder',
+      which: 'main',
+      launch: 'chromium'
+    },
+    {
+      type: 'test',
+      which: 'axe',
+      detailLevel: 1,
+      rules: [],
+      what: 'Axe core, all rules'
+    },
+    {
+      type: 'placeholder',
+      which: 'about'
+    },
+    {
+      type: 'test',
+      which: 'qualWeb',
+      withNewContent: false,
+      what: 'QualWeb, all rules'
+    }
+  ]
+}
+```
+
+### Mergers
+
+Testilo can _merge_ a batch with a script, creating jobs. Facts about targets from the batch are inserted into the script as substitutes for placeholder acts. In the above example, Testilo would replace the `main` placeholder with the `main` acts of a target, and replace the `about` placeholder with the `about` acts of the same target. The `main` placeholder contains a `launch` property naming one of the browser types of Playwright. That causes the `launch` act to be given a `which` property whole value is the value of `launch` property of the placeholder. Thus, when the placeholder has a `launch: chromium` property and the acts include a `launch` act, that act becomes
+
+```javascript
+{
+  type: 'launch',
+  which: 'chromium'
+}
+```
+
+### Target list to batch
+
+If you have a target list instead of a batch, Testilo can convert the former to the latter, and then it can merge the batch with a script.
+
+When Testilo converts a target list to a batch, the batch will contain, for each target, one array of acts named `main`, containing a `launch` act and a `url` act.
+
+### Merge procedure
+
+To use the `merge` module, you need to create a script and a batch, as described above.
+
+The `merge` module offers an isolation option. If you exercise it, the `merge` module will act as if the latest placeholder were again inserted after each target-modifying test act, except where that test act is the last act or where the next act after it is a placeholder.
 
 #### Output
 

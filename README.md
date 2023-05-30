@@ -403,8 +403,8 @@ The first two arguments to `digest()` are a digest template and a digesting func
 A user can invoke `digest` in this way:
 
 ```bash
-node call digest dp25a
-node call digest dp25a 75
+node call digest tdp25a
+node call digest tdp25a 75
 ```
 
 When a user invokes `digest` in this example, the `call` module:
@@ -457,7 +457,7 @@ The first two arguments to `compare()` are a template and a comparison function.
 A user can invoke `compare` in this way:
 
 ```bash
-node call compare cp25a legislators
+node call compare tcp25a legislators
 ```
 
 When a user invokes `compare` in this example, the `call` module:

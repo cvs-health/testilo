@@ -1,8 +1,6 @@
 /*
-  cp20sqrt.js
+  cp24.js
   Returns a query for replacing placeholders in the associated template.
-  Makes the bar widths the square roots of their proportional widths, for cases of extreme
-  score disparity.
 */
 
 // ########## IMPORTS

@@ -8,19 +8,13 @@
 
 // ########## FUNCTIONS
 
-// Scores the specified raw reports and returns them, scored.
+// Scores the specified raw reports.
 exports.score = (scorer, reports) => {
-  const scoredReports = [];
   // For each report:
   for (const report of reports) {
     // Score it.
-    const scoredReport = JSON.parse(JSON.stringify(report));
-    scorer(scoredReport);
-    // Append it to the array of scored reports.
-    scoredReports.push(scoredReport);
+    scorer(report);
     console.log(`Report ${report.id} scored`);
   }
-  // Return the array of scored reports.
   console.log(`Scoring complete; report count ${reports.length}`);
-  return scoredReports;
 };

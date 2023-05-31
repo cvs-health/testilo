@@ -1,6 +1,6 @@
 /*
-  tic23
-  Testilo issue classification 23
+  tic24
+  Testilo issue classification 24
 
   Classifies tests of Testaro and its dependent tools into issues.
 
@@ -10,7 +10,8 @@
     weight: weight of the issue in score computation.
     tools: tools (including Testaro) providing tests in the issue.
 
-  Each property of tools specifies a test of that tool. Its key is the identifier of the test. Its value is an object with these properties:
+  Each property of tools specifies a test of that tool. Its key is the identifier of the test.
+  Its value is an object with these properties:
   - variable: whether the identifier is a regular expression.
   - quality: the estimated quality of the test (normally 1).
   - what: description of the test.
@@ -43,6 +44,19 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Link text is not supplemented with a title attribute'
+        }
+      }
+    }
+  },
+  duplicateAttribute:{
+    wcag: '4.1.1',
+    weight: 2,
+    tools: {
+      testaro: {
+        dupAtt: {
+          variable: false,
+          quality: 0.7,
+          what: 'Source code of the element contains 2 or more of the same attribute'
         }
       }
     }
@@ -83,7 +97,7 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:AAA.4_1_1.F77': {
+        'AAA.4_1_1.F77': {
           variable: false,
           quality: 1,
           what: 'Duplicate id attribute value'
@@ -232,52 +246,52 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:AAA.4_1_2.H91.InputText.Name': {
+        'AAA.4_1_2.H91.InputText.Name': {
           variable: false,
           quality: 1,
           what: 'Text input has no accessible name'
         },
-        'e:AAA.4_1_2.H91.InputEmail.Name': {
+        'AAA.4_1_2.H91.InputEmail.Name': {
           variable: false,
           quality: 1,
           what: 'Email input has no accessible name'
         },
-        'e:AAA.4_1_2.H91.InputPhone.Name': {
+        'AAA.4_1_2.H91.InputPhone.Name': {
           variable: false,
           quality: 1,
           what: 'Telephone input has no accessible name'
         },
-        'e:AAA.4_1_2.H91.InputFile.Name': {
+        'AAA.4_1_2.H91.InputFile.Name': {
           variable: false,
           quality: 1,
           what: 'File input element has no accessible name'
         },
-        'e:AAA.4_1_2.H91.InputTel.Name': {
+        'AAA.4_1_2.H91.InputTel.Name': {
           variable: false,
           quality: 1,
           what: 'Telephone input has no accessible name'
         },
-        'e:AAA.4_1_2.H91.InputNumber.Name': {
+        'AAA.4_1_2.H91.InputNumber.Name': {
           variable: false,
           quality: 1,
           what: 'Number input has no accessible name'
         },
-        'e:AAA.4_1_2.H91.InputPassword.Name': {
+        'AAA.4_1_2.H91.InputPassword.Name': {
           variable: false,
           quality: 1,
           what: 'Password input has no accessible name'
         },
-        'e:AAA.4_1_2.H91.InputSearch.Name': {
+        'AAA.4_1_2.H91.InputSearch.Name': {
           variable: false,
           quality: 1,
           what: 'Search input has no accessible name'
         },
-        'e:AAA.4_1_2.H91.InputCheckbox.Name': {
+        'AAA.4_1_2.H91.InputCheckbox.Name': {
           variable: false,
           quality: 1,
           what: 'Checkbox input has no accessible name'
         },
-        'e:AAA.4_1_2.H91.InputRadio.Name': {
+        'AAA.4_1_2.H91.InputRadio.Name': {
           variable: false,
           quality: 1,
           what: 'Radio input has no accessible name'
@@ -317,7 +331,7 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:H36': {
+        'H36': {
           variable: false,
           quality: 1,
           what: 'Image submit button has no alt attribute'
@@ -343,7 +357,7 @@ exports.issues = {
         }
       },
       wave: {
-        'e:alt_input_missing': {
+        'alt_input_missing': {
           variable: false,
           quality: 1,
           what: 'Image button has no alternative text'
@@ -400,7 +414,7 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:AAA.1_1_1.H37': {
+        'AAA.1_1_1.H37': {
           variable: false,
           quality: 1,
           what: 'img element has no alt attribute'
@@ -433,12 +447,12 @@ exports.issues = {
         }
       },
       wave: {
-        'e:alt_missing': {
+        'alt_missing': {
           variable: false,
           quality: 1,
           what: 'Text alternative is missing'
         },
-        'e:alt_spacer_missing': {
+        'alt_spacer_missing': {
           variable: false,
           quality: 1,
           what: 'Spacer image has no text alternative'
@@ -557,7 +571,7 @@ exports.issues = {
     weight: 1,
     tools: {
       wave: {
-        'a:alt_duplicate': {
+        'alt_duplicate': {
           variable: false,
           quality: 1,
           what: 'Two images near each other have the same text alternative'
@@ -577,7 +591,7 @@ exports.issues = {
         }
       },
       wave: {
-        'a:alt_long': {
+        'alt_long': {
           variable: false,
           quality: 1,
           what: 'Long text alternative'
@@ -635,7 +649,7 @@ exports.issues = {
         }
       },
       wave: {
-        'a:alt_suspicious': {
+        'alt_suspicious': {
           variable: false,
           quality: 1,
           what: 'Image text alternative is suspicious'
@@ -648,7 +662,7 @@ exports.issues = {
     weight: 1,
     tools: {
       htmlcs: {
-        'w:AAA.1_1_1.H67.2': {
+        'AAA.1_1_1.H67.2': {
           variable: false,
           quality: 1,
           what: 'Image marked as decorative may be informative'
@@ -714,7 +728,7 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:AAA.3_1_1.H57.2': {
+        'AAA.3_1_1.H57.2': {
           variable: false,
           quality: 1,
           what: 'html element has no lang or xml:lang attribute'
@@ -747,7 +761,7 @@ exports.issues = {
         }
       },
       wave: {
-        'e:language_missing': {
+        'language_missing': {
           variable: false,
           quality: 1,
           what: 'Language missing or invalid'
@@ -781,7 +795,7 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:AAA.3_1_1.H57.3.Lang': {
+        'AAA.3_1_1.H57.3.Lang': {
           variable: false,
           quality: 1,
           what: 'Language specified in the lang attribute of the document does not appear to be well-formed'
@@ -813,7 +827,7 @@ exports.issues = {
     weight: 4,
     tools: {
       htmlcs: {
-        'e:AAA.3_1_2.H58.1.Lang': {
+        'AAA.3_1_2.H58.1.Lang': {
           variable: false,
           quality: 1,
           what: 'Language specified in the lang attribute of the element does not appear to be well-formed'
@@ -854,7 +868,7 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:WCAG2AAA.Principle3.Guideline3_1.3_1_2.H58': {
+        'WCAG2AAA.Principle3.Guideline3_1.3_1_2.H58': {
           variable: false,
           quality: 1,
           what: 'Change in language is not marked'
@@ -921,7 +935,7 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:ARIA6+H53': {
+        'ARIA6+H53': {
           variable: false,
           quality: 1,
           what: 'object element contains no text alternative'
@@ -942,7 +956,7 @@ exports.issues = {
         }
       },
       wave: {
-        'a:plugin': {
+        'plugin': {
           variable: false,
           quality: 1,
           what: 'An unidentified plugin is present'
@@ -981,7 +995,7 @@ exports.issues = {
     weight: 4,
     tools: {
       wave: {
-        'e:alt_map_missing': {
+        'alt_map_missing': {
           variable: false,
           quality: 1,
           what: 'Image that has hot spots has no alt attribute'
@@ -1001,7 +1015,7 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:AAA.1_1_1.H24': {
+        'AAA.1_1_1.H24': {
           variable: false,
           quality: 1,
           what: 'Area element in an image map has no alt attribute'
@@ -1027,7 +1041,7 @@ exports.issues = {
         }
       },
       wave: {
-        'e:alt_area_missing': {
+        'alt_area_missing': {
           variable: false,
           quality: 1,
           what: 'Image map area has no alternative text'
@@ -1040,7 +1054,7 @@ exports.issues = {
     weight: 1,
     tools: {
       htmlcs: {
-        'w:AAA.2_1_2.F10': {
+        'AAA.2_1_2.F10': {
           variable: false,
           quality: 1,
           what: 'Applet or plugin may fail to enable moving the focus away with the keyboard'
@@ -1066,27 +1080,27 @@ exports.issues = {
     weight: 1,
     tools: {
       htmlcs: {
-        'w:AAA.2_1_1.G90': {
+        'AAA.2_1_1.G90': {
           variable: false,
           quality: 1,
           what: 'Event handler functionality may not be available by keyboard'
         },
-        'w:AAA.2_1_1.SCR20.MouseOut': {
+        'AAA.2_1_1.SCR20.MouseOut': {
           variable: false,
           quality: 1,
           what: 'Mousing-out functionality may not be available by keyboard'
         },
-        'w:AAA.2_1_1.SCR20.MouseOver': {
+        'AAA.2_1_1.SCR20.MouseOver': {
           variable: false,
           quality: 1,
           what: 'Mousing-over functionality may not be available by keyboard'
         },
-        'w:AAA.2_1_1.SCR20.MouseDown': {
+        'AAA.2_1_1.SCR20.MouseDown': {
           variable: false,
           quality: 1,
           what: 'Mousing-down functionality may not be available by keyboard'
         },
-        'w:AAA.2_1_1.SCR20.MouseUp': {
+        'AAA.2_1_1.SCR20.MouseUp': {
           variable: false,
           quality: 1,
           what: 'Mousing-up functionality may not be available by keyboard'
@@ -1100,7 +1114,7 @@ exports.issues = {
         }
       },
       wave: {
-        'a:event_handler': {
+        'event_handler': {
           variable: false,
           quality: 1,
           what: 'Device-dependent event handler'
@@ -1113,14 +1127,14 @@ exports.issues = {
     weight: 4,
     tools: {
       htmlcs: {
-        'e:AAA.2_4_1.G1,G123,G124.NoSuchID': {
+        'AAA.2_4_1.G1,G123,G124.NoSuchID': {
           variable: false,
           quality: 1,
           what: 'Internal link references a nonexistent destination'
         }
       },
       wave: {
-        'a:link_internal_broken': {
+        'link_internal_broken': {
           variable: false,
           quality: 1,
           what: 'Broken same-page link'
@@ -1133,7 +1147,7 @@ exports.issues = {
     weight: 3,
     tools: {
       htmlcs: {
-        'w:AAA.1_3_1.H44.NotFormControl': {
+        'AAA.1_3_1.H44.NotFormControl': {
           variable: false,
           quality: 1,
           what: 'referent of the for attribute of the label is not a form control, so may be wrong'
@@ -1263,17 +1277,17 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'w:AAA.1_3_1.H44.NonExistentFragment': {
+        'AAA.1_3_1.H44.NonExistentFragment': {
           variable: false,
           quality: 1,
           what: 'Label for attribute references a nonexistent element'
         },
-        'w:AAA.1_3_1.ARIA16,ARIA9': {
+        'AAA.1_3_1.ARIA16,ARIA9': {
           variable: false,
           quality: 1,
           what: 'aria-labelledby attribute references a nonexistent element'
         },
-        'w:AAA.4_1_2.ARIA16,ARIA9': {
+        'AAA.4_1_2.ARIA16,ARIA9': {
           variable: false,
           quality: 1,
           what: 'aria-labelledby attribute references a nonexistent element'
@@ -1304,7 +1318,7 @@ exports.issues = {
         }
       },
       wave: {
-        'a:label_orphaned': {
+        'label_orphaned': {
           variable: false,
           quality: 1,
           what: 'Orphaned form label'
@@ -1364,27 +1378,27 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:AAA.1_1_1.H30.2': {
+        'AAA.1_1_1.H30.2': {
           variable: false,
           quality: 1,
           what: 'img element is the only link content but has no text alternative'
         },
-        'w:AAA.4_1_2.H91.A.Empty': {
+        'AAA.4_1_2.H91.A.Empty': {
           variable: false,
           quality: 1,
           what: 'a element has an id attribute but no href attribute or text'
         },
-        'e:AAA.4_1_2.H91.A.EmptyNoId': {
+        'AAA.4_1_2.H91.A.EmptyNoId': {
           variable: false,
           quality: 1,
           what: 'Link has no name or id attribute or value'
         },
-        'w:AAA.4_1_2.H91.A.EmptyWithName': {
+        'AAA.4_1_2.H91.A.EmptyWithName': {
           variable: false,
           quality: 1,
           what: 'Link has a name attribute but no href attribute or text'
         },
-        'e:AAA.4_1_2.H91.A.NoContent': {
+        'AAA.4_1_2.H91.A.NoContent': {
           variable: false,
           quality: 1,
           what: 'Link has an href attribute but no text'
@@ -1422,12 +1436,12 @@ exports.issues = {
         }
       },
       wave: {
-        'e:link_empty': {
+        'link_empty': {
           variable: false,
           quality: 1,
           what: 'Link contains no text'
         },
-        'e:alt_link_missing': {
+        'alt_link_missing': {
           variable: false,
           quality: 1,
           what: 'Linked image has no text alternative'
@@ -1440,7 +1454,7 @@ exports.issues = {
     weight: 2,
     tools: {
       htmlcs: {
-        'w:AAA.4_1_2.H91.A.Placeholder': {
+        'AAA.4_1_2.H91.A.Placeholder': {
           variable: false,
           quality: 1,
           what: 'Link has text but no href, id, or name attribute'
@@ -1453,7 +1467,7 @@ exports.issues = {
     weight: 3,
     tools: {
       htmlcs: {
-        'e:AAA.2_4_8.H59.2b': {
+        'AAA.2_4_8.H59.2b': {
           variable: false,
           quality: 1,
           what: 'link element is missing a non-empty href for the linked resource'
@@ -1506,7 +1520,7 @@ exports.issues = {
     weight: 1,
     tools: {
       wave: {
-        'a:link_pdf': {
+        'link_pdf': {
           variable: false,
           quality: 1,
           what: 'Link to PDF document'
@@ -1519,7 +1533,7 @@ exports.issues = {
     weight: 2,
     tools: {
       htmlcs: {
-        'w:AAA.4_1_2.H91.A.NoHref': {
+        'AAA.4_1_2.H91.A.NoHref': {
           variable: false,
           quality: 1,
           what: 'Link is misused as a link destination'
@@ -1553,7 +1567,7 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:AAA.4_1_2.H91.Textarea.Name': {
+        'AAA.4_1_2.H91.Textarea.Name': {
           variable: false,
           quality: 1,
           what: 'textarea element has no accessible name'
@@ -1566,7 +1580,7 @@ exports.issues = {
     weight: 2,
     tools: {
       htmlcs: {
-        'e:AAA.1_1_1.H2.EG3': {
+        'AAA.1_1_1.H2.EG3': {
           variable: false,
           quality: 1,
           what: 'alt value of the link img element duplicates the text of a link beside it'
@@ -1662,7 +1676,7 @@ exports.issues = {
         }
       },
       wave: {
-        'a:link_redundant': {
+        'link_redundant': {
           variable: false,
           quality: 1,
           what: 'Adjacent links go to the same URL'
@@ -1714,12 +1728,12 @@ exports.issues = {
     weight: 1,
     tools: {
       htmlcs: {
-        'w:WCAG2AAA.Principle3.Guideline3_2.3_2_5.H83.3': {
+        'WCAG2AAA.Principle3.Guideline3_2.3_2_5.H83.3': {
           variable: false,
           quality: 1,
           what: 'Link may open in a new window without notice'
         },
-        'w:AAA.3_2_5.H83.3': {
+        'AAA.3_2_5.H83.3': {
           variable: false,
           quality: 1,
           what: 'Link text may fail to indicate that the link will open in a new window'
@@ -1732,7 +1746,7 @@ exports.issues = {
     weight: 1,
     tools: {
       wave: {
-        'a:javascript_jumpmenu': {
+        'javascript_jumpmenu': {
           variable: false,
           quality: 1,
           what: 'selection change may navigate to another page without notice'
@@ -1799,32 +1813,32 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:AAA.4_1_2.H91.A.Name': {
+        'AAA.4_1_2.H91.A.Name': {
           variable: false,
           quality: 1,
           what: 'Link with button role has no accessible name'
         },
-        'e:AAA.4_1_2.H91.Div.Name': {
+        'AAA.4_1_2.H91.Div.Name': {
           variable: false,
           quality: 1,
           what: 'div element with button role has no accessible name'
         },
-        'e:AAA.4_1_2.H91.Button.Name': {
+        'AAA.4_1_2.H91.Button.Name': {
           variable: false,
           quality: 1,
           what: 'Button element has no accessible name'
         },
-        'e:AAA.4_1_2.H91.Img.Name': {
+        'AAA.4_1_2.H91.Img.Name': {
           variable: false,
           quality: 1,
           what: 'img element with button role has no accessible name'
         },
-        'e:AAA.4_1_2.H91.InputButton.Name': {
+        'AAA.4_1_2.H91.InputButton.Name': {
           variable: false,
           quality: 1,
           what: 'Button input element has no accessible name'
         },
-        'e:AAA.4_1_2.H91.Span.Name': {
+        'AAA.4_1_2.H91.Span.Name': {
           variable: false,
           quality: 1,
           what: 'Element with button role has no accessible name'
@@ -1845,7 +1859,7 @@ exports.issues = {
         }
       },
       wave: {
-        'e:button_empty': {
+        'button_empty': {
           variable: false,
           quality: 1,
           what: 'Button is empty or has no value text'
@@ -1946,7 +1960,7 @@ exports.issues = {
     weight: 4,
     tools: {
       htmlcs: {
-        'e:AAA.1_3_1.F92,ARIA4': {
+        'AAA.1_3_1.F92,ARIA4': {
           variable: false,
           quality: 1,
           what: 'Element has presentation role but semantic child'
@@ -2118,7 +2132,7 @@ exports.issues = {
         }
       },
       wave: {
-        'a:text_small': {
+        'text_small': {
           variable: false,
           quality: 1,
           what: 'Text is very small'
@@ -2393,7 +2407,7 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:AAA.2_4_1.H64.1': {
+        'AAA.2_4_1.H64.1': {
           variable: false,
           quality: 1,
           what: 'iframe element has no non-empty title attribute'
@@ -2814,13 +2828,6 @@ exports.issues = {
           quality: 1,
           what: 'Element with a role attribute does not have the required states and properties'
         }
-      },
-      wave: {
-        'e:aria_reference_broken': {
-          variable: false,
-          quality: 1,
-          what: 'Broken ARIA reference'
-        }
       }
     }
   },
@@ -3091,7 +3098,7 @@ exports.issues = {
         }
       },
       wave: {
-        'e:aria_reference_broken': {
+        'aria_reference_broken': {
           variable: false,
           quality: 1,
           what: 'Broken ARIA reference'
@@ -3118,7 +3125,7 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:AAA.1_3_5.H98': {
+        'AAA.1_3_5.H98': {
           variable: false,
           quality: 1,
           what: 'autocomplete attribute and the input type are mismatched'
@@ -3165,7 +3172,7 @@ exports.issues = {
     weight: 1,
     tools: {
       htmlcs: {
-        'w:AAA.1_3_5.H98': {
+        'AAA.1_3_5.H98': {
           variable: false,
           quality: 1,
           what: 'Element contains a potentially faulty value in its autocomplete attribute'
@@ -3192,17 +3199,17 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:AAA.1_4_3.G145.Fail': {
+        'AAA.1_4_3.G145.Fail': {
           variable: false,
           quality: 1,
           what: 'Contrast between the text and its background is less than 3:1.'
         },
-        'e:AAA.1_4_3.G18.Fail': {
+        'AAA.1_4_3.G18.Fail': {
           variable: false,
           quality: 1,
           what: 'Contrast between the text and its background is less than 4.5:1'
         },
-        'e:AAA.1_4_6.G18.Fail': {
+        'AAA.1_4_6.G18.Fail': {
           variable: false,
           quality: 1,
           what: 'Contrast between the text and its background is less than 4.5:1'
@@ -3223,7 +3230,7 @@ exports.issues = {
         }
       },
       wave: {
-        'c:contrast': {
+        'contrast': {
           variable: false,
           quality: 1,
           what: 'Very low contrast'
@@ -3263,12 +3270,12 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:WCAG2AAA.Principle1.Guideline1_4.1_4_3.G18': {
+        'WCAG2AAA.Principle1.Guideline1_4.1_4_3.G18': {
           variable: false,
           quality: 1,
           what: 'Insufficient contrast'
         },
-        'e:AAA.1_4_6.G17.Fail': {
+        'AAA.1_4_6.G17.Fail': {
           variable: false,
           quality: 1,
           what: 'Text has insufficient contrast'
@@ -3295,57 +3302,57 @@ exports.issues = {
     weight: 1,
     tools: {
       htmlcs: {
-        'w:AAA.1_4_3_F24.F24.BGColour': {
+        'AAA.1_4_3_F24.F24.BGColour': {
           variable: false,
           quality: 1,
           what: 'Inline background color may lack a complementary foreground color'
         },
-        'w:AAA.1_4_3_F24.F24.FGColour': {
+        'AAA.1_4_3_F24.F24.FGColour': {
           variable: false,
           quality: 1,
           what: 'Inline foreground color may lack a complementary background color'
         },
-        'w:AAA.1_4_3.G18.Abs': {
+        'AAA.1_4_3.G18.Abs': {
           variable: false,
           quality: 1,
           what: 'Contrast between the absolutely positioned text and its background may be inadequate'
         },
-        'w:AAA.1_4_6.G18.Abs': {
+        'AAA.1_4_6.G18.Abs': {
           variable: false,
           quality: 1,
           what: 'Contrast between the absolutely positioned text and its background may be less than 4.5:1'
         },
-        'w:AAA.1_4_3.G18.Alpha': {
+        'AAA.1_4_3.G18.Alpha': {
           variable: false,
           quality: 1,
           what: 'Contrast between the text and its background may be less than 4.5:1, given the transparency'
         },
-        'w:AAA.1_4_3.G145.Abs': {
+        'AAA.1_4_3.G145.Abs': {
           variable: false,
           quality: 1,
           what: 'Contrast between the absolutely positioned large text and its background may be less than 3:1'
         },
-        'w:AAA.1_4_3.G145.Alpha': {
+        'AAA.1_4_3.G145.Alpha': {
           variable: false,
           quality: 1,
           what: 'Contrast between the text and its background may be less than 3:1, given the transparency'
         },
-        'w:AAA.1_4_3.G145.BgImage': {
+        'AAA.1_4_3.G145.BgImage': {
           variable: false,
           quality: 1,
           what: 'Contrast between the text and its background image may be less than 3:1'
         },
-        'w:AAA.1_4_3.G18.BgImage': {
+        'AAA.1_4_3.G18.BgImage': {
           variable: false,
           quality: 1,
           what: 'Contrast between the text and its background image may be less than 4.5:1'
         },
-        'w:AAA.1_4_6.G17.Abs': {
+        'AAA.1_4_6.G17.Abs': {
           variable: false,
           quality: 1,
           what: 'Contrast between the absolutely positioned text and its background may be less than 7:1'
         },
-        'w:AAA.1_4_6.G17.BgImage': {
+        'AAA.1_4_6.G17.BgImage': {
           variable: false,
           quality: 1,
           what: 'Contrast between the text and its background image may be less than 7:1'
@@ -3403,7 +3410,7 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:AAA.1_3_1.H42.2': {
+        'AAA.1_3_1.H42.2': {
           variable: false,
           quality: 1,
           what: 'Heading empty'
@@ -3431,7 +3438,7 @@ exports.issues = {
         }
       },
       wave: {
-        'e:heading_empty': {
+        'heading_empty': {
           variable: false,
           quality: 1,
           what: 'Empty heading'
@@ -3496,7 +3503,7 @@ exports.issues = {
         }
       },
       wave: {
-        'a:alt_redundant': {
+        'alt_redundant': {
           variable: false,
           quality: 1,
           what: 'Redundant text alternative'
@@ -3509,7 +3516,7 @@ exports.issues = {
     weight: 1,
     tools: {
       htmlcs: {
-        'e:AAA.1_1_1.H67.1': {
+        'AAA.1_1_1.H67.1': {
           variable: false,
           quality: 1,
           what: 'img element has an empty alt attribute but has a nonempty title attribute'
@@ -3523,7 +3530,7 @@ exports.issues = {
         }
       },
       wave: {
-        'a:image_title': {
+        'image_title': {
           variable: false,
           quality: 1,
           what: 'Image has a title attribute value but no alt value'
@@ -3550,7 +3557,7 @@ exports.issues = {
         }
       },
       wave: {
-        'a:title_redundant': {
+        'title_redundant': {
           variable: false,
           quality: 1,
           what: 'Title attribute text is the same as text or alternative text'
@@ -3570,12 +3577,12 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'w:AAA.1_3_1.H65': {
+        'AAA.1_3_1.H65': {
           variable: false,
           quality: 0.5,
           what: 'title attribute of the form control is empty or only whitespace'
         },
-        'w:AAA.4_1_2.H65': {
+        'AAA.4_1_2.H65': {
           variable: false,
           quality: 0.5,
           what: 'title attribute of the form control is empty or only whitespace'
@@ -3636,12 +3643,12 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:AAA.2_4_2.H25.1.NoTitleEl': {
+        'AAA.2_4_2.H25.1.NoTitleEl': {
           variable: false,
           quality: 1,
           what: 'Document head element contains no title element'
         },
-        'e:AAA.2_4_2.H25.1.EmptyTitle': {
+        'AAA.2_4_2.H25.1.EmptyTitle': {
           variable: false,
           quality: 1,
           what: 'Document head element contains an empty title element'
@@ -3669,7 +3676,7 @@ exports.issues = {
         }
       },
       wave: {
-        'e:title_invalid': {
+        'title_invalid': {
           variable: false,
           quality: 1,
           what: 'Missing or uninformative page title'
@@ -3677,7 +3684,7 @@ exports.issues = {
       }
     }
   },
-  headingStructure: {
+  headingLevelSkip: {
     wcag: '1.3.1',
     weight: 2,
     tools: {
@@ -3695,25 +3702,24 @@ exports.issues = {
           what: 'Heading levels do not increase by only one'
         }
       },
+      wave: {
+        'heading_skipped': {
+          variable: false,
+          quality: 1,
+          what: 'Skipped heading level'
+        }
+      }
+    }
+  },
+  headingStructure: {
+    wcag: '1.3.1',
+    weight: 2,
+    tools: {
       htmlcs: {
-        'e:AAA.1_3_1_AAA.G141': {
+        'AAA.1_3_1_AAA.G141': {
           variable: false,
           quality: 1,
           what: 'Heading level is incorrect'
-        }
-      },
-      nuVal: {
-        'Consider using the h1 element as a top-level heading only (all h1 elements are treated as top-level headings by many screen readers and other tools).': {
-          variable: false,
-          quality: 1,
-          what: 'Page contains more than 1 h1 element'
-        }
-      },
-      qualWeb: {
-        'QW-WCAG-T9': {
-          variable: false,
-          quality: 1,
-          what: 'Page is not organized using headings'
         }
       },
       tenon: {
@@ -3721,13 +3727,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Headings are not structured in a hierarchical manner'
-        }
-      },
-      wave: {
-        'a:heading_skipped': {
-          variable: false,
-          quality: 1,
-          what: 'Skipped heading level'
         }
       }
     }
@@ -3764,10 +3763,23 @@ exports.issues = {
         }
       },
       wave: {
-        'a:heading_missing': {
+        'heading_missing': {
           variable: false,
           quality: 1,
           what: 'Page has no headings'
+        }
+      }
+    }
+  },
+  h1Multiple: {
+    wcag: '1.3.1',
+    weight: 2,
+    tools: {
+      nuVal: {
+        'Consider using the h1 element as a top-level heading only (all h1 elements are treated as top-level headings by many screen readers and other tools).': {
+          variable: false,
+          quality: 1,
+          what: 'Page contains more than 1 h1 element'
         }
       }
     }
@@ -3791,7 +3803,7 @@ exports.issues = {
         }
       },
       wave: {
-        'a:h1_missing': {
+        'h1_missing': {
           variable: false,
           quality: 1,
           what: 'Missing first level heading'
@@ -3827,6 +3839,13 @@ exports.issues = {
           quality: 1,
           what: 'section has no heading'
         }
+      },
+      qualWeb: {
+        'QW-WCAG-T9': {
+          variable: false,
+          quality: 1,
+          what: 'Page is not organized using headings'
+        }
       }
     }
   },
@@ -3856,7 +3875,7 @@ exports.issues = {
         }
       },
       wave: {
-        'a:text_justified': {
+        'text_justified': {
           variable: false,
           quality: 1,
           what: 'Text is justified'
@@ -3882,42 +3901,42 @@ exports.issues = {
     weight: 2,
     tools: {
       htmlcs: {
-        'w:AAA.1_3_1.H49.AlignAttr': {
+        'AAA.1_3_1.H49.AlignAttr': {
           variable: false,
           quality: 1,
           what: 'Special text is aligned nonsemantically'
         },
-        'w:AAA.1_3_1.H49.B': {
+        'AAA.1_3_1.H49.B': {
           variable: false,
           quality: 1,
           what: 'Special text is bolded nonsemantically'
         },
-        'w:AAA.1_3_1.H49.I': {
+        'AAA.1_3_1.H49.I': {
           variable: false,
           quality: 1,
           what: 'Special text is italicized nonsemantically'
         },
-        'w:AAA.1_3_1.H49.Big': {
+        'AAA.1_3_1.H49.Big': {
           variable: false,
           quality: 1,
           what: 'Special text is enlarged nonsemantically'
         },
-        'w:AAA.1_3_1.H49.Small': {
+        'AAA.1_3_1.H49.Small': {
           variable: false,
           quality: 1,
           what: 'Special text is made small nonsemantically'
         },
-        'w:AAA.1_3_1.H49.U': {
+        'AAA.1_3_1.H49.U': {
           variable: false,
           quality: 1,
           what: 'Special text is underlined nonsemantically'
         },
-        'w:AAA.1_3_1.H49.Center': {
+        'AAA.1_3_1.H49.Center': {
           variable: false,
           quality: 1,
           what: 'Special text is centered nonsemantically'
         },
-        'w:AAA.1_3_1.H49.Font': {
+        'AAA.1_3_1.H49.Font': {
           variable: false,
           quality: 1,
           what: 'Special text is designated nonsemantically with a (deprecated) font element'
@@ -3976,14 +3995,14 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'w:AAA.1_3_1.H42': {
+        'AAA.1_3_1.H42': {
           variable: false,
           quality: 1,
           what: 'Heading coding is not used but the element may be intended as a heading'
         }
       },
       wave: {
-        'a:heading_possible': {
+        'heading_possible': {
           variable: false,
           quality: 1,
           what: 'Possible heading'
@@ -4003,7 +4022,7 @@ exports.issues = {
         }
       },
       wave: {
-        'a:underline': {
+        'underline': {
           variable: false,
           quality: 1,
           what: 'CSS underline on text that is not a link'
@@ -4097,7 +4116,7 @@ exports.issues = {
     weight: 1,
     tools: {
       wave: {
-        'a:list_possible': {
+        'list_possible': {
           variable: false,
           quality: 1,
           what: 'List may fail to be coded as such'
@@ -4110,7 +4129,7 @@ exports.issues = {
     weight: 1,
     tools: {
       htmlcs: {
-        'w:AAA.1_3_1.H48.2': {
+        'AAA.1_3_1.H48.2': {
           variable: false,
           quality: 1,
           what: 'Ordered list may fail to be coded as such'
@@ -4123,7 +4142,7 @@ exports.issues = {
     weight: 2,
     tools: {
       htmlcs: {
-        'w:AAA.1_3_1.H48': {
+        'AAA.1_3_1.H48': {
           variable: false,
           quality: 1,
           what: 'Navigation links are not coded as a list'
@@ -4157,19 +4176,19 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:AAA.4_1_2.H91.Select.Name': {
+        'AAA.4_1_2.H91.Select.Name': {
           variable: false,
           quality: 1,
           what: 'Select element has no accessible name'
         },
-        'w:AAA.4_1_2.H91.Select.Value': {
+        'AAA.4_1_2.H91.Select.Value': {
           variable: false,
           quality: 1,
           what: 'Select element value has no accessible name'
         }
       },
       wave: {
-        'a:select_missing_label': {
+        'select_missing_label': {
           variable: false,
           quality: 1,
           what: 'Select element has no label'
@@ -4195,7 +4214,7 @@ exports.issues = {
     weight: 1,
     tools: {
       htmlcs: {
-        'w:AAA.1_3_1.H85.2': {
+        'AAA.1_3_1.H85.2': {
           variable: false,
           quality: 1,
           what: 'Selection list may contain groups of related options that are not grouped with optgroup'
@@ -4229,7 +4248,7 @@ exports.issues = {
         }
       },
       wave: {
-        'a:accesskey': {
+        'accesskey': {
           variable: false,
           quality: 1,
           what: 'Accesskey'
@@ -4256,7 +4275,7 @@ exports.issues = {
         }
       },
       wave: {
-        'a:fieldset_missing': {
+        'fieldset_missing': {
           variable: false,
           quality: 1,
           what: 'fieldset element is missing'
@@ -4269,7 +4288,7 @@ exports.issues = {
     weight: 1,
     tools: {
       htmlcs: {
-        'w:AAA.1_3_1.H71.SameName': {
+        'AAA.1_3_1.H71.SameName': {
           variable: false,
           quality: 1,
           what: 'Radio buttons or check boxes may require a group description via a fieldset element'
@@ -4302,7 +4321,7 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:AAA.1_3_1.H71.NoLegend': {
+        'AAA.1_3_1.H71.NoLegend': {
           variable: false,
           quality: 1,
           what: 'fieldset has no legend element'
@@ -4323,7 +4342,7 @@ exports.issues = {
         }
       },
       wave: {
-        'a:legend_missing': {
+        'legend_missing': {
           variable: false,
           quality: 1,
           what: 'fieldset has no legend element'
@@ -4343,7 +4362,7 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:AAA.4_1_2.H91.Fieldset.Name': {
+        'AAA.4_1_2.H91.Fieldset.Name': {
           variable: false,
           quality: 1,
           what: 'Fieldset has no accessible name'
@@ -4382,7 +4401,7 @@ exports.issues = {
         }
       },
       wave: {
-        'a:table_layout': {
+        'table_layout': {
           variable: false,
           quality: 1,
           what: 'table element is misused to arrange content'
@@ -4446,7 +4465,7 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'w:AAA.1_3_1.H39.3.NoCaption': {
+        'AAA.1_3_1.H39.3.NoCaption': {
           variable: false,
           quality: 1,
           what: 'Table has no caption element'
@@ -4466,7 +4485,7 @@ exports.issues = {
     weight: 4,
     tools: {
       htmlcs: {
-        'e:AAA.1_3_1.H43.HeadersRequired': {
+        'AAA.1_3_1.H43.HeadersRequired': {
           variable: false,
           quality: 1,
           what: 'Complex table requires headers attributes of cells'
@@ -4499,7 +4518,7 @@ exports.issues = {
     weight: 2,
     tools: {
       htmlcs: {
-        'w:AAA.1_3_1.H43.ScopeAmbiguous': {
+        'AAA.1_3_1.H43.ScopeAmbiguous': {
           variable: false,
           quality: 1,
           what: 'Complex table requires headers attributes of cells instead of header scopes'
@@ -4596,7 +4615,7 @@ exports.issues = {
     weight: 1,
     tools: {
       htmlcs: {
-        'e:AAA.1_3_1.H63.1': {
+        'AAA.1_3_1.H63.1': {
           variable: false,
           quality: 1,
           what: 'Not all th elements in the table have a scope attribute, so an inferred scope may be incorrect'
@@ -4609,7 +4628,7 @@ exports.issues = {
     weight: 2,
     tools: {
       wave: {
-        'e:th_empty': {
+        'th_empty': {
           variable: false,
           quality: 1,
           what: 'th (table header) contains no text'
@@ -4642,7 +4661,7 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:AAA.1_3_1.F68': {
+        'AAA.1_3_1.F68': {
           variable: false,
           quality: 1,
           what: 'Form control has no label'
@@ -4663,7 +4682,7 @@ exports.issues = {
         }
       },
       wave: {
-        'e:label_missing': {
+        'label_missing': {
           variable: false,
           quality: 1,
           what: 'form element has no label'
@@ -4689,7 +4708,7 @@ exports.issues = {
     weight: 3,
     tools: {
       wave: {
-        'a:label_title': {
+        'label_title': {
           variable: false,
           quality: 1,
           what: 'Form control has a title but no label'
@@ -4716,7 +4735,7 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'w:AAA.2_5_3.F96': {
+        'AAA.2_5_3.F96': {
           variable: false,
           quality: 1,
           what: 'Visible label is not in the accessible name'
@@ -4974,7 +4993,7 @@ exports.issues = {
     weight: 2,
     tools: {
       wave: {
-        'a:region_missing': {
+        'region_missing': {
           variable: false,
           quality: 1,
           what: 'Page has no regions or ARIA landmarks'
@@ -5503,12 +5522,12 @@ exports.issues = {
     weight: 2,
     tools: {
       htmlcs: {
-        'w:AAA.1_3_1.F68.Hidden': {
+        'AAA.1_3_1.F68.Hidden': {
           variable: false,
           quality: 1,
           what: 'Hidden form field is needlessly labeled.'
         },
-        'w:AAA.1_3_1.F68.HiddenAttr': {
+        'AAA.1_3_1.F68.HiddenAttr': {
           variable: false,
           quality: 1,
           what: 'Form field with a hidden attribute is needlessly labeled.'
@@ -5607,7 +5626,7 @@ exports.issues = {
         }
       },
       wave: {
-        'e:label_multiple': {
+        'label_multiple': {
           variable: false,
           quality: 1,
           what: 'Form control has more than one label associated with it'
@@ -5620,19 +5639,19 @@ exports.issues = {
     weight: 3,
     tools: {
       htmlcs: {
-        'w:AAA.1_3_1.ARIA6': {
+        'AAA.1_3_1.ARIA6': {
           variable: false,
           quality: 1,
           what: 'Value of the aria-label attribute of the form control is empty or only whitespace'
         },
-        'w:AAA.4_1_2.ARIA6': {
+        'AAA.4_1_2.ARIA6': {
           variable: false,
           quality: 1,
           what: 'Value of the aria-label attribute of the form control is empty or only whitespace'
         }
       },
       wave: {
-        'e:label_empty': {
+        'label_empty': {
           variable: false,
           quality: 1,
           what: 'Empty form label'
@@ -5645,7 +5664,7 @@ exports.issues = {
     weight: 1,
     tools: {
       wave: {
-        'a:link_suspicious': {
+        'link_suspicious': {
           variable: false,
           quality: 1,
           what: 'Suspicious link text'
@@ -5665,12 +5684,12 @@ exports.issues = {
         }
       },
       wave: {
-        'a:link_excel': {
+        'link_excel': {
           variable: false,
           quality: 1,
           what: 'Link to Microsoft Excel workbook'
         },
-        'a:link_word': {
+        'link_word': {
           variable: false,
           quality: 1,
           what: 'Link to Microsoft Word document'
@@ -5736,7 +5755,7 @@ exports.issues = {
     weight: 4,
     tools: {
       wave: {
-        'e:aria_menu_broken': {
+        'aria_menu_broken': {
           variable: false,
           quality: 1,
           what: 'ARIA menu does not contain required menu items'
@@ -5957,7 +5976,7 @@ exports.issues = {
         }
       },
       wave: {
-        'a:tabindex': {
+        'tabindex': {
           variable: false,
           quality: 1,
           what: 'tabIndex value positive'
@@ -6137,17 +6156,17 @@ exports.issues = {
     weight: 1,
     tools: {
       wave: {
-        'a:html5_video_audio': {
+        'html5_video_audio': {
           variable: false,
           quality: 1,
           what: 'video or audio element may have no or incorrect captions, transcript, or audio description'
         },
-        'a:audio_video': {
+        'audio_video': {
           variable: false,
           quality: 1,
           what: 'audio or video file or link may have no or incorrect captions, transcript, or audio description'
         },
-        'a:youtube_video': {
+        'youtube_video': {
           variable: false,
           quality: 1,
           what: 'YouTube video may have no or incorrect captions'
@@ -6226,7 +6245,7 @@ exports.issues = {
     weight: 1,
     tools: {
       htmlcs: {
-        'w:AAA.1_4_10.C32,C31,C33,C38,SCR34,G206': {
+        'AAA.1_4_10.C32,C31,C33,C38,SCR34,G206': {
           variable: false,
           quality: 1,
           what: 'Fixed-position element may force bidirectional scrolling'
@@ -6277,7 +6296,7 @@ exports.issues = {
         }
       },
       wave: {
-        'e:link_skip_broken': {
+        'link_skip_broken': {
           variable: false,
           quality: 1,
           what: 'Skip-navigation link has no target or is not keyboard accessible'
@@ -6330,7 +6349,7 @@ exports.issues = {
     weight: 3,
     tools: {
       htmlcs: {
-        'e:AAA.3_2_2.H32.2': {
+        'AAA.3_2_2.H32.2': {
           variable: false,
           quality: 1,
           what: 'Form has no submit button'
@@ -6376,7 +6395,7 @@ exports.issues = {
     weight: 1,
     tools: {
       wave: {
-        'a:noscript': {
+        'noscript': {
           variable: false,
           quality: 1,
           what: 'noscript element may fail to contain an accessible equivalent or alternative'
@@ -6409,22 +6428,22 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'e:AAA.1_3_1.H49.AlignAttr': {
+        'AAA.1_3_1.H49.AlignAttr': {
           variable: false,
           quality: 1,
           what: 'align attribute is obsolete'
         },
-        'e:AAA.1_3_1.H49.Center': {
+        'AAA.1_3_1.H49.Center': {
           variable: false,
           quality: 1,
           what: 'center element is obsolete'
         },
-        'w:AAA.1_3_1.H63.2': {
+        'AAA.1_3_1.H63.2': {
           variable: false,
           quality: 1,
           what: 'scope attribute on a td element, instead of a th element, is obsolete'
         },
-        'e:AAA.1_3_1.H49.Font': {
+        'AAA.1_3_1.H49.Font': {
           variable: false,
           quality: 1,
           what: 'font element is obsolete'
@@ -6507,12 +6526,12 @@ exports.issues = {
         }
       },
       wave: {
-        'a:longdesc': {
+        'longdesc': {
           variable: false,
           quality: 1,
           what: 'longdesc attribute is obsolete'
         },
-        'a:flash': {
+        'flash': {
           variable: false,
           quality: 1,
           what: 'Flash content is present'
@@ -6653,6 +6672,57 @@ exports.issues = {
       }
     }
   },
+  elementClosure: {
+    wcag: '4.1.1',
+    weight: 3,
+    tools: {
+      nuVal: {
+        '^Stray start tag .+$': {
+          variable: true,
+          quality: 1,
+          what: 'Invalid opening tag'
+        },
+        '^Stray end tag .+$': {
+          variable: true,
+          quality: 1,
+          what: 'Invalid closing tag'
+        },
+        '^Start tag .+ seen but an element of the same type was already open.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Element is invalidly a descendant of another such element'
+        },
+        '^End tag for .+ seen, but there were unclosed elements.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Element is closed while an element within it is unclosed'
+        },
+        '^Unclosed element .+$': {
+          variable: true,
+          quality: 1,
+          what: 'Element is unclosed'
+        },
+        '^No .+ element in scope but a .+ end tag seen.*$': {
+          variable: true,
+          quality: 1,
+          what: 'End tag for an element that is not in scope'
+        }
+      }
+    }
+  },
+  nestingBad: {
+    wcag: '4.1.1',
+    weight: 3,
+    tools: {
+      nuVal: {
+        '^End tag .+ violates nesting rules.*$': {
+          variable: true,
+          quality: 1,
+          what: 'End tag violates nesting rules'
+        }
+      }
+    }
+  },
   parseError: {
     wcag: '4.1',
     weight: 3,
@@ -6680,40 +6750,10 @@ exports.issues = {
           quality: 1,
           what: 'aria-hidden attribute is invalid for an input element with type="hidden"'
         },
-        '^Stray start tag .+$': {
-          variable: true,
-          quality: 1,
-          what: 'Invalid opening tag'
-        },
-        '^Stray end tag .+$': {
-          variable: true,
-          quality: 1,
-          what: 'Invalid closing tag'
-        },
-        '^Start tag .+ seen but an element of the same type was already open.*$': {
-          variable: true,
-          quality: 1,
-          what: 'Element is invalidly a descendant of another such element'
-        },
-        '^End tag for .+ seen, but there were unclosed elements.*$': {
-          variable: true,
-          quality: 1,
-          what: 'Element is closed while an element within it is unclosed'
-        },
-        '^Unclosed element .+$': {
-          variable: true,
-          quality: 1,
-          what: 'Element is unclosed'
-        },
         '^Bad start tag in .+$': {
           variable: true,
           quality: 1,
           what: 'Invalid start tag'
-        },
-        '^End tag .+ violates nesting rules.*$': {
-          variable: true,
-          quality: 1,
-          what: 'End tag violates nesting rules'
         },
         '^Element .+ is missing a required instance of child element .+$': {
           variable: true,
@@ -6764,11 +6804,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Attribute name includes a double quotation mark'
-        },
-        '^No .+ element in scope but a .+ end tag seen.*$': {
-          variable: true,
-          quality: 1,
-          what: 'End tag for an element that is not in scope'
         },
         'Element script must not have attribute async unless attribute src is also specified or unless attribute type is specified with value module.': {
           variable: false,
@@ -6869,7 +6904,7 @@ exports.issues = {
         }
       },
       wave: {
-        'e:longdesc_invalid': {
+        'longdesc_invalid': {
           variable: false,
           quality: 1,
           what: 'longdesc attribute has a value that is not a URL (and is obsolete)'

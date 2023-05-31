@@ -19,14 +19,8 @@ const stdRequester = process.env.REQUESTER;
 const contaminantNames = new Set([
   'axe',
   'continuum',
-  'focAll',
-  'focInd',
-  'focOp',
-  'hover',
   'htmlcs',
   'ibm',
-  'menuNav',
-  'textNodes',
   'wave'
 ]);
 // Tests that are immune to page alteration.
@@ -44,7 +38,7 @@ exports.merge = (script, batch, requester, isolate = false) => {
   // If the requester is unspecified, make it the standard requester.
   requester ||= stdRequester;
   // Create a timestamp.
-  const timeStamp = Math.floor((Date.now() - Date.UTC(2022, 1)) / 2000).toString(36);
+  const timeStamp = Math.floor((Date.now() - Date.UTC(2023, 4)) / 2000).toString(36);
   // Create a time description.
   const creationTime = (new Date()).toISOString().slice(0, 19);
   // Initialize a target-independent job.

@@ -18,6 +18,8 @@
 require('dotenv').config();
 // Function to process files.
 const fs = require('fs/promises');
+// Function to process a list-to-batch conversion.
+const {batch} = require('./batch');
 // Function to process a merger.
 const {merge} = require('./merge');
 // Function to score reports.
@@ -41,12 +43,13 @@ const fnArgs = process.argv.slice(3);
 // Converts a target list to a batch.
 const callBatch = async (listID, what) => {
   // Get the target list.
-  const list = await fs.readFile(`${specDir}/targetLists/${listID}.tsv`, 'utf8');
+  const listString = await fs.readFile(`${specDir}/targetLists/${listID}.tsv`, 'utf8');
+  const list = listString.split('\n').map(target => target.split('\t'));
   // Convert it to a batch.
   const batchObj = batch(listID, what, list);
   // Save the batch.
   const batchJSON = JSON.stringify(batchObj, null, 2);
-  await fs.writeFile(`${specDir}/batches/${listID}.json`, batchJSON);
+  await fs.writeFile(`${specDir}/batches/${listID}.json`, `${batchJSON}\n`);
   console.log(`Target list ${listID} converted to a batch and saved in ${specDir}/batches`);
 };
 // Fulfills a merging request.

@@ -21,7 +21,7 @@ exports.batch = (id, what, targetList) => {
     && targetList.length
     && targetList.every(
       target => Array.isArray(target)
-      && target.every(item => typeof item === string)
+      && target.every(item => typeof item === 'string')
     )
     && targetList.some(target => target.length === 3)
   ) {

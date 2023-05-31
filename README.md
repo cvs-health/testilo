@@ -158,7 +158,36 @@ As shown in this example, when a browser is launched by placeholder substitution
 
 ### Target list to batch
 
-If you have a target list, Testilo can convert it to a batch. The batch will contain, for each target, one array of acts named `main`, containing a `launch` act (depending on the script to specify the browser type) and a `url` act.
+If you have a target list, the `batch` module of Testilo can convert it to a batch. The batch will contain, for each target, one array of acts named `main`, containing a `launch` act (depending on the script to specify the browser type) and a `url` act.
+
+#### Invocation
+
+There are two ways to use the `batch` module.
+
+##### By a module
+
+A module can invoke `batch` in this way:
+
+```javaScript
+const {batch} = require('testilo/batch');
+const batchObj = batch(listID, what, targetList);
+```
+
+This invocation references `listID`, `what`, and `targetList` variables that the module must have already defined. They are all strings. `listID` is a unique identifier for the target list. `what` describes the target list. `targetList` is the target list. The `batch()` function of the `batch` module generates a batch and returns it as an object. The invoking module can further dispose of the batch as needed.
+
+##### By a user
+
+A user can invoke `batch` in this way:
+
+- Create a target list and save it as a text file (with tab-delimited items in newline-delimited lines) in the `targetLists` subdirectory of the `process.env.SPECDIR` directory. Name the file `x.tsv`, where `x` is the list ID.
+- In the Testilo project directory, execute this statement:
+    - `node call batch i`
+
+In this statement, replace `i` with the list ID.
+
+The `call` module will retrieve the named target list.
+The `batch` module will convert the target list to a batch.
+The `call` module will save the batch as a JSON file in the `batches` subdirectory of the `process.env.SPECDIR` directory.
 
 ### Merge
 

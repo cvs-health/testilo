@@ -38,6 +38,17 @@ const fnArgs = process.argv.slice(3);
 
 // ########## FUNCTIONS
 
+// Converts a target list to a batch.
+const callBatch = async (listID, what) => {
+  // Get the target list.
+  const list = await fs.readFile(`${specDir}/targetLists/${listID}.tsv`, 'utf8');
+  // Convert it to a batch.
+  const batchObj = batch(listID, what, list);
+  // Save the batch.
+  const batchJSON = JSON.stringify(batchObj, null, 2);
+  await fs.writeFile(`${specDir}/batches/${listID}.json`, batchJSON);
+  console.log(`Target list ${listID} converted to a batch and saved in ${specDir}/batches`);
+};
 // Fulfills a merging request.
 const callMerge = async (scriptID, batchID, requester, withIsolation = false) => {
   // Get the script and the batch.
@@ -141,6 +152,12 @@ const callCompare = async (compareProcID, comparisonNameBase) => {
 // Execute the requested function.
 if (fn === 'aim' && fnArgs.length === 5) {
   callAim(... fnArgs)
+  .then(() => {
+    console.log('Execution completed');
+  });
+}
+else if (fn === 'batch' && fnArgs.length === 2) {
+  callBatch(... fnArgs)
   .then(() => {
     console.log('Execution completed');
   });

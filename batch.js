@@ -20,8 +20,10 @@ exports.batch = (id, what, targetList) => {
     && Array.isArray(targetList)
     && targetList.length
     && targetList.every(
-      target => Array.isArray(target) && target.every(item => typeof item === string && item.length)
+      target => Array.isArray(target)
+      && target.every(item => typeof item === string)
     )
+    && targetList.some(target => target.length === 3)
   ) {
     // Initialize the batch.
     const batch = {
@@ -29,25 +31,27 @@ exports.batch = (id, what, targetList) => {
       what,
       targets: []
     };
-    // For each target:
+    // For each valid target:
     targetList.forEach(target => {
-      // Add it to the batch.
-      batch.targets.push({
-        id: target[0],
-        what: target[1],
-        acts: {
-          main: [
-            {
-              type: 'launch'
-            },
-            {
-              type: 'url',
-              which: target[2],
-              what: target[1]
-            }
-          ]
-        }
-      });
+      if (target.length === 3) {
+        // Add it to the batch.
+        batch.targets.push({
+          id: target[0],
+          what: target[1],
+          acts: {
+            main: [
+              {
+                type: 'launch'
+              },
+              {
+                type: 'url',
+                which: target[2],
+                what: target[1]
+              }
+            ]
+          }
+        });
+      }
     });
     // Return the batch.
     return batch;

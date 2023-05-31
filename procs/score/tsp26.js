@@ -21,27 +21,13 @@ const logWeights = {
   errorLogCount: 1,
   errorLogSize: 0.02,
   prohibitedCount: 15,
-  visitTimeoutCount: 10,
-  visitRejectionCount: 10,
-  visitLatency: 1
+  visitRejectionCount: 10
 };
-// Normal latency (1 second per visit).
-const normalLatency = 13;
+const latencyWeight = 1;
+// Normal latency (1.5 second per visit).
+const normalLatency = 20;
 // How much each prevention adds to the score.
 const preventionWeight = 100;
-// Tools.
-const tools = [
-  'alfa',
-  'axe',
-  'continuum',
-  'htmlcs',
-  'ibm',
-  'nuVal',
-  'qualWeb',
-  'tenon',
-  'testaro',
-  'wave'
-];
 
 // VARIABLES
 
@@ -54,7 +40,8 @@ let preventionScores = {};
 exports.scorer = async report => {
   // Initialize the score.
   report.score = {
-    summary = {
+    scoreProcID,
+    summary: {
       total: 0,
       tools: 0,
       preventions: 0,
@@ -63,7 +50,7 @@ exports.scorer = async report => {
     },
     toolTotals: [],
     tools: {},
-    preventions = {}
+    preventions: {}
   };
   // If there are any acts in the report:
   const {acts} = report;
@@ -77,17 +64,18 @@ exports.scorer = async report => {
         total: 0
       };
       const {score} = report;
+      const {summary} = score;
       // For each test act:
       testActs.forEach(act => {
         // If a result with totals exists:
         const {which} = act;
         if (act.result && act.result.totals && act.result.totals.length === 4) {
-          // Add the totals to the score.
+          // Add the tool totals to the score.
           const {totals} = act.result;
           score.tools[which] = totals;
           score.toolTotals.forEach((total, index) => {
             score.toolTotals[index] += totals[index];
-            score.summary.tools += totals[index] * severityWeights[index];
+            summary.tools += totals[index] * severityWeights[index];
           });
         }
         // Otherwise, i.e. if no result with totals exists:
@@ -99,40 +87,34 @@ exports.scorer = async report => {
           if (! act.result.prevented) {
             act.result.prevented = true;
           };
-          // Add the tool and a prevention score to the score.
+          // Add the tool and the prevention score to the score.
           report.score.preventions[which] = preventionWeight;
           report.score.preventions += preventionWeight;
         }
       });
-      // Get the log score.
+      // Add the log score to the score.
       const {jobData} = report;
-      const logScore = logWeights.logCount * jobData.logCount
-      + logWeights.logSize * jobData.logSize +
-      + logWeights.errorLogCount * jobData.errorLogCount
-      + logWeights.errorLogSize * jobData.errorLogSize
-      + logWeights.prohibitedCount * jobData.prohibitedCount +
-      + logWeights.visitTimeoutCount * jobData.visitTimeoutCount +
-      + logWeights.visitRejectionCount * jobData.visitRejectionCount
-      + logWeights.visitLatency * (jobData.visitLatency - normalLatency);
-      const roundedLogScore = Math.max(0, Math.round(logScore));
-      summary.log = roundedLogScore;
-      summary.total += roundedLogScore;
+      summary.log = Math.max(0, Math.round(
+        logWeights.logCount * jobData.logCount
+        + logWeights.logSize * jobData.logSize +
+        + logWeights.errorLogCount * jobData.errorLogCount
+        + logWeights.errorLogSize * jobData.errorLogSize
+        + logWeights.prohibitedCount * jobData.prohibitedCount +
+        + logWeights.visitRejectionCount * jobData.visitRejectionCount
+      ));
+      summary.latency = Math.round(latencyWeight * (jobData.visitLatency - normalLatency));
+      // Add the total score to the score.
+      summary.total = summary.tools + summary.preventions + summary.log + summary.latency;
     }
     // Otherwise, i.e. if none of them is a test act:
     else {
       // Report this.
       console.log('ERROR: No test acts');
-  // Add the score facts to the report.
-  report.score = {
-    scoreProcID,
-    logWeights,
-    soloWeight,
-    issueWeights,
-    preventionWeights,
-    toolDetails,
-    issueDetails,
-    preventionScores,
-    summary
-  };
+    }
+  }
+  // Otherwise, i.e. if there are no acts in the report:
+  else {
+    // Report this.
+    console.log('ERROR: No acts');
+  }
 };
-exports.issues = issues;

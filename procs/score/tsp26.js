@@ -2,12 +2,10 @@
   tsp26
   Testilo score proc 26
 
-  Computes scores from Testilo script ts26 and adds them to a report.
+  Totals the standardized tool totals from a ts26 report and adds them to the report. This proc
+  does not compensate for inter-tool duplicativity, treats tool totals as equivalent, and
+  weighs ordinal severities linearly from 1 to 4.
 */
-
-// IMPORTS
-
-const {issues} = require('./tic26');
 
 // CONSTANTS
 
@@ -29,49 +27,40 @@ const normalLatency = 20;
 // How much each prevention adds to the score.
 const preventionWeight = 100;
 
-// VARIABLES
-
-let summary = {};
-let preventionScores = {};
-
 // FUNCTIONS
 
 // Scores a report.
-exports.scorer = async report => {
-  // Initialize the score.
-  report.score = {
-    scoreProcID,
-    summary: {
-      total: 0,
-      tools: 0,
-      preventions: 0,
-      log: 0,
-      latency: 0
-    },
-    toolTotals: [],
-    tools: {},
-    preventions: {}
-  };
+exports.scorer = report => {
   // If there are any acts in the report:
   const {acts} = report;
   if (Array.isArray(acts) && acts.length) {
     // If any of them are test acts:
     const testActs = acts.filter(act => act.type === 'test');
     if (testActs.length) {
-      // Initialize a report score.
-      report.score = {
+      // Initialize the score data.
+      const score = {
+        scoreProcID,
+        summary: {
+          total: 0,
+          tools: 0,
+          preventions: 0,
+          log: 0,
+          latency: 0
+        },
+        toolTotals: [0, 0, 0, 0],
         tools: {},
-        total: 0
+        preventions: {}
       };
-      const {score} = report;
       const {summary} = score;
       // For each test act:
       testActs.forEach(act => {
-        // If a result with totals exists:
+        // If a standard result with valid totals exists:
         const {which} = act;
-        if (act.result && act.result.totals && act.result.totals.length === 4) {
+        if (
+          act.standardResult && act.standardResult.totals && act.standardResult.totals.length === 4
+        ) {
           // Add the tool totals to the score.
-          const {totals} = act.result;
+          const {totals} = act.standardResult;
           score.tools[which] = totals;
           score.toolTotals.forEach((total, index) => {
             score.toolTotals[index] += totals[index];
@@ -88,8 +77,8 @@ exports.scorer = async report => {
             act.result.prevented = true;
           };
           // Add the tool and the prevention score to the score.
-          report.score.preventions[which] = preventionWeight;
-          report.score.preventions += preventionWeight;
+          score.preventions[which] = preventionWeight;
+          summary.preventions += preventionWeight;
         }
       });
       // Add the log score to the score.
@@ -105,6 +94,8 @@ exports.scorer = async report => {
       summary.latency = Math.round(latencyWeight * (jobData.visitLatency - normalLatency));
       // Add the total score to the score.
       summary.total = summary.tools + summary.preventions + summary.log + summary.latency;
+      // Add the score to the report.
+      report.score = score;
     }
     // Otherwise, i.e. if none of them is a test act:
     else {

@@ -95,14 +95,12 @@ const callScore = async (scorerID, selector = '') => {
     // Get the scorer.
     const {scorer} = require(`${functionDir}/score/${scorerID}`);
     // Score the reports.
-    const scoredReports = score(scorer, reports);
+    score(scorer, reports);
     const scoredReportDir = `${reportDir}/scored`;
     // For each scored report:
-    for (const scoredReport of scoredReports) {
+    for (const report of reports) {
       // Save it.
-      await fs.writeFile(
-        `${scoredReportDir}/${scoredReport.id}.json`, JSON.stringify(scoredReport, null, 2)
-      );
+      await fs.writeFile(`${scoredReportDir}/${report.id}.json`, JSON.stringify(report, null, 2));
     };
   }
   // Otherwise, i.e. if no raw reports are to be scored:

@@ -1,6 +1,6 @@
 /*
-  tic24
-  Testilo issue classification 24
+  tic26
+  Testilo issue classification 26
 
   Classifies tests of Testaro and its dependent tools into issues.
 
@@ -5398,10 +5398,15 @@ exports.issues = {
     weight: 3,
     tools: {
       testaro: {
-        focOp: {
+        'focOp-focusable-inoperable': {
           variable: false,
           quality: 1,
-          what: 'Operable elements that cannot be Tab-focused and vice versa'
+          what: 'Tab-focusable elements that are inoperable'
+        },
+        'focOp-operable-nonfocusable': {
+          variable: false,
+          quality: 1,
+          what: 'Operable elements that cannot be Tab-focused'
         }
       }
     }

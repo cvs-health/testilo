@@ -2586,7 +2586,7 @@ exports.issues = {
         }
       },
       testaro: {
-        role: {
+        'role-bad': {
           variable: false,
           quality: 1,
           what: 'Nonexistent or implicit-overriding role'
@@ -2625,6 +2625,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'explicit role is redundant for a text-type input element without a list attribute'
+        }
+      },
+      testaro: {
+        'role-redundant': {
+          variable: false,
+          quality: 1,
+          what: 'Redundant role'
         }
       }
     }
@@ -4681,6 +4688,13 @@ exports.issues = {
           what: 'Form control has no accessible name'
         }
       },
+      testaro: {
+        'labClash-unlabeled': {
+          variable: false,
+          quality: 1,
+          what: 'Button, input, select, or textarea is unlabeled'
+        }
+      },
       wave: {
         'label_missing': {
           variable: false,
@@ -4940,10 +4954,23 @@ exports.issues = {
         }
       },
       testaro: {
-        focInd: {
+        'focInd-missing': {
           variable: false,
           quality: 1,
-          what: 'Focused element displays no or a nostandard focus indicator'
+          what: 'Focused element displays no focus indicator'
+        }
+      }
+    }
+  },
+  focusIndicationBad: {
+    wcag: '2.4.7',
+    weight: 3,
+    tools: {
+      testaro: {
+        'focInd-nonOutline': {
+          variable: false,
+          quality: 1,
+          what: 'Focused element displays a nostandard focus indicator'
         }
       }
     }
@@ -5617,7 +5644,7 @@ exports.issues = {
         }
       },
       testaro: {
-        labClash: {
+        'labClash-mislabeled': {
           variable: false,
           quality: 1,
           what: 'Incompatible label types'

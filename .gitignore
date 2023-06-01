@@ -10,3 +10,4 @@ node_modules/
 
 # Secrets
 .env
+.npmrc

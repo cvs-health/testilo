@@ -181,9 +181,9 @@ A user can invoke `batch` in this way:
 
 - Create a target list and save it as a text file (with tab-delimited items in newline-delimited lines) in the `targetLists` subdirectory of the `process.env.SPECDIR` directory. Name the file `x.tsv`, where `x` is the list ID.
 - In the Testilo project directory, execute this statement:
-    - `node call batch i`
+    - `node call batch i w`
 
-In this statement, replace `i` with the list ID.
+In this statement, replace `i` with the list ID and `w` with a description of the batch.
 
 The `call` module will retrieve the named target list.
 The `batch` module will convert the target list to a batch.

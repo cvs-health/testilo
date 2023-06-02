@@ -17,7 +17,7 @@
   - what: description of the test.
 */
 
-exports.issues = {
+exports.issueClasses = {
   ignorable: {
     wcag: '',
     weight: 0,
@@ -4967,7 +4967,7 @@ exports.issues = {
     weight: 3,
     tools: {
       testaro: {
-        'focInd-nonOutline': {
+        'focInd-nonoutline': {
           variable: false,
           quality: 1,
           what: 'Focused element displays a nostandard focus indicator'
@@ -5632,6 +5632,84 @@ exports.issues = {
       }
     }
   },
+  hoverImpact: {
+    wcag: '1.4.13',
+    weight: 3,
+    tools: {
+      testaro: {
+        'hover-impactTriggers': {
+          variable: false,
+          quality: 1,
+          what: 'Hovering over element has unexpected effects'
+        }
+      }
+    }
+  },
+  unhoverable: {
+    wcag: '1.4.13',
+    weight: 3,
+    tools: {
+      testaro: {
+        'hover-unhoverables': {
+          variable: false,
+          quality: 1,
+          what: 'Operable element cannot be hovered over'
+        }
+      }
+    }
+  },
+  hoverNoCursor: {
+    wcag: '1.4.13',
+    weight: 3,
+    tools: {
+      testaro: {
+        'hover-noCursors': {
+          variable: false,
+          quality: 1,
+          what: 'Hoverable element hides the mouse cursor'
+        }
+      }
+    }
+  },
+  hoverBadCursor: {
+    wcag: '1.4.13',
+    weight: 2,
+    tools: {
+      testaro: {
+        'hover-badCursors': {
+          variable: false,
+          quality: 1,
+          what: 'Link or button makes the hovering mouse cursor nonstandard'
+        }
+      }
+    }
+  },
+  hoverNoIndicator: {
+    wcag: '1.4.13',
+    weight: 3,
+    tools: {
+      testaro: {
+        'hover-noCursors': {
+          variable: false,
+          quality: 1,
+          what: 'Button shows no indication of being hovered over'
+        }
+      }
+    }
+  },
+  hoverBadIndicator: {
+    wcag: '1.4.13',
+    weight: 2,
+    tools: {
+      testaro: {
+        'hover-noCursors': {
+          variable: false,
+          quality: 1,
+          what: 'List item changes when hovered over'
+        }
+      }
+    }
+  },
   labelClash: {
     wcag: '1.3.1',
     weight: 2,
@@ -5979,6 +6057,19 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Heading, link, and button style inconsistencies'
+        }
+      }
+    }
+  },
+  filterStyle: {
+    wcag: '4.1',
+    weight: 1,
+    tools: {
+      testaro: {
+        filterStyle: {
+          variable: false,
+          quality: 1,
+          what: 'Element styles include filter'
         }
       }
     }

@@ -2806,20 +2806,25 @@ exports.issueClasses = {
         }
       },
       continuum: {
+        1039: {
+          variable: false,
+          quality: 1,
+          what: 'Element with a checkbox role has no aria-checked attribute'
+        },
         1040: {
           variable: false,
           quality: 1,
-          what: 'element with a combobox role has no aria-controls or no aria-expanded attribute'
+          what: 'Element with a combobox role has no aria-controls or no aria-expanded attribute'
         },
         1042: {
           variable: false,
           quality: 1,
-          what: 'element with an option role has no aria-selected attribute'
+          what: 'Element with an option role has no aria-selected attribute'
         },
         1043: {
           variable: false,
           quality: 1,
-          what: 'element with a radio role has no aria-checked attribute'
+          what: 'Element with a radio role has no aria-checked attribute'
         }
       },
       nuVal: {
@@ -3227,6 +3232,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Contrast ratio of text with background does not meet WCAG 2.1 AA'
+        },
+        text_contrast_sufficient: {
+          variable: false,
+          quality: 1,
+          what: 'Text has a contrast with its background less than the WCAG AA minimum for its size and weight'
         }
       },
       qualWeb: {
@@ -3313,6 +3323,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Inline background color may lack a complementary foreground color'
+        },
+        'AAA.1_4_6.G18.BgImage': {
+          variable: false,
+          quality: 1,
+          what: 'Contrast between the text and the background image may be less than 4.5:1'
         },
         'AAA.1_4_3_F24.F24.FGColour': {
           variable: false,
@@ -4122,6 +4137,13 @@ exports.issueClasses = {
     wcag: '1.3.1',
     weight: 1,
     tools: {
+      qualWeb: {
+        'QW-BP23': {
+          variable: false,
+          quality: 1,
+          what: 'List item is used nonsemantically'
+        }
+      },
       wave: {
         'list_possible': {
           variable: false,
@@ -4756,6 +4778,11 @@ exports.issueClasses = {
         }
       },
       ibm: {
+        label_name_visible: {
+          variable: false,
+          quality: 1,
+          what: 'Accessible name does not match or contain the visible label text'
+        },
         WCAG21_Label_Accessible: {
           variable: false,
           quality: 1,
@@ -7033,6 +7060,19 @@ exports.issueClasses = {
           what: 'longdesc attribute has a value that is not a URL (and is obsolete)'
         }
       },
+    }
+  },
+  slashParseRisk: {
+    wcag: '4.1',
+    weight: 1,
+    tools: {
+      nuVal: {
+        'Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.': {
+          variable: false,
+          quality: 1,
+          what: 'Void element has a useless trailing slash.'
+        }
+      }
     }
   },
   encodingBad: {

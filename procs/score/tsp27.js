@@ -30,8 +30,9 @@ const latencyWeight = 1;
 const normalLatency = 20;
 // How much each prevention adds to the score.
 const preventionWeight = 200;
-// Index of issues.
+// Indexes of issues.
 const issueIndex = {};
+const issueMatcher = [];
 Object.keys(issueClasses).forEach(issueClassName => {
   Object.keys(issueClasses[issueClassName].tools).forEach(toolName => {
     Object.keys(issueClasses[issueClassName].tools[toolName]).forEach(issueID => {
@@ -39,6 +40,9 @@ Object.keys(issueClasses).forEach(issueClassName => {
         issueIndex[toolName] = {};
       }
       issueIndex[toolName][issueID] = issueClassName;
+      if (issueClasses[issueClassName].tools[toolName][issueID].variable) {
+        issueMatcher.push(issueID);
+      }
     })
   });
 });
@@ -93,17 +97,29 @@ exports.scorer = report => {
           const issueTotals = {};
           standardResult.instances.forEach(instance => {
             const issueID = issueIndex[which][instance.issueID];
-            if (! issueID) {
-              console.log(`issueID problem for ${which}: ${instance.issueID}`);
+            let indexIssueID;
+            if (issueID) {
+              indexIssueID = issueID;
             }
-            if (! issueTotals[issueID]) {
-              issueTotals[issueID] = 0;
+            else {
+              indexIssueID = issueMatcher.find(pattern => {
+                const patternRE = new RegExp(pattern);
+                return patternRE.test(instance.issueID);
+              });
             }
-            issueTotals[issueID] += instance.count || 1;
+            if (indexIssueID) {
+              if (! issueTotals[indexIssueID]) {
+                issueTotals[indexIssueID] = 0;
+              }
+              issueTotals[indexIssueID] += instance.count || 1;
+            }
+            else {
+              console.log(`ERROR: ${instance.issueID} not found in issueClasses`);
+            }
           });
           // Update the issue totals in the score.
-          Object.keys(issueTotals).forEach(issueID => {
-            issues[issueID] = Math.max(issues[issueID] || 0, issueTotals[issueID]);
+          Object.keys(issueTotals).forEach(id => {
+            issues[id] = Math.max(issues[id] || 0, issueTotals[id]);
           });
           summary.issues = Object.values(issues).reduce((total, current) => total + current);
         }

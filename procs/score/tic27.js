@@ -166,7 +166,7 @@ exports.issueClasses = {
       }
     }
   },
-  headingNoText: {
+  headingImageNoText: {
     wcag: '1.1.1',
     weight: 4,
     tools: {
@@ -2588,7 +2588,7 @@ exports.issueClasses = {
       testaro: {
         'role-bad': {
           variable: false,
-          quality: 1,
+          quality: 0.5,
           what: 'Nonexistent or implicit-overriding role'
         }
       }
@@ -3453,7 +3453,7 @@ exports.issueClasses = {
         }
       },
       qualWeb: {
-        'QW-ACT-R33': {
+        'QW-ACT-R35': {
           variable: false,
           quality: 1,
           what: 'Heading has no accessible name'

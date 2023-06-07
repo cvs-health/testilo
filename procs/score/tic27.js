@@ -6847,6 +6847,11 @@ exports.issueClasses = {
           quality: 1,
           what: 'Element is closed while an element within it is unclosed'
         },
+        '^End tag .+ seen, but there were open elements.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Element is closed while an element within it is unclosed'
+        },
         '^Unclosed element .+$': {
           variable: true,
           quality: 1,

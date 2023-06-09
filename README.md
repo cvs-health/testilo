@@ -41,12 +41,12 @@ Testilo can, however, make job preparation more efficient in these scenarios:
 
 ### Target lists
 
-The simplest version of a list of targets is a _target list_. It is stored as a tab-delimited text file, with one line per target. Each line contains 3 items, with tabs between them:
+The simplest version of a list of targets is a _target list_. It is an array of arrays defining 1 or more targets. It is stored as a tab-delimited text file, with one line per target. Each line contains 3 items, with tabs between them:
 - An ID for the target
 - A description of the target
 - The URL of the target
 
-For example, a target list (with “→” representing the Tab character) might be:
+For example, a stored target list (with “→” representing the Tab character) might be:
 
 ```text
 w3c→World Wide Web Consortium→https://www.w3.org/
@@ -168,10 +168,12 @@ A module can invoke `batch` in this way:
 
 ```javaScript
 const {batch} = require('testilo/batch');
-const batchObj = batch(listID, what, targetList);
+const batchObj = batch(listID, what, targets);
 ```
 
-This invocation references `listID`, `what`, and `targetList` variables that the module must have already defined. They are all strings. `listID` is a unique identifier for the target list. `what` describes the target list. `targetList` is the target list. The `batch()` function of the `batch` module generates a batch and returns it as an object. The invoking module can further dispose of the batch as needed.
+This invocation references `listID`, `what`, and `targets` variables that the module must have already defined. The `listID` variable is a unique identifier for the target list. the `what` variable describes the target list. The `targets` variable is an array of arrays, with each array containing the 3 items (ID, description, and URL) defining one target.
+
+The `batch()` function of the `batch` module generates a batch and returns it as an object. The invoking module can further dispose of the batch as needed.
 
 ##### By a user
 

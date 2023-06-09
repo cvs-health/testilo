@@ -19,14 +19,11 @@ exports.script = (id, issueClasses, ... issueIDs) => {
   const neededTools = {};
   // For each specified issue:
   issueIDs.forEach(issueID => {
-    console.log(`Processing ${issueID}`);
     // If it exists in the classification:
     const issueData = issueClasses[issueID];
     if (issueData) {
-      console.log('It is in the classification');
       // For each tool that tests for the issue:
       const issueToolIDs = Object.keys(issueData.tools);
-      console.log(`Tools with tests for it are ${issueToolIDs}`);
       issueToolIDs.forEach(issueToolID => {
         // For each of the tests of the tool for the issue:
         if (! neededTools[issueToolID]) {

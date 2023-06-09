@@ -20,6 +20,8 @@ require('dotenv').config();
 const fs = require('fs/promises');
 // Function to process a list-to-batch conversion.
 const {batch} = require('./batch');
+// Function to create a script from rule specifications.
+const {script} = require('./script');
 // Function to process a merger.
 const {merge} = require('./merge');
 // Function to score reports.
@@ -51,6 +53,17 @@ const callBatch = async (listID, what) => {
   const batchJSON = JSON.stringify(batchObj, null, 2);
   await fs.writeFile(`${specDir}/batches/${listID}.json`, `${batchJSON}\n`);
   console.log(`Target list ${listID} converted to a batch and saved in ${specDir}/batches`);
+};
+// Fulfills a script-creation request.
+const callScript = async (scriptID, classificationID, ... issueIDs) => {
+  // Get the issue classification.
+  const {issueClasses} = require(`${functionDir}/score/${classificationID}`);
+  // Create a script.
+  const scriptObj = script(issueClasses, ... issueIDs);
+  // Save the script.
+  const scriptJSON = JSON.stringify(scriptObj, null, 2);
+  await fs.writeFile(`${specDir}/scripts/${scriptID}.json`, scriptJSON);
+  console.log(`Script ${scriptID} created and saved in ${specDir}/scripts`);
 };
 // Fulfills a merging request.
 const callMerge = async (scriptID, batchID, requester, withIsolation = false) => {
@@ -159,6 +172,12 @@ if (fn === 'aim' && fnArgs.length === 5) {
 }
 else if (fn === 'batch' && fnArgs.length === 2) {
   callBatch(... fnArgs)
+  .then(() => {
+    console.log('Execution completed');
+  });
+}
+else if (fn === 'script' && fnArgs.length > 2) {
+  callScript(... fnArgs)
   .then(() => {
     console.log('Execution completed');
   });

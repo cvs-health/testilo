@@ -35,15 +35,13 @@ Testaro executes _jobs_. In a job, Testaro performs _acts_ (tests and other oper
 
 You can create a job for Testaro directly, without using Testilo.
 
-Testilo can, however, make job preparation more efficient in two scenarios:
-- A common use case is to define a battery of tests and to have those same tests performed on multiple targets. In that case, it is efficient to create multiple jobs, one per target. The jobs are identical, except for the target-specific acts (including navigating to targets). If you tell Testilo about the tests and the targets, Testilo can create such collections of jobs for you.
-- Some tests operate on a copy of a target and modify that copy. Usually, one wants test isolation: The results of a test do not depend on any previously performed tests. To ensure test isolation, a job containing such target-modifying test acts must follow them with acts that restore the target to its pre-test state. Testilo can insert the required target-restoring acts into each job after target-modifying test act.
-
-The `batch` and `merge` modules performs these services.
+Testilo can, however, make job preparation more efficient in these scenarios:
+- You want to perform a battery of tests on multiple targets.
+- You want to test targets for particular issues, using whichever tools happen to have tests for those issues.
 
 ### Target lists
 
-The simplest version of a list of targets is _target list_. It is stored as a tab-delimited text file, with one line per target. Each line contains 3 items, with tabs between them:
+The simplest version of a list of targets is a _target list_. It is stored as a tab-delimited text file, with one line per target. Each line contains 3 items, with tabs between them:
 - An ID for the target
 - A description of the target
 - The URL of the target
@@ -125,7 +123,7 @@ Here is a script:
 
 ```javaScript
 {
-  id: 'ts25',
+  id: 'ts99',
   what: 'Axe and QualWeb on account page',
   strict: true,
   timeLimit: 60,
@@ -152,7 +150,7 @@ Here is a script:
 }
 ```
 
-This script has 2 acts. The first is a placeholder act. The above batch can be merged with this script to create jobs. In that case, the first job would launch a Chromium browser, navigate to the Acme login page, complete and submit the login form, wait for the account page to load, and then run the Axe tests. If the batch contained additional targets, additional jobs would be created, with the login actions for each target specified in the `private` array of the `acts` object of that target.
+This script has 3 acts. The first is a placeholder act. The above batch can be merged with this script to create jobs. In that case, the first job would launch a Chromium browser, navigate to the Acme login page, complete and submit the login form, wait for the account page to load, run the Axe tests, and then run the QualWeb tests. If the batch contained additional targets, additional jobs would be created, with the login actions for each target specified in the `private` array of the `acts` object of that target.
 
 As shown in this example, when a browser is launched by placeholder substitution, the script can determine the browser type (`chromium`, `firefox`, or `webkit`) by assigning a value to a `launch` property of the placeholder. That is useful, because sometimes it is the actions specified in a script that dictate which browser type is appropriate.
 
@@ -191,7 +189,7 @@ The `call` module will save the batch as a JSON file in the `batches` subdirecto
 
 ### Merge
 
-Testilo merges batches with scripts by means of a `merge` module.
+Testilo merges batches with scripts, producing jobs, by means of the `merge` module.
 
 The `merge` module needs to be given a batch and a script. In addition, `merge` offers an isolation option. If you exercise it, the `merge` module will act as if the latest placeholder were **again** inserted after each target-modifying test act, except where that test act is the last act or where the next act after it is a placeholder.
 
@@ -203,7 +201,7 @@ Suppose you ask for a merger of the above batch and script, **without** the isol
 
 ```javaScript
 {
-  id: '7is3i-ts25-acme',
+  id: '7is3i-ts99-acme',
   what: 'Axe on account page',
   strict: true,
   timeLimit: 60,
@@ -252,7 +250,7 @@ Suppose you ask for a merger of the above batch and script, **without** the isol
     }
   ],
   sources: {
-    script: 'ts25',
+    script: 'ts99',
     batch: 'clothing-stores',
     target: {
       id: 'acme',
@@ -311,7 +309,7 @@ A user can invoke `merge` in this way:
     - `node call merge s b e false`
     - `node call merge s b e`
 
-In these statements, replace `s` and `b` with the base names of the script and batch files, respectively. For example, if the script file is named `ts25.json`, then replace `s` with `ts25`. Replace `e` with an email address, or with an empty string if the environment variable `process.env.REQUESTER` exists and you want to use it.
+In these statements, replace `s` and `b` with the base names of the script and batch files, respectively. For example, if the script file is named `ts99.json`, then replace `s` with `ts99`. Replace `e` with an email address, or with an empty string if the environment variable `process.env.REQUESTER` exists and you want to use it.
 
 The first statement will cause a merger **with** isolation.
 The second and third statements will cause a merger **without* isolation.
@@ -323,6 +321,40 @@ The `call` module will save the jobs as JSON files in the `todo` subdirectory of
 #### Validation
 
 To test the `merge` module, in the project directory you can execute the statement `node validation/merge/validate`. If `merge` is valid, all logging statements will begin with “Success” and none will begin with “ERROR”.
+
+### Issues to script
+
+Testilo classifies issues. The built-in issue classifications are located in the `procs/score` directory, in files whose names begin with `tic` (for “Testilo issue classification”). You can create additional `tic` files with custom issue classifications.
+
+If you want Testaro to test targets for particular issues, you can name those issues and use the Testilo `script` module to create a script.
+
+#### Invocation
+
+There are two ways to use the `script` module.
+
+##### By a module
+
+A module can invoke `script` in this way:
+
+```javaScript
+const {script} = require('testilo/script');
+const scriptObj = script(issueClasses, issueIDs);
+```
+
+This invocation references `issueClasses` and `issueIDs` variables. The `issueClasses` variable is an object that classifies issues, such as the `issueClasses` object in a `tic` file. The `issueIDs` variable is an array of strings such as `'regionNoText'`, that are the names of properties of the `issueClasses` object. The `script()` function of the `script` module generates a script and returns it as an object. The invoking module can further dispose of the script as needed.
+
+##### By a user
+
+A user can invoke `script` in this way: In the Testilo project directory, execute the statement `node call script s c i0 i1 i2 i3 …`.
+
+In this statement:
+- Replace `s` with an ID for the script, such as `headings`.
+- Replace `c` with the base name, such as `tic99`, of an issue classification file in the `score` subdirectory of the `process.env.FUNCTIONDIR` directory.
+- Replace the remaining arguments (`i0` etc.) with issue IDs from that classification file.
+
+The `call` module will retrieve the named classification from its directory.
+The `script` module will create a script.
+The `call` module will save the script as a JSON file in the `scripts` subdirectory of the `process.env.SPECDIR` directory.
 
 ## Report scoring
 
@@ -366,7 +398,7 @@ A module can invoke `score` in this way:
 
 ```javaScript
 const {score} = require('testilo/score');
-const {scorer} = require('testilo/procs/score/tsp25');
+const {scorer} = require('testilo/procs/score/tsp99');
 score(scorer, reports);
 ```
 
@@ -377,12 +409,12 @@ The first argument to `score()` is a scoring function. In this example, it has b
 A user can invoke `score` in this way:
 
 ```bash
-node call score tsp25
-node call score tsp25 75m
+node call score tsp99
+node call score tsp99 75m
 ```
 
 When a user invokes `score` in this example, the `call` module:
-- gets the scoring module `tsp25` from its JSON file `tsp25.json` in the `score` subdirectory of the `process.env.FUNCTIONDIR` directory.
+- gets the scoring module `tsp99` from its JSON file `tsp99.json` in the `score` subdirectory of the `process.env.FUNCTIONDIR` directory.
 - gets the reports from the `raw` subdirectory of the `process.env.REPORTDIR` directory.
 - writes the scored reports in JSON format to the `scored` subdirectory of the `process.env.REPORTDIR` directory.
 
@@ -415,7 +447,7 @@ A module can invoke `digest` in this way:
 
 ```javaScript
 const {digest} = require('testilo/digest');
-const digesterDir = `${process.env.FUNCTIONDIR}/digest/dp25a`;
+const digesterDir = `${process.env.FUNCTIONDIR}/digest/dp99a`;
 fs.readFile(`${digesterDir}/index.html`, 'utf8')
 .then(template => {
   const {digester} = require(`${digesterDir}/index`);
@@ -430,12 +462,12 @@ The first two arguments to `digest()` are a digest template and a digesting func
 A user can invoke `digest` in this way:
 
 ```bash
-node call digest tdp25
-node call digest tdp25 75m
+node call digest tdp99
+node call digest tdp99 75m
 ```
 
 When a user invokes `digest` in this example, the `call` module:
-- gets the template and the digesting module from subdirectory `tdp25` in the `digest` subdirectory of the `process.env.FUNCTIONDIR` directory.
+- gets the template and the digesting module from subdirectory `tdp99` in the `digest` subdirectory of the `process.env.FUNCTIONDIR` directory.
 - gets the reports from the `scored` subdirectory of the `process.env.REPORTDIR` directory.
 - writes the digested reports to the `digested` subdirectory of the `process.env.REPORTDIR` directory.
 
@@ -469,7 +501,7 @@ A module can invoke `compare` in this way:
 ```javaScript
 const fs = require('fs/promises);
 const {compare} = require('testilo/compare');
-const comparerDir = `${process.env.FUNCTIONDIR}/compare/tcp25`;
+const comparerDir = `${process.env.FUNCTIONDIR}/compare/tcp99`;
 fs.readFile(`${comparerDir}/index.html`)
 .then(template => {
   const {comparer} = require(`${comparerDir}/index`);
@@ -484,11 +516,11 @@ The first two arguments to `compare()` are a template and a comparison function.
 A user can invoke `compare` in this way:
 
 ```bash
-node call compare tcp25 legislators
+node call compare tcp99 legislators
 ```
 
 When a user invokes `compare` in this example, the `call` module:
-- gets the template and the comparison module from subdirectory `tcp25` of the subdirectory `compare` in the `process.env.FUNCTIONDIR` directory.
+- gets the template and the comparison module from subdirectory `tcp99` of the subdirectory `compare` in the `process.env.FUNCTIONDIR` directory.
 - gets all the reports in the `scored` subdirectory of the `process.env.REPORTDIR` directory.
 - writes the comparative report as an HTML file named `legislators.html` to the `comparative` subdirectory of the `process.env.REPORTDIR` directory.
 

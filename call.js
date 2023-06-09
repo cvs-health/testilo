@@ -59,7 +59,7 @@ const callScript = async (scriptID, classificationID, ... issueIDs) => {
   // Get the issue classification.
   const {issueClasses} = require(`${functionDir}/score/${classificationID}`);
   // Create a script.
-  const scriptObj = script(issueClasses, ... issueIDs);
+  const scriptObj = script(scriptID, issueClasses, ... issueIDs);
   // Save the script.
   const scriptJSON = JSON.stringify(scriptObj, null, 2);
   await fs.writeFile(`${specDir}/scripts/${scriptID}.json`, scriptJSON);

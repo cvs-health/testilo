@@ -356,6 +356,10 @@ The `call` module will retrieve the named classification from its directory.
 The `script` module will create a script.
 The `call` module will save the script as a JSON file in the `scripts` subdirectory of the `process.env.SPECDIR` directory.
 
+#### Options
+
+When the `script` module creates a script for you, it does not ask you for all of the options that the script may require. Instead, it chooses options. After you invoke `script`, you can edit the script that it creates to revise options.
+
 ## Report scoring
 
 ### Introduction

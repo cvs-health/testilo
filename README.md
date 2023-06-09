@@ -338,10 +338,15 @@ A module can invoke `script` in this way:
 
 ```javaScript
 const {script} = require('testilo/script');
-const scriptObj = script(issueClasses, issueIDs);
+const scriptObj = script(scriptID, issueClasses, issueID0, issueID1, …);
 ```
 
-This invocation references `issueClasses` and `issueIDs` variables. The `issueClasses` variable is an object that classifies issues, such as the `issueClasses` object in a `tic` file. The `issueIDs` variable is an array of strings such as `'regionNoText'`, that are the names of properties of the `issueClasses` object. The `script()` function of the `script` module generates a script and returns it as an object. The invoking module can further dispose of the script as needed.
+This invocation references `scriptID`, `issueClasses`, and `issueID` variables.
+- The `scriptID` variable is an alphanumeric string.
+- The `issueClasses` variable is an object that classifies issues, such as the `issueClasses` object in a `tic` file.
+- The `issueID` variables are strings, such as `'regionNoText'`, that name of properties of the `issueClasses` object.
+
+The `script()` function of the `script` module generates a script and returns it as an object. The invoking module can further dispose of the script as needed.
 
 ##### By a user
 

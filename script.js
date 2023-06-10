@@ -88,6 +88,11 @@ exports.script = (id, issueClasses, ... issueIDs) => {
         which: toolID,
         rules: neededTools[toolID]
       };
+      // If the tool is Testaro:
+      if (toolID === 'testaro') {
+        // Prepend the inclusion option to the rule array.
+        toolAct.rules.unshift('y');
+      }
       // Add option specifications if necessary.
       if (toolID === 'axe') {
         toolAct.detailLevel = 2;

@@ -189,6 +189,49 @@ The `call` module will retrieve the named target list.
 The `batch` module will convert the target list to a batch.
 The `call` module will save the batch as a JSON file in the `batches` subdirectory of the `process.env.SPECDIR` directory.
 
+### Issues to script
+
+Testilo classifies issues. The built-in issue classifications are located in the `procs/score` directory, in files whose names begin with `tic` (for “Testilo issue classification”). You can create additional `tic` files with custom issue classifications.
+
+If you want Testaro to test targets for particular issues, you can name those issues and use the Testilo `script` module to create a script.
+
+#### Invocation
+
+There are two ways to use the `script` module.
+
+##### By a module
+
+A module can invoke `script` in this way:
+
+```javaScript
+const {script} = require('testilo/script');
+const scriptObj = script(scriptID, issueClasses, issueID0, issueID1, …);
+```
+
+This invocation references `scriptID`, `issueClasses`, and `issueID` variables.
+- The `scriptID` variable is an alphanumeric string.
+- The `issueClasses` variable is an object that classifies issues, such as the `issueClasses` object in a `tic` file.
+- The `issueID` variables are strings, such as `'regionNoText'`, that name of properties of the `issueClasses` object.
+
+The `script()` function of the `script` module generates a script and returns it as an object. The invoking module can further dispose of the script as needed.
+
+##### By a user
+
+A user can invoke `script` in this way: In the Testilo project directory, execute the statement `node call script s c i0 i1 i2 i3 …`.
+
+In this statement:
+- Replace `s` with an ID for the script, such as `headings`.
+- Replace `c` with the base name, such as `tic99`, of an issue classification file in the `score` subdirectory of the `process.env.FUNCTIONDIR` directory.
+- Replace the remaining arguments (`i0` etc.) with issue IDs from that classification file.
+
+The `call` module will retrieve the named classification from its directory.
+The `script` module will create a script.
+The `call` module will save the script as a JSON file in the `scripts` subdirectory of the `process.env.SPECDIR` directory.
+
+#### Options
+
+When the `script` module creates a script for you, it does not ask you for all of the options that the script may require. Instead, it chooses options. After you invoke `script`, you can edit the script that it creates to revise options.
+
 ### Merge
 
 Testilo merges batches with scripts, producing jobs, by means of the `merge` module.
@@ -323,49 +366,6 @@ The `call` module will save the jobs as JSON files in the `todo` subdirectory of
 #### Validation
 
 To test the `merge` module, in the project directory you can execute the statement `node validation/merge/validate`. If `merge` is valid, all logging statements will begin with “Success” and none will begin with “ERROR”.
-
-### Issues to script
-
-Testilo classifies issues. The built-in issue classifications are located in the `procs/score` directory, in files whose names begin with `tic` (for “Testilo issue classification”). You can create additional `tic` files with custom issue classifications.
-
-If you want Testaro to test targets for particular issues, you can name those issues and use the Testilo `script` module to create a script.
-
-#### Invocation
-
-There are two ways to use the `script` module.
-
-##### By a module
-
-A module can invoke `script` in this way:
-
-```javaScript
-const {script} = require('testilo/script');
-const scriptObj = script(scriptID, issueClasses, issueID0, issueID1, …);
-```
-
-This invocation references `scriptID`, `issueClasses`, and `issueID` variables.
-- The `scriptID` variable is an alphanumeric string.
-- The `issueClasses` variable is an object that classifies issues, such as the `issueClasses` object in a `tic` file.
-- The `issueID` variables are strings, such as `'regionNoText'`, that name of properties of the `issueClasses` object.
-
-The `script()` function of the `script` module generates a script and returns it as an object. The invoking module can further dispose of the script as needed.
-
-##### By a user
-
-A user can invoke `script` in this way: In the Testilo project directory, execute the statement `node call script s c i0 i1 i2 i3 …`.
-
-In this statement:
-- Replace `s` with an ID for the script, such as `headings`.
-- Replace `c` with the base name, such as `tic99`, of an issue classification file in the `score` subdirectory of the `process.env.FUNCTIONDIR` directory.
-- Replace the remaining arguments (`i0` etc.) with issue IDs from that classification file.
-
-The `call` module will retrieve the named classification from its directory.
-The `script` module will create a script.
-The `call` module will save the script as a JSON file in the `scripts` subdirectory of the `process.env.SPECDIR` directory.
-
-#### Options
-
-When the `script` module creates a script for you, it does not ask you for all of the options that the script may require. Instead, it chooses options. After you invoke `script`, you can edit the script that it creates to revise options.
 
 ## Report scoring
 

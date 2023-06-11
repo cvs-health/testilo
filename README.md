@@ -64,6 +64,7 @@ Targets can be specified in a more complex way, too. That allows you to create j
   targets: [
     {
       id: 'acme',
+      which: 'https://acmeclothes.com/',
       what: 'Acme Clothes',
       acts: {
         public: [

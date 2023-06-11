@@ -33,10 +33,11 @@ exports.batch = (id, what, targetList) => {
     };
     // For each valid target:
     targetList.forEach(target => {
-      if (target.length === 3) {
+      if (target.length === 3 && target.every(item => item.length)) {
         // Add it to the batch.
         batch.targets.push({
           id: target[0],
+          which: target[2],
           what: target[1],
           acts: {
             main: [

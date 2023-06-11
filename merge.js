@@ -51,6 +51,7 @@ exports.merge = (script, batch, requester, isolate = false) => {
     batch: batch.id,
     target: {
       id: '',
+      which: '',
       what: ''
     },
     requester
@@ -87,43 +88,51 @@ exports.merge = (script, batch, requester, isolate = false) => {
   // For each target in the batch:
   const {targets} = batch;
   for (const target of targets) {
-    // Initialize a job.
-    const job = JSON.parse(JSON.stringify(protoJob));
-    // Add the target ID to the job ID.
-    job.id += target.id;
-    // Add data on the target to the sources property of the job.
-    job.sources.target.id = target.id;
-    job.sources.target.what = target.what;
-    // Replace each placeholder object in the job with the named replacer array of the target.
-    let {acts} = job;
-    for (const actIndex in acts) {
-      const act = acts[actIndex];
-      if (act.type === 'placeholder') {
-        const replacerName = act.which;
-        if (replacerName && target.acts) {
-          let replacerActs = target.acts[replacerName];
-          if (replacerActs) {
-            // Add a which property to any launch act in the replacer.
-            replacerActs = JSON.parse(JSON.stringify(replacerActs));
-            for (const replacerAct of replacerActs) {
-              if (replacerAct.type === 'launch') {
-                replacerAct.which = act.launch;
+    // If the target has the required identifiers:
+    const {id, which, what} = target;
+    if (id && which && what) {
+      // Initialize a job.
+      const job = JSON.parse(JSON.stringify(protoJob));
+      // Append the target ID to the job ID.
+      job.id += target.id;
+      // Add data on the target to the sources property of the job.
+      job.sources.target.id = target.id;
+      job.sources.target.which = target.which;
+      job.sources.target.what = target.what;
+      // Replace each placeholder object in the job with the named replacer array of the target.
+      let {acts} = job;
+      for (const actIndex in acts) {
+        const act = acts[actIndex];
+        if (act.type === 'placeholder') {
+          const replacerName = act.which;
+          if (replacerName && target.acts) {
+            let replacerActs = target.acts[replacerName];
+            if (replacerActs) {
+              // Add a which property to any launch act in the replacer.
+              replacerActs = JSON.parse(JSON.stringify(replacerActs));
+              for (const replacerAct of replacerActs) {
+                if (replacerAct.type === 'launch') {
+                  replacerAct.which = act.launch;
+                }
               }
+              acts[actIndex] = replacerActs;
             }
-            acts[actIndex] = replacerActs;
+            else {
+              console.log(`ERROR: Target ${target.id} has no ${replacerName} replacer`);
+            }
           }
           else {
-            console.log(`ERROR: Target ${target.id} has no ${replacerName} replacer`);
+            console.log(`ERROR: Placeholder for target ${target.id} not replaceable`);
           }
         }
-        else {
-          console.log(`ERROR: Placeholder for target ${target.id} not replaceable`);
-        }
       }
+      job.acts = acts.flat();
+      // Append the job to the array of jobs.
+      jobs.push(job);
     }
-    job.acts = acts.flat();
-    // Append the job to the array of jobs.
-    jobs.push(job);
+    else {
+      console.log('ERROR: Target in batch missing id, which, or what property');
+    }
   };
   return jobs;
 };

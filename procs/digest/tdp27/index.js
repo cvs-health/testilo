@@ -5,7 +5,7 @@
 
 // IMPORTS
 
-const {issueClasses} = require('./procs/score/tic27');
+const {issueClasses} = require('../../score/tic27');
 
 // CONSTANTS
 

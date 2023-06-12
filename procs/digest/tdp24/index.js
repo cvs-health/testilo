@@ -5,14 +5,10 @@
 
 // CONSTANTS
 
+  const id = 'tdp27';
   // Newlines with indentations.
   const joiner = '\n      ';
   const innerJoiner = '\n        ';
-  const specialMessages = {
-    log: 'This is based on the amount of browser error logging and miscellaneous logging during the tests.',
-    preventions: 'This is based on tests that the page did not allow to be run. That impedes accessibility progress and risks interfering with tools that users with disabilities need.',
-    solos: 'This is based on issues reported by unclassified tests. Details are in the report.'
-  };
 
 // FUNCTIONS
 
@@ -30,21 +26,22 @@ const getSpecialPStart = (summary, scoreID) =>
 exports.makeQuery = (report, query) => {
   // Add an HTML-safe copy of the report to the query to be appended to the digest.
   const {acts, sources, jobData, score} = report;
-  const {target, requester} = sources;
+  const {script, target, requester} = sources;
   const reportJSON = JSON.stringify(report, null, 2);
   const reportJSONSafe = htmlEscape(reportJSON);
   query.report = reportJSONSafe;
-  query.ts = 'ts24';
-  query.sp = 'tsp24';
-  query.dp = 'tdp24';
+  const {scoreProcID, summary, issues, tools, preventions} = score;
+  query.ts = script;
+  query.sp = scoreProcID;
+  query.dp = id;
   // Add the job data to the query.
   query.dateISO = jobData.endTime.slice(0, 10);
   query.dateSlash = query.dateISO.replace(/-/g, '/');
+  query.url = target.which;
   query.org = target.what;
-  query.url = acts && acts.length > 1 && acts[1].which;
   query.requester = requester;
-  const {issueDetails, summary} = score;
-  const {total, issues} = summary;
+  const {total} = summary;
+  const issueTotal = summary.issues;
   if (typeof total === 'number') {
     query.totalScore = total;
   }
@@ -52,17 +49,17 @@ exports.makeQuery = (report, query) => {
     console.log('ERROR: missing or invalid total score');
     return;
   }
-  // Add the total and any special rows of the score-summary table to the query.
+  // Add the total and the rows of the score-summary table to the query.
   const scoreRows = [];
-  const specialComponentIDs = ['log', 'preventions', 'solos'];
-  ['total'].concat(specialComponentIDs).forEach(item => {
-    if (summary[item]) {
-      scoreRows.push(getScoreRow(item, summary[item]));
+  const componentIDs = ['issues', 'tools', 'preventions', 'log', 'latency'];
+  ['total'].concat(componentIDs).forEach(itemID => {
+    if (summary[itemID]) {
+      scoreRows.push(getScoreRow(itemID, summary[itemID]));
     }
   });
-  // Add the group rows of the score-summary table to the query.
-  issues.forEach(issue => {
-    scoreRows.push(getScoreRow(`${issue.issueName}`, issue.score));
+  // Add the issue rows of the score-summary table to the query.
+  Object.keys(issues).forEach(issueID => {
+    scoreRows.push(getScoreRow(issueID, issues[issueID]));
   });
   query.scoreRows = scoreRows.join(innerJoiner);
   // If the score has any special components:

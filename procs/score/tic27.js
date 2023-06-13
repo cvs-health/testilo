@@ -2258,13 +2258,6 @@ exports.issueClasses = {
     wcag: '1.3.1',
     weight: 4,
     tools: {
-      nuVal: {
-        'Element title not allowed as child of element body in this context. (Suppressing further errors from this subtree.)': {
-          variable: false,
-          quality: 1,
-          what: 'title element is a child of the body element'
-        }
-      },
       testaro: {
         titledEl: {
           variable: false,
@@ -4122,13 +4115,6 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'list item has no ul, ol, or list-role parent or owner'
-        }
-      },
-      nuVal: {
-        'Element li not allowed as child of element div in this context. (Suppressing further errors from this subtree.)': {
-          variable: false,
-          quality: 1,
-          what: 'li element is a child of a div element'
         }
       }
     }
@@ -6021,56 +6007,15 @@ exports.issueClasses = {
       }
     }
   },
-  divParentBad: {
+  parentBad: {
     wcag: '1.3.1',
     weight: 4,
     tools: {
       nuVal: {
-        'Element div not allowed as child of element button in this context. (Suppressing further errors from this subtree.)': {
-          variable: false,
+        '^Element .+ not allowed as child of element .+ in this context.*$': {
+          variable: true,
           quality: 1,
-          what: 'div element has a button element as its parent'
-        }
-      }
-    }
-  },
-  pParentBad: {
-    wcag: '1.3.1',
-    weight: 4,
-    tools: {
-      nuVal: {
-        'Element p not allowed as child of element strong in this context. (Suppressing further errors from this subtree.)': {
-          variable: false,
-          quality: 1,
-          what: 'p element has a strong element as its parent'
-        }
-      }
-    }
-  },
-  styleParentBad: {
-    wcag: '1.3.1',
-    weight: 4,
-    tools: {
-      nuVal: {
-        'Element style not allowed as child of element body in this context. (Suppressing further errors from this subtree.)': {
-          variable: false,
-          quality: 1,
-          what: 'style element not allowed as a child of the body element'
-        },
-        'Element style not allowed as child of element div in this context. (Suppressing further errors from this subtree.)': {
-          variable: false,
-          quality: 1,
-          what: 'style element not allowed as a child of this div element'
-        },
-        'Element style not allowed as child of element main in this context. (Suppressing further errors from this subtree.)': {
-          variable: false,
-          quality: 1,
-          what: 'style element not allowed as a child of this main element'
-        },
-        'Element style not allowed as child of element footer in this context. (Suppressing further errors from this subtree.)': {
-          variable: false,
-          quality: 1,
-          what: 'style element not allowed as a child of this footer element'
+          what: 'Element has an invalid parent'
         }
       }
     }
@@ -6914,11 +6859,6 @@ exports.issueClasses = {
           variable: true,
           quality: 1,
           what: 'Element is missing a required child'
-        },
-        '^Element .+ not allowed as child of element .+ in this context.*$': {
-          variable: true,
-          quality: 1,
-          what: 'Element not allowed as a child of its parent here'
         },
         'Saw <!-- within a comment. Probable cause: Nested comment (not allowed).': {
           variable: false,

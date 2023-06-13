@@ -25,12 +25,12 @@ exports.script = (id, issueClasses, ... issueIDs) => {
       // For each tool that tests for the issue:
       const issueToolIDs = Object.keys(issueData.tools);
       issueToolIDs.forEach(issueToolID => {
-        // For each of the tests of the tool for the issue:
+        // For each of the rules of the tool for the issue:
         if (! neededTools[issueToolID]) {
           neededTools[issueToolID] = [];
         }
         Object.keys(issueData.tools[issueToolID]).forEach(ruleID => {
-          // Add data on the test.
+          // Add data on the rule.
           const ruleData = issueData.tools[issueToolID][ruleID];
           if (issueToolID === 'nuVal') {
             if (ruleData.variable) {

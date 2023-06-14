@@ -29,21 +29,29 @@
         </table>
       </header>
       <h2>Introduction</h2>
-      <p>This is a digest of results from a battery of accessibility Tests.</p>
-      <p>The battery includes 1353 automated accessibility tests drawn from ten different packages: Alfa, Axe, Continuum, Equal Access, HTML CodeSniffer, Nu Html Checker, QualWeb, Tenon, Testaro, and WAVE.</p>
+      <p>This is a digest of results from a battery of accessibility tests.</p>
+      <p>The battery includes about 1350 tests drawn from ten different packages: Alfa, Axe, Continuum, Equal Access, HTML CodeSniffer, Nu Html Checker, QualWeb, Tenon, Testaro, and WAVE.</p>
       <p>These tests were run on the web page named above and gave the page a score of __totalScore__, where 0 would be <q>perfect</q>.</p>
       <h2>Score summary</h2>
       <table class="allBorder secondCellRight">
-        <caption>Score components</caption>
+        <caption>Score summary</caption>
+        <thead>
+          <tr><th>Component</th><th>Score</th></tr>
+        </thead>
         <tbody class="headersLeft">
-        __scoreRows__
+          __summaryRows__
         </tbody>
       </table>
-      <h2>Issue summary</h2>
-      <h3>Special issues</h3>
-      __specialSummary__
-      <h3>Classified issues</h3>
-      __issueSummary__
+      <h2>Issue scores</h2>
+      <table class="allBorder secondCellRight">
+        <caption>Issue scores</caption>
+        <thead>
+          <tr><th>Issue</th><th>Score</th></tr>
+        </thead>
+        <tbody class="headersLeft">
+          __issueRows__
+        </tbody>
+      </table>
       <h2>Complete report</h2>
       <pre>__report__</pre>
       <footer>

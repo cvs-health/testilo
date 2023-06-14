@@ -63,18 +63,22 @@ exports.scorer = report => {
         scoreProcID,
         summary: {
           total: 0,
-          issues: 0,
-          tools: 0,
-          preventions: 0,
+          issue: 0,
+          tool: 0,
+          prevention: 0,
           log: 0,
           latency: 0
         },
-        toolTotals: [0, 0, 0, 0],
-        issues: {},
-        tools: {},
-        preventions: {}
+        details: {
+          severity: {
+            total: [0, 0, 0, 0],
+            byTool: {}
+          },
+          prevention: {},
+          issue: {}
+        }
       };
-      const {summary, toolTotals, issues, tools, preventions} = score;
+      const {summary, details} = score;
       // For each test act:
       testActs.forEach(act => {
         // If a successful standard result exists:
@@ -87,15 +91,10 @@ exports.scorer = report => {
         ) {
           // Add the severity totals of the tool to the score.
           const {totals} = standardResult;
-          tools[which] = totals;
-          toolTotals.forEach((total, index) => {
-            toolTotals[index] += totals[index];
-          });
-          // Update the issue totals for the tool.
-          const issueTotals = {};
-          let ruleID;
+          details.severity.byTool[which] = totals;
+          // Add the instance data of the tool to the score.
           standardResult.instances.forEach(instance => {
-            ruleID = issueIndex[which][instance.ruleID];
+            let ruleID = issueIndex[which][instance.ruleID];
             if (! ruleID) {
               ruleID = issueMatcher.find(pattern => {
                 const patternRE = new RegExp(pattern);
@@ -104,22 +103,46 @@ exports.scorer = report => {
             }
             if (ruleID) {
               const issueID = issueIndex[which][ruleID];
-              if (! issueTotals[issueID]) {
-                issueTotals[issueID] = 0;
+              if (! details.issue[issueID]) {
+                details.issue[issueID] = {
+                  weight: issueClasses[issueID].weight,
+                  tools: {}
+                };
               }
-              issueTotals[issueID] += instance.count || 1;
+              if (! details.issue[issueID].tools[which]) {
+                details.issue[issueID].tools[which] = {};
+              }
+              if (! details.issue[issueID].tools[which][ruleID]) {
+                details.issue[issueID].tools[which][ruleID] = {
+                  quality: issueClasses[issueID][which][ruleID].quality,
+                  complaints: {
+                    countTotal: 0,
+                    texts: []
+                  }
+                };
+              }
+              details
+              .issue[issueID]
+              .tools[which][ruleID]
+              .complaints
+              .countTotal += instance.count || 1;
+              if (
+                ! details
+                .issue[issueID]
+                .tools[which][ruleID]
+                .complaints
+                .texts
+                .includes(instance.complaint)
+              ) {
+                details.issue[issueID].tools[which][ruleID].complaints.texts.push(instance.complaint);
+              }
             }
             else {
               console.log(`ERROR: ${instance.ruleID} of ${which} not found in issueClasses`);
             }
           });
-          // Update the issue totals in the score.
-          Object.keys(issueTotals).forEach(issueID => {
-            issues[issueID] = Math.max(issues[id] || 0, issueTotals[issueID]);
-          });
-          summary.issues = Object.values(issues).reduce((total, current) => total + current);
         }
-        // Otherwise, i.e. if no no successful result exists:
+        // Otherwise, i.e. if no successful standard result exists:
         else {
           // Add a prevented result to the act if not already there.
           if (! act.result) {
@@ -129,15 +152,35 @@ exports.scorer = report => {
             act.result.prevented = true;
           };
           // Add the tool and the prevention score to the score.
-          preventions[which] = preventionWeight;
-          summary.preventions += preventionWeight;
+          details.prevention[which] = preventionWeight;
         }
       });
-      // Add the weighted tool total to the score.
-      summary.tools = toolWeight * toolTotals.reduce(
-        (total, current, index) => total + current * severityWeights[index], 0
+      // Add the severity detail totals to the score.
+      details.severity.total = Object.keys(details.severity.byTool).reduce((severityTotals, toolID) => {
+        details.severity.byTool[toolID].forEach((severityScore, index) => {
+          severityTotals[index] += severityScore;
+        });
+        return severityTotals;
+      }, details.severity.total);
+      // Add the summary issue total to the score.
+      Object.keys(details.issue).forEach(issueID => {
+        Object.keys(details.issue[issueID].tools).forEach(toolID => {
+          Object.keys(details.issue[issueID].tools[toolID]).forEach(ruleID => {
+            summary.issue += details.issue[issueID].weight
+            * details.issue[issueID].tools[toolID][ruleID].quality
+            * details.issue[issueID].tools[toolID][ruleID].complaints.countTotal;
+          });
+        });
+      });
+      // Add the summary tool total to the score.
+      summary.tool = toolWeight * details.severity.total.reduce(
+        (total, current, index) => total + severityWeights[index] * current, 0
       );
-      // Add the log score to the score.
+      // Add the summary prevention total to the score.
+      summary.prevention = Object.values(details.prevention).reduce(
+        (total, current) => total + current
+      );
+      // Add the summary log score to the score.
       const {jobData} = report;
       summary.log = Math.max(0, Math.round(
         logWeights.logCount * jobData.logCount
@@ -147,21 +190,21 @@ exports.scorer = report => {
         + logWeights.prohibitedCount * jobData.prohibitedCount +
         + logWeights.visitRejectionCount * jobData.visitRejectionCount
       ));
-      // Add the latency score to the score.
+      // Add the summary latency score to the score.
       summary.latency = Math.round(
         latencyWeight * (Math.max(0, jobData.visitLatency - normalLatency))
       );
-      // Round the scores.
+      // Round the unrounded scores.
       Object.keys(summary).forEach(summaryTypeName => {
         summary[summaryTypeName] = Math.round(summary[summaryTypeName]);
       });
-      toolTotals.forEach((severityTotal, index) => {
-        toolTotals[index] = Math.round(toolTotals[index]);
+      details.severity.total.forEach((severityTotal, index) => {
+        details.severity.total[index] = Math.round(severityTotal);
       });
-      // Add the total score to the score.
-      summary.total = summary.issues
-      + summary.tools
-      + summary.preventions
+      // Add the summary total score to the score.
+      summary.total = summary.issue
+      + summary.tool
+      + summary.prevention
       + summary.log
       + summary.latency;
       // Add the score to the report.

@@ -55,9 +55,11 @@ const callBatch = async (listID, what) => {
   console.log(`Target list ${listID} converted to a batch and saved in ${specDir}/batches`);
 };
 // Fulfills a script-creation request.
-const callScript = async (scriptID, classificationID, ... issueIDs) => {
-  // Get the issue classification.
-  const {issueClasses} = require(`${functionDir}/score/${classificationID}`);
+const callScript = async (scriptID, classificationID = null, ... issueIDs) => {
+  // Get any issue classification.
+  const issueClasses = classificationID
+  ? require(`${functionDir}/score/${classificationID}`)
+  : null;
   // Create a script.
   const scriptObj = script(scriptID, issueClasses, ... issueIDs);
   // Save the script.
@@ -176,7 +178,7 @@ else if (fn === 'batch' && fnArgs.length === 2) {
     console.log('Execution completed');
   });
 }
-else if (fn === 'script' && fnArgs.length > 2) {
+else if (fn === 'script' && fnArgs.length) {
   callScript(... fnArgs)
   .then(() => {
     console.log('Execution completed');

@@ -1,6 +1,6 @@
 /*
   script.js
-  Creates and returns a script for specified issues.
+  Creates and returns a script.
   Arguments:
     0. issue classification
     1. issue IDs
@@ -11,57 +11,66 @@
 // Module to keep secrets.
 require('dotenv').config();
 
+// ########## VARIABLES
+
+let toolIDs = [
+  'alfa', 'axe', 'continuum', 'htmlcs', 'ibm', 'nuVal', 'qualWeb', 'tenon', 'testaro', 'wave'
+];
+
 // ########## FUNCTIONS
 
 // Creates and returns a script.
-exports.script = (id, issueClasses, ... issueIDs) => {
-  // Initialize data on the tests for the specified issues.
+exports.script = (id, issueClasses = null, ... issueIDs) => {
+  // Initialize data on the tools and rules for the specified issues.
   const neededTools = {};
-  // For each specified issue:
-  issueIDs.forEach(issueID => {
-    // If it exists in the classification:
-    const issueData = issueClasses[issueID];
-    if (issueData) {
-      // For each tool that tests for the issue:
-      const issueToolIDs = Object.keys(issueData.tools);
-      issueToolIDs.forEach(issueToolID => {
-        // For each of the rules of the tool for the issue:
-        if (! neededTools[issueToolID]) {
-          neededTools[issueToolID] = [];
-        }
-        Object.keys(issueData.tools[issueToolID]).forEach(ruleID => {
-          // Add data on the rule.
-          const ruleData = issueData.tools[issueToolID][ruleID];
-          if (issueToolID === 'nuVal') {
-            if (ruleData.variable) {
-              neededTools[issueToolID].push(`~${ruleID}`);
+  // If an issue classification and any issues were specified:
+  if (issueClasses && issueIDs.length) {
+    // For each specified issue:
+    issueIDs.forEach(issueID => {
+      // If it exists in the classification:
+      const issueData = issueClasses[issueID];
+      if (issueData) {
+        // For each tool that tests for the issue:
+        const issueToolIDs = Object.keys(issueData.tools);
+        issueToolIDs.forEach(issueToolID => {
+          // For each of the rules of the tool for the issue:
+          if (! neededTools[issueToolID]) {
+            neededTools[issueToolID] = [];
+          }
+          Object.keys(issueData.tools[issueToolID]).forEach(ruleID => {
+            // Add data on the rule.
+            const ruleData = issueData.tools[issueToolID][ruleID];
+            if (issueToolID === 'nuVal') {
+              if (ruleData.variable) {
+                neededTools[issueToolID].push(`~${ruleID}`);
+              }
+              else {
+                neededTools[issueToolID].push(`=${ruleID}`);
+              }
             }
             else {
-              neededTools[issueToolID].push(`=${ruleID}`);
+              neededTools[issueToolID].push(ruleID);
             }
-          }
-          else {
-            neededTools[issueToolID].push(ruleID);
-          }
+          });
         });
-      });
-    }
-    // Otherwise, i.e. if it does not exist in the classification:
-    else {
-      // Report this.
-      console.log(`ERROR: Issue ${issueID} not in issue classification`);
-      return {};
-    }
-  });
-  // If any tests have been identified:
-  const toolIDs = Object.keys(neededTools);
+        toolIDs = Object.keys(neededTools);
+      }
+      // Otherwise, i.e. if it does not exist in the classification:
+      else {
+        // Report this.
+        console.log(`ERROR: Issue ${issueID} not in issue classification`);
+        return {};
+      }
+    });
+  }
+  // If any rules have been identified:
   if (toolIDs.length) {
     // Initialize a script.
     const scriptObj = {
       id,
       what: `accessibility tests`,
       strict: true,
-      timeLimit: 30 + 2 * issueIDs.length,
+      timeLimit: 30 + (10 * issueIDs.length || 30 * toolIDs.length),
       acts: [
         {
           "type": "placeholder",
@@ -77,7 +86,7 @@ exports.script = (id, issueClasses, ... issueIDs) => {
         type: 'tenonRequest',
         id: 'a',
         withNewContent: false,
-        what: 'Tenon API version 2 test request, with URL'
+        what: 'Tenon API version 2 test request, with page content'
       });
     }
     // For each identified tool:
@@ -85,13 +94,17 @@ exports.script = (id, issueClasses, ... issueIDs) => {
       // Initialize a test act for it.
       const toolAct = {
         type: 'test',
-        which: toolID,
-        rules: neededTools[toolID]
+        which: toolID
       };
-      // If the tool is Testaro:
-      if (toolID === 'testaro') {
-        // Prepend the inclusion option to the rule array.
-        toolAct.rules.unshift('y');
+      // If rules were specified:
+      if (issueClasses && issueIDs.length) {
+        // Add a rules property to the act.
+        toolAct.rules = neededTools[toolID];
+        // If the tool is Testaro:
+        if (toolID === 'testaro') {
+          // Prepend the inclusion option to the rule array.
+          toolAct.rules.unshift('y');
+        }
       }
       // Add option specifications if necessary.
       if (toolID === 'axe') {
@@ -119,10 +132,10 @@ exports.script = (id, issueClasses, ... issueIDs) => {
     // Return the script.
     return scriptObj;
   }
-  // Otherwise, i.e. if no tests have been identified:
+  // Otherwise, i.e. if no rules have been identified:
   else {
     // Report this.
-    console.log(`ERROR: No tests for the specified issues found`);
+    console.log(`ERROR: No rules for the specified issues found`);
     return {};
   }
 };

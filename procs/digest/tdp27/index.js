@@ -1,7 +1,4 @@
-/*
-  index: digester for scoring procedure tsp27.
-  Creator of parameters for substitution into index.html.
-*/
+// index: digester for scoring procedure tsp27.
 
 // IMPORTS
 
@@ -26,13 +23,9 @@ const htmlEscape = textOrNumber => textOrNumber
 // Gets a row of the score-summary table.
 const getScoreRow = (componentName, score) => `<tr><th>${componentName}</th><td>${score}</td></tr>`;
 // Adds parameters to a query for a digest.
-exports.makeQuery = (report, query) => {
-  // Add an HTML-safe copy of the report to the query to be appended to the digest.
+const makeQuery = (report, query) => {
   const {sources, jobData, score} = report;
   const {script, target, requester} = sources;
-  const reportJSON = JSON.stringify(report, null, 2);
-  const reportJSONSafe = htmlEscape(reportJSON);
-  query.report = reportJSONSafe;
   const {scoreProcID, summary, issues} = score;
   const {total} = summary;
   query.ts = script;
@@ -99,4 +92,21 @@ exports.makeQuery = (report, query) => {
     issueSummaryItems.push(issueHeading, wcagP, scoreP, issueIntroP, issueList);
   });
   query.issueSummary = issueSummaryItems.join(joiner);
+  // Add an HTML-safe copy of the report to the query to be appended to the digest.
+  const reportJSON = JSON.stringify(report, null, 2);
+  const reportJSONSafe = htmlEscape(reportJSON);
+  query.report = reportJSONSafe;
+};
+// Returns a digested report.
+exports.digester = async report => {
+  // Create a query to replace plateholders.
+  const query = makeQuery(report, {});
+  // Get the template.
+  let template = await fs.readFile(`${__dirname}/index.html`, 'utf8');
+  // Replace its placeholders.
+  Object.keys(query).forEach(param => {
+    template = template.replace(new RegExp(`__${param}__`, 'g'), query[param]);
+  });
+  // Return the digest.
+  return template;
 };

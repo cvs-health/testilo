@@ -181,8 +181,7 @@ The `batch()` function of the `batch` module generates a batch and returns it as
 A user can invoke `batch` in this way:
 
 - Create a target list and save it as a text file (with tab-delimited items in newline-delimited lines) in the `targetLists` subdirectory of the `process.env.SPECDIR` directory. Name the file `x.tsv`, where `x` is the list ID.
-- In the Testilo project directory, execute this statement:
-    - `node call batch i w`
+- In the Testilo project directory, execute the statement `node call batch i w`.
 
 In this statement, replace `i` with the list ID and `w` with a description of the batch.
 

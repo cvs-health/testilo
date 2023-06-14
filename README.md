@@ -196,6 +196,8 @@ Testilo classifies issues. The built-in issue classifications are located in the
 
 If you want Testaro to test targets for particular issues, you can name those issues and use the Testilo `script` module to create a script.
 
+If you want Testaro to test targets for **all** the rules of all the available tools, without regard to any issue classification, you can use the `script` module to create a script that does not impose any issue restrictions.
+
 #### Invocation
 
 There are two ways to use the `script` module.
@@ -216,6 +218,13 @@ This invocation references `scriptID`, `issueClasses`, and `issueID` variables.
 
 The `script()` function of the `script` module generates a script and returns it as an object. The invoking module can further dispose of the script as needed.
 
+To create a script without issue restrictions, a module can use this invocation:
+
+```javaScript
+const {script} = require('testilo/script');
+const scriptObj = script(scriptID);
+```
+
 ##### By a user
 
 A user can invoke `script` in this way: In the Testilo project directory, execute the statement `node call script s c i0 i1 i2 i3 …`.
@@ -228,6 +237,8 @@ In this statement:
 The `call` module will retrieve the named classification from its directory.
 The `script` module will create a script.
 The `call` module will save the script as a JSON file in the `scripts` subdirectory of the `process.env.SPECDIR` directory.
+
+To create a script without any issue restrictions, a user can execute the statement `node call script s`.
 
 #### Options
 

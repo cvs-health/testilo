@@ -30,7 +30,6 @@ const populateQuery = (report, query) => {
   const {sources, jobData, score} = report;
   const {script, target, requester} = sources;
   const {scoreProcID, summary, details} = score;
-  const {total} = summary;
   query.ts = script;
   query.sp = scoreProcID;
   query.dp = id;
@@ -41,55 +40,49 @@ const populateQuery = (report, query) => {
   query.url = target.which;
   query.requester = requester;
   // Add values for the score-summary table to the query.
-  ['total', 'issue', 'tool', 'prevention', 'log', 'latency'].forEach(sumItem => {
-    query[sumItem] = summary[sumItem];
-  });
   const rows = {
     summaryRows: [],
     issueRows: []
   };
-  const componentIDs = ['issues', 'tools', 'preventions', 'log', 'latency'];
-  ['total'].concat(componentIDs).forEach(itemID => {
-    if (summary[itemID]) {
-      rows.summaryRows.push(getScoreRow(itemID, summary[itemID]));
-    }
+  ['total', 'issue', 'tool', 'prevention', 'log', 'latency'].forEach(sumItem => {
+    query[sumItem] = summary[sumItem];
+    rows.summaryRows.push(getScoreRow(sumItem, query[sumItem]));
   });
-  // Get rows for an issue-score table.
-  Object.keys(details.issue).forEach(issueID => {
+  // Sort the issue IDs in descending score order.
+  const issueIDs = Object.keys(details.issue);
+  issueIDs.sort((a, b) => details.issue[b].score - details.issue[a].score);
+  // Get rows for the issue-score table.
+  issueIDs.forEach(issueID => {
     rows.issueRows.push(getScoreRow(issueID, details.issue[issueID].score));
   });
   // Add the rows to the query.
   ['summaryRows', 'issueRows'].forEach(rowType => {
     query[rowType] = rows[rowType].join(innerJoiner);
   });
-  // Add paragraphs about the issues to the query.
-  const issueSummaryItems = [];
-  Object.keys(details.issue).forEach(issueID => {
-    const issueHeading = `<h4>Issue ${issueID}</h4>`;
-    const wcagP = `<p>WCAG: ${issueClasses[issueID].wcag || 'N/A'}</p>`;
-    const scoreP = `<p>Score: ${details.issue[issueID]}</p>`;
-    const issueIntroP = '<p>Issue reports in this category:</p>';
-    const issueListItems = [];
+  // Add paragraph groups about the issue details to the query.
+  const issueDetailRows = [];
+  issueIDs.forEach(issueID => {
+    issueDetailRows.push(`<h3>Issue <code>${issueID}</code></h3>`);
+    issueDetailRows.push(`<p>WCAG: ${issueClasses[issueID].wcag || 'N/A'}</p>`);
     const issueData = details.issue[issueID];
+    issueDetailRows.push(`<p>Score: ${issueData.score}</p>`);
     const toolIDs = Object.keys(issueData.tools);
     toolIDs.forEach(toolID => {
-      const testIDs = Object.keys(issueData.tools[toolID]);
-      testIDs.forEach(testID => {
-        const testData = issueData.tools[toolID][testID];
-        const {score, what} = testData;
-        const listItem =
-          `<li>Package <code>${toolID}</code>, test <code>${testID}</code>, score ${score} (${what})</li>`;
-        issueListItems.push(listItem);
+      issueDetailRows.push(`<h4>Complaints by <code>${toolID}</code></h5>`);
+      const ruleIDs = Object.keys(issueData.tools[toolID]);
+      ruleIDs.forEach(ruleID => {
+        issueDetailRows.push(`<h5>Rule <code>${ruleID}</code></h5>`);
+        issueDetailRows.push(
+          `<p>Count of instances: ${issueData.tools[toolID][ruleID].complaints.countTotal}</p>`
+        );
+        issueDetailRows.push('<h6>Complaint specifics</h6>');
+        issueData.tools[toolID][ruleID].complaints.texts.forEach(text => {
+          issueDetailRows.push(`<p>${text}</p>`);
+        });
       });
     });
-    const issueList = [
-      '<ul>',
-      issueListItems.join('\n  '),
-      '</ul>'
-    ].join(joiner);
-    issueSummaryItems.push(issueHeading, wcagP, scoreP, issueIntroP, issueList);
   });
-  query.issueSummary = issueSummaryItems.join(joiner);
+  query.issueDetailRows = issueDetailRows.join(innerJoiner);
   // Add an HTML-safe copy of the report to the query to be appended to the digest.
   const reportJSON = JSON.stringify(report, null, 2);
   const reportJSONSafe = htmlEscape(reportJSON);
@@ -97,7 +90,7 @@ const populateQuery = (report, query) => {
 };
 // Returns a digested report.
 exports.digester = async report => {
-  // Create a query to replace plateholders.
+  // Create a query to replace placeholders.
   const query = {};
   populateQuery(report, query);
   // Get the template.

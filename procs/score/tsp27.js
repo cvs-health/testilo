@@ -94,8 +94,8 @@ exports.scorer = report => {
           details.severity.byTool[which] = totals;
           // Add the instance data of the tool to the score.
           standardResult.instances.forEach(instance => {
-            let ruleID = issueIndex[which][instance.ruleID];
-            if (! ruleID) {
+            let {ruleID} = instance;
+            if (! issueIndex[which][ruleID]) {
               ruleID = issueMatcher.find(pattern => {
                 const patternRE = new RegExp(pattern);
                 return patternRE.test(instance.ruleID);
@@ -114,7 +114,7 @@ exports.scorer = report => {
               }
               if (! details.issue[issueID].tools[which][ruleID]) {
                 details.issue[issueID].tools[which][ruleID] = {
-                  quality: issueClasses[issueID][which][ruleID].quality,
+                  quality: issueClasses[issueID].tools[which][ruleID].quality,
                   complaints: {
                     countTotal: 0,
                     texts: []
@@ -132,9 +132,9 @@ exports.scorer = report => {
                 .tools[which][ruleID]
                 .complaints
                 .texts
-                .includes(instance.complaint)
+                .includes(instance.what)
               ) {
-                details.issue[issueID].tools[which][ruleID].complaints.texts.push(instance.complaint);
+                details.issue[issueID].tools[which][ruleID].complaints.texts.push(instance.what);
               }
             }
             else {
@@ -178,7 +178,7 @@ exports.scorer = report => {
       );
       // Add the summary prevention total to the score.
       summary.prevention = Object.values(details.prevention).reduce(
-        (total, current) => total + current
+        (total, current) => total + current, 0
       );
       // Add the summary log score to the score.
       const {jobData} = report;

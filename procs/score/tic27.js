@@ -108,6 +108,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Element id attribute value is not unique within the document'
+        },
+        element_id_unique: {
+          variable: false,
+          quality: 1,
+          what: 'Element has an id attribute value that is already in use'
         }
       },
       nuVal: {
@@ -3093,6 +3098,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'ARIA property does not reference the non-empty unique id of a visible element'
+        },
+        aria_id_unique: {
+          variable: false,
+          quality: 1,
+          what: 'ARIA attribute has an invalid or duplicated id as its value'
         }
       },
       wave: {
@@ -5037,6 +5047,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Content does not reside within an element with a landmark role'
+        },
+        aria_content_in_landmark: {
+          variable: false,
+          quality: 1,
+          what: 'Content is not within a landmark element'
         }
       }
     }
@@ -5227,6 +5242,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Landmark has no unique aria-labelledby or aria-label among landmarks in the same parent region'
+        },
+        aria_landmark_name_unique: {
+          variable: false,
+          quality: 1,
+          what: 'Multiple landmarks with the same parent region are not distinguished from one another'
         }
       }
     }
@@ -5319,6 +5339,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Element with a navigation role has no unique purpose label among the navigation-role elements'
+        },
+        aria_navigation_label_unique: {
+          variable: false,
+          quality: 1,
+          what: 'Multiple elements with the navigation role do not have unique labels'
         }
       }
     }
@@ -5345,6 +5370,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Element with a search role has no unique purpose label among the search-role elements'
+        },
+        aria_search_label_unique: {
+          variable: false,
+          quality: 1,
+          what: 'Multiple elements with the search role do not have unique labels'
         }
       }
     }
@@ -5474,6 +5504,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Focusable element is within the subtree of an element with aria-hidden set to true'
+        },
+        aria_hidden_nontabbable: {
+          variable: false,
+          quality: 1,
+          what: 'Element has an ancestor with a true aria-hidden attribute but is focusable'
         }
       },
       qualWeb: {

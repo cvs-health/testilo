@@ -2577,13 +2577,6 @@ exports.issueClasses = {
           quality: 1,
           what: 'role attribute has an invalid value'
         }
-      },
-      testaro: {
-        'role-bad': {
-          variable: false,
-          quality: 0.5,
-          what: 'Nonexistent or implicit-overriding role'
-        }
       }
     }
   },
@@ -2621,10 +2614,10 @@ exports.issueClasses = {
         }
       },
       testaro: {
-        'role-redundant': {
+        'role': {
           variable: false,
           quality: 1,
-          what: 'Redundant role'
+          what: 'Invalid, native-replacing, or redundant role'
         }
       }
     }
@@ -4696,13 +4689,6 @@ exports.issueClasses = {
           what: 'Form control has no accessible name'
         }
       },
-      testaro: {
-        'labClash-unlabeled': {
-          variable: false,
-          quality: 1,
-          what: 'Button, input, select, or textarea is unlabeled'
-        }
-      },
       wave: {
         'label_missing': {
           variable: false,
@@ -4967,23 +4953,10 @@ exports.issueClasses = {
         }
       },
       testaro: {
-        'focInd-missing': {
+        'focInd': {
           variable: false,
           quality: 1,
-          what: 'Focused element displays no focus indicator'
-        }
-      }
-    }
-  },
-  focusIndicationBad: {
-    wcag: '2.4.7',
-    weight: 3,
-    tools: {
-      testaro: {
-        'focInd-nonoutline': {
-          variable: false,
-          quality: 1,
-          what: 'Focused element displays a nostandard focus indicator'
+          what: 'Focused element displays a nonstandard or no focus indicator'
         }
       }
     }
@@ -5438,15 +5411,10 @@ exports.issueClasses = {
     weight: 3,
     tools: {
       testaro: {
-        'focOp-focusable-inoperable': {
+        'focOp': {
           variable: false,
           quality: 1,
-          what: 'Tab-focusable elements that are inoperable'
-        },
-        'focOp-operable-nonfocusable': {
-          variable: false,
-          quality: 1,
-          what: 'Operable elements that cannot be Tab-focused'
+          what: 'Tab-focusable elements that are inoperable or operable elements that are not focusable'
         }
       }
     }
@@ -5645,80 +5613,15 @@ exports.issueClasses = {
       }
     }
   },
-  hoverImpact: {
+  hoverSurprise: {
     wcag: '1.4.13',
     weight: 3,
     tools: {
       testaro: {
-        'hover-impactTriggers': {
+        'hover': {
           variable: false,
           quality: 1,
           what: 'Hovering over element has unexpected effects'
-        }
-      }
-    }
-  },
-  unhoverable: {
-    wcag: '1.4.13',
-    weight: 3,
-    tools: {
-      testaro: {
-        'hover-unhoverables': {
-          variable: false,
-          quality: 1,
-          what: 'Operable element cannot be hovered over'
-        }
-      }
-    }
-  },
-  hoverNoCursor: {
-    wcag: '1.4.13',
-    weight: 3,
-    tools: {
-      testaro: {
-        'hover-noCursors': {
-          variable: false,
-          quality: 1,
-          what: 'Hoverable element hides the mouse cursor'
-        }
-      }
-    }
-  },
-  hoverBadCursor: {
-    wcag: '1.4.13',
-    weight: 2,
-    tools: {
-      testaro: {
-        'hover-badCursors': {
-          variable: false,
-          quality: 1,
-          what: 'Link or button makes the hovering mouse cursor nonstandard'
-        }
-      }
-    }
-  },
-  hoverNoIndicator: {
-    wcag: '1.4.13',
-    weight: 3,
-    tools: {
-      testaro: {
-        'hover-noCursors': {
-          variable: false,
-          quality: 1,
-          what: 'Button shows no indication of being hovered over'
-        }
-      }
-    }
-  },
-  hoverBadIndicator: {
-    wcag: '1.4.13',
-    weight: 2,
-    tools: {
-      testaro: {
-        'hover-noCursors': {
-          variable: false,
-          quality: 1,
-          what: 'List item changes when hovered over'
         }
       }
     }
@@ -5735,7 +5638,7 @@ exports.issueClasses = {
         }
       },
       testaro: {
-        'labClash-mislabeled': {
+        'labClash': {
           variable: false,
           quality: 1,
           what: 'Incompatible label types'

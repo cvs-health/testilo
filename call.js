@@ -58,7 +58,7 @@ const callBatch = async (listID, what) => {
 const callScript = async (scriptID, classificationID = null, ... issueIDs) => {
   // Get any issue classification.
   const issueClasses = classificationID
-  ? require(`${functionDir}/score/${classificationID}`)
+  ? require(`${functionDir}/score/${classificationID}`).issueClasses
   : null;
   // Create a script.
   const scriptObj = script(scriptID, issueClasses, ... issueIDs);

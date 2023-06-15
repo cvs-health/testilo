@@ -48,8 +48,21 @@ form {
   margin-top: 1rem;
 }
 h2 {
+  font-size: 1.8rem;
   margin: 1rem auto 0.5rem auto;
   color: #006666;
+}
+h3 {
+  font-size: 1.6rem;
+}
+h4 {
+  font-size: 1.4rem;
+}
+h5 {
+  font-size: 1.2rem;
+}
+h6 {
+  font-size: 1rem;
 }
 input {
   margin: 0.5rem 0;
@@ -57,6 +70,9 @@ input {
 }
 legend {
   font-weight: 700;
+}
+pre {
+  white-space: break-spaces;
 }
 .secondCellRight td:nth-child(2) {
   text-align: right;

@@ -76,9 +76,11 @@ const populateQuery = (report, query) => {
           `<p>Count of instances: ${issueData.tools[toolID][ruleID].complaints.countTotal}</p>`
         );
         issueDetailRows.push('<h6>Complaint specifics</h6>');
+        issueDetailRows.push('<ul>');
         issueData.tools[toolID][ruleID].complaints.texts.forEach(text => {
-          issueDetailRows.push(`<p>${text}</p>`);
+          issueDetailRows.push(`  <li>${htmlEscape(text || '')}</li>`);
         });
+        issueDetailRows.push('</ul>');
       });
     });
   });

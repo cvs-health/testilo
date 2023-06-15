@@ -3151,6 +3151,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'autocomplete attribute has an empty value'
+        },
+        'An input element with a type attribute whose value is hidden must not have an autocomplete attribute whose value is on or off.': {
+          variable: false,
+          quality: 1,
+          what: 'autocomplete attribute belongs to a hidden element but has an on or off value'
         }
       },
       qualWeb: {

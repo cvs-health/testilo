@@ -2,7 +2,10 @@
 
 // IMPORTS
 
+// Issue classification
 const {issueClasses} = require('../../score/tic27');
+// Function to process files.
+const fs = require('fs/promises');
 
 // CONSTANTS
 
@@ -23,10 +26,10 @@ const htmlEscape = textOrNumber => textOrNumber
 // Gets a row of the score-summary table.
 const getScoreRow = (componentName, score) => `<tr><th>${componentName}</th><td>${score}</td></tr>`;
 // Adds parameters to a query for a digest.
-const makeQuery = (report, query) => {
+const populateQuery = (report, query) => {
   const {sources, jobData, score} = report;
   const {script, target, requester} = sources;
-  const {scoreProcID, summary, issues} = score;
+  const {scoreProcID, summary, details} = score;
   const {total} = summary;
   query.ts = script;
   query.sp = scoreProcID;
@@ -37,15 +40,10 @@ const makeQuery = (report, query) => {
   query.org = target.what;
   query.url = target.which;
   query.requester = requester;
-  // Add the total score to the query.
-  if (typeof total === 'number') {
-    query.totalScore = total;
-  }
-  else {
-    console.log('ERROR: missing or invalid total score');
-    return;
-  }
-  // Get rows for a score-summary table.
+  // Add values for the score-summary table to the query.
+  ['total', 'issue', 'tool', 'prevention', 'log', 'latency'].forEach(sumItem => {
+    query[sumItem] = summary[sumItem];
+  });
   const rows = {
     summaryRows: [],
     issueRows: []
@@ -57,8 +55,8 @@ const makeQuery = (report, query) => {
     }
   });
   // Get rows for an issue-score table.
-  Object.keys(issues).forEach(issueID => {
-    rows.issueRows.push(getScoreRow(issueID, issues[issueID]));
+  Object.keys(details.issue).forEach(issueID => {
+    rows.issueRows.push(getScoreRow(issueID, details.issue[issueID].score));
   });
   // Add the rows to the query.
   ['summaryRows', 'issueRows'].forEach(rowType => {
@@ -66,13 +64,13 @@ const makeQuery = (report, query) => {
   });
   // Add paragraphs about the issues to the query.
   const issueSummaryItems = [];
-  Object.keys(issues).forEach(issueID => {
+  Object.keys(details.issue).forEach(issueID => {
     const issueHeading = `<h4>Issue ${issueID}</h4>`;
     const wcagP = `<p>WCAG: ${issueClasses[issueID].wcag || 'N/A'}</p>`;
-    const scoreP = `<p>Score: ${issues[issueID]}</p>`;
+    const scoreP = `<p>Score: ${details.issue[issueID]}</p>`;
     const issueIntroP = '<p>Issue reports in this category:</p>';
     const issueListItems = [];
-    const issueData = issueDetails.issues[issueName];
+    const issueData = details.issue[issueID];
     const toolIDs = Object.keys(issueData.tools);
     toolIDs.forEach(toolID => {
       const testIDs = Object.keys(issueData.tools[toolID]);
@@ -100,7 +98,8 @@ const makeQuery = (report, query) => {
 // Returns a digested report.
 exports.digester = async report => {
   // Create a query to replace plateholders.
-  const query = makeQuery(report, {});
+  const query = {};
+  populateQuery(report, query);
   // Get the template.
   let template = await fs.readFile(`${__dirname}/index.html`, 'utf8');
   // Replace its placeholders.

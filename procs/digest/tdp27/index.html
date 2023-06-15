@@ -22,7 +22,7 @@
           <tr><th>URL</th><td>__url__</td></tr>
           <tr><th>Requester</th><td>__requester__</td></tr>
           <tr><th>Test date</th><td>__dateSlash__</td></tr>
-          <tr><th>Score</th><td>__totalScore__</td></tr>
+          <tr><th>Score</th><td>__total__</td></tr>
           <tr><th>Tested by</th><td>Testaro, procedure <code>__ts__</code></td></tr>
           <tr><th>Scored by</th><td>Testilo, procedure <code>__sp__</code></td></tr>
           <tr><th>Digested by</th><td>Testilo, procedure <code>__dp__</code></td></tr>
@@ -31,18 +31,22 @@
       <h2>Introduction</h2>
       <p>This is a digest of results from a battery of accessibility tests.</p>
       <p>The battery includes about 1350 tests drawn from ten different packages: Alfa, Axe, Continuum, Equal Access, HTML CodeSniffer, Nu Html Checker, QualWeb, Tenon, Testaro, and WAVE.</p>
-      <p>These tests were run on the web page named above and gave the page a score of __totalScore__, where 0 would be <q>perfect</q>.</p>
-      <h2>Score summary</h2>
+      <p>These tests were run on the web page named above and gave the page a score of __total__, where 0 would be <q>perfect</q>.</p>
+      <h2>Scores</h2>
       <table class="allBorder secondCellRight">
         <caption>Score summary</caption>
         <thead>
           <tr><th>Component</th><th>Score</th></tr>
         </thead>
         <tbody class="headersLeft">
-          __summaryRows__
+          <tr><th>total</th><td>__total__</td></tr>
+          <tr><th>issue</th><td>__issue__</td></tr>
+          <tr><th>tool</th><td>__tool__</td></tr>
+          <tr><th>prevention</th><td>__prevention__</td></tr>
+          <tr><th>log</th><td>__log__</td></tr>
+          <tr><th>latency</th><td>__latency__</td></tr>
         </tbody>
       </table>
-      <h2>Issue scores</h2>
       <table class="allBorder secondCellRight">
         <caption>Issue scores</caption>
         <thead>

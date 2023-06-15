@@ -117,7 +117,8 @@ const callScore = async (scorerID, selector = '') => {
       // Save it.
       await fs.writeFile(`${scoredReportDir}/${report.id}.json`, JSON.stringify(report, null, 2));
     };
-  }
+    console.log(`Reports scored and saved in ${scoredReportDir}`);
+    }
   // Otherwise, i.e. if no raw reports are to be scored:
   else {
     // Report this.
@@ -132,17 +133,16 @@ const callDigest = async (digesterID, selector = '') => {
   if (reports.length) {
     const digesterDir = `${functionDir}/digest/${digesterID}`;
     // Get the digester.
-    const digester = require(`${digesterDir}/index`).makeQuery;
-    // Get the template.
-    const template = await fs.readFile(`${digesterDir}/index.html`, 'utf8');
+    const {digester} = require(`${digesterDir}/index`);
     // Digest the reports.
-    const digestedReports = digest(template, digester, reports);
+    const digestedReports = await digest(digester, reports);
     const digestedReportDir = `${reportDir}/digested`;
     // For each digested report:
     for (const reportID of Object.keys(digestedReports)) {
       // Save it.
       await fs.writeFile(`${digestedReportDir}/${reportID}.html`, digestedReports[reportID]);
     };
+    console.log(`Reports digested and saved in ${digestedReportDir}`);
   }
   // Otherwise, i.e. if no scored reports are to be digested:
   else {

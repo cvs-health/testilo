@@ -81,9 +81,14 @@ exports.scorer = report => {
       const {summary, details} = score;
       // For each test act:
       testActs.forEach(act => {
-        // If a successful standard result exists:
+        // If the page prevented the tool from operating:
         const {which, standardResult} = act;
-        if (
+        if (standardResult.prevented) {
+          // Add this to the score.
+          details.prevention[which] = preventionWeight;
+        }
+        // Otherwise, if a successful standard result exists:
+        else if (
           standardResult
           && standardResult.totals
           && standardResult.totals.length === 4
@@ -105,6 +110,8 @@ exports.scorer = report => {
               const issueID = issueIndex[which][ruleID];
               if (! details.issue[issueID]) {
                 details.issue[issueID] = {
+                  score: 0,
+                  maxCount: 0,
                   weight: issueClasses[issueID].weight,
                   tools: {}
                 };
@@ -144,16 +151,28 @@ exports.scorer = report => {
         }
         // Otherwise, i.e. if no successful standard result exists:
         else {
-          // Add a prevented result to the act if not already there.
-          if (! act.result) {
-            act.result = {};
-          }
-          if (! act.result.prevented) {
-            act.result.prevented = true;
-          };
-          // Add the tool and the prevention score to the score.
+          // Add an inferred prevention to the score.
           details.prevention[which] = preventionWeight;
         }
+      });
+      // For each issue with any complaints:
+      Object.keys(details.issue).forEach(issueID => {
+        const issueData = details.issue[issueID];
+        // For each tool with any complaints for the issue:
+        Object.keys(issueData.tools).forEach(toolID => {
+          // Get the sum of the weighted counts of its issue rules.
+          let weightedCount = 0;
+          Object.values(issueData.tools[toolID]).forEach(ruleData => {
+            weightedCount += ruleData.quality * ruleData.complaints.countTotal;
+          });
+          // If the sum exceeds the existing maximum weighted count for the issue:
+          if (weightedCount > issueData.maxCount) {
+            // Change the maximum count for the issue to the sum.
+            issueData.maxCount = weightedCount;
+          }
+        });
+        // Get the score for the issue.
+        issueData.score = issueData.weight * issueData.maxCount;
       });
       // Add the severity detail totals to the score.
       details.severity.total = Object.keys(details.severity.byTool).reduce((severityTotals, toolID) => {
@@ -163,15 +182,9 @@ exports.scorer = report => {
         return severityTotals;
       }, details.severity.total);
       // Add the summary issue total to the score.
-      Object.keys(details.issue).forEach(issueID => {
-        Object.keys(details.issue[issueID].tools).forEach(toolID => {
-          Object.keys(details.issue[issueID].tools[toolID]).forEach(ruleID => {
-            summary.issue += details.issue[issueID].weight
-            * details.issue[issueID].tools[toolID][ruleID].quality
-            * details.issue[issueID].tools[toolID][ruleID].complaints.countTotal;
-          });
-        });
-      });
+      summary.issue = Object
+      .values(details.issue)
+      .reduce((total, current) => total + current.score, 0);
       // Add the summary tool total to the score.
       summary.tool = toolWeight * details.severity.total.reduce(
         (total, current, index) => total + severityWeights[index] * current, 0

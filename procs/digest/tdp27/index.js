@@ -62,7 +62,7 @@ const populateQuery = (report, query) => {
   // Add paragraph groups about the issue details to the query.
   const issueDetailRows = [];
   issueIDs.forEach(issueID => {
-    issueDetailRows.push(`<h3>Issue <code>${issueID}</code></h3>`);
+    issueDetailRows.push(`<h3 class="bars">Issue <code>${issueID}</code></h3>`);
     issueDetailRows.push(`<p>WCAG: ${issueClasses[issueID].wcag || 'N/A'}</p>`);
     const issueData = details.issue[issueID];
     issueDetailRows.push(`<p>Score: ${issueData.score}</p>`);

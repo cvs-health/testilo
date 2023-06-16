@@ -131,8 +131,8 @@ const callDigest = async (digesterID, selector = '') => {
   const reports = await getReports('scored', selector);
   // If any exist:
   if (reports.length) {
-    const digesterDir = `${functionDir}/digest/${digesterID}`;
     // Get the digester.
+    const digesterDir = `${functionDir}/digest/${digesterID}`;
     const {digester} = require(`${digesterDir}/index`);
     // Digest the reports.
     const digestedReports = await digest(digester, reports);
@@ -152,15 +152,20 @@ const callDigest = async (digesterID, selector = '') => {
 };
 // Fulfills a comparison request.
 // Get the scored reports to be scored.
-const callCompare = async (compareProcID, comparisonNameBase) => {
-  const reports = await getReports('scored');
-  const comparerDir = `${functionDir}/compare/${compareProcID}`;
-  const comparisonTemplate = await fs.readFile(`${comparerDir}/index.html`, 'utf8');
-  const comparer = require(`${comparerDir}/index`).getQuery;
-  const comparison = await compare(comparisonTemplate, comparer, reports);
-  const comparisonDir = `${reportDir}/comparative`;
-  await fs.writeFile(`${comparisonDir}/${comparisonNameBase}.html`, comparison);
-  console.log(`Comparison completed. Proc: ${compareProcID}. Directory: ${comparisonDir}.`);
+const callCompare = async (compareProcID, comparisonNameBase, selector = '') => {
+  const reports = await getReports('scored', selector);
+  // If any exist:
+  if (reports.length) {
+    // Get the comparer.
+    const comparerDir = `${functionDir}/compare/${compareProcID}`;
+    const {comparer} = require(`${comparerDir}/index`);
+    // Compare the reports.
+    const comparison = await compare(comparer, reports);
+    // Save the comparison.
+    const comparisonDir = `${reportDir}/comparative`;
+    await fs.writeFile(`${comparisonDir}/${comparisonNameBase}.html`, comparison);
+    console.log(`Comparison completed and saved in ${comparisonDir}`);
+  }
 };
 
 // ########## OPERATION
@@ -214,7 +219,7 @@ else if (fn === 'multiDigest' && fnArgs.length === 1) {
     console.log('Execution completed');
   });
 }
-else if (fn === 'compare' && fnArgs.length === 2) {
+else if (fn === 'compare' && fnArgs.length > 1 && fnArgs.length < 4) {
   callCompare(... fnArgs)
   .then(() => {
     console.log('Execution completed');

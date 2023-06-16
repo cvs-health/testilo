@@ -1,6 +1,6 @@
 /*
   digest.js
-  Creates digests from a scored reports.
+  Creates digests from scored reports.
   Arguments:
     0. Digesting function.
     1. Array of scored reports.

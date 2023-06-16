@@ -469,15 +469,13 @@ A module can invoke `digest` in this way:
 
 ```javaScript
 const {digest} = require('testilo/digest');
-const digesterDir = `${process.env.FUNCTIONDIR}/digest/dp99a`;
-fs.readFile(`${digesterDir}/index.html`, 'utf8')
-.then(template => {
-  const {digester} = require(`${digesterDir}/index`);
-  const digestedReports = digest(template, digester, scoredReports);
-});
+const digesterDir = `${process.env.FUNCTIONDIR}/digest/tdp99a`;
+const {digester} = require(`${digesterDir}/index`);
+digest(digester, scoredReports)
+.then(digestedReports => {…});
 ```
 
-The first two arguments to `digest()` are a digest template and a digesting function. In this example, they have been obtained from files in the Testilo package, but they could be custom-made. The third argument to `digest()` is an array of scored report objects. The `digest()` function returns an array of digested reports. The invoking module can further dispose of the digested reports as needed.
+The first argument to `digest()` is a digesting function. In this example, it has been obtained from a files in the Testilo package, but it could be custom-made. The second argument to `digest()` is an array of scored report objects. The `digest()` function returns an array of digested reports. The invoking module can further dispose of the digested reports as needed.
 
 #### By a user
 
@@ -505,12 +503,11 @@ To test the `digest` module, in the project directory you can execute the statem
 
 If you use Testilo to perform a battery of tests on multiple targets, you may want a single report that compares the total scores received by the targets. Testilo can produce such a _comparative report_.
 
-The `compare` module compares the scores in a collection of scored reports. Its `compare()` function takes three arguments:
-- a comparison template
+The `compare` module compares the scores in a collection of scored reports. Its `compare()` function takes two arguments:
 - a comparison function
 - an array of scored reports
 
-The comparison template is an HTML document containing placeholders. A copy of the template, with its placeholders replaced by computed values, becomes the comparative report. The comparison function defines the rules for replacing the placeholders with values. The Testilo package contains a `procs/compare` directory, in which there are subdirectories containing pairs of templates and modules that export comparison functions. You can use one of those pairs, or you can create your own.
+The comparison function defines the rules for generating an HTML file comparing the scored reports. The Testilo package contains a `procs/compare` directory, in which there are subdirectories containing modules that export comparison functions. You can use one of those functions, or you can create your own.
 
 ### Invocation
 
@@ -521,30 +518,29 @@ There are two ways to use the `compare` module.
 A module can invoke `compare` in this way:
 
 ```javaScript
-const fs = require('fs/promises);
 const {compare} = require('testilo/compare');
 const comparerDir = `${process.env.FUNCTIONDIR}/compare/tcp99`;
-fs.readFile(`${comparerDir}/index.html`)
-.then(template => {
-  const {comparer} = require(`${comparerDir}/index`);
-  const comparativeReport = compare(template, comparer, scoredReports);
-});
+const {comparer} = require(`${comparerDir}/index`);
+compare(comparer, scoredReports)
+.then(comparison => {…});
 ```
 
-The first two arguments to `compare()` are a template and a comparison function. In this example, they have been obtained from files in the Testilo package, but they could be custom-made. The third argument to `compare()` is an array of report objects. The `compare()` function returns a comparative report. The invoking module can further dispose of the comparative report as needed.
+The first argument to `compare()` is a comparison function. In this example, it been obtained from a file in the Testilo package, but it could be custom-made. The second argument to `compare()` is an array of report objects. The `compare()` function returns a comparative report. The invoking module can further dispose of the comparative report as needed.
 
 #### By a user
 
 A user can invoke `compare` in this way:
 
 ```bash
-node call compare tcp99 legislators
+node call compare tcp99 legislators 23pl
 ```
 
 When a user invokes `compare` in this example, the `call` module:
-- gets the template and the comparison module from subdirectory `tcp99` of the subdirectory `compare` in the `process.env.FUNCTIONDIR` directory.
-- gets all the reports in the `scored` subdirectory of the `process.env.REPORTDIR` directory.
+- gets the comparison module from subdirectory `tcp99` of the subdirectory `compare` in the `process.env.FUNCTIONDIR` directory.
+- gets all the reports in the `scored` subdirectory of the `process.env.REPORTDIR` directory whose file names begin with `23pl`.
 - writes the comparative report as an HTML file named `legislators.html` to the `comparative` subdirectory of the `process.env.REPORTDIR` directory.
+
+The fourth argument to `call` (`23pl` in this example) is optional. If it is omitted, `call` will get and `comparer` will compare all the reports in the `scored` directory.
 
 The comparative report created by `compare` is an HTML file, and it expects a `style.css` file to exist in its directory. The `reports/comparative/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where comparative reports are written.
 

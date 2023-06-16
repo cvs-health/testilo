@@ -1,22 +1,16 @@
 /*
   compare.js
-  Creates a comparative report from scored reports.
+  Creates a comparison from scored reports.
+  Arguments:
+    0. Comparing function.
+    1. Array of scored reports.
 */
 
 // ########## FUNCTIONS
 
-// Replaces the placeholders in a template with eponymous query parameters.
-const replaceHolders = (template, query) => template
-.replace(/__([a-zA-Z]+)__/g, (ph, qp) => query[qp]);
 // Compares the scored reports and returns a comparison.
-exports.compare = async (comparisonTemplate, comparer, reports) => {
-  // Create a query.
-  const query = {};
-  // Populate the query.
-  await comparer(reports, query);
-  // Use it to create a comparison.
-  const comparison = replaceHolders(comparisonTemplate, query);
+exports.compare = async (comparer, scoredReports) => {
   // Return the comparison.
-  console.log(`Comparison complete. Report count: ${reports.length}`);
-  return comparison;
+  console.log(`Comparison complete. Report count: ${scoredReports.length}`);
+  return comparer(scoredReports);
 };

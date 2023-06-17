@@ -29,7 +29,7 @@ const latencyWeight = 1;
 // Normal latency (1.5 second per visit).
 const normalLatency = 20;
 // How much each prevention adds to the score.
-const preventionWeight = 200;
+const preventionWeight = 300;
 // Indexes of issues.
 const issueIndex = {};
 const issueMatcher = [];
@@ -83,7 +83,7 @@ exports.scorer = report => {
       testActs.forEach(act => {
         // If the page prevented the tool from operating:
         const {which, standardResult} = act;
-        if (standardResult.prevented) {
+        if (! standardResult || standardResult.prevented) {
           // Add this to the score.
           details.prevention[which] = preventionWeight;
         }
@@ -149,7 +149,7 @@ exports.scorer = report => {
             }
           });
         }
-        // Otherwise, i.e. if no successful standard result exists:
+        // Otherwise, i.e. if a failed standard result exists:
         else {
           // Add an inferred prevention to the score.
           details.prevention[which] = preventionWeight;

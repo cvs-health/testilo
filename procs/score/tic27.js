@@ -362,7 +362,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'alt_input_missing': {
+        alt_input_missing: {
           variable: false,
           quality: 1,
           what: 'Image button has no alternative text'
@@ -452,12 +452,12 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'alt_missing': {
+        alt_missing: {
           variable: false,
           quality: 1,
           what: 'Text alternative is missing'
         },
-        'alt_spacer_missing': {
+        alt_spacer_missing: {
           variable: false,
           quality: 1,
           what: 'Spacer image has no text alternative'
@@ -576,7 +576,7 @@ exports.issueClasses = {
     weight: 1,
     tools: {
       wave: {
-        'alt_duplicate': {
+        alt_duplicate: {
           variable: false,
           quality: 1,
           what: 'Two images near each other have the same text alternative'
@@ -596,7 +596,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'alt_long': {
+        alt_long: {
           variable: false,
           quality: 1,
           what: 'Long text alternative'
@@ -654,7 +654,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'alt_suspicious': {
+        alt_suspicious: {
           variable: false,
           quality: 1,
           what: 'Image text alternative is suspicious'
@@ -766,7 +766,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'language_missing': {
+        language_missing: {
           variable: false,
           quality: 1,
           what: 'Language missing or invalid'
@@ -961,7 +961,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'plugin': {
+        plugin: {
           variable: false,
           quality: 1,
           what: 'An unidentified plugin is present'
@@ -1000,7 +1000,7 @@ exports.issueClasses = {
     weight: 4,
     tools: {
       wave: {
-        'alt_map_missing': {
+        alt_map_missing: {
           variable: false,
           quality: 1,
           what: 'Image that has hot spots has no alt attribute'
@@ -1046,7 +1046,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'alt_area_missing': {
+        alt_area_missing: {
           variable: false,
           quality: 1,
           what: 'Image map area has no alternative text'
@@ -1119,7 +1119,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'event_handler': {
+        event_handler: {
           variable: false,
           quality: 1,
           what: 'Device-dependent event handler'
@@ -1139,7 +1139,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'link_internal_broken': {
+        link_internal_broken: {
           variable: false,
           quality: 1,
           what: 'Broken same-page link'
@@ -1155,7 +1155,14 @@ exports.issueClasses = {
         'AAA.1_3_1.H44.NotFormControl': {
           variable: false,
           quality: 1,
-          what: 'referent of the for attribute of the label is not a form control, so may be wrong'
+          what: 'Referent of the for attribute of the label is not a form control, so may be wrong'
+        }
+      },
+      ibm: {
+        label_ref_valid: {
+          variable: false,
+          quality: 1,
+          what: 'Value of the for attribute of the label element is not the id of a valid input element'
         }
       },
       nuVal: {
@@ -1323,7 +1330,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'label_orphaned': {
+        label_orphaned: {
           variable: false,
           quality: 1,
           what: 'Orphaned form label'
@@ -1414,6 +1421,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Hyperlink has no text description'
+        },
+        a_text_purpose: {
+          variable: false,
+          quality: 1,
+          what: 'Hyperlink has no link text, label, or image with a text alternative'
         }
       },
       qualWeb: {
@@ -1441,12 +1453,12 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'link_empty': {
+        link_empty: {
           variable: false,
           quality: 1,
           what: 'Link contains no text'
         },
-        'alt_link_missing': {
+        alt_link_missing: {
           variable: false,
           quality: 1,
           what: 'Linked image has no text alternative'
@@ -1525,7 +1537,7 @@ exports.issueClasses = {
     weight: 1,
     tools: {
       wave: {
-        'link_pdf': {
+        link_pdf: {
           variable: false,
           quality: 1,
           what: 'Link to PDF document'
@@ -1681,7 +1693,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'link_redundant': {
+        link_redundant: {
           variable: false,
           quality: 1,
           what: 'Adjacent links go to the same URL'
@@ -1751,7 +1763,7 @@ exports.issueClasses = {
     weight: 1,
     tools: {
       wave: {
-        'javascript_jumpmenu': {
+        javascript_jumpmenu: {
           variable: false,
           quality: 1,
           what: 'selection change may navigate to another page without notice'
@@ -1864,7 +1876,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'button_empty': {
+        button_empty: {
           variable: false,
           quality: 1,
           what: 'Button is empty or has no value text'
@@ -2137,7 +2149,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'text_small': {
+        text_small: {
           variable: false,
           quality: 1,
           what: 'Text is very small'
@@ -2276,6 +2288,18 @@ exports.issueClasses = {
     wcag: '1.3.1',
     weight: 4,
     tools: {
+      htmlcs: {
+        'AAA.2_4_8.H59.1': {
+          variable: false,
+          quality: 1,
+          what: 'link element is not in the document head'
+        },
+        'A link element with an as attribute must have a rel attribute that contains the value preload or the value modulepreload or the value prefetch.': {
+          variable: false,
+          quality: 1,
+          what: 'link element with an as attribute has no rel attribute with preload, modulepreload, or prefetch as its value'
+        }
+      },
       nuVal: {
         'A link element must not appear as a descendant of a body element unless the link element has an itemprop attribute or has a rel attribute whose value contains dns-prefetch, modulepreload, pingback, preconnect, prefetch, preload, prerender, or stylesheet.': {
           variable: false,
@@ -2518,6 +2542,11 @@ exports.issueClasses = {
         }
       },
       ibm: {
+        aria_role_valid: {
+          variable: false,
+          quality: 1,
+          what: 'ARIA role is not valid for its element'
+        },
         aria_semantics_role: {
           variable: false,
           quality: 1,
@@ -2537,6 +2566,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Element has an invalid role'
+        },
+        aria_eventhandler_role_valid: {
+          variable: false,
+          quality: 1,
+          what: 'Element with an onclick, onmouseout, or onmouseover attribute has no valid ARIA role'
         },
         Rpt_Aria_EventHandlerMissingRole_Native_Host_Sematics: {
           variable: false,
@@ -2619,7 +2653,7 @@ exports.issueClasses = {
         }
       },
       testaro: {
-        'role': {
+        role: {
           variable: false,
           quality: 1,
           what: 'Invalid, native-replacing, or redundant role'
@@ -2636,6 +2670,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'dir attribute has a value other than ltr, rtl, or auto'
+        },
+        aria_attribute_valid: {
+          variable: false,
+          quality: 1,
+          what: 'ARIA attribute is invalid for the role of its element'
         }
       },
       nuVal: {
@@ -2728,6 +2767,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'ARIA role on an element does not have a required attribute'
+        },
+        aria_attribute_required: {
+          variable: false,
+          quality: 1,
+          what: 'Element does not have the ARIA attribute required by its role'
         }
       },
       nuVal: {
@@ -3106,7 +3150,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'aria_reference_broken': {
+        aria_reference_broken: {
           variable: false,
           quality: 1,
           what: 'Broken ARIA reference'
@@ -3248,7 +3292,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'contrast': {
+        contrast: {
           variable: false,
           quality: 1,
           what: 'Very low contrast'
@@ -3444,6 +3488,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Heading element provides no descriptive text'
+        },
+        heading_content_exists: {
+          variable: false,
+          quality: 1,
+          what: 'Heading element has no descriptive content'
         }
       },
       nuVal: {
@@ -3461,7 +3510,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'heading_empty': {
+        heading_empty: {
           variable: false,
           quality: 1,
           what: 'Empty heading'
@@ -3526,7 +3575,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'alt_redundant': {
+        alt_redundant: {
           variable: false,
           quality: 1,
           what: 'Redundant text alternative'
@@ -3553,7 +3602,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'image_title': {
+        image_title: {
           variable: false,
           quality: 1,
           what: 'Image has a title attribute value but no alt value'
@@ -3580,7 +3629,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'title_redundant': {
+        title_redundant: {
           variable: false,
           quality: 1,
           what: 'Title attribute text is the same as text or alternative text'
@@ -3699,7 +3748,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'title_invalid': {
+        title_invalid: {
           variable: false,
           quality: 1,
           what: 'Missing or uninformative page title'
@@ -3726,7 +3775,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'heading_skipped': {
+        heading_skipped: {
           variable: false,
           quality: 1,
           what: 'Skipped heading level'
@@ -3786,7 +3835,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'heading_missing': {
+        heading_missing: {
           variable: false,
           quality: 1,
           what: 'Page has no headings'
@@ -3898,7 +3947,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'text_justified': {
+        text_justified: {
           variable: false,
           quality: 1,
           what: 'Text is justified'
@@ -4025,7 +4074,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'heading_possible': {
+        heading_possible: {
           variable: false,
           quality: 1,
           what: 'Possible heading'
@@ -4045,7 +4094,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'underline': {
+        underline: {
           variable: false,
           quality: 1,
           what: 'CSS underline on text that is not a link'
@@ -4139,7 +4188,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'list_possible': {
+        list_possible: {
           variable: false,
           quality: 1,
           what: 'List may fail to be coded as such'
@@ -4211,7 +4260,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'select_missing_label': {
+        select_missing_label: {
           variable: false,
           quality: 1,
           what: 'Select element has no label'
@@ -4271,7 +4320,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'accesskey': {
+        accesskey: {
           variable: false,
           quality: 1,
           what: 'Accesskey'
@@ -4298,7 +4347,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'fieldset_missing': {
+        fieldset_missing: {
           variable: false,
           quality: 1,
           what: 'fieldset element is missing'
@@ -4354,7 +4403,12 @@ exports.issueClasses = {
         WCAG20_Fieldset_HasLegend: {
           variable: false,
           quality: 1,
-          what: 'fieldset element has no single, non-empty legend as a label'
+          what: 'fieldset element has no single, non-empty legend element as a label'
+        },
+        fieldset_legend_valid: {
+          variable: false,
+          quality: 1,
+          what: 'fieldset element does not have a legend element'
         }
       },
       qualWeb: {
@@ -4365,7 +4419,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'legend_missing': {
+        legend_missing: {
           variable: false,
           quality: 1,
           what: 'fieldset has no legend element'
@@ -4396,6 +4450,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Groups with nested inputs has no unique accessible name'
+        },
+        fieldset_label_valid: {
+          variable: false,
+          quality: 1,
+          what: 'Group or fieldset has no accessible name'
         }
       }
     }
@@ -4424,7 +4483,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'table_layout': {
+        table_layout: {
           variable: false,
           quality: 1,
           what: 'table element is misused to arrange content'
@@ -4651,7 +4710,7 @@ exports.issueClasses = {
     weight: 2,
     tools: {
       wave: {
-        'th_empty': {
+        th_empty: {
           variable: false,
           quality: 1,
           what: 'th (table header) contains no text'
@@ -4705,7 +4764,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'label_missing': {
+        label_missing: {
           variable: false,
           quality: 1,
           what: 'form element has no label'
@@ -4731,7 +4790,7 @@ exports.issueClasses = {
     weight: 3,
     tools: {
       wave: {
-        'label_title': {
+        label_title: {
           variable: false,
           quality: 1,
           what: 'Form control has a title but no label'
@@ -4968,7 +5027,7 @@ exports.issueClasses = {
         }
       },
       testaro: {
-        'focInd': {
+        focInd: {
           variable: false,
           quality: 1,
           what: 'Focused element displays a nonstandard or no focus indicator'
@@ -5021,7 +5080,7 @@ exports.issueClasses = {
     weight: 2,
     tools: {
       wave: {
-        'region_missing': {
+        region_missing: {
           variable: false,
           quality: 1,
           what: 'Page has no regions or ARIA landmarks'
@@ -5182,6 +5241,13 @@ exports.issueClasses = {
           quality: 1,
           what: 'Multiple elements with a banner role are on the page'
         }
+      },
+      qualWeb: {
+        'QW-BP20': {
+          variable: false,
+          quality: 1,
+          what: 'Document has more than 1 banner landmark'
+        }
       }
     }
   },
@@ -5194,6 +5260,13 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'banner landmark is contained in another landmark'
+        }
+      },
+      qualWeb: {
+        'QW-BP19': {
+          variable: false,
+          quality: 1,
+          what: 'banner landmark is not at the top level'
         }
       }
     }
@@ -5437,6 +5510,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'label element has no non-empty purpose-descriptive text'
+        },
+        label_content_exists: {
+          variable: false,
+          quality: 1,
+          what: 'label element has no descriptive text identifying the expected input'
         }
       }
     }
@@ -5446,7 +5524,7 @@ exports.issueClasses = {
     weight: 3,
     tools: {
       testaro: {
-        'focOp': {
+        focOp: {
           variable: false,
           quality: 1,
           what: 'Tab-focusable elements that are inoperable or operable elements that are not focusable'
@@ -5570,6 +5648,24 @@ exports.issueClasses = {
       }
     }
   },
+  multipleLabelees: {
+    wcag: '1.3.1',
+    weight: 4,
+    tools: {
+      nuVal: {
+        'The label element may contain at most one button, input, meter, output, progress, select, or textarea descendant.': {
+          variable: false,
+          quality: 1,
+          what: 'label element has more than 1 labelable descendant.'
+        },
+        'label element with multiple labelable descendants.': {
+          variable: false,
+          quality: 1,
+          what: 'label element has multiple labelable descendants.'
+        }
+      }
+    }
+  },
   labeledHidden: {
     wcag: '1.3.1',
     weight: 2,
@@ -5658,7 +5754,7 @@ exports.issueClasses = {
     weight: 3,
     tools: {
       testaro: {
-        'hover': {
+        hover: {
           variable: false,
           quality: 1,
           what: 'Hovering over element has unexpected effects'
@@ -5678,7 +5774,7 @@ exports.issueClasses = {
         }
       },
       testaro: {
-        'labClash': {
+        labClash: {
           variable: false,
           quality: 1,
           what: 'Incompatible label types'
@@ -5692,7 +5788,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'label_multiple': {
+        label_multiple: {
           variable: false,
           quality: 1,
           what: 'Form control has more than one label associated with it'
@@ -5717,7 +5813,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'label_empty': {
+        label_empty: {
           variable: false,
           quality: 1,
           what: 'Empty form label'
@@ -5730,7 +5826,7 @@ exports.issueClasses = {
     weight: 1,
     tools: {
       wave: {
-        'link_suspicious': {
+        link_suspicious: {
           variable: false,
           quality: 1,
           what: 'Suspicious link text'
@@ -5750,12 +5846,12 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'link_excel': {
+        link_excel: {
           variable: false,
           quality: 1,
           what: 'Link to Microsoft Excel workbook'
         },
-        'link_word': {
+        link_word: {
           variable: false,
           quality: 1,
           what: 'Link to Microsoft Word document'
@@ -5821,7 +5917,7 @@ exports.issueClasses = {
     weight: 4,
     tools: {
       wave: {
-        'aria_menu_broken': {
+        aria_menu_broken: {
           variable: false,
           quality: 1,
           what: 'ARIA menu does not contain required menu items'
@@ -5954,6 +6050,13 @@ exports.issueClasses = {
     wcag: '1.3.1',
     weight: 4,
     tools: {
+      ibm: {
+        aria_parent_required: {
+          variable: true,
+          quality: 1,
+          what: 'Element is not contained in or owned by an element with a required role'
+        }
+      },
       nuVal: {
         '^Element .+ not allowed as child of element .+ in this context.*$': {
           variable: true,
@@ -6014,7 +6117,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'tabindex': {
+        tabindex: {
           variable: false,
           quality: 1,
           what: 'tabIndex value positive'
@@ -6199,12 +6302,12 @@ exports.issueClasses = {
           quality: 1,
           what: 'video or audio element may have no or incorrect captions, transcript, or audio description'
         },
-        'audio_video': {
+        audio_video: {
           variable: false,
           quality: 1,
           what: 'audio or video file or link may have no or incorrect captions, transcript, or audio description'
         },
-        'youtube_video': {
+        youtube_video: {
           variable: false,
           quality: 1,
           what: 'YouTube video may have no or incorrect captions'
@@ -6303,7 +6406,7 @@ exports.issueClasses = {
     weight: 3,
     tools: {
       axe: {
-        'bypass': {
+        bypass: {
           variable: false,
           quality: 1,
           what: 'Page has no means to bypass repeated blocks'
@@ -6334,7 +6437,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'link_skip_broken': {
+        link_skip_broken: {
           variable: false,
           quality: 1,
           what: 'Skip-navigation link has no target or is not keyboard accessible'
@@ -6433,7 +6536,7 @@ exports.issueClasses = {
     weight: 1,
     tools: {
       wave: {
-        'noscript': {
+        noscript: {
           variable: false,
           quality: 1,
           what: 'noscript element may fail to contain an accessible equivalent or alternative'
@@ -6564,12 +6667,12 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'longdesc': {
+        longdesc: {
           variable: false,
           quality: 1,
           what: 'longdesc attribute is obsolete'
         },
-        'flash': {
+        flash: {
           variable: false,
           quality: 1,
           what: 'Flash content is present'
@@ -6771,7 +6874,12 @@ exports.issueClasses = {
     weight: 3,
     tools: {
       ibm: {
-        'Rpt_Aria_InvalidTabindexForActivedescendant': {
+        aria_child_valid: {
+          variable: false,
+          quality: 1,
+          what: 'Child element has a role not allowed for the role of the parent'
+        },
+        Rpt_Aria_InvalidTabindexForActivedescendant: {
           variable: false,
           quality: 1,
           what: 'Element with an aria-activedescendant attribute has no nonpositive tabindex attribute'
@@ -6942,7 +7050,7 @@ exports.issueClasses = {
         }
       },
       wave: {
-        'longdesc_invalid': {
+        longdesc_invalid: {
           variable: false,
           quality: 1,
           what: 'longdesc attribute has a value that is not a URL (and is obsolete)'

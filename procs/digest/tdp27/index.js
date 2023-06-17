@@ -21,8 +21,7 @@ const innerJoiner = '\n        ';
 const htmlEscape = textOrNumber => textOrNumber
 .toString()
 .replace(/&/g, '&amp;')
-.replace(/</g, '&lt;')
-.replace(/"/g, '&quot;');
+.replace(/</g, '&lt;');
 // Gets a row of the score-summary table.
 const getScoreRow = (componentName, score) => `<tr><th>${componentName}</th><td>${score}</td></tr>`;
 // Adds parameters to a query for a digest.

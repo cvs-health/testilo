@@ -379,6 +379,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'figure element has no associated label'
+        },
+        figure_label_exists: {
+          variable: false,
+          quality: 1,
+          what: 'figure element has no associated label'
         }
       }
     }
@@ -431,10 +436,20 @@ exports.issueClasses = {
           quality: 1,
           what: 'Element with an img role has no non-empty label'
         },
+        aria_img_labelled: {
+          variable: false,
+          quality: 1,
+          what: 'Element with an img role has no label or an empty label'
+        },
         WCAG20_Img_HasAlt: {
           variable: false,
           quality: 1,
           what: 'Image has no alt attribute conveying its meaning, or alt="" if decorative'
+        },
+        img_alt_valid: {
+          variable: false,
+          quality: 1,
+          what: 'Image has neither an alt attribute nor an ARIA label or title'
         }
       },
       nuVal: {
@@ -1266,6 +1281,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Checkbox or radio button label precedes the input control'
+        },
+        input_label_after: {
+          variable: false,
+          quality: 1,
+          what: 'Label text is located before its associated checkbox or radio button element'
         }
       },
       qualWeb: {
@@ -2243,12 +2263,18 @@ exports.issueClasses = {
           quality: 1,
           what: 'Overflow is hidden or clipped if the text is enlarged'
         }
-      },
+      }
+    }
+  },
+  overflowHiddenRisk: {
+    wcag: '1.4.4',
+    weight: 1,
+    tools: {
       qualWeb: {
         'QW-ACT-R40': {
           variable: false,
           quality: 1,
-          what: 'Zoomed text node is clipped by a CSS overflow declaration'
+          what: 'Zoomed text node may be clipped by a CSS overflow declaration'
         }
       }
     }
@@ -2310,6 +2336,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'link element with an as attribute has no rel attribute with preload, modulepreload, or prefetch as its value'
+        },
+        'A link element with an as attribute must have a rel attribute that contains the value preload or the value modulepreload.': {
+          variable: false,
+          quality: 1,
+          what: 'link element with an as attribute has no rel attribute with preload or modulepreload as its value'
         }
       }
     }
@@ -2561,6 +2592,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Element has a contentinfo role when no element has a main role'
+        },
+        aria_contentinfo_misuse: {
+          variable: false,
+          quality: 1,
+          what: 'Element with a contentinfo role is present without an element with a main role'
         },
         Rpt_Aria_ValidRole: {
           variable: false,
@@ -4294,6 +4330,19 @@ exports.issueClasses = {
       }
     }
   },
+  noOptionFocusable: {
+    wcag: '2.1.1',
+    weight: 1,
+    tools: {
+      ibm: {
+        aria_child_tabbable: {
+          variable: false,
+          quality: 1,
+          what: 'No descendent element with an option role is tabbable'
+        }
+      }
+    }
+  },
   accessKeyDuplicate: {
     wcag: '1.3.1',
     weight: 3,
@@ -4754,6 +4803,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Form control has no associated label'
+        },
+        input_label_exists: {
+          variable: false,
+          quality: 1,
+          what: 'Element with the role of a form control has no associated label'
         }
       },
       qualWeb: {
@@ -5351,6 +5405,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Element with a form role has no unique purpose label among the form-role elements'
+        },
+        aria_form_label_unique: {
+          variable: false,
+          quality: 1,
+          what: 'Multiple elements with a form role do not have unique labels'
         }
       }
     }
@@ -5435,6 +5494,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Element with a region role has no unique label among the region-role elements'
+        },
+        aria_region_label_unique: {
+          variable: false,
+          quality: 1,
+          what: 'Multiple elements with a region role do not have unique labels'
         }
       }
     }
@@ -5744,20 +5808,7 @@ exports.issueClasses = {
         hover: {
           variable: false,
           quality: 1,
-          what: 'Hovering is mis-indicated or changes content'
-        }
-      }
-    }
-  },
-  hoverSurprise: {
-    wcag: '1.4.13',
-    weight: 3,
-    tools: {
-      testaro: {
-        hover: {
-          variable: false,
-          quality: 1,
-          what: 'Hovering over element has unexpected effects'
+          what: 'Hovering is impossible or mis-indicated or changes content'
         }
       }
     }
@@ -6886,6 +6937,16 @@ exports.issueClasses = {
         }
       },
       nuVal: {
+        'No space between attributes.': {
+          variable: false,
+          quality: 1,
+          what: 'No space between attributes'
+        },
+        'Saw <?. Probable cause: Attempt to use an XML processing instruction in HTML. (XML processing instructions are not supported in HTML.)': {
+          variable: false,
+          quality: 1,
+          what: 'Left angle bracket is followed by a question mark'
+        },
         'Almost standards mode doctype. Expected <!DOCTYPE html>.': {
           variable: false,
           quality: 1,

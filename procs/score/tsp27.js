@@ -120,8 +120,10 @@ exports.scorer = report => {
                 details.issue[issueID].tools[which] = {};
               }
               if (! details.issue[issueID].tools[which][ruleID]) {
+                const ruleData = issueClasses[issueID].tools[which][ruleID];
                 details.issue[issueID].tools[which][ruleID] = {
-                  quality: issueClasses[issueID].tools[which][ruleID].quality,
+                  quality: ruleData.quality,
+                  what: ruleData.what,
                   complaints: {
                     countTotal: 0,
                     texts: []
@@ -172,7 +174,7 @@ exports.scorer = report => {
           }
         });
         // Get the score for the issue.
-        issueData.score = issueData.weight * issueData.maxCount;
+        issueData.score = Math.round(issueData.weight * issueData.maxCount);
       });
       // Add the severity detail totals to the score.
       details.severity.total = Object.keys(details.severity.byTool).reduce((severityTotals, toolID) => {

@@ -237,17 +237,17 @@ exports.issueClasses = {
         507: {
           variable: false,
           quality: 1,
-          what: 'element with a radio role has no mechanism that allows an accessible name to be calculated'
+          what: 'Element with a radio role has no mechanism that allows an accessible name to be calculated'
         },
         509: {
           variable: false,
           quality: 1,
-          what: 'element with a textbox role has no mechanism that allows an accessible name to be calculated'
+          what: 'Element with a textbox role has no mechanism that allows an accessible name to be calculated'
         },
         510: {
           variable: false,
           quality: 1,
-          what: 'element with a combobox role has no mechanism that allows an accessible name to be calculated'
+          what: 'Element with a combobox role has no mechanism that allows an accessible name to be calculated'
         }
       },
       htmlcs: {
@@ -415,7 +415,7 @@ exports.issueClasses = {
         87: {
           variable: false,
           quality: 1,
-          what: 'element with an image, graphics-symbol, or graphics-document role has no mechanism to calculate an accessible name'
+          what: 'Element with an image, graphics-symbol, or graphics-document role has no mechanism to calculate an accessible name'
         },
         89: {
           variable: false,
@@ -658,7 +658,7 @@ exports.issueClasses = {
         235: {
           variable: false,
           quality: 1,
-          what: 'element with an img, graphics-symbol, or graphics-document role has a suspicious calculated accessible name'
+          what: 'Element with an img, graphics-symbol, or graphics-document role has a suspicious calculated accessible name'
         }
       },
       qualWeb: {
@@ -756,6 +756,11 @@ exports.issueClasses = {
       },
       ibm: {
         WCAG20_Html_HasLang: {
+          variable: false,
+          quality: 1,
+          what: 'Page detected as HTML, but has no lang attribute'
+        },
+        html_lang_exists: {
           variable: false,
           quality: 1,
           what: 'Page detected as HTML, but has no lang attribute'
@@ -1305,7 +1310,7 @@ exports.issueClasses = {
         95: {
           variable: false,
           quality: 1,
-          what: 'element has an aria-labelledby value that includes an invalid or duplicate id'
+          what: 'Element has an aria-labelledby value that includes an invalid or duplicate id'
         }
       },
       htmlcs: {
@@ -1912,14 +1917,14 @@ exports.issueClasses = {
         r94: {
           variable: false,
           quality: 1,
-          what: 'element with a menuitem role has no accessible name'
+          what: 'Element with a menuitem role has no accessible name'
         }
       },
       qualWeb: {
         'QW-ACT-R66': {
           variable: false,
           quality: 1,
-          what: 'Menuitem has no non-empty accessible name'
+          what: 'menuitem element has no non-empty accessible name'
         }
       }
     }
@@ -2080,7 +2085,7 @@ exports.issueClasses = {
         r47: {
           variable: false,
           quality: 1,
-          what: 'Meta element restricts zooming'
+          what: 'meta element restricts zooming'
         }
       },
       axe: {
@@ -2393,7 +2398,7 @@ exports.issueClasses = {
         '^Bad value .+ for attribute .+ on element meta.*$': {
           variable: true,
           quality: 1,
-          what: 'attribute of a meta element has an invalid value'
+          what: 'Attribute of a meta element has an invalid value'
         }
       }
     }
@@ -2569,7 +2574,7 @@ exports.issueClasses = {
         412: {
           variable: false,
           quality: 1,
-          what: 'element has a role attribute set to an invalid ARIA role value'
+          what: 'Element has a role attribute set to an invalid ARIA role value'
         }
       },
       ibm: {
@@ -2727,17 +2732,17 @@ exports.issueClasses = {
         '^Attribute .+ not allowed on element .+ at this point.*$': {
           variable: true,
           quality: 1,
-          what: 'attribute not allowed on this element'
+          what: 'Attribute not allowed on this element'
         },
         '^Bad value .* for attribute .+ on element .+$': {
           variable: true,
           quality: 1,
-          what: 'attribute on this element has an invalid value'
+          what: 'Attribute on this element has an invalid value'
         },
         '^Bad value .+ for the attribute .+$': {
           variable: true,
           quality: 1,
-          what: 'attribute has an invalid value'
+          what: 'Attribute has an invalid value'
         },
         '^Attribute .+ not allowed here.*$': {
           variable: true,
@@ -2772,17 +2777,17 @@ exports.issueClasses = {
         'The sizes attribute may be specified only if the srcset attribute is also present.': {
           variable: false,
           quality: 1,
-          what: 'element has a sizes attribute but no srcset attribute'
+          what: 'Element has a sizes attribute but no srcset attribute'
         },
         '^Bad value  for attribute (?:width|height) on element img: The empty string is not a valid non-negative integer.*$': {
           variable: true,
           quality: 1,
-          what: 'attribute has an empty value'
+          what: 'Attribute has an empty value'
         },
         '^.+ in an unquoted attribute value. Probable causes: Attributes running together or a URL query string in an unquoted attribute value.*$': {
           variable: true,
           quality: 1,
-          what: 'attribute has a value containing invalid punctuation'
+          what: 'Attribute has a value containing invalid punctuation'
         }
       }
     }
@@ -3006,12 +3011,12 @@ exports.issueClasses = {
         279: {
           variable: false,
           quality: 1,
-          what: 'element has an aria-posinset attribute without having a compatible role'
+          what: 'Element has an aria-posinset attribute without having a compatible role'
         },
         280: {
           variable: false,
           quality: 1,
-          what: 'element has aria-posinset and aria-setsize attributes without having a compatible role'
+          what: 'Element has aria-posinset and aria-setsize attributes without having a compatible role'
         },
         281: {
           variable: false,
@@ -3051,7 +3056,7 @@ exports.issueClasses = {
         610: {
           variable: false,
           quality: 1,
-          what: 'element has an aria-setsize attribute without having a compatible role'
+          what: 'Element has an aria-setsize attribute without having a compatible role'
         },
         1066: {
           variable: false,
@@ -3090,17 +3095,17 @@ exports.issueClasses = {
         'Attribute aria-activedescendant value should either refer to a descendant element, or should be accompanied by attribute aria-owns.': {
           variable: false,
           quality: 1,
-          what: 'element has no aria-owns attribute but its aria-activedescendant attribute references a non-descendant'
+          what: 'Element has no aria-owns attribute but its aria-activedescendant attribute references a non-descendant'
         },
         '^Bad value  for attribute .+ on element .+: Must be non-empty.*$': {
           variable: true,
           quality: 1,
-          what: 'attribute value is empty'
+          what: 'Attribute value is empty'
         },
         '^Bad value  for attribute aria-hidden on element .+$': {
           variable: true,
           quality: 1,
-          what: 'attribute aria-hidden has an empty value'
+          what: 'aria-hidden attribute has an empty value'
         },
         'The form attribute must refer to a form element.': {
           variable: false,
@@ -3847,7 +3852,7 @@ exports.issueClasses = {
         71: {
           variable: false,
           quality: 1,
-          what: 'element with a heading role has no aria-level attribute'
+          what: 'Element with a heading role has no aria-level attribute'
         }
       }
     }
@@ -4182,7 +4187,14 @@ exports.issueClasses = {
         'Element dl is missing a required child element.': {
           variable: false,
           quality: 1,
-          what: 'dl element has no child element.'
+          what: 'dl element has no child element'
+        }
+      },
+      qualWeb: {
+        'QW-BP24': {
+          variable: false,
+          quality: 1,
+          what: 'ul or ol element has a child other than li, script, or template'
         }
       }
     }
@@ -5209,6 +5221,13 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'main landmark is contained in another landmark'
+        }
+      },
+      qualWeb: {
+        'QW-BP27': {
+          variable: false,
+          quality: 1,
+          what: 'main landmark is not at the top level'
         }
       }
     }
@@ -7070,7 +7089,7 @@ exports.issueClasses = {
         'When the srcset attribute has any image candidate string with a width descriptor, the sizes attribute must also be present.': {
           variable: false,
           quality: 1,
-          what: 'element with a srcset attribute with a width has no sizes attribute'
+          what: 'Element with a srcset attribute with a width has no sizes attribute'
         },
         '^The text content of element .+ was not in the required format: Expected .+ but found .+ instead.*$': {
           variable: true,

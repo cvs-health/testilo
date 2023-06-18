@@ -1,7 +1,7 @@
 {
   "name": "testilo",
-  "version": "13.6.1",
-  "description": "Client that scores and digests Testaro reports",
+  "version": "13.6.2",
+  "description": "Prepares and processes Testaro reports",
   "main": "aim.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

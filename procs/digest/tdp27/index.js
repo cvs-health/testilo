@@ -70,13 +70,13 @@ const populateQuery = (report, query) => {
       issueDetailRows.push(`<h4>Complaints by <code>${toolID}</code></h5>`);
       const ruleIDs = Object.keys(issueData.tools[toolID]);
       ruleIDs.forEach(ruleID => {
+        const ruleData = issueData.tools[toolID][ruleID];
         issueDetailRows.push(`<h5>Rule <code>${ruleID}</code></h5>`);
-        issueDetailRows.push(
-          `<p>Count of instances: ${issueData.tools[toolID][ruleID].complaints.countTotal}</p>`
-        );
+        issueDetailRows.push(`<p>Description: ${ruleData.what}</p>`);
+        issueDetailRows.push(`<p>Count of instances: ${ruleData.complaints.countTotal}</p>`);
         issueDetailRows.push('<h6>Complaint specifics</h6>');
         issueDetailRows.push('<ul>');
-        issueData.tools[toolID][ruleID].complaints.texts.forEach(text => {
+        ruleData.complaints.texts.forEach(text => {
           issueDetailRows.push(`  <li>${htmlEscape(text || '')}</li>`);
         });
         issueDetailRows.push('</ul>');

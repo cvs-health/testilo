@@ -197,18 +197,20 @@ exports.scorer = report => {
       );
       // Add the summary log score to the score.
       const {jobData} = report;
-      summary.log = Math.max(0, Math.round(
-        logWeights.logCount * jobData.logCount
-        + logWeights.logSize * jobData.logSize +
-        + logWeights.errorLogCount * jobData.errorLogCount
-        + logWeights.errorLogSize * jobData.errorLogSize
-        + logWeights.prohibitedCount * jobData.prohibitedCount +
-        + logWeights.visitRejectionCount * jobData.visitRejectionCount
-      ));
-      // Add the summary latency score to the score.
-      summary.latency = Math.round(
-        latencyWeight * (Math.max(0, jobData.visitLatency - normalLatency))
-      );
+      if (jobData) {
+        summary.log = Math.max(0, Math.round(
+          logWeights.logCount * jobData.logCount
+          + logWeights.logSize * jobData.logSize +
+          + logWeights.errorLogCount * jobData.errorLogCount
+          + logWeights.errorLogSize * jobData.errorLogSize
+          + logWeights.prohibitedCount * jobData.prohibitedCount +
+          + logWeights.visitRejectionCount * jobData.visitRejectionCount
+        ));
+        // Add the summary latency score to the score.
+        summary.latency = Math.round(
+          latencyWeight * (Math.max(0, jobData.visitLatency - normalLatency))
+        );
+      }
       // Round the unrounded scores.
       Object.keys(summary).forEach(summaryTypeName => {
         summary[summaryTypeName] = Math.round(summary[summaryTypeName]);

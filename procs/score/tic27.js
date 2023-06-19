@@ -52,6 +52,13 @@ exports.issueClasses = {
     wcag: '4.1.1',
     weight: 2,
     tools: {
+      nuVal: {
+        '^Duplicate attribute.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Source code of the element contains 2 or more of the same attribute'
+        }
+      },
       testaro: {
         dupAtt: {
           variable: false,
@@ -140,6 +147,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Interactive component has no programmatically associated name'
+        },
+        aria_widget_labelled: {
+          variable: false,
+          quality: 1,
+          what: 'Interactive component has no programmatically associated name'
         }
       }
     }
@@ -159,7 +171,7 @@ exports.issueClasses = {
         1010: {
           variable: false,
           quality: 1,
-          what: 'Element with a region role has no mechanism that allows an accessible name to be calculated'
+          what: 'Element with a region role has no machanism allowing an accessible name to be calculated'
         }
       },
       ibm: {
@@ -167,6 +179,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Element with a region role has no label that describes its purpose'
+        },
+        aria_region_labelled: {
+          variable: false,
+          quality: 1,
+          what: 'Element with a region role has no label'
         }
       }
     }
@@ -217,37 +234,42 @@ exports.issueClasses = {
         118: {
           variable: false,
           quality: 1,
-          what: 'Text input element has no mechanism that allows an accessible name to be calculated'
+          what: 'Text input element has no machanism allowing an accessible name to be calculated'
         },
         370: {
           variable: false,
           quality: 1,
-          what: 'Search input element has no mechanism that allows an accessible name to be calculated'
+          what: 'Search input element has no machanism allowing an accessible name to be calculated'
+        },
+        372: {
+          variable: false,
+          quality: 1,
+          what: 'email input element has no machanism allowing an accessible name to be calculated'
         },
         375: {
           variable: false,
           quality: 1,
-          what: 'input element with type="checkbox" has no mechanism that allows an accessible name to be calculated'
+          what: 'input element with type="checkbox" has no machanism allowing an accessible name to be calculated'
         },
         376: {
           variable: false,
           quality: 1,
-          what: 'input element has no mechanism that allows an accessible name to be calculated'
+          what: 'input element has no machanism allowing an accessible name to be calculated'
         },
         507: {
           variable: false,
           quality: 1,
-          what: 'Element with a radio role has no mechanism that allows an accessible name to be calculated'
+          what: 'Element with a radio role has no machanism allowing an accessible name to be calculated'
         },
         509: {
           variable: false,
           quality: 1,
-          what: 'Element with a textbox role has no mechanism that allows an accessible name to be calculated'
+          what: 'Element with a textbox role has no machanism allowing an accessible name to be calculated'
         },
         510: {
           variable: false,
           quality: 1,
-          what: 'Element with a combobox role has no mechanism that allows an accessible name to be calculated'
+          what: 'Element with a combobox role has no machanism allowing an accessible name to be calculated'
         }
       },
       htmlcs: {
@@ -317,17 +339,10 @@ exports.issueClasses = {
       }
     }
   },
-  imageInputNoText: {
+  imageButtonNoText: {
     wcag: '1.1.1',
     weight: 4,
     tools: {
-      alfa: {
-        r28: {
-          variable: false,
-          quality: 1,
-          what: 'Image input element has no accessible name'
-        }
-      },
       axe: {
         'input-image-alt': {
           variable: false,
@@ -340,13 +355,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Image submit button has no alt attribute'
-        }
-      },
-      ibm: {
-        WCAG20_Input_ExplicitLabelImage: {
+        },
+        'AAA.1_1_1.H36': {
           variable: false,
           quality: 1,
-          what: 'Input element of type image has no text alternative'
+          what: 'Image submit button has no alt attribute'
         }
       },
       qualWeb: {
@@ -366,6 +379,45 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Image button has no alternative text'
+        }
+      }
+    }
+  },
+  imageInputNoText: {
+    wcag: '1.1.1',
+    weight: 4,
+    tools: {
+      alfa: {
+        r28: {
+          variable: false,
+          quality: 1,
+          what: 'image input element has no accessible name'
+        }
+      },
+      continuum: {
+        131: {
+          variable: false,
+          quality: 1,
+          what: 'image input has no machanism allowing an accessible name to be calculated'
+        }
+      },
+      htmlcs: {
+        'AAA.4_1_2.H91.InputImage.Name': {
+          variable: false,
+          quality: 1,
+          what: 'image input has no accessible name'
+        }
+      },
+      ibm: {
+        WCAG20_Input_ExplicitLabelImage: {
+          variable: false,
+          quality: 1,
+          what: 'input element of type image has no text alternative'
+        },
+        imagebutton_alt_exists: {
+          variable: false,
+          quality: 1,
+          what: 'input element of type image has no text alternative'
         }
       }
     }
@@ -420,7 +472,7 @@ exports.issueClasses = {
         89: {
           variable: false,
           quality: 1,
-          what: 'img element has no mechanism that allows an accessible name to be calculated'
+          what: 'img element has no machanism allowing an accessible name to be calculated'
         }
       },
       htmlcs: {
@@ -450,6 +502,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Image has neither an alt attribute nor an ARIA label or title'
+        },
+        img_alt_null: {
+          variable: false,
+          quality: 1,
+          what: 'Image has a title attribute but an empty alt attribute'
         }
       },
       nuVal: {
@@ -916,7 +973,7 @@ exports.issueClasses = {
         736: {
           variable: false,
           quality: 1,
-          what: 'Element with a dialog role has no mechanism that allows an accessible name to be calculated'
+          what: 'Element with a dialog role has no machanism allowing an accessible name to be calculated'
         }
       }
     }
@@ -956,7 +1013,7 @@ exports.issueClasses = {
         249: {
           variable: false,
           quality: 1,
-          what: 'object element has no mechanism that allows an accessible name to be calculated'
+          what: 'object element has no machanism allowing an accessible name to be calculated'
         }
       },
       htmlcs: {
@@ -1010,7 +1067,7 @@ exports.issueClasses = {
         252: {
           variable: false,
           quality: 1,
-          what: 'video element has no mechanism that allows an accessible name to be calculated'
+          what: 'video element has no machanism allowing an accessible name to be calculated'
         }
       }
     }
@@ -1282,6 +1339,11 @@ exports.issueClasses = {
           quality: 1,
           what: 'Text input or select element label follows the input control'
         },
+        input_label_before: {
+          variable: false,
+          quality: 1,
+          what: 'Label text is after its text input or select element'
+        },
         WCAG20_Input_LabelAfter: {
           variable: false,
           quality: 1,
@@ -1411,7 +1473,12 @@ exports.issueClasses = {
         237: {
           variable: false,
           quality: 1,
-          what: 'a element has no mechanism that allows an accessible name value to be calculated'
+          what: 'a element has no machanism allowing an accessible name value to be calculated'
+        },
+        238: {
+          variable: false,
+          quality: 1,
+          what: 'Element with a link role has no machanism allowing an accessible name value to be calculated'
         }
       },
       htmlcs: {
@@ -1841,17 +1908,17 @@ exports.issueClasses = {
         116: {
           variable: false,
           quality: 1,
-          what: 'input element with type=button has no mechanism that allows an accessible name to be calculated'
+          what: 'input element with type=button has no machanism allowing an accessible name to be calculated'
         },
         224: {
           variable: false,
           quality: 1,
-          what: 'button element has no mechanism that allows an accessible name to be calculated'
+          what: 'button element has no machanism allowing an accessible name to be calculated'
         },
         511: {
           variable: false,
           quality: 1,
-          what: 'Element with a button role has no mechanism that allows an accessible name to be calculated'
+          what: 'Element with a button role has no machanism allowing an accessible name to be calculated'
         }
       },
       htmlcs: {
@@ -2032,7 +2099,7 @@ exports.issueClasses = {
         123: {
           variable: false,
           quality: 1,
-          what: 'svg element has no mechanism that allows an accessible name to be calculated'
+          what: 'svg element has no machanism allowing an accessible name to be calculated'
         }
       },
       qualWeb: {
@@ -2461,7 +2528,7 @@ exports.issueClasses = {
         228: {
           variable: false,
           quality: 1,
-          what: 'iframe has no mechanism that allows an accessible name to be calculated'
+          what: 'iframe has no machanism allowing an accessible name to be calculated'
         }
       },
       htmlcs: {
@@ -2476,6 +2543,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Inline frame has an empty or nonunique title attribute'
+        },
+        frame_title_exists: {
+          variable: false,
+          quality: 1,
+          what: 'Inline frame has no title attribute'
         }
       },
       qualWeb: {
@@ -2501,6 +2573,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Element does not have a valid role'
+        },
+        r110: {
+          variable: false,
+          quality: 1,
+          what: 'No token in the value of the role attribute is valid'
         }
       },
       axe: {
@@ -2604,6 +2681,11 @@ exports.issueClasses = {
           what: 'Element with a contentinfo role is present without an element with a main role'
         },
         Rpt_Aria_ValidRole: {
+          variable: false,
+          quality: 1,
+          what: 'Element has an invalid role'
+        },
+        aria_role_allowed: {
           variable: false,
           quality: 1,
           what: 'Element has an invalid role'
@@ -2716,6 +2798,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'ARIA attribute is invalid for the role of its element'
+        },
+        aria_attribute_value_valid: {
+          variable: false,
+          quality: 1,
+          what: 'Value of an attribute on the element is not valid'
         }
       },
       nuVal: {
@@ -2774,7 +2861,17 @@ exports.issueClasses = {
           quality: 1,
           what: 'link element has a sizes attribute but no icon-type rel attribute'
         },
+        'An input element with a type attribute whose value is hidden must not have any aria-* attributes.': {
+          variable: false,
+          quality: 1,
+          what: 'hidden-type input element has an ARIA attribute'
+        },
         'The sizes attribute may be specified only if the srcset attribute is also present.': {
+          variable: false,
+          quality: 1,
+          what: 'Element has a sizes attribute but no srcset attribute'
+        },
+        'The sizes attribute must only be specified if the srcset attribute is also specified.': {
           variable: false,
           quality: 1,
           what: 'Element has a sizes attribute but no srcset attribute'
@@ -3115,7 +3212,12 @@ exports.issueClasses = {
         'The aria-checked attribute should not be used on an input element which has a type attribute whose value is checkbox.': {
           variable: false,
           quality: 1,
-          what: 'input element with type="checkbox" has an aria-checked attribute'
+          what: 'input element with type checkbox has an aria-checked attribute'
+        },
+        'The aria-checked attribute must not be used on an input element which has a type attribute whose value is checkbox.': {
+          variable: false,
+          quality: 1,
+          what: 'input element with type checkbox has an aria-checked attribute'
         },
         'An img element with no alt attribute must not have any aria-* attributes other than aria-hidden.': {
           variable: false,
@@ -3229,6 +3331,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'autocomplete attribute token is not appropriate for the input form field'
+        },
+        input_autocomplete_valid: {
+          variable: false,
+          quality: 1,
+          what: 'autocomplete attribute has an incorrect value'
         }
       },
       nuVal: {
@@ -4292,7 +4399,7 @@ exports.issueClasses = {
         114: {
           variable: false,
           quality: 1,
-          what: 'select element has no mechanism that allows an accessible name to be calculated'
+          what: 'select element has no machanism allowing an accessible name to be calculated'
         }
       },
       htmlcs: {
@@ -4398,6 +4505,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Input is in a different group than another with the name'
+        },
+        input_checkboxes_grouped: {
+          variable: false,
+          quality: 1,
+          what: 'checkbox input is not grouped with others with the same name'
         }
       },
       testaro: {
@@ -4450,7 +4562,7 @@ exports.issueClasses = {
         221: {
           variable: false,
           quality: 1,
-          what: 'Element with a radiogroup role has no mechanism that allows an accessible name to be calculated'
+          what: 'Element with a radiogroup role has no machanism allowing an accessible name to be calculated'
         }
       },
       htmlcs: {
@@ -5209,6 +5321,18 @@ exports.issueClasses = {
           quality: 1,
           what: 'complementary landmark (aside) is contained in another landmark'
         }
+      },
+      qualWeb: {
+        'QW-BP25': {
+          variable: false,
+          quality: 1,
+          what: 'complementary landmark is not at the top level'
+        },
+        'QW-BP26': {
+          variable: false,
+          quality: 1,
+          what: 'complementary landmark is not at the top level'
+        }
       }
     }
   },
@@ -5313,6 +5437,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Multiple elements with a banner role are on the page'
+        },
+        aria_banner_single: {
+          variable: false,
+          quality: 1,
+          what: 'More than one element with a banner role is on the page'
         }
       },
       qualWeb: {
@@ -5353,6 +5482,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Element with a contentinfo role has no unique purpose label among the contentinfo-role elements'
+        },
+        aria_contentinfo_label_unique: {
+          variable: false,
+          quality: 1,
+          what: 'Multiple elements with a contentinfo role have no unique labels'
         }
       }
     }
@@ -5373,6 +5507,18 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Page, document, or application has more than one element with a contentinfo role'
+        },
+        aria_contentinfo_single: {
+          variable: false,
+          quality: 1,
+          what: 'Multiple elements with a contentinfo role are on the page'
+        }
+      },
+      qualWeb: {
+        'QW-BP21': {
+          variable: false,
+          quality: 0.5,
+          what: 'There are multiple contentinfo or banner landmarks'
         }
       }
     }
@@ -5462,6 +5608,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Element with a complementary role has no unique purpose label among the complementary-role elements'
+        },
+        aria_complementary_label_unique: {
+          variable: false,
+          quality: 1,
+          what: 'Multiple elements with a complementary role have no unique labels'
         }
       }
     }
@@ -5475,6 +5626,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Element with a banner role has no unique purpose label among the banner-role elements'
+        },
+        aria_banner_label_unique: {
+          variable: false,
+          quality: 1,
+          what: 'Multiple elements with a banner role have no unique labels'
         }
       }
     }
@@ -5561,12 +5717,22 @@ exports.issueClasses = {
         Rpt_Aria_ComplementaryRequiredLabel_Implicit: {
           variable: false,
           quality: 1,
-          what: 'Element has a complementary role but has no label'
+          what: 'Element with a complementary role has no label'
+        },
+        aria_complementary_labelled: {
+          variable: false,
+          quality: 1,
+          what: 'Element with a complementary role has no label'
         },
         Rpt_Aria_ComplementaryLandmarkLabel_Implicit: {
           variable: false,
           quality: 1,
           what: 'Element with a complementary role has no visible purpose label'
+        },
+        aria_complementary_label_visible: {
+          variable: false,
+          quality: 1,
+          what: 'Element with a complementary role has no visible label'
         }
       }
     }
@@ -5855,6 +6021,11 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Form control does not have exactly one label'
+        },
+        form_label_unique: {
+          variable: false,
+          quality: 1,
+          what: 'Form control has more than one label'
         }
       },
       wave: {
@@ -6492,6 +6663,11 @@ exports.issueClasses = {
           variable: false,
           quality: 0.5,
           what: 'Page provides no way to skip directly to the main content'
+        },
+        skip_main_exists: {
+          variable: false,
+          quality: 0.5,
+          what: 'Page provides no way to quickly navigate to the main content'
         }
       },
       qualWeb: {
@@ -6755,6 +6931,16 @@ exports.issueClasses = {
     weight: 3,
     tools: {
       nuVal: {
+        'CSS: z-index: This number should be an integer.': {
+          variable: false,
+          quality: 1,
+          what: 'z-index style property has a non-integer value'
+        },
+        '^CSS: .+: Character .+ is neither a decimal digit number.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Nonnumeric character in a numeric style property'
+        },
         'CSS: Parse Error. Style sheets should not include HTML syntax.': {
           variable: false,
           quality: 1,
@@ -6913,6 +7099,11 @@ exports.issueClasses = {
           quality: 1,
           what: 'Element is closed while an element within it is unclosed'
         },
+        '^End tag .+ implied, but there were open elements.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Element is implicitly closed while an element within it is unclosed'
+        },
         '^Unclosed element .+$': {
           variable: true,
           quality: 1,
@@ -6956,10 +7147,25 @@ exports.issueClasses = {
         }
       },
       nuVal: {
-        'No space between attributes.': {
+        'End tag clippath did not match the name of the current open element (path).': {
           variable: false,
           quality: 1,
+          what: 'End tag clippath conflicts with the current open element.'
+        },
+        '^Self-closing syntax .+ used on a non-void HTML element.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Self-closing syntax used on a non-void element'
+        },
+        'No space between attributes.': {
+          variable: true,
+          quality: 1,
           what: 'No space between attributes'
+        },
+        '^Bad value [^\ufffd]+ Tab, new line or carriage return found.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Attribute value contains an illegal spacing character'
         },
         'Saw <?. Probable cause: Attempt to use an XML processing instruction in HTML. (XML processing instructions are not supported in HTML.)': {
           variable: false,

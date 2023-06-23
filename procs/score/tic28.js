@@ -1819,7 +1819,7 @@ exports.issueClasses = {
       }
     }
   },
-  linkForcesNewWindow: {
+  externalLinkSurprise: {
     wcag: '3.2.5',
     weight: 3,
     tools: {
@@ -1832,7 +1832,7 @@ exports.issueClasses = {
       }
     }
   },
-  linkWindowSurpriseRisk: {
+  externalLink: {
     wcag: '3.2.5',
     weight: 1,
     tools: {
@@ -1846,6 +1846,13 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Link text may fail to indicate that the link will open in a new window'
+        }
+      },
+      testaro: {
+        linkExt: {
+          variable: false,
+          quality: 1,
+          what: 'Link opens a new window or tab'
         }
       }
     }

@@ -446,7 +446,7 @@ The optional third argument to call (`75m` in this example) is a report selector
 
 To test the `score` module, in the project directory you can execute the statement `node validation/score/validate`. If `score` is valid, all logging statements will begin with “Success” and none will begin with “ERROR”.
 
-## Rport digesting
+## Report digesting
 
 ### Introduction
 
@@ -543,6 +543,50 @@ When a user invokes `compare` in this example, the `call` module:
 The fourth argument to `call` (`23pl` in this example) is optional. If it is omitted, `call` will get and `comparer` will compare all the reports in the `scored` directory.
 
 The comparative report created by `compare` is an HTML file, and it expects a `style.css` file to exist in its directory. The `reports/comparative/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where comparative reports are written.
+
+### Tool crediting
+
+If you use Testilo to perform all the tests of all the tools on multiple targets and score the reports with a score proc that maps tool rules onto tool-agnostic issues, you may want to tabulate the comparative efficacy of each tool in discovering instances of issues. Testilo can help you do this by producing a _credit report_.
+
+The `credit` module tabulates the contribution of each tool to the discovery of issue instances in a collection of scored reports. Its `credit()` function takes one argument: an array of scored reports.
+
+The credit report contains four sections:
+- `counts`: for each issue, how many instances each tool reported
+- `onlies`: for each issue of which only 1 tool reported instances, which tool it was
+- `mosts`: for each issue of which at least 2 tools reported instances, which tool(s) reported the maximum instance count
+- `tools`: for each tool, two sections:
+    - `onlies`: a list of the issues that only the tool reported instances of
+    - `mosts`: a list of the issues for which the instance count of the tool was not surpassed by that of any other tool
+
+### Invocation
+
+There are two ways to use the `credit` module.
+
+#### By a module
+
+A module can invoke `credit` in this way:
+
+```javaScript
+const {credit} = require('testilo/credit');
+credit(scoredReports)
+.then(creditReport => {…});
+```
+
+The argument to `credit()` is an array of scored report objects. The `credit()` function returns a credit report. The invoking module can further dispose of the credit report as needed.
+
+#### By a user
+
+A user can invoke `credit` in this way:
+
+```bash
+node call credit legislators 23pl
+```
+
+When a user invokes `credit` in this example, the `call` module:
+- gets all the reports in the `scored` subdirectory of the `process.env.REPORTDIR` directory whose file names begin with `23pl`.
+- writes the credit report as JSON file named `legislators.json` to the `credit` subdirectory of the `process.env.REPORTDIR` directory.
+
+The third argument to `call` (`23pl` in this example) is optional. If it is omitted, `call` will get and `credit()` will tabulate all the reports in the `scored` directory.
 
 ### Validation
 

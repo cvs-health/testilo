@@ -167,6 +167,26 @@ const callCompare = async (compareProcID, comparisonNameBase, selector = '') => 
     console.log(`Comparison completed and saved in ${comparisonDir}`);
   }
 };
+// Fulfills a credit request.
+const callCredit = async (tallyID, selector = '') => {
+  // Get the scored reports to be tallied.
+  const reports = await getReports('scored', selector);
+  // If any exist:
+  if (reports.length) {
+    // Get the tallier.
+    const {credit} = require(`${functionDir}/analyze/credit`);
+    // Tally the reports.
+    const tally = credit(reports);
+    // Save the tally.
+    await fs.writeFile(`${reportDir}/credit/${tallyID}.json`, JSON.stringify(tally, null, 2));
+    console.log(`Reports tallied and credit report saved in ${reportDir}/credit`);
+  }
+  // Otherwise, i.e. if no scored reports are to be tallied:
+  else {
+    // Report this.
+    console.log('ERROR: No scored reports to be tallied');
+  }
+};
 
 // ########## OPERATION
 
@@ -221,6 +241,12 @@ else if (fn === 'multiDigest' && fnArgs.length === 1) {
 }
 else if (fn === 'compare' && fnArgs.length > 1 && fnArgs.length < 4) {
   callCompare(... fnArgs)
+  .then(() => {
+    console.log('Execution completed');
+  });
+}
+else if (fn === 'credit' && fnArgs.length === 2) {
+  callCredit(... fnArgs)
   .then(() => {
     console.log('Execution completed');
   });

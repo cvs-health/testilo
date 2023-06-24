@@ -5039,6 +5039,13 @@ exports.issueClasses = {
           quality: 1,
           what: 'Actionable element is smaller than the minimum required size'
         }
+      },
+      testaro: {
+        targetSize: {
+          variable: false,
+          quality: 1,
+          what: 'Button, input, or non-inline link is smaller than 44 px wide and high'
+        }
       }
     }
   },

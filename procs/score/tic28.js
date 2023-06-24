@@ -2321,13 +2321,20 @@ exports.issueClasses = {
   },
   leadingClipsText: {
     wcag: '1.4.8',
-    weight: 4,
+    weight: 2,
     tools: {
       tenon: {
         144: {
           variable: false,
           quality: 1,
           what: 'Line height is insufficent to properly display the computed font size'
+        }
+      },
+      testaro: {
+        lineHeight: {
+          variable: false,
+          quality: 1,
+          what: 'Text has a line height less than 1.5 times its font size'
         }
       }
     }

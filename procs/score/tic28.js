@@ -1719,6 +1719,13 @@ exports.issueClasses = {
           quality: 1,
           what: 'Links have the same text but different destinations'
         }
+      },
+      testaro: {
+        linkAmb: {
+          variable: false,
+          quality: 1,
+          what: 'Text content is identical in links with different destinations'
+        }
       }
     }
   },
@@ -2147,6 +2154,13 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Text is needlessly rotated 60+ degrees or more, hurting comprehension'
+        }
+      },
+      testaro: {
+        rotation: {
+          variable: false,
+          quality: 1,
+          what: 'Element text content is rotated'
         }
       }
     }
@@ -3790,6 +3804,13 @@ exports.issueClasses = {
           what: 'Link has a title attribute that is the same as the text inside the link'
         }
       },
+      testaro: {
+        linkTitle: {
+          variable: false,
+          quality: 1,
+          what: 'Link has a title attribute that repeats link text content'
+        }
+      },
       wave: {
         title_redundant: {
           variable: false,
@@ -4187,6 +4208,13 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Multiple consecutive br elements may simulate paragraphs'
+        }
+      },
+      testaro: {
+        pseudoP: {
+          variable: false,
+          quality: 1,
+          what: 'Element has 2 or more consecutive child br elements'
         }
       }
     }
@@ -5251,6 +5279,13 @@ exports.issueClasses = {
           quality: 1,
           what: 'Long string of text is in all caps'
         }
+      },
+      testaro: {
+        allCaps: {
+          variable: false,
+          quality: 1,
+          what: 'Leaf element has entirely upper-case text content at least 8 characters long'
+        }
       }
     }
   },
@@ -5270,6 +5305,13 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Long string of text is italic'
+        }
+      },
+      testaro: {
+        allSlanted: {
+          variable: false,
+          quality: 1,
+          what: 'Leaf element has entirely italic or oblique text content at least 40 characters long'
         }
       }
     }

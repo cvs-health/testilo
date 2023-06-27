@@ -2145,7 +2145,7 @@ exports.issueClasses = {
       }
     }
   },
-  textRotated: {
+  textDistorted: {
     wcag: '1.4.8',
     weight: 2,
     tools: {
@@ -2157,10 +2157,10 @@ exports.issueClasses = {
         }
       },
       testaro: {
-        rotation: {
+        distortion: {
           variable: false,
           quality: 1,
-          what: 'Element text content is rotated'
+          what: 'Element text content is distorted'
         }
       }
     }

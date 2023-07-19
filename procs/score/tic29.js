@@ -1,6 +1,6 @@
 /*
-  tic28
-  Testilo issue classification 28
+  tic29
+  Testilo issue classification 29
 
   Classifies tests of Testaro and its dependent tools into issues.
 
@@ -5943,7 +5943,7 @@ exports.issueClasses = {
   },
   labeledHidden: {
     wcag: '1.3.1',
-    weight: 2,
+    weight: 1,
     tools: {
       htmlcs: {
         'AAA.1_3_1.F68.Hidden': {
@@ -5980,7 +5980,7 @@ exports.issueClasses = {
         'hidden-content': {
           variable: false,
           quality: 1,
-          what: 'Some content is hidden and therefore may not be testable for accessibility'
+          what: 'Some content is hidden and so may not be testable for accessibility'
         }
       }
     }
@@ -5993,7 +5993,7 @@ exports.issueClasses = {
         'frame-tested': {
           variable: false,
           quality: 0.2,
-          what: 'Some content is in an iframe and therefore may not be testable for accessibility'
+          what: 'Some content is in an iframe and so may not be testable for accessibility'
         }
       }
     }
@@ -6019,7 +6019,7 @@ exports.issueClasses = {
         hover: {
           variable: false,
           quality: 1,
-          what: 'Hovering is impossible or mis-indicated or changes content'
+          what: 'Hovering is impossible, is mis-indicated, or changes content'
         }
       }
     }
@@ -6161,7 +6161,7 @@ exports.issueClasses = {
         linkUl: {
           variable: false,
           quality: 1,
-          what: 'Non-underlined adjacent links'
+          what: 'Inline links are not underlined'
         }
       }
     }
@@ -6171,10 +6171,10 @@ exports.issueClasses = {
     weight: 2,
     tools: {
       testaro: {
-        menuNav: {
+        buttonMenu: {
           variable: false,
           quality: 1,
-          what: 'Nonstandard keyboard navigation among focusable menu items'
+          what: 'Button menu items respond nonstandardly to navigation keys'
         }
       }
     }

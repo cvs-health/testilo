@@ -1,6 +1,6 @@
 {
   "name": "testilo",
-  "version": "13.10.0",
+  "version": "13.10.1",
   "description": "Prepares and processes Testaro reports",
   "main": "aim.js",
   "scripts": {

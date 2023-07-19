@@ -1,6 +1,6 @@
 /*
-  tic28
-  Testilo issue classification 28
+  tic29
+  Testilo issue classification 29
 
   Classifies tests of Testaro and its dependent tools into issues.
 
@@ -1719,13 +1719,6 @@ exports.issueClasses = {
           quality: 1,
           what: 'Links have the same text but different destinations'
         }
-      },
-      testaro: {
-        linkAmb: {
-          variable: false,
-          quality: 1,
-          what: 'Text content is identical in links with different destinations'
-        }
       }
     }
   },
@@ -2145,7 +2138,7 @@ exports.issueClasses = {
       }
     }
   },
-  textDistorted: {
+  textRotated: {
     wcag: '1.4.8',
     weight: 2,
     tools: {
@@ -2154,13 +2147,6 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Text is needlessly rotated 60+ degrees or more, hurting comprehension'
-        }
-      },
-      testaro: {
-        distortion: {
-          variable: false,
-          quality: 1,
-          what: 'Element text content is distorted'
         }
       }
     }
@@ -3809,13 +3795,6 @@ exports.issueClasses = {
           what: 'Link has a title attribute that is the same as the text inside the link'
         }
       },
-      testaro: {
-        linkTitle: {
-          variable: false,
-          quality: 1,
-          what: 'Link has a title attribute that repeats link text content'
-        }
-      },
       wave: {
         title_redundant: {
           variable: false,
@@ -4213,13 +4192,6 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Multiple consecutive br elements may simulate paragraphs'
-        }
-      },
-      testaro: {
-        pseudoP: {
-          variable: false,
-          quality: 1,
-          what: 'Element has 2 or more consecutive child br elements'
         }
       }
     }
@@ -5284,13 +5256,6 @@ exports.issueClasses = {
           quality: 1,
           what: 'Long string of text is in all caps'
         }
-      },
-      testaro: {
-        allCaps: {
-          variable: false,
-          quality: 1,
-          what: 'Leaf element has entirely upper-case text content at least 8 characters long'
-        }
       }
     }
   },
@@ -5310,13 +5275,6 @@ exports.issueClasses = {
           variable: false,
           quality: 1,
           what: 'Long string of text is italic'
-        }
-      },
-      testaro: {
-        allSlanted: {
-          variable: false,
-          quality: 1,
-          what: 'Leaf element has entirely italic or oblique text content at least 40 characters long'
         }
       }
     }
@@ -5985,7 +5943,7 @@ exports.issueClasses = {
   },
   labeledHidden: {
     wcag: '1.3.1',
-    weight: 2,
+    weight: 1,
     tools: {
       htmlcs: {
         'AAA.1_3_1.F68.Hidden': {
@@ -6022,7 +5980,7 @@ exports.issueClasses = {
         'hidden-content': {
           variable: false,
           quality: 1,
-          what: 'Some content is hidden and therefore may not be testable for accessibility'
+          what: 'Some content is hidden and so may not be testable for accessibility'
         }
       }
     }
@@ -6035,7 +5993,7 @@ exports.issueClasses = {
         'frame-tested': {
           variable: false,
           quality: 0.2,
-          what: 'Some content is in an iframe and therefore may not be testable for accessibility'
+          what: 'Some content is in an iframe and so may not be testable for accessibility'
         }
       }
     }
@@ -6061,7 +6019,7 @@ exports.issueClasses = {
         hover: {
           variable: false,
           quality: 1,
-          what: 'Hovering is impossible or mis-indicated or changes content'
+          what: 'Hovering is impossible, is mis-indicated, or changes content'
         }
       }
     }
@@ -6203,7 +6161,7 @@ exports.issueClasses = {
         linkUl: {
           variable: false,
           quality: 1,
-          what: 'Non-underlined adjacent links'
+          what: 'Inline links are not underlined'
         }
       }
     }
@@ -6213,10 +6171,10 @@ exports.issueClasses = {
     weight: 2,
     tools: {
       testaro: {
-        menuNav: {
+        buttonMenu: {
           variable: false,
           quality: 1,
-          what: 'Nonstandard keyboard navigation among focusable menu items'
+          what: 'Button menu items respond nonstandardly to navigation keys'
         }
       }
     }

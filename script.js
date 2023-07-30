@@ -20,15 +20,15 @@ let toolIDs = [
 // ########## FUNCTIONS
 
 // Creates and returns a script.
-exports.script = (id, issueClasses = null, ... issueIDs) => {
+exports.script = (id, issues = null, ... issueIDs) => {
   // Initialize data on the tools and rules for the specified issues.
   const neededTools = {};
   // If an issue classification and any issues were specified:
-  if (issueClasses && issueIDs.length) {
+  if (issues && issueIDs.length) {
     // For each specified issue:
     issueIDs.forEach(issueID => {
       // If it exists in the classification:
-      const issueData = issueClasses[issueID];
+      const issueData = issues[issueID];
       if (issueData) {
         // For each tool that tests for the issue:
         const issueToolIDs = Object.keys(issueData.tools);
@@ -97,7 +97,7 @@ exports.script = (id, issueClasses = null, ... issueIDs) => {
         which: toolID
       };
       // If rules were specified:
-      if (issueClasses && issueIDs.length) {
+      if (issues && issueIDs.length) {
         // Add a rules property to the act.
         toolAct.rules = neededTools[toolID];
         // If the tool is Testaro:

@@ -57,11 +57,11 @@ const callBatch = async (listID, what) => {
 // Fulfills a script-creation request.
 const callScript = async (scriptID, classificationID = null, ... issueIDs) => {
   // Get any issue classification.
-  const issueClasses = classificationID
-  ? require(`${functionDir}/score/${classificationID}`).issueClasses
+  const issues = classificationID
+  ? require(`${functionDir}/score/${classificationID}`).issues
   : null;
   // Create a script.
-  const scriptObj = script(scriptID, issueClasses, ... issueIDs);
+  const scriptObj = script(scriptID, issues, ... issueIDs);
   // Save the script.
   const scriptJSON = JSON.stringify(scriptObj, null, 2);
   await fs.writeFile(`${specDir}/scripts/${scriptID}.json`, scriptJSON);

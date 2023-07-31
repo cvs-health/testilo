@@ -2314,7 +2314,7 @@ exports.issues = {
         r73: {
           variable: false,
           quality: 1,
-          what: 'Paragraph of text has insufficient line height'
+          what: 'Text line height is not at least 1.5'
         }
       }
     }

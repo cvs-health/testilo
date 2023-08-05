@@ -14,7 +14,7 @@ require('dotenv').config();
 // ########## VARIABLES
 
 let toolIDs = [
-  'alfa', 'axe', 'continuum', 'htmlcs', 'ibm', 'nuVal', 'qualWeb', 'tenon', 'testaro', 'wave'
+  'alfa', 'axe', 'continuum', 'htmlcs', 'ibm', 'nuVal', 'qualWeb', 'testaro', 'wave'
 ];
 
 // ########## FUNCTIONS
@@ -79,16 +79,6 @@ exports.script = (id, issues = null, ... issueIDs) => {
         }
       ]
     };
-    // If Tenon is one of the identified tools:
-    if (toolIDs.includes('tenon')) {
-      // Add a Tenon request act to the script.
-      scriptObj.acts.push({
-        type: 'tenonRequest',
-        id: 'a',
-        withNewContent: false,
-        what: 'Tenon API version 2 test request, with page content'
-      });
-    }
     // For each identified tool:
     toolIDs.forEach(toolID => {
       // Initialize a test act for it.
@@ -116,9 +106,6 @@ exports.script = (id, issues = null, ... issueIDs) => {
       }
       else if (toolID === 'qualWeb') {
         toolAct.withNewContent = false;
-      }
-      else if (toolID === 'tenon') {
-        toolAct.id = 'a';
       }
       else if (toolID === 'testaro') {
         toolAct.withItems = true;

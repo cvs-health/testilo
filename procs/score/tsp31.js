@@ -1,18 +1,18 @@
 /*
-  tsp28
-  Testilo score proc 28
+  tsp31
+  Testilo score proc 31
 
-  Computes target score data and adds them to a ts26 report.
+  Computes target score data and adds them to a ts31 report.
 */
 
 // IMPORTS
 
-const {issueClasses} = require('./tic28');
+const {issues} = require('./tic31');
 
 // CONSTANTS
 
 // ID of this proc.
-const scoreProcID = 'tsp28';
+const scoreProcID = 'tsp31';
 // Configuration disclosures.
 const severityWeights = [1, 2, 3, 4];
 const toolWeight = 0.1;
@@ -33,14 +33,14 @@ const preventionWeight = 300;
 // Indexes of issues.
 const issueIndex = {};
 const issueMatcher = [];
-Object.keys(issueClasses).forEach(issueClassName => {
-  Object.keys(issueClasses[issueClassName].tools).forEach(toolName => {
-    Object.keys(issueClasses[issueClassName].tools[toolName]).forEach(issueID => {
+Object.keys(issues).forEach(issueName => {
+  Object.keys(issues[issueName].tools).forEach(toolName => {
+    Object.keys(issues[issueName].tools[toolName]).forEach(issueID => {
       if (! issueIndex[toolName]) {
         issueIndex[toolName] = {};
       }
-      issueIndex[toolName][issueID] = issueClassName;
-      if (issueClasses[issueClassName].tools[toolName][issueID].variable) {
+      issueIndex[toolName][issueID] = issueName;
+      if (issues[issueName].tools[toolName][issueID].variable) {
         issueMatcher.push(issueID);
       }
     })
@@ -112,7 +112,7 @@ exports.scorer = report => {
                 details.issue[issueID] = {
                   score: 0,
                   maxCount: 0,
-                  weight: issueClasses[issueID].weight,
+                  weight: issues[issueID].weight,
                   tools: {}
                 };
               }
@@ -120,7 +120,7 @@ exports.scorer = report => {
                 details.issue[issueID].tools[which] = {};
               }
               if (! details.issue[issueID].tools[which][ruleID]) {
-                const ruleData = issueClasses[issueID].tools[which][ruleID];
+                const ruleData = issues[issueID].tools[which][ruleID];
                 details.issue[issueID].tools[which][ruleID] = {
                   quality: ruleData.quality,
                   what: ruleData.what,
@@ -147,7 +147,7 @@ exports.scorer = report => {
               }
             }
             else {
-              console.log(`ERROR: ${instance.ruleID} of ${which} not found in issueClasses`);
+              console.log(`ERROR: ${instance.ruleID} of ${which} not found in issues`);
             }
           });
         }

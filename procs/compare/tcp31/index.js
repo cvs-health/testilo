@@ -1,4 +1,4 @@
-// index: comparer for scoring procedure tsp27
+// index: comparer for scoring procedure tsp28
 
 // ########## IMPORTS
 
@@ -8,7 +8,7 @@ const fs = require('fs/promises');
 // CONSTANTS
 
 // Digester ID.
-const id = 'tcp27';
+const id = 'tcp31';
 // Newlines with indentations.
 const joiner = '\n      ';
 const innerJoiner = '\n        ';
@@ -59,9 +59,9 @@ const populateQuery = async (scoredReports, query) => {
   const data = await getData(scoredReports);
   query.pageCount = data.pageCount;
   query.scriptID = scoredReports[0].sources.script;
-  query.scorer = 'tsp27';
-  query.digester = 'tdp27';
-  query.comparer = 'tcp27';
+  query.scorer = 'tsp28';
+  query.digester = 'tdp28';
+  query.comparer = 'tcp28';
   query.tableBody = await getTableBody(data.bodyData);
   const date = new Date();
   query.dateISO = date.toISOString().slice(0, 10);

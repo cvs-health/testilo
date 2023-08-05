@@ -15,17 +15,12 @@ require('dotenv').config();
 // ########## CONSTANTS
 
 const stdRequester = process.env.REQUESTER;
-// Tests that alter the page.
+// Tools that alter the page.
 const contaminantNames = new Set([
   'axe',
   'continuum',
   'htmlcs',
-  'ibm',
-  'wave'
-]);
-// Tests that are immune to page alteration.
-const immuneNames = new Set([
-  'tenon'
+  'ibm'
 ]);
 
 // ########## FUNCTIONS
@@ -76,7 +71,7 @@ exports.merge = (script, batch, requester, isolate = false) => {
         && contaminantNames.has(act.which)
         && actIndex < acts.length - 1
         && nextAct.type !== 'placeholder'
-        && (nextAct.type !== 'test' || ! immuneNames.has(nextAct.which))
+        && (nextAct.type !== 'test')
       ) {
         acts[actIndex] = JSON.parse(JSON.stringify([act, lastPlaceholder]));
       }

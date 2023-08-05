@@ -2,7 +2,7 @@
   tic31
   Testilo issue classification 31
 
-  Classifies rules of the tools of Testaro into issues.
+  Classifies 918 rules of the tools of Testaro into 257 issues.
 
   Issue properties:
     wcag: WCAG Principle, Guideline, Success Criterion, or Technique, if any, most closely

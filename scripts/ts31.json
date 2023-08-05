@@ -44,7 +44,8 @@
     {
       "type": "test",
       "which": "testaro",
-      "withItems": true
+      "withItems": true,
+      "stopOnFail": false
     },
     {
       "type": "test",

@@ -109,6 +109,7 @@ exports.script = (id, issues = null, ... issueIDs) => {
       }
       else if (toolID === 'testaro') {
         toolAct.withItems = true;
+        toolAct.stopOnFail = false;
       }
       else if (toolID === 'wave') {
         toolAct.reportType = 4;

@@ -3,14 +3,14 @@
 // IMPORTS
 
 // Issue classification
-const {issueClasses} = require('../../score/tic28');
+const {issueClasses} = require('../../score/tic31');
 // Function to process files.
 const fs = require('fs/promises');
 
 // CONSTANTS
 
 // Digester ID.
-const id = 'tdp28';
+const id = 'tdp31';
 // Newlines with indentations.
 const joiner = '\n      ';
 const innerJoiner = '\n        ';

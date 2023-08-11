@@ -2,7 +2,7 @@
   tic32
   Testilo issue classification 32
 
-  Classifies 919 rules of the tools of Testaro into 258 issues.
+  Classifies 920 rules of the tools of Testaro into 259 issues.
 
   Issue properties:
     wcag: WCAG Principle, Guideline, Success Criterion, or Technique, if any, most closely
@@ -3787,6 +3787,19 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Missing or uninformative page title'
+        }
+      }
+    }
+  },
+  headElementsBad: {
+    wcag: '4.1.1',
+    weight: 3,
+    tools: {
+      testaro: {
+        'headEl': {
+          variable: false,
+          quality: 1,
+          what: 'Elements in the head are not allowed there'
         }
       }
     }

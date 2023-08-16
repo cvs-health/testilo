@@ -2,7 +2,7 @@
   tic33
   Testilo issue classification 33
 
-  Classifies 921 rules of the tools of Testaro into 258 issues.
+  Classifies 921 rules of the tools of Testaro into 257 issues.
 
   Issue properties:
     why: expected impact
@@ -46,6 +46,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Link text is not supplemented with a title attribute'
+        },
+        'QW-WCAG-T4': {
+          variable: false,
+          quality: 0,
+          what: 'summary attribute is not used to give an overview of a data table'
         }
       }
     }
@@ -4187,20 +4192,6 @@ exports.issues = {
       }
     }
   },
-  pseudoList: {
-    why: 'User cannot get help recognizing a list of items',
-    wcag: '1.3.1',
-    weight: 1,
-    tools: {
-      qualWeb: {
-        'QW-BP11': {
-          variable: false,
-          quality: 1,
-          what: 'br is used to make a list'
-        }
-      }
-    }
-  },
   pseudoCodeRisk: {
     why: 'User may be unable to get help to fully understand the text',
     wcag: '1.3.1',
@@ -4230,7 +4221,7 @@ exports.issues = {
     }
   },
   pseudoHeadingRisk: {
-    why: '',
+    why: 'User may be unable to understand the topic of a part of the document',
     wcag: '1.3.1',
     weight: 1,
     tools: {
@@ -4258,7 +4249,7 @@ exports.issues = {
     }
   },
   pseudoLinkRisk: {
-    why: '',
+    why: 'User may be misled into believing some text is a link',
     wcag: '1.3.1',
     weight: 1,
     tools: {
@@ -4272,7 +4263,7 @@ exports.issues = {
     }
   },
   listChild: {
-    why: '',
+    why: 'User cannot get help on which items are in a list',
     wcag: '1.3.1',
     weight: 4,
     tools: {
@@ -4329,7 +4320,7 @@ exports.issues = {
     }
   },
   listItemOrphan: {
-    why: '',
+    why: 'User cannot get help on whether an item is in a list',
     wcag: '1.3.1',
     weight: 4,
     tools: {
@@ -4354,8 +4345,22 @@ exports.issues = {
       }
     }
   },
+  pseudoList: {
+    why: 'User cannot get help recognizing a list of items',
+    wcag: '1.3.1',
+    weight: 1,
+    tools: {
+      qualWeb: {
+        'QW-BP11': {
+          variable: false,
+          quality: 1,
+          what: 'br is used to make a list'
+        }
+      }
+    }
+  },
   pseudoListRisk: {
-    why: '',
+    why: 'User may be unable to get help on which items are in lists',
     wcag: '1.3.1',
     weight: 1,
     tools: {
@@ -4376,7 +4381,7 @@ exports.issues = {
     }
   },
   pseudoOrderedListRisk: {
-    why: '',
+    why: 'User may be unable to get help on whether a list is ordered',
     wcag: '1.3.1',
     weight: 1,
     tools: {
@@ -4390,7 +4395,7 @@ exports.issues = {
     }
   },
   pseudoNavList: {
-    why: '',
+    why: 'User cannot get help recognizing a list of navigation links',
     wcag: '1.3.1',
     weight: 2,
     tools: {
@@ -4411,7 +4416,7 @@ exports.issues = {
     }
   },
   selectNoText: {
-    why: '',
+    why: 'User cannot get help on the topic of a list of options',
     wcag: '4.1.2',
     weight: 3,
     tools: {
@@ -4451,7 +4456,7 @@ exports.issues = {
     }
   },
   optionNoText: {
-    why: '',
+    why: 'User cannot get help to understand an option',
     wcag: '4.1.2',
     weight: 4,
     tools: {
@@ -4465,7 +4470,7 @@ exports.issues = {
     }
   },
   selectFlatRisk: {
-    why: '',
+    why: 'User may be unable to get help recognizing groups of options',
     wcag: '1.3.1',
     weight: 1,
     tools: {
@@ -4479,7 +4484,7 @@ exports.issues = {
     }
   },
   noOptionFocusable: {
-    why: '',
+    why: 'No-mouse user cannot choose an option',
     wcag: '2.1.1',
     weight: 1,
     tools: {
@@ -4493,7 +4498,7 @@ exports.issues = {
     }
   },
   accessKeyDuplicate: {
-    why: '',
+    why: 'Keyboard shortcut does not reliably trigger the intended action',
     wcag: '1.3.1',
     weight: 3,
     tools: {
@@ -4521,7 +4526,7 @@ exports.issues = {
     }
   },
   fieldSetMissing: {
-    why: '',
+    why: 'User cannot get help recognizing a group of related form items',
     wcag: '1.3.1',
     weight: 2,
     tools: {
@@ -4554,7 +4559,7 @@ exports.issues = {
     }
   },
   fieldSetRisk: {
-    why: '',
+    why: 'User may be unable to get help recognizing a group of related form items',
     wcag: '1.3.1',
     weight: 1,
     tools: {
@@ -4568,7 +4573,7 @@ exports.issues = {
     }
   },
   legendMisplaced: {
-    why: '',
+    why: 'User cannot get help on the topic of a group of form items',
     wcag: '4.1.2',
     weight: 4,
     tools: {
@@ -4582,7 +4587,7 @@ exports.issues = {
     }
   },
   legendMissing: {
-    why: '',
+    why: 'User cannot get help on the topic of a group of form items',
     wcag: '4.1.2',
     weight: 2,
     tools: {
@@ -4629,7 +4634,7 @@ exports.issues = {
     }
   },
   groupName: {
-    why: '',
+    why: 'User cannot get help on the topic of a group of form items',
     wcag: '4.1.2',
     weight: 3,
     tools: {
@@ -4662,7 +4667,7 @@ exports.issues = {
     }
   },
   layoutTable: {
-    why: '',
+    why: 'Helper misinforms a user about whether items are cells of a table',
     wcag: '1.3.1',
     weight: 2,
     tools: {
@@ -4695,7 +4700,7 @@ exports.issues = {
     }
   },
   tabularTableless: {
-    why: '',
+    why: 'Helper misinforms a user about whether items are cells of a table',
     wcag: '1.3.1',
     weight: 3,
     tools: {
@@ -4708,22 +4713,8 @@ exports.issues = {
       }
     }
   },
-  tableNoSummary: {
-    why: '',
-    wcag: '1.3.1',
-    weight: 2,
-    tools: {
-      qualWeb: {
-        'QW-WCAG-T4': {
-          variable: false,
-          quality: 1,
-          what: 'summary attribute is not used to give an overview of a data table'
-        }
-      }
-    }
-  },
   tableColumnsVary: {
-    why: '',
+    why: 'User cannot get help on the dimensions of a table',
     wcag: '1.3.1',
     weight: 3,
     tools: {
@@ -4742,7 +4733,7 @@ exports.issues = {
     }
   },
   tableCaption: {
-    why: '',
+    why: 'User cannot get help on the topic of a table',
     wcag: '1.3.1',
     weight: 1,
     tools: {
@@ -4770,7 +4761,7 @@ exports.issues = {
     }
   },
   cellHeadersNotInferrable: {
-    why: '',
+    why: 'User cannot get help on relationships in a table',
     wcag: '1.3.1',
     weight: 4,
     tools: {
@@ -4791,7 +4782,7 @@ exports.issues = {
     }
   },
   cellHeadersOutsideTable: {
-    why: '',
+    why: 'User cannot get help on relationships in a table',
     wcag: '1.3.1',
     weight: 4,
     tools: {
@@ -4805,7 +4796,7 @@ exports.issues = {
     }
   },
   cellHeadersAmbiguityRisk: {
-    why: '',
+    why: 'User may be unable to get help on relationships in a table',
     wcag: '1.3.1',
     weight: 2,
     tools: {
@@ -4836,7 +4827,7 @@ exports.issues = {
     }
   },
   tableHeaderless: {
-    why: '',
+    why: 'User cannot get help on relationships in a table',
     wcag: '1.3.1',
     weight: 3,
     tools: {
@@ -4857,7 +4848,7 @@ exports.issues = {
     }
   },
   tableCellHeaderless: {
-    why: '',
+    why: 'User cannot get help on the topic of a table cell',
     wcag: '1.3.1',
     weight: 3,
     tools: {
@@ -4878,7 +4869,7 @@ exports.issues = {
     }
   },
   tableHeaderCelless: {
-    why: '',
+    why: 'User cannot get help on relationships in a table',
     wcag: '1.3.1',
     weight: 4,
     tools: {
@@ -4906,7 +4897,7 @@ exports.issues = {
     }
   },
   TableHeaderScopeRisk: {
-    why: '',
+    why: 'User may be unable to get help on relationships in a table',
     wcag: '1.3.1',
     weight: 1,
     tools: {
@@ -4920,7 +4911,7 @@ exports.issues = {
     }
   },
   tableHeaderEmpty: {
-    why: '',
+    why: 'User cannot get help on relationships in a table',
     wcag: '1.3.1',
     weight: 2,
     tools: {
@@ -4934,7 +4925,7 @@ exports.issues = {
     }
   },
   tableEmbedded: {
-    why: '',
+    why: 'User cannot get help on relationships in a table',
     wcag: '1.3.1',
     weight: 2,
     tools: {
@@ -4948,7 +4939,7 @@ exports.issues = {
     }
   },
   controlNoText: {
-    why: '',
+    why: 'User cannot get help on how to operate a form item',
     wcag: '4.1.2',
     weight: 4,
     tools: {
@@ -5002,7 +4993,7 @@ exports.issues = {
     }
   },
   controlLabelInvisible: {
-    why: '',
+    why: 'User cannot understand how to operate a form item',
     wcag: '2.4.6',
     weight: 4,
     tools: {
@@ -5016,7 +5007,7 @@ exports.issues = {
     }
   },
   titleAsLabel: {
-    why: '',
+    why: 'User cannot get help on how to operate a form item',
     wcag: '2.4.6',
     weight: 3,
     tools: {
@@ -5030,7 +5021,7 @@ exports.issues = {
     }
   },
   visibleLabelNotName: {
-    why: '',
+    why: 'User cannot get help choosing a form control to operate',
     wcag: '2.5.3',
     weight: 3,
     tools: {
@@ -5077,7 +5068,7 @@ exports.issues = {
     }
   },
   targetSize: {
-    why: '',
+    why: 'User cannot reliably choose an item to click or tap',
     wcag: '2.5.5',
     weight: 3,
     tools: {
@@ -5091,7 +5082,7 @@ exports.issues = {
     }
   },
   visibleBulk: {
-    why: '',
+    why: 'User cannot easily find items in the document',
     wcag: '2.4',
     weight: 1,
     tools: {
@@ -5105,7 +5096,7 @@ exports.issues = {
     }
   },
   activeEmbedding: {
-    why: '',
+    why: 'User cannot reliably choose an item to click or tap',
     wcag: '2.5.5',
     weight: 3,
     tools: {
@@ -5205,7 +5196,7 @@ exports.issues = {
     }
   },
   tabFocusability: {
-    why: '',
+    why: 'No-mouse user cannot choose an item to operate',
     wcag: '2.1.1',
     weight: 4,
     tools: {

@@ -1625,20 +1625,6 @@ exports.issues = {
       }
     }
   },
-  pdfLink: {
-    why: 'User is pointed to a harder-to-use non-web document',
-    wcag: '1.3.3',
-    weight: 1,
-    tools: {
-      wave: {
-        link_pdf: {
-          variable: false,
-          quality: 1,
-          what: 'Link to PDF document'
-        }
-      }
-    }
-  },
   destinationLink: {
     why: 'Helper cannot properly explain a link to a user',
     wcag: '1.3.1',
@@ -5236,7 +5222,7 @@ exports.issues = {
     }
   },
   focusIndication: {
-    why: '',
+    why: 'No-mouse user cannot choose an item to operate',
     wcag: '2.4.7',
     weight: 4,
     tools: {
@@ -5264,7 +5250,7 @@ exports.issues = {
     }
   },
   allCaps: {
-    why: '',
+    why: 'Text is difficult to read',
     wcag: '3.1.5',
     weight: 1,
     tools: {
@@ -5285,7 +5271,7 @@ exports.issues = {
     }
   },
   allItalics: {
-    why: '',
+    why: 'Text is difficult to read',
     wcag: '3.1.5',
     weight: 1,
     tools: {
@@ -5306,7 +5292,7 @@ exports.issues = {
     }
   },
   textDistortion: {
-    why: '',
+    why: 'Text is difficult to read',
     wcag: '3.1.5',
     weight: 1,
     tools: {
@@ -5327,7 +5313,7 @@ exports.issues = {
     }
   },
   noLandmarks: {
-    why: '',
+    why: 'User cannot get help on how the document is organized',
     wcag: '1.3.6',
     weight: 2,
     tools: {
@@ -5341,9 +5327,9 @@ exports.issues = {
     }
   },
   contentBeyondLandmarks: {
-    why: '',
+    why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
-    weight: 2,
+    weight: 1,
     tools: {
       alfa: {
         r57: {
@@ -5374,7 +5360,7 @@ exports.issues = {
     }
   },
   footerNotTop: {
-    why: '',
+    why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 1,
     tools: {
@@ -5388,7 +5374,7 @@ exports.issues = {
     }
   },
   asideNotTop: {
-    why: '',
+    why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 2,
     tools: {
@@ -5414,7 +5400,7 @@ exports.issues = {
     }
   },
   mainNotTop: {
-    why: '',
+    why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 2,
     tools: {
@@ -5435,7 +5421,7 @@ exports.issues = {
     }
   },
   mainConfusion: {
-    why: '',
+    why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 3,
     tools: {
@@ -5454,7 +5440,7 @@ exports.issues = {
     }
   },
   mainNone: {
-    why: '',
+    why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 2,
     tools: {
@@ -5475,7 +5461,7 @@ exports.issues = {
     }
   },
   mainNot1: {
-    why: '',
+    why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 2,
     tools: {
@@ -5503,7 +5489,7 @@ exports.issues = {
     }
   },
   bannerNot1: {
-    why: '',
+    why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 2,
     tools: {
@@ -5536,7 +5522,7 @@ exports.issues = {
     }
   },
   bannerNotTop: {
-    why: '',
+    why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 2,
     tools: {
@@ -5557,7 +5543,7 @@ exports.issues = {
     }
   },
   footerConfusion: {
-    why: '',
+    why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 3,
     tools: {
@@ -5576,7 +5562,7 @@ exports.issues = {
     }
   },
   footerNot1: {
-    why: '',
+    why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 2,
     tools: {
@@ -5609,7 +5595,7 @@ exports.issues = {
     }
   },
   landmarkConfusion: {
-    why: '',
+    why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 3,
     tools: {
@@ -5635,7 +5621,7 @@ exports.issues = {
     }
   },
   articleConfusion: {
-    why: '',
+    why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 3,
     tools: {
@@ -5649,7 +5635,7 @@ exports.issues = {
     }
   },
   formConfusion: {
-    why: '',
+    why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 3,
     tools: {
@@ -5668,7 +5654,7 @@ exports.issues = {
     }
   },
   applicationConfusion: {
-    why: '',
+    why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 3,
     tools: {
@@ -5682,7 +5668,7 @@ exports.issues = {
     }
   },
   asideConfusion: {
-    why: '',
+    why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 3,
     tools: {
@@ -5713,7 +5699,7 @@ exports.issues = {
     }
   },
   bannerConfusion: {
-    why: '',
+    why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 3,
     tools: {
@@ -5732,7 +5718,7 @@ exports.issues = {
     }
   },
   navConfusion: {
-    why: '',
+    why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 3,
     tools: {
@@ -5763,7 +5749,7 @@ exports.issues = {
     }
   },
   regionConfusion: {
-    why: '',
+    why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 3,
     tools: {
@@ -5782,7 +5768,7 @@ exports.issues = {
     }
   },
   searchConfusion: {
-    why: '',
+    why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 3,
     tools: {
@@ -5801,7 +5787,7 @@ exports.issues = {
     }
   },
   complementaryNoText: {
-    why: '',
+    why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 1,
     tools: {
@@ -5830,7 +5816,7 @@ exports.issues = {
     }
   },
   labelNoText: {
-    why: '',
+    why: 'User cannot get help on the topic of a form item',
     wcag: '1.3.1',
     weight: 4,
     tools: {
@@ -5849,7 +5835,7 @@ exports.issues = {
     }
   },
   focusableOperable: {
-    why: '',
+    why: 'No-mouse user cannot navigate properly to the operable items',
     wcag: '2.1.1',
     weight: 3,
     tools: {
@@ -5863,7 +5849,7 @@ exports.issues = {
     }
   },
   focusableRole: {
-    why: '',
+    why: 'No-mouse user cannot navigate properly to the operable items',
     wcag: '4.1.2',
     weight: 3,
     tools: {
@@ -5884,7 +5870,7 @@ exports.issues = {
     }
   },
   focusableHidden: {
-    why: '',
+    why: 'No-mouse user cannot navigate properly to the operable items',
     wcag: '4.1.2',
     weight: 4,
     tools: {
@@ -5936,7 +5922,7 @@ exports.issues = {
     }
   },
   focusedAway: {
-    why: '',
+    why: 'No-mouse user cannot navigate properly to the operable items',
     wcag: '1.4.10',
     weight: 3,
     tools: {
@@ -5950,7 +5936,7 @@ exports.issues = {
     }
   },
   focusableDescendants: {
-    why: '',
+    why: 'No-mouse user cannot navigate properly to the operable items',
     wcag: '4.1.2',
     weight: 4,
     tools: {
@@ -5971,7 +5957,7 @@ exports.issues = {
     }
   },
   multipleLabelees: {
-    why: '',
+    why: 'User cannot get help on the topic of a form item',
     wcag: '1.3.1',
     weight: 4,
     tools: {
@@ -5990,7 +5976,7 @@ exports.issues = {
     }
   },
   labeledHidden: {
-    why: '',
+    why: 'Document includes unnecessary code',
     wcag: '1.3.1',
     weight: 1,
     tools: {
@@ -6009,9 +5995,9 @@ exports.issues = {
     }
   },
   contentHidden: {
-    why: '',
+    why: 'User cannot get the document content',
     wcag: '2.4.7',
-    weight: 10,
+    weight: 4,
     tools: {
       testaro: {
         allHidden: {
@@ -6023,7 +6009,7 @@ exports.issues = {
     }
   },
   hiddenContentRisk: {
-    why: '',
+    why: 'Some barriers in the document may be undetected',
     wcag: '4.1',
     weight: 1,
     tools: {
@@ -6037,7 +6023,7 @@ exports.issues = {
     }
   },
   frameContentRisk: {
-    why: '',
+    why: 'Some barriers in the document may be undetected',
     wcag: '4.1',
     weight: 1,
     tools: {
@@ -6051,7 +6037,7 @@ exports.issues = {
     }
   },
   frameSandboxRisk: {
-    why: '',
+    why: 'Document may be unsafe to use',
     wcag: '4.1',
     weight: 2,
     tools: {
@@ -6065,7 +6051,7 @@ exports.issues = {
     }
   },
   hoverIndication: {
-    why: '',
+    why: 'User cannot explore the document reliably with a mouse',
     wcag: '3.3.2',
     weight: 3,
     tools: {
@@ -6079,7 +6065,7 @@ exports.issues = {
     }
   },
   hoverSurprise: {
-    why: '',
+    why: 'User cannot explore the document reliably with a mouse',
     wcag: '3.2.5',
     weight: 1,
     tools: {
@@ -6093,7 +6079,7 @@ exports.issues = {
     }
   },
   labelClash: {
-    why: '',
+    why: 'User cannot get reliable help on the topics of form items',
     wcag: '1.3.1',
     weight: 2,
     tools: {
@@ -6133,7 +6119,7 @@ exports.issues = {
     }
   },
   labelEmpty: {
-    why: '',
+    why: 'User cannot get help on the topics of form items',
     wcag: '1.3.1',
     weight: 3,
     tools: {
@@ -6159,7 +6145,7 @@ exports.issues = {
     }
   },
   linkComprehensionRisk: {
-    why: '',
+    why: 'User may misunderstand what a link points to',
     wcag: '2.4.4',
     weight: 1,
     tools: {
@@ -6173,7 +6159,7 @@ exports.issues = {
     }
   },
   nonWebLink: {
-    why: '',
+    why: 'Document points to harder-to-use resources',
     wcag: '1.3.3',
     weight: 1,
     tools: {
@@ -6190,6 +6176,11 @@ exports.issues = {
           quality: 1,
           what: 'Link to Microsoft Excel workbook'
         },
+        link_pdf: {
+          variable: false,
+          quality: 1,
+          what: 'Link to PDF document'
+        },
         link_word: {
           variable: false,
           quality: 1,
@@ -6199,7 +6190,7 @@ exports.issues = {
     }
   },
   linkIndication: {
-    why: '',
+    why: 'User cannot differentiate a link from plain text',
     wcag: '1.3.3',
     weight: 2,
     tools: {
@@ -6227,7 +6218,7 @@ exports.issues = {
     }
   },
   menuNavigation: {
-    why: '',
+    why: 'Menu items behave improperly for a no-mouse user',
     wcag: '2.1.1',
     weight: 2,
     tools: {
@@ -6241,7 +6232,7 @@ exports.issues = {
     }
   },
   menuItemless: {
-    why: '',
+    why: 'User cannot reach promised menu items',
     wcag: '1.3.1',
     weight: 4,
     tools: {
@@ -6255,7 +6246,7 @@ exports.issues = {
     }
   },
   tabNavigation: {
-    why: '',
+    why: 'Tablist items behave improperly for a no-mouse user',
     wcag: '2.1.1',
     weight: 2,
     tools: {

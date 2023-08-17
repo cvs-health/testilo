@@ -2,7 +2,7 @@
   tic33
   Testilo issue classification 33
 
-  Classifies 921 rules of the tools of Testaro into 257 issues.
+  Classifies 921 rules of the tools of Testaro into 256 issues.
 
   Issue properties:
     why: expected impact
@@ -42,15 +42,20 @@ exports.issues = {
           quality: 1,
           what: 'video element visual content has no description track (description tracks and this ACT rule have been deprecated)'
         },
-        'QW-WCAG-T20': {
-          variable: false,
-          quality: 1,
-          what: 'Link text is not supplemented with a title attribute'
-        },
         'QW-WCAG-T4': {
           variable: false,
           quality: 0,
           what: 'summary attribute is not used to give an overview of a data table'
+        },
+        'QW-WCAG-T15': {
+          variable: false,
+          quality: 1,
+          what: 'link element may be used for navigation but not in the head'
+        },
+        'QW-WCAG-T20': {
+          variable: false,
+          quality: 1,
+          what: 'Link text is not supplemented with a title attribute'
         }
       }
     }
@@ -6259,22 +6264,8 @@ exports.issues = {
       }
     }
   },
-  siteNavigation: {
-    why: '',
-    wcag: '2.4',
-    weight: 1,
-    tools: {
-      qualWeb: {
-        'QW-WCAG-T15': {
-          variable: false,
-          quality: 1,
-          what: 'link element and navigation tools not used'
-        }
-      }
-    }
-  },
   spontaneousMotion: {
-    why: '',
+    why: 'Motion-sensitive user may suffer harm',
     wcag: '2.2.2',
     weight: 2,
     tools: {
@@ -6288,7 +6279,7 @@ exports.issues = {
     }
   },
   blink: {
-    why: '',
+    why: 'Motion-sensitive user may suffer harm',
     wcag: '2.2.2',
     weight: 4,
     tools: {
@@ -6307,7 +6298,7 @@ exports.issues = {
     }
   },
   autoplay: {
-    why: '',
+    why: 'Motion- or noise-sensitive user may suffer harm',
     wcag: '1.4.2',
     weight: 2,
     tools: {
@@ -6328,7 +6319,7 @@ exports.issues = {
     }
   },
   autoplayLong: {
-    why: '',
+    why: 'Motion- or noise-sensitive user may suffer harm',
     wcag: '1.4.2',
     weight: 2,
     tools: {
@@ -6342,7 +6333,7 @@ exports.issues = {
     }
   },
   autoplayControl: {
-    why: '',
+    why: 'Motion- or noise-sensitive user may suffer harm',
     wcag: '1.4.2',
     weight: 2,
     tools: {
@@ -6356,7 +6347,7 @@ exports.issues = {
     }
   },
   refresh: {
-    why: '',
+    why: 'Delayed document change may surprise a user',
     wcag: '2.2.1',
     weight: 3,
     tools: {
@@ -6375,7 +6366,7 @@ exports.issues = {
     }
   },
   parentBad: {
-    why: '',
+    why: 'User cannot properly operate an item',
     wcag: '1.3.1',
     weight: 4,
     tools: {
@@ -6396,7 +6387,7 @@ exports.issues = {
     }
   },
   inconsistentStyles: {
-    why: '',
+    why: 'User cannot easily distinguish items of different types',
     wcag: '3.2.4',
     weight: 1,
     tools: {
@@ -6410,7 +6401,7 @@ exports.issues = {
     }
   },
   filterStyle: {
-    why: '',
+    why: 'Item is too distorted for understandability',
     wcag: '4.1',
     weight: 1,
     tools: {
@@ -6424,7 +6415,7 @@ exports.issues = {
     }
   },
   zIndexNotZero: {
-    why: '',
+    why: 'User cannot predict the effect of clicking',
     wcag: '1.4',
     weight: 1,
     tools: {
@@ -6438,7 +6429,7 @@ exports.issues = {
     }
   },
   tabIndexPositive: {
-    why: '',
+    why: 'No-mouse user cannot predict the navigation sequence',
     wcag: '2.4.3',
     weight: 1,
     tools: {
@@ -6459,7 +6450,7 @@ exports.issues = {
     }
   },
   tabIndexBad: {
-    why: '',
+    why: 'No-mouse user cannot follow the intended navigation sequence',
     wcag: '1.3.1',
     weight: 4,
     tools: {
@@ -6473,7 +6464,7 @@ exports.issues = {
     }
   },
   tabIndexMissing: {
-    why: '',
+    why: 'No-mouse user cannot reach an item to operate it',
     wcag: '2.1.1',
     weight: 4,
     tools: {
@@ -6492,7 +6483,7 @@ exports.issues = {
     }
   },
   trackNoLabel: {
-    why: '',
+    why: 'User cannot get help reading speech as text',
     wcag: '4.1.2',
     weight: 4,
     tools: {
@@ -6511,7 +6502,7 @@ exports.issues = {
     }
   },
   trackNoSource: {
-    why: '',
+    why: 'User cannot get help reading speech as text',
     wcag: '1.3.1',
     weight: 4,
     tools: {
@@ -6525,7 +6516,7 @@ exports.issues = {
     }
   },
   audioContentNoText: {
-    why: '',
+    why: 'User cannot get help reading speech as text',
     wcag: '1.2.1',
     weight: 4,
     tools: {
@@ -6566,7 +6557,7 @@ exports.issues = {
     }
   },
   videoContentNoText: {
-    why: '',
+    why: 'User cannot get help reading video content as text',
     wcag: '1.2.2',
     weight: 4,
     tools: {
@@ -6612,7 +6603,7 @@ exports.issues = {
     }
   },
   videoContentNoTranscript: {
-    why: '',
+    why: 'User cannot get help reading video content as text',
     wcag: '1.2.2',
     weight: 4,
     tools: {
@@ -6626,7 +6617,7 @@ exports.issues = {
     }
   },
   videoCaptionRisk: {
-    why: '',
+    why: 'User may be unable to get help reading video content as text',
     wcag: '1.2.2',
     weight: 1,
     tools: {
@@ -6650,7 +6641,7 @@ exports.issues = {
     }
   },
   videoNoAudioDescription: {
-    why: '',
+    why: 'User cannot get help hearing video content as speech',
     wcag: '1.2.1',
     weight: 4,
     tools: {
@@ -6664,7 +6655,7 @@ exports.issues = {
     }
   },
   videoNoAudioTrack: {
-    why: '',
+    why: 'User cannot get help hearing video content as speech',
     wcag: '1.2.1',
     weight: 4,
     tools: {
@@ -6678,7 +6669,7 @@ exports.issues = {
     }
   },
   notKeyboardScrollable: {
-    why: '',
+    why: 'No-mouse user cannot scroll an item',
     wcag: '2.1.1',
     weight: 4,
     tools: {
@@ -6706,7 +6697,7 @@ exports.issues = {
     }
   },
   scrollRisk: {
-    why: '',
+    why: 'User may be unable to see all of an item without scrolling in both dimensions',
     wcag: '1.4.10',
     weight: 1,
     tools: {
@@ -6727,7 +6718,7 @@ exports.issues = {
     }
   },
   skipRepeatedContent: {
-    why: '',
+    why: 'No-mouse user cannot easily reach the specific content of the document',
     wcag: '2.4.1',
     weight: 3,
     tools: {
@@ -6777,7 +6768,7 @@ exports.issues = {
     }
   },
   repeatedContentRisk: {
-    why: '',
+    why: 'No-mouse user may be unable easily to reach the specific content of the document',
     wcag: '2.4.1',
     weight: 1,
     tools: {
@@ -6818,7 +6809,7 @@ exports.issues = {
     }
   },
   submitButton: {
-    why: '',
+    why: 'User cannot easily submit a form',
     wcag: '2.5.6',
     weight: 3,
     tools: {
@@ -6839,7 +6830,7 @@ exports.issues = {
     }
   },
   fragmentaryNoticeRisk: {
-    why: '',
+    why: 'User may be unable to get help on what content has changed',
     wcag: '4.1.3',
     weight: 2,
     tools: {
@@ -6853,7 +6844,7 @@ exports.issues = {
     }
   },
   errorReferenceBad: {
-    why: '',
+    why: 'User cannot correct a form error',
     wcag: '3.3.1',
     weight: 4,
     tools: {
@@ -6867,7 +6858,7 @@ exports.issues = {
     }
   },
   noScriptRisk: {
-    why: '',
+    why: 'User who has disabled JavaScript may be denied some content',
     wcag: '4.1',
     weight: 1,
     tools: {
@@ -6881,7 +6872,7 @@ exports.issues = {
     }
   },
   browserSupportRisk: {
-    why: '',
+    why: 'Document may include code that the browser cannot process',
     wcag: '4.1',
     weight: 1,
     tools: {
@@ -6895,7 +6886,7 @@ exports.issues = {
     }
   },
   obsolete: {
-    why: '',
+    why: 'Document includes obsolete code that the browser may fail to process',
     wcag: '4.1',
     weight: 3,
     tools: {
@@ -7019,7 +7010,7 @@ exports.issues = {
     }
   },
   cssInvalid: {
-    why: '',
+    why: 'Document cannot be properly displayed',
     wcag: '4.1',
     weight: 3,
     tools: {
@@ -7163,7 +7154,7 @@ exports.issues = {
     }
   },
   elementClosure: {
-    why: '',
+    why: 'Document contains invalid code',
     wcag: '4.1.1',
     weight: 3,
     tools: {
@@ -7212,7 +7203,7 @@ exports.issues = {
     }
   },
   nestingBad: {
-    why: '',
+    why: 'Document contains invalid code',
     wcag: '4.1.1',
     weight: 3,
     tools: {
@@ -7226,7 +7217,7 @@ exports.issues = {
     }
   },
   parseError: {
-    why: '',
+    why: 'Document contains invalid code',
     wcag: '4.1',
     weight: 3,
     tools: {
@@ -7441,7 +7432,7 @@ exports.issues = {
     }
   },
   slashParseRisk: {
-    why: '',
+    why: 'Document contains invalid code',
     wcag: '4.1',
     weight: 1,
     tools: {
@@ -7455,7 +7446,7 @@ exports.issues = {
     }
   },
   encodingBad: {
-    why: '',
+    why: 'Document contains invalid code',
     wcag: '3.1.3',
     weight: 4,
     tools: {
@@ -7469,9 +7460,9 @@ exports.issues = {
     }
   },
   fatalError: {
-    why: '',
+    why: 'Document prevents testing for accessibility',
     wcag: '4.1',
-    weight: 50,
+    weight: 4,
     tools: {
       nuVal: {
         'Cannot recover after last error. Any further errors will be ignored.': {
@@ -7488,7 +7479,7 @@ exports.issues = {
     }
   },
   notValidatable: {
-    why: '',
+    why: 'Item prevents testing for accessibility',
     wcag: '4.1',
     weight: 1,
     tools: {

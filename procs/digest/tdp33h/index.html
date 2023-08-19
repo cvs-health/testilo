@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Testilo">
+    <meta name="creator" content="Testilo">
+    <meta name="publisher" name="Testilo">
+    <meta name="description" content="report of accessibility testing of a web page">
+    <meta name="keywords" content="accessibility a11y web testing">
+    <title>Accessibility digest</title>
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Accessibility digest</h1>
+        <table class="allBorder">
+          <caption>Synopsis</caption>
+          <tr><th>Page</th><td>__org__</td></tr>
+          <tr><th>URL</th><td>__url__</td></tr>
+          <tr><th>Requester</th><td>__requester__</td></tr>
+          <tr><th>Test date</th><td>__dateSlash__</td></tr>
+          <tr><th>Score</th><td>__total__</td></tr>
+          <tr><th>Tested by</th><td>Testaro, procedure <code>__ts__</code></td></tr>
+          <tr><th>Scored by</th><td>Testilo, procedure <code>__sp__</code></td></tr>
+          <tr><th>Digested by</th><td>Testilo, procedure <code>__dp__</code></td></tr>
+        </table>
+        <table class="allBorder">
+          <caption>Score history</caption>
+          <thead>
+            <tr><th>Date and time</th><th>Score</th></tr>
+          </thead>
+          <tbody>
+            __scoreHistory__
+          </tbody>
+        </table>
+      </header>
+      <h2>Introduction</h2>
+      <p>This is a digest of results from a battery of <a href="https://www.w3.org/WAI/">web accessibility</a> tests.</p>
+      <p>Nine different <dfn>tools</dfn> (Alfa, Axe, Continuum, Equal Access, HTML CodeSniffer, Nu Html Checker, QualWeb, Testaro, and WAVE) tested the web page of __org__ at __url__ to check its compliance with various <dfn>rules</dfn>. There were a total of about 900 rules, classified into about 260 accessibility <dfn>issues</dfn>.</p>
+      <p>The results were interpreted to yield a total score of __total__, where 0 would be <q>perfect</q>.
+      <p>This history of total scores from this testing series on the same page is shown above.</p>
+      <h2>Total score</h2>
+      <p>The total score is the sum of five components.</p>
+      <table class="allBorder secondCellRight">
+        <caption>Score summary</caption>
+        <thead>
+          <tr><th>Component</th><th>Score</th><th>Description</th></tr>
+        </thead>
+        <tbody class="headersLeft">
+          <tr><th>total</th><td>__total__</td><td>Sum of the component scores</td></tr>
+          <tr><th>issue</th><td>__issue__</td><td>Severity and number of reported defects</td></tr>
+          <tr><th>tool</th><td>__tool__</td><td>Tool-by-tool defect ratings</td></tr>
+          <tr><th>prevention</th><td>__prevention__</td><td>Failed attempts by tools to test the page</td></tr>
+          <tr><th>log</th><td>__log__</td><td>Browser warnings about the page</td></tr>
+          <tr><th>latency</th><td>__latency__</td><td>Abnormal delay in page responses</td></tr>
+        </tbody>
+      </table>
+      <h2>Issue scores</h2>
+      <p>The score of an issue depends on the <dfn>severity</dfn> (user impact and certainty) of the issue and on how many instances were reported (by one or more tools).</p>
+      <table class="allBorder secondCellRight">
+        <caption>Issue scores</caption>
+        <thead>
+          <tr><th>Issue</th><th>Score</th></tr>
+        </thead>
+        <tbody class="headersLeft">
+          __issueRows__
+        </tbody>
+      </table>
+      <h2>Itemized issues</h2>
+      <p>The reported rule violations are itemized below, issue by issue. Additional details can be inspected in the complete report at the end of this page.</p>
+      __issueDetailRows__
+      <h2>Complete report</h2>
+      <pre>__report__</pre>
+      <footer>
+        <p class="date">Produced <time itemprop="datePublished" datetime="__dateISO__">__dateSlash__</time></p>
+      </footer>
+    </main>
+  </body>
+</html>

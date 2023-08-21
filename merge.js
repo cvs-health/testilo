@@ -33,7 +33,8 @@ exports.merge = (script, batch, requester, isolate = false) => {
   // If the requester is unspecified, make it the standard requester.
   requester ||= stdRequester;
   // Create a timestamp.
-  const timeStamp = Math.floor((Date.now() - Date.UTC(2023, 6)) / 2000).toString(36);
+  const now = new Date();
+  const timeStamp = now.toISOString().slice(2, 16).replace(/-:/g, '');
   // Create a time description.
   const creationTime = (new Date()).toISOString().slice(0, 19);
   // Initialize a target-independent job.

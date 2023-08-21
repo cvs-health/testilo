@@ -24,6 +24,8 @@ const {batch} = require('./batch');
 const {script} = require('./script');
 // Function to process a merger.
 const {merge} = require('./merge');
+// Function to generate a job series.
+const {series} = require('./series');
 // Function to score reports.
 const {score} = require('./score');
 // Function to digest reports.
@@ -86,7 +88,30 @@ const callMerge = async (scriptID, batchID, requester, withIsolation = false) =>
     `Script ${scriptID} and batch ${batchID} merged; jobs ${timeStamp}… saved in ${jobDir}/todo`
   );
 };
-// Get selected reports.
+// Fulfills a series request.
+const callSeries = async (idStart, count, interval) => {
+  // Get the initial job.
+  const jobNames = await fs.readdir(`${jobDir}/toDo`);
+  const seriesJobName = jobNames.find(jobName => jobName.startsWith(idStart));
+  // If it exists:
+  if (seriesJobName) {
+    // Generate a job series.
+    const jobJSON = await fs.readFile(`${jobDir}/toDo/${seriesJobName}.json`, 'utf8');
+    const job = JSON.parse(jobJSON);
+    const jobSeries = series(job, count, interval);
+    // Save the jobs.
+    for (const item of jobSeries) {
+      await fs.writeFile(`${jobDir}/toDo/${item.id}.json`);
+    }
+    console.log(`Series of ${jobSeries.length} jobs generated and saved in ${jobDir}/todo`);
+  }
+  // Otherwise, i.e. if it does not exist:
+  else {
+    // Report this.
+    console.log('ERROR: No matching to-do job found');
+  }
+};
+// Gets selected reports.
 const getReports = async (type, selector = '') => {
   const allFileNames = await fs.readdir(`${reportDir}/${type}`);
   const reportIDs = allFileNames
@@ -210,6 +235,12 @@ else if (fn === 'script' && fnArgs.length) {
   });
 }
 else if (fn === 'merge' && fnArgs.length > 2 && fnArgs.length < 5) {
+  callMerge(... fnArgs)
+  .then(() => {
+    console.log('Execution completed');
+  });
+}
+else if (fn === 'series' && fnArgs.length === 3) {
   callMerge(... fnArgs)
   .then(() => {
     console.log('Execution completed');

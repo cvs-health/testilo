@@ -3,7 +3,7 @@
 // IMPORTS
 
 // Issue classification
-const {issueClasses} = require('../../score/tic31');
+const {issues} = require('../../score/tic31');
 // Function to process files.
 const fs = require('fs/promises');
 
@@ -62,7 +62,7 @@ const populateQuery = (report, query) => {
   const issueDetailRows = [];
   issueIDs.forEach(issueID => {
     issueDetailRows.push(`<h3 class="bars">Issue <code>${issueID}</code></h3>`);
-    issueDetailRows.push(`<p>WCAG: ${issueClasses[issueID].wcag || 'N/A'}</p>`);
+    issueDetailRows.push(`<p>WCAG: ${issues[issueID].wcag || 'N/A'}</p>`);
     const issueData = details.issue[issueID];
     issueDetailRows.push(`<p>Score: ${issueData.score}</p>`);
     const toolIDs = Object.keys(issueData.tools);

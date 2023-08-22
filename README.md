@@ -384,7 +384,9 @@ If you want to monitor a web resource by performing identical jobs repeatedly an
 
 The jobs in a series differ from one another only in the timestamp segments of their `id` properties. For example, if the first job had the `id` value `240528T1316-mon-mozilla` and the events in the series occurred at intervals of 12 hours, then the second job would have the `id` value `240529T0116-mon-mozilla`.
 
-To support monitoring, a server that receives job requests from testing agents can perform a time check on the first job in the queue. If the time specified by the first job is in the future, the server can reply that there is no job to do.
+The `series` module adds a `sources.series` property to each job in the series. The value of that property is the `id` value of the first job in the series.
+
+To support monitoring, a server that receives job requests from testing agents can perform a time check on the first job in the queue. If the time specified by the `id` of the first job is in the future, the server can reply that there is no job to do.
 
 #### Invocation
 

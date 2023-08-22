@@ -14,10 +14,12 @@ exports.series = (job, count, interval) => {
   // If the arguments are valid:
   if (
     typeof job === 'object'
+    && count
     && typeof count === 'number'
     && count === Math.floor(count)
     && count > 1
     && interval
+    && typeof interval === 'number'
     && interval === Math.floor(interval)
     && interval > 0
   ) {

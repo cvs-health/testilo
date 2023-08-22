@@ -85,23 +85,23 @@ const callMerge = async (scriptID, batchID, requester, withIsolation = false) =>
   }
   const {timeStamp} = jobs[0];
   console.log(
-    `Script ${scriptID} and batch ${batchID} merged; jobs ${timeStamp}… saved in ${jobDir}/todo`
+    `Script ${scriptID} and batch ${batchID} merged; jobs ${timeStamp}-… saved in ${jobDir}/todo`
   );
 };
 // Fulfills a series request.
 const callSeries = async (idStart, count, interval) => {
   // Get the initial job.
-  const jobNames = await fs.readdir(`${jobDir}/toDo`);
+  const jobNames = await fs.readdir(`${jobDir}/todo`);
   const seriesJobName = jobNames.find(jobName => jobName.startsWith(idStart));
   // If it exists:
   if (seriesJobName) {
     // Generate a job series.
-    const jobJSON = await fs.readFile(`${jobDir}/toDo/${seriesJobName}.json`, 'utf8');
+    const jobJSON = await fs.readFile(`${jobDir}/todo/${seriesJobName}`, 'utf8');
     const job = JSON.parse(jobJSON);
     const jobSeries = series(job, count, interval);
     // Save the jobs.
     for (const item of jobSeries) {
-      await fs.writeFile(`${jobDir}/toDo/${item.id}.json`);
+      await fs.writeFile(`${jobDir}/todo/${item.id}.json`);
     }
     console.log(`Series of ${jobSeries.length} jobs generated and saved in ${jobDir}/todo`);
   }
@@ -241,7 +241,7 @@ else if (fn === 'merge' && fnArgs.length > 2 && fnArgs.length < 5) {
   });
 }
 else if (fn === 'series' && fnArgs.length === 3) {
-  callMerge(... fnArgs)
+  callSeries(... fnArgs)
   .then(() => {
     console.log('Execution completed');
   });

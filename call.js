@@ -70,7 +70,7 @@ const callScript = async (scriptID, classificationID = null, ... issueIDs) => {
   console.log(`Script ${scriptID} created and saved in ${specDir}/scripts`);
 };
 // Fulfills a merging request.
-const callMerge = async (scriptID, batchID, requester, withIsolation = false) => {
+const callMerge = async (scriptID, batchID, requester, withIsolation, todo = true) => {
   // Get the script and the batch.
   const scriptJSON = await fs.readFile(`${specDir}/scripts/${scriptID}.json`, 'utf8');
   const script = JSON.parse(scriptJSON);
@@ -81,17 +81,18 @@ const callMerge = async (scriptID, batchID, requester, withIsolation = false) =>
   // Save the jobs.
   for (const job of jobs) {
     const jobJSON = JSON.stringify(job, null, 2);
-    await fs.writeFile(`${jobDir}/todo/${job.id}.json`, jobJSON);
+    const destination = todo ? 'todo' : 'pending';
+    await fs.writeFile(`${jobDir}/${destination}/${job.id}.json`, jobJSON);
   }
   const {timeStamp} = jobs[0];
   console.log(
-    `Script ${scriptID} and batch ${batchID} merged; jobs ${timeStamp}-… saved in ${jobDir}/todo`
+    `Script ${scriptID} and batch ${batchID} merged as ${timeStamp}-… in ${jobDir}/${destination}`
   );
 };
 // Fulfills a series request.
 const callSeries = async (idStart, count, interval) => {
   // Get the initial job.
-  const jobNames = await fs.readdir(`${jobDir}/todo`);
+  const jobNames = await fs.readdir(`${jobDir}/pending`);
   const seriesJobName = jobNames.find(jobName => jobName.startsWith(idStart));
   // If it exists:
   if (seriesJobName) {

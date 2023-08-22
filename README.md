@@ -257,7 +257,7 @@ Suppose you ask for a merger of the above batch and script, **without** the isol
 
 ```javaScript
 {
-  id: '7is3i-ts99-acme',
+  id: '231120T1550-ts99-acme',
   what: 'Axe on account page',
   strict: true,
   timeLimit: 60,
@@ -315,14 +315,14 @@ Suppose you ask for a merger of the above batch and script, **without** the isol
     requester: 'you@yourdomain.tld'
   },
   creationTime: '2023-11-20T15:50:27',
-  timeStamp: '7is3i'
+  timeStamp: '231120T1550'
 }
 ```
 
 Testilo has substituted the `private` acts from the `acme` target of the batch for the placeholder when creating the job. Testilo also has:
 - let the script determine the browser type of the `launch` act.
-- added a unique timestamp to the job.
 - added the creation time to the job.
+- added a unique timestamp to the job (a more compact representation of the creation time).
 - given the job an ID that combines the timestamp with the script ID and the batch ID.
 - inserted a `sources` property into the job, recording facts about the script, the batch, the target, and the email address given by the user who requested the merger.
 
@@ -360,23 +360,67 @@ A user can invoke `merge` in this way:
 
 - Create a script and save it as a JSON file in the `scripts` subdirectory of the `process.env.SPECDIR` directory.
 - Create a batch and save it as a JSON file in the `batches` subdirectory of the `process.env.SPECDIR` directory.
-- In the Testilo project directory, execute one of these statements:
-    - `node call merge s b e true`
-    - `node call merge s b e false`
-    - `node call merge s b e`
+- In the Testilo project directory, execute this statement:
+    - `node call merge s b e i t`
 
-In these statements, replace `s` and `b` with the base names of the script and batch files, respectively. For example, if the script file is named `ts99.json`, then replace `s` with `ts99`. Replace `e` with an email address, or with an empty string if the environment variable `process.env.REQUESTER` exists and you want to use it.
-
-The first statement will cause a merger **with** isolation.
-The second and third statements will cause a merger **without* isolation.
+In these statements, replace:
+- `s` with the base name of the script file
+- `b` with the base name of the batch file
+- `e` with an email address, or with an empty string if the environment variable `process.env.REQUESTER` exists and you want to use it
+- `i` with `true` if you want test isolation or `false` if not
+- `t` with `true` if the job is to be saved in the `todo` subdirectory or `false` if it is to be saved in the `pending` subdirectory of the `process.env.JOBDIR` directory.
 
 The `call` module will retrieve the named script and batch from their respective directories.
-The `merge` module will create an array of jobs.
-The `call` module will save the jobs as JSON files in the `todo` subdirectory of the `process.env.JOBDIR` directory.
+The `merge` module will create an array of jobs, with or without test isolation.
+The `call` module will save the jobs as JSON files in the `todo` or `pending` subdirectory of the `process.env.JOBDIR` directory.
 
 #### Validation
 
 To test the `merge` module, in the project directory you can execute the statement `node validation/merge/validate`. If `merge` is valid, all logging statements will begin with “Success” and none will begin with “ERROR”.
+
+### Series
+
+If you want to monitor a web resource by performing identical jobs repeatedly and comparing the results, you can use the `series` module to create a series of identical jobs.
+
+The jobs in a series differ from one another only in the timestamp segments of their `id` properties. For example, if the first job had the `id` value `240528T1316-mon-mozilla` and the events in the series occurred at intervals of 12 hours, then the second job would have the `id` value `240529T0116-mon-mozilla`.
+
+To support monitoring, a server that receives job requests from testing agents can perform a time check on the first job in the queue. If the time specified by the first job is in the future, the server can reply that there is no job to do.
+
+#### Invocation
+
+There are two ways to use the `series` module.
+
+##### By a module
+
+A module can invoke `series` in this way:
+
+```javaScript
+const {series} = require('testilo/series');
+const jobs = series(job, count, interval);
+```
+
+This invocation references a `job` variable, whose value is a job object. The `count` variable is an integer, 2 or greater, specifying how many events the series consists of. The `interval` variable is an integer, 1 or greater, specifying how many minutes are to elapse after each event before the next event. The `series()` function of the `series` module generates an array of job objects and returns the array. The invoking module can further dispose of the jobs as needed.
+
+##### By a user
+
+A user can invoke `series` in this way:
+
+- Create a job and save it as a JSON file in the `todo` subdirectory of the `process.env.JOBDIR` directory.
+- In the Testilo project directory, execute this statement:
+    - `node call series j c i`
+
+In this statement, replace:
+- `j` with a string that the filename of the starting job begins with
+- `c` with a count
+- `i` with an interval in minutes
+
+The `call` module will retrieve the first job that matches `j` from the `pending` subdirectory of the `process.env.JOBDIR` directory.
+The `series` module will create an array of jobs.
+The `call` module will save the jobs as JSON files in the `todo` subdirectory of the `process.env.JOBDIR` directory.
+
+#### Validation
+
+To test the `series` module, in the project directory you can execute the statement `node validation/series/validate`. If `series` is valid, all logging statements will begin with “Success” and none will begin with “ERROR”.
 
 ## Report scoring
 

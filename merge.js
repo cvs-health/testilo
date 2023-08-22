@@ -34,7 +34,7 @@ exports.merge = (script, batch, requester, isolate = false) => {
   requester ||= stdRequester;
   // Create a timestamp.
   const now = new Date();
-  const timeStamp = now.toISOString().slice(2, 16).replace(/-:/g, '');
+  const timeStamp = now.toISOString().slice(2, 16).replace(/[-:]/g, '');
   // Create a time description.
   const creationTime = (new Date()).toISOString().slice(0, 19);
   // Initialize a target-independent job.

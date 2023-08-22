@@ -23,9 +23,9 @@ exports.series = (job, count, interval) => {
     && interval === Math.floor(interval)
     && interval > 0
   ) {
-    // Create a representation of the initial job.
-    const template = JSON.stringify(job);
-    // If the initial job has an ID:
+    // Get a copy of the initial job.
+    const template = JSON.parse(JSON.stringify(job));
+    // If it has an ID:
     const jobID = template.id;
     if (jobID) {
       // If the ID specifies a valid time:
@@ -34,31 +34,39 @@ exports.series = (job, count, interval) => {
       const timeSpec = `${s[7]}${s[8]}:${s[9]}${s[10]}`;
       const dateTimeSpec = `${dateSpec}T${timeSpec}Z`;
       const start = new Date(dateTimeSpec);
-      const startNum = valueOf(start);
+      const startNum = start.valueOf();
       if (startNum) {
         // Initialize the series.
         const series = [];
         // For each job required:
         for (let i = 0; i < count; i++) {
-          // Add it to the series.
-          const nextJob = JSON.parse(template);
-          const nextDate = new Date(startNum + i * interval * 60000);
-          const nextTimeStamp = nextDate.toISOString().slice(2, 16).replace(/-:/g, '');
-          nextJob.id.replace(/^[^-]+/, nextTimeStamp);
+          // Create it.
+          const nextJob = JSON.parse(JSON.stringify(template));
           nextJob.sources.series = nextJob.id;
+          // Revise its ID.
+          const nextDate = new Date(startNum + i * interval * 60000);
+          const nextTimeStamp = nextDate.toISOString().slice(2, 16).replace(/[-:]/g, '');
+          nextJob.id = nextJob.id.replace(/^[^-]+/, nextTimeStamp);
+          // Add the job to the series.
           series.push(nextJob);
         }
         return series;
       }
+      // Otherwise, i.e. if it does not specify a valid time:
       else {
+        // Report this.
         console.log('ERROR: Initial job ID starts with an invalid time specification');
       }
     }
+    // Otherwise, i.e. if it has no ID:
     else {
+      // Report this.
       console.log('ERROR: Initial job has no ID');
     }
   }
+  // Otherwise, i.e. if they are invalid:
   else {
+    // Report this.
     console.log('ERROR: Arguments invalid');
   }
 };

@@ -98,10 +98,10 @@ const callSeries = async (idStart, count, interval) => {
     // Generate a job series.
     const jobJSON = await fs.readFile(`${jobDir}/todo/${seriesJobName}`, 'utf8');
     const job = JSON.parse(jobJSON);
-    const jobSeries = series(job, count, interval);
+    const jobSeries = series(job, Number.parseInt(count), Number.parseInt(interval));
     // Save the jobs.
     for (const item of jobSeries) {
-      await fs.writeFile(`${jobDir}/todo/${item.id}.json`);
+      await fs.writeFile(`${jobDir}/todo/${item.id}.json`, JSON.stringify(item, null, 2));
     }
     console.log(`Series of ${jobSeries.length} jobs generated and saved in ${jobDir}/todo`);
   }

@@ -51,7 +51,7 @@ const populateQuery = (report, query) => {
   history.forEach(event => {
     rows.historyRows.push(getScoreRow(... event));
   });
-  query.scoreHistory = historyRows.join(innerJoiner);
+  query.scoreHistory = rows.historyRows.join(innerJoiner);
   // Sort the issue IDs in descending score order.
   const issueIDs = Object.keys(details.issue);
   issueIDs.sort((a, b) => details.issue[b].score - details.issue[a].score);

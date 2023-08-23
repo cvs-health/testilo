@@ -28,7 +28,7 @@ const getScoreRow = (componentName, score) => `<tr><th>${componentName}</th><td>
 const populateQuery = (report, query) => {
   const {sources, jobData, score} = report;
   const {script, target, requester} = sources;
-  const {scoreProcID, summary, details} = score;
+  const {scoreProcID, summary, details, history} = score;
   query.ts = script;
   query.sp = scoreProcID;
   query.dp = id;
@@ -48,8 +48,8 @@ const populateQuery = (report, query) => {
     query[sumItem] = summary[sumItem];
     rows.summaryRows.push(getScoreRow(sumItem, query[sumItem]));
   });
-  score.history.forEach(event => {
-    historyRows.push(getScoreRow(... event));
+  history.forEach(event => {
+    rows.historyRows.push(getScoreRow(... event));
   });
   query.scoreHistory = historyRows.join(innerJoiner);
   // Sort the issue IDs in descending score order.

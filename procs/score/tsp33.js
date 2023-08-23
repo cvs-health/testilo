@@ -51,7 +51,6 @@ Object.keys(issues).forEach(issueName => {
 
 // Scores a report.
 exports.scorer = report => {
-  console.log(`Scoring report ${report.id}`);
   // If there are any acts in the report:
   const {acts} = report;
   if (Array.isArray(acts) && acts.length) {

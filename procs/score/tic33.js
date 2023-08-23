@@ -5306,9 +5306,7 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element text is distorted by a transform style property'
-        }
-      },
-      testaro: {
+        },
         allCaps: {
           variable: false,
           quality: 1,
@@ -5440,6 +5438,16 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element with main role has no unique visible label among the main-role elements'
+        },
+        aria_main_label_visible: {
+          variable: false,
+          quality: 1,
+          what: 'Element with a main role has no unique visible label among the main-role elements'
+        },
+        aria_main_label_unique: {
+          variable: false,
+          quality: 1,
+          what: 'Element with a main role has no unique label among the main-role elements'
         }
       }
     }

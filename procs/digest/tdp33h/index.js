@@ -23,7 +23,8 @@ const htmlEscape = textOrNumber => textOrNumber
 .replace(/&/g, '&amp;')
 .replace(/</g, '&lt;');
 // Gets a row of the score-summary table.
-const getScoreRow = (componentName, score) => `<tr><th>${componentName}</th><td>${score}</td></tr>`;
+const getScoreRow
+= (componentName, score) => `<tr><th>${componentName}</th><td class="right">${score}</td></tr>`;
 // Adds parameters to a query for a digest.
 const populateQuery = (report, query) => {
   const {sources, jobData, score} = report;

@@ -2984,8 +2984,8 @@ exports.issues = {
       }
     }
   },
-  ariaBadAttribute: {
-    why: 'Item behaves improperly',
+  ariaAttributeBad: {
+    why: 'Item behavior violates user expectations',
     wcag: '4.1.2',
     weight: 4,
     tools: {
@@ -3247,7 +3247,7 @@ exports.issues = {
     }
   },
   ariaReferenceBad: {
-    why: 'Item behaves improperly',
+    why: 'Item behavior violates user expectations',
     wcag: '1.3.1',
     weight: 4,
     tools: {
@@ -3757,7 +3757,7 @@ exports.issues = {
         title_redundant: {
           variable: false,
           quality: 1,
-          what: 'Title attribute text is the same as text or alternative text'
+          what: 'Title attribute text is the same as the text or alternative text'
         }
       }
     }

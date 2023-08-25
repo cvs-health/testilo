@@ -5306,11 +5306,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element text is distorted by a transform style property'
-        },
-        allCaps: {
-          variable: false,
-          quality: 1,
-          what: 'Element has a text substring of at least 8 upper-case characters'
         }
       }
     }

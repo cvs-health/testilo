@@ -152,6 +152,20 @@ exports.issues = {
       }
     }
   },
+  roleNoText: {
+    why: 'User cannot get help understanding an item',
+    wcag: '4.1.2',
+    weight: 4,
+    tools: {
+      ibm: {
+        aria_accessiblename_exists: {
+          variable: false,
+          quality: 1,
+          what: 'Element has no accessible name, although its role requires one'
+        }
+      }
+    }
+  },
   componentNoText: {
     why: 'User cannot get help understanding a custom item',
     wcag: '4.1.2',
@@ -5493,6 +5507,13 @@ exports.issues = {
           quality: 1,
           what: 'Page includes more than 1 visible main element'
         }
+      },
+      qualWeb: {
+        'QW-BP22': {
+          variable: false,
+          quality: 1,
+          what: 'Document has more than 1 element with a main role'
+        }
       }
     }
   },
@@ -6625,7 +6646,7 @@ exports.issues = {
     weight: 1,
     tools: {
       wave: {
-        'html5_video_audio': {
+        html5_video_audio: {
           variable: false,
           quality: 1,
           what: 'video or audio element may have no or incorrect captions, transcript, or audio description'

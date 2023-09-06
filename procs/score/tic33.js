@@ -7283,6 +7283,11 @@ exports.issues = {
           quality: 1,
           what: 'Left angle bracket is followed by a question mark'
         },
+        '^Bad character . after <. Probable cause: Unescaped <. Try escaping it as &lt;.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Left angle bracket is followed by an invalid character'
+        },
         'Almost standards mode doctype. Expected <!DOCTYPE html>.': {
           variable: false,
           quality: 1,

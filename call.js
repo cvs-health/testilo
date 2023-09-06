@@ -66,7 +66,7 @@ const callScript = async (scriptID, classificationID = null, ... issueIDs) => {
   const scriptObj = script(scriptID, issues, ... issueIDs);
   // Save the script.
   const scriptJSON = JSON.stringify(scriptObj, null, 2);
-  await fs.writeFile(`${specDir}/scripts/${scriptID}.json`, scriptJSON);
+  await fs.writeFile(`${specDir}/scripts/${scriptID}.json`, `${scriptJSON}\n`);
   console.log(`Script ${scriptID} created and saved in ${specDir}/scripts`);
 };
 // Fulfills a merging request.
@@ -82,7 +82,7 @@ const callMerge = async (scriptID, batchID, requester, withIsolation, todo) => {
   const destination = todo === 'true' ? 'todo' : 'pending';
   for (const job of jobs) {
     const jobJSON = JSON.stringify(job, null, 2);
-    await fs.writeFile(`${jobDir}/${destination}/${job.id}.json`, jobJSON);
+    await fs.writeFile(`${jobDir}/${destination}/${job.id}.json`, `${jobJSON}\n`);
   }
   const {timeStamp} = jobs[0];
   console.log(
@@ -102,7 +102,7 @@ const callSeries = async (idStart, count, interval) => {
     const jobSeries = series(job, Number.parseInt(count), Number.parseInt(interval));
     // Save the jobs.
     for (const item of jobSeries) {
-      await fs.writeFile(`${jobDir}/todo/${item.id}.json`, JSON.stringify(item, null, 2));
+      await fs.writeFile(`${jobDir}/todo/${item.id}.json`, `${JSON.stringify(item, null, 2)}\n`);
     }
     console.log(`Series of ${jobSeries.length} jobs generated and saved in ${jobDir}/todo`);
   }
@@ -141,7 +141,9 @@ const callScore = async (scorerID, selector = '') => {
     // For each scored report:
     for (const report of reports) {
       // Save it.
-      await fs.writeFile(`${scoredReportDir}/${report.id}.json`, JSON.stringify(report, null, 2));
+      await fs.writeFile(
+        `${scoredReportDir}/${report.id}.json`, `${JSON.stringify(report, null, 2)}\n`
+      );
     };
     console.log(`Reports scored and saved in ${scoredReportDir}`);
     }

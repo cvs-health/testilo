@@ -1,0 +1,77 @@
+{
+  "id": "ts34",
+  "what": "comprehensive accessibility tests",
+  "strict": true,
+  "timeLimit": 330,
+  "acts": [
+    {
+      "type": "placeholder",
+      "which": "main",
+      "launch": "chromium"
+    },
+    {
+      "type": "test",
+      "which": "alfa"
+    },
+    {
+      "type": "test",
+      "which": "axe",
+      "detailLevel": 2
+    },
+    {
+      "type": "test",
+      "which": "continuum"
+    },
+    {
+      "type": "test",
+      "which": "htmlcs"
+    },
+    {
+      "type": "test",
+      "which": "ibm",
+      "withItems": true,
+      "withNewContent": false
+    },
+    {
+      "type": "test",
+      "which": "nuVal"
+    },
+    {
+      "type": "test",
+      "which": "qualWeb",
+      "withNewContent": false
+    },
+    {
+      "type": "test",
+      "which": "wave",
+      "reportType": 4
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": true,
+      "stopOnFail": false,
+      "rules": [
+        "n",
+        "hover",
+        "motion"
+      ]
+    },
+    {
+      "type": "placeholder",
+      "which": "main",
+      "launch": "webkit"
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": true,
+      "stopOnFail": false,
+      "rules": [
+        "y",
+        "hover",
+        "motion"
+      ]
+    }
+  ]
+}

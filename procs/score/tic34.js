@@ -1,8 +1,8 @@
 /*
-  tic33
-  Testilo issue classification 33
+  tic34
+  Testilo issue classification 34
 
-  Classifies 921 rules of the tools of Testaro into 256 issues.
+  Classifies 922 rules of the tools of Testaro into 256 issues.
 
   Issue properties:
     why: expected impact
@@ -5864,15 +5864,29 @@ exports.issues = {
     }
   },
   focusableOperable: {
-    why: 'No-mouse user cannot navigate properly to the operable items',
+    why: 'Inoperability of an item violates a user expectation',
     wcag: '2.1.1',
-    weight: 3,
+    weight: 2,
     tools: {
       testaro: {
         focOp: {
           variable: false,
           quality: 1,
-          what: 'Tab-focusable elements are inoperable or operable elements are not Tab-focusable'
+          what: 'Tab-focusable element is inoperable'
+        }
+      }
+    }
+  },
+  operableFocusable: {
+    why: 'No-mouse user cannot navigate properly to an operable item',
+    wcag: '2.1.1',
+    weight: 4,
+    tools: {
+      testaro: {
+        focOp: {
+          variable: false,
+          quality: 1,
+          what: 'Operable element is not Tab-focusable'
         }
       }
     }

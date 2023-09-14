@@ -27,6 +27,18 @@ Testilo can be installed wherever Node.js (version 14 or later) is installed. Th
 
 The reason for Testilo being an independent package, rather than part of Testaro, is that Testilo can be installed on any host, while Testaro can run successfully only on a Windows or Macintosh workstation (and perhaps on some workstations with Ubuntu operating systems). Testaro runs tests similar to those that a human accessibility tester would run, using whatever browsers, input devices, system settings, simulated and attached devices, and assistive technologies tests may require. Thus, Testaro is limited to functionalities that require workstation attributes. For maximum flexibility in the management of Testaro jobs, all other functionalities are located outside of Testaro. You could have software such as Testilo running on a server, communicating with multiple workstations running Testaro. The workstations could receive job orders from the server and return job results to the server for further processing.
 
+## Configuration
+
+Environment variables for Testilo can be specified in a `.env` file. An example:
+
+```bash
+FUNCTIONDIR=../testdir/procs
+JOBDIR=../testdir/jobs
+REPORTDIR=../testdir/reports
+REQUESTER=a11ymgr@a11yorg.com
+SPECDIR=../testdir/specs
+```
+
 ## Job preparation
 
 ### Introduction

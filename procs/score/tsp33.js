@@ -30,18 +30,25 @@ const latencyWeight = 1;
 const normalLatency = 9;
 // How much each prevention adds to the score.
 const preventionWeight = 300;
-// Indexes of issues.
+// Initialize a table of tool rules.
 const issueIndex = {};
+// Initialize an array of variably named tool rules.
 const issueMatcher = [];
+// For each issue:
 Object.keys(issues).forEach(issueName => {
+  // For each tool with rules belonging to that issue:
   Object.keys(issues[issueName].tools).forEach(toolName => {
-    Object.keys(issues[issueName].tools[toolName]).forEach(issueID => {
+    // For each of those rules:
+    Object.keys(issues[issueName].tools[toolName]).forEach(ruleID => {
+      // Add it to the table of tool rules.
       if (! issueIndex[toolName]) {
         issueIndex[toolName] = {};
       }
-      issueIndex[toolName][issueID] = issueName;
-      if (issues[issueName].tools[toolName][issueID].variable) {
-        issueMatcher.push(issueID);
+      issueIndex[toolName][ruleID] = issueName;
+      // If it is variably named:
+      if (issues[issueName].tools[toolName][ruleID].variable) {
+        // Add it to the array of variably named tool rules.
+        issueMatcher.push(ruleID);
       }
     })
   });
@@ -63,6 +70,7 @@ exports.scorer = report => {
         summary: {
           total: 0,
           issue: 0,
+          solo: 0,
           tool: 0,
           prevention: 0,
           log: 0,
@@ -74,7 +82,8 @@ exports.scorer = report => {
             byTool: {}
           },
           prevention: {},
-          issue: {}
+          issue: {},
+          solo: {}
         }
       };
       const {summary, details} = score;
@@ -96,31 +105,38 @@ exports.scorer = report => {
           // Add the severity totals of the tool to the score.
           const {totals} = standardResult;
           details.severity.byTool[which] = totals;
-          // Add the instance data of the tool to the score.
+          // For each instance of the tool:
           standardResult.instances.forEach(instance => {
-            let {ruleID} = instance;
+            // Get the rule ID.
+            const {ruleID, ordinalSeverity, count} = instance;
+            // If it is not in the table of tool rules:
+            let canonicalRuleID = ruleID;
             if (! issueIndex[which][ruleID]) {
-              ruleID = issueMatcher.find(pattern => {
+              // Convert it to the variably named tool rule that it matches, if any.
+              canonicalRuleID = issueMatcher.find(pattern => {
                 const patternRE = new RegExp(pattern);
                 return patternRE.test(instance.ruleID);
               });
             }
-            if (ruleID) {
-              const issueID = issueIndex[which][ruleID];
-              if (! details.issue[issueID]) {
-                details.issue[issueID] = {
+            // If the rule ID belongs to an issue:
+            if (canonicalRuleID) {
+              // Get the issue.
+              const issueName = issueIndex[which][canonicalRuleID];
+              // Add the instance to the issue details of the score data.
+              if (! details.issue[issueName]) {
+                details.issue[issueName] = {
                   score: 0,
                   maxCount: 0,
-                  weight: issues[issueID].weight,
+                  weight: issues[issueName].weight,
                   tools: {}
                 };
               }
-              if (! details.issue[issueID].tools[which]) {
-                details.issue[issueID].tools[which] = {};
+              if (! details.issue[issueName].tools[which]) {
+                details.issue[issueName].tools[which] = {};
               }
-              if (! details.issue[issueID].tools[which][ruleID]) {
-                const ruleData = issues[issueID].tools[which][ruleID];
-                details.issue[issueID].tools[which][ruleID] = {
+              if (! details.issue[issueName].tools[which][canonicalRuleID]) {
+                const ruleData = issues[issueName].tools[which][canonicalRuleID];
+                details.issue[issueName].tools[which][canonicalRuleID] = {
                   quality: ruleData.quality,
                   what: ruleData.what,
                   complaints: {
@@ -130,22 +146,37 @@ exports.scorer = report => {
                 };
               }
               details
-              .issue[issueID]
-              .tools[which][ruleID]
+              .issue[issueName]
+              .tools[which][canonicalRuleID]
               .complaints
               .countTotal += instance.count || 1;
               if (
                 ! details
-                .issue[issueID]
-                .tools[which][ruleID]
+                .issue[issueName]
+                .tools[which][canonicalRuleID]
                 .complaints
                 .texts
                 .includes(instance.what)
               ) {
-                details.issue[issueID].tools[which][ruleID].complaints.texts.push(instance.what);
+                details
+                .issue[issueName]
+                .tools[which][canonicalRuleID]
+                .complaints
+                .texts
+                .push(instance.what);
               }
             }
+            // Otherwise, i.e. if the rule ID belongs to no issue:
             else {
+              // Add the instance to the solo details of the score data.
+              if (! details.solo[which]) {
+                details.solo[which] = {};
+              }
+              if (! details.solo[which][ruleID]) {
+                details.solo[which][ruleID] = 0;
+              }
+              details.solo[which][ruleID] += (count || 1) * (ordinalSeverity + 1);
+              // Report this.
               console.log(`ERROR: ${instance.ruleID} of ${which} not found in issues`);
             }
           });
@@ -157,8 +188,8 @@ exports.scorer = report => {
         }
       });
       // For each issue with any complaints:
-      Object.keys(details.issue).forEach(issueID => {
-        const issueData = details.issue[issueID];
+      Object.keys(details.issue).forEach(issueName => {
+        const issueData = details.issue[issueName];
         // For each tool with any complaints for the issue:
         Object.keys(issueData.tools).forEach(toolID => {
           // Get the sum of the weighted counts of its issue rules.
@@ -186,6 +217,12 @@ exports.scorer = report => {
       summary.issue = Object
       .values(details.issue)
       .reduce((total, current) => total + current.score, 0);
+      // Add the summary solo total to the score.
+      Object.keys(details.solo).forEach(tool => {
+        summary.solo += Object
+        .values(details.solo[tool])
+        .reduce((total, current) => total + current);
+      });
       // Add the summary tool total to the score.
       summary.tool = toolWeight * details.severity.total.reduce(
         (total, current, index) => total + severityWeights[index] * current, 0
@@ -219,6 +256,7 @@ exports.scorer = report => {
       });
       // Add the summary total score to the score.
       summary.total = summary.issue
+      + summary.solo
       + summary.tool
       + summary.prevention
       + summary.log

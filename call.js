@@ -66,11 +66,11 @@ const callScript = async (scriptID, classificationID = null, ... issueIDs) => {
   const scriptObj = script(scriptID, issues, ... issueIDs);
   // Save the script.
   const scriptJSON = JSON.stringify(scriptObj, null, 2);
-  await fs.writeFile(`${specDir}/scripts/${scriptID}.json`, scriptJSON);
+  await fs.writeFile(`${specDir}/scripts/${scriptID}.json`, `${scriptJSON}\n`);
   console.log(`Script ${scriptID} created and saved in ${specDir}/scripts`);
 };
 // Fulfills a merging request.
-const callMerge = async (scriptID, batchID, requester, withIsolation, todo = true) => {
+const callMerge = async (scriptID, batchID, requester, withIsolation, todo) => {
   // Get the script and the batch.
   const scriptJSON = await fs.readFile(`${specDir}/scripts/${scriptID}.json`, 'utf8');
   const script = JSON.parse(scriptJSON);
@@ -79,10 +79,10 @@ const callMerge = async (scriptID, batchID, requester, withIsolation, todo = tru
   // Merge them into an array of jobs.
   const jobs = merge(script, batch, requester, withIsolation);
   // Save the jobs.
+  const destination = todo === 'true' ? 'todo' : 'pending';
   for (const job of jobs) {
     const jobJSON = JSON.stringify(job, null, 2);
-    const destination = todo ? 'todo' : 'pending';
-    await fs.writeFile(`${jobDir}/${destination}/${job.id}.json`, jobJSON);
+    await fs.writeFile(`${jobDir}/${destination}/${job.id}.json`, `${jobJSON}\n`);
   }
   const {timeStamp} = jobs[0];
   console.log(
@@ -102,7 +102,7 @@ const callSeries = async (idStart, count, interval) => {
     const jobSeries = series(job, Number.parseInt(count), Number.parseInt(interval));
     // Save the jobs.
     for (const item of jobSeries) {
-      await fs.writeFile(`${jobDir}/todo/${item.id}.json`, JSON.stringify(item, null, 2));
+      await fs.writeFile(`${jobDir}/todo/${item.id}.json`, `${JSON.stringify(item, null, 2)}\n`);
     }
     console.log(`Series of ${jobSeries.length} jobs generated and saved in ${jobDir}/todo`);
   }
@@ -141,7 +141,9 @@ const callScore = async (scorerID, selector = '') => {
     // For each scored report:
     for (const report of reports) {
       // Save it.
-      await fs.writeFile(`${scoredReportDir}/${report.id}.json`, JSON.stringify(report, null, 2));
+      await fs.writeFile(
+        `${scoredReportDir}/${report.id}.json`, `${JSON.stringify(report, null, 2)}\n`
+      );
     };
     console.log(`Reports scored and saved in ${scoredReportDir}`);
     }
@@ -235,7 +237,7 @@ else if (fn === 'script' && fnArgs.length) {
     console.log('Execution completed');
   });
 }
-else if (fn === 'merge' && fnArgs.length > 2 && fnArgs.length < 5) {
+else if (fn === 'merge' && fnArgs.length === 5) {
   callMerge(... fnArgs)
   .then(() => {
     console.log('Execution completed');

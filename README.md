@@ -630,7 +630,7 @@ node call credit legislators 23pl
 
 When a user invokes `credit` in this example, the `call` module:
 - gets all the reports in the `scored` subdirectory of the `process.env.REPORTDIR` directory whose file names begin with `23pl`.
-- writes the credit report as JSON file named `legislators.json` to the `credit` subdirectory of the `process.env.REPORTDIR` directory.
+- writes the credit report as a JSON file named `legislators.json` to the `credit` subdirectory of the `process.env.REPORTDIR` directory.
 
 The third argument to `call` (`23pl` in this example) is optional. If it is omitted, `call` will get and `credit()` will tabulate all the reports in the `scored` directory.
 

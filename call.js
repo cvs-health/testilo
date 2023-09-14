@@ -277,7 +277,7 @@ else if (fn === 'compare' && fnArgs.length > 1 && fnArgs.length < 4) {
     console.log('Execution completed');
   });
 }
-else if (fn === 'credit' && fnArgs.length === 2) {
+else if (fn === 'credit' && fnArgs.length > 0 && fnArgs.length < 3) {
   callCredit(... fnArgs)
   .then(() => {
     console.log('Execution completed');

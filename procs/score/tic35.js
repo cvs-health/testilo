@@ -1,9 +1,8 @@
 /*
   tic35
-  CONTINUUM NOT YET REMOVED
   Testilo issue classification 35
 
-  Classifies approximately 650 rules of the tools of Testaro into 256 issues.
+  Classifies about 650 rules of the tools of Testaro into 256 issues.
 
   Issue properties:
     why: expected impact
@@ -351,11 +350,11 @@ exports.issues = {
     wcag: '4.1.2',
     weight: 3,
     tools: {
-      continuum: {
-        863: {
+      testaro: {
+        phOnly: {
           variable: false,
           quality: 1,
-          what: 'input element has an accessible name that depends on a placeholder'
+          what: '*input element has a placeholder but no accessible name'
         }
       }
     }
@@ -1365,11 +1364,11 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 4,
     tools: {
-      continuum: {
-        83: {
+      testaro: {
+        adbBadID: {
           variable: false,
           quality: 1,
-          what: 'aria-describedby attribute references an invalid or duplicate ID'
+          what: '*aria-describedby attribute references an invalid or duplicate ID'
         }
       }
     }
@@ -1678,13 +1677,6 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 4,
     tools: {
-      continuum: {
-        872: {
-          variable: false,
-          quality: 1,
-          what: 'textarea element has no accessible name, but only a placeholder attribute'
-        }
-      },
       htmlcs: {
         'AAA.4_1_2.H91.Textarea.Name': {
           variable: false,
@@ -2079,13 +2071,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'svg element with an img role has no text alternative'
-        }
-      },
-      continuum: {
-        123: {
-          variable: false,
-          quality: 1,
-          what: 'svg element has no machanism allowing an accessible name to be calculated'
         }
       },
       qualWeb: {
@@ -2961,28 +2946,6 @@ exports.issues = {
           what: 'Element does not have all required states and properties'
         }
       },
-      continuum: {
-        1039: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a checkbox role has no aria-checked attribute'
-        },
-        1040: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a combobox role has no aria-controls or no aria-expanded attribute'
-        },
-        1042: {
-          variable: false,
-          quality: 1,
-          what: 'Element with an option role has no aria-selected attribute'
-        },
-        1043: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a radio role has no aria-checked attribute'
-        }
-      },
       nuVal: {
         '^Element .+ is missing required attribute aria-.+$': {
           variable: true,
@@ -2995,6 +2958,20 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element with a role attribute does not have the required states and properties'
+        }
+      }
+    }
+  },
+  ariaMissingRisk: {
+    why: 'Item may behave improperly',
+    wcag: '4.1.2',
+    weight: 1,
+    tools: {
+      testaro: {
+        opRoleSel: {
+          variable: false,
+          quality: 1,
+          what: '*Non-option element with an explicit option role has no aria-selected attribute'
         }
       }
     }
@@ -3041,108 +3018,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'aria-roledescription is on an element with no semantic role'
-        }
-      },
-      continuum: {
-        16: {
-          variable: false,
-          quality: 1,
-          what: 'Element has an aria-multiline attribute, which is not allowed'
-        },
-        38: {
-          variable: false,
-          quality: 1,
-          what: 'Element has an aria-pressed attribute, which is not allowed'
-        },
-        64: {
-          variable: false,
-          quality: 1,
-          what: 'Element has an aria-valuemax attribute that is not set to an integer'
-        },
-        257: {
-          variable: false,
-          quality: 1,
-          what: 'Element has an aria-checked attribute, which is not allowed'
-        },
-        260: {
-          variable: false,
-          quality: 1,
-          what: 'Element has an aria-level attribute, which is not allowed'
-        },
-        261: {
-          variable: false,
-          quality: 1,
-          what: 'Element has an aria-multiselectable attribute, which is not allowed'
-        },
-        264: {
-          variable: false,
-          quality: 1,
-          what: 'Element has an aria-selected attribute, which is not allowed'
-        },
-        270: {
-          variable: false,
-          quality: 1,
-          what: 'Element has an aria-required attribute, which is not allowed'
-        },
-        278: {
-          variable: false,
-          quality: 1,
-          what: 'Element has an aria-modal attribute, which is not allowed'
-        },
-        279: {
-          variable: false,
-          quality: 1,
-          what: 'Element has an aria-posinset attribute without having a compatible role'
-        },
-        280: {
-          variable: false,
-          quality: 1,
-          what: 'Element has aria-posinset and aria-setsize attributes without having a compatible role'
-        },
-        281: {
-          variable: false,
-          quality: 1,
-          what: 'Element has an aria-expanded attribute, which is not allowed'
-        },
-        282: {
-          variable: false,
-          quality: 1,
-          what: 'Element has an aria-autocomplete attribute, which is not allowed'
-        },
-        283: {
-          variable: false,
-          quality: 1,
-          what: 'Element has an aria-activedescendant attribute, which is not allowed'
-        },
-        331: {
-          variable: false,
-          quality: 1,
-          what: 'Element has an aria-owns attribute set to a non-null value'
-        },
-        333: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a textbox role has an aria-owns attribute, which is not allowed'
-        },
-        334: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a searchbox role has an aria-owns attribute, which is not allowed'
-        },
-        609: {
-          variable: false,
-          quality: 1,
-          what: 'Element has an aria-setsize attribute but has no aria-posinset attribute'
-        },
-        610: {
-          variable: false,
-          quality: 1,
-          what: 'Element has an aria-setsize attribute without having a compatible role'
-        },
-        1066: {
-          variable: false,
-          quality: 1,
-          what: 'Element has an ARIA attribute which is not valid'
         }
       },
       ibm: {
@@ -4336,18 +4211,6 @@ exports.issues = {
           quality: 1,
           what: 'li element is not contained by a ul or ol element'
         }
-      },
-      continuum: {
-        99: {
-          variable: false,
-          quality: 1,
-          what: 'li element has no ul, ol, or list-role parent'
-        },
-        385: {
-          variable: false,
-          quality: 1,
-          what: 'list item has no ul, ol, or list-role parent or owner'
-        }
       }
     }
   },
@@ -4583,11 +4446,11 @@ exports.issues = {
     wcag: '4.1.2',
     weight: 4,
     tools: {
-      continuum: {
-        738: {
+      testaro: {
+        legendWhere: {
           variable: false,
           quality: 1,
-          what: 'legend element is not the first child of its fieldset element'
+          what: '*legend element is not the first child of its fieldset element'
         }
       }
     }
@@ -5752,18 +5615,6 @@ exports.issues = {
     wcag: '1.3.6',
     weight: 3,
     tools: {
-      continuum: {
-        531: {
-          variable: false,
-          quality: 1,
-          what: 'nav element has an accessible name that is non-unique among the nav elements'
-        },
-        533: {
-          variable: false,
-          quality: 1,
-          what: 'nav element is not the only nav element but has no accessible name'
-        }
-      },
       ibm: {
         Rpt_Aria_MultipleNavigationLandmarks_Implicit: {
           variable: false,
@@ -6207,11 +6058,11 @@ exports.issues = {
     wcag: '1.3.3',
     weight: 1,
     tools: {
-      continuum: {
-        141: {
+      testaro: {
+        imageLink: {
           variable: false,
           quality: 1,
-          what: 'a element has an href attribute set to an image file reference'
+          what: '*a element has an href attribute set to an image file reference'
         }
       },
       wave: {

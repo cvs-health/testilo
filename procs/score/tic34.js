@@ -354,7 +354,7 @@ exports.issues = {
         863: {
           variable: false,
           quality: 1,
-          what: 'input has an accessible name that depends on a placeholder'
+          what: 'input element has an accessible name that depends on a placeholder'
         }
       }
     }

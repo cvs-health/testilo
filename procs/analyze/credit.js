@@ -17,7 +17,7 @@ exports.credit = reports => {
     // If it is valid:
     if (report.score && report.score.details && report.score.details.issue) {
       // For each issue:
-      const issues = report.score.details.issue;
+      const issues = report.score.details && report.score.details.issue;
       Object.keys(issues).forEach(issueID => {
         // For each tool with any complaints about it:
         if (! counts[issueID]) {
@@ -28,19 +28,29 @@ exports.credit = reports => {
           Object.keys(issueTools).forEach(toolID => {
             // For each rule cited by any of those complaints:
             if (! counts[issueID][toolID]) {
-              counts[issueID][toolID] = 0;
+              counts[issueID][toolID] = {
+                total: 0,
+                rules: {}
+              };
             }
             Object.keys(issueTools[toolID]).forEach(ruleID => {
               // If an instance count was recorded:
               const {complaints} = issueTools[toolID][ruleID];
               if (complaints && complaints.countTotal) {
                 // Add it to the tally.
-                counts[issueID][toolID] += complaints.countTotal;
+                counts[issueID][toolID].total += complaints.countTotal;
+                // Add a rule itemization to the tally.
+                if (! counts[issueID][toolID].rules[ruleID]) {
+                  counts[issueID][toolID].rules[ruleID] = 0;
+                }
+                counts[issueID][toolID].rules[ruleID] += complaints.countTotal;
               }
               // Otherwise, i.e. if no instance count was recorded:
               else {
                 // Report this.
-                console.log(`ERROR: Missing countTotal for ${toolID} in ${issueID}`);
+                console.log(
+                  `ERROR: Report ${report.id} missing countTotal for ${toolID} in ${issueID}`
+                );
               }
             });
           });
@@ -69,9 +79,9 @@ exports.credit = reports => {
       // Add the tools with the maximum instance count to the tally.
       const maxCount = Object
       .values(counts[issueID])
-      .reduce((max, current) => Math.max(max, current));
+      .reduce((max, current) => Math.max(max, current ? current.total : 0), 0);
       Object.keys(counts[issueID]).forEach(toolID => {
-        if (counts[issueID][toolID] === maxCount) {
+        if (maxCount && counts[issueID][toolID].total === maxCount) {
           if (! mosts[issueID]) {
             mosts[issueID] = [];
           }

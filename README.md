@@ -344,12 +344,11 @@ This is a valid Testaro job.
 
 If, however, you requested a merger **with** isolation, then Testilo would take cognizance of the fact that an `axe` test act is a target-modifying act. Testilo would therefore act as if another instance of the placeholder had been located in the script after the `axe` test act. So, copies of the same 6 acts that precede the `axe` test act would be inserted **after** the `axe` test act, too.
 
-Of the 10 tools providing tests for Testaro, 6 are target-modifying:
+Of the 8 tools providing tests for Testaro, 4 are target-modifying:
 - `axe`
-- `continuum`
 - `htmlcs`
 - `ibm`
-- `wave`
+- `testaro`
 
 #### Invocation
 

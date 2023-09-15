@@ -10,11 +10,6 @@
       "launch": "webkit"
     },
     {
-      "type": "test",
-      "which": "continuum",
-      "what": "Continuum"
-    },
-    {
       "type": "placeholder",
       "which": "main",
       "launch": "chromium"

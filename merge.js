@@ -18,7 +18,6 @@ const stdRequester = process.env.REQUESTER;
 // Tools that alter the page.
 const contaminantNames = new Set([
   'axe',
-  'continuum',
   'htmlcs',
   'ibm'
 ]);

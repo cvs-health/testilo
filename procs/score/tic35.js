@@ -2965,7 +2965,7 @@ exports.issues = {
   ariaMissingRisk: {
     why: 'Item may behave improperly',
     wcag: '4.1.2',
-    weight: 1,
+    weight: 2,
     tools: {
       testaro: {
         opRoleSel: {

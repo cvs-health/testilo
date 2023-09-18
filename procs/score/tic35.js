@@ -354,7 +354,7 @@ exports.issues = {
         phOnly: {
           variable: false,
           quality: 1,
-          what: '*input element has a placeholder but no accessible name'
+          what: 'input element has a placeholder but no accessible name'
         }
       }
     }
@@ -1368,7 +1368,7 @@ exports.issues = {
         adbBadID: {
           variable: false,
           quality: 1,
-          what: '*aria-describedby attribute references an invalid or duplicate ID'
+          what: 'aria-describedby attribute references an invalid or duplicate ID'
         }
       }
     }
@@ -2968,10 +2968,10 @@ exports.issues = {
     weight: 2,
     tools: {
       testaro: {
-        opRoleSel: {
+        optRoleSel: {
           variable: false,
           quality: 1,
-          what: '*Non-option element with an explicit option role has no aria-selected attribute'
+          what: 'Non-option element with an explicit option role has no aria-selected attribute'
         }
       }
     }
@@ -4447,10 +4447,10 @@ exports.issues = {
     weight: 4,
     tools: {
       testaro: {
-        legendWhere: {
+        legendLoc: {
           variable: false,
           quality: 1,
-          what: '*legend element is not the first child of its fieldset element'
+          what: 'legend element is not the first child of its fieldset element'
         }
       }
     }
@@ -4629,6 +4629,20 @@ exports.issues = {
       }
     }
   },
+  tableCaptionLoc: {
+    why: 'User cannot get help on the topic of a table',
+    wcag: '1.3.1',
+    weight: 3,
+    tools: {
+      testaro: {
+        captionLoc: {
+          variable: false,
+          quality: 1,
+          what: 'caption element is not the first child of a table element'
+        }
+      }
+    }
+  },
   cellHeadersNotInferrable: {
     why: 'User cannot get help on relationships in a table',
     wcag: '1.3.1',
@@ -4638,7 +4652,7 @@ exports.issues = {
         'AAA.1_3_1.H43.HeadersRequired': {
           variable: false,
           quality: 1,
-          what: 'Complex table requires headers attributes of cells'
+          what: 'Complex table is missing headers attributes of cells'
         }
       },
       ibm: {
@@ -5735,7 +5749,7 @@ exports.issues = {
     weight: 4,
     tools: {
       testaro: {
-        focOp: {
+        opFoc: {
           variable: false,
           quality: 1,
           what: 'Operable element is not Tab-focusable'
@@ -6062,7 +6076,7 @@ exports.issues = {
         imageLink: {
           variable: false,
           quality: 1,
-          what: '*a element has an href attribute set to an image file reference'
+          what: 'a element has an href attribute set to an image file reference'
         }
       },
       wave: {
@@ -6296,7 +6310,7 @@ exports.issues = {
     weight: 1,
     tools: {
       testaro: {
-        filterStyle: {
+        filter: {
           variable: false,
           quality: 1,
           what: 'Element styles include filter'
@@ -6883,6 +6897,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'HTML element is used to control the visual presentation of content'
+        }
+      },
+      testaro: {
+        linkOldAtt: {
+          variable: false,
+          quality: 1,
+          what: 'a element has a deprecated attribute'
         }
       },
       wave: {

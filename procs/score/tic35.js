@@ -1365,7 +1365,7 @@ exports.issues = {
     weight: 4,
     tools: {
       testaro: {
-        adbBadID: {
+        adbID: {
           variable: false,
           quality: 1,
           what: 'aria-describedby attribute references an invalid or duplicate ID'

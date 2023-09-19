@@ -1364,6 +1364,13 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 4,
     tools: {
+      nuVal: {
+        'The aria-describedby attribute must point to an element in the same document.': {
+          variable: false,
+          quality: 1,
+          what: 'aria-describedby attribute references an element not in the document'
+        }
+      },
       testaro: {
         adbID: {
           variable: false,
@@ -1455,11 +1462,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'aria-labelledby attribute references an element not in the document'
-        },
-        'The aria-describedby attribute must point to an element in the same document.': {
-          variable: false,
-          quality: 1,
-          what: 'aria-describedby attribute references an element not in the document'
         }
       },
       wave: {

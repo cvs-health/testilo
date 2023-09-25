@@ -110,13 +110,6 @@ exports.issues = {
           what: 'id attribute used in ARIA or in a label has a value that is not unique'
         }
       },
-      continuum: {
-        94: {
-          variable: false,
-          quality: 1,
-          what: 'Element contains an id attribute set to a value that is not unique in the DOM'
-        }
-      },
       htmlcs: {
         'AAA.4_1_1.F77': {
           variable: false,
@@ -197,13 +190,6 @@ exports.issues = {
           what: 'Region has no accessible name'
         }
       },
-      continuum: {
-        1010: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a region role has no machanism allowing an accessible name to be calculated'
-        }
-      },
       ibm: {
         Rpt_Aria_RegionLabel_Implicit: {
           variable: false,
@@ -247,48 +233,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Toggle field has no accessible name'
-        }
-      },
-      continuum: {
-        118: {
-          variable: false,
-          quality: 1,
-          what: 'Text input element has no machanism allowing an accessible name to be calculated'
-        },
-        370: {
-          variable: false,
-          quality: 1,
-          what: 'Search input element has no machanism allowing an accessible name to be calculated'
-        },
-        372: {
-          variable: false,
-          quality: 1,
-          what: 'email input element has no machanism allowing an accessible name to be calculated'
-        },
-        375: {
-          variable: false,
-          quality: 1,
-          what: 'input element with type="checkbox" has no machanism allowing an accessible name to be calculated'
-        },
-        376: {
-          variable: false,
-          quality: 1,
-          what: 'input element has no machanism allowing an accessible name to be calculated'
-        },
-        507: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a radio role has no machanism allowing an accessible name to be calculated'
-        },
-        509: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a textbox role has no machanism allowing an accessible name to be calculated'
-        },
-        510: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a combobox role has no machanism allowing an accessible name to be calculated'
         }
       },
       htmlcs: {
@@ -416,13 +360,6 @@ exports.issues = {
           what: 'image input element has no accessible name'
         }
       },
-      continuum: {
-        131: {
-          variable: false,
-          quality: 1,
-          what: 'image input has no machanism allowing an accessible name to be calculated'
-        }
-      },
       htmlcs: {
         'AAA.4_1_2.H91.InputImage.Name': {
           variable: false,
@@ -485,18 +422,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element with role img has no text alternative'
-        }
-      },
-      continuum: {
-        87: {
-          variable: false,
-          quality: 1,
-          what: 'Element with an image, graphics-symbol, or graphics-document role has no mechanism to calculate an accessible name'
-        },
-        89: {
-          variable: false,
-          quality: 1,
-          what: 'img element has no machanism allowing an accessible name to be calculated'
         }
       },
       htmlcs: {
@@ -660,20 +585,6 @@ exports.issues = {
       }
     }
   },
-  inputAlt: {
-    why: 'User cannot get help understanding an item in a form',
-    wcag: '4.1',
-    weight: 4,
-    tools: {
-      continuum: {
-        15: {
-          variable: false,
-          quality: 1,
-          what: 'input element has an alt attribute'
-        }
-      }
-    }
-  },
   imagesSameAlt: {
     why: 'User cannot get help differentiating two adjacent images',
     wcag: '1.1.1',
@@ -742,18 +653,6 @@ exports.issues = {
     wcag: '1',
     weight: 1,
     tools: {
-      continuum: {
-        234: {
-          variable: false,
-          quality: 1,
-          what: 'img element has a suspicious calculated accessible name'
-        },
-        235: {
-          variable: false,
-          quality: 1,
-          what: 'Element with an img, graphics-symbol, or graphics-document role has a suspicious calculated accessible name'
-        }
-      },
       qualWeb: {
         'QW-WCAG-T8': {
           variable: false,
@@ -836,13 +735,6 @@ exports.issues = {
           what: 'html element has no lang attribute'
         }
       },
-      continuum: {
-        101: {
-          variable: false,
-          quality: 1,
-          what: 'root html element has no lang attribute'
-        }
-      },
       htmlcs: {
         'AAA.3_1_1.H57.2': {
           variable: false,
@@ -907,13 +799,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'html element has no valid value for the lang attribute'
-        }
-      },
-      continuum: {
-        647: {
-          variable: false,
-          quality: 1,
-          what: 'html element has no lang attribute starting with an IANA Language Subtag Registry language value'
         }
       },
       htmlcs: {
@@ -1005,18 +890,18 @@ exports.issues = {
     wcag: '4.1.2',
     weight: 4,
     tools: {
+      aslint: {
+        'aria-role-dialog': {
+          variable: false,
+          quality: 1,
+          what: 'Element has a dialog role but has no accessible name'
+        }
+      },
       axe: {
         'aria-dialog-name': {
           variable: false,
           quality: 1,
           what: 'ARIA dialog or alertdialog node has no accessible name'
-        }
-      },
-      continuum: {
-        736: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a dialog role has no machanism allowing an accessible name to be calculated'
         }
       }
     }
@@ -1052,13 +937,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'object element has no text alternative'
-        }
-      },
-      continuum: {
-        249: {
-          variable: false,
-          quality: 1,
-          what: 'object element has no machanism allowing an accessible name to be calculated'
         }
       },
       htmlcs: {
@@ -1101,20 +979,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Text alternative not provided on an applet element'
-        }
-      }
-    }
-  },
-  videoNoText: {
-    why: 'User cannot get help on the topic of a video',
-    wcag: '1.1.1',
-    weight: 4,
-    tools: {
-      continuum: {
-        252: {
-          variable: false,
-          quality: 1,
-          what: 'video element has no machanism allowing an accessible name to be calculated'
         }
       }
     }
@@ -1310,13 +1174,6 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 4,
     tools: {
-      continuum: {
-        290: {
-          variable: false,
-          quality: 1,
-          what: 'aria-activedescendant attribute is set to an invalid or duplicate id'
-        }
-      },
       ibm: {
         HAAC_ActiveDescendantCheck: {
           variable: false,
@@ -1331,13 +1188,6 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 4,
     tools: {
-      continuum: {
-        85: {
-          variable: false,
-          quality: 1,
-          what: 'aria-controls attribute references an invalid or duplicate ID'
-        }
-      },
       ibm: {
         combobox_popup_reference: {
           variable: false,
@@ -1421,13 +1271,6 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 4,
     tools: {
-      continuum: {
-        95: {
-          variable: false,
-          quality: 1,
-          what: 'Element has an aria-labelledby value that includes an invalid or duplicate id'
-        }
-      },
       htmlcs: {
         'AAA.1_3_1.H44.NonExistentFragment': {
           variable: false,
@@ -1487,20 +1330,6 @@ exports.issues = {
       }
     }
   },
-  ownerConflict: {
-    why: 'No-mouse user cannot operate a custom tool',
-    wcag: '1.3.1',
-    weight: 4,
-    tools: {
-      continuum: {
-        360: {
-          variable: false,
-          quality: 1,
-          what: 'Element and another element have aria-owns attributes with identical id values'
-        }
-      }
-    }
-  },
   linkNoText: {
     why: 'User cannot get help understanding what a link points to',
     wcag: '2.4.4',
@@ -1518,18 +1347,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Link has no discernible text'
-        }
-      },
-      continuum: {
-        237: {
-          variable: false,
-          quality: 1,
-          what: 'a element has no machanism allowing an accessible name value to be calculated'
-        },
-        238: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a link role has no machanism allowing an accessible name value to be calculated'
         }
       },
       htmlcs: {
@@ -1670,6 +1487,20 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Link has no href attribute'
+        }
+      }
+    }
+  },
+  editableHow: {
+    why: 'User cannot get help on how to edit editable content',
+    wcag: '1.3.1',
+    weight: 3,
+    tools: {
+      aslint: {
+        'content-editable-missing-attributes': {
+          variable: false,
+          quality: 1,
+          what: 'Element has a true contenteditable attribute but no aria-multiline or labeling attribute'
         }
       }
     }
@@ -1877,23 +1708,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Input button has no discernible text'
-        }
-      },
-      continuum: {
-        116: {
-          variable: false,
-          quality: 1,
-          what: 'input element with type=button has no machanism allowing an accessible name to be calculated'
-        },
-        224: {
-          variable: false,
-          quality: 1,
-          what: 'button element has no machanism allowing an accessible name to be calculated'
-        },
-        511: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a button role has no machanism allowing an accessible name to be calculated'
         }
       },
       htmlcs: {
@@ -2127,18 +1941,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'User cannot zoom and scale the text up to 500%'
-        }
-      },
-      continuum: {
-        55: {
-          variable: false,
-          quality: 1,
-          what: 'meta element in the head stops a user from scaling the viewport size'
-        },
-        59: {
-          variable: false,
-          quality: 1,
-          what: 'meta element in the head sets the viewport maximum-scale to less than 2'
         }
       },
       nuVal: {
@@ -2487,13 +2289,6 @@ exports.issues = {
           what: 'Frame title attribute is not unique'
         }
       },
-      continuum: {
-        228: {
-          variable: false,
-          quality: 1,
-          what: 'iframe has no machanism allowing an accessible name to be calculated'
-        }
-      },
       htmlcs: {
         'AAA.2_4_1.H64.1': {
           variable: false,
@@ -2554,68 +2349,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'ARIA role is not appropriate for the element'
-        }
-      },
-      continuum: {
-        37: {
-          variable: false,
-          quality: 1,
-          what: 'a element has a role attribute that is not allowed'
-        },
-        44: {
-          variable: false,
-          quality: 1,
-          what: 'hr element has a role attribute'
-        },
-        176: {
-          variable: false,
-          quality: 1,
-          what: 'label element has a role attribute'
-        },
-        185: {
-          variable: false,
-          quality: 1,
-          what: 'noscript element has a role attribute'
-        },
-        285: {
-          variable: false,
-          quality: 1,
-          what: 'button element has a role attribute that is not allowed'
-        },
-        288: {
-          variable: false,
-          quality: 1,
-          what: 'fieldset element has a role other than group and radiogroup'
-        },
-        294: {
-          variable: false,
-          quality: 1,
-          what: 'form element has a role other than search and region'
-        },
-        297: {
-          variable: false,
-          quality: 1,
-          what: 'iframe element has a role attribute that is not allowed'
-        },
-        319: {
-          variable: false,
-          quality: 1,
-          what: 'ol element has a role attribute that is not allowed'
-        },
-        325: {
-          variable: false,
-          quality: 1,
-          what: 'ul element has a role attribute that is not allowed'
-        },
-        361: {
-          variable: false,
-          quality: 1,
-          what: 'Element has an abstract ARIA role'
-        },
-        412: {
-          variable: false,
-          quality: 1,
-          what: 'Element has a role attribute set to an invalid ARIA role value'
         }
       },
       ibm: {
@@ -3115,13 +2848,6 @@ exports.issues = {
     wcag: '4.1.2',
     weight: 1,
     tools: {
-      continuum: {
-        205: {
-          variable: false,
-          quality: 1,
-          what: 'aria-disabled attribute is redundant with the disabled attribute'
-        }
-      },
       ibm: {
         aria_attribute_redundant: {
           variable: false,
@@ -3659,13 +3385,6 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 1,
     tools: {
-      continuum: {
-        152: {
-          variable: false,
-          quality: 1,
-          what: 'title attribute is empty'
-        }
-      },
       htmlcs: {
         'AAA.1_3_1.H65': {
           variable: false,
@@ -3725,13 +3444,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Document contains no title element'
-        }
-      },
-      continuum: {
-        884: {
-          variable: false,
-          quality: 1,
-          what: 'DOM contains no document title element'
         }
       },
       htmlcs: {
@@ -3828,20 +3540,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Heading level is incorrect'
-        }
-      }
-    }
-  },
-  headingLevelless: {
-    why: 'Helper misdescribes the document',
-    wcag: '1.3.1',
-    weight: 1,
-    tools: {
-      continuum: {
-        71: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a heading role has no aria-level attribute'
         }
       }
     }
@@ -4162,23 +3860,6 @@ exports.issues = {
           what: 'List element dl has a child element other than properly ordered dt and dt group, script, template, and div'
         }
       },
-      continuum: {
-        244: {
-          variable: false,
-          quality: 1,
-          what: 'dl element does not contain only dt, dd, script, template, or listitem-role elements as direct child elements'
-        },
-        245: {
-          variable: false,
-          quality: 1,
-          what: 'ol element does not contain only li, script, template, or listitem-role elements as direct child elements'
-        },
-        246: {
-          variable: false,
-          quality: 1,
-          what: 'ul element does not contain only li, script, template, or listitem-role elements as direct child elements'
-        }
-      },
       ibm: {
         HAAC_List_Group_ListItem: {
           variable: false,
@@ -4296,13 +3977,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'select element has no accessible name'
-        }
-      },
-      continuum: {
-        114: {
-          variable: false,
-          quality: 1,
-          what: 'select element has no machanism allowing an accessible name to be calculated'
         }
       },
       htmlcs: {
@@ -4462,13 +4136,6 @@ exports.issues = {
     wcag: '4.1.2',
     weight: 2,
     tools: {
-      continuum: {
-        221: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a radiogroup role has no machanism allowing an accessible name to be calculated'
-        }
-      },
       htmlcs: {
         'AAA.1_3_1.H71.NoLegend': {
           variable: false,
@@ -4716,13 +4383,6 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 3,
     tools: {
-      continuum: {
-        387: {
-          variable: false,
-          quality: 1,
-          what: 'table element contains no th element or element with a rowheader or columnheader role'
-        }
-      },
       ibm: {
         RPT_Table_DataHeadingsAria: {
           variable: false,
@@ -4992,13 +4652,6 @@ exports.issues = {
           what: 'Interactive controls are nested'
         }
       },
-      continuum: {
-        22: {
-          variable: false,
-          quality: 1,
-          what: 'Link contains an input, keygen, select, textarea, or button'
-        }
-      },
       nuVal: {
         'The element a must not appear as a descendant of an element with the attribute role=link.': {
           variable: false,
@@ -5151,13 +4804,20 @@ exports.issues = {
   allCaps: {
     why: 'Text is difficult to read',
     wcag: '3.1.5',
-    weight: 1,
+    weight: 0,
     tools: {
       alfa: {
         r72: {
           variable: false,
           quality: 1,
           what: 'Paragraph text is uppercased'
+        }
+      },
+      aslint: {
+        'capital-letters-words': {
+          variable: false,
+          quality: 1,
+          what: 'Element or its title has entirely upper-case words'
         }
       },
       testaro: {
@@ -5172,7 +4832,7 @@ exports.issues = {
   allItalics: {
     why: 'Text is difficult to read',
     wcag: '3.1.5',
-    weight: 1,
+    weight: 0,
     tools: {
       alfa: {
         r85: {
@@ -5374,13 +5034,6 @@ exports.issues = {
           what: 'page has more than 1 main landmark'
         }
       },
-      continuum: {
-        809: {
-          variable: false,
-          quality: 1,
-          what: 'More than 1 main element is located in the body element'
-        }
-      },
       nuVal: {
         'A document must not include more than one visible main element.': {
           variable: false,
@@ -5475,6 +5128,13 @@ exports.issues = {
     wcag: '1.3.6',
     weight: 2,
     tools: {
+      aslint: {
+        'contentinfo-landmark-only-one': {
+          variable: false,
+          quality: 1,
+          what: 'Page has more than 1 contentinfo landmark (footer)'
+        }
+      },
       axe: {
         'landmark-no-duplicate-contentinfo': {
           variable: false,
@@ -5581,18 +5241,6 @@ exports.issues = {
     wcag: '1.3.6',
     weight: 3,
     tools: {
-      continuum: {
-        527: {
-          variable: false,
-          quality: 1,
-          what: 'aside element has an accessible name that is non-unique among the aside elements'
-        },
-        532: {
-          variable: false,
-          quality: 1,
-          what: 'aside element is not the only aside element but has no accessible name'
-        }
-      },
       ibm: {
         Rpt_Aria_MultipleComplementaryLandmarks_Implicit: {
           variable: false,
@@ -5804,13 +5452,6 @@ exports.issues = {
           what: 'Element has a none/presentation role but is focusable or has a global ARIA state or property'
         }
       },
-      continuum: {
-        790: {
-          variable: false,
-          quality: 1,
-          what: 'Element with an explicit or implicit nonnegative tabindex attribute is directly aria-hidden'
-        }
-      },
       ibm: {
         aria_hidden_focus_misuse: {
           variable: false,
@@ -5915,6 +5556,20 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Content is entirely or mainly hidden'
+        }
+      }
+    }
+  },
+  hideFailureRisk: {
+    why: 'User may be misled by erroneously hidden or revealed document content',
+    wcag: '2.4.6',
+    weight: 0,
+    tools: {
+      aslint: {
+        'aria-hidden': {
+          variable: false,
+          quality: 1,
+          what: 'aria-hidden attribute has the value false'
         }
       }
     }
@@ -6365,58 +6020,6 @@ exports.issues = {
           variable: true,
           quality: 1,
           what: 'tabindex attribute has an empty value instead of an integer'
-        }
-      }
-    }
-  },
-  tabIndexMissing: {
-    why: 'No-mouse user cannot reach an item to operate it',
-    wcag: '2.1.1',
-    weight: 4,
-    tools: {
-      continuum: {
-        337: {
-          variable: false,
-          quality: 1,
-          what: 'Enabled element with a button role has no nonpositive tabindex attribute'
-        },
-        356: {
-          variable: false,
-          quality: 1,
-          what: 'Enabled element with a textbox role has no nonpositive tabindex attribute'
-        }
-      }
-    }
-  },
-  trackNoLabel: {
-    why: 'User cannot get help reading speech as text',
-    wcag: '4.1.2',
-    weight: 4,
-    tools: {
-      continuum: {
-        40: {
-          variable: false,
-          quality: 1,
-          what: 'captions track element has no label attribute set to a text value'
-        },
-        368: {
-          variable: false,
-          quality: 1,
-          what: 'subtitle track element has no label attribute set to a text value'
-        }
-      }
-    }
-  },
-  trackNoSource: {
-    why: 'User cannot get help reading speech as text',
-    wcag: '1.3.1',
-    weight: 4,
-    tools: {
-      continuum: {
-        485: {
-          variable: false,
-          quality: 1,
-          what: 'track element has no src attribute set to a text value'
         }
       }
     }

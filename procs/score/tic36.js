@@ -1468,6 +1468,13 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 2,
     tools: {
+      aslint: {
+        'missing-href-on-a': {
+          variable: false,
+          quality: 1,
+          what: 'Link has no href attribute'
+        }
+      },
       htmlcs: {
         'AAA.4_1_2.H91.A.NoHref': {
           variable: false,
@@ -1573,6 +1580,20 @@ exports.issues = {
       }
     }
   },
+  linkExternalRisk: {
+    why: 'User may be confused by the content after following a link',
+    wcag: '2.4.4',
+    weight: 1,
+    tools: {
+      aslint: {
+        'links-language-destination': {
+          variable: false,
+          quality: 1,
+          what: 'Link destination has a named host and may be in an unexpected language'
+        }
+      }
+    }
+  },
   linksNoNav: {
     why: 'User cannot get help identifying links as a navigation tool',
     wcag: '1.3.1',
@@ -1627,7 +1648,7 @@ exports.issues = {
       }
     }
   },
-  externalLink: {
+  newTab: {
     why: 'Following a link opens a new window, possibly surprising a user',
     wcag: '3.2.5',
     weight: 1,
@@ -1990,6 +2011,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Font size is smaller than 9 pixels'
+        }
+      },
+      aslint: {
+        'minimum-font-size': {
+          variable: false,
+          quality: 1,
+          what: 'Font size is smaller than 10 pixels'
         }
       },
       testaro: {
@@ -2482,17 +2510,40 @@ exports.issues = {
       }
     }
   },
-  attributeBad: {
-    why: 'Item behaves improperly',
-    wcag: '1.3.1',
-    weight: 4,
+  dirBad: {
+    why: 'Item may behave improperly',
+    wcag: '4.1.2',
+    weight: 1,
     tools: {
+      aslint: {
+        'invalid-attribute-dir-value': {
+          variable: true,
+          quality: 1,
+          what: 'Element has a dir attribute with a value other than rtl, ltr, or auto'
+        }
+      },
       ibm: {
         Valerie_Elem_DirValid: {
           variable: false,
           quality: 1,
           what: 'dir attribute has a value other than ltr, rtl, or auto'
-        },
+        }
+      }
+    }
+  },
+  attributeBad: {
+    why: 'Item behaves improperly',
+    wcag: '1.3.1',
+    weight: 4,
+    tools: {
+      aslint: {
+        'misused-input-attribute': {
+          variable: false,
+          quality: 1,
+          what: 'Element has an attribute that is not valid for input elements'
+        }
+      },
+      ibm: {
         aria_attribute_valid: {
           variable: false,
           quality: 1,
@@ -2977,6 +3028,34 @@ exports.issues = {
       }
     }
   },
+  requirementBad: {
+    why: 'User may fail to get help determining whether a form item must be completed',
+    wcag: '1.3.5',
+    weight: 4,
+    tools: {
+      aslint: {
+        'misused-required-attribute': {
+          variable: false,
+          quality: 1,
+          what: 'Requirement status of the element is invalid'
+        }
+      }
+    }
+  },
+  requirementRedundant: {
+    why: 'Help determining whether a form item must be completed is exposed to risk of corruption',
+    wcag: '1.3.5',
+    weight: 1,
+    tools: {
+      aslint: {
+        'misused-required-attributeR': {
+          variable: false,
+          quality: 1,
+          what: 'Requirement status of the element is stated twice'
+        }
+      }
+    }
+  },
   textContrastAA: {
     why: 'Text is difficult to read',
     wcag: '1.4.3',
@@ -3357,6 +3436,13 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 1,
     tools: {
+      aslint: {
+        'label-duplicated-content-title': {
+          variable: false,
+          quality: 1,
+          what: 'Element has an accessible name identical to the value of its title attribute'
+        }
+      },
       qualWeb: {
         'QW-BP3': {
           variable: false,
@@ -3385,6 +3471,13 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 1,
     tools: {
+      aslint: {
+        'empty-title-attribute': {
+          variable: false,
+          quality: 0.5,
+          what: 'title attribute of the element is empty or only whitespace'
+        }
+      },
       htmlcs: {
         'AAA.1_3_1.H65': {
           variable: false,
@@ -3493,6 +3586,13 @@ exports.issues = {
     wcag: '4.1.1',
     weight: 3,
     tools: {
+      aslint: {
+        'elements-not-allowed-in-head': {
+          variable: false,
+          quality: 1,
+          what: 'Elements in the head are not allowed there'
+        }
+      },
       testaro: {
         'headEl': {
           variable: false,
@@ -3549,6 +3649,13 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 2,
     tools: {
+      aslint: {
+        'headings-sibling-unique': {
+          variable: false,
+          quality: 1,
+          what: 'Sibling headings have the same accessible name'
+        }
+      },
       testaro: {
         headingAmb: {
           variable: false,
@@ -3605,18 +3712,18 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 3,
     tools: {
-      alfa: {
-        r61: {
+      aslint: {
+        'h1-must-be': {
           variable: false,
           quality: 1,
-          what: 'First heading is not h1'
+          what: 'Page contains no h1 element'
         }
       },
       axe: {
         'page-has-heading-one': {
           variable: false,
           quality: 1,
-          what: 'Page contains no level-one heading'
+          what: 'Document contains no level-one heading'
         }
       },
       wave: {
@@ -3624,6 +3731,20 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Missing first level heading'
+        }
+      }
+    }
+  },
+  h1Not1st: {
+    why: 'User cannot understand the topic of the document',
+    wcag: '1.3.1',
+    weight: 3,
+    tools: {
+      alfa: {
+        r61: {
+          variable: false,
+          quality: 1,
+          what: 'First heading is not h1'
         }
       }
     }
@@ -3764,6 +3885,13 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 1,
     tools: {
+      aslint: {
+        'horizontal-rule': {
+          variable: false,
+          quality: 1,
+          what: 'hr element has neither a true aria-hidden attribute nor a presentation role'
+        }
+      },
       testaro: {
         hr: {
           variable: false,
@@ -4841,6 +4969,13 @@ exports.issues = {
           what: 'Text of the paragraph is all italic'
         }
       },
+      aslint: {
+        'font-style-italic': {
+          variable: false,
+          quality: 1,
+          what: 'Text longer than 80 characters has an italic font style'
+        }
+      },
       testaro: {
         allSlanted: {
           variable: false,
@@ -4956,6 +5091,13 @@ exports.issues = {
     wcag: '1.3.6',
     weight: 2,
     tools: {
+      aslint: {
+        'main-landmark-must-be-top-level': {
+          variable: false,
+          quality: 1,
+          what: 'Element with a main role is not at the top level'
+        }
+      },
       axe: {
         'landmark-main-is-top-level': {
           variable: false,
@@ -5027,11 +5169,18 @@ exports.issues = {
     wcag: '1.3.6',
     weight: 2,
     tools: {
+      aslint: {
+        'main-element-only-one': {
+          variable: false,
+          quality: 1,
+          what: 'Document has more than 1 main landmark'
+        }
+      },
       axe: {
         'landmark-no-duplicate-main': {
           variable: false,
           quality: 1,
-          what: 'page has more than 1 main landmark'
+          what: 'Page has more than 1 main landmark'
         }
       },
       nuVal: {
@@ -5293,6 +5442,20 @@ exports.issues = {
       }
     }
   },
+  landmarkInNav: {
+    why: 'User cannot get help on how some of the document is organized',
+    wcag: '1.3.6',
+    weight: 4,
+    tools: {
+      aslint: {
+        'navigation-landmark-restrictions': {
+          variable: false,
+          quality: 1,
+          what: 'Element with a navigation role contains a landmark other than region and search'
+        }
+      }
+    }
+  },
   regionConfusion: {
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
@@ -5440,6 +5603,13 @@ exports.issues = {
           what: 'Tab-focusable element is or has an ancestor that is aria-hidden'
         }
       },
+      aslint: {
+        'misused-aria-on-focusable-element': {
+          variable: false,
+          quality: 1,
+          what: 'Visible focusable element has a true aria-hidden attribute or a presentation role'
+        }
+      },
       axe: {
         'aria-hidden-focus': {
           variable: false,
@@ -5584,6 +5754,20 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Some content is hidden and so may not be testable for accessibility'
+        }
+      }
+    }
+  },
+  negativeIndent: {
+    why: 'Helper may hide content from the user',
+    wcag: '4.1',
+    weight: 3,
+    tools: {
+      aslint: {
+        'incorrect-technique-for-hiding-content': {
+          variable: false,
+          quality: 1,
+          what: 'Element has a text-indent style with a negative value'
         }
       }
     }
@@ -6380,6 +6564,27 @@ exports.issues = {
       }
     }
   },
+  flash: {
+    why: 'Document includes code that may not work and may jeopardize user security',
+    wcag: '4.1',
+    weight: 1,
+    tools: {
+      aslint: {
+        'flash-content': {
+          variable: false,
+          quality: 1,
+          what: 'Document contains Adobe Flash content'
+        }
+      },
+      wave: {
+        flash: {
+          variable: false,
+          quality: 1,
+          what: 'Flash content is present'
+        }
+      }
+    }
+  },
   browserSupportRisk: {
     why: 'Document may include code that the browser cannot process',
     wcag: '4.1',
@@ -6516,11 +6721,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'longdesc attribute is obsolete'
-        },
-        flash: {
-          variable: false,
-          quality: 1,
-          what: 'Flash content is present'
         }
       }
     }

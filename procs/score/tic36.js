@@ -1330,6 +1330,34 @@ exports.issues = {
       }
     }
   },
+  applicationRisk: {
+    why: 'User actions may have unexpected effects',
+    wcag: '1.3.1',
+    weight: 1,
+    tools: {
+      aslint: {
+        'role-application': {
+          variable: false,
+          quality: 1,
+          what: 'Element has an application role'
+        }
+      }
+    }
+  },
+  directionRisk: {
+    why: 'Item may behave incorrectly',
+    wcag: '1.3.2',
+    weight: 1,
+    tools: {
+      aslint: {
+        'rtl-content': {
+          variable: false,
+          quality: 1,
+          what: 'Direction specified as right to left'
+        }
+      }
+    }
+  },
   linkNoText: {
     why: 'User cannot get help understanding what a link points to',
     wcag: '2.4.4',
@@ -1459,6 +1487,25 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Definition for an abbreviation not provided with an abbr element'
+        }
+      }
+    }
+  },
+  destinationNotURL: {
+    why: 'Helper cannot properly explain a link to a user',
+    wcag: '1.3.1',
+    weight: 1,
+    tools: {
+      aslint: {
+        'unclear-anchor-uri': {
+          variable: false,
+          quality: 1,
+          what: 'Link destination is #, a script, or empty'
+        },
+        'unclear-uri-on-a': {
+          variable: false,
+          quality: 1,
+          what: 'Link destination is #, a script, or empty'
         }
       }
     }
@@ -4913,6 +4960,13 @@ exports.issues = {
           what: 'Element in the sequential focus order has no visible focus'
         }
       },
+      aslint: {
+        'outline-zero': {
+          variable: false,
+          quality: 1,
+          what: 'Element may get invisibly focused because its outline has no thickness'
+        }
+      },
       qualWeb: {
         'QW-ACT-R62': {
           variable: false,
@@ -6599,7 +6653,81 @@ exports.issues = {
       }
     }
   },
-  obsolete: {
+  attributeObsolete: {
+    why: 'Document includes obsolete code that the browser may fail to process',
+    wcag: '4.1',
+    weight: 3,
+    tools: {
+      aslint: {
+        'obsolete-html-attributes': {
+          variable: false,
+          quality: 1,
+          what: 'Element has an obsolete attribute'
+        }
+      },
+      htmlcs: {
+        'AAA.1_3_1.H49.AlignAttr': {
+          variable: false,
+          quality: 1,
+          what: 'align attribute is obsolete'
+        },
+        'AAA.1_3_1.H63.2': {
+          variable: false,
+          quality: 1,
+          what: 'scope attribute on a td element, instead of a th element, is obsolete'
+        }
+      },
+      ibm: {
+        aria_attribute_deprecated: {
+          variable: false,
+          quality: 1,
+          what: 'ARIA role or attribute is deprecated'
+        }
+      },
+      nuVal: {
+        'The border attribute is obsolete. Consider specifying img { border: 0; } in CSS instead.': {
+          variable: false,
+          quality: 1,
+          what: 'border element is obsolete'
+        },
+        '^The .+ attribute on the .+ element is obsolete.+$': {
+          variable: true,
+          quality: 1,
+          what: 'Attribute is obsolete on its element'
+        },
+        'The only allowed value for the charset attribute for the script element is utf-8. (But the attribute is not needed and should be omitted altogether.)': {
+          variable: false,
+          quality: 1,
+          what: 'charset attribute has a value other than utf-8 and is unnecessary'
+        },
+        'The name attribute is obsolete. Consider putting an id attribute on the nearest container instead.': {
+          variable: false,
+          quality: 1,
+          what: 'name attribute is obsolete'
+        },
+        '^Potentially bad value .+ for attribute .+ on element .+: The language subtag .+ is deprecated.+$': {
+          variable: true,
+          quality: 1,
+          what: 'Attribute value is a deprecated language subtag'
+        }
+      },
+      testaro: {
+        linkOldAtt: {
+          variable: false,
+          quality: 1,
+          what: 'Element has a deprecated attribute'
+        }
+      },
+      wave: {
+        longdesc: {
+          variable: false,
+          quality: 1,
+          what: 'longdesc attribute is obsolete'
+        }
+      }
+    }
+  },
+  elementObsolete: {
     why: 'Document includes obsolete code that the browser may fail to process',
     wcag: '4.1',
     weight: 3,
@@ -6611,21 +6739,18 @@ exports.issues = {
           what: 'Element is obsolete or deprecated'
         }
       },
-      htmlcs: {
-        'AAA.1_3_1.H49.AlignAttr': {
+      aslint: {
+        'obsolete-html-elements': {
           variable: false,
           quality: 1,
-          what: 'align attribute is obsolete'
-        },
+          what: 'Element is obsolete'
+        }
+      },
+      htmlcs: {
         'AAA.1_3_1.H49.Center': {
           variable: false,
           quality: 1,
           what: 'center element is obsolete'
-        },
-        'AAA.1_3_1.H63.2': {
-          variable: false,
-          quality: 1,
-          what: 'scope attribute on a td element, instead of a th element, is obsolete'
         },
         'AAA.1_3_1.H49.Font': {
           variable: false,
@@ -6633,12 +6758,38 @@ exports.issues = {
           what: 'font element is obsolete'
         }
       },
-      ibm: {
-        aria_attribute_deprecated: {
+      nuVal: {
+        'The center element is obsolete. Use CSS instead.': {
           variable: false,
           quality: 1,
-          what: 'ARIA role or attribute is deprecated'
+          what: 'center element is obsolete'
         },
+        'The font element is obsolete. Use CSS instead.': {
+          variable: false,
+          quality: 1,
+          what: 'font element is obsolete'
+        },
+        'Using the meta element to specify the document-wide default language is obsolete. Consider specifying the language on the root element instead.': {
+          variable: false,
+          quality: 1,
+          what: 'Language declaration in a meta element is obsolete'
+        }
+      },
+      qualWeb: {
+        'QW-BP10': {
+          variable: false,
+          quality: 1,
+          what: 'HTML element is used to control the visual presentation of content'
+        }
+      }
+    }
+  },
+  obsolete: {
+    why: 'Document contains invalid code',
+    wcag: '4.1',
+    weight: 3,
+    tools: {
+      ibm: {
         combobox_version: {
           variable: false,
           quality: 1,
@@ -6656,71 +6807,10 @@ exports.issues = {
           quality: 1,
           what: 'DOCTYPE is obsolete instead of html'
         },
-        'The border attribute is obsolete. Consider specifying img { border: 0; } in CSS instead.': {
-          variable: false,
-          quality: 1,
-          what: 'border element is obsolete'
-        },
-        'The center element is obsolete. Use CSS instead.': {
-          variable: false,
-          quality: 1,
-          what: 'center element is obsolete'
-        },
-        'The font element is obsolete. Use CSS instead.': {
-          variable: false,
-          quality: 1,
-          what: 'font element is obsolete'
-        },
-        '^The .+ attribute on the .+ element is obsolete.+$': {
-          variable: true,
-          quality: 1,
-          what: 'Attribute is obsolete on its element'
-        },
-        'The only allowed value for the charset attribute for the script element is utf-8. (But the attribute is not needed and should be omitted altogether.)': {
-          variable: false,
-          quality: 1,
-          what: 'charset attribute has a value other than utf-8 and is unnecessary'
-        },
-        'Using the meta element to specify the document-wide default language is obsolete. Consider specifying the language on the root element instead.': {
-          variable: false,
-          quality: 1,
-          what: 'Language declaration in a meta element is obsolete'
-        },
-        'The name attribute is obsolete. Consider putting an id attribute on the nearest container instead.': {
-          variable: false,
-          quality: 1,
-          what: 'name attribute is obsolete'
-        },
         '^CSS: Deprecated media feature .+$': {
           variable: true,
           quality: 1,
           what: 'Media feature is deprecated'
-        },
-        '^Potentially bad value .+ for attribute .+ on element .+: The language subtag .+ is deprecated.+$': {
-          variable: true,
-          quality: 1,
-          what: 'Attribute value is a deprecated language subtag'
-        }
-      },
-      qualWeb: {
-        'QW-BP10': {
-          variable: false,
-          quality: 1,
-          what: 'HTML element is used to control the visual presentation of content'
-        }
-      },
-      testaro: {
-        linkOldAtt: {
-          variable: false,
-          quality: 1,
-          what: 'a element has a deprecated attribute'
-        }
-      },
-      wave: {
-        longdesc: {
-          variable: false,
-          quality: 1,
-          what: 'longdesc attribute is obsolete'
         }
       }
     }
@@ -7176,6 +7266,20 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Page includes a Unicode PUA character'
+        }
+      }
+    }
+  },
+  overlay: {
+    why: 'Help for the user may be complex, inconsistent, and ineffective',
+    wcag: '4.1',
+    weight: 1,
+    tools: {
+      aslint: {
+        'overlay': {
+          variable: false,
+          quality: 1,
+          what: 'Document contains a commercial overlay modifier that may fail or invalidate test results'
         }
       }
     }

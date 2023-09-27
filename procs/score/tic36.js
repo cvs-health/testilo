@@ -2414,6 +2414,13 @@ exports.issues = {
           what: 'No token in the value of the role attribute is valid'
         }
       },
+      aslint: {
+        'unsupported-role-on-element': {
+          variable: false,
+          quality: 1,
+          what: 'Element has a role that is not valid for it'
+        }
+      },
       axe: {
         'aria-roles': {
           variable: false,

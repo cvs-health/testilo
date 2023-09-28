@@ -412,6 +412,13 @@ exports.issues = {
           what: 'Image has no accessible name'
         }
       },
+      aslint: {
+        'missing-alt-attribute': {
+          variable: false,
+          quality: 1,
+          what: 'Image has no alt attribute'
+        }
+      },
       axe: {
         'image-alt': {
           variable: false,
@@ -1023,18 +1030,25 @@ exports.issues = {
     wcag: '1.1.1',
     weight: 4,
     tools: {
+      aslint: {
+        'a-area-missing-alt': {
+          variable: false,
+          quality: 1,
+          what: 'Text alternative of the element is missing or empty'
+        }
+      },
       axe: {
         'area-alt': {
           variable: false,
           quality: 1,
-          what: 'Active area element has no text alternative'
+          what: 'Element is an active area element but has no text alternative'
         }
       },
       htmlcs: {
         'AAA.1_1_1.H24': {
           variable: false,
           quality: 1,
-          what: 'Area element in an image map has no alt attribute'
+          what: 'Element is an area in an image map but has no alt attribute'
         }
       },
       ibm: {
@@ -1046,7 +1060,7 @@ exports.issues = {
         'WCAG20_Area_HasAlt': {
           variable: false,
           quality: 1,
-          what: 'Area element in an image map has no text alternative'
+          what: 'Element is an area in an image map but has no text alternative'
         }
       },
       qualWeb: {
@@ -1681,6 +1695,13 @@ exports.issues = {
     wcag: '2.4.4',
     weight: 2,
     tools: {
+      aslint: {
+        'img-adjacent-duplicate-text-link': {
+          variable: false,
+          quality: 1,
+          what: 'Link and an adjacent link are logically 1 link but are not combined'
+        }
+      },
       qualWeb: {
         'QW-WCAG-T10': {
           variable: false,
@@ -1968,7 +1989,14 @@ exports.issues = {
         r43: {
           variable: false,
           quality: 1,
-          what: 'SVG image element has no accessible name'
+          what: 'Element has no accessible name'
+        }
+      },
+      aslint: {
+        'accessible-svgN': {
+          variable: false,
+          quality: 1,
+          what: 'Element has no title, description, text, attribute label, or role description'
         }
       },
       axe: {
@@ -3464,6 +3492,13 @@ exports.issues = {
     wcag: '1.1.1',
     weight: 1,
     tools: {
+      aslint: {
+        'img-alt-duplicate-text-link': {
+          variable: false,
+          quality: 1,
+          what: 'Text alternative of the image duplicates the text of the enclosing link'
+        }
+      },
       axe: {
         'image-redundant-alt': {
           variable: false,
@@ -7322,6 +7357,20 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Page includes a Unicode PUA character'
+        }
+      }
+    }
+  },
+  captcha2: {
+    why: 'User is prevented from consuming the document',
+    wcag: '1.1.1',
+    weight: 1,
+    tools: {
+      aslint: {
+        'captcha-google': {
+          variable: false,
+          quality: 1,
+          what: 'Document employs Google CAPTCHA version 2'
         }
       }
     }

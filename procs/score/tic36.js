@@ -357,26 +357,33 @@ exports.issues = {
         r28: {
           variable: false,
           quality: 1,
-          what: 'image input element has no accessible name'
+          what: 'Element is an image input but has no accessible name'
+        }
+      },
+      aslint: {
+        'input-image-missing-alt': {
+          variable: false,
+          quality: 1,
+          what: 'Element is an image input but its text alternative is missing or empty'
         }
       },
       htmlcs: {
         'AAA.4_1_2.H91.InputImage.Name': {
           variable: false,
           quality: 1,
-          what: 'image input has no accessible name'
+          what: 'Element is an image input but has no accessible name'
         }
       },
       ibm: {
         WCAG20_Input_ExplicitLabelImage: {
           variable: false,
           quality: 1,
-          what: 'input element of type image has no text alternative'
+          what: 'Element is an input of type image but has no text alternative'
         },
         imagebutton_alt_exists: {
           variable: false,
           quality: 1,
-          what: 'input element of type image has no text alternative'
+          what: 'Element is an input of type image but has no text alternative'
         }
       }
     }
@@ -524,6 +531,20 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Image text alternative includes a filename'
+        }
+      }
+    }
+  },
+  imageTextRisk: {
+    why: 'Helper may describe an image inadequately',
+    wcag: '1.1.1',
+    weight: 1,
+    tools: {
+      aslint: {
+        'general-alt': {
+          variable: false,
+          quality: 1,
+          what: 'Image may be better described by a revised text alternative and an aria-label attribute'
         }
       }
     }
@@ -997,11 +1018,37 @@ exports.issues = {
       }
     }
   },
+  objectTextRisk: {
+    why: 'Helper may explain a custom item inadequately',
+    wcag: '1.1.1',
+    weight: 1,
+    tools: {
+      aslint: {
+        'object-general-alt': {
+          variable: false,
+          quality: 1,
+          what: 'Text of the object may better explain it if revised'
+        }
+      }
+    }
+  },
   appletNoText: {
     why: 'User cannot get help on how to use a custom item',
     wcag: '1.1.1',
     weight: 4,
     tools: {
+      aslint: {
+        'applet-missing-alt': {
+          variable: false,
+          quality: 1,
+          what: 'Text alternative of the applet is missing or empty'
+        },
+        'applet-missing-body': {
+          variable: false,
+          quality: 1,
+          what: 'Content of the applet is missing or empty'
+        }
+      },
       qualWeb: {
         'QW-WCAG-T11': {
           variable: false,
@@ -1403,6 +1450,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Link has no accessible name'
+        }
+      },
+      aslint: {
+        'img-empty-alt-in-link': {
+          variable: false,
+          quality: 1,
+          what: 'Element is an image in a link but has no text alternative'
         }
       },
       axe: {
@@ -3532,11 +3586,18 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 1,
     tools: {
+      aslint: {
+        'img-empty-alt-with-empty-title': {
+          variable: false,
+          quality: 1,
+          what: 'Element has an empty alt attribute but a nonempty title attribute'
+        }
+      },
       htmlcs: {
         'AAA.1_1_1.H67.1': {
           variable: false,
           quality: 1,
-          what: 'img element has an empty alt attribute but has a nonempty title attribute'
+          what: 'Element has an empty alt attribute but has a nonempty title attribute'
         }
       },
       ibm: {
@@ -6353,7 +6414,7 @@ exports.issues = {
       }
     }
   },
-  audioContentNoText: {
+  audioNoText: {
     why: 'User cannot get help reading speech as text',
     wcag: '1.2.1',
     weight: 4,
@@ -6394,7 +6455,7 @@ exports.issues = {
       }
     }
   },
-  videoContentNoText: {
+  videoNoText: {
     why: 'User cannot get help reading video content as text',
     wcag: '1.2.2',
     weight: 4,
@@ -6440,7 +6501,7 @@ exports.issues = {
       }
     }
   },
-  videoContentNoTranscript: {
+  videoNoTranscript: {
     why: 'User cannot get help reading video content as text',
     wcag: '1.2.2',
     weight: 4,

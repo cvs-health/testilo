@@ -511,6 +511,13 @@ exports.issues = {
           quality: 1,
           what: 'Image text alternative is the filename instead'
         }
+      },
+      aslint: {
+        'alt-text-include-filename': {
+          variable: false,
+          quality: 1,
+          what: 'Image text alternative includes a filename'
+        }
       }
     }
   },
@@ -679,6 +686,20 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Image marked as decorative may be informative'
+        }
+      }
+    }
+  },
+  backgroundImageRisk: {
+    why: 'Helper ignores an image that may be informative',
+    wcag: '1.1.1',
+    weight: 1,
+    tools: {
+      aslint: {
+        'css-images-convey-information': {
+          variable: false,
+          quality: 1,
+          what: 'Background image may be informative'
         }
       }
     }
@@ -1954,14 +1975,28 @@ exports.issues = {
         'svg-img-alt': {
           variable: false,
           quality: 1,
-          what: 'svg element with an img role has no text alternative'
+          what: 'Element with an img role has no text alternative'
         }
       },
       qualWeb: {
         'QW-ACT-R21': {
           variable: false,
           quality: 1,
-          what: 'svg element with an explicit role has no accessible name'
+          what: 'Element with an explicit role has no accessible name'
+        }
+      }
+    }
+  },
+  svgLabelID: {
+    why: 'User cannot get help understanding an image',
+    wcag: '1.1.1',
+    weight: 4,
+    tools: {
+      aslint: {
+        'accessible-svgI': {
+          variable: false,
+          quality: 1,
+          what: 'Element references a nonexisting element as its label'
         }
       }
     }
@@ -6255,7 +6290,7 @@ exports.issues = {
       }
     }
   },
-  tabIndexBad: {
+  tabIndexEmpty: {
     why: 'No-mouse user cannot follow the intended navigation sequence',
     wcag: '1.3.1',
     weight: 4,
@@ -6265,6 +6300,20 @@ exports.issues = {
           variable: true,
           quality: 1,
           what: 'tabindex attribute has an empty value instead of an integer'
+        }
+      }
+    }
+  },
+  tabIndexInt: {
+    why: 'No-mouse user cannot follow the intended navigation sequence',
+    wcag: '1.3.1',
+    weight: 4,
+    tools: {
+      aslint: {
+        'accessible-svgT': {
+          variable: true,
+          quality: 1,
+          what: 'Element has a non-integer tabindex attribute'
         }
       }
     }

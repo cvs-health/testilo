@@ -1032,6 +1032,20 @@ exports.issues = {
       }
     }
   },
+  objectAudioRisk: {
+    why: 'User may get inadequate help consuming audio content',
+    wcag: '1.1.1',
+    weight: 1,
+    tools: {
+      aslint: {
+        'audio-alternative': {
+          variable: false,
+          quality: 1,
+          what: 'Element is inferior to an audio element if it plays audio'
+        }
+      }
+    }
+  },
   appletNoText: {
     why: 'User cannot get help on how to use a custom item',
     wcag: '1.1.1',
@@ -2047,7 +2061,7 @@ exports.issues = {
         }
       },
       aslint: {
-        'accessible-svgN': {
+        'accessible-svg': {
           variable: false,
           quality: 1,
           what: 'Element has no title, description, text, attribute label, or role description'
@@ -6419,38 +6433,59 @@ exports.issues = {
     wcag: '1.2.1',
     weight: 4,
     tools: {
+      aslint: {
+        'audio-alternativeT': {
+          variable: false,
+          quality: 1,
+          what: 'Element contains no track element'
+        }
+      },
       axe: {
         'audio-caption': {
           variable: false,
           quality: 1,
-          what: 'audio element has no captions track'
+          what: 'Element has no captions track'
         }
       },
       qualWeb: {
         'QW-ACT-R26': {
           variable: false,
           quality: 1,
-          what: 'video element auditory content has no accessible alternative'
+          what: 'Auditory content of the element has no accessible alternative'
         },
         'QW-ACT-R29': {
           variable: false,
           quality: 1,
-          what: 'audio element content has no text alternative'
+          what: 'Content of the element has no text alternative'
         },
         'QW-ACT-R58': {
           variable: false,
           quality: 1,
-          what: 'audio element content has no transcript'
+          what: 'Content of the element has no transcript'
         },
         'QW-ACT-R59': {
           variable: false,
           quality: 1,
-          what: 'audio element content is not a media alternative for text'
+          what: 'Element content is not a media alternative for text'
         },
         'QW-ACT-R60': {
           variable: false,
           quality: 1,
-          what: 'video element auditory content has no captions'
+          what: 'Auditory content of the element has no captions'
+        }
+      }
+    }
+  },
+  audioTextRisk: {
+    why: 'User may be unable to get help reading speech as text',
+    wcag: '1.2.1',
+    weight: 1,
+    tools: {
+      aslint: {
+        'audio-alternativeA': {
+          variable: false,
+          quality: 1,
+          what: 'Referenced description or another text alternative may be missing'
         }
       }
     }
@@ -6464,7 +6499,7 @@ exports.issues = {
         'video-caption': {
           variable: false,
           quality: 1,
-          what: 'video element has no captions'
+          what: 'Element has no captions'
         }
       },
       qualWeb: {
@@ -6896,6 +6931,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element is obsolete'
+        },
+        'audio-alternativeB': {
+          variable: false,
+          quality: 1,
+          what: 'Element is obsolete and inferior to an audio element'
         }
       },
       htmlcs: {

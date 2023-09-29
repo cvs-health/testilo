@@ -3841,11 +3841,11 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 2,
     tools: {
-      htmlcs: {
-        'AAA.1_3_1_AAA.G141': {
+      aslint: {
+        'headings-hierarchy': {
           variable: false,
           quality: 1,
-          what: 'Heading level is incorrect'
+          what: 'Heading level is illogical in its context'
         }
       },
       htmlcs: {
@@ -4616,6 +4616,18 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 1,
     tools: {
+      aslint: {
+        'table-missing-descriptionC': {
+          variable: false,
+          quality: 1,
+          what: 'Element contains no caption element'
+        },
+        'table-missing-descriptionE': {
+          variable: false,
+          quality: 1,
+          what: 'Element contains a caption element, but it is empty'
+        }
+      },
       axe: {
         'table-fake-caption': {
           variable: false,
@@ -4627,7 +4639,7 @@ exports.issues = {
         'AAA.1_3_1.H39.3.NoCaption': {
           variable: false,
           quality: 1,
-          what: 'Table has no caption element'
+          what: 'Element contains no caption element'
         }
       },
       qualWeb: {
@@ -4649,6 +4661,72 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'caption element is not the first child of a table element'
+        }
+      }
+    }
+  },
+  tableCapSum: {
+    why: 'Helper informs a user repetitively about the topic of a table',
+    wcag: '1.3.1',
+    weight: 2,
+    tools: {
+      aslint: {
+        'table-caption-summary-identical': {
+          variable: false,
+          quality: 1,
+          what: 'Element has a summary attribute identical to its caption element'
+        }
+      }
+    }
+  },
+  tableSum: {
+    why: 'User cannot get help summarizing a table',
+    wcag: '1.3.1',
+    weight: 4,
+    tools: {
+      aslint: {
+        'table-missing-descriptionS': {
+          variable: false,
+          quality: 1,
+          what: 'Element has a summary attribute, but it is empty'
+        }
+      }
+    }
+  },
+  tablelabelID: {
+    why: 'User cannot get help on the topic of a table',
+    wcag: '1.3.1',
+    weight: 4,
+    tools: {
+      aslint: {
+        'table-missing-descriptionLM': {
+          variable: false,
+          quality: 1,
+          what: 'Element has a broken aria-labelledby ID'
+        },
+        'table-missing-descriptionLE': {
+          variable: false,
+          quality: 1,
+          what: 'Element has an aria-labelledby attribute, but it is empty'
+        }
+      }
+    }
+  },
+  tableDescriptionID: {
+    why: 'User cannot get help on the topic of a table',
+    wcag: '1.3.1',
+    weight: 4,
+    tools: {
+      aslint: {
+        'table-missing-descriptionDM': {
+          variable: false,
+          quality: 1,
+          what: 'Element has a broken aria-describedby ID'
+        },
+        'table-missing-descriptionDE': {
+          variable: false,
+          quality: 1,
+          what: 'Element has an aria-describedby attribute, but it is empty'
         }
       }
     }

@@ -1310,6 +1310,13 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 4,
     tools: {
+      aslint: {
+        'aria-describedby-association': {
+          variable: false,
+          quality: 1,
+          what: 'aria-describedby attribute references a missing or empty element'
+        }
+      },
       nuVal: {
         'The aria-describedby attribute must point to an element in the same document.': {
           variable: false,
@@ -3834,6 +3841,13 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 2,
     tools: {
+      htmlcs: {
+        'AAA.1_3_1_AAA.G141': {
+          variable: false,
+          quality: 1,
+          what: 'Heading level is incorrect'
+        }
+      },
       htmlcs: {
         'AAA.1_3_1_AAA.G141': {
           variable: false,
@@ -6428,6 +6442,20 @@ exports.issues = {
       }
     }
   },
+  avNoText: {
+    why: 'User cannot get help reading speech as text',
+    wcag: '1.2.1',
+    weight: 4,
+    tools: {
+      aslint: {
+        'audio-video-captions': {
+          variable: false,
+          quality: 1,
+          what: 'Element is audio or video but contains no caption track element'
+        }
+      }
+    }
+  },
   audioNoText: {
     why: 'User cannot get help reading speech as text',
     wcag: '1.2.1',
@@ -6597,12 +6625,26 @@ exports.issues = {
         'QW-ACT-R54': {
           variable: false,
           quality: 1,
-          what: 'video element visual-only content has no audio track alternative'
+          what: 'Visual-only content of the element has no audio track alternative'
         }
       }
     }
   },
-  notKeyboardScrollable: {
+  videoAlternative: {
+    why: 'User cannot get help consuming a video recording as text or speech',
+    wcag: '1.2.1',
+    weight: 4,
+    tools: {
+      aslint: {
+        'video-audio-descriptions': {
+          variable: false,
+          quality: 1,
+          what: 'Element has neither an audio source nor a description track'
+        }
+      }
+    }
+  },
+  keyboardScroll: {
     why: 'No-mouse user cannot scroll an item',
     wcag: '2.1.1',
     weight: 4,

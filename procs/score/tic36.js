@@ -24,6 +24,18 @@ exports.issues = {
     wcag: '',
     weight: 0,
     tools: {
+      aslint: {
+        'meaningful-content-sequence': {
+          variable: false,
+          quality: 0,
+          what: 'The content sequence may fail to be meaningful'
+        },
+        'flickering': {
+          variable: false,
+          quality: 0,
+          what: 'Excessive flashing may exist'
+        }
+      },
       nuVal: {
         'Element mediaelementwrapper not allowed as child of element div in this context. (Suppressing further errors from this subtree.)': {
           variable: false,
@@ -34,12 +46,12 @@ exports.issues = {
       qualWeb: {
         'QW-ACT-R52': {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'video element visual-only content has no description track (description tracks and this ACT rule have been deprecated)'
         },
         'QW-ACT-R57': {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'video element visual content has no description track (description tracks and this ACT rule have been deprecated)'
         },
         'QW-WCAG-T4': {
@@ -49,12 +61,12 @@ exports.issues = {
         },
         'QW-WCAG-T15': {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'link element may be used for navigation but not in the head'
         },
         'QW-WCAG-T20': {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'Link text is not supplemented with a title attribute'
         }
       }
@@ -545,6 +557,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Image may be better described by a revised text alternative and an aria-label attribute'
+        },
+        'alt-color-convey-information': {
+          variable: false,
+          quality: 1,
+          what: 'Text alternative may fail to give information provided by colors'
         }
       }
     }
@@ -1140,6 +1157,20 @@ exports.issues = {
       }
     }
   },
+  customKeyboardRisk: {
+    why: 'Custom item may prevent a no-mouse user from operating it',
+    wcag: '2.1.1',
+    weight: 1,
+    tools: {
+      htmlcs: {
+        'link-button-space-key': {
+          variable: false,
+          quality: 1,
+          what: 'Element has a button role but may fail to be keyboard-operable'
+        }
+      }
+    }
+  },
   objectBlurKeyboardRisk: {
     why: 'Custom item may trap a no-mouse user',
     wcag: '2.1.1',
@@ -1207,6 +1238,13 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 4,
     tools: {
+      aslint: {
+        'broken-same-page-link': {
+          variable: false,
+          quality: 1,
+          what: 'Same-page destination of the link does not exist'
+        }
+      },
       htmlcs: {
         'AAA.2_4_1.G1,G123,G124.NoSuchID': {
           variable: false,
@@ -1228,6 +1266,13 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 3,
     tools: {
+      aslint: {
+        'label-inappropriate-associationN': {
+          variable: false,
+          quality: 1,
+          what: 'Element referenced by the for attribute is not a form control'
+        }
+      },
       htmlcs: {
         'AAA.1_3_1.H44.NotFormControl': {
           variable: false,
@@ -1338,6 +1383,13 @@ exports.issues = {
     wcag: '3.3.2',
     weight: 1,
     tools: {
+      aslint: {
+        'incorrect-label-placement': {
+          variable: false,
+          quality: 1,
+          what: 'label element precedes the labeled radio button or checkbox'
+        }
+      },
       ibm: {
         WCAG20_Input_LabelBefore: {
           variable: false,
@@ -1374,6 +1426,13 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 4,
     tools: {
+      aslint: {
+        'label-inappropriate-associationM': {
+          variable: false,
+          quality: 1,
+          what: 'Element referenced by the for attribute is missing'
+        }
+      },
       htmlcs: {
         'AAA.1_3_1.H44.NonExistentFragment': {
           variable: false,
@@ -2134,7 +2193,14 @@ exports.issues = {
         r47: {
           variable: false,
           quality: 1,
-          what: 'meta element restricts zooming'
+          what: 'Element restricts zooming'
+        }
+      },
+      aslint: {
+        'zoom-disabled': {
+          variable: false,
+          quality: 1,
+          what: 'Element specifies a minimum or maximum scale or prohibits zooming'
         }
       },
       axe: {
@@ -3260,6 +3326,23 @@ exports.issues = {
           what: 'Text outside widget has subminimum contrast'
         }
       },
+      aslint: {
+        'color-contrast-aa': {
+          variable: false,
+          quality: 1,
+          what: 'Text has contrast less than 4.5:1'
+        },
+        'color-contrast-state-pseudo-classes-abstract3': {
+          variable: false,
+          quality: 1,
+          what: 'Text has contrast less than 3:1'
+        },
+        'color-contrast-state-pseudo-classes-abstract4': {
+          variable: false,
+          quality: 1,
+          what: 'Text has contrast less than 4.5:1'
+        }
+      },
       axe: {
         'color-contrast': {
           variable: false,
@@ -3326,6 +3409,20 @@ exports.issues = {
       }
     }
   },
+  colorNamedRisk: {
+    why: 'Content is impossible to perceive under some conditions',
+    wcag: '1.4.1',
+    weight: 1,
+    tools: {
+      qualWeb: {
+        'text-color-convey-information': {
+          variable: false,
+          quality: 1,
+          what: 'Text naming a color may require the ability to distinguish colors'
+        }
+      }
+    }
+  },
   contrastAAA: {
     why: 'Text is difficult to read',
     wcag: '1.4.6',
@@ -3336,6 +3433,18 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Text contrast less than AAA requires'
+        }
+      },
+      aslint: {
+        'color-contrast-aaa4': {
+          variable: false,
+          quality: 1,
+          what: 'Text has contrast less than 4.5:1'
+        },
+        'color-contrast-aaa7': {
+          variable: false,
+          quality: 1,
+          what: 'Text has contrast less than 7:1'
         }
       },
       axe: {
@@ -3371,6 +3480,23 @@ exports.issues = {
     wcag: '1.4.3',
     weight: 1,
     tools: {
+      aslint: {
+        'color-contrast-state-pseudo-classes-abstractF': {
+          variable: false,
+          quality: 1,
+          what: 'Fixed position of the element prevents contrast measurement'
+        },
+        'color-contrast-state-pseudo-classes-abstractB': {
+          variable: false,
+          quality: 1,
+          what: 'Transparent background color of the element prevents contrast measurement'
+        },
+        'color-contrast-aaaB': {
+          variable: false,
+          quality: 1,
+          what: 'Transparent background color of the element prevents contrast measurement'
+        }
+      },
       htmlcs: {
         'AAA.1_4_3_F24.F24.BGColour': {
           variable: false,
@@ -3726,6 +3852,27 @@ exports.issues = {
       }
     }
   },
+  pageTitleBad: {
+    why: 'Browser processes the document improperly',
+    wcag: '1.3.1',
+    weight: 4,
+    tools: {
+      aslint: {
+        'page-titleU': {
+          variable: false,
+          quality: 1,
+          what: 'Page title does not identify the contents or purpose of the page'
+        }
+      },
+      wave: {
+        title_invalid: {
+          variable: false,
+          quality: 1,
+          what: 'Missing or uninformative page title'
+        }
+      }
+    }
+  },
   pageTitle: {
     why: 'User is not informed of the topic of the document',
     wcag: '2.4.2',
@@ -3736,6 +3883,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Document has no valid title element'
+        }
+      },
+      aslint: {
+        'page-titleN': {
+          variable: false,
+          quality: 1,
+          what: 'Page title is missing or empty'
         }
       },
       axe: {
@@ -3776,13 +3930,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'HTML page has no title'
-        }
-      },
-      wave: {
-        title_invalid: {
-          variable: false,
-          quality: 1,
-          what: 'Missing or uninformative page title'
         }
       }
     }
@@ -3878,13 +4025,20 @@ exports.issues = {
       }
     }
   },
-  noHeading: {
+  headingNone: {
     why: 'User cannot survey parts of the document',
     wcag: '1.3.1',
     weight: 3,
     tools: {
       alfa: {
         r59: {
+          variable: false,
+          quality: 1,
+          what: 'Document has no headings'
+        }
+      },
+      aslint: {
+        'no-headings': {
           variable: false,
           quality: 1,
           what: 'Document has no headings'
@@ -4449,6 +4603,13 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 1,
     tools: {
+      aslint: {
+        'group-elements-name-attribute': {
+          variable: false,
+          quality: 1,
+          what: 'Element is an input with a name attribute but has no fieldset parent'
+        }
+      },
       htmlcs: {
         'AAA.1_3_1.H71.SameName': {
           variable: false,
@@ -4477,11 +4638,18 @@ exports.issues = {
     wcag: '4.1.2',
     weight: 2,
     tools: {
+      aslint: {
+        'fieldset-no-legend': {
+          variable: false,
+          quality: 1,
+          what: 'First child element of the element is not a legend'
+        }
+      },
       htmlcs: {
         'AAA.1_3_1.H71.NoLegend': {
           variable: false,
           quality: 1,
-          what: 'fieldset has no legend element'
+          what: 'Element has no legend element'
         }
       },
       ibm: {
@@ -4493,7 +4661,7 @@ exports.issues = {
         fieldset_legend_valid: {
           variable: false,
           quality: 1,
-          what: 'fieldset element does not have a legend element'
+          what: 'Element does not have a legend element'
         }
       },
       qualWeb: {
@@ -4507,7 +4675,7 @@ exports.issues = {
         legend_missing: {
           variable: false,
           quality: 1,
-          what: 'fieldset has no legend element'
+          what: 'Element has no legend element'
         }
       }
     }
@@ -4802,6 +4970,13 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 3,
     tools: {
+      aslint: {
+        'table-row-and-column-headersRC': {
+          variable: false,
+          quality: 1,
+          what: 'None of the cells in the table is a header'
+        }
+      },
       ibm: {
         RPT_Table_DataHeadingsAria: {
           variable: false,
@@ -4883,7 +5058,35 @@ exports.issues = {
         th_empty: {
           variable: false,
           quality: 1,
-          what: 'th (table header) contains no text'
+          what: 'Element contains no text'
+        }
+      }
+    }
+  },
+  tableHead: {
+    why: 'User cannot get help on parts of a table',
+    wcag: '1.3.1',
+    weight: 1,
+    tools: {
+      aslint: {
+        'table-row-and-column-headersH': {
+          variable: false,
+          quality: 1,
+          what: 'Element does not contain a thead element'
+        }
+      }
+    }
+  },
+  tableBody: {
+    why: 'User cannot get help on parts of a table',
+    wcag: '1.3.1',
+    weight: 1,
+    tools: {
+      aslint: {
+        'table-row-and-column-headersB': {
+          variable: false,
+          quality: 1,
+          what: 'Element does not contain a tbody element'
         }
       }
     }
@@ -5981,16 +6184,23 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 4,
     tools: {
+      aslint: {
+        'label-implicitly-associatedM': {
+          variable: false,
+          quality: 1,
+          what: 'Element contains more than 1 labelable element.'
+        }
+      },
       nuVal: {
         'The label element may contain at most one button, input, meter, output, progress, select, or textarea descendant.': {
           variable: false,
           quality: 1,
-          what: 'label element has more than 1 labelable descendant.'
+          what: 'Element has more than 1 labelable descendant.'
         },
         'label element with multiple labelable descendants.': {
           variable: false,
           quality: 1,
-          what: 'label element has multiple labelable descendants.'
+          what: 'Element has multiple labelable descendants.'
         }
       }
     }
@@ -6131,18 +6341,32 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 2,
     tools: {
-      axe: {
-        'form-field-multiple-labels': {
-          variable: false,
-          quality: 1,
-          what: 'Form field has multiple label elements'
-        }
-      },
       testaro: {
         labClash: {
           variable: false,
           quality: 1,
           what: 'Incompatible label types'
+        }
+      }
+    }
+  },
+  labelNot1: {
+    why: 'User cannot get reliable help on the topics of form items',
+    wcag: '1.3.1',
+    weight: 1,
+    tools: {
+      aslint: {
+        'duplicated-for-attribute': {
+          variable: false,
+          quality: 1,
+          what: 'More than 1 label element has the same for attribute'
+        }
+      },
+      axe: {
+        'form-field-multiple-labels': {
+          variable: false,
+          quality: 1,
+          what: 'Form field has multiple label elements'
         }
       },
       ibm: {
@@ -6171,6 +6395,18 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 3,
     tools: {
+      aslint: {
+        'empty-label-element': {
+          variable: false,
+          quality: 1,
+          what: 'Element has no content'
+        },
+        'label-implicitly-associatedW': {
+          variable: false,
+          quality: 1,
+          what: 'Element has no labeling content except whitespace'
+        }
+      },
       htmlcs: {
         'AAA.1_3_1.ARIA6': {
           variable: false,
@@ -6249,11 +6485,18 @@ exports.issues = {
           what: 'Inline link is not distinct from the surrounding text except by color'
         }
       },
+      aslint: {
+        'links-not-visually-evident-without-color-vision': {
+          variable: false,
+          quality: 1,
+          what: 'Element is a link, but its style properties do not differentiate it from its parent'
+        }
+      },
       axe: {
         'link-in-text-block': {
           variable: false,
           quality: 1,
-          what: 'Link is not distinct from surrounding text without reliance on color'
+          what: 'Element is not distinct from surrounding text without reliance on color'
         }
       },
       testaro: {
@@ -6318,6 +6561,32 @@ exports.issues = {
           quality: 1,
           what: 'Change of visible content not requested by user'
         }
+      },
+      aslint: {
+        animationM: {
+          variable: false,
+          quality: 1,
+          what: 'Animation may fail to give user a pause, stop, or hide mechanism'
+        }
+      }
+    }
+  },
+  animationLong: {
+    why: 'Motion-sensitive user may suffer harm',
+    wcag: '2.2.2',
+    weight: 3,
+    tools: {
+      aslint: {
+        animationD: {
+          variable: false,
+          quality: 1,
+          what: 'Animation lasts more than 5 seconds'
+        },
+        animationI: {
+          variable: false,
+          quality: 1,
+          what: 'Animation is repetitive'
+        }
       }
     }
   },
@@ -6326,11 +6595,18 @@ exports.issues = {
     wcag: '2.2.2',
     weight: 4,
     tools: {
+      aslint: {
+        'blink-element': {
+          variable: false,
+          quality: 1,
+          what: 'Element is blink'
+        }
+      },
       qualWeb: {
         'QW-WCAG-T13': {
           variable: false,
           quality: 1,
-          what: 'blink element used'
+          what: 'Element is blink'
         },
         'QW-WCAG-T30': {
           variable: false,
@@ -6345,18 +6621,25 @@ exports.issues = {
     wcag: '1.4.2',
     weight: 2,
     tools: {
+      aslint: {
+        'autoplay-audio-video': {
+          variable: false,
+          quality: 1,
+          what: 'Element plays automatically'
+        }
+      },
       axe: {
         'no-autoplay-audio': {
           variable: false,
           quality: 1,
-          what: 'video or audio element plays automatically'
+          what: 'Element plays automatically'
         }
       },
       qualWeb: {
         'QW-ACT-R15': {
           variable: false,
           quality: 1,
-          what: 'audio or video has audio that plays automatically'
+          what: 'Element has audio that plays automatically'
         }
       }
     }
@@ -6370,7 +6653,7 @@ exports.issues = {
         'QW-ACT-R49': {
           variable: false,
           quality: 1,
-          what: 'audio or video that plays automatically has audio lasting more than 3 seconds'
+          what: 'Element that plays automatically has audio lasting more than 3 seconds'
         }
       }
     }
@@ -6390,20 +6673,27 @@ exports.issues = {
     }
   },
   refresh: {
-    why: 'Delayed document change may surprise a user',
+    why: 'Document change may surprise a user',
     wcag: '2.2.1',
     weight: 3,
     tools: {
+      aslint: {
+        'no-meta-http-equiv-refresh': {
+          variable: false,
+          quality: 1,
+          what: 'Element forces a page reload'
+        }
+      },
       qualWeb: {
         'QW-ACT-R4': {
           variable: false,
           quality: 1,
-          what: 'meta element refreshes or redirects with delay'
+          what: 'Element refreshes or redirects with delay'
         },
         'QW-ACT-R71': {
           variable: false,
           quality: 1,
-          what: 'meta element has a refresh delay (no exception)'
+          what: 'Element has a refresh delay (no exception)'
         }
       }
     }
@@ -7551,7 +7841,7 @@ exports.issues = {
           quality: 1,
           what: 'longdesc attribute has a value that is not a URL (and is obsolete)'
         }
-      },
+      }
     }
   },
   slashParseRisk: {

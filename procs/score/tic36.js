@@ -30,10 +30,15 @@ exports.issues = {
           quality: 0,
           what: 'The content sequence may fail to be meaningful'
         },
-        'flickering': {
+        flickering: {
           variable: false,
           quality: 0,
           what: 'Excessive flashing may exist'
+        },
+        reflow: {
+          variable: false,
+          quality: 0,
+          what: 'Page may require horizontal scrolling'
         }
       },
       nuVal: {
@@ -93,13 +98,20 @@ exports.issues = {
       }
     }
   },
-  duplicateID: {
+  IDUnique: {
     why: 'User may be pointed to the wrong item',
     wcag: '4.1.1',
     weight: 4,
     tools: {
       alfa: {
         r3: {
+          variable: false,
+          quality: 1,
+          what: 'Element id attribute value is not unique'
+        }
+      },
+      aslint: {
+        'duplicated-id-attribute': {
           variable: false,
           quality: 1,
           what: 'Element id attribute value is not unique'
@@ -791,7 +803,19 @@ exports.issues = {
         r4: {
           variable: false,
           quality: 1,
-          what: 'Lang attribute missing, empty, or only whitespace'
+          what: 'lang attribute missing, empty, or only whitespace'
+        }
+      },
+      aslint: {
+        'html-lang-attrN': {
+          variable: false,
+          quality: 1,
+          what: 'lang attribute missing from the html element'
+        },
+        'html-lang-attrE': {
+          variable: false,
+          quality: 1,
+          what: 'lang attribute of the html element is empty'
         }
       },
       axe: {
@@ -858,6 +882,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'lang attribute has no valid primary language tag'
+        }
+      },
+      aslint: {
+        'html-lang-attrP': {
+          variable: false,
+          quality: 1,
+          what: 'value of the lang attribute of the html element has too many segments'
         }
       },
       axe: {
@@ -1431,6 +1462,16 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element referenced by the for attribute is missing'
+        },
+        'aria-labelledby-associationN': {
+          variable: false,
+          quality: 1,
+          what: 'Element referenced by the aria-labelledby attribute is missing'
+        },
+        'aria-labelledby-associationE': {
+          variable: false,
+          quality: 1,
+          what: 'aria-labelledby attribute refers to no element'
         }
       },
       htmlcs: {
@@ -1520,6 +1561,20 @@ exports.issues = {
       }
     }
   },
+  clickOnly: {
+    why: 'User may misunderstand how to activate a link',
+    wcag: '2.4.4',
+    weight: 1,
+    tools: {
+      aslint: {
+        'click-verb': {
+          variable: false,
+          quality: 1,
+          what: 'Mouse-specific word click is in the element text'
+        }
+      }
+    }
+  },
   linkNoText: {
     why: 'User cannot get help understanding what a link points to',
     wcag: '2.4.4',
@@ -1537,6 +1592,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element is an image in a link but has no text alternative'
+        },
+        'empty-link-element': {
+          variable: false,
+          quality: 1,
+          what: 'Element has no visible and accessible name'
         }
       },
       axe: {
@@ -1651,6 +1711,13 @@ exports.issues = {
     wcag: '3.1.4',
     weight: 4,
     tools: {
+      aslint: {
+        'title-for-abbr': {
+          variable: false,
+          quality: 1,
+          what: 'Element as an abbr but its defining title attribute is missing or empty'
+        }
+      },
       qualWeb: {
         'QW-WCAG-T7': {
           variable: false,
@@ -1761,6 +1828,13 @@ exports.issues = {
     wcag: '2.4.4',
     weight: 2,
     tools: {
+      aslint: {
+        'links-same-content-different-url': {
+          variable: false,
+          quality: 1,
+          what: 'Links with the same text content have different destination URLs'
+        }
+      },
       qualWeb: {
         'QW-ACT-R9': {
           variable: false,
@@ -1876,6 +1950,13 @@ exports.issues = {
     wcag: '3.2.5',
     weight: 1,
     tools: {
+      aslint: {
+        linkExt: {
+          variable: false,
+          quality: 1,
+          what: 'Indicator that the link opens a new window or tab may be missing'
+        }
+      },
       htmlcs: {
         'WCAG2AAA.Principle3.Guideline3_2.3_2_5.H83.3': {
           variable: false,
@@ -1911,6 +1992,20 @@ exports.issues = {
       }
     }
   },
+  preselectedOption: {
+    why: 'User may risk erroneously submitting a form',
+    wcag: '4.1.2',
+    weight: 1,
+    tools: {
+      aslint: {
+        'select-initial-option': {
+          variable: false,
+          quality: 1,
+          what: 'No option has been made the default with a selected attribute'
+        }
+      }
+    }
+  },
   buttonAlt: {
     why: 'User cannot get help explaing a button',
     wcag: '4.1.2',
@@ -1935,6 +2030,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Button has no accessible name'
+        }
+      },
+      aslint: {
+        'empty-button-description': {
+          variable: false,
+          quality: 1,
+          what: 'Button has no visible accessible name'
         }
       },
       axe: {
@@ -2168,6 +2270,13 @@ exports.issues = {
     wcag: '1.3.4',
     weight: 4,
     tools: {
+      aslint: {
+        'orientation': {
+          variable: false,
+          quality: 1,
+          what: 'CSS media query specifies an orientation'
+        }
+      },
       axe: {
         'css-orientation-lock': {
           variable: false,
@@ -2180,6 +2289,20 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Orientation of the page is restricted by a CSS transform property'
+        }
+      }
+    }
+  },
+  orientationRisk: {
+    why: 'User may need to read sideways after rotating a device',
+    wcag: '1.3.4',
+    weight: 1,
+    tools: {
+      aslint: {
+        'orientationT': {
+          variable: false,
+          quality: 1,
+          what: 'Failure to read a stylesheet prevents testing for orientation violations'
         }
       }
     }
@@ -2227,6 +2350,20 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'meta viewport prevents zoom'
+        }
+      }
+    }
+  },
+  deviceRisk: {
+    why: 'User may be unable to produce required device movement',
+    wcag: '2.5.4',
+    weight: 1,
+    tools: {
+      aslint: {
+        'motion-actuation': {
+          variable: false,
+          quality: 1,
+          what: 'Document listens for device motion or rotation'
         }
       }
     }
@@ -2554,6 +2691,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'iframe has no accessible name'
+        }
+      },
+      aslint: {
+        'title-iframe': {
+          variable: false,
+          quality: 1,
+          what: 'Element is an iframe or object but its title attribute is missing or empty'
         }
       },
       axe: {
@@ -3208,7 +3352,14 @@ exports.issues = {
         r10: {
           variable: false,
           quality: 1,
-          what: 'Autocomplete attribute has no valid value'
+          what: 'autocomplete attribute has no valid value'
+        }
+      },
+      aslint: {
+        'identify-input-purpose': {
+          variable: false,
+          quality: 1,
+          what: 'autocomplete attribute has an invalid value'
         }
       },
       axe: {
@@ -3604,6 +3755,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Heading has no non-empty accessible name'
+        }
+      },
+      aslint: {
+        'empty-heading': {
+          variable: false,
+          quality: 1,
+          what: 'Element is a heading but is empty'
         }
       },
       axe: {
@@ -4643,6 +4801,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'First child element of the element is not a legend'
+        },
+        'legend-first-child-of-fieldset': {
+          variable: false,
+          quality: 1,
+          what: 'First child element of the element is not a legend'
         }
       },
       htmlcs: {
@@ -5164,11 +5327,18 @@ exports.issues = {
     wcag: '2.4.6',
     weight: 4,
     tools: {
+      aslint: {
+        'label-visually-hidden-only': {
+          variable: false,
+          quality: 1,
+          what: 'Form control has a label but it is not visible'
+        }
+      },
       axe: {
         'label-title-only': {
           variable: false,
           quality: 1,
-          what: 'Form element has no visible label'
+          what: 'Form control has no visible label'
         }
       }
     }
@@ -6360,6 +6530,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'More than 1 label element has the same for attribute'
+        },
+        'missing-labelM': {
+          variable: false,
+          quality: 1,
+          what: 'More than 1 label element refers to the element'
         }
       },
       axe: {
@@ -6405,6 +6580,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element has no labeling content except whitespace'
+        },
+        'aria-labelledby-association-empty-element': {
+          variable: false,
+          quality: 1,
+          what: 'Referenced label has no content'
         }
       },
       htmlcs: {
@@ -6428,11 +6608,37 @@ exports.issues = {
       }
     }
   },
+  labelRisk: {
+    why: 'User may misunderstand a form control',
+    wcag: '3.3.2',
+    weight: 1,
+    tools: {
+      aslint: {
+        'missing-labelI': {
+          variable: false,
+          quality: 1,
+          what: 'Element has no id attribute for an explicit label to reference'
+        },
+        'missing-labelN': {
+          variable: false,
+          quality: 1,
+          what: 'Element has an id attribute but no explicit label references it'
+        }
+      }
+    }
+  },
   linkComprehensionRisk: {
     why: 'User may misunderstand what a link points to',
     wcag: '2.4.4',
     weight: 1,
     tools: {
+      aslint: {
+        'link-with-unclear-purpose': {
+          variable: false,
+          quality: 1,
+          what: 'Element is a link but has vague or generic content'
+        }
+      },
       wave: {
         link_suspicious: {
           variable: false,
@@ -6766,6 +6972,13 @@ exports.issues = {
     wcag: '2.4.3',
     weight: 1,
     tools: {
+      aslint: {
+        'positive-tabindex': {
+          variable: false,
+          quality: 1,
+          what: 'Element has a positive tabIndex value'
+        }
+      },
       axe: {
         tabindex: {
           variable: false,
@@ -6806,6 +7019,20 @@ exports.issues = {
           variable: true,
           quality: 1,
           what: 'Element has a non-integer tabindex attribute'
+        }
+      }
+    }
+  },
+  tabIndexExtra: {
+    why: 'Revision risks interfering with navigation by a no-mouse user',
+    wcag: '1.3.1',
+    weight: 1,
+    tools: {
+      aslint: {
+        'misused-tabindex-attribute': {
+          variable: true,
+          quality: 1,
+          what: 'Element has an implicit tabIndex value 0, but also has a tabindex attribute'
         }
       }
     }
@@ -7040,18 +7267,32 @@ exports.issues = {
       }
     }
   },
-  scrollRisk: {
-    why: 'User may be unable to see all of an item without scrolling in both dimensions',
+  positionSticky: {
+    why: 'User may be unable to see needed content or may be forced to scroll in both dimensions',
     wcag: '1.4.10',
     weight: 1,
     tools: {
+      aslint: {
+        'position-sticky': {
+          variable: false,
+          quality: 1,
+          what: 'Element has a sticky position'
+        }
+      },
       htmlcs: {
         'AAA.1_4_10.C32,C31,C33,C38,SCR34,G206': {
           variable: false,
           quality: 1,
           what: 'Fixed-position element may force bidirectional scrolling'
         }
-      },
+      }
+    }
+  },
+  scrollRisk: {
+    why: 'User may be unable to see all of an item without scrolling in both dimensions',
+    wcag: '1.4.10',
+    weight: 1,
+    tools: {
       qualWeb: {
         'QW-BP18': {
           variable: false,
@@ -7154,9 +7395,16 @@ exports.issues = {
   },
   submitButton: {
     why: 'User cannot easily submit a form',
-    wcag: '2.5.6',
+    wcag: '3.2.2',
     weight: 3,
     tools: {
+      aslint: {
+        'missing-submit-button': {
+          variable: false,
+          quality: 1,
+          what: 'Element is a form but contains no input or button element for submission'
+        }
+      },
       htmlcs: {
         'AAA.3_2_2.H32.2': {
           variable: false,

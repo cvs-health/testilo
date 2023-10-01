@@ -4,7 +4,8 @@
   Arguments:
     0. script
     1. batch
-    2. whether to provide test isolation (no if omitted)
+    2. requester
+    3. whether to provide test isolation (no if omitted)
 */
 
 // ########## IMPORTS
@@ -17,6 +18,7 @@ require('dotenv').config();
 const stdRequester = process.env.REQUESTER;
 // Tools that alter the page.
 const contaminantNames = new Set([
+  'alfa',
   'aslint',
   'axe',
   'htmlcs',
@@ -72,8 +74,7 @@ exports.merge = (script, batch, requester, isolate = false) => {
         act.type === 'test'
         && contaminantNames.has(act.which)
         && actIndex < acts.length - 1
-        && nextAct.type !== 'placeholder'
-        && (nextAct.type !== 'test')
+        && (nextAct.type === 'test')
       ) {
         acts[actIndex] = JSON.parse(JSON.stringify([act, lastPlaceholder]));
       }

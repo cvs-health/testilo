@@ -17,9 +17,11 @@ require('dotenv').config();
 const stdRequester = process.env.REQUESTER;
 // Tools that alter the page.
 const contaminantNames = new Set([
+  'aslint',
   'axe',
   'htmlcs',
-  'ibm'
+  'ibm',
+  'testaro'
 ]);
 
 // ########## FUNCTIONS

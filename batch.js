@@ -42,11 +42,8 @@ exports.batch = (id, what, targetList) => {
           acts: {
             main: [
               {
-                type: 'launch'
-              },
-              {
-                type: 'url',
-                which: target[2],
+                type: 'launch',
+                url: target[2],
                 what: target[1]
               }
             ]

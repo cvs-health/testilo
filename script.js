@@ -14,7 +14,7 @@ require('dotenv').config();
 // ########## VARIABLES
 
 let toolIDs = [
-  'alfa', 'axe', 'htmlcs', 'ibm', 'nuVal', 'qualWeb', 'testaro', 'wave'
+  'alfa', 'aslint', 'axe', 'htmlcs', 'ibm', 'nuVal', 'qualWeb', 'testaro', 'wave'
 ];
 
 // ########## FUNCTIONS

@@ -25,7 +25,7 @@ exports.issues = {
     weight: 0,
     tools: {
       aslint: {
-        meaningful_content_sequence: {
+        'meaningful-content-sequence': {
           variable: false,
           quality: 0,
           what: 'The content sequence may fail to be meaningful'
@@ -111,7 +111,7 @@ exports.issues = {
         }
       },
       aslint: {
-        duplicated_id_attribute: {
+        'duplicated-id-attribute': {
           variable: false,
           quality: 1,
           what: 'Element id attribute value is not unique'
@@ -385,7 +385,7 @@ exports.issues = {
         }
       },
       aslint: {
-        input_image_missing_alt: {
+        'input-image-missing-alt': {
           variable: false,
           quality: 1,
           what: 'Element is an image input but its text alternative is missing or empty'
@@ -444,7 +444,7 @@ exports.issues = {
         }
       },
       aslint: {
-        missing_alt_attribute: {
+        'missing-alt-attribute': {
           variable: false,
           quality: 1,
           what: 'Image has no alt attribute'
@@ -551,7 +551,7 @@ exports.issues = {
         }
       },
       aslint: {
-        alt_text_include_filename: {
+        'alt-text-include-filename': {
           variable: false,
           quality: 1,
           what: 'Image text alternative includes a filename'
@@ -565,29 +565,15 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        general_alt: {
+        'general-alt': {
           variable: false,
           quality: 1,
           what: 'Image may be better described by a revised text alternative and an aria-label attribute'
         },
-        alt_color_convey_information: {
+        'alt-color-convey-information': {
           variable: false,
           quality: 1,
           what: 'Text alternative may fail to give information provided by colors'
-        }
-      }
-    }
-  },
-  colorRisk: {
-    why: 'User may be unable to get help understanding document information',
-    wcag: '1.4.1',
-    weight: 1,
-    tools: {
-      aslint: {
-        text_color_convey_information: {
-          variable: false,
-          quality: 1,
-          what: 'Color may give information not given also by text'
         }
       }
     }
@@ -767,7 +753,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        css_images_convey_information: {
+        'css-images-convey-information': {
           variable: false,
           quality: 1,
           what: 'Background image may be informative'
@@ -821,12 +807,12 @@ exports.issues = {
         }
       },
       aslint: {
-        html_lang_attrN: {
+        'html-lang-attrN': {
           variable: false,
           quality: 1,
           what: 'lang attribute missing from the html element'
         },
-        html_lang_attrE: {
+        'html-lang-attrE': {
           variable: false,
           quality: 1,
           what: 'lang attribute of the html element is empty'
@@ -899,7 +885,7 @@ exports.issues = {
         }
       },
       aslint: {
-        html_lang_attrP: {
+        'html-lang-attrP': {
           variable: false,
           quality: 1,
           what: 'value of the lang attribute of the html element has too many segments'
@@ -1002,7 +988,7 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        aria_role_dialog: {
+        'aria-role-dialog': {
           variable: false,
           quality: 1,
           what: 'Element has a dialog role but has no accessible name'
@@ -1086,7 +1072,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        object_general_alt: {
+        'object-general-alt': {
           variable: false,
           quality: 1,
           what: 'Text of the object may better explain it if revised'
@@ -1100,7 +1086,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        audio_alternative: {
+        'audio-alternative': {
           variable: false,
           quality: 1,
           what: 'Element is inferior to an audio element if it plays audio'
@@ -1114,12 +1100,12 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        applet_missing_alt: {
+        'applet-missing-alt': {
           variable: false,
           quality: 1,
           what: 'Text alternative of the applet is missing or empty'
         },
-        applet_missing_body: {
+        'applet-missing-body': {
           variable: false,
           quality: 1,
           what: 'Content of the applet is missing or empty'
@@ -1154,7 +1140,7 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        a_area_missing_alt: {
+        'a-area-missing-alt': {
           variable: false,
           quality: 1,
           what: 'Text alternative of the element is missing or empty'
@@ -1284,7 +1270,7 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        broken_same_page_link: {
+        'broken-same-page-link': {
           variable: false,
           quality: 1,
           what: 'Same-page destination of the link does not exist'
@@ -1312,7 +1298,7 @@ exports.issues = {
     weight: 3,
     tools: {
       aslint: {
-        label_inappropriate_associationN: {
+        'label-inappropriate-associationN': {
           variable: false,
           quality: 1,
           what: 'Element referenced by the for attribute is not a form control'
@@ -1401,7 +1387,7 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        aria_describedby_association: {
+        'aria-describedby-association': {
           variable: false,
           quality: 1,
           what: 'aria-describedby attribute references a missing or empty element'
@@ -1429,7 +1415,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        incorrect_label_placement: {
+        'incorrect-label-placement': {
           variable: false,
           quality: 1,
           what: 'label element precedes the labeled radio button or checkbox'
@@ -1472,17 +1458,17 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        label_inappropriate_associationM: {
+        'label-inappropriate-associationM': {
           variable: false,
           quality: 1,
           what: 'Element referenced by the for attribute is missing'
         },
-        aria_labelledby_associationN: {
+        'aria-labelledby-associationN': {
           variable: false,
           quality: 1,
           what: 'Element referenced by the aria-labelledby attribute is missing'
         },
-        aria_labelledby_associationE: {
+        'aria-labelledby-associationE': {
           variable: false,
           quality: 1,
           what: 'aria-labelledby attribute refers to no element'
@@ -1553,7 +1539,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        role_application: {
+        'role-application': {
           variable: false,
           quality: 1,
           what: 'Element has an application role'
@@ -1567,7 +1553,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        rtl_content: {
+        'rtl-content': {
           variable: false,
           quality: 1,
           what: 'Direction specified as right to left'
@@ -1581,7 +1567,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        click_verb: {
+        'click-verb': {
           variable: false,
           quality: 1,
           what: 'Mouse-specific word click is in the element text'
@@ -1602,12 +1588,12 @@ exports.issues = {
         }
       },
       aslint: {
-        img_empty_alt_in_link: {
+        'img-empty-alt-in-link': {
           variable: false,
           quality: 1,
           what: 'Element is an image in a link but has no text alternative'
         },
-        empty_link_element: {
+        'empty-link-element': {
           variable: false,
           quality: 1,
           what: 'Element has no visible and accessible name'
@@ -1726,7 +1712,7 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        title_for_abbr: {
+        'title-for-abbr': {
           variable: false,
           quality: 1,
           what: 'Element as an abbr but its defining title attribute is missing or empty'
@@ -1747,12 +1733,12 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        unclear_anchor_uri: {
+        'unclear-anchor-uri': {
           variable: false,
           quality: 1,
           what: 'Link destination is #, a script, or empty'
         },
-        unclear_uri_on_a: {
+        'unclear-uri-on-a': {
           variable: false,
           quality: 1,
           what: 'Link destination is #, a script, or empty'
@@ -1766,7 +1752,7 @@ exports.issues = {
     weight: 2,
     tools: {
       aslint: {
-        missing_href_on_a: {
+        'missing-href-on-a': {
           variable: false,
           quality: 1,
           what: 'Link has no href attribute'
@@ -1801,7 +1787,7 @@ exports.issues = {
     weight: 3,
     tools: {
       aslint: {
-        content_editable_missing_attributes: {
+        'content-editable-missing-attributes': {
           variable: false,
           quality: 1,
           what: 'Element has a true contenteditable attribute but no aria-multiline or labeling attribute'
@@ -1843,7 +1829,7 @@ exports.issues = {
     weight: 2,
     tools: {
       aslint: {
-        links_same_content_different_url: {
+        'links-same-content-different-url': {
           variable: false,
           quality: 1,
           what: 'Links with the same text content have different destination URLs'
@@ -1862,7 +1848,7 @@ exports.issues = {
         }
       },
       testaro: {
-        linkAmb: {
+        'linkAmb': {
           variable: false,
           quality: 1,
           what: 'Links with the same text content have different destinations'
@@ -1890,7 +1876,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        links_language_destination: {
+        'links-language-destination': {
           variable: false,
           quality: 1,
           what: 'Link destination has a named host and may be in an unexpected language'
@@ -1918,7 +1904,7 @@ exports.issues = {
     weight: 2,
     tools: {
       aslint: {
-        img_adjacent_duplicate_text_link: {
+        'img-adjacent-duplicate-text-link': {
           variable: false,
           quality: 1,
           what: 'Link and an adjacent link are logically 1 link but are not combined'
@@ -1965,7 +1951,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        links_new_window_mark: {
+        linkExt: {
           variable: false,
           quality: 1,
           what: 'Indicator that the link opens a new window or tab may be missing'
@@ -2012,7 +1998,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        select_initial_option: {
+        'select-initial-option': {
           variable: false,
           quality: 1,
           what: 'No option has been made the default with a selected attribute'
@@ -2047,7 +2033,7 @@ exports.issues = {
         }
       },
       aslint: {
-        empty_button_description: {
+        'empty-button-description': {
           variable: false,
           quality: 1,
           what: 'Button has no visible accessible name'
@@ -2243,7 +2229,7 @@ exports.issues = {
         }
       },
       aslint: {
-        accessible_svg: {
+        'accessible-svg': {
           variable: false,
           quality: 1,
           what: 'Element has no title, description, text, attribute label, or role description'
@@ -2271,7 +2257,7 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        accessible_svgI: {
+        'accessible-svgI': {
           variable: false,
           quality: 1,
           what: 'Element references a nonexisting element as its label'
@@ -2285,7 +2271,7 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        orientation: {
+        'orientation': {
           variable: false,
           quality: 1,
           what: 'CSS media query specifies an orientation'
@@ -2313,7 +2299,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        orientationT: {
+        'orientationT': {
           variable: false,
           quality: 1,
           what: 'Failure to read a stylesheet prevents testing for orientation violations'
@@ -2334,7 +2320,7 @@ exports.issues = {
         }
       },
       aslint: {
-        zoom_disabled: {
+        'zoom-disabled': {
           variable: false,
           quality: 1,
           what: 'Element specifies a minimum or maximum scale or prohibits zooming'
@@ -2374,7 +2360,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        motion_actuation: {
+        'motion-actuation': {
           variable: false,
           quality: 1,
           what: 'Document listens for device motion or rotation'
@@ -2416,7 +2402,7 @@ exports.issues = {
         }
       },
       aslint: {
-        minimum_font_size: {
+        'minimum-font-size': {
           variable: false,
           quality: 1,
           what: 'Font size is smaller than 10 pixels'
@@ -2708,7 +2694,7 @@ exports.issues = {
         }
       },
       aslint: {
-        title_iframe: {
+        'title-iframe': {
           variable: false,
           quality: 1,
           what: 'Element is an iframe or object but its title attribute is missing or empty'
@@ -2777,7 +2763,7 @@ exports.issues = {
         }
       },
       aslint: {
-        unsupported_role_on_element: {
+        'unsupported-role-on-element': {
           variable: false,
           quality: 1,
           what: 'Element has a role that is not valid for it'
@@ -2932,7 +2918,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        invalid_attribute_dir_value: {
+        'invalid-attribute-dir-value': {
           variable: true,
           quality: 1,
           what: 'Element has a dir attribute with a value other than rtl, ltr, or auto'
@@ -2953,17 +2939,10 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        misused_input_attribute: {
+        'misused-input-attribute': {
           variable: false,
           quality: 1,
           what: 'Element has an attribute that is not valid for input elements'
-        }
-      },
-      axe: {
-        'aria-prohibited-attr': {
-          variable: false,
-          quality: 1,
-          what: 'Element has an attribute that is not valid for the role of the element'
         }
       },
       ibm: {
@@ -3377,7 +3356,7 @@ exports.issues = {
         }
       },
       aslint: {
-        identify_input_purpose: {
+        'identify-input-purpose': {
           variable: false,
           quality: 1,
           what: 'autocomplete attribute has an invalid value'
@@ -3464,7 +3443,7 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        misused_required_attribute: {
+        'misused-required-attribute': {
           variable: false,
           quality: 1,
           what: 'Requirement status of the element is invalid'
@@ -3478,7 +3457,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        misused_required_attributeR: {
+        'misused-required-attributeR': {
           variable: false,
           quality: 1,
           what: 'Requirement status of the element is stated twice'
@@ -3499,17 +3478,17 @@ exports.issues = {
         }
       },
       aslint: {
-        color_contrast_aa: {
+        'color-contrast-aa': {
           variable: false,
           quality: 1,
           what: 'Text has contrast less than 4.5:1'
         },
-        'color_contrast_state_pseudo_classes_abstract3': {
+        'color-contrast-state-pseudo-classes-abstract3': {
           variable: false,
           quality: 1,
           what: 'Text has contrast less than 3:1'
         },
-        'color_contrast_state_pseudo_classes_abstract4': {
+        'color-contrast-state-pseudo-classes-abstract4': {
           variable: false,
           quality: 1,
           what: 'Text has contrast less than 4.5:1'
@@ -3608,17 +3587,12 @@ exports.issues = {
         }
       },
       aslint: {
-        'color_contrast_aaa': {
-          variable: false,
-          quality: 1,
-          what: 'Text contrast may be less than enhanced but the element is invisible'
-        },
-        'color_contrast_aaa4': {
+        'color-contrast-aaa4': {
           variable: false,
           quality: 1,
           what: 'Text has contrast less than 4.5:1'
         },
-        'color_contrast_aaa7': {
+        'color-contrast-aaa7': {
           variable: false,
           quality: 1,
           what: 'Text has contrast less than 7:1'
@@ -3658,17 +3632,17 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        color_contrast_state_pseudo_classes_abstractF: {
+        'color-contrast-state-pseudo-classes-abstractF': {
           variable: false,
           quality: 1,
           what: 'Fixed position of the element prevents contrast measurement'
         },
-        color_contrast_state_pseudo_classes_abstractB: {
+        'color-contrast-state-pseudo-classes-abstractB': {
           variable: false,
           quality: 1,
           what: 'Transparent background color of the element prevents contrast measurement'
         },
-        color_contrast_aaaB: {
+        'color-contrast-aaaB': {
           variable: false,
           quality: 1,
           what: 'Transparent background color of the element prevents contrast measurement'
@@ -3784,7 +3758,7 @@ exports.issues = {
         }
       },
       aslint: {
-        empty_heading: {
+        'empty-heading': {
           variable: false,
           quality: 1,
           what: 'Element is a heading but is empty'
@@ -3878,7 +3852,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        img_alt_duplicate_text_link: {
+        'img-alt-duplicate-text-link': {
           variable: false,
           quality: 1,
           what: 'Text alternative of the image duplicates the text of the enclosing link'
@@ -3918,7 +3892,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        img_empty_alt_with_empty_title: {
+        'img-empty-alt-with-empty-title': {
           variable: false,
           quality: 1,
           what: 'Element has an empty alt attribute but a nonempty title attribute'
@@ -3953,7 +3927,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        label_duplicated_content_title: {
+        'label-duplicated-content-title': {
           variable: false,
           quality: 1,
           what: 'Element has an accessible name identical to the value of its title attribute'
@@ -3967,7 +3941,7 @@ exports.issues = {
         }
       },
       testaro: {
-        linkTitle: {
+        'linkTitle': {
           variable: false,
           quality: 1,
           what: 'Link title value is also contained in the link text'
@@ -3988,7 +3962,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        empty_title_attribute: {
+        'empty-title-attribute': {
           variable: false,
           quality: 0.5,
           what: 'title attribute of the element is empty or only whitespace'
@@ -4042,7 +4016,7 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        page_titleU: {
+        'page-titleU': {
           variable: false,
           quality: 1,
           what: 'Page title does not identify the contents or purpose of the page'
@@ -4070,7 +4044,7 @@ exports.issues = {
         }
       },
       aslint: {
-        page_titleN: {
+        'page-titleN': {
           variable: false,
           quality: 1,
           what: 'Page title is missing or empty'
@@ -4124,14 +4098,14 @@ exports.issues = {
     weight: 3,
     tools: {
       aslint: {
-        elements_not_allowed_in_head: {
+        'elements-not-allowed-in-head': {
           variable: false,
           quality: 1,
           what: 'Elements in the head are not allowed there'
         }
       },
       testaro: {
-        headEl: {
+        'headEl': {
           variable: false,
           quality: 1,
           what: 'Elements in the head are not allowed there'
@@ -4173,7 +4147,7 @@ exports.issues = {
     weight: 2,
     tools: {
       aslint: {
-        headings_hierarchy: {
+        'headings-hierarchy': {
           variable: false,
           quality: 1,
           what: 'Heading level is illogical in its context'
@@ -4194,7 +4168,7 @@ exports.issues = {
     weight: 2,
     tools: {
       aslint: {
-        headings_sibling_unique: {
+        'headings-sibling-unique': {
           variable: false,
           quality: 1,
           what: 'Sibling headings have the same accessible name'
@@ -4222,7 +4196,7 @@ exports.issues = {
         }
       },
       aslint: {
-        no_headings: {
+        'no-headings': {
           variable: false,
           quality: 1,
           what: 'Document has no headings'
@@ -4264,7 +4238,7 @@ exports.issues = {
     weight: 3,
     tools: {
       aslint: {
-        'h1_must_be': {
+        'h1-must-be': {
           variable: false,
           quality: 1,
           what: 'Page contains no h1 element'
@@ -4437,7 +4411,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        horizontal_rule: {
+        'horizontal-rule': {
           variable: false,
           quality: 1,
           what: 'hr element has neither a true aria-hidden attribute nor a presentation role'
@@ -4788,7 +4762,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        group_elements_name_attribute: {
+        'group-elements-name-attribute': {
           variable: false,
           quality: 1,
           what: 'Element is an input with a name attribute but has no fieldset parent'
@@ -4823,12 +4797,12 @@ exports.issues = {
     weight: 2,
     tools: {
       aslint: {
-        fieldset_no_legend: {
+        'fieldset-no-legend': {
           variable: false,
           quality: 1,
           what: 'First child element of the element is not a legend'
         },
-        legend_first_child_of_fieldset: {
+        'legend-first-child-of-fieldset': {
           variable: false,
           quality: 1,
           what: 'First child element of the element is not a legend'
@@ -4974,12 +4948,12 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        table_missing_descriptionC: {
+        'table-missing-descriptionC': {
           variable: false,
           quality: 1,
           what: 'Element contains no caption element'
         },
-        table_missing_descriptionE: {
+        'table-missing-descriptionE': {
           variable: false,
           quality: 1,
           what: 'Element contains a caption element, but it is empty'
@@ -5028,7 +5002,7 @@ exports.issues = {
     weight: 2,
     tools: {
       aslint: {
-        table_caption_summary_identical: {
+        'table-caption-summary-identical': {
           variable: false,
           quality: 1,
           what: 'Element has a summary attribute identical to its caption element'
@@ -5042,7 +5016,7 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        table_missing_descriptionS: {
+        'table-missing-descriptionS': {
           variable: false,
           quality: 1,
           what: 'Element has a summary attribute, but it is empty'
@@ -5056,12 +5030,12 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        table_missing_descriptionLM: {
+        'table-missing-descriptionLM': {
           variable: false,
           quality: 1,
           what: 'Element has a broken aria-labelledby ID'
         },
-        table_missing_descriptionLE: {
+        'table-missing-descriptionLE': {
           variable: false,
           quality: 1,
           what: 'Element has an aria-labelledby attribute, but it is empty'
@@ -5075,12 +5049,12 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        table_missing_descriptionDM: {
+        'table-missing-descriptionDM': {
           variable: false,
           quality: 1,
           what: 'Element has a broken aria-describedby ID'
         },
-        table_missing_descriptionDE: {
+        'table-missing-descriptionDE': {
           variable: false,
           quality: 1,
           what: 'Element has an aria-describedby attribute, but it is empty'
@@ -5160,7 +5134,7 @@ exports.issues = {
     weight: 3,
     tools: {
       aslint: {
-        table_row_and_column_headersRC: {
+        'table-row-and-column-headersRC': {
           variable: false,
           quality: 1,
           what: 'None of the cells in the table is a header'
@@ -5258,7 +5232,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        table_row_and_column_headersH: {
+        'table-row-and-column-headersH': {
           variable: false,
           quality: 1,
           what: 'Element does not contain a thead element'
@@ -5272,7 +5246,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        table_row_and_column_headersB: {
+        'table-row-and-column-headersB': {
           variable: false,
           quality: 1,
           what: 'Element does not contain a tbody element'
@@ -5354,7 +5328,7 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        label_visually_hidden_only: {
+        'label-visually-hidden-only': {
           variable: false,
           quality: 1,
           what: 'Form control has a label but it is not visible'
@@ -5604,7 +5578,7 @@ exports.issues = {
         }
       },
       aslint: {
-        outline_zero: {
+        'outline-zero': {
           variable: false,
           quality: 1,
           what: 'Element may get invisibly focused because its outline has no thickness'
@@ -5639,7 +5613,7 @@ exports.issues = {
         }
       },
       aslint: {
-        capital_letters_words: {
+        'capital-letters-words': {
           variable: false,
           quality: 1,
           what: 'Element or its title has entirely upper-case words'
@@ -5667,7 +5641,7 @@ exports.issues = {
         }
       },
       aslint: {
-        font_style_italic: {
+        'font-style-italic': {
           variable: false,
           quality: 1,
           what: 'Text longer than 80 characters has an italic font style'
@@ -5789,7 +5763,7 @@ exports.issues = {
     weight: 2,
     tools: {
       aslint: {
-        main_landmark_must_be_top_level: {
+        'main-landmark-must-be-top-level': {
           variable: false,
           quality: 1,
           what: 'Element with a main role is not at the top level'
@@ -5867,7 +5841,7 @@ exports.issues = {
     weight: 2,
     tools: {
       aslint: {
-        main_element_only_one: {
+        'main-element-only-one': {
           variable: false,
           quality: 1,
           what: 'Document has more than 1 main landmark'
@@ -5975,7 +5949,7 @@ exports.issues = {
     weight: 2,
     tools: {
       aslint: {
-        contentinfo_landmark_only_one: {
+        'contentinfo-landmark-only-one': {
           variable: false,
           quality: 1,
           what: 'Page has more than 1 contentinfo landmark (footer)'
@@ -6145,7 +6119,7 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        navigation_landmark_restrictions: {
+        'navigation-landmark-restrictions': {
           variable: false,
           quality: 1,
           what: 'Element with a navigation role contains a landmark other than region and search'
@@ -6301,7 +6275,7 @@ exports.issues = {
         }
       },
       aslint: {
-        misused_aria_on_focusable_element: {
+        'misused-aria-on-focusable-element': {
           variable: false,
           quality: 1,
           what: 'Visible focusable element has a true aria-hidden attribute or a presentation role'
@@ -6381,7 +6355,7 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        label_implicitly_associatedM: {
+        'label-implicitly-associatedM': {
           variable: false,
           quality: 1,
           what: 'Element contains more than 1 labelable element.'
@@ -6440,7 +6414,7 @@ exports.issues = {
     weight: 0,
     tools: {
       aslint: {
-        aria_hidden: {
+        'aria-hidden': {
           variable: false,
           quality: 1,
           what: 'aria-hidden attribute has the value false'
@@ -6468,7 +6442,7 @@ exports.issues = {
     weight: 3,
     tools: {
       aslint: {
-        incorrect_technique_for_hiding_content: {
+        'incorrect-technique-for-hiding-content': {
           variable: false,
           quality: 1,
           what: 'Element has a text-indent style with a negative value'
@@ -6552,12 +6526,12 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        duplicated_for_attribute: {
+        'duplicated-for-attribute': {
           variable: false,
           quality: 1,
           what: 'More than 1 label element has the same for attribute'
         },
-        missing_labelM: {
+        'missing-labelM': {
           variable: false,
           quality: 1,
           what: 'More than 1 label element refers to the element'
@@ -6597,17 +6571,17 @@ exports.issues = {
     weight: 3,
     tools: {
       aslint: {
-        empty_label_element: {
+        'empty-label-element': {
           variable: false,
           quality: 1,
           what: 'Element has no content'
         },
-        label_implicitly_associatedW: {
+        'label-implicitly-associatedW': {
           variable: false,
           quality: 1,
           what: 'Element has no labeling content except whitespace'
         },
-        aria_labelledby_association_empty_element: {
+        'aria-labelledby-association-empty-element': {
           variable: false,
           quality: 1,
           what: 'Referenced label has no content'
@@ -6640,17 +6614,12 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        missing_label: {
-          variable: false,
-          quality: 1,
-          what: 'Element has no explicit label and may have no other accessible name'
-        },
-        missing_labelI: {
+        'missing-labelI': {
           variable: false,
           quality: 1,
           what: 'Element has no id attribute for an explicit label to reference'
         },
-        missing_labelN: {
+        'missing-labelN': {
           variable: false,
           quality: 1,
           what: 'Element has an id attribute but no explicit label references it'
@@ -6664,7 +6633,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        link_with_unclear_purpose: {
+        'link-with-unclear-purpose': {
           variable: false,
           quality: 1,
           what: 'Element is a link but has vague or generic content'
@@ -6723,7 +6692,7 @@ exports.issues = {
         }
       },
       aslint: {
-        links_not_visually_evident_without_color_vision: {
+        'links-not-visually-evident-without-color-vision': {
           variable: false,
           quality: 1,
           what: 'Element is a link, but its style properties do not differentiate it from its parent'
@@ -6833,7 +6802,7 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        blink_element: {
+        'blink-element': {
           variable: false,
           quality: 1,
           what: 'Element is blink'
@@ -6859,7 +6828,7 @@ exports.issues = {
     weight: 2,
     tools: {
       aslint: {
-        autoplay_audio_video: {
+        'autoplay-audio-video': {
           variable: false,
           quality: 1,
           what: 'Element plays automatically'
@@ -6915,7 +6884,7 @@ exports.issues = {
     weight: 3,
     tools: {
       aslint: {
-        no_meta_http_equiv_refresh: {
+        'no-meta-http-equiv-refresh': {
           variable: false,
           quality: 1,
           what: 'Element forces a page reload'
@@ -7004,7 +6973,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        positive_tabindex: {
+        'positive-tabindex': {
           variable: false,
           quality: 1,
           what: 'Element has a positive tabIndex value'
@@ -7046,7 +7015,7 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        accessible_svgT: {
+        'accessible-svgT': {
           variable: true,
           quality: 1,
           what: 'Element has a non-integer tabindex attribute'
@@ -7060,7 +7029,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        misused_tabindex_attribute: {
+        'misused-tabindex-attribute': {
           variable: true,
           quality: 1,
           what: 'Element has an implicit tabIndex value 0, but also has a tabindex attribute'
@@ -7074,7 +7043,7 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        audio_video_captions: {
+        'audio-video-captions': {
           variable: false,
           quality: 1,
           what: 'Element is audio or video but contains no caption track element'
@@ -7088,7 +7057,7 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        audio_alternativeT: {
+        'audio-alternativeT': {
           variable: false,
           quality: 1,
           what: 'Element contains no track element'
@@ -7136,7 +7105,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        audio_alternativeA: {
+        'audio-alternativeA': {
           variable: false,
           quality: 1,
           what: 'Referenced description or another text alternative may be missing'
@@ -7262,7 +7231,7 @@ exports.issues = {
     weight: 4,
     tools: {
       aslint: {
-        video_audio_descriptions: {
+        'video-audio-descriptions': {
           variable: false,
           quality: 1,
           what: 'Element has neither an audio source nor a description track'
@@ -7304,7 +7273,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        position_sticky: {
+        'position-sticky': {
           variable: false,
           quality: 1,
           what: 'Element has a sticky position'
@@ -7430,7 +7399,7 @@ exports.issues = {
     weight: 3,
     tools: {
       aslint: {
-        missing_submit_button: {
+        'missing-submit-button': {
           variable: false,
           quality: 1,
           what: 'Element is a form but contains no input or button element for submission'
@@ -7500,7 +7469,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        flash_content: {
+        'flash-content': {
           variable: false,
           quality: 1,
           what: 'Document contains Adobe Flash content'
@@ -7535,7 +7504,7 @@ exports.issues = {
     weight: 3,
     tools: {
       aslint: {
-        obsolete_html_attributes: {
+        'obsolete-html-attributes': {
           variable: false,
           quality: 1,
           what: 'Element has an obsolete attribute'
@@ -7616,12 +7585,12 @@ exports.issues = {
         }
       },
       aslint: {
-        obsolete_html_elements: {
+        'obsolete-html-elements': {
           variable: false,
           quality: 1,
           what: 'Element is obsolete'
         },
-        audio_alternativeB: {
+        'audio-alternativeB': {
           variable: false,
           quality: 1,
           what: 'Element is obsolete and inferior to an audio element'
@@ -8157,7 +8126,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        captcha_google: {
+        'captcha-google': {
           variable: false,
           quality: 1,
           what: 'Document employs Google CAPTCHA version 2'
@@ -8171,7 +8140,7 @@ exports.issues = {
     weight: 1,
     tools: {
       aslint: {
-        overlay: {
+        'overlay': {
           variable: false,
           quality: 1,
           what: 'Document contains a commercial overlay modifier that may fail or invalidate test results'

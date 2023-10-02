@@ -7,12 +7,12 @@
 
 // IMPORTS
 
-const {issues} = require('./tic33');
+const {issues} = require('./tic36');
 
 // CONSTANTS
 
 // ID of this proc.
-const scoreProcID = 'tsp33';
+const scoreProcID = 'tsp36';
 // Configuration disclosures.
 const severityWeights = [1, 2, 3, 4];
 const toolWeight = 0.1;

@@ -77,7 +77,7 @@ exports.issues = {
       }
     }
   },
-  duplicateAttribute:{
+  duplicateAttribute: {
     why: 'Browser processes the document improperly',
     wcag: '4.1.1',
     weight: 2,

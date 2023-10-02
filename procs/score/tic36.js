@@ -1203,7 +1203,7 @@ exports.issues = {
     }
   },
   customKeyboardRisk: {
-    why: 'Custom item may prevent a no-mouse user from operating it',
+    why: 'Custom item may prevent a keyboard-only user from operating it',
     wcag: '2.1.1',
     weight: 1,
     tools: {
@@ -1217,7 +1217,7 @@ exports.issues = {
     }
   },
   objectBlurKeyboardRisk: {
-    why: 'Custom item may trap a no-mouse user',
+    why: 'Custom item may trap a keyboard-only user',
     wcag: '2.1.1',
     weight: 1,
     tools: {
@@ -1231,7 +1231,7 @@ exports.issues = {
     }
   },
   eventKeyboardRisk: {
-    why: 'No-mouse user may be unable to perform an action',
+    why: 'Keyboard-only user may be unable to perform an action',
     wcag: '2.1.1',
     weight: 1,
     tools: {
@@ -1356,7 +1356,7 @@ exports.issues = {
     }
   },
   activeDescendantBadID: {
-    why: 'No-mouse user cannot reach an item in a menu',
+    why: 'Keyboard-only user cannot reach an item in a menu',
     wcag: '1.3.1',
     weight: 4,
     tools: {
@@ -1370,7 +1370,7 @@ exports.issues = {
     }
   },
   governedBadID: {
-    why: 'No-mouse user cannot reach an item',
+    why: 'Keyboard-only user cannot reach an item',
     wcag: '1.3.1',
     weight: 4,
     tools: {
@@ -1534,7 +1534,7 @@ exports.issues = {
     }
   },
   haspopupBad: {
-    why: 'No-mouse user cannot operate a custom tool',
+    why: 'Keyboard-only user cannot operate a custom tool',
     wcag: '1.3.1',
     weight: 4,
     tools: {
@@ -1913,7 +1913,7 @@ exports.issues = {
     }
   },
   linkPair: {
-    why: 'No-mouse user expends twice the effort to pass a link',
+    why: 'Keyboard-only user expends extra effort to skip a link',
     wcag: '2.4.4',
     weight: 2,
     tools: {
@@ -2147,7 +2147,7 @@ exports.issues = {
     }
   },
   parentMissing: {
-    why: 'No-mouse user cannot operate a custom tool',
+    why: 'Keyboard-only user cannot operate a custom tool',
     wcag: '1.3.1',
     weight: 4,
     tools: {
@@ -2189,7 +2189,7 @@ exports.issues = {
     }
   },
   descendantMissing: {
-    why: 'No-mouse user cannot operate a custom tool',
+    why: 'Keyboard-only user cannot operate a custom tool',
     wcag: '1.3.1',
     weight: 4,
     tools: {
@@ -2217,7 +2217,7 @@ exports.issues = {
     }
   },
   presentationChild: {
-    why: 'No-mouse user cannot reach an item intended to be reachable',
+    why: 'Keyboard-only user cannot reach an item intended to be reachable',
     wcag: '1.3.1',
     weight: 4,
     tools: {
@@ -3913,7 +3913,7 @@ exports.issues = {
     }
   },
   decorativeTitle: {
-    why: 'Hovering gives information withheld from a no-mouse user',
+    why: 'Hovering-produced information is denied to a keyboard-only user',
     wcag: '1.3.1',
     weight: 1,
     tools: {
@@ -4708,7 +4708,7 @@ exports.issues = {
     }
   },
   noOptionFocusable: {
-    why: 'No-mouse user cannot choose an option',
+    why: 'Keyboard-only user cannot choose an option',
     wcag: '2.1.1',
     weight: 1,
     tools: {
@@ -5552,7 +5552,7 @@ exports.issues = {
     }
   },
   tabFocusability: {
-    why: 'No-mouse user cannot choose an item to operate',
+    why: 'Keyboard-only user cannot choose an item to operate',
     wcag: '2.1.1',
     weight: 4,
     tools: {
@@ -5592,7 +5592,7 @@ exports.issues = {
     }
   },
   focusIndication: {
-    why: 'No-mouse user cannot choose an item to operate',
+    why: 'Keyboard-only user cannot choose an item to operate',
     wcag: '2.4.7',
     weight: 4,
     tools: {
@@ -6254,7 +6254,7 @@ exports.issues = {
     }
   },
   operableFocusable: {
-    why: 'No-mouse user cannot navigate properly to an operable item',
+    why: 'Keyboard-only user cannot navigate properly to an operable item',
     wcag: '2.1.1',
     weight: 4,
     tools: {
@@ -6268,7 +6268,7 @@ exports.issues = {
     }
   },
   focusableRole: {
-    why: 'No-mouse user cannot navigate properly to the operable items',
+    why: 'Keyboard-only user cannot navigate properly to the operable items',
     wcag: '4.1.2',
     weight: 3,
     tools: {
@@ -6289,7 +6289,7 @@ exports.issues = {
     }
   },
   focusableHidden: {
-    why: 'No-mouse user cannot navigate properly to the operable items',
+    why: 'Keyboard-only user cannot navigate properly to the operable items',
     wcag: '4.1.2',
     weight: 4,
     tools: {
@@ -6341,7 +6341,7 @@ exports.issues = {
     }
   },
   focusedAway: {
-    why: 'No-mouse user cannot navigate properly to the operable items',
+    why: 'Keyboard-only user cannot navigate properly to the operable items',
     wcag: '1.4.10',
     weight: 3,
     tools: {
@@ -6355,7 +6355,7 @@ exports.issues = {
     }
   },
   focusableDescendants: {
-    why: 'No-mouse user cannot navigate properly to the operable items',
+    why: 'Keyboard-only user cannot navigate properly to the operable items',
     wcag: '4.1.2',
     weight: 4,
     tools: {
@@ -6746,7 +6746,7 @@ exports.issues = {
     }
   },
   menuNavigation: {
-    why: 'Menu items behave improperly for a no-mouse user',
+    why: 'Menu items behave improperly for a keyboard-only user',
     wcag: '2.1.1',
     weight: 2,
     tools: {
@@ -6774,7 +6774,7 @@ exports.issues = {
     }
   },
   tabNavigation: {
-    why: 'Tablist items behave improperly for a no-mouse user',
+    why: 'Tablist items behave improperly for a keyboard-only user',
     wcag: '2.1.1',
     weight: 2,
     tools: {
@@ -6999,7 +6999,7 @@ exports.issues = {
     }
   },
   tabIndexPositive: {
-    why: 'No-mouse user cannot predict the navigation sequence',
+    why: 'Keyboard-only user cannot predict the navigation sequence',
     wcag: '2.4.3',
     weight: 1,
     tools: {
@@ -7027,7 +7027,7 @@ exports.issues = {
     }
   },
   tabIndexEmpty: {
-    why: 'No-mouse user cannot follow the intended navigation sequence',
+    why: 'Keyboard-only user cannot follow the intended navigation sequence',
     wcag: '1.3.1',
     weight: 4,
     tools: {
@@ -7041,7 +7041,7 @@ exports.issues = {
     }
   },
   tabIndexInt: {
-    why: 'No-mouse user cannot follow the intended navigation sequence',
+    why: 'Keyboard-only user cannot follow the intended navigation sequence',
     wcag: '1.3.1',
     weight: 4,
     tools: {
@@ -7055,7 +7055,7 @@ exports.issues = {
     }
   },
   tabIndexExtra: {
-    why: 'Revision risks interfering with navigation by a no-mouse user',
+    why: 'Revision risks interfering with navigation by a keyboard-only user',
     wcag: '1.3.1',
     weight: 1,
     tools: {
@@ -7271,7 +7271,7 @@ exports.issues = {
     }
   },
   keyboardScroll: {
-    why: 'No-mouse user cannot scroll an item',
+    why: 'Keyboard-only user cannot scroll an item',
     wcag: '2.1.1',
     weight: 4,
     tools: {
@@ -7334,7 +7334,7 @@ exports.issues = {
     }
   },
   skipRepeatedContent: {
-    why: 'No-mouse user cannot easily reach the specific content of the document',
+    why: 'Keyboard-only user cannot easily reach the specific content of the document',
     wcag: '2.4.1',
     weight: 3,
     tools: {
@@ -7384,7 +7384,7 @@ exports.issues = {
     }
   },
   repeatedContentRisk: {
-    why: 'No-mouse user may be unable easily to reach the specific content of the document',
+    why: 'Keyboard-only user may be unable easily to reach the specific content of the document',
     wcag: '2.4.1',
     weight: 1,
     tools: {

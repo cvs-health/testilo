@@ -68,19 +68,13 @@ const populateQuery = (report, query) => {
     issueDetailRows.push(`<p>Score: ${issueData.score}</p>`);
     const toolIDs = Object.keys(issueData.tools);
     toolIDs.forEach(toolID => {
-      issueDetailRows.push(`<h4>Complaints by <code>${toolID}</code></h5>`);
+      issueDetailRows.push(`<h4>Violations of <code>${toolID}</code> rules</h5>`);
       const ruleIDs = Object.keys(issueData.tools[toolID]);
       ruleIDs.forEach(ruleID => {
         const ruleData = issueData.tools[toolID][ruleID];
         issueDetailRows.push(`<h5>Rule <code>${ruleID}</code></h5>`);
         issueDetailRows.push(`<p>Description: ${ruleData.what}</p>`);
         issueDetailRows.push(`<p>Count of instances: ${ruleData.complaints.countTotal}</p>`);
-        issueDetailRows.push('<h6>Complaint specifics</h6>');
-        issueDetailRows.push('<ul>');
-        ruleData.complaints.texts.forEach(text => {
-          issueDetailRows.push(`  <li>${htmlEscape(text || '')}</li>`);
-        });
-        issueDetailRows.push('</ul>');
       });
     });
   });

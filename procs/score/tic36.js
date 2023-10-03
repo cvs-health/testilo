@@ -1207,8 +1207,8 @@ exports.issues = {
     wcag: '2.1.1',
     weight: 1,
     tools: {
-      htmlcs: {
-        'link_button_space_key': {
+      aslint: {
+        link_button_space_key: {
           variable: false,
           quality: 1,
           what: 'Element has a button role but may fail to be keyboard-operable'

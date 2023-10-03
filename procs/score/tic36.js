@@ -1208,7 +1208,7 @@ exports.issues = {
     weight: 1,
     tools: {
       htmlcs: {
-        'link-button-space-key': {
+        'link_button_space_key': {
           variable: false,
           quality: 1,
           what: 'Element has a button role but may fail to be keyboard-operable'

@@ -53,7 +53,8 @@ exports.merge = (script, batch, requester, isolate = false) => {
       which: '',
       what: ''
     },
-    requester
+    requester,
+    sendReportTo: process.env.REPORT_URL || ''
   };
   // Add time properties to the job.
   protoJob.creationTime = creationTime;

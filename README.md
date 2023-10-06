@@ -327,7 +327,7 @@ Suppose you ask for a merger of the above batch and script, **without** the isol
     requester: 'you@yourdomain.tld'
   },
   creationTime: '2023-11-20T15:50:27',
-  timeStamp: '231120T1550'
+  timeStamp: '231120T155314'
 }
 ```
 

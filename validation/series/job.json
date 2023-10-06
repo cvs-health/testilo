@@ -1,5 +1,5 @@
 {
-  "id": "240223T0815-mon-example",
+  "id": "231120T155027-mon-example",
   "what": "Job for series validation",
   "strict": true,
   "timeLimit": 10,
@@ -7,17 +7,10 @@
     {
       "type": "launch",
       "which": "chromium",
-      "what": "Chromium browser",
+      "url": "https://example.com",
+      "what": "Example of web page",
       "startTime": 1662474496075,
       "endTime": 1662474496453
-    },
-    {
-      "type": "url",
-      "which": "https://example.com",
-      "what": "Example of web page",
-      "startTime": 1662474496453,
-      "result": "https://example.com",
-      "endTime": 1662474501684
     },
     {
       "type": "test",
@@ -40,5 +33,5 @@
     "requester": "user@domain.tld"
   },
   "creationTime": "2023-11-20T15:50:27",
-  "timeStamp": "240223T0815"
+  "timeStamp": "231120T155027"
 }

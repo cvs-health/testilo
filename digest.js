@@ -20,6 +20,6 @@ exports.digest = async (digester, reports) => {
     console.log(`Report ${report.id} digested`);
   };
   // Return the digests.
-  console.log(`Digesting complete. Report count: ${reports.length}`);
+  console.log(`Digesting complete; report count ${reports.length}`);
   return digests;
 };

@@ -37,7 +37,7 @@ const populateQuery = (report, query) => {
   query.org = target.what;
   query.url = target.which;
   query.requester = requester;
-  query.reportURL = `${report.id}.json`;
+  query.reportURL = `report?jobID=${report.id}`;
   // Add values for the score-summary table to the query.
   const rows = {
     summaryRows: [],

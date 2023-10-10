@@ -362,10 +362,10 @@ A module can invoke `merge` in this way:
 
 ```javaScript
 const {merge} = require('testilo/merge');
-const jobs = merge(script, batch, requester, true);
+const jobs = merge(script, batch, requester, 'only', true);
 ```
 
-This invocation references `script`, `batch`, and `requester` variables that the module must have already defined. The `script` and `batch` variables are a script object and a batch object, respectively. The `requester` variable is an email address. The fourth argument is a boolean, specifying whether to perform isolation; a missing fourth argument is equivalent to `false`. The `merge()` function of the `merge` module generates jobs and returns them in an array. The invoking module can further dispose of the jobs as needed.
+This invocation references `script`, `batch`, and `requester` variables that the module must have already defined. The `script` and `batch` variables are a script object and a batch object, respectively. The `requester` variable is an email address. The fourth argument is a string that specifies the Testaro standardization option ('also', 'only', or 'no'). The fifth argument is a boolean, specifying whether to perform isolation; a missing fifth argument is equivalent to `false`. The `merge()` function of the `merge` module generates jobs and returns them in an array. The invoking module can further dispose of the jobs as needed.
 
 ##### By a user
 
@@ -374,12 +374,13 @@ A user can invoke `merge` in this way:
 - Create a script and save it as a JSON file in the `scripts` subdirectory of the `process.env.SPECDIR` directory.
 - Create a batch and save it as a JSON file in the `batches` subdirectory of the `process.env.SPECDIR` directory.
 - In the Testilo project directory, execute this statement:
-    - `node call merge s b e i t`
+    - `node call merge s b e o i t`
 
 In these statements, replace:
 - `s` with the base name of the script file
 - `b` with the base name of the batch file
 - `e` with an email address, or with an empty string if the environment variable `process.env.REQUESTER` exists and you want to use it
+- `o` with `'also'`, `'only'`, or `'no'` to specify the Testaro standardization option
 - `i` with `true` if you want test isolation or `false` if not
 - `t` with `true` if the job is to be saved in the `todo` subdirectory or `false` if it is to be saved in the `pending` subdirectory of the `process.env.JOBDIR` directory.
 

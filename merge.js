@@ -6,7 +6,8 @@
     1. batch
     2. requester
     3. value of the standard property
-    4. whether to provide test isolation (no if omitted)
+    4. value of the granularity property
+    5. whether to provide test isolation (no if omitted)
 */
 
 // ########## IMPORTS
@@ -30,7 +31,7 @@ const contaminantNames = new Set([
 // ########## FUNCTIONS
 
 // Merges a script and a batch and returns jobs.
-exports.merge = (script, batch, requester, standard, isolate = false) => {
+exports.merge = (script, batch, requester, standard, granular, isolate = false) => {
   if (isolate === 'false') {
     isolate = false;
   }
@@ -56,11 +57,11 @@ exports.merge = (script, batch, requester, standard, isolate = false) => {
     requester,
     sendReportTo: process.env.REPORT_URL || ''
   };
-  // Add time properties to the job.
+  // Add properties to the job.
   protoJob.creationTime = creationTime;
   protoJob.timeStamp = timeStamp;
-  // Add the standardization option to the job.
   protoJob.standard = standard || 'only';
+  protojob.observe = granular || false;
   // If isolation was requested:
   if (isolate) {
     // Perform it.

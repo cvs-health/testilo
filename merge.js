@@ -61,7 +61,7 @@ exports.merge = (script, batch, requester, standard, granular, isolate = false) 
   protoJob.creationTime = creationTime;
   protoJob.timeStamp = timeStamp;
   protoJob.standard = standard || 'only';
-  protojob.observe = granular || false;
+  protoJob.observe = granular || false;
   // If isolation was requested:
   if (isolate) {
     // Perform it.

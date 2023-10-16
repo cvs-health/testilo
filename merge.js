@@ -5,9 +5,9 @@
     0. script
     1. batch
     2. requester
-    3. value of the standard property
-    4. value of the granularity property
-    5. whether to provide test isolation (no if omitted)
+    3. whether to provide test isolation
+    4. value of the standard property
+    5. whether reporting is to be granular
 */
 
 // ########## IMPORTS

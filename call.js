@@ -70,14 +70,22 @@ const callScript = async (scriptID, classificationID = null, ... issueIDs) => {
   console.log(`Script ${scriptID} created and saved in ${specDir}/scripts`);
 };
 // Fulfills a merging request.
-const callMerge = async (scriptID, batchID, requester, withIsolation, todo) => {
+const callMerge = async (
+  scriptID,
+  batchID,
+  requester,
+  withIsolation,
+  standard,
+  isGranular,
+  todo
+) => {
   // Get the script and the batch.
   const scriptJSON = await fs.readFile(`${specDir}/scripts/${scriptID}.json`, 'utf8');
   const script = JSON.parse(scriptJSON);
   const batchJSON = await fs.readFile(`${specDir}/batches/${batchID}.json`, 'utf8');
   const batch = JSON.parse(batchJSON);
   // Merge them into an array of jobs.
-  const jobs = merge(script, batch, requester, withIsolation);
+  const jobs = merge(script, batch, requester, withIsolation, standard, isGranular);
   // Save the jobs.
   const destination = todo === 'true' ? 'todo' : 'pending';
   for (const job of jobs) {
@@ -237,7 +245,7 @@ else if (fn === 'script' && fnArgs.length) {
     console.log('Execution completed');
   });
 }
-else if (fn === 'merge' && fnArgs.length === 5) {
+else if (fn === 'merge' && fnArgs.length === 7) {
   callMerge(... fnArgs)
   .then(() => {
     console.log('Execution completed');

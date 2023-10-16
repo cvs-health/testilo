@@ -374,7 +374,11 @@ A user can invoke `merge` in this way:
 - Create a script and save it as a JSON file in the `scripts` subdirectory of the `process.env.SPECDIR` directory.
 - Create a batch and save it as a JSON file in the `batches` subdirectory of the `process.env.SPECDIR` directory.
 - In the Testilo project directory, execute this statement:
+<<<<<<< HEAD
     - `node call merge s b e o g i t`
+=======
+    - `node call merge s b e i f g t`
+>>>>>>> c127166 (Implemented reporting granularity option)
 
 In these statements, replace:
 - `s` with the base name of the script file
@@ -383,6 +387,8 @@ In these statements, replace:
 - `o` with `'also'`, `'only'`, or `'no'` to specify the Testaro standardization option
 - `g` with `true` if you want Testaro to allow granular network watching or `false` if not.
 - `i` with `true` if you want test isolation or `false` if not
+- `f` with `'also'`, `'only'`, or `'no'` to specify the treatment of standard-format results.
+- `g` with `true` if reporting is to be granular, or `false` if not.
 - `t` with `true` if the job is to be saved in the `todo` subdirectory or `false` if it is to be saved in the `pending` subdirectory of the `process.env.JOBDIR` directory.
 
 The `call` module will retrieve the named script and batch from their respective directories.

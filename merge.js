@@ -31,7 +31,7 @@ const contaminantNames = new Set([
 // ########## FUNCTIONS
 
 // Merges a script and a batch and returns jobs.
-exports.merge = (script, batch, requester, standard, granular, isolate = false) => {
+exports.merge = (script, batch, requester, isolate, standard, isGranular) => {
   if (isolate === 'false') {
     isolate = false;
   }
@@ -61,7 +61,7 @@ exports.merge = (script, batch, requester, standard, granular, isolate = false) 
   protoJob.creationTime = creationTime;
   protoJob.timeStamp = timeStamp;
   protoJob.standard = standard || 'only';
-  protoJob.observe = granular || false;
+  protoJob.observe = isGranular || false;
   // If isolation was requested:
   if (isolate) {
     // Perform it.

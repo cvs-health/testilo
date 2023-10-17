@@ -95,7 +95,7 @@ exports.scorer = report => {
           // Add this to the score.
           details.prevention[which] = preventionWeight;
         }
-        // Otherwise, if a successful standard result exists:
+        // Otherwise, if a valid standard result exists:
         else if (
           standardResult
           && standardResult.totals
@@ -125,6 +125,7 @@ exports.scorer = report => {
               // Add the instance to the issue details of the score data.
               if (! details.issue[issueName]) {
                 details.issue[issueName] = {
+                  summary: issues[issueName].summary,
                   score: 0,
                   maxCount: 0,
                   weight: issues[issueName].weight,

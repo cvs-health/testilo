@@ -1,6 +1,6 @@
 /*
-  tic36
-  Testilo issue classification 36
+  tic37
+  Testilo issue classification 37
 
   Classifies about 760 rules of the tools of Testaro into 256? issues.
 
@@ -20,6 +20,7 @@
 
 exports.issues = {
   ignorable: {
+    summary: 'ignorable',
     why: 'No known impact',
     wcag: '',
     weight: 0,
@@ -78,6 +79,7 @@ exports.issues = {
     }
   },
   duplicateAttribute: {
+    summary: 'duplicate attribute',
     why: 'Browser processes the document improperly',
     wcag: '4.1.1',
     weight: 2,
@@ -99,6 +101,7 @@ exports.issues = {
     }
   },
   IDUnique: {
+    summary: 'ID not unique',
     why: 'User may be pointed to the wrong item',
     wcag: '4.1.1',
     weight: 4,
@@ -170,6 +173,7 @@ exports.issues = {
     }
   },
   roleNoText: {
+    summary: 'no role-required name',
     why: 'User cannot get help understanding an item',
     wcag: '4.1.2',
     weight: 4,
@@ -184,6 +188,7 @@ exports.issues = {
     }
   },
   componentNoText: {
+    summary: 'interactive component not named',
     why: 'User cannot get help understanding a custom item',
     wcag: '4.1.2',
     weight: 4,
@@ -203,6 +208,7 @@ exports.issues = {
     }
   },
   regionNoText: {
+    summary: 'region not named',
     why: 'User cannot get help surveying the parts of the document',
     wcag: '4.1.2',
     weight: 4,
@@ -229,6 +235,7 @@ exports.issues = {
     }
   },
   headingImageNoText: {
+    summary: 'heading image not named',
     why: 'User cannot get help understanding an image used as a heading',
     wcag: '1.1.1',
     weight: 4,
@@ -243,6 +250,7 @@ exports.issues = {
     }
   },
   inputNoText: {
+    summary: 'input not named',
     why: 'User cannot get help on what information to enter in a form item',
     wcag: '4.1.2',
     weight: 4,
@@ -314,6 +322,7 @@ exports.issues = {
     }
   },
   inputOnlyPlaceholder: {
+    summary: 'input has placeholder instead of name',
     why: 'User cannot get reliable help on what information to enter in a form item',
     wcag: '4.1.2',
     weight: 3,
@@ -328,6 +337,7 @@ exports.issues = {
     }
   },
   imageButtonNoText: {
+    summary: 'image button not named',
     why: 'User cannot get help understanding an image used as a button',
     wcag: '1.1.1',
     weight: 4,
@@ -373,6 +383,7 @@ exports.issues = {
     }
   },
   imageInputNoText: {
+    summary: 'image input not named',
     why: 'User cannot get help understanding an image used as a submission button',
     wcag: '1.1.1',
     weight: 4,
@@ -413,6 +424,7 @@ exports.issues = {
     }
   },
   figureNoText: {
+    summary: 'figure not named',
     why: 'User cannot get help on the topic of a figure',
     wcag: '1.1.1',
     weight: 4,
@@ -432,6 +444,7 @@ exports.issues = {
     }
   },
   imageNoText: {
+    summary: 'image not named',
     why: 'User cannot get help to know what is in an image',
     wcag: '1.1.1',
     weight: 4,
@@ -525,6 +538,7 @@ exports.issues = {
     }
   },
   decorativeImageAltBad: {
+    summary: 'decorative image has no alt',
     why: 'Helper alerts a user to an uninformative image instead of ignoring it',
     wcag: '1.1.1',
     weight: 4,
@@ -539,6 +553,7 @@ exports.issues = {
     }
   },
   imageTextBad: {
+    summary: 'image named with filename',
     why: 'Helper gives a user the filename of an image instead of describing it',
     wcag: '1.1.1',
     weight: 3,
@@ -560,6 +575,7 @@ exports.issues = {
     }
   },
   imageTextRisk: {
+    summary: 'image dubiously named',
     why: 'Helper may describe an image inadequately',
     wcag: '1.1.1',
     weight: 1,
@@ -575,10 +591,25 @@ exports.issues = {
           quality: 1,
           what: 'Text alternative may fail to give information provided by colors'
         }
+      },
+      qualWeb: {
+        'QW-WCAG-T8': {
+          variable: false,
+          quality: 1,
+          what: 'Text alternative is not an alternative'
+        }
+      },
+      wave: {
+        alt_suspicious: {
+          variable: false,
+          quality: 1,
+          what: 'Image text alternative is suspicious'
+        }
       }
     }
   },
   colorRisk: {
+    summary: 'info may be only color-represented',
     why: 'User may be unable to get help understanding document information',
     wcag: '1.4.1',
     weight: 1,
@@ -593,6 +624,7 @@ exports.issues = {
     }
   },
   imageNoSource: {
+    summary: 'image has no src',
     why: 'Image to be shown cannot be found',
     wcag: '1.3.1',
     weight: 4,
@@ -607,6 +639,7 @@ exports.issues = {
     }
   },
   sourceEmpty: {
+    summary: 'src empty',
     why: 'Image, audio, or video to be shown cannot be found',
     wcag: '1.3.1',
     weight: 4,
@@ -621,6 +654,7 @@ exports.issues = {
     }
   },
   backgroundBad: {
+    summary: 'CSS background invalid',
     why: 'Background is displayed improperly',
     wcag: '4.1',
     weight: 4,
@@ -645,6 +679,7 @@ exports.issues = {
     }
   },
   backgroundImageBad: {
+    summary: 'background image invalid',
     why: 'Background image is displayed improperly',
     wcag: '4.1',
     weight: 4,
@@ -664,6 +699,7 @@ exports.issues = {
     }
   },
   imagesSameAlt: {
+    summary: 'nearby images have same alt',
     why: 'User cannot get help differentiating two adjacent images',
     wcag: '1.1.1',
     weight: 1,
@@ -678,6 +714,7 @@ exports.issues = {
     }
   },
   imageTextLong: {
+    summary: 'image alt long',
     why: 'Helper gives a user an overly verbose explanation of an image',
     wcag: '1.1.1',
     weight: 2,
@@ -699,6 +736,7 @@ exports.issues = {
     }
   },
   titleLong: {
+    summary: 'title long',
     why: 'Hovering makes an overly verbose explanation pop up',
     wcag: '3.1.5',
     weight: 2,
@@ -713,6 +751,7 @@ exports.issues = {
     }
   },
   titleNotText: {
+    summary: 'title contains ASCII art',
     why: 'Hovering makes a hard-to-understand explanation pop up',
     wcag: '3.1.5',
     weight: 2,
@@ -726,28 +765,8 @@ exports.issues = {
       }
     }
   },
-  textAlternativeRisk: {
-    why: 'Helper gives a user a dubious explanation of an image',
-    wcag: '1',
-    weight: 1,
-    tools: {
-      qualWeb: {
-        'QW-WCAG-T8': {
-          variable: false,
-          quality: 1,
-          what: 'Text alternative is not an alternative'
-        }
-      },
-      wave: {
-        alt_suspicious: {
-          variable: false,
-          quality: 1,
-          what: 'Image text alternative is suspicious'
-        }
-      }
-    }
-  },
   decorativeImageRisk: {
+    summary: 'image dubiously marked decorative',
     why: 'Helper ignores an image that is apparently informative',
     wcag: '1.1.1',
     weight: 1,
@@ -762,6 +781,7 @@ exports.issues = {
     }
   },
   backgroundImageRisk: {
+    summary: 'background image possibly informative',
     why: 'Helper ignores an image that may be informative',
     wcag: '1.1.1',
     weight: 1,
@@ -776,6 +796,7 @@ exports.issues = {
     }
   },
   decorativeElementExposed: {
+    summary: 'decorative element exposed',
     why: 'Helper alerts a user to an uninformative image',
     wcag: '1.3.1',
     weight: 2,
@@ -809,6 +830,7 @@ exports.issues = {
     }
   },
   pageLanguage: {
+    summary: 'page language missing',
     why: 'Speaking helper may mispronounce the document text',
     wcag: '3.1.1',
     weight: 4,
@@ -887,6 +909,7 @@ exports.issues = {
     }
   },
   pageLanguageBad: {
+    summary: 'page language invalid',
     why: 'Speaking helper may mispronounce the document text',
     wcag: '3.1.1',
     weight: 4,
@@ -941,6 +964,7 @@ exports.issues = {
     }
   },
   elementLanguageBad: {
+    summary: 'element language invalid',
     why: 'Speaking helper may mispronounce the text of an item',
     wcag: '3.1.2',
     weight: 4,
@@ -969,6 +993,7 @@ exports.issues = {
     }
   },
   languageChange: {
+    summary: 'language change invalid',
     why: 'Speaking helper may mispronounce the text of an item',
     wcag: '3.1.2',
     weight: 3,
@@ -997,6 +1022,7 @@ exports.issues = {
     }
   },
   dialogNoText: {
+    summary: 'dialog not named',
     why: 'User cannot get help explaining a pop-up window',
     wcag: '4.1.2',
     weight: 4,
@@ -1018,6 +1044,7 @@ exports.issues = {
     }
   },
   applicationNoText: {
+    summary: 'application not named',
     why: 'User cannot get help on how to use a custom item',
     wcag: '4.1.2',
     weight: 4,
@@ -1032,6 +1059,7 @@ exports.issues = {
     }
   },
   objectNoText: {
+    summary: 'object not named',
     why: 'User cannot get help explaining a custom item',
     wcag: '1.1.1',
     weight: 4,
@@ -1081,6 +1109,7 @@ exports.issues = {
     }
   },
   objectTextRisk: {
+    summary: 'object dubiously named',
     why: 'Helper may explain a custom item inadequately',
     wcag: '1.1.1',
     weight: 1,
@@ -1095,6 +1124,7 @@ exports.issues = {
     }
   },
   objectAudioRisk: {
+    summary: 'non-audio element possibly plays audio',
     why: 'User may get inadequate help consuming audio content',
     wcag: '1.1.1',
     weight: 1,
@@ -1109,6 +1139,7 @@ exports.issues = {
     }
   },
   appletNoText: {
+    summary: 'applet not named',
     why: 'User cannot get help on how to use a custom item',
     wcag: '1.1.1',
     weight: 4,
@@ -1135,6 +1166,7 @@ exports.issues = {
     }
   },
   imageMapNoText: {
+    summary: 'image map not named',
     why: 'User cannot get help on the topic of an interactive image',
     wcag: '1.1.1',
     weight: 4,
@@ -1149,6 +1181,7 @@ exports.issues = {
     }
   },
   imageMapAreaNoText: {
+    summary: 'image map area not named',
     why: 'User cannot get help on how to use an interactive image',
     wcag: '1.1.1',
     weight: 4,
@@ -1203,6 +1236,7 @@ exports.issues = {
     }
   },
   customKeyboardRisk: {
+    summary: 'custom button possibly keyboard-inoperable',
     why: 'Custom item may prevent a keyboard-only user from operating it',
     wcag: '2.1.1',
     weight: 1,
@@ -1217,6 +1251,7 @@ exports.issues = {
     }
   },
   objectBlurKeyboardRisk: {
+    summary: 'object possibly not keyboard-blurrable',
     why: 'Custom item may trap a keyboard-only user',
     wcag: '2.1.1',
     weight: 1,
@@ -1231,6 +1266,7 @@ exports.issues = {
     }
   },
   eventKeyboardRisk: {
+    summary: 'event possibly not keyboard-triggerable',
     why: 'Keyboard-only user may be unable to perform an action',
     wcag: '2.1.1',
     weight: 1,
@@ -1279,6 +1315,7 @@ exports.issues = {
     }
   },
   internalLinkBroken: {
+    summary: 'internal link broken',
     why: 'User cannot reach a promised document location',
     wcag: '1.3.1',
     weight: 4,
@@ -1307,6 +1344,7 @@ exports.issues = {
     }
   },
   labelForBad: {
+    summary: 'label referent ineligible',
     why: 'User cannot get help understanding an item in a form',
     wcag: '1.3.1',
     weight: 3,
@@ -1342,6 +1380,7 @@ exports.issues = {
     }
   },
   ariaLabelWrongRisk: {
+    summary: 'dubious aria-label',
     why: 'User may fail to get help understanding an item in a form',
     wcag: '1.3.1',
     weight: 1,
@@ -1356,6 +1395,7 @@ exports.issues = {
     }
   },
   activeDescendantBadID: {
+    summary: 'aria-activedescendant invalid',
     why: 'Keyboard-only user cannot reach an item in a menu',
     wcag: '1.3.1',
     weight: 4,
@@ -1370,6 +1410,7 @@ exports.issues = {
     }
   },
   governedBadID: {
+    summary: 'aria-controls or -owns invalid',
     why: 'Keyboard-only user cannot reach an item',
     wcag: '1.3.1',
     weight: 4,
@@ -1396,6 +1437,7 @@ exports.issues = {
     }
   },
   descriptionBadID: {
+    summary: 'aria-describedby invalid',
     why: 'User cannot get help understanding an item in detail',
     wcag: '1.3.1',
     weight: 4,
@@ -1424,6 +1466,7 @@ exports.issues = {
     }
   },
   labelConfusionRisk: {
+    summary: 'label location dubious',
     why: 'User may fail to notice the explanation of an item in a form',
     wcag: '3.3.2',
     weight: 1,
@@ -1467,6 +1510,7 @@ exports.issues = {
     }
   },
   labelBadID: {
+    summary: 'label reference invalid',
     why: 'User cannot get help understanding an item in a form',
     wcag: '1.3.1',
     weight: 4,
@@ -1534,6 +1578,7 @@ exports.issues = {
     }
   },
   haspopupBad: {
+    summary: 'aria-haspopup invalid',
     why: 'Keyboard-only user cannot operate a custom tool',
     wcag: '1.3.1',
     weight: 4,
@@ -1548,6 +1593,7 @@ exports.issues = {
     }
   },
   applicationRisk: {
+    summary: 'dubious application role',
     why: 'User actions may have unexpected effects',
     wcag: '1.3.1',
     weight: 1,
@@ -1562,6 +1608,7 @@ exports.issues = {
     }
   },
   directionRisk: {
+    summary: 'dubious direction',
     why: 'Item may behave incorrectly',
     wcag: '1.3.2',
     weight: 1,
@@ -1576,6 +1623,7 @@ exports.issues = {
     }
   },
   clickOnly: {
+    summary: 'name dubiously mouse-specific',
     why: 'User may misunderstand how to activate a link',
     wcag: '2.4.4',
     weight: 1,
@@ -1590,6 +1638,7 @@ exports.issues = {
     }
   },
   linkNoText: {
+    summary: 'link not named',
     why: 'User cannot get help understanding what a link points to',
     wcag: '2.4.4',
     weight: 4,
@@ -1644,7 +1693,7 @@ exports.issues = {
         'AAA.4_1_2.H91.A.NoContent': {
           variable: false,
           quality: 1,
-          what: 'Link has an href attribute but no text'
+          what: 'Link has an href attribute but not named'
         }
       },
       ibm: {
@@ -1675,7 +1724,7 @@ exports.issues = {
         link_empty: {
           variable: false,
           quality: 1,
-          what: 'Link contains no text'
+          what: 'Link contains not named'
         },
         alt_link_missing: {
           variable: false,
@@ -1686,6 +1735,7 @@ exports.issues = {
     }
   },
   linkBrokenRisk: {
+    summary: 'link incomplete',
     why: 'User may fail to reach a promised location',
     wcag: '1.3.1',
     weight: 2,
@@ -1700,6 +1750,7 @@ exports.issues = {
     }
   },
   linkElNoHref: {
+    summary: 'link element href missing',
     why: 'User cannot reach a promised location',
     wcag: '4.1',
     weight: 3,
@@ -1721,6 +1772,7 @@ exports.issues = {
     }
   },
   abbreviationNoTitle: {
+    summary: 'abbr title missing',
     why: 'User cannot get help understanding an abbreviation',
     wcag: '3.1.4',
     weight: 4,
@@ -1729,7 +1781,7 @@ exports.issues = {
         title_for_abbr: {
           variable: false,
           quality: 1,
-          what: 'Element as an abbr but its defining title attribute is missing or empty'
+          what: 'Element is an abbr but its defining title attribute is missing or empty'
         }
       },
       qualWeb: {
@@ -1742,6 +1794,7 @@ exports.issues = {
     }
   },
   destinationNotURL: {
+    summary: 'link destination not URL',
     why: 'Helper cannot properly explain a link to a user',
     wcag: '1.3.1',
     weight: 1,
@@ -1761,6 +1814,7 @@ exports.issues = {
     }
   },
   destinationLink: {
+    summary: 'link href missing',
     why: 'Helper cannot properly explain a link to a user',
     wcag: '1.3.1',
     weight: 2,
@@ -1796,6 +1850,7 @@ exports.issues = {
     }
   },
   editableHow: {
+    summary: 'contenteditable element incomplete',
     why: 'User cannot get help on how to edit editable content',
     wcag: '1.3.1',
     weight: 3,
@@ -1810,6 +1865,7 @@ exports.issues = {
     }
   },
   textAreaNoText: {
+    summary: 'text area not named',
     why: 'User cannot get help on what information to enter in a form item',
     wcag: '1.3.1',
     weight: 4,
@@ -1824,6 +1880,7 @@ exports.issues = {
     }
   },
   linkAltSame: {
+    summary: 'link image alt duplicative',
     why: 'Helper repeats the explanation of a link',
     wcag: '1.1.1',
     weight: 2,
@@ -1838,6 +1895,7 @@ exports.issues = {
     }
   },
   linkTextsSame: {
+    summary: 'links named identically',
     why: 'User cannot get help differentiating links',
     wcag: '2.4.4',
     weight: 2,
@@ -1871,6 +1929,7 @@ exports.issues = {
     }
   },
   linkConfusionRisk: {
+    summary: 'links dubiously share name',
     why: 'User may be unable to get help differentiating links',
     wcag: '2.4.4',
     weight: 1,
@@ -1885,6 +1944,7 @@ exports.issues = {
     }
   },
   linkExternalRisk: {
+    summary: 'destination language change possibly unstated',
     why: 'User may be confused by the content after following a link',
     wcag: '2.4.4',
     weight: 1,
@@ -1899,6 +1959,7 @@ exports.issues = {
     }
   },
   linksNoNav: {
+    summary: 'links not grouped as nav',
     why: 'User cannot get help identifying links as a navigation tool',
     wcag: '1.3.1',
     weight: 2,
@@ -1913,6 +1974,7 @@ exports.issues = {
     }
   },
   linkPair: {
+    summary: 'text and image link not combined',
     why: 'Keyboard-only user expends extra effort to skip a link',
     wcag: '2.4.4',
     weight: 2,
@@ -1946,6 +2008,7 @@ exports.issues = {
     }
   },
   pageNewWindow: {
+    summary: 'page immediately opens window',
     why: 'User promised a document gets another document, too',
     wcag: '3.2.5',
     weight: 3,
@@ -1959,7 +2022,8 @@ exports.issues = {
       }
     }
   },
-  newTab: {
+  newTabSurpriseRisk: {
+    summary: 'tab-opening link action possibly unstated',
     why: 'Following a link opens a new window, possibly surprising a user',
     wcag: '3.2.5',
     weight: 1,
@@ -1993,6 +2057,7 @@ exports.issues = {
     }
   },
   selectNavSurpriseRisk: {
+    summary: 'navigating selection-change action possibly unstated',
     why: 'Changing a selected option opens a new window, possibly surprising a user',
     wcag: '3.2.5',
     weight: 1,
@@ -2007,6 +2072,7 @@ exports.issues = {
     }
   },
   preselectedOption: {
+    summary: 'no default option',
     why: 'User may risk erroneously submitting a form',
     wcag: '4.1.2',
     weight: 1,
@@ -2021,6 +2087,7 @@ exports.issues = {
     }
   },
   buttonAlt: {
+    summary: 'button has alt',
     why: 'User cannot get help explaing a button',
     wcag: '4.1.2',
     weight: 4,
@@ -2035,6 +2102,7 @@ exports.issues = {
     }
   },
   buttonNoText: {
+    summary: 'button not named',
     why: 'User cannot get help explaing a button',
     wcag: '4.1.2',
     weight: 4,
@@ -2126,6 +2194,7 @@ exports.issues = {
     }
   },
   menuItemNoText: {
+    summary: 'menu item not named',
     why: 'User cannot get help explaing a menu item',
     wcag: '4.1.2',
     weight: 4,
@@ -2147,6 +2216,7 @@ exports.issues = {
     }
   },
   parentMissing: {
+    summary: 'parent missing',
     why: 'Keyboard-only user cannot operate a custom tool',
     wcag: '1.3.1',
     weight: 4,
@@ -2189,6 +2259,7 @@ exports.issues = {
     }
   },
   descendantMissing: {
+    summary: 'descendant missing',
     why: 'Keyboard-only user cannot operate a custom tool',
     wcag: '1.3.1',
     weight: 4,
@@ -2217,6 +2288,7 @@ exports.issues = {
     }
   },
   presentationChild: {
+    summary: 'presentation element has child',
     why: 'Keyboard-only user cannot reach an item intended to be reachable',
     wcag: '1.3.1',
     weight: 4,
@@ -2231,6 +2303,7 @@ exports.issues = {
     }
   },
   svgImageNoText: {
+    summary: 'svg image not named',
     why: 'User cannot get help understanding an image',
     wcag: '1.1.1',
     weight: 4,
@@ -2266,6 +2339,7 @@ exports.issues = {
     }
   },
   svgLabelID: {
+    summary: 'svg label referent invalid',
     why: 'User cannot get help understanding an image',
     wcag: '1.1.1',
     weight: 4,
@@ -2280,6 +2354,7 @@ exports.issues = {
     }
   },
   cssBansRotate: {
+    summary: 'CSS bans rotation',
     why: 'User must read sideways after rotating a device',
     wcag: '1.3.4',
     weight: 4,
@@ -2308,6 +2383,7 @@ exports.issues = {
     }
   },
   orientationRisk: {
+    summary: 'orientation issues not testable',
     why: 'User may need to read sideways after rotating a device',
     wcag: '1.3.4',
     weight: 1,
@@ -2322,6 +2398,7 @@ exports.issues = {
     }
   },
   metaBansZoom: {
+    summary: 'meta bans zoom',
     why: 'User cannot adjust the document size for readability',
     wcag: '1.4.4',
     weight: 4,
@@ -2369,6 +2446,7 @@ exports.issues = {
     }
   },
   deviceRisk: {
+    summary: 'motion or orientation dependence possibly faulty',
     why: 'User may be unable to produce required device movement',
     wcag: '2.5.4',
     weight: 1,
@@ -2383,6 +2461,7 @@ exports.issues = {
     }
   },
   fontSizeAbsolute: {
+    summary: 'font size absolute',
     why: 'User cannot adjust the document size for readability',
     wcag: '1.4.4',
     weight: 2,
@@ -2404,6 +2483,7 @@ exports.issues = {
     }
   },
   fontSmall: {
+    summary: 'font small',
     why: 'Text is difficult to read',
     wcag: '1.4',
     weight: 3,
@@ -2439,6 +2519,7 @@ exports.issues = {
     }
   },
   textSpacingFrozen: {
+    summary: 'text spacing frozen',
     why: 'User cannot adjust the text spacing for readability',
     wcag: '1.4.12',
     weight: 4,
@@ -2477,6 +2558,7 @@ exports.issues = {
     }
   },
   leadingAbsolute: {
+    summary: 'line height absolute',
     why: 'User cannot adjust the line height of text for readability',
     wcag: '1.4.12',
     weight: 2,
@@ -2491,6 +2573,7 @@ exports.issues = {
     }
   },
   lineHeightLow: {
+    summary: 'line height low',
     why: 'Text is difficult to read',
     wcag: '1.4.8',
     weight: 2,
@@ -2512,6 +2595,7 @@ exports.issues = {
     }
   },
   overflowHidden: {
+    summary: 'overflow hidden',
     why: 'User cannot enlarge the text for readability',
     wcag: '1.4.4',
     weight: 4,
@@ -2526,6 +2610,7 @@ exports.issues = {
     }
   },
   overflowHiddenRisk: {
+    summary: 'overflow possibly hidden',
     why: 'User may be unable to enlarge the text for readability',
     wcag: '1.4.4',
     weight: 1,
@@ -2540,6 +2625,7 @@ exports.issues = {
     }
   },
   boxSizeAbsolute: {
+    summary: 'box size absolute',
     why: 'User cannot enlarge the content of an item for readability',
     wcag: '1.4.4',
     weight: 3,
@@ -2559,6 +2645,7 @@ exports.issues = {
     }
   },
   titleBad: {
+    summary: 'title attribute invalid',
     why: 'User cannot hover to get help explaining an item',
     wcag: '1.3.1',
     weight: 4,
@@ -2573,6 +2660,7 @@ exports.issues = {
     }
   },
   linkElementBad: {
+    summary: 'link element invalid',
     why: 'Document fails to get a needed external resource',
     wcag: '1.3.1',
     weight: 4,
@@ -2609,6 +2697,7 @@ exports.issues = {
     }
   },
   metaBad: {
+    summary: 'meta invalid',
     why: 'Document fails to include needed data',
     wcag: '1.3.1',
     weight: 3,
@@ -2663,6 +2752,7 @@ exports.issues = {
     }
   },
   scriptElementBad: {
+    summary: 'script element invalid',
     why: 'Browser processes the document improperly',
     wcag: '1.3.1',
     weight: 4,
@@ -2682,6 +2772,7 @@ exports.issues = {
     }
   },
   itemTypeBad: {
+    summary: 'itemtype invalid',
     why: 'User cannot get help on the definition of a term',
     wcag: '1.3.1',
     weight: 4,
@@ -2696,6 +2787,7 @@ exports.issues = {
     }
   },
   iframeTitleBad: {
+    summary: 'iframe not named',
     why: 'User cannot get help on the topic of an embedded document',
     wcag: '4.1.2',
     weight: 4,
@@ -2760,6 +2852,7 @@ exports.issues = {
     }
   },
   roleBad: {
+    summary: 'role invalid',
     why: 'User cannot get help on the nature of an item',
     wcag: '4.1.2',
     weight: 3,
@@ -2884,6 +2977,7 @@ exports.issues = {
     }
   },
   roleRedundant: {
+    summary: 'role redundant',
     why: 'Document includes unnecessary code',
     wcag: '4.1.2',
     weight: 1,
@@ -2927,6 +3021,7 @@ exports.issues = {
     }
   },
   dirBad: {
+    summary: 'dir invalid',
     why: 'Item may behave improperly',
     wcag: '4.1.2',
     weight: 1,
@@ -2948,6 +3043,7 @@ exports.issues = {
     }
   },
   attributeBad: {
+    summary: 'attribute invalid',
     why: 'Item behaves improperly',
     wcag: '1.3.1',
     weight: 4,
@@ -3063,6 +3159,7 @@ exports.issues = {
     }
   },
   attributeMissing: {
+    summary: 'attribute missing',
     why: 'Item behaves improperly',
     wcag: '4.1.2',
     weight: 4,
@@ -3116,6 +3213,7 @@ exports.issues = {
     }
   },
   roleMissing: {
+    summary: 'role missing',
     why: 'Item behaves improperly',
     wcag: '4.1.2',
     weight: 3,
@@ -3130,6 +3228,7 @@ exports.issues = {
     }
   },
   roleMissingRisk: {
+    summary: 'role possibly missing',
     why: 'Item may behave improperly',
     wcag: '4.1.2',
     weight: 1,
@@ -3144,6 +3243,7 @@ exports.issues = {
     }
   },
   ariaMissing: {
+    summary: 'aria attribute missing',
     why: 'Item behaves improperly',
     wcag: '4.1.2',
     weight: 4,
@@ -3172,6 +3272,7 @@ exports.issues = {
     }
   },
   ariaMissingRisk: {
+    summary: 'aria attribute possibly missing',
     why: 'Item may behave improperly',
     wcag: '4.1.2',
     weight: 2,
@@ -3186,6 +3287,7 @@ exports.issues = {
     }
   },
   ariaAttributeBad: {
+    summary: 'aria attribute invalid',
     why: 'Item behavior violates user expectations',
     wcag: '4.1.2',
     weight: 4,
@@ -3318,6 +3420,7 @@ exports.issues = {
     }
   },
   ariaRedundant: {
+    summary: 'aria attribute redundant',
     why: 'Document includes unnecessary code',
     wcag: '4.1.2',
     weight: 1,
@@ -3339,6 +3442,7 @@ exports.issues = {
     }
   },
   ariaReferenceBad: {
+    summary: 'aria reference invalid',
     why: 'Item behavior violates user expectations',
     wcag: '1.3.1',
     weight: 4,
@@ -3365,6 +3469,7 @@ exports.issues = {
     }
   },
   autocompleteBad: {
+    summary: 'autocomplete invalid',
     why: 'User cannot get help entering personal information in a form item',
     wcag: '1.3.5',
     weight: 3,
@@ -3431,6 +3536,7 @@ exports.issues = {
     }
   },
   autocompleteNone: {
+    summary: 'autocomplete missing',
     why: 'User cannot get help entering personal information in a form',
     wcag: '1.3.5',
     weight: 1,
@@ -3445,6 +3551,7 @@ exports.issues = {
     }
   },
   autocompleteRisk: {
+    summary: 'autocomplete dubious',
     why: 'User may fail to get help entering personal information in a form item',
     wcag: '1.3.5',
     weight: 1,
@@ -3459,6 +3566,7 @@ exports.issues = {
     }
   },
   requirementBad: {
+    summary: 'requirement invalid',
     why: 'User may fail to get help determining whether a form item must be completed',
     wcag: '1.3.5',
     weight: 4,
@@ -3473,6 +3581,7 @@ exports.issues = {
     }
   },
   requirementRedundant: {
+    summary: 'requirement redundant',
     why: 'Help determining whether a form item must be completed is exposed to risk of corruption',
     wcag: '1.3.5',
     weight: 1,
@@ -3487,6 +3596,7 @@ exports.issues = {
     }
   },
   textContrastAA: {
+    summary: 'text contrast poor',
     why: 'Text is difficult to read',
     wcag: '1.4.3',
     weight: 4,
@@ -3568,6 +3678,7 @@ exports.issues = {
     }
   },
   colorMissing: {
+    summary: 'color missing',
     why: 'Content is impossible to perceive under some conditions',
     wcag: '1.4.3',
     weight: 4,
@@ -3582,6 +3693,7 @@ exports.issues = {
     }
   },
   colorNamedRisk: {
+    summary: 'color perception possibly required',
     why: 'Content is impossible to perceive under some conditions',
     wcag: '1.4.1',
     weight: 1,
@@ -3596,6 +3708,7 @@ exports.issues = {
     }
   },
   contrastAAA: {
+    summary: 'text contrast improvable',
     why: 'Text is difficult to read',
     wcag: '1.4.6',
     weight: 1,
@@ -3653,6 +3766,7 @@ exports.issues = {
     }
   },
   contrastRisk: {
+    summary: 'text contrast issues not testable',
     why: 'Text may be difficult to read',
     wcag: '1.4.3',
     weight: 1,
@@ -3739,6 +3853,7 @@ exports.issues = {
     }
   },
   idEmpty: {
+    summary: 'ID empty',
     why: 'Item behaves improperly',
     wcag: '1.3.1',
     weight: 4,
@@ -3758,6 +3873,7 @@ exports.issues = {
     }
   },
   targetEmpty: {
+    summary: 'target empty',
     why: 'Item is displayed improperly',
     wcag: '1.3.1',
     weight: 4,
@@ -3772,6 +3888,7 @@ exports.issues = {
     }
   },
   headingEmpty: {
+    summary: 'heading empty',
     why: 'User cannot get help on the topic of a part of the document',
     wcag: '2.4.6',
     weight: 3,
@@ -3840,6 +3957,7 @@ exports.issues = {
     }
   },
   headingOfNothing: {
+    summary: 'heading heads nothing',
     why: 'Helper misdescribes the document',
     wcag: '1.3.1',
     weight: 2,
@@ -3854,6 +3972,7 @@ exports.issues = {
     }
   },
   typeRedundant: {
+    summary: 'type redundant',
     why: 'Document includes unnecessary code',
     wcag: '1.3.1',
     weight: 1,
@@ -3873,6 +3992,7 @@ exports.issues = {
     }
   },
   imageTextRedundant: {
+    summary: 'image name redundant',
     why: 'Helper repeats the explanation of an image',
     wcag: '1.1.1',
     weight: 1,
@@ -3913,6 +4033,7 @@ exports.issues = {
     }
   },
   decorativeTitle: {
+    summary: 'decorative element has title',
     why: 'Hovering-produced information is denied to a keyboard-only user',
     wcag: '1.3.1',
     weight: 1,
@@ -3948,6 +4069,7 @@ exports.issues = {
     }
   },
   titleRedundant: {
+    summary: 'title attribute redundant',
     why: 'Helper repeats the explanation of an item',
     wcag: '1.3.1',
     weight: 1,
@@ -3983,6 +4105,7 @@ exports.issues = {
     }
   },
   titleEmpty: {
+    summary: 'title attribute empty',
     why: 'Hovering does not get the promised explanation of an item',
     wcag: '1.3.1',
     weight: 1,
@@ -4016,6 +4139,7 @@ exports.issues = {
     }
   },
   docType: {
+    summary: 'DOCTYPE missing',
     why: 'Browser processes the document improperly',
     wcag: '1.3.1',
     weight: 4,
@@ -4037,6 +4161,7 @@ exports.issues = {
     }
   },
   pageTitleBad: {
+    summary: 'page title invalid',
     why: 'Browser processes the document improperly',
     wcag: '1.3.1',
     weight: 4,
@@ -4058,6 +4183,7 @@ exports.issues = {
     }
   },
   pageTitle: {
+    summary: 'page title missing',
     why: 'User is not informed of the topic of the document',
     wcag: '2.4.2',
     weight: 10,
@@ -4119,6 +4245,7 @@ exports.issues = {
     }
   },
   headElementsBad: {
+    summary: 'element in head invalid',
     why: 'Browser processes the document improperly',
     wcag: '4.1.1',
     weight: 3,
@@ -4140,6 +4267,7 @@ exports.issues = {
     }
   },
   headingLevelSkip: {
+    summary: 'heading level skipped',
     why: 'Helper misdescribes the document',
     wcag: '1.3.1',
     weight: 2,
@@ -4168,6 +4296,7 @@ exports.issues = {
     }
   },
   headingStructure: {
+    summary: 'heading structure illogical',
     why: 'Helper misdescribes the document',
     wcag: '1.3.1',
     weight: 2,
@@ -4189,6 +4318,7 @@ exports.issues = {
     }
   },
   headingConfusion: {
+    summary: 'heading names repeated',
     why: 'User cannot differentiate parts of the document',
     wcag: '1.3.1',
     weight: 2,
@@ -4210,6 +4340,7 @@ exports.issues = {
     }
   },
   headingNone: {
+    summary: 'headings missing',
     why: 'User cannot survey parts of the document',
     wcag: '1.3.1',
     weight: 3,
@@ -4245,6 +4376,7 @@ exports.issues = {
     }
   },
   h1Multiple: {
+    summary: 'multiple h1 headings',
     why: 'User cannot understand the topic of the document',
     wcag: '1.3.1',
     weight: 2,
@@ -4259,6 +4391,7 @@ exports.issues = {
     }
   },
   h1Missing: {
+    summary: 'h1 missing',
     why: 'User cannot understand the topic of the document',
     wcag: '1.3.1',
     weight: 3,
@@ -4287,6 +4420,7 @@ exports.issues = {
     }
   },
   h1Not1st: {
+    summary: 'h1 not 1st heading',
     why: 'User cannot understand the topic of the document',
     wcag: '1.3.1',
     weight: 3,
@@ -4301,6 +4435,7 @@ exports.issues = {
     }
   },
   articleHeadingless: {
+    summary: 'article heading missing',
     why: 'User cannot understand the topic of a part of the document',
     wcag: '1.3.1',
     weight: 1,
@@ -4315,6 +4450,7 @@ exports.issues = {
     }
   },
   sectionHeadingless: {
+    summary: 'section heading missing',
     why: 'User cannot understand the topic of a part of the document',
     wcag: '1.3.1',
     weight: 1,
@@ -4341,6 +4477,7 @@ exports.issues = {
     }
   },
   justification: {
+    summary: 'text fully justified',
     why: 'Text is difficult to read',
     wcag: '1.4.8',
     weight: 2,
@@ -4369,6 +4506,7 @@ exports.issues = {
     }
   },
   justificationRisk: {
+    summary: 'justification possibly undefined',
     why: 'Text may be difficult to read',
     wcag: '1.4.8',
     weight: 1,
@@ -4383,6 +4521,7 @@ exports.issues = {
     }
   },
   nonSemanticText: {
+    summary: 'semantic properties represented with styles',
     why: 'User cannot get help to fully understand the text',
     wcag: '1.3.1',
     weight: 2,
@@ -4432,6 +4571,7 @@ exports.issues = {
     }
   },
   hrConfusionRisk: {
+    summary: 'hr misused',
     why: 'User cannot get help on the nature of segments of the document',
     wcag: '1.3.1',
     weight: 1,
@@ -4453,6 +4593,7 @@ exports.issues = {
     }
   },
   pseudoCodeRisk: {
+    summary: 'pre use dubious',
     why: 'User may be unable to get help to fully understand the text',
     wcag: '1.3.1',
     weight: 1,
@@ -4467,6 +4608,7 @@ exports.issues = {
     }
   },
   pseudoParagraphRisk: {
+    summary: 'double br use dubious',
     why: 'User may be unable to get help to fully understand the text',
     wcag: '1.3.1',
     weight: 1,
@@ -4481,6 +4623,7 @@ exports.issues = {
     }
   },
   pseudoHeadingRisk: {
+    summary: 'heading-like styles dubious',
     why: 'User may be unable to understand the topic of a part of the document',
     wcag: '1.3.1',
     weight: 1,
@@ -4509,6 +4652,7 @@ exports.issues = {
     }
   },
   pseudoLinkRisk: {
+    summary: 'underlining dubious',
     why: 'User may be misled into believing some text is a link',
     wcag: '1.3.1',
     weight: 1,
@@ -4523,6 +4667,7 @@ exports.issues = {
     }
   },
   listChild: {
+    summary: 'list child invalid',
     why: 'User cannot get help on which items are in a list',
     wcag: '1.3.1',
     weight: 4,
@@ -4563,6 +4708,7 @@ exports.issues = {
     }
   },
   listItemOrphan: {
+    summary: 'list item orphan',
     why: 'User cannot get help on whether an item is in a list',
     wcag: '1.3.1',
     weight: 4,
@@ -4577,6 +4723,7 @@ exports.issues = {
     }
   },
   pseudoList: {
+    summary: 'list-like br use dubious',
     why: 'User cannot get help recognizing a list of items',
     wcag: '1.3.1',
     weight: 1,
@@ -4591,6 +4738,7 @@ exports.issues = {
     }
   },
   pseudoListRisk: {
+    summary: 'list-item use dubious',
     why: 'User may be unable to get help on which items are in lists',
     wcag: '1.3.1',
     weight: 1,
@@ -4601,7 +4749,15 @@ exports.issues = {
           quality: 1,
           what: 'List item is used nonsemantically'
         }
-      },
+      }
+    }
+  },
+  pseudoListRisk: {
+    summary: 'list possibly not marked as such',
+    why: 'User may be unable to get help on which items are in lists',
+    wcag: '1.3.1',
+    weight: 1,
+    tools: {
       wave: {
         list_possible: {
           variable: false,
@@ -4612,6 +4768,7 @@ exports.issues = {
     }
   },
   pseudoOrderedListRisk: {
+    summary: 'list unordered type dubious',
     why: 'User may be unable to get help on whether a list is ordered',
     wcag: '1.3.1',
     weight: 1,
@@ -4626,6 +4783,7 @@ exports.issues = {
     }
   },
   pseudoNavList: {
+    summary: 'nav links not list',
     why: 'User cannot get help recognizing a list of navigation links',
     wcag: '1.3.1',
     weight: 2,
@@ -4647,6 +4805,7 @@ exports.issues = {
     }
   },
   selectNoText: {
+    summary: 'select not named',
     why: 'User cannot get help on the topic of a list of options',
     wcag: '4.1.2',
     weight: 3,
@@ -4680,6 +4839,7 @@ exports.issues = {
     }
   },
   optionNoText: {
+    summary: 'option not named',
     why: 'User cannot get help to understand an option',
     wcag: '4.1.2',
     weight: 4,
@@ -4694,6 +4854,7 @@ exports.issues = {
     }
   },
   selectFlatRisk: {
+    summary: 'option groups possibly not marked',
     why: 'User may be unable to get help recognizing groups of options',
     wcag: '1.3.1',
     weight: 1,
@@ -4708,6 +4869,7 @@ exports.issues = {
     }
   },
   noOptionFocusable: {
+    summary: 'no option focusable',
     why: 'Keyboard-only user cannot choose an option',
     wcag: '2.1.1',
     weight: 1,
@@ -4722,6 +4884,7 @@ exports.issues = {
     }
   },
   accessKeyDuplicate: {
+    summary: 'duplicate access key',
     why: 'Keyboard shortcut does not reliably trigger the intended action',
     wcag: '1.3.1',
     weight: 3,
@@ -4750,6 +4913,7 @@ exports.issues = {
     }
   },
   fieldSetMissing: {
+    summary: 'fieldset missing',
     why: 'User cannot get help recognizing a group of related form items',
     wcag: '1.3.1',
     weight: 2,
@@ -4783,6 +4947,7 @@ exports.issues = {
     }
   },
   fieldSetRisk: {
+    summary: 'fieldset possibly missing',
     why: 'User may be unable to get help recognizing a group of related form items',
     wcag: '1.3.1',
     weight: 1,
@@ -4804,6 +4969,7 @@ exports.issues = {
     }
   },
   legendMisplaced: {
+    summary: 'legend location invalid',
     why: 'User cannot get help on the topic of a group of form items',
     wcag: '4.1.2',
     weight: 4,
@@ -4818,6 +4984,7 @@ exports.issues = {
     }
   },
   legendMissing: {
+    summary: 'legend missing',
     why: 'User cannot get help on the topic of a group of form items',
     wcag: '4.1.2',
     weight: 2,
@@ -4870,6 +5037,7 @@ exports.issues = {
     }
   },
   groupName: {
+    summary: 'group not named',
     why: 'User cannot get help on the topic of a group of form items',
     wcag: '4.1.2',
     weight: 3,
@@ -4903,6 +5071,7 @@ exports.issues = {
     }
   },
   layoutTable: {
+    summary: 'table misused',
     why: 'Helper misinforms a user about whether items are cells of a table',
     wcag: '1.3.1',
     weight: 2,
@@ -4936,6 +5105,7 @@ exports.issues = {
     }
   },
   tabularTableless: {
+    summary: 'table not marked as such',
     why: 'Helper misinforms a user about whether items are cells of a table',
     wcag: '1.3.1',
     weight: 3,
@@ -4950,6 +5120,7 @@ exports.issues = {
     }
   },
   tableColumnsVary: {
+    summary: 'table column counts vary',
     why: 'User cannot get help on the dimensions of a table',
     wcag: '1.3.1',
     weight: 3,
@@ -4969,6 +5140,7 @@ exports.issues = {
     }
   },
   tableCaption: {
+    summary: 'table caption missing',
     why: 'User cannot get help on the topic of a table',
     wcag: '1.3.1',
     weight: 1,
@@ -5009,6 +5181,7 @@ exports.issues = {
     }
   },
   tableCaptionLoc: {
+    summary: 'table caption location invalid',
     why: 'User cannot get help on the topic of a table',
     wcag: '1.3.1',
     weight: 3,
@@ -5023,6 +5196,7 @@ exports.issues = {
     }
   },
   tableCapSum: {
+    summary: 'table summary duplicative',
     why: 'Helper informs a user repetitively about the topic of a table',
     wcag: '1.3.1',
     weight: 2,
@@ -5037,6 +5211,7 @@ exports.issues = {
     }
   },
   tableSum: {
+    summary: 'table summary empty',
     why: 'User cannot get help summarizing a table',
     wcag: '1.3.1',
     weight: 4,
@@ -5050,7 +5225,8 @@ exports.issues = {
       }
     }
   },
-  tablelabelID: {
+  tableLabelID: {
+    summary: 'table aria-labelledby invalid',
     why: 'User cannot get help on the topic of a table',
     wcag: '1.3.1',
     weight: 4,
@@ -5070,6 +5246,7 @@ exports.issues = {
     }
   },
   tableDescriptionID: {
+    summary: 'table aria-describedby invalid',
     why: 'User cannot get help on the topic of a table',
     wcag: '1.3.1',
     weight: 4,
@@ -5089,6 +5266,7 @@ exports.issues = {
     }
   },
   cellHeadersNotInferrable: {
+    summary: 'cell headers not inferrable',
     why: 'User cannot get help on relationships in a table',
     wcag: '1.3.1',
     weight: 4,
@@ -5110,6 +5288,7 @@ exports.issues = {
     }
   },
   cellHeadersOutsideTable: {
+    summary: 'cell headers outside table',
     why: 'User cannot get help on relationships in a table',
     wcag: '1.3.1',
     weight: 4,
@@ -5124,6 +5303,7 @@ exports.issues = {
     }
   },
   cellHeadersAmbiguityRisk: {
+    summary: 'cell headers possibly ambiguous',
     why: 'User may be unable to get help on relationships in a table',
     wcag: '1.3.1',
     weight: 2,
@@ -5155,6 +5335,7 @@ exports.issues = {
     }
   },
   tableHeaderless: {
+    summary: 'table headers missing',
     why: 'User cannot get help on relationships in a table',
     wcag: '1.3.1',
     weight: 3,
@@ -5176,6 +5357,7 @@ exports.issues = {
     }
   },
   tableCellHeaderless: {
+    summary: 'table-cell header missing',
     why: 'User cannot get help on the topic of a table cell',
     wcag: '1.3.1',
     weight: 3,
@@ -5196,7 +5378,8 @@ exports.issues = {
       }
     }
   },
-  tableHeaderCelless: {
+  tableHeaderCellless: {
+    summary: 'table-header cell missing',
     why: 'User cannot get help on relationships in a table',
     wcag: '1.3.1',
     weight: 4,
@@ -5225,6 +5408,7 @@ exports.issues = {
     }
   },
   TableHeaderScopeRisk: {
+    summary: 'Table scope possibly ambiguous',
     why: 'User may be unable to get help on relationships in a table',
     wcag: '1.3.1',
     weight: 1,
@@ -5239,6 +5423,7 @@ exports.issues = {
     }
   },
   tableHeaderEmpty: {
+    summary: 'table header empty',
     why: 'User cannot get help on relationships in a table',
     wcag: '1.3.1',
     weight: 2,
@@ -5247,12 +5432,13 @@ exports.issues = {
         th_empty: {
           variable: false,
           quality: 1,
-          what: 'Element contains no text'
+          what: 'Element not named'
         }
       }
     }
   },
   tableHead: {
+    summary: 'thead missing',
     why: 'User cannot get help on parts of a table',
     wcag: '1.3.1',
     weight: 1,
@@ -5267,6 +5453,7 @@ exports.issues = {
     }
   },
   tableBody: {
+    summary: 'tbody missing',
     why: 'User cannot get help on parts of a table',
     wcag: '1.3.1',
     weight: 1,
@@ -5281,6 +5468,7 @@ exports.issues = {
     }
   },
   tableEmbedded: {
+    summary: 'table embedded in table',
     why: 'User cannot get help on relationships in a table',
     wcag: '1.3.1',
     weight: 2,
@@ -5295,6 +5483,7 @@ exports.issues = {
     }
   },
   controlNoText: {
+    summary: 'control not named',
     why: 'User cannot get help on how to operate a form item',
     wcag: '4.1.2',
     weight: 4,
@@ -5349,6 +5538,7 @@ exports.issues = {
     }
   },
   controlLabelInvisible: {
+    summary: 'control label invisible',
     why: 'User cannot understand how to operate a form item',
     wcag: '2.4.6',
     weight: 4,
@@ -5370,6 +5560,7 @@ exports.issues = {
     }
   },
   titleAsLabel: {
+    summary: 'control has title instead of label',
     why: 'User cannot get help on how to operate a form item',
     wcag: '2.4.6',
     weight: 3,
@@ -5383,7 +5574,8 @@ exports.issues = {
       }
     }
   },
-  visibleLabelNotName: {
+  visibleLabelNotInName: {
+    summary: 'visible label not in name',
     why: 'User cannot get help choosing a form control to operate',
     wcag: '2.5.3',
     weight: 3,
@@ -5431,6 +5623,7 @@ exports.issues = {
     }
   },
   targetSize: {
+    summary: 'target small',
     why: 'User cannot reliably choose an item to click or tap',
     wcag: '2.5.5',
     weight: 3,
@@ -5445,6 +5638,7 @@ exports.issues = {
     }
   },
   visibleBulk: {
+    summary: 'large visible-element count',
     why: 'User cannot easily find items in the document',
     wcag: '2.4',
     weight: 1,
@@ -5459,6 +5653,7 @@ exports.issues = {
     }
   },
   activeEmbedding: {
+    summary: 'control child of link or button',
     why: 'User cannot reliably choose an item to click or tap',
     wcag: '2.5.5',
     weight: 3,
@@ -5552,6 +5747,7 @@ exports.issues = {
     }
   },
   tabFocusability: {
+    summary: 'element not focusable',
     why: 'Keyboard-only user cannot choose an item to operate',
     wcag: '2.1.1',
     weight: 4,
@@ -5592,6 +5788,7 @@ exports.issues = {
     }
   },
   focusIndication: {
+    summary: 'focus indication poor',
     why: 'Keyboard-only user cannot choose an item to operate',
     wcag: '2.4.7',
     weight: 4,
@@ -5627,6 +5824,7 @@ exports.issues = {
     }
   },
   allCaps: {
+    summary: 'all-capital text',
     why: 'Text is difficult to read',
     wcag: '3.1.5',
     weight: 0,
@@ -5655,6 +5853,7 @@ exports.issues = {
     }
   },
   allItalics: {
+    summary: 'all-italic text',
     why: 'Text is difficult to read',
     wcag: '3.1.5',
     weight: 0,
@@ -5683,6 +5882,7 @@ exports.issues = {
     }
   },
   textDistortion: {
+    summary: 'text distortion',
     why: 'Text is difficult to read',
     wcag: '3.1.5',
     weight: 1,
@@ -5697,6 +5897,7 @@ exports.issues = {
     }
   },
   noLandmarks: {
+    summary: 'no landmarks',
     why: 'User cannot get help on how the document is organized',
     wcag: '1.3.6',
     weight: 2,
@@ -5711,6 +5912,7 @@ exports.issues = {
     }
   },
   contentBeyondLandmarks: {
+    summary: 'content beyond landmarks',
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 1,
@@ -5744,6 +5946,7 @@ exports.issues = {
     }
   },
   footerNotTop: {
+    summary: 'footer child of landmark',
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 1,
@@ -5758,6 +5961,7 @@ exports.issues = {
     }
   },
   asideNotTop: {
+    summary: 'aside child of landmark',
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 2,
@@ -5784,6 +5988,7 @@ exports.issues = {
     }
   },
   mainNotTop: {
+    summary: 'main child of landmark',
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 2,
@@ -5812,6 +6017,7 @@ exports.issues = {
     }
   },
   mainConfusion: {
+    summary: 'mains not distinctly named',
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 3,
@@ -5841,6 +6047,7 @@ exports.issues = {
     }
   },
   mainNone: {
+    summary: 'main missing',
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 2,
@@ -5862,6 +6069,7 @@ exports.issues = {
     }
   },
   mainNot1: {
+    summary: 'multiple mains',
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 2,
@@ -5897,6 +6105,7 @@ exports.issues = {
     }
   },
   bannerNot1: {
+    summary: 'multiple banners',
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 2,
@@ -5930,6 +6139,7 @@ exports.issues = {
     }
   },
   bannerNotTop: {
+    summary: 'banner child of landmark',
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 2,
@@ -5951,6 +6161,7 @@ exports.issues = {
     }
   },
   footerConfusion: {
+    summary: 'contentinfos not distinctly named',
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 3,
@@ -5970,6 +6181,7 @@ exports.issues = {
     }
   },
   footerNot1: {
+    summary: 'multiple contentinfos',
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 2,
@@ -6010,6 +6222,7 @@ exports.issues = {
     }
   },
   landmarkConfusion: {
+    summary: 'landmarks not distinctly named',
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 3,
@@ -6036,6 +6249,7 @@ exports.issues = {
     }
   },
   articleConfusion: {
+    summary: 'articles not distinctly named',
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 3,
@@ -6050,6 +6264,7 @@ exports.issues = {
     }
   },
   formConfusion: {
+    summary: 'forms not distinctly named',
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 3,
@@ -6069,6 +6284,7 @@ exports.issues = {
     }
   },
   applicationConfusion: {
+    summary: 'applications not distinctly named',
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 3,
@@ -6083,6 +6299,7 @@ exports.issues = {
     }
   },
   asideConfusion: {
+    summary: 'asides not distinctly named',
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 3,
@@ -6102,6 +6319,7 @@ exports.issues = {
     }
   },
   bannerConfusion: {
+    summary: 'banners not distinctly named',
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 3,
@@ -6121,6 +6339,7 @@ exports.issues = {
     }
   },
   navConfusion: {
+    summary: 'navigations not distinctly named',
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 3,
@@ -6140,6 +6359,7 @@ exports.issues = {
     }
   },
   landmarkInNav: {
+    summary: 'invalid landmark child of navigation role',
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 4,
@@ -6154,6 +6374,7 @@ exports.issues = {
     }
   },
   regionConfusion: {
+    summary: 'regions not distinctly named',
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 3,
@@ -6173,6 +6394,7 @@ exports.issues = {
     }
   },
   searchConfusion: {
+    summary: 'searches not distinctly named',
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 3,
@@ -6192,6 +6414,7 @@ exports.issues = {
     }
   },
   complementaryNoText: {
+    summary: 'complementary not named',
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 1,
@@ -6221,6 +6444,7 @@ exports.issues = {
     }
   },
   labelNoText: {
+    summary: 'label not named',
     why: 'User cannot get help on the topic of a form item',
     wcag: '1.3.1',
     weight: 4,
@@ -6240,6 +6464,7 @@ exports.issues = {
     }
   },
   focusableOperable: {
+    summary: 'focusable element inoperable',
     why: 'Inoperability of an item violates a user expectation',
     wcag: '2.1.1',
     weight: 2,
@@ -6254,6 +6479,7 @@ exports.issues = {
     }
   },
   operableFocusable: {
+    summary: 'operable element not focusable',
     why: 'Keyboard-only user cannot navigate properly to an operable item',
     wcag: '2.1.1',
     weight: 4,
@@ -6268,6 +6494,7 @@ exports.issues = {
     }
   },
   focusableRole: {
+    summary: 'focusable element not active',
     why: 'Keyboard-only user cannot navigate properly to the operable items',
     wcag: '4.1.2',
     weight: 3,
@@ -6289,6 +6516,7 @@ exports.issues = {
     }
   },
   focusableHidden: {
+    summary: 'focusable element hidden',
     why: 'Keyboard-only user cannot navigate properly to the operable items',
     wcag: '4.1.2',
     weight: 4,
@@ -6341,6 +6569,7 @@ exports.issues = {
     }
   },
   focusedAway: {
+    summary: 'element beyond display when focused',
     why: 'Keyboard-only user cannot navigate properly to the operable items',
     wcag: '1.4.10',
     weight: 3,
@@ -6355,6 +6584,7 @@ exports.issues = {
     }
   },
   focusableDescendants: {
+    summary: 'presentational child focusable',
     why: 'Keyboard-only user cannot navigate properly to the operable items',
     wcag: '4.1.2',
     weight: 4,
@@ -6376,6 +6606,7 @@ exports.issues = {
     }
   },
   multipleLabelees: {
+    summary: 'labeled element ambiguous',
     why: 'User cannot get help on the topic of a form item',
     wcag: '1.3.1',
     weight: 4,
@@ -6402,6 +6633,7 @@ exports.issues = {
     }
   },
   labeledHidden: {
+    summary: 'control hidden but labeled',
     why: 'Document includes unnecessary code',
     wcag: '1.3.1',
     weight: 1,
@@ -6421,6 +6653,7 @@ exports.issues = {
     }
   },
   contentHidden: {
+    summary: 'page hidden',
     why: 'User cannot get the document content',
     wcag: '2.4.7',
     weight: 4,
@@ -6435,6 +6668,7 @@ exports.issues = {
     }
   },
   hideFailureRisk: {
+    summary: 'false aria-hidden value risky',
     why: 'User may be misled by erroneously hidden or revealed document content',
     wcag: '2.4.6',
     weight: 0,
@@ -6449,6 +6683,7 @@ exports.issues = {
     }
   },
   hiddenContentRisk: {
+    summary: 'hidden content possibly not testable',
     why: 'Some barriers in the document may be undetected',
     wcag: '4.1',
     weight: 1,
@@ -6463,6 +6698,7 @@ exports.issues = {
     }
   },
   negativeIndent: {
+    summary: 'negative text-indent',
     why: 'Helper may hide content from the user',
     wcag: '4.1',
     weight: 3,
@@ -6477,6 +6713,7 @@ exports.issues = {
     }
   },
   frameContentRisk: {
+    summary: 'iframe content possibly not testable',
     why: 'Some barriers in the document may be undetected',
     wcag: '4.1',
     weight: 1,
@@ -6491,6 +6728,7 @@ exports.issues = {
     }
   },
   frameSandboxRisk: {
+    summary: 'iframe sandbox attributes risky',
     why: 'Document may be unsafe to use',
     wcag: '4.1',
     weight: 2,
@@ -6505,6 +6743,7 @@ exports.issues = {
     }
   },
   hoverIndication: {
+    summary: 'hover indication poor',
     why: 'User cannot explore the document reliably with a mouse',
     wcag: '3.3.2',
     weight: 3,
@@ -6519,6 +6758,7 @@ exports.issues = {
     }
   },
   hoverSurprise: {
+    summary: 'hovering changes content',
     why: 'User cannot explore the document reliably with a mouse',
     wcag: '3.2.5',
     weight: 1,
@@ -6533,6 +6773,7 @@ exports.issues = {
     }
   },
   labelClash: {
+    summary: 'label types incompatible',
     why: 'User cannot get reliable help on the topics of form items',
     wcag: '1.3.1',
     weight: 2,
@@ -6547,6 +6788,7 @@ exports.issues = {
     }
   },
   labelNot1: {
+    summary: 'element referenced by multiple labels',
     why: 'User cannot get reliable help on the topics of form items',
     wcag: '1.3.1',
     weight: 1,
@@ -6592,6 +6834,7 @@ exports.issues = {
     }
   },
   labelEmpty: {
+    summary: 'label empty',
     why: 'User cannot get help on the topics of form items',
     wcag: '1.3.1',
     weight: 3,
@@ -6635,6 +6878,7 @@ exports.issues = {
     }
   },
   labelRisk: {
+    summary: 'labeling risky',
     why: 'User may misunderstand a form control',
     wcag: '3.3.2',
     weight: 1,
@@ -6659,6 +6903,7 @@ exports.issues = {
     }
   },
   linkComprehensionRisk: {
+    summary: 'link name dubious',
     why: 'User may misunderstand what a link points to',
     wcag: '2.4.4',
     weight: 1,
@@ -6680,6 +6925,7 @@ exports.issues = {
     }
   },
   nonWebLink: {
+    summary: 'link to non-web resource',
     why: 'Document points to harder-to-use resources',
     wcag: '1.3.3',
     weight: 1,
@@ -6711,6 +6957,7 @@ exports.issues = {
     }
   },
   linkIndication: {
+    summary: 'link indication poor',
     why: 'User cannot differentiate a link from plain text',
     wcag: '1.3.3',
     weight: 2,
@@ -6746,6 +6993,7 @@ exports.issues = {
     }
   },
   menuNavigation: {
+    summary: 'menu navigation nonstandard',
     why: 'Menu items behave improperly for a keyboard-only user',
     wcag: '2.1.1',
     weight: 2,
@@ -6760,6 +7008,7 @@ exports.issues = {
     }
   },
   menuItemless: {
+    summary: 'menu items missing',
     why: 'User cannot reach promised menu items',
     wcag: '1.3.1',
     weight: 4,
@@ -6774,6 +7023,7 @@ exports.issues = {
     }
   },
   tabNavigation: {
+    summary: 'tablist navigation nonstandard',
     why: 'Tablist items behave improperly for a keyboard-only user',
     wcag: '2.1.1',
     weight: 2,
@@ -6788,6 +7038,7 @@ exports.issues = {
     }
   },
   spontaneousMotion: {
+    summary: 'page content moves spontaneously',
     why: 'Motion-sensitive user may suffer harm',
     wcag: '2.2.2',
     weight: 2,
@@ -6809,6 +7060,7 @@ exports.issues = {
     }
   },
   animationLong: {
+    summary: 'animation long or repetitive',
     why: 'Motion-sensitive user may suffer harm',
     wcag: '2.2.2',
     weight: 3,
@@ -6828,6 +7080,7 @@ exports.issues = {
     }
   },
   blink: {
+    summary: 'blink element',
     why: 'Motion-sensitive user may suffer harm',
     wcag: '2.2.2',
     weight: 4,
@@ -6854,6 +7107,7 @@ exports.issues = {
     }
   },
   autoplay: {
+    summary: 'autoplay',
     why: 'Motion- or noise-sensitive user may suffer harm',
     wcag: '1.4.2',
     weight: 2,
@@ -6882,6 +7136,7 @@ exports.issues = {
     }
   },
   autoplayLong: {
+    summary: 'autoplay long',
     why: 'Motion- or noise-sensitive user may suffer harm',
     wcag: '1.4.2',
     weight: 2,
@@ -6896,6 +7151,7 @@ exports.issues = {
     }
   },
   autoplayControl: {
+    summary: 'autoplay control',
     why: 'Motion- or noise-sensitive user may suffer harm',
     wcag: '1.4.2',
     weight: 2,
@@ -6910,6 +7166,7 @@ exports.issues = {
     }
   },
   refresh: {
+    summary: 'element reloads or redirects',
     why: 'Document change may surprise a user',
     wcag: '2.2.1',
     weight: 3,
@@ -6936,6 +7193,7 @@ exports.issues = {
     }
   },
   parentBad: {
+    summary: 'parent invalid',
     why: 'User cannot properly operate an item',
     wcag: '1.3.1',
     weight: 4,
@@ -6957,6 +7215,7 @@ exports.issues = {
     }
   },
   inconsistentStyles: {
+    summary: 'inconsistent heading, link, or button styles',
     why: 'User cannot easily distinguish items of different types',
     wcag: '3.2.4',
     weight: 1,
@@ -6971,6 +7230,7 @@ exports.issues = {
     }
   },
   filterStyle: {
+    summary: 'filter style',
     why: 'Item is too distorted for understandability',
     wcag: '4.1',
     weight: 1,
@@ -6985,6 +7245,7 @@ exports.issues = {
     }
   },
   zIndexNotZero: {
+    summary: 'z-index not zero',
     why: 'User cannot predict the effect of clicking',
     wcag: '1.4',
     weight: 1,
@@ -6999,6 +7260,7 @@ exports.issues = {
     }
   },
   tabIndexPositive: {
+    summary: 'tabindex positive',
     why: 'Keyboard-only user cannot predict the navigation sequence',
     wcag: '2.4.3',
     weight: 1,
@@ -7027,6 +7289,7 @@ exports.issues = {
     }
   },
   tabIndexEmpty: {
+    summary: 'tabindex empty',
     why: 'Keyboard-only user cannot follow the intended navigation sequence',
     wcag: '1.3.1',
     weight: 4,
@@ -7041,6 +7304,7 @@ exports.issues = {
     }
   },
   tabIndexInt: {
+    summary: 'tabindex not integer',
     why: 'Keyboard-only user cannot follow the intended navigation sequence',
     wcag: '1.3.1',
     weight: 4,
@@ -7055,6 +7319,7 @@ exports.issues = {
     }
   },
   tabIndexExtra: {
+    summary: 'tabindex redundant',
     why: 'Revision risks interfering with navigation by a keyboard-only user',
     wcag: '1.3.1',
     weight: 1,
@@ -7069,6 +7334,7 @@ exports.issues = {
     }
   },
   avNoText: {
+    summary: 'audio or video caption track missing',
     why: 'User cannot get help reading speech as text',
     wcag: '1.2.1',
     weight: 4,
@@ -7083,6 +7349,7 @@ exports.issues = {
     }
   },
   audioNoText: {
+    summary: 'audio track missing',
     why: 'User cannot get help reading speech as text',
     wcag: '1.2.1',
     weight: 4,
@@ -7131,6 +7398,7 @@ exports.issues = {
     }
   },
   audioTextRisk: {
+    summary: 'audio possibly not named',
     why: 'User may be unable to get help reading speech as text',
     wcag: '1.2.1',
     weight: 1,
@@ -7145,6 +7413,7 @@ exports.issues = {
     }
   },
   videoNoText: {
+    summary: 'video not named',
     why: 'User cannot get help reading video content as text',
     wcag: '1.2.2',
     weight: 4,
@@ -7191,6 +7460,7 @@ exports.issues = {
     }
   },
   videoNoTranscript: {
+    summary: 'video transcript missing',
     why: 'User cannot get help reading video content as text',
     wcag: '1.2.2',
     weight: 4,
@@ -7205,6 +7475,7 @@ exports.issues = {
     }
   },
   videoCaptionRisk: {
+    summary: 'audio or video alternatives possibly missing',
     why: 'User may be unable to get help reading video content as text',
     wcag: '1.2.2',
     weight: 1,
@@ -7229,6 +7500,7 @@ exports.issues = {
     }
   },
   videoNoAudioDescription: {
+    summary: 'video audio description missing',
     why: 'User cannot get help hearing video content as speech',
     wcag: '1.2.1',
     weight: 4,
@@ -7243,6 +7515,7 @@ exports.issues = {
     }
   },
   videoNoAudioTrack: {
+    summary: 'video audio track missing',
     why: 'User cannot get help hearing video content as speech',
     wcag: '1.2.1',
     weight: 4,
@@ -7257,6 +7530,7 @@ exports.issues = {
     }
   },
   videoAlternative: {
+    summary: 'video alternative missing',
     why: 'User cannot get help consuming a video recording as text or speech',
     wcag: '1.2.1',
     weight: 4,
@@ -7271,6 +7545,7 @@ exports.issues = {
     }
   },
   keyboardScroll: {
+    summary: 'element not scrollable',
     why: 'Keyboard-only user cannot scroll an item',
     wcag: '2.1.1',
     weight: 4,
@@ -7299,6 +7574,7 @@ exports.issues = {
     }
   },
   positionSticky: {
+    summary: 'position sticky',
     why: 'User may be unable to see needed content or may be forced to scroll in both dimensions',
     wcag: '1.4.10',
     weight: 1,
@@ -7320,6 +7596,7 @@ exports.issues = {
     }
   },
   scrollRisk: {
+    summary: 'container size unit not percentage',
     why: 'User may be unable to see all of an item without scrolling in both dimensions',
     wcag: '1.4.10',
     weight: 1,
@@ -7334,6 +7611,7 @@ exports.issues = {
     }
   },
   skipRepeatedContent: {
+    summary: 'skip method missing or invalid',
     why: 'Keyboard-only user cannot easily reach the specific content of the document',
     wcag: '2.4.1',
     weight: 3,
@@ -7384,6 +7662,7 @@ exports.issues = {
     }
   },
   repeatedContentRisk: {
+    summary: 'skip method possibly missing or invalid',
     why: 'Keyboard-only user may be unable easily to reach the specific content of the document',
     wcag: '2.4.1',
     weight: 1,
@@ -7425,6 +7704,7 @@ exports.issues = {
     }
   },
   submitButton: {
+    summary: 'form submission button missing',
     why: 'User cannot easily submit a form',
     wcag: '3.2.2',
     weight: 3,
@@ -7453,6 +7733,7 @@ exports.issues = {
     }
   },
   fragmentaryNoticeRisk: {
+    summary: 'assertive region not atomic',
     why: 'User may be unable to get help on what content has changed',
     wcag: '4.1.3',
     weight: 2,
@@ -7467,6 +7748,7 @@ exports.issues = {
     }
   },
   errorReferenceBad: {
+    summary: 'error reference invalid',
     why: 'User cannot correct a form error',
     wcag: '3.3.1',
     weight: 4,
@@ -7481,6 +7763,7 @@ exports.issues = {
     }
   },
   noScriptRisk: {
+    summary: 'noscript element possibly not equivalent',
     why: 'User who has disabled JavaScript may be denied some content',
     wcag: '4.1',
     weight: 1,
@@ -7495,6 +7778,7 @@ exports.issues = {
     }
   },
   flash: {
+    summary: 'flash content',
     why: 'Document includes code that may not work and may jeopardize user security',
     wcag: '4.1',
     weight: 1,
@@ -7516,6 +7800,7 @@ exports.issues = {
     }
   },
   browserSupportRisk: {
+    summary: 'inputmode attribute',
     why: 'Document may include code that the browser cannot process',
     wcag: '4.1',
     weight: 1,
@@ -7530,6 +7815,7 @@ exports.issues = {
     }
   },
   attributeObsolete: {
+    summary: 'attribute obsolete',
     why: 'Document includes obsolete code that the browser may fail to process',
     wcag: '4.1',
     weight: 3,
@@ -7604,6 +7890,7 @@ exports.issues = {
     }
   },
   elementObsolete: {
+    summary: 'element obsolete',
     why: 'Document includes obsolete code that the browser may fail to process',
     wcag: '4.1',
     weight: 3,
@@ -7666,6 +7953,7 @@ exports.issues = {
     }
   },
   obsolete: {
+    summary: 'code obsolete',
     why: 'Document contains invalid code',
     wcag: '4.1',
     weight: 3,
@@ -7697,6 +7985,7 @@ exports.issues = {
     }
   },
   cssInvalid: {
+    summary: 'CSS invalid',
     why: 'Document cannot be properly displayed',
     wcag: '4.1',
     weight: 3,
@@ -7841,6 +8130,7 @@ exports.issues = {
     }
   },
   elementClosure: {
+    summary: 'element closure invalid',
     why: 'Document contains invalid code',
     wcag: '4.1.1',
     weight: 3,
@@ -7890,6 +8180,7 @@ exports.issues = {
     }
   },
   nestingBad: {
+    summary: 'nesting invalid',
     why: 'Document contains invalid code',
     wcag: '4.1.1',
     weight: 3,
@@ -7904,6 +8195,7 @@ exports.issues = {
     }
   },
   parseError: {
+    summary: 'code invalid',
     why: 'Document contains invalid code',
     wcag: '4.1',
     weight: 3,
@@ -8124,6 +8416,7 @@ exports.issues = {
     }
   },
   slashParseRisk: {
+    summary: 'void element has trailing slash',
     why: 'Document contains invalid code',
     wcag: '4.1',
     weight: 1,
@@ -8138,6 +8431,7 @@ exports.issues = {
     }
   },
   encodingBad: {
+    summary: 'text in Private Use Area',
     why: 'Document contains invalid code',
     wcag: '3.1.3',
     weight: 4,
@@ -8152,6 +8446,7 @@ exports.issues = {
     }
   },
   captcha2: {
+    summary: 'captcha2',
     why: 'User is prevented from consuming the document',
     wcag: '1.1.1',
     weight: 1,
@@ -8166,6 +8461,7 @@ exports.issues = {
     }
   },
   overlay: {
+    summary: 'overlay',
     why: 'Help for the user may be complex, inconsistent, and ineffective',
     wcag: '4.1',
     weight: 1,
@@ -8180,6 +8476,7 @@ exports.issues = {
     }
   },
   fatalError: {
+    summary: 'fatal error',
     why: 'Document prevents testing for accessibility',
     wcag: '4.1',
     weight: 4,
@@ -8199,6 +8496,7 @@ exports.issues = {
     }
   },
   notValidatable: {
+    summary: 'SVG version not 1.1',
     why: 'Item prevents testing for accessibility',
     wcag: '4.1',
     weight: 1,

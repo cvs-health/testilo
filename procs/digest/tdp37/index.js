@@ -19,9 +19,9 @@ const innerJoiner = '\n        ';
 // Gets a row of the score-summary table.
 const getScoreRow = (componentName, score) => `<tr><th>${componentName}</th><td>${score}</td></tr>`;
 // Gets a row of the issue-score-summary table.
-const getIssueScoreRow = (issueID, wcag, score, tools) => {
+const getIssueScoreRow = (summary, wcag, score, tools) => {
   const toolList = tools.join(', ');
-  return `<tr><th>${issueID}</th><td>${wcag}<td>${score}</td><td>${toolList}</tr>`;
+  return `<tr><th>${summary}</th><td>${wcag}<td>${score}</td><td>${toolList}</tr>`;
 };
 // Adds parameters to a query for a digest.
 const populateQuery = (report, query) => {
@@ -54,7 +54,7 @@ const populateQuery = (report, query) => {
   issueIDs.forEach(issueID => {
     const {score, tools} = details.issue[issueID];
     rows.issueRows.push(
-      getIssueScoreRow(issueID, issues[issueID].wcag, score, Object.keys(tools))
+      getIssueScoreRow(issues[issueID].summary, issues[issueID].wcag, score, Object.keys(tools))
     );
   });
   // Add the rows to the query.

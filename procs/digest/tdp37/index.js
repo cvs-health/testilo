@@ -19,7 +19,7 @@ const innerJoiner = '\n        ';
 // Gets a row of the score-summary table.
 const getScoreRow = (componentName, score) => `<tr><th>${componentName}</th><td>${score}</td></tr>`;
 // Gets a row of the issue-score-summary table.
-const getIssueScoreRow = (issueID, wcag, score, [tools]) => {
+const getIssueScoreRow = (issueID, wcag, score, tools) => {
   const toolList = tools.join(', ');
   return `<tr><th>${issueID}</th><td>${wcag}<td>${score}</td><td>${toolList}</tr>`;
 };

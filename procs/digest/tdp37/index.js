@@ -20,7 +20,7 @@ const innerJoiner = '\n        ';
 const getScoreRow = (componentName, score) => `<tr><th>${componentName}</th><td>${score}</td></tr>`;
 // Gets a row of the issue-score-summary table.
 const getIssueScoreRow = (summary, wcag, score, tools) => {
-  const toolList = tools.join(', ');
+  const toolList = tools.map(tool => `<code>${tool}</code>`).join(', ');
   return `<tr><th>${summary}</th><td>${wcag}<td>${score}</td><td>${toolList}</tr>`;
 };
 // Adds parameters to a query for a digest.

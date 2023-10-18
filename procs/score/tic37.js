@@ -7595,6 +7595,21 @@ exports.issues = {
       }
     }
   },
+  scrollFocus: {
+    summary: 'scrollable element and its children not focusable',
+    why: 'User may be unable to see all of an item without scrolling in both dimensions',
+    wcag: '2.1.1',
+    weight: 3,
+    tools: {
+      ibm: {
+        element_scrollable_tabbable: {
+          variable: false,
+          quality: 1,
+          what: 'Element and its children are not focusable, but the element is scrollable'
+        }
+      }
+    }
+  },
   scrollRisk: {
     summary: 'container size unit not percentage',
     why: 'User may be unable to see all of an item without scrolling in both dimensions',

@@ -1405,6 +1405,18 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'aria-activedescendant property does not reference the id of a non-empty, non-hidden active child element'
+        },
+        aria_activedescendant_valid: {
+          variable: false,
+          quality: 1,
+          what: 'aria-activedescendant property does not reference the id of a non-empty, non-hidden active child element'
+        }
+      },
+      nuVal: {
+        'Attribute aria-activedescendant value should either refer to a descendant element, or should be accompanied by attribute aria-owns.': {
+          variable: false,
+          quality: 1,
+          what: 'Element has no aria-owns attribute but its aria-activedescendant attribute references a non-descendant'
         }
       }
     }
@@ -1767,6 +1779,21 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'link element has an empty href attribute'
+        }
+      }
+    }
+  },
+  linkElNoSource: {
+    summary: 'link element href or imagesrcset missing',
+    why: 'User cannot reach a promised location',
+    wcag: '4.1',
+    weight: 3,
+    tools: {
+      nuVal: {
+        'A link element must have an href or imagesrcset attribute, or both.': {
+          variable: false,
+          quality: 1,
+          what: 'link element has neither an href nor an imagesrcset attribute'
         }
       }
     }
@@ -3342,6 +3369,11 @@ exports.issues = {
           quality: 1,
           what: 'ARIA attribute is invalid for the role'
         },
+        aria_attribute_allowed: {
+          variable: false,
+          quality: 1,
+          what: 'ARIA attribute is invalid for the role'
+        },
         Rpt_Aria_ValidPropertyValue: {
           variable: false,
           quality: 1,
@@ -3358,11 +3390,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'input element with type="radio" has an aria-checked attribute'
-        },
-        'Attribute aria-activedescendant value should either refer to a descendant element, or should be accompanied by attribute aria-owns.': {
-          variable: false,
-          quality: 1,
-          what: 'Element has no aria-owns attribute but its aria-activedescendant attribute references a non-descendant'
         },
         '^Bad value  for attribute .+ on element .+: Must be non-empty.*$': {
           variable: true,
@@ -6294,6 +6321,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element with an application role has no unique purpose label among the application-role elements'
+        },
+        aria_application_label_unique: {
+          variable: false,
+          quality: 1,
+          what: 'Element with an application role has no unique purpose label among the application-role elements'
         }
       }
     }
@@ -6675,6 +6707,11 @@ exports.issues = {
     tools: {
       aslint: {
         aria_hidden: {
+          variable: false,
+          quality: 1,
+          what: 'aria-hidden attribute has the value false'
+        },
+        aria_hidden_false: {
           variable: false,
           quality: 1,
           what: 'aria-hidden attribute has the value false'
@@ -8228,8 +8265,8 @@ exports.issues = {
         }
       },
       nuVal: {
-        'End tag clippath did not match the name of the current open element (path).': {
-          variable: false,
+        '^End tag .+ did not match the name of the current open element (.+).*$': {
+          variable: true,
           quality: 1,
           what: 'End tag clippath conflicts with the current open element.'
         },

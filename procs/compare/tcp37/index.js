@@ -1,4 +1,7 @@
-// index: comparer for scoring procedure tsp28
+/*
+  index
+  Compares scores in reports scored by tsp37.
+*/
 
 // ########## IMPORTS
 
@@ -8,7 +11,7 @@ const fs = require('fs/promises');
 // CONSTANTS
 
 // Digester ID.
-const id = 'tcp33';
+const id = 'tcp37';
 // Newlines with indentations.
 const joiner = '\n      ';
 const innerJoiner = '\n        ';
@@ -18,8 +21,10 @@ const innestJoiner = '\n          ';
 
 // Returns data on the targets.
 const getData = async scoredReports => {
+  // For each scored report:
   const bodyData = [];
   for (const report of scoredReports) {
+    // Get data.
     const {id, sources, score} = report;
     bodyData.push({
       id,
@@ -28,6 +33,7 @@ const getData = async scoredReports => {
       score: score.summary.total
     });
   };
+  // Return the report count, the script ID of the first report, and the data of all the reports.
   return {
     pageCount: scoredReports.length,
     script: scoredReports[0].sources.script,
@@ -59,9 +65,9 @@ const populateQuery = async (scoredReports, query) => {
   const data = await getData(scoredReports);
   query.pageCount = data.pageCount;
   query.scriptID = scoredReports[0].sources.script;
-  query.scorer = 'tsp33';
-  query.digester = 'tdp33';
-  query.comparer = 'tcp33';
+  query.scorer = 'tsp37';
+  query.digester = 'tdp37';
+  query.comparer = 'tcp37';
   query.tableBody = await getTableBody(data.bodyData);
   const date = new Date();
   query.dateISO = date.toISOString().slice(0, 10);

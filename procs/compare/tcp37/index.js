@@ -26,12 +26,14 @@ const getData = async scoredReports => {
   for (const report of scoredReports) {
     // Get data.
     const {id, sources, score} = report;
-    bodyData.push({
-      id,
-      org: sources.target.what,
-      url: sources.target.which,
-      score: score.summary.total
-    });
+    if (id && sources && score) {
+      bodyData.push({
+        id,
+        org: sources.target.what,
+        url: sources.target.which,
+        score: score.summary.total
+      });
+    }
   };
   // Return the report count, the script ID of the first report, and the data of all the reports.
   return {

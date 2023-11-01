@@ -26,7 +26,7 @@ const getData = async scoredReports => {
   for (const report of scoredReports) {
     // Get data.
     const {id, sources, score} = report;
-    if (id && sources && score) {
+    if (id && sources && sources.script && score) {
       bodyData.push({
         id,
         org: sources.target.what,
@@ -38,7 +38,6 @@ const getData = async scoredReports => {
   // Return the report count, the script ID of the first report, and the data of all the reports.
   return {
     pageCount: scoredReports.length,
-    script: scoredReports[0].sources.script,
     bodyData
   }
 };
@@ -66,7 +65,6 @@ const getTableBody = async bodyData => {
 const populateQuery = async (scoredReports, query) => {
   const data = await getData(scoredReports);
   query.pageCount = data.pageCount;
-  query.scriptID = scoredReports[0].sources.script;
   query.scorer = 'tsp37';
   query.digester = 'tdp37';
   query.comparer = 'tcp37';

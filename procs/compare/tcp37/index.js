@@ -51,7 +51,7 @@ const getTableBody = async bodyData => {
   .map(item => {
     const {id, org, url, score} = item;
     const pageCell = `<th scope="row"><a href="${url}">${org}</a></th>`;
-    const numCell = `<td><a href="digests/${id}.html">${score}</a></td>`;
+    const numCell = `<td><a href="digests?jobID=${id}">${score}</a></td>`;
     // Make the bar width proportional.
     const barWidth = 100 * score / maxScore;
     const bar = `<rect height="100%" width="${barWidth}%" fill="red"></rect>`;

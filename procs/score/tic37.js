@@ -28,7 +28,7 @@ exports.issues = {
       aslint: {
         color_contrast_aa: {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'Text has contrast less than 4.5:1 [speculative]'
         },
         flickering: {
@@ -43,12 +43,12 @@ exports.issues = {
         },
         motion_actuation: {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'Document listens for device motion or rotation [speculative]'
         },
         overlay: {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'Document contains a commercial overlay modifier that may fail or invalidate test results [unreliable]'
         },
         reflow: {
@@ -61,7 +61,7 @@ exports.issues = {
         axe: {
           'css-orientation-lock': {
             variable: false,
-            quality: 1,
+            quality: 0,
             what: 'CSS media query locks display orientation [unreliable]'
           }
         }
@@ -86,12 +86,12 @@ exports.issues = {
         },
         'QW-ACT-R62': {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'Element in the sequential focus order may have no visible focus [speculative]'
         },
         'QW-ACT-R63': {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'Document has no landmark with non-repeated content [invalid]'
         },
         'QW-WCAG-T4': {
@@ -101,7 +101,7 @@ exports.issues = {
         },
         'QW-WCAG-T9': {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'Page may fail to be organized using headings [speculative]'
         },
         'QW-WCAG-T15': {

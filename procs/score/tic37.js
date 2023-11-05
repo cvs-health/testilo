@@ -21,32 +21,56 @@
 exports.issues = {
   ignorable: {
     summary: 'ignorable',
-    why: 'No known impact',
+    why: 'No known impact, because the test is unreliable or invalid',
     wcag: '',
     weight: 0,
     tools: {
       aslint: {
-        meaningful_content_sequence: {
+        color_contrast_aa: {
           variable: false,
-          quality: 0,
-          what: 'The content sequence may fail to be meaningful'
+          quality: 1,
+          what: 'Text has contrast less than 4.5:1 [speculative]'
         },
         flickering: {
           variable: false,
           quality: 0,
-          what: 'Excessive flashing may exist'
+          what: 'Excessive flashing may exist [speculative]'
+        },
+        meaningful_content_sequence: {
+          variable: false,
+          quality: 0,
+          what: 'The content sequence may fail to be meaningful [speculative]'
+        },
+        motion_actuation: {
+          variable: false,
+          quality: 1,
+          what: 'Document listens for device motion or rotation [speculative]'
+        },
+        overlay: {
+          variable: false,
+          quality: 1,
+          what: 'Document contains a commercial overlay modifier that may fail or invalidate test results [unreliable]'
         },
         reflow: {
           variable: false,
           quality: 0,
-          what: 'Page may require horizontal scrolling'
+          what: 'Page may require horizontal scrolling [speculative]'
+        }
+      },
+      axe: {
+        axe: {
+          'css-orientation-lock': {
+            variable: false,
+            quality: 1,
+            what: 'CSS media query locks display orientation [unreliable]'
+          }
         }
       },
       nuVal: {
         'Element mediaelementwrapper not allowed as child of element div in this context. (Suppressing further errors from this subtree.)': {
           variable: false,
           quality: 0,
-          what: 'Bug in nuVal'
+          what: 'Element contains a prohibited mediaelementwrapper element [invalid]'
         }
       },
       qualWeb: {
@@ -60,20 +84,35 @@ exports.issues = {
           quality: 0,
           what: 'video element visual content has no description track (description tracks and this ACT rule have been deprecated)'
         },
+        'QW-ACT-R62': {
+          variable: false,
+          quality: 1,
+          what: 'Element in the sequential focus order may have no visible focus [speculative]'
+        },
+        'QW-ACT-R63': {
+          variable: false,
+          quality: 1,
+          what: 'Document has no landmark with non-repeated content [invalid]'
+        },
         'QW-WCAG-T4': {
           variable: false,
           quality: 0,
-          what: 'summary attribute is not used to give an overview of a data table'
+          what: 'summary attribute is not used to give an overview of a data table [invalid]'
+        },
+        'QW-WCAG-T9': {
+          variable: false,
+          quality: 1,
+          what: 'Page may fail to be organized using headings [speculative]'
         },
         'QW-WCAG-T15': {
           variable: false,
           quality: 0,
-          what: 'link element may be used for navigation but not in the head'
+          what: 'link element may be used for navigation but not in the head [invalid]'
         },
         'QW-WCAG-T20': {
           variable: false,
           quality: 0,
-          what: 'Link text is not supplemented with a title attribute'
+          what: 'Link text is not supplemented with a title attribute [invalid]'
         }
       }
     }
@@ -2393,13 +2432,6 @@ exports.issues = {
           what: 'CSS media query specifies an orientation'
         }
       },
-      axe: {
-        'css-orientation-lock': {
-          variable: false,
-          quality: 1,
-          what: 'CSS media query locks display orientation'
-        }
-      },
       qualWeb: {
         'QW-ACT-R7': {
           variable: false,
@@ -2468,21 +2500,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'meta viewport prevents zoom'
-        }
-      }
-    }
-  },
-  deviceRisk: {
-    summary: 'motion or orientation dependence possibly faulty',
-    why: 'User may be unable to produce required device movement',
-    wcag: '2.5.4',
-    weight: 1,
-    tools: {
-      aslint: {
-        motion_actuation: {
-          variable: false,
-          quality: 1,
-          what: 'Document listens for device motion or rotation'
         }
       }
     }
@@ -3636,11 +3653,6 @@ exports.issues = {
         }
       },
       aslint: {
-        color_contrast_aa: {
-          variable: false,
-          quality: 1,
-          what: 'Text has contrast less than 4.5:1'
-        },
         'color_contrast_state_pseudo_classes_abstract3': {
           variable: false,
           quality: 1,
@@ -4492,13 +4504,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'section has no heading'
-        }
-      },
-      qualWeb: {
-        'QW-WCAG-T9': {
-          variable: false,
-          quality: 1,
-          what: 'Page is not organized using headings'
         }
       }
     }
@@ -5834,13 +5839,6 @@ exports.issues = {
           what: 'Element may get invisibly focused because its outline has no thickness'
         }
       },
-      qualWeb: {
-        'QW-ACT-R62': {
-          variable: false,
-          quality: 1,
-          what: 'Element in the sequential focus order has no visible focus'
-        }
-      },
       testaro: {
         focInd: {
           variable: false,
@@ -6084,13 +6082,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'page has no main landmark'
-        }
-      },
-      qualWeb: {
-        'QW-ACT-R63': {
-          variable: false,
-          quality: 1,
-          what: 'Document has no landmark with non-repeated content'
         }
       }
     }
@@ -8508,21 +8499,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Document employs Google CAPTCHA version 2'
-        }
-      }
-    }
-  },
-  overlay: {
-    summary: 'overlay',
-    why: 'Help for the user may be complex, inconsistent, and ineffective',
-    wcag: '4.1',
-    weight: 1,
-    tools: {
-      aslint: {
-        overlay: {
-          variable: false,
-          quality: 1,
-          what: 'Document contains a commercial overlay modifier that may fail or invalidate test results'
         }
       }
     }

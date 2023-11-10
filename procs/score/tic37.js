@@ -2,20 +2,20 @@
   tic37
   Testilo issue classification 37
 
-  Classifies about 760 rules of the tools of Testaro into 256? issues.
+  Classifies about 980 rules of the tools of Testaro into about 300 issues.
 
   Issue properties:
-    why: expected impact
-    wcag: WCAG Principle, Guideline, Success Criterion, or Technique, if any, most closely
-      associated with the issue.
-    weight: weight of the issue in score computation.
-    tools: tools (including Testaro) providing tests in the issue.
+    summary: minimal description
+    why: expected impact on a user
+    wcag: most relevant WCAG Principle, Guideline, Success Criterion, or Technique
+    weight: weight of the issue in score computation
+    tools: tools (including Testaro) providing tests for the issue
 
   Each property of tools specifies a rule of that tool. The key is the identifier of the rule.
   The value is an object with these properties:
-  - variable: whether the identifier is a regular expression.
-  - quality: the estimated quality of the test for the rule (normally 1).
-  - what: description of a defect disclosed by the test for the rule.
+  - variable: whether the key is a regular expression
+  - quality: the estimated quality of the test for the rule (normally 1)
+  - what: description of a rule violation
 */
 
 exports.issues = {

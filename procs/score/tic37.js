@@ -11,11 +11,10 @@
     weight: weight of the issue in score computation
     tools: tools (including Testaro) providing tests for the issue
 
-  Each property of tools specifies a rule of that tool. The key is the identifier of the rule.
-  The value is an object with these properties:
-  - variable: whether the key is a regular expression
-  - quality: the estimated quality of the test for the rule (normally 1)
-  - what: description of a rule violation
+  Each property of tools is data about one of the tools that test for the issue. The key is the name of the tool. The value is an object containing data about the rules of the tool that pertain to the issue. Each property of that object is data about one of those rules. The key is the identifier of the rule, and the value is an object with these properties:
+    variable: whether the key is a regular expression
+    quality: the estimated quality of the test for the rule (normally 1)
+    what: description of a rule violation
 */
 
 exports.issues = {

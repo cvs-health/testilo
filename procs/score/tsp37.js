@@ -67,6 +67,14 @@ exports.scorer = report => {
       // Initialize the score data.
       const score = {
         scoreProcID,
+        weights: {
+          severities: severityWeights,
+          tool: toolWeight,
+          log: logWeights,
+          latency: latencyWeight,
+          prevention: preventionWeight
+        },
+        normalLatency,
         summary: {
           total: 0,
           issue: 0,
@@ -83,7 +91,8 @@ exports.scorer = report => {
           },
           prevention: {},
           issue: {},
-          solo: {}
+          solo: {},
+          tool: {}
         }
       };
       const {summary, details} = score;
@@ -105,6 +114,10 @@ exports.scorer = report => {
           // Add the severity totals of the tool to the score.
           const {totals} = standardResult;
           details.severity.byTool[which] = totals;
+          // Add the severity-weighted tool totals to the score.
+          details.tool[which] = totals.reduce(
+            (sum, current, index) => sum + severityWeights[index] * current, 0
+          );
           // For each instance of the tool:
           standardResult.instances.forEach(instance => {
             // Get the rule ID.

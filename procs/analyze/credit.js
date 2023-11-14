@@ -13,7 +13,8 @@ exports.credit = reports => {
     issueCounts: {
       total: 0,
       nonOnlies: 0,
-      onlies: {}
+      onlies: 0,
+      toolOnlies: {}
     }
   };
   const {instanceCounts, onlies, mosts, tools, issueCounts} = tally;
@@ -21,10 +22,8 @@ exports.credit = reports => {
   reports.forEach(report => {
     // If it is valid:
     if (report.score && report.score.details && report.score.details.issue) {
-      // Populate the issue count.
-      const issues = report.score.details && report.score.details.issue;
-      issueCounts.nonOnlies = issueCounts.total = Object.keys(issues).length;
       // For each issue:
+      const issues = report.score.details && report.score.details.issue;
       Object.keys(issues).forEach(issueID => {
         // For each tool with any complaints about it:
         if (! instanceCounts[issueID]) {
@@ -73,18 +72,21 @@ exports.credit = reports => {
       console.log(`ERROR: Report ${report.id} missing score data`);
     }
   });
+  // Populate the total and initial non-only issue counts.
+  issueCounts.nonOnlies = issueCounts.total = Object.keys(instanceCounts).length;
   // For each tallied issue:
   Object.keys(instanceCounts).forEach(issueID => {
     // If only 1 tool complained about it:
-    const toolIDs = Object.keys(instanceCounts[issueID])
+    const toolIDs = Object.keys(instanceCounts[issueID]);
     if (toolIDs.length === 1) {
-      // Add this to the tally.
+      // Add this to the tally and decrement the non-only total.
       const toolID = toolIDs[0];
       onlies[issueID] = toolID;
-      if (! issueCounts.onlies[toolID]) {
-        issueCounts.onlies[toolID] = 0;
+      issueCounts.onlies++;
+      if (! issueCounts.toolOnlies[toolID]) {
+        issueCounts.toolOnlies[toolID] = 0;
       }
-      issueCounts.onlies[toolID]++;
+      issueCounts.toolOnlies[toolID]++;
       issueCounts.nonOnlies--;
     }
     // Otherwise, i.e. if multiple tools complained about it:

@@ -12,6 +12,7 @@ exports.credit = reports => {
     tools: {},
     issueCounts: {
       total: 0,
+      nonOnlies: 0,
       onlies: {}
     }
   };
@@ -22,7 +23,7 @@ exports.credit = reports => {
     if (report.score && report.score.details && report.score.details.issue) {
       // Populate the issue count.
       const issues = report.score.details && report.score.details.issue;
-      issueCounts.total = Object.keys(issues).length;
+      issueCounts.nonOnlies = issueCounts.total = Object.keys(issues).length;
       // For each issue:
       Object.keys(issues).forEach(issueID => {
         // For each tool with any complaints about it:
@@ -84,6 +85,7 @@ exports.credit = reports => {
         issueCounts.onlies[toolID] = 0;
       }
       issueCounts.onlies[toolID]++;
+      issueCounts.nonOnlies--;
     }
     // Otherwise, i.e. if multiple tools complained about it:
     else {

@@ -6,29 +6,35 @@
 // Returns a tabulation of the instance counts of issues reported by tools in scored reports.
 exports.credit = reports => {
   const tally = {
-    counts: {},
+    instanceCounts: {},
     onlies: {},
     mosts: {},
-    tools: {}
+    tools: {},
+    issueCounts: {
+      total: 0,
+      onlies: {}
+    }
   };
-  const {counts, onlies, mosts, tools} = tally;
+  const {instanceCounts, onlies, mosts, tools, issueCounts} = tally;
   // For each report:
   reports.forEach(report => {
     // If it is valid:
     if (report.score && report.score.details && report.score.details.issue) {
-      // For each issue:
+      // Populate the issue count.
       const issues = report.score.details && report.score.details.issue;
+      issueCounts.total = Object.keys(issues).length;
+      // For each issue:
       Object.keys(issues).forEach(issueID => {
         // For each tool with any complaints about it:
-        if (! counts[issueID]) {
-          counts[issueID] = {};
+        if (! instanceCounts[issueID]) {
+          instanceCounts[issueID] = {};
         }
         const issueTools = issues[issueID].tools;
         if (issueTools) {
           Object.keys(issueTools).forEach(toolID => {
             // For each rule cited by any of those complaints:
-            if (! counts[issueID][toolID]) {
-              counts[issueID][toolID] = {
+            if (! instanceCounts[issueID][toolID]) {
+              instanceCounts[issueID][toolID] = {
                 total: 0,
                 rules: {}
               };
@@ -38,12 +44,12 @@ exports.credit = reports => {
               const {complaints} = issueTools[toolID][ruleID];
               if (complaints && complaints.countTotal) {
                 // Add it to the tally.
-                counts[issueID][toolID].total += complaints.countTotal;
+                instanceCounts[issueID][toolID].total += complaints.countTotal;
                 // Add a rule itemization to the tally.
-                if (! counts[issueID][toolID].rules[ruleID]) {
-                  counts[issueID][toolID].rules[ruleID] = 0;
+                if (! instanceCounts[issueID][toolID].rules[ruleID]) {
+                  instanceCounts[issueID][toolID].rules[ruleID] = 0;
                 }
-                counts[issueID][toolID].rules[ruleID] += complaints.countTotal;
+                instanceCounts[issueID][toolID].rules[ruleID] += complaints.countTotal;
               }
               // Otherwise, i.e. if no instance count was recorded:
               else {
@@ -67,21 +73,26 @@ exports.credit = reports => {
     }
   });
   // For each tallied issue:
-  Object.keys(counts).forEach(issueID => {
+  Object.keys(instanceCounts).forEach(issueID => {
     // If only 1 tool complained about it:
-    const toolIDs = Object.keys(counts[issueID])
+    const toolIDs = Object.keys(instanceCounts[issueID])
     if (toolIDs.length === 1) {
       // Add this to the tally.
-      onlies[issueID] = toolIDs[0];
+      const toolID = toolIDs[0];
+      onlies[issueID] = toolID;
+      if (! issueCounts.onlies[toolID]) {
+        issueCounts.onlies[toolID] = 0;
+      }
+      issueCounts.onlies[toolID]++;
     }
     // Otherwise, i.e. if multiple tools complained about it:
     else {
       // Add the tools with the maximum instance count to the tally.
       const maxCount = Object
-      .values(counts[issueID])
+      .values(instanceCounts[issueID])
       .reduce((max, current) => Math.max(max, current ? current.total : 0), 0);
-      Object.keys(counts[issueID]).forEach(toolID => {
-        if (maxCount && counts[issueID][toolID].total === maxCount) {
+      Object.keys(instanceCounts[issueID]).forEach(toolID => {
+        if (maxCount && instanceCounts[issueID][toolID].total === maxCount) {
           if (! mosts[issueID]) {
             mosts[issueID] = [];
           }

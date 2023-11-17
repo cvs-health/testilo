@@ -2811,7 +2811,7 @@ exports.issues = {
         r21: {
           variable: false,
           quality: 1,
-          what: 'Element does not have a valid role'
+          what: 'Element has no valid role'
         },
         r110: {
           variable: false,
@@ -4888,7 +4888,7 @@ exports.issues = {
         fieldset_legend_valid: {
           variable: false,
           quality: 1,
-          what: 'Element does not have a legend element'
+          what: 'Element has no legend element'
         }
       },
       qualWeb: {

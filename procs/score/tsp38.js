@@ -213,7 +213,7 @@ exports.scorer = report => {
         const issueData = details.issue[issueName];
         // For each tool with any complaints for the issue:
         Object.keys(issueData.tools).forEach(toolID => {
-          // Get the sum of the weighted counts of its issue rules.
+          // Get the sum of the quality-weighted counts of its issue rules.
           let weightedCount = 0;
           Object.values(issueData.tools[toolID]).forEach(ruleData => {
             weightedCount += ruleData.quality * ruleData.complaints.countTotal;

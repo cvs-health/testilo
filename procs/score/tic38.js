@@ -66,6 +66,16 @@ exports.issues = {
             variable: false,
             quality: 0,
             what: 'CSS media query locks display orientation [unreliable]'
+          },
+          'frame-tested': {
+            variable: false,
+            quality: 0.2,
+            what: 'Some content is in an iframe and so may not be testable for accessibility [speculative]'
+          },
+          'hidden-content': {
+            variable: false,
+            quality: 1,
+            what: 'Some content is hidden and so may not be testable for accessibility [speculative]'
           }
         }
       },
@@ -97,6 +107,26 @@ exports.issues = {
           quality: 0,
           what: 'Document has no landmark with non-repeated content [invalid]'
         },
+        'QW-ACT-R64': {
+          variable: false,
+          quality: 1,
+          what: 'Document has no heading for non-repeated content'
+        },
+        'QW-ACT-R73': {
+          variable: false,
+          quality: 1,
+          what: 'Block of repeated content is not collapsible [invalid]'
+        },
+        'QW-ACT-R74': {
+          variable: false,
+          quality: 1,
+          what: 'Document has no instrument to move focus to non-repeated content [invalid]'
+        },
+        'QW-ACT-R75': {
+          variable: false,
+          quality: 1,
+          what: 'Blocks of repeated content cannot be bypassed [invalid]'
+        },
         'QW-WCAG-T4': {
           variable: false,
           quality: 0,
@@ -116,6 +146,11 @@ exports.issues = {
           variable: false,
           quality: 0,
           what: 'Link text is not supplemented with a title attribute [invalid]'
+        },
+        'QW-WCAG-T23': {
+          variable: false,
+          quality: 1,
+          what: 'No link at the top of the page goes directly to the main content area [invalid]'
         }
       }
     }
@@ -2430,7 +2465,6 @@ exports.issues = {
     why: 'User must read sideways after rotating a device',
     wcag: '1.3.4',
     weight: 4,
-    max: 1,
     tools: {
       aslint: {
         orientation: {
@@ -6734,22 +6768,6 @@ exports.issues = {
       }
     }
   },
-  hiddenContentRisk: {
-    summary: 'hidden content possibly not testable',
-    why: 'Some barriers in the document may be undetected',
-    wcag: '4.1',
-    weight: 1,
-    max: 1,
-    tools: {
-      axe: {
-        'hidden-content': {
-          variable: false,
-          quality: 1,
-          what: 'Some content is hidden and so may not be testable for accessibility'
-        }
-      }
-    }
-  },
   negativeIndent: {
     summary: 'negative text-indent',
     why: 'Helper may hide content from the user',
@@ -6761,22 +6779,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element has a text-indent style with a negative value'
-        }
-      }
-    }
-  },
-  frameContentRisk: {
-    summary: 'iframe content possibly not testable',
-    why: 'Some barriers in the document may be undetected',
-    wcag: '4.1',
-    weight: 1,
-    max: 1,
-    tools: {
-      axe: {
-        'frame-tested': {
-          variable: false,
-          quality: 0.2,
-          what: 'Some content is in an iframe and so may not be testable for accessibility'
         }
       }
     }
@@ -7274,7 +7276,6 @@ exports.issues = {
     why: 'User cannot easily distinguish items of different types',
     wcag: '3.2.4',
     weight: 1,
-    max: 9,
     tools: {
       testaro: {
         styleDiff: {
@@ -7686,7 +7687,7 @@ exports.issues = {
     why: 'Keyboard-only user cannot easily reach the specific content of the document',
     wcag: '2.4.1',
     weight: 3,
-    max: 1,
+    max: 2,
     tools: {
       axe: {
         bypass: {
@@ -7712,18 +7713,6 @@ exports.issues = {
           what: 'Page provides no way to quickly navigate to the main content'
         }
       },
-      qualWeb: {
-        'QW-ACT-R64': {
-          variable: false,
-          quality: 1,
-          what: 'Document has no heading for non-repeated content'
-        },
-        'QW-ACT-R75': {
-          variable: false,
-          quality: 1,
-          what: 'Blocks of repeated content cannot be bypassed'
-        }
-      },
       wave: {
         link_skip_broken: {
           variable: false,
@@ -7738,7 +7727,7 @@ exports.issues = {
     why: 'Keyboard-only user may be unable easily to reach the specific content of the document',
     wcag: '2.4.1',
     weight: 1,
-    max: 1,
+    max: 2,
     tools: {
       alfa: {
         'r87': {
@@ -7752,21 +7741,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'First focusable element is not a link to the non-repeated content'
-        },
-        'QW-ACT-R73': {
-          variable: false,
-          quality: 1,
-          what: 'Block of repeated content is not collapsible'
-        },
-        'QW-ACT-R74': {
-          variable: false,
-          quality: 1,
-          what: 'Document has no instrument to move focus to non-repeated content'
-        },
-        'QW-WCAG-T23': {
-          variable: false,
-          quality: 1,
-          what: 'No link at the top of the page that goes directly to the main content area'
         },
         'QW-BP17': {
           variable: false,

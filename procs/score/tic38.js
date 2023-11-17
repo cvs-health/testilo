@@ -1,6 +1,6 @@
 /*
   tic37
-  Testilo issue classification 37
+  Testilo issue classification 38
 
   Classifies about 980 rules of the tools of Testaro into about 300 issues.
 
@@ -9,6 +9,7 @@
     why: expected impact on a user
     wcag: most relevant WCAG Principle, Guideline, Success Criterion, or Technique
     weight: weight of the issue in score computation
+    max?: maximum possible count of instances if finite
     tools: tools (including Testaro) providing tests for the issue
 
   Each property of tools is data about one of the tools that test for the issue. The key is the name
@@ -875,6 +876,7 @@ exports.issues = {
     why: 'Speaking helper may mispronounce the document text',
     wcag: '3.1.1',
     weight: 4,
+    max: 1,
     tools: {
       alfa: {
         r4: {
@@ -954,6 +956,7 @@ exports.issues = {
     why: 'Speaking helper may mispronounce the document text',
     wcag: '3.1.1',
     weight: 4,
+    max: 1,
     tools: {
       alfa: {
         r5: {
@@ -2080,6 +2083,7 @@ exports.issues = {
     why: 'User promised a document gets another document, too',
     wcag: '3.2.5',
     weight: 3,
+    max: 1,
     tools: {
       qualWeb: {
         'QW-WCAG-T22': {
@@ -2426,6 +2430,7 @@ exports.issues = {
     why: 'User must read sideways after rotating a device',
     wcag: '1.3.4',
     weight: 4,
+    max: 1,
     tools: {
       aslint: {
         orientation: {
@@ -2448,6 +2453,7 @@ exports.issues = {
     why: 'User may need to read sideways after rotating a device',
     wcag: '1.3.4',
     weight: 1,
+    max: 1,
     tools: {
       aslint: {
         orientationT: {
@@ -2463,6 +2469,7 @@ exports.issues = {
     why: 'User cannot adjust the document size for readability',
     wcag: '1.4.4',
     weight: 4,
+    max: 1,
     tools: {
       alfa: {
         r47: {
@@ -2508,7 +2515,7 @@ exports.issues = {
   },
   fontSizeAbsolute: {
     summary: 'font size absolute',
-    why: 'User cannot adjust the document size for readability',
+    why: 'User cannot adjust the text size for readability',
     wcag: '1.4.4',
     weight: 2,
     tools: {
@@ -2603,7 +2610,7 @@ exports.issues = {
       }
     }
   },
-  leadingAbsolute: {
+  lineHeightAbsolute: {
     summary: 'line height absolute',
     why: 'User cannot adjust the line height of text for readability',
     wcag: '1.4.12',
@@ -4184,6 +4191,7 @@ exports.issues = {
     why: 'Browser processes the document improperly',
     wcag: '1.3.1',
     weight: 4,
+    max: 1,
     tools: {
       nuVal: {
         'Start tag seen without seeing a doctype first. Expected <!DOCTYPE html>.': {
@@ -4205,7 +4213,8 @@ exports.issues = {
     summary: 'page title invalid',
     why: 'Browser processes the document improperly',
     wcag: '1.3.1',
-    weight: 4,
+    weight: 3,
+    max: 1,
     tools: {
       aslint: {
         page_titleU: {
@@ -4227,7 +4236,8 @@ exports.issues = {
     summary: 'page title missing',
     why: 'User is not informed of the topic of the document',
     wcag: '2.4.2',
-    weight: 10,
+    weight: 4,
+    max: 1,
     tools: {
       alfa: {
         r1: {
@@ -4290,6 +4300,7 @@ exports.issues = {
     why: 'Browser processes the document improperly',
     wcag: '4.1.1',
     weight: 3,
+    max: 1,
     tools: {
       aslint: {
         elements_not_allowed_in_head: {
@@ -4385,6 +4396,7 @@ exports.issues = {
     why: 'User cannot survey parts of the document',
     wcag: '1.3.1',
     weight: 3,
+    max: 1,
     tools: {
       alfa: {
         r59: {
@@ -4421,6 +4433,7 @@ exports.issues = {
     why: 'User cannot understand the topic of the document',
     wcag: '1.3.1',
     weight: 2,
+    max: 1,
     tools: {
       nuVal: {
         'Consider using the h1 element as a top-level heading only (all h1 elements are treated as top-level headings by many screen readers and other tools).': {
@@ -4436,6 +4449,7 @@ exports.issues = {
     why: 'User cannot understand the topic of the document',
     wcag: '1.3.1',
     weight: 3,
+    max: 1,
     tools: {
       aslint: {
         'h1_must_be': {
@@ -4465,6 +4479,7 @@ exports.issues = {
     why: 'User cannot understand the topic of the document',
     wcag: '1.3.1',
     weight: 3,
+    max: 1,
     tools: {
       alfa: {
         r61: {
@@ -5676,6 +5691,7 @@ exports.issues = {
     why: 'User cannot easily find items in the document',
     wcag: '2.4',
     weight: 1,
+    max: 1,
     tools: {
       testaro: {
         bulk: {
@@ -5928,6 +5944,7 @@ exports.issues = {
     why: 'User cannot get help on how the document is organized',
     wcag: '1.3.6',
     weight: 2,
+    max: 1,
     tools: {
       wave: {
         region_missing: {
@@ -6078,6 +6095,7 @@ exports.issues = {
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 2,
+    max: 1,
     tools: {
       axe: {
         'landmark-one-main': {
@@ -6093,6 +6111,7 @@ exports.issues = {
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 2,
+    max: 1,
     tools: {
       aslint: {
         main_element_only_one: {
@@ -6129,6 +6148,7 @@ exports.issues = {
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 2,
+    max: 1,
     tools: {
       axe: {
         'landmark-no-duplicate-banner': {
@@ -6205,6 +6225,7 @@ exports.issues = {
     why: 'User cannot get help on how some of the document is organized',
     wcag: '1.3.6',
     weight: 2,
+    max: 1,
     tools: {
       aslint: {
         contentinfo_landmark_only_one: {
@@ -6682,6 +6703,7 @@ exports.issues = {
     why: 'User cannot get the document content',
     wcag: '2.4.7',
     weight: 4,
+    max: 1,
     tools: {
       testaro: {
         allHidden: {
@@ -6717,6 +6739,7 @@ exports.issues = {
     why: 'Some barriers in the document may be undetected',
     wcag: '4.1',
     weight: 1,
+    max: 1,
     tools: {
       axe: {
         'hidden-content': {
@@ -6747,6 +6770,7 @@ exports.issues = {
     why: 'Some barriers in the document may be undetected',
     wcag: '4.1',
     weight: 1,
+    max: 1,
     tools: {
       axe: {
         'frame-tested': {
@@ -7072,6 +7096,7 @@ exports.issues = {
     why: 'Motion-sensitive user may suffer harm',
     wcag: '2.2.2',
     weight: 2,
+    max: 1,
     tools: {
       testaro: {
         motion: {
@@ -7249,6 +7274,7 @@ exports.issues = {
     why: 'User cannot easily distinguish items of different types',
     wcag: '3.2.4',
     weight: 1,
+    max: 9,
     tools: {
       testaro: {
         styleDiff: {
@@ -7660,6 +7686,7 @@ exports.issues = {
     why: 'Keyboard-only user cannot easily reach the specific content of the document',
     wcag: '2.4.1',
     weight: 3,
+    max: 1,
     tools: {
       axe: {
         bypass: {
@@ -7711,6 +7738,7 @@ exports.issues = {
     why: 'Keyboard-only user may be unable easily to reach the specific content of the document',
     wcag: '2.4.1',
     weight: 1,
+    max: 1,
     tools: {
       alfa: {
         'r87': {
@@ -7827,6 +7855,7 @@ exports.issues = {
     why: 'Document includes code that may not work and may jeopardize user security',
     wcag: '4.1',
     weight: 1,
+    max: 1,
     tools: {
       aslint: {
         flash_content: {
@@ -8480,6 +8509,7 @@ exports.issues = {
     why: 'Document contains invalid code',
     wcag: '3.1.3',
     weight: 4,
+    max: 1,
     tools: {
       nuVal: {
         'Document uses the Unicode Private Use Area(s), which should not be used in publicly exchanged documents. (Charmod C073)': {
@@ -8495,6 +8525,7 @@ exports.issues = {
     why: 'User is prevented from consuming the document',
     wcag: '1.1.1',
     weight: 1,
+    max: 1,
     tools: {
       aslint: {
         captcha_google: {
@@ -8510,6 +8541,7 @@ exports.issues = {
     why: 'Document prevents testing for accessibility',
     wcag: '4.1',
     weight: 4,
+    max: 1,
     tools: {
       nuVal: {
         'Cannot recover after last error. Any further errors will be ignored.': {

@@ -2,7 +2,7 @@
   tic37
   Testilo issue classification 38
 
-  Classifies about 980 rules of the tools of Testaro into about 300 issues.
+  Classifies about 900 rules of the tools of Testaro into about 300 issues.
 
   Issue properties:
     summary: minimal description
@@ -10,7 +10,7 @@
     wcag: most relevant WCAG Principle, Guideline, Success Criterion, or Technique
     weight: weight of the issue in score computation
     max?: maximum possible count of instances if finite
-    tools: tools (including Testaro) providing tests for the issue
+    tools: tools (including Testaro) defining rules for the issue
 
   Each property of tools is data about one of the tools that test for the issue. The key is the name
   of the tool. The value is an object containing data about the rules of the tool that pertain to
@@ -61,22 +61,20 @@ exports.issues = {
         }
       },
       axe: {
-        axe: {
-          'css-orientation-lock': {
-            variable: false,
-            quality: 0,
-            what: 'CSS media query locks display orientation [unreliable]'
-          },
-          'frame-tested': {
-            variable: false,
-            quality: 0.2,
-            what: 'Some content is in an iframe and so may not be testable for accessibility [speculative]'
-          },
-          'hidden-content': {
-            variable: false,
-            quality: 1,
-            what: 'Some content is hidden and so may not be testable for accessibility [speculative]'
-          }
+        'css-orientation-lock': {
+          variable: false,
+          quality: 0,
+          what: 'CSS media query locks display orientation [unreliable]'
+        },
+        'frame-tested': {
+          variable: false,
+          quality: 0.2,
+          what: 'Some content is in an iframe and so may not be testable for accessibility [speculative]'
+        },
+        'hidden-content': {
+          variable: false,
+          quality: 1,
+          what: 'Some content is hidden and so may not be testable for accessibility [speculative]'
         }
       },
       nuVal: {
@@ -222,11 +220,6 @@ exports.issues = {
         }
       },
       ibm: {
-        RPT_Elem_UniqueId: {
-          variable: false,
-          quality: 1,
-          what: 'Element id attribute value is not unique within the document'
-        },
         element_id_unique: {
           variable: false,
           quality: 1,
@@ -271,11 +264,6 @@ exports.issues = {
     weight: 4,
     tools: {
       ibm: {
-        Rpt_Aria_WidgetLabels_Implicit: {
-          variable: false,
-          quality: 1,
-          what: 'Interactive component has no programmatically associated name'
-        },
         aria_widget_labelled: {
           variable: false,
           quality: 1,
@@ -298,11 +286,6 @@ exports.issues = {
         }
       },
       ibm: {
-        Rpt_Aria_RegionLabel_Implicit: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a region role has no label that describes its purpose'
-        },
         aria_region_labelled: {
           variable: false,
           quality: 1,
@@ -487,11 +470,6 @@ exports.issues = {
         }
       },
       ibm: {
-        WCAG20_Input_ExplicitLabelImage: {
-          variable: false,
-          quality: 1,
-          what: 'Element is an input of type image but has no text alternative'
-        },
         imagebutton_alt_exists: {
           variable: false,
           quality: 1,
@@ -507,11 +485,6 @@ exports.issues = {
     weight: 4,
     tools: {
       ibm: {
-        HAAC_Figure_label: {
-          variable: false,
-          quality: 1,
-          what: 'figure element has no associated label'
-        },
         figure_label_exists: {
           variable: false,
           quality: 1,
@@ -560,20 +533,10 @@ exports.issues = {
         }
       },
       ibm: {
-        HAAC_Aria_ImgAlt: {
-          variable: false,
-          quality: 1,
-          what: 'Element with an img role has no non-empty label'
-        },
         aria_img_labelled: {
           variable: false,
           quality: 1,
           what: 'Element with an img role has no label or an empty label'
-        },
-        WCAG20_Img_HasAlt: {
-          variable: false,
-          quality: 1,
-          what: 'Image has no alt attribute conveying its meaning, or alt="" if decorative'
         },
         img_alt_valid: {
           variable: false,
@@ -610,21 +573,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Spacer image has no text alternative'
-        }
-      }
-    }
-  },
-  decorativeImageAltBad: {
-    summary: 'decorative image has no alt',
-    why: 'Helper alerts a user to an uninformative image instead of ignoring it',
-    wcag: '1.1.1',
-    weight: 4,
-    tools: {
-      ibm: {
-        WCAG20_Img_PresentationImgHasNonNullAlt: {
-          variable: false,
-          quality: 1,
-          what: 'Image designated as decorative has no alt=""'
         }
       }
     }
@@ -947,11 +895,6 @@ exports.issues = {
         }
       },
       ibm: {
-        WCAG20_Html_HasLang: {
-          variable: false,
-          quality: 1,
-          what: 'Page detected as HTML, but has no lang attribute'
-        },
         html_lang_exists: {
           variable: false,
           quality: 1,
@@ -1019,13 +962,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Language specified in the lang attribute of the document does not appear to be well-formed'
-        }
-      },
-      ibm: {
-        WCAG20_Elem_Lang_Valid: {
-          variable: false,
-          quality: 1,
-          what: 'lang attribute does not include a valid primary language'
         }
       },
       qualWeb: {
@@ -1122,21 +1058,6 @@ exports.issues = {
       }
     }
   },
-  applicationNoText: {
-    summary: 'application not named',
-    why: 'User cannot get help on how to use a custom item',
-    wcag: '4.1.2',
-    weight: 4,
-    tools: {
-      ibm: {
-        Rpt_Aria_ApplicationLandmarkLabel: {
-          variable: false,
-          quality: 1,
-          what: 'Element with an application role has no purpose label'
-        }
-      }
-    }
-  },
   objectNoText: {
     summary: 'object not named',
     why: 'User cannot get help explaining a custom item',
@@ -1162,13 +1083,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'object element contains no text alternative'
-        }
-      },
-      ibm: {
-        WCAG20_Object_HasText: {
-          variable: false,
-          quality: 1,
-          what: 'object element has no text alternative'
         }
       },
       qualWeb: {
@@ -1284,18 +1198,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element is an area in an image map but has no alt attribute'
-        }
-      },
-      ibm: {
-        HAAC_Img_UsemapAlt: {
-          variable: false,
-          quality: 1,
-          what: 'Image map or child area has no text alternative'
-        },
-        'WCAG20_Area_HasAlt': {
-          variable: false,
-          quality: 1,
-          what: 'Element is an area in an image map but has no text alternative'
         }
       },
       qualWeb: {
@@ -1480,11 +1382,6 @@ exports.issues = {
     weight: 4,
     tools: {
       ibm: {
-        HAAC_ActiveDescendantCheck: {
-          variable: false,
-          quality: 1,
-          what: 'aria-activedescendant property does not reference the id of a non-empty, non-hidden active child element'
-        },
         aria_activedescendant_valid: {
           variable: false,
           quality: 1,
@@ -1570,20 +1467,10 @@ exports.issues = {
         }
       },
       ibm: {
-        WCAG20_Input_LabelBefore: {
-          variable: false,
-          quality: 1,
-          what: 'Text input or select element label follows the input control'
-        },
         input_label_before: {
           variable: false,
           quality: 1,
           what: 'Label text is after its text input or select element'
-        },
-        WCAG20_Input_LabelAfter: {
-          variable: false,
-          quality: 1,
-          what: 'Checkbox or radio button label precedes the input control'
         },
         input_label_after: {
           variable: false,
@@ -1638,13 +1525,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'aria-labelledby attribute references a nonexistent element'
-        }
-      },
-      ibm: {
-        WCAG20_Label_RefValid: {
-          variable: false,
-          quality: 1,
-          what: 'for attribute does not reference a non-empty, unique id attribute of an input element'
         }
       },
       nuVal: {
@@ -1788,11 +1668,6 @@ exports.issues = {
         }
       },
       ibm: {
-        WCAG20_A_HasText: {
-          variable: false,
-          quality: 1,
-          what: 'Hyperlink has no text description'
-        },
         a_text_purpose: {
           variable: false,
           quality: 1,
@@ -2340,13 +2215,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'ARIA role is not contained by a required parent'
-        }
-      },
-      ibm: {
-        Rpt_Aria_RequiredParent_Native_Host_Sematics: {
-          variable: false,
-          quality: 1,
-          what: 'Element is not contained within a role-valid element'
         }
       },
       nuVal: {
@@ -2913,11 +2781,6 @@ exports.issues = {
         }
       },
       ibm: {
-        WCAG20_Frame_HasTitle: {
-          variable: false,
-          quality: 1,
-          what: 'Inline frame has an empty or nonunique title attribute'
-        },
         frame_title_exists: {
           variable: false,
           quality: 1,
@@ -3119,13 +2982,6 @@ exports.issues = {
           quality: 1,
           what: 'Element has a dir attribute with a value other than rtl, ltr, or auto'
         }
-      },
-      ibm: {
-        Valerie_Elem_DirValid: {
-          variable: false,
-          quality: 1,
-          what: 'dir attribute has a value other than ltr, rtl, or auto'
-        }
       }
     }
   },
@@ -3259,11 +3115,6 @@ exports.issues = {
         }
       },
       ibm: {
-        Rpt_Aria_RequiredProperties: {
-          variable: false,
-          quality: 1,
-          what: 'ARIA role on an element does not have a required attribute'
-        },
         aria_attribute_required: {
           variable: false,
           quality: 1,
@@ -3535,11 +3386,6 @@ exports.issues = {
     weight: 4,
     tools: {
       ibm: {
-        Rpt_Aria_ValidIdRef: {
-          variable: false,
-          quality: 1,
-          what: 'ARIA property does not reference the non-empty unique id of a visible element'
-        },
         aria_id_unique: {
           variable: false,
           quality: 1,
@@ -3590,11 +3436,6 @@ exports.issues = {
         }
       },
       ibm: {
-        WCAG21_Input_Autocomplete: {
-          variable: false,
-          quality: 1,
-          what: 'autocomplete attribute token is not appropriate for the input form field'
-        },
         input_autocomplete_valid: {
           variable: false,
           quality: 1,
@@ -3732,11 +3573,6 @@ exports.issues = {
         }
       },
       ibm: {
-        IBMA_Color_Contrast_WCAG2AA: {
-          variable: false,
-          quality: 1,
-          what: 'Contrast ratio of text with background does not meet WCAG 2.1 AA'
-        },
         text_contrast_sufficient: {
           variable: false,
           quality: 1,
@@ -4004,11 +3840,6 @@ exports.issues = {
         }
       },
       ibm: {
-        RPT_Header_HasContent: {
-          variable: false,
-          quality: 1,
-          what: 'Heading element provides no descriptive text'
-        },
         heading_content_exists: {
           variable: false,
           quality: 1,
@@ -4094,11 +3925,6 @@ exports.issues = {
         }
       },
       ibm: {
-        WCAG20_Img_LinkTextNotRedundant: {
-          variable: false,
-          quality: 1,
-          what: 'Text alternative for the image in a link repeats text of the same or an adjacent link'
-        },
         img_alt_redundant: {
           variable: false,
           quality: 1,
@@ -4132,13 +3958,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element has an empty alt attribute but has a nonempty title attribute'
-        }
-      },
-      ibm: {
-        WCAG20_Img_TitleEmptyWhenAltNull: {
-          variable: false,
-          quality: 1,
-          what: 'Image alt attribute is empty, but its title attribute is not'
         }
       },
       wave: {
@@ -4304,13 +4123,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Document head element contains an empty title element'
-        }
-      },
-      ibm: {
-        WCAG20_Doc_HasTitle: {
-          variable: false,
-          quality: 1,
-          what: 'Page has no subject-identifying title'
         }
       },
       nuVal: {
@@ -4767,13 +4579,6 @@ exports.issues = {
           what: 'List element dl has a child element other than properly ordered dt and dt group, script, template, and div'
         }
       },
-      ibm: {
-        HAAC_List_Group_ListItem: {
-          variable: false,
-          quality: 1,
-          what: 'List component with a group role has a non-listitem child'
-        }
-      },
       nuVal: {
         'Element dl is missing a required child element.': {
           variable: false,
@@ -4979,13 +4784,6 @@ exports.issues = {
           what: 'accesskey attribute value is not unique'
         }
       },
-      ibm: {
-        WCAG20_Elem_UniqueAccessKey: {
-          variable: false,
-          quality: 1,
-          what: 'Accesskey attribute value on an element is not unique for the page'
-        }
-      },
       wave: {
         accesskey: {
           variable: false,
@@ -5002,11 +4800,6 @@ exports.issues = {
     weight: 2,
     tools: {
       ibm: {
-        WCAG20_Input_RadioChkInFieldSet: {
-          variable: false,
-          quality: 1,
-          what: 'Input is in a different group than another with the name'
-        },
         input_checkboxes_grouped: {
           variable: false,
           quality: 1,
@@ -5092,11 +4885,6 @@ exports.issues = {
         }
       },
       ibm: {
-        WCAG20_Fieldset_HasLegend: {
-          variable: false,
-          quality: 1,
-          what: 'fieldset element has no single, non-empty legend element as a label'
-        },
         fieldset_legend_valid: {
           variable: false,
           quality: 1,
@@ -5360,13 +5148,6 @@ exports.issues = {
           quality: 1,
           what: 'Complex table is missing headers attributes of cells'
         }
-      },
-      ibm: {
-        Valerie_Table_DataCellRelationships: {
-          variable: false,
-          quality: 1,
-          what: 'Not all th and td elements in the complex table have header or scope attributes'
-        }
       }
     }
   },
@@ -5428,13 +5209,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'None of the cells in the table is a header'
-        }
-      },
-      ibm: {
-        RPT_Table_DataHeadingsAria: {
-          variable: false,
-          quality: 1,
-          what: 'Data table does not identify headers'
         }
       }
     }
@@ -5593,11 +5367,6 @@ exports.issues = {
         }
       },
       ibm: {
-        WCAG20_Input_ExplicitLabel: {
-          variable: false,
-          quality: 1,
-          what: 'Form control has no associated label'
-        },
         input_label_exists: {
           variable: false,
           quality: 1,
@@ -5843,13 +5612,6 @@ exports.issues = {
           what: 'iframe element with a negative tabindex attribute contains an interactive element'
         }
       },
-      ibm: {
-        Rpt_Aria_MissingFocusableChild: {
-          variable: false,
-          quality: 1,
-          what: 'UI component has no focusable child element for keyboard access'
-        }
-      },
       qualWeb: {
         'QW-ACT-R70': {
           variable: false,
@@ -6010,11 +5772,6 @@ exports.issues = {
         }
       },
       ibm: {
-        Rpt_Aria_OrphanedContent_Native_Host_Sematics: {
-          variable: false,
-          quality: 1,
-          what: 'Content does not reside within an element with a landmark role'
-        },
         aria_content_in_landmark: {
           variable: false,
           quality: 1,
@@ -6101,16 +5858,6 @@ exports.issues = {
     weight: 3,
     tools: {
       ibm: {
-        Rpt_Aria_MultipleMainsRequireLabel_Implicit_2: {
-          variable: false,
-          quality: 1,
-          what: 'Element with main role has no unique label among the main-role elements'
-        },
-        Rpt_Aria_MultipleMainsVisibleLabel_Implicit: {
-          variable: false,
-          quality: 1,
-          what: 'Element with main role has no unique visible label among the main-role elements'
-        },
         aria_main_label_visible: {
           variable: false,
           quality: 1,
@@ -6192,11 +5939,6 @@ exports.issues = {
         }
       },
       ibm: {
-        Rpt_Aria_OneBannerInSiblingSet_Implicit: {
-          variable: false,
-          quality: 1,
-          what: 'Multiple elements with a banner role are on the page'
-        },
         aria_banner_single: {
           variable: false,
           quality: 1,
@@ -6241,11 +5983,6 @@ exports.issues = {
     weight: 3,
     tools: {
       ibm: {
-        Rpt_Aria_MultipleContentinfoLandmarks_Implicit: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a contentinfo role has no unique purpose label among the contentinfo-role elements'
-        },
         aria_contentinfo_label_unique: {
           variable: false,
           quality: 1,
@@ -6276,11 +6013,6 @@ exports.issues = {
         }
       },
       ibm: {
-        Rpt_Aria_MultipleContentinfoInSiblingSet_Implicit: {
-          variable: false,
-          quality: 1,
-          what: 'Page, document, or application has more than one element with a contentinfo role'
-        },
         aria_contentinfo_single: {
           variable: false,
           quality: 1,
@@ -6323,21 +6055,6 @@ exports.issues = {
       }
     }
   },
-  articleConfusion: {
-    summary: 'articles not distinctly named',
-    why: 'User cannot get help on how some of the document is organized',
-    wcag: '1.3.6',
-    weight: 3,
-    tools: {
-      ibm: {
-        Rpt_Aria_MultipleArticleRoles_Implicit: {
-          variable: false,
-          quality: 1,
-          what: 'Element with an article role has no unique purpose label among the article-role elements'
-        }
-      }
-    }
-  },
   formConfusion: {
     summary: 'forms not distinctly named',
     why: 'User cannot get help on how some of the document is organized',
@@ -6345,11 +6062,6 @@ exports.issues = {
     weight: 3,
     tools: {
       ibm: {
-        Rpt_Aria_MultipleFormLandmarks_Implicit: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a form role has no unique purpose label among the form-role elements'
-        },
         aria_form_label_unique: {
           variable: false,
           quality: 1,
@@ -6365,11 +6077,6 @@ exports.issues = {
     weight: 3,
     tools: {
       ibm: {
-        Rpt_Aria_MultipleApplicationLandmarks: {
-          variable: false,
-          quality: 1,
-          what: 'Element with an application role has no unique purpose label among the application-role elements'
-        },
         aria_application_label_unique: {
           variable: false,
           quality: 1,
@@ -6385,11 +6092,6 @@ exports.issues = {
     weight: 3,
     tools: {
       ibm: {
-        Rpt_Aria_MultipleComplementaryLandmarks_Implicit: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a complementary role has no unique purpose label among the complementary-role elements'
-        },
         aria_complementary_label_unique: {
           variable: false,
           quality: 1,
@@ -6405,11 +6107,6 @@ exports.issues = {
     weight: 3,
     tools: {
       ibm: {
-        Rpt_Aria_MultipleBannerLandmarks_Implicit: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a banner role has no unique purpose label among the banner-role elements'
-        },
         aria_banner_label_unique: {
           variable: false,
           quality: 1,
@@ -6425,11 +6122,6 @@ exports.issues = {
     weight: 3,
     tools: {
       ibm: {
-        Rpt_Aria_MultipleNavigationLandmarks_Implicit: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a navigation role has no unique purpose label among the navigation-role elements'
-        },
         aria_navigation_label_unique: {
           variable: false,
           quality: 1,
@@ -6460,11 +6152,6 @@ exports.issues = {
     weight: 3,
     tools: {
       ibm: {
-        Rpt_Aria_MultipleRegionsUniqueLabel_Implicit: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a region role has no unique label among the region-role elements'
-        },
         aria_region_label_unique: {
           variable: false,
           quality: 1,
@@ -6480,11 +6167,6 @@ exports.issues = {
     weight: 3,
     tools: {
       ibm: {
-        Rpt_Aria_MultipleSearchLandmarks: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a search role has no unique purpose label among the search-role elements'
-        },
         aria_search_label_unique: {
           variable: false,
           quality: 1,
@@ -6500,20 +6182,10 @@ exports.issues = {
     weight: 1,
     tools: {
       ibm: {
-        Rpt_Aria_ComplementaryRequiredLabel_Implicit: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a complementary role has no label'
-        },
         aria_complementary_labelled: {
           variable: false,
           quality: 1,
           what: 'Element with a complementary role has no label'
-        },
-        Rpt_Aria_ComplementaryLandmarkLabel_Implicit: {
-          variable: false,
-          quality: 1,
-          what: 'Element with a complementary role has no visible purpose label'
         },
         aria_complementary_label_visible: {
           variable: false,
@@ -6530,11 +6202,6 @@ exports.issues = {
     weight: 4,
     tools: {
       ibm: {
-        Valerie_Label_HasContent: {
-          variable: false,
-          quality: 1,
-          what: 'label element has no non-empty purpose-descriptive text'
-        },
         label_content_exists: {
           variable: false,
           quality: 1,
@@ -6869,11 +6536,6 @@ exports.issues = {
         }
       },
       ibm: {
-        RPT_Label_UniqueFor: {
-          variable: false,
-          quality: 1,
-          what: 'Form control does not have exactly one label'
-        },
         form_label_unique: {
           variable: false,
           quality: 1,
@@ -7702,11 +7364,6 @@ exports.issues = {
         }
       },
       ibm: {
-        WCAG20_Body_FirstASkips_Native_Host_Sematics: {
-          variable: false,
-          quality: 0.5,
-          what: 'Page provides no way to skip directly to the main content'
-        },
         skip_main_exists: {
           variable: false,
           quality: 0.5,

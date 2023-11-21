@@ -4679,7 +4679,7 @@ exports.issues = {
     weight: 4,
     tools: {
       qualWeb: {
-        'The test target is not contained in a correct description list element.': {
+        'QW-WCAG-T33': {
           variable: false,
           quality: 1,
           what: 'Element is not contained by a valid dl element'

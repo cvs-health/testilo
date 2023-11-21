@@ -283,7 +283,7 @@ exports.scorer = report => {
       + summary.prevention
       + summary.log
       + summary.latency;
-      // Add the score to the report.
+      // Add the score to the report or replace the existing score of the report.
       report.score = score;
     }
     // Otherwise, i.e. if none of them is a test act:

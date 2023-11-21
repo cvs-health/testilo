@@ -1,29 +1,28 @@
-// index: digester for scoring procedure tsp28.
+// index: digester for scoring procedure tsp36.
 
 // IMPORTS
 
-// Issue classification
-const {issues} = require('../../score/tic31');
-// Function to process files.
+// Module to classify tool rules into issues
+const {issues} = require('../../score/tic38');
+// Module to process files.
 const fs = require('fs/promises');
 
 // CONSTANTS
 
 // Digester ID.
-const id = 'tdp31';
-// Newlines with indentations.
-const joiner = '\n      ';
+const id = 'tdp38';
+// Newline with indentations.
 const innerJoiner = '\n        ';
 
 // FUNCTIONS
 
-// Makes strings HTML-safe.
-const htmlEscape = textOrNumber => textOrNumber
-.toString()
-.replace(/&/g, '&amp;')
-.replace(/</g, '&lt;');
 // Gets a row of the score-summary table.
 const getScoreRow = (componentName, score) => `<tr><th>${componentName}</th><td>${score}</td></tr>`;
+// Gets a row of the issue-score-summary table.
+const getIssueScoreRow = (summary, wcag, score, tools) => {
+  const toolList = tools.map(tool => `<code>${tool}</code>`).join(', ');
+  return `<tr><th>${summary}</th><td>${wcag}<td>${score}</td><td>${toolList}</tr>`;
+};
 // Adds parameters to a query for a digest.
 const populateQuery = (report, query) => {
   const {sources, jobData, score} = report;
@@ -38,6 +37,7 @@ const populateQuery = (report, query) => {
   query.org = target.what;
   query.url = target.which;
   query.requester = requester;
+  query.reportURL = `report?jobID=${report.id}`;
   // Add values for the score-summary table to the query.
   const rows = {
     summaryRows: [],
@@ -52,7 +52,15 @@ const populateQuery = (report, query) => {
   issueIDs.sort((a, b) => details.issue[b].score - details.issue[a].score);
   // Get rows for the issue-score table.
   issueIDs.forEach(issueID => {
-    rows.issueRows.push(getScoreRow(issueID, details.issue[issueID].score));
+    const {score, tools} = details.issue[issueID];
+    if (issues[issueID]) {
+      rows.issueRows.push(
+        getIssueScoreRow(issues[issueID].summary, issues[issueID].wcag, score, Object.keys(tools))
+      );
+    }
+    else {
+      console.log(`ERROR: Issue ${issueID} not found`);
+    }
   });
   // Add the rows to the query.
   ['summaryRows', 'issueRows'].forEach(rowType => {
@@ -61,33 +69,24 @@ const populateQuery = (report, query) => {
   // Add paragraph groups about the issue details to the query.
   const issueDetailRows = [];
   issueIDs.forEach(issueID => {
-    issueDetailRows.push(`<h3 class="bars">Issue <code>${issueID}</code></h3>`);
+    issueDetailRows.push(`<h3 class="bars">Issue: ${issues[issueID].summary}</h3>`);
+    issueDetailRows.push(`<p>Impact: ${issues[issueID].why || 'N/A'}</p>`);
     issueDetailRows.push(`<p>WCAG: ${issues[issueID].wcag || 'N/A'}</p>`);
     const issueData = details.issue[issueID];
     issueDetailRows.push(`<p>Score: ${issueData.score}</p>`);
     const toolIDs = Object.keys(issueData.tools);
     toolIDs.forEach(toolID => {
-      issueDetailRows.push(`<h4>Complaints by <code>${toolID}</code></h5>`);
+      issueDetailRows.push(`<h4>Violations of <code>${toolID}</code> rules</h5>`);
       const ruleIDs = Object.keys(issueData.tools[toolID]);
       ruleIDs.forEach(ruleID => {
         const ruleData = issueData.tools[toolID][ruleID];
         issueDetailRows.push(`<h5>Rule <code>${ruleID}</code></h5>`);
         issueDetailRows.push(`<p>Description: ${ruleData.what}</p>`);
         issueDetailRows.push(`<p>Count of instances: ${ruleData.complaints.countTotal}</p>`);
-        issueDetailRows.push('<h6>Complaint specifics</h6>');
-        issueDetailRows.push('<ul>');
-        ruleData.complaints.texts.forEach(text => {
-          issueDetailRows.push(`  <li>${htmlEscape(text || '')}</li>`);
-        });
-        issueDetailRows.push('</ul>');
       });
     });
   });
   query.issueDetailRows = issueDetailRows.join(innerJoiner);
-  // Add an HTML-safe copy of the report to the query to be appended to the digest.
-  const reportJSON = JSON.stringify(report, null, 2);
-  const reportJSONSafe = htmlEscape(reportJSON);
-  query.report = reportJSONSafe;
 };
 // Returns a digested report.
 exports.digester = async report => {

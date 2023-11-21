@@ -4208,7 +4208,6 @@ exports.issues = {
     why: 'Browser processes the document improperly',
     wcag: '4.1.1',
     weight: 3,
-    max: 1,
     tools: {
       aslint: {
         elements_not_allowed_in_head: {

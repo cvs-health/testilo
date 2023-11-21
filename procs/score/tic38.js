@@ -54,6 +54,11 @@ exports.issues = {
           quality: 0,
           what: 'Document contains a commercial overlay modifier that may fail or invalidate test results [unreliable]'
         },
+        object_missing_body: {
+          variable: false,
+          quality: 0,
+          what: 'object element has no body to act as a text alternative [invalid]'
+        },
         reflow: {
           variable: false,
           quality: 0,
@@ -1328,7 +1333,7 @@ exports.issues = {
     summary: 'label referent ineligible',
     why: 'User cannot get help understanding an item in a form',
     wcag: '1.3.1',
-    weight: 3,
+    weight: 4,
     tools: {
       aslint: {
         label_inappropriate_associationN: {
@@ -1356,6 +1361,21 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'for attribute of the label element does not reference a non-hidden form control'
+        }
+      }
+    }
+  },
+  buttonIDInLabelBad: {
+    summary: 'label contains button with nonmatching ID',
+    why: 'User cannot get help understanding an item in a form',
+    wcag: '1.3.1',
+    weight: 4,
+    tools: {
+      nuVal: {
+        'Any button descendant of a label element with a for attribute must have an ID value that matches that for attribute.': {
+          variable: false,
+          quality: 1,
+          what: 'label element has a button descendant whose ID differs from the for attribute of the label'
         }
       }
     }
@@ -1984,6 +2004,21 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Adjacent links go to the same URL'
+        }
+      }
+    }
+  },
+  linkPairRisk: {
+    summary: 'text and image link may merit combination',
+    why: 'Keyboard-only user may expend extra effort to skip a link',
+    wcag: '2.4.4',
+    weight: 1,
+    tools: {
+      htmlcs: {
+        'AAA.1_1_1.H2.EG4': {
+          variable: false,
+          quality: 1,
+          what: 'Adjacent links, one with text and the other with a textless image, may merit combination'
         }
       }
     }
@@ -2624,29 +2659,34 @@ exports.issues = {
         'AAA.2_4_8.H59.1': {
           variable: false,
           quality: 1,
-          what: 'link element is not in the document head'
+          what: 'Element is not in the document head'
+        },
+        'AAA.2_4_8.H59.2a': {
+          variable: false,
+          quality: 1,
+          what: 'Element has no nonempty rel attribute for the type'
         },
         'A link element with an as attribute must have a rel attribute that contains the value preload or the value modulepreload or the value prefetch.': {
           variable: false,
           quality: 1,
-          what: 'link element with an as attribute has no rel attribute with preload, modulepreload, or prefetch as its value'
+          what: 'Element with an as attribute has no rel attribute with preload, modulepreload, or prefetch as its value'
         }
       },
       nuVal: {
         'A link element must not appear as a descendant of a body element unless the link element has an itemprop attribute or has a rel attribute whose value contains dns-prefetch, modulepreload, pingback, preconnect, prefetch, preload, prerender, or stylesheet.': {
           variable: false,
           quality: 1,
-          what: 'link element with a body ancestor has no itemprop or valid rel attribute'
+          what: 'Element has a body ancestor but no itemprop or valid rel attribute'
         },
         'A link element with an as attribute must have a rel attribute that contains the value preload or the value modulepreload or the value prefetch.': {
           variable: false,
           quality: 1,
-          what: 'link element with an as attribute has no rel attribute with preload, modulepreload, or prefetch as its value'
+          what: 'Element has an as attribute but no rel attribute with preload, modulepreload, or prefetch as its value'
         },
         'A link element with an as attribute must have a rel attribute that contains the value preload or the value modulepreload.': {
           variable: false,
           quality: 1,
-          what: 'link element with an as attribute has no rel attribute with preload or modulepreload as its value'
+          what: 'Element has an as attribute but no rel attribute with preload or modulepreload as its value'
         }
       }
     }
@@ -2666,17 +2706,17 @@ exports.issues = {
         '^Element meta is missing one or more of the following attributes: .+$': {
           variable: true,
           quality: 1,
-          what: 'meta element is missing a required attribute'
+          what: 'Element is missing a required attribute'
         },
         'A document must not include more than one meta element with its name attribute set to the value description.': {
           variable: false,
           quality: 1,
-          what: 'meta element with name="description" is not the only one'
+          what: 'Element with name="description" is not the only meta element with that name'
         },
         'A document must not include both a meta element with an http-equiv attribute whose value is content-type, and a meta element with a charset attribute.': {
           variable: false,
           quality: 1,
-          what: 'meta element with http-equiv="content-type" is incompatible with the meta element with a charset attribute'
+          what: 'Element with http-equiv="content-type" is incompatible with the meta element with a charset attribute'
         },
         'A document must not include more than one meta element with a http-equiv attribute whose value is content-type.': {
           variable: false,
@@ -2686,7 +2726,7 @@ exports.issues = {
         'A meta element with an http-equiv attribute whose value is X-UA-Compatible must have a content attribute with the value IE=edge.': {
           variable: false,
           quality: 1,
-          what: 'meta element with http-equiv="X-UA-Compatible" has no content="IE=edge"'
+          what: 'Element with http-equiv="X-UA-Compatible" has no content="IE=edge"'
         },
         'A document must not include more than one meta element with a charset attribute.': {
           variable: false,
@@ -3510,7 +3550,7 @@ exports.issues = {
   },
   requirementRedundant: {
     summary: 'requirement redundant',
-    why: 'Help determining whether a form item must be completed is exposed to risk of corruption',
+    why: 'Help determining whether a form item must be completed is at risk of corruption',
     wcag: '1.3.5',
     weight: 1,
     tools: {
@@ -3884,6 +3924,21 @@ exports.issues = {
       }
     }
   },
+  typeBad: {
+    summary: 'type invalid',
+    why: 'Document styles are at risk of corruption',
+    wcag: '1.3.1',
+    weight: 4,
+    tools: {
+      nuVal: {
+        'The only allowed value for the type attribute for the style element is text/css (with no parameters). (But the attribute is not needed and should be omitted altogether.)': {
+          variable: false,
+          quality: 1,
+          what: 'type attribute is invalid'
+        }
+      }
+    }
+  },
   typeRedundant: {
     summary: 'type redundant',
     why: 'Document includes unnecessary code',
@@ -4123,6 +4178,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Document head element contains an empty title element'
+        }
+      },
+      ibm: {
+        'page_title_exists': {
+          variable: false,
+          quality: 1,
+          what: 'Page has no title'
         }
       },
       nuVal: {
@@ -4605,7 +4667,22 @@ exports.issues = {
         listitem: {
           variable: false,
           quality: 1,
-          what: 'li element is not contained by a ul or ol element'
+          what: 'Element is not contained by a ul or ol element'
+        }
+      }
+    }
+  },
+  descriptionOrphan: {
+    summary: 'description list orphan',
+    why: 'User cannot get help on whether an item is in a list',
+    wcag: '1.3.1',
+    weight: 4,
+    tools: {
+      qualWeb: {
+        'The test target is not contained in a correct description list element.': {
+          variable: false,
+          quality: 1,
+          what: 'Element is not contained by a valid dl element'
         }
       }
     }
@@ -7659,7 +7736,7 @@ exports.issues = {
   },
   obsolete: {
     summary: 'code obsolete',
-    why: 'Document contains invalid code',
+    why: 'Document contains code that is no longer standard',
     wcag: '4.1',
     weight: 3,
     tools: {
@@ -7676,6 +7753,11 @@ exports.issues = {
         }
       },
       nuVal: {
+        'Legacy doctype. Expected <!DOCTYPE html>.': {
+          variable: false,
+          quality: 1,
+          what: 'doctype is obsolete'
+        },
         'Obsolete doctype. Expected <!DOCTYPE html>.': {
           variable: false,
           quality: 1,
@@ -7711,10 +7793,20 @@ exports.issues = {
           quality: 1,
           what: 'CSS style sheet includes HTML syntax'
         },
+        '^CSS: column-count: .+ is not valid, only values greater than 0 allowed.*$': {
+          variable: true,
+          quality: 1,
+          what: 'CSS column-count property has a nonpositive value'
+        },
         'CSS: font-size: One operand must be a number.': {
           variable: false,
           quality: 1,
           what: 'CSS font-size property has no numeric operand'
+        },
+        '^CSS: font-weight: .+ is not valid, only values greater than or equal to 1.0 are allowed.*$': {
+          variable: true,
+          quality: 1,
+          what: 'CSS font-weight property has a value smaller than 1'
         },
         '^CSS: .+: Parse Error.*$': {
           variable: true,
@@ -7810,6 +7902,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'CSS @charset at-rule is not at the start of its style sheet'
+        },
+        'CSS: @import are not allowed after any valid statement other than @charset and @import.': {
+          variable: false,
+          quality: 1,
+          what: 'CSS @import at-rule is after an at-rule other than @charset or @import'
         },
         '^CSS: perspective: .+ is not valid, only values greater than 0 allowed.*$': {
           variable: true,
@@ -7988,10 +8085,25 @@ exports.issues = {
           quality: 1,
           what: 'Comment contains --'
         },
+        'The document is not mappable to XML 1.0 due to a trailing hyphen in a comment.': {
+          variable: false,
+          quality: 1,
+          what: 'Comment ends with -'
+        },
+        'Bogus comment.': {
+          variable: false,
+          quality: 1,
+          what: 'Comment is missing a valid termination'
+        },
         '^Element name .+ cannot be represented as XML 1\\.0.*$': {
           variable: true,
           quality: 1,
           what: 'Invalid element name'
+        },
+        '^Bad element name .*: Code point .* is not allowed*$': {
+          variable: true,
+          quality: 1,
+          what: 'Element name contains an invalid character'
         },
         '^Forbidden code point U+.+$': {
           variable: true,
@@ -8072,6 +8184,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element with a srcset attribute with a width has no sizes attribute'
+        },
+        'When the srcset attribute has any image candidate string with a width descriptor, the sizes attribute must also be specified.': {
+          variable: false,
+          quality: 1,
+          what: 'Element with a srcset attribute with a width has no valid sizes attribute'
         },
         '^The text content of element .+ was not in the required format: Expected .+ but found .+ instead.*$': {
           variable: true,

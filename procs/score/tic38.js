@@ -34,10 +34,20 @@ exports.issues = {
           quality: 0,
           what: 'Text has contrast less than 4.5:1 [speculative]'
         },
+        css_images_convey_information: {
+          variable: false,
+          quality: 1,
+          what: 'Background image may be informative [speculative]'
+        },
         flickering: {
           variable: false,
           quality: 0,
           what: 'Excessive flashing may exist [speculative]'
+        },
+        links_language_destination: {
+          variable: false,
+          quality: 1,
+          what: 'Link destination has a named host and may be in an unexpected language [speculative]'
         },
         meaningful_content_sequence: {
           variable: false,
@@ -63,6 +73,11 @@ exports.issues = {
           variable: false,
           quality: 0,
           what: 'Page may require horizontal scrolling [speculative]'
+        },
+        text_color_convey_information: {
+          variable: false,
+          quality: 1,
+          what: 'Color may give information not given also by text [speculative]'
         }
       },
       axe: {
@@ -638,21 +653,6 @@ exports.issues = {
       }
     }
   },
-  colorRisk: {
-    summary: 'info may be only color-represented',
-    why: 'User may be unable to get help understanding document information',
-    wcag: '1.4.1',
-    weight: 1,
-    tools: {
-      aslint: {
-        text_color_convey_information: {
-          variable: false,
-          quality: 1,
-          what: 'Color may give information not given also by text'
-        }
-      }
-    }
-  },
   imageNoSource: {
     summary: 'image has no src',
     why: 'Image to be shown cannot be found',
@@ -806,21 +806,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Image marked as decorative may be informative'
-        }
-      }
-    }
-  },
-  backgroundImageRisk: {
-    summary: 'background image possibly informative',
-    why: 'Helper ignores an image that may be informative',
-    wcag: '1.1.1',
-    weight: 1,
-    tools: {
-      aslint: {
-        css_images_convey_information: {
-          variable: false,
-          quality: 1,
-          what: 'Background image may be informative'
         }
       }
     }
@@ -1940,21 +1925,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Links with the same accessible name may serve dissimilar purposes'
-        }
-      }
-    }
-  },
-  linkExternalRisk: {
-    summary: 'destination language change possibly unstated',
-    why: 'User may be confused by the content after following a link',
-    wcag: '2.4.4',
-    weight: 1,
-    tools: {
-      aslint: {
-        links_language_destination: {
-          variable: false,
-          quality: 1,
-          what: 'Link destination has a named host and may be in an unexpected language'
         }
       }
     }

@@ -1350,17 +1350,17 @@ exports.issues = {
       }
     }
   },
-  buttonIDInLabelBad: {
-    summary: 'label contains button with nonmatching ID',
+  controlIDInLabelBad: {
+    summary: 'label contains control with nonmatching ID',
     why: 'User cannot get help understanding an item in a form',
     wcag: '1.3.1',
     weight: 4,
     tools: {
       nuVal: {
-        'Any button descendant of a label element with a for attribute must have an ID value that matches that for attribute.': {
-          variable: false,
+        '^Any .+ descendant of a label element with a for attribute must have an ID value that matches that for attribute.*$': {
+          variable: true,
           quality: 1,
-          what: 'label element has a button descendant whose ID differs from the for attribute of the label'
+          what: 'label element has a labelable descendant whose ID differs from the for attribute of the label'
         }
       }
     }

@@ -2736,6 +2736,21 @@ exports.issues = {
       }
     }
   },
+  itemIDBad: {
+    summary: 'itemid invalid',
+    why: 'User cannot get help to identify a referent',
+    wcag: '1.3.1',
+    weight: 4,
+    tools: {
+      nuVal: {
+        'The itemid attribute must not be specified on elements that do not have both an itemscope attribute and an itemtype attribute specified.': {
+          variable: false,
+          quality: 1,
+          what: 'Element has an itemid attribute without both an itemscope and an itemtype attribute'
+        }
+      }
+    }
+  },
   itemTypeBad: {
     summary: 'itemtype invalid',
     why: 'User cannot get help on the definition of a term',
@@ -2898,6 +2913,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Table structure element specifies an explicit role within the table container'
+        },
+        aria_child_valid: {
+          variable: false,
+          quality: 1,
+          what: 'Child element has a role not allowed for the role of the parent'
         }
       },
       nuVal: {
@@ -3020,11 +3040,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'ARIA attribute is invalid for the role of its element'
-        },
-        aria_attribute_value_valid: {
-          variable: false,
-          quality: 1,
-          what: 'Value of an attribute on the element is not valid'
         }
       },
       nuVal: {
@@ -3043,16 +3058,6 @@ exports.issues = {
           quality: 1,
           what: 'Attribute not allowed on this element'
         },
-        '^Bad value .* for attribute .+ on element .+$': {
-          variable: true,
-          quality: 1,
-          what: 'Attribute on this element has an invalid value'
-        },
-        '^Bad value .+ for the attribute .+$': {
-          variable: true,
-          quality: 1,
-          what: 'Attribute has an invalid value'
-        },
         '^Attribute .+ not allowed here.*$': {
           variable: true,
           quality: 1,
@@ -3062,11 +3067,6 @@ exports.issues = {
           variable: true,
           quality: 1,
           what: 'Attribute is invalidly nonserializable'
-        },
-        '^Bad value  for attribute .+ on element .+: Must not be empty.*$': {
-          variable: true,
-          quality: 1,
-          what: 'Attribute has an invalidly empty value'
         },
         '^Attribute .+ is only allowed when .+$': {
           variable: true,
@@ -3098,15 +3098,57 @@ exports.issues = {
           quality: 1,
           what: 'Element has a sizes attribute but no srcset attribute'
         },
+        'When the srcset attribute has any image candidate string with a width descriptor, the sizes attribute must also be present.': {
+          variable: false,
+          quality: 1,
+          what: 'Element with a srcset attribute with a width has no sizes attribute'
+        },
+        'When the srcset attribute has any image candidate string with a width descriptor, the sizes attribute must also be specified.': {
+          variable: false,
+          quality: 1,
+          what: 'Element with a srcset attribute with a width has no valid sizes attribute'
+        }
+      }
+    }
+  },
+  attributeValueBad: {
+    summary: 'attribute value invalid',
+    why: 'Item behaves improperly',
+    wcag: '1.3.1',
+    weight: 4,
+    tools: {
+      ibm: {
+        aria_attribute_value_valid: {
+          variable: false,
+          quality: 1,
+          what: 'Value of an attribute on the element is not valid'
+        }
+      },
+      nuVal: {
+        '^Bad value .* for attribute .+ on element .+$': {
+          variable: true,
+          quality: 1,
+          what: 'Attribute on this element has an invalid value'
+        },
+        '^Bad value .+ for the attribute .+$': {
+          variable: true,
+          quality: 1,
+          what: 'Attribute has an invalid value'
+        },
+        '^Bad value  for attribute .+ on element .+: Must not be empty.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Attribute has an invalidly empty value'
+        },
         '^Bad value  for attribute (?:width|height) on element img: The empty string is not a valid non-negative integer.*$': {
           variable: true,
           quality: 1,
           what: 'Attribute has an empty value'
         },
-        '^.+ in an unquoted attribute value. Probable causes: Attributes running together or a URL query string in an unquoted attribute value.*$': {
-          variable: true,
+        'A script element with a defer attribute must not have a type attribute with the value module.': {
+          variable: false,
           quality: 1,
-          what: 'Attribute has a value containing invalid punctuation'
+          what: 'script element with a defer attribute has type="module"'
         }
       }
     }
@@ -3132,11 +3174,6 @@ exports.issues = {
         }
       },
       nuVal: {
-        '^Element .+ is missing required attribute .+$': {
-          variable: true,
-          quality: 1,
-          what: 'Element is missing a required attribute'
-        },
         '^Element image is missing required attribute (?:height|width).*$': {
           variable: true,
           quality: 1,
@@ -3156,6 +3193,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'source or img element is missing a media or type attribute'
+        },
+        '^Element .+ is missing required attribute .+$': {
+          variable: true,
+          quality: 1,
+          what: 'Element is missing a required attribute'
         }
       }
     }
@@ -4064,7 +4106,7 @@ exports.issues = {
       }
     }
   },
-  docType: {
+  docTypeMissing: {
     summary: 'DOCTYPE missing',
     why: 'Browser processes the document improperly',
     wcag: '1.3.1',
@@ -4083,6 +4125,22 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'document has no valid doctype property'
+        }
+      }
+    }
+  },
+  docTypeBad: {
+    summary: 'DOCTYPE invalid',
+    why: 'Browser processes the document improperly',
+    wcag: '1.3.1',
+    weight: 3,
+    max: 1,
+    tools: {
+      nuVal: {
+        'Almost standards mode doctype. Expected <!DOCTYPE html>.': {
+          variable: false,
+          quality: 1,
+          what: 'document type declaration differs from <!DOCTYPE html>'
         }
       }
     }
@@ -5256,6 +5314,13 @@ exports.issues = {
           quality: 1,
           what: 'None of the cells in the table is a header'
         }
+      },
+      ibm: {
+        table_headers_exists: {
+          variable: false,
+          quality: 1,
+          what: 'No cell in the table is a th element or has a scope or headers attribute'
+        }
       }
     }
   },
@@ -5609,6 +5674,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'descendant of an element with a link role has a tabindex attribute'
+        },
+        'An element with the attribute tabindex must not appear as a descendant of the button element.': {
+          variable: false,
+          quality: 1,
+          what: 'descendant of a button element has a tabindex attribute'
         },
         'An element with the attribute tabindex must not appear as a descendant of an element with the attribute role=button.': {
           variable: false,
@@ -7965,139 +8035,32 @@ exports.issues = {
       }
     }
   },
-  parseError: {
-    summary: 'code invalid',
-    why: 'Document contains invalid code',
+  characterBad: {
+    summary: 'invalid character',
+    why: 'Invalid character makes the document behave correctly',
     wcag: '4.1',
     weight: 3,
     tools: {
-      ibm: {
-        aria_child_valid: {
-          variable: false,
-          quality: 1,
-          what: 'Child element has a role not allowed for the role of the parent'
-        },
-        Rpt_Aria_InvalidTabindexForActivedescendant: {
-          variable: false,
-          quality: 1,
-          what: 'Element with an aria-activedescendant attribute has no nonpositive tabindex attribute'
-        }
-      },
       nuVal: {
-        '^End tag .+ did not match the name of the current open element (.+).*$': {
-          variable: true,
-          quality: 1,
-          what: 'End tag clippath conflicts with the current open element.'
-        },
-        '^Self-closing syntax .+ used on a non-void HTML element.*$': {
-          variable: true,
-          quality: 1,
-          what: 'Self-closing syntax used on a non-void element'
-        },
-        'No space between attributes.': {
-          variable: true,
-          quality: 1,
-          what: 'No space between attributes'
-        },
         '^Bad value [^\ufffd]+ Tab, new line or carriage return found.*$': {
           variable: true,
           quality: 1,
           what: 'Attribute value contains an illegal spacing character'
-        },
-        'Saw <?. Probable cause: Attempt to use an XML processing instruction in HTML. (XML processing instructions are not supported in HTML.)': {
-          variable: false,
-          quality: 1,
-          what: 'Left angle bracket is followed by a question mark'
         },
         '^Bad character . after <. Probable cause: Unescaped <. Try escaping it as &lt;.*$': {
           variable: true,
           quality: 1,
           what: 'Left angle bracket is followed by an invalid character'
         },
-        'Almost standards mode doctype. Expected <!DOCTYPE html>.': {
-          variable: false,
-          quality: 1,
-          what: 'document type declaration differs from <!DOCTYPE html>'
-        },
-        '^The aria-hidden attribute must not be specified on the .+ element.*$': {
-          variable: true,
-          quality: 1,
-          what: 'aria-hidden attribute is invalid for its element'
-        },
-        'The aria-hidden attribute must not be specified on an input element whose type attribute has the value hidden.': {
-          variable: false,
-          quality: 1,
-          what: 'aria-hidden attribute is invalid for an input element with type="hidden"'
-        },
-        '^Bad start tag in .+$': {
-          variable: true,
-          quality: 1,
-          what: 'Invalid start tag'
-        },
-        '^Element .+ is missing a required instance of child element .+$': {
-          variable: true,
-          quality: 1,
-          what: 'Element is missing a required child'
-        },
-        'Saw <!-- within a comment. Probable cause: Nested comment (not allowed).': {
-          variable: false,
-          quality: 1,
-          what: 'Comment is nested within a comment'
-        },
         '^Saw .+ when expecting an attribute name. Probable cause: (?:.+ missing|Missing .+) immediately before.*$': {
           variable: true,
           quality: 1,
           what: 'Invalid character appears where an attribute name must appear'
         },
-        'The document is not mappable to XML 1.0 due to two consecutive hyphens in a comment.': {
-          variable: false,
-          quality: 1,
-          what: 'Comment contains --'
-        },
-        'The document is not mappable to XML 1.0 due to a trailing hyphen in a comment.': {
-          variable: false,
-          quality: 1,
-          what: 'Comment ends with -'
-        },
-        'Bogus comment.': {
-          variable: false,
-          quality: 1,
-          what: 'Comment is missing a valid termination'
-        },
-        '^Element name .+ cannot be represented as XML 1\\.0.*$': {
-          variable: true,
-          quality: 1,
-          what: 'Invalid element name'
-        },
         '^Bad element name .*: Code point .* is not allowed*$': {
           variable: true,
           quality: 1,
           what: 'Element name contains an invalid character'
-        },
-        '^Forbidden code point U+.+$': {
-          variable: true,
-          quality: 1,
-          what: 'Invalid Unicode code point'
-        },
-        '^Internal encoding declaration .+ disagrees with the actual encoding of the document.*$': {
-          variable: true,
-          quality: 1,
-          what: 'Encoding declaration disagrees with the actual encoding of the page'
-        },
-        'Text run is not in Unicode Normalization Form C.': {
-          variable: false,
-          quality: 1,
-          what: 'Text run is not in Unicode Normalization Form C.'
-        },
-        'Quote \" in attribute name. Probable cause: Matching quote missing somewhere earlier.': {
-          variable: false,
-          quality: 1,
-          what: 'Attribute name includes a double quotation mark'
-        },
-        'Element script must not have attribute async unless attribute src is also specified or unless attribute type is specified with value module.': {
-          variable: false,
-          quality: 1,
-          what: 'script element has an async attribute but has no src or value=module attribute'
         },
         '^Bad value .* for attribute href on element .+: Illegal character in path segment: .+ is not allowed.*$': {
           variable: true,
@@ -8124,15 +8087,140 @@ exports.issues = {
           quality: 1,
           what: 'src attribute value contains a tab, newline, or return character'
         },
+        'Non-space character inside noscript inside head.': {
+          variable: false,
+          quality: 1,
+          what: 'noscript element inside the head element has a nonspace text-node child'
+        },
+        '^.+ in an unquoted attribute value. Probable causes: Attributes running together or a URL query string in an unquoted attribute value.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Attribute has a value containing invalid punctuation'
+        }
+      }
+    }
+  },
+  textContentBad: {
+    summary: 'element text content invalid',
+    why: 'User may be unable to read all the document text',
+    wcag: '4.1',
+    weight: 3,
+    tools: {
+      nuVal: {
+        'Text run is not in Unicode Normalization Form C.': {
+          variable: false,
+          quality: 1,
+          what: 'Text run is not in Unicode Normalization Form C.'
+        },
+        '^The text content of element .+ was not in the required format: Expected .+ but found .+ instead.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Element has text content with invalid format'
+        },
+        'The text content of element time was not in the required format: The literal did not satisfy the time-datetime format.': {
+          variable: false,
+          quality: 1,
+          what: 'time element has text content that is not in the time-datetime format'
+        }
+      }
+    }
+  },
+  parseError: {
+    summary: 'code invalid',
+    why: 'Invalid code in the document may prevent a helper from working',
+    wcag: '4.1',
+    weight: 3,
+    tools: {
+      nuVal: {
+        '^End tag .+ did not match the name of the current open element (.+).*$': {
+          variable: true,
+          quality: 1,
+          what: 'End tag clippath conflicts with the current open element.'
+        },
+        '^Self-closing syntax .+ used on a non-void HTML element.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Self-closing syntax used on a non-void element'
+        },
+        'No space between attributes.': {
+          variable: true,
+          quality: 1,
+          what: 'No space between attributes'
+        },
+        'Saw <?. Probable cause: Attempt to use an XML processing instruction in HTML. (XML processing instructions are not supported in HTML.)': {
+          variable: false,
+          quality: 1,
+          what: 'Left angle bracket is followed by a question mark'
+        },
+        '^The aria-hidden attribute must not be specified on the .+ element.*$': {
+          variable: true,
+          quality: 1,
+          what: 'aria-hidden attribute is invalid for its element'
+        },
+        'The aria-hidden attribute must not be specified on an input element whose type attribute has the value hidden.': {
+          variable: false,
+          quality: 1,
+          what: 'aria-hidden attribute is invalid for an input element with type="hidden"'
+        },
+        '^Bad start tag in .+$': {
+          variable: true,
+          quality: 1,
+          what: 'Invalid start tag'
+        },
+        '^Element .+ is missing a required instance of child element .+$': {
+          variable: true,
+          quality: 1,
+          what: 'Element is missing a required child'
+        },
+        'Saw <!-- within a comment. Probable cause: Nested comment (not allowed).': {
+          variable: false,
+          quality: 1,
+          what: 'Comment is nested within a comment'
+        },
+        'The document is not mappable to XML 1.0 due to two consecutive hyphens in a comment.': {
+          variable: false,
+          quality: 1,
+          what: 'Comment contains --'
+        },
+        'The document is not mappable to XML 1.0 due to a trailing hyphen in a comment.': {
+          variable: false,
+          quality: 1,
+          what: 'Comment ends with -'
+        },
+        'Bogus comment.': {
+          variable: false,
+          quality: 1,
+          what: 'Comment is missing a valid termination'
+        },
+        '^Element name .+ cannot be represented as XML 1\\.0.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Invalid element name'
+        },
+        '^Forbidden code point U+.+$': {
+          variable: true,
+          quality: 1,
+          what: 'Invalid Unicode code point'
+        },
+        '^Internal encoding declaration .+ disagrees with the actual encoding of the document.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Encoding declaration disagrees with the actual encoding of the page'
+        },
+        'Quote \" in attribute name. Probable cause: Matching quote missing somewhere earlier.': {
+          variable: false,
+          quality: 1,
+          what: 'Attribute name includes a double quotation mark'
+        },
+        'Element script must not have attribute async unless attribute src is also specified or unless attribute type is specified with value module.': {
+          variable: false,
+          quality: 1,
+          what: 'script element has an async attribute but has no src or value=module attribute'
+        },
         '^Text not allowed in element .+ in this context.*$': {
           variable: true,
           quality: 1,
           what: 'Element contains text, which is not allowed here'
-        },
-        'Element source is missing required attribute srcset.': {
-          variable: false,
-          quality: 1,
-          what: 'source element has no srcset attribute'
         },
         '^The .+ element must not appear as a descendant of the .+ element.*$': {
           variable: true,
@@ -8149,40 +8237,10 @@ exports.issues = {
           quality: 1,
           what: 'option element has a nonempty value'
         },
-        'When the srcset attribute has any image candidate string with a width descriptor, the sizes attribute must also be present.': {
-          variable: false,
-          quality: 1,
-          what: 'Element with a srcset attribute with a width has no sizes attribute'
-        },
-        'When the srcset attribute has any image candidate string with a width descriptor, the sizes attribute must also be specified.': {
-          variable: false,
-          quality: 1,
-          what: 'Element with a srcset attribute with a width has no valid sizes attribute'
-        },
-        '^The text content of element .+ was not in the required format: Expected .+ but found .+ instead.*$': {
-          variable: true,
-          quality: 1,
-          what: 'Element has text content with invalid format'
-        },
         'Element script must not have attribute charset unless attribute src is also specified.': {
           variable: false,
           quality: 1,
           what: 'script element has a charset attribute but no src attribute'
-        },
-        'The text content of element time was not in the required format: The literal did not satisfy the time-datetime format.': {
-          variable: false,
-          quality: 1,
-          what: 'time element has text content that is not in the time-datetime format'
-        },
-        'A script element with a defer attribute must not have a type attribute with the value module.': {
-          variable: false,
-          quality: 1,
-          what: 'script element with a defer attribute has type="module"'
-        },
-        'Non-space character inside noscript inside head.': {
-          variable: false,
-          quality: 1,
-          what: 'noscript element inside the head element has a nonspace text-node child'
         },
         '^java.util.concurrent.TimeoutException: Idle timeout expired: .+ ms.*$': {
           variable: true,
@@ -8221,9 +8279,9 @@ exports.issues = {
       }
     }
   },
-  encodingBad: {
+  encodingPrivate: {
     summary: 'text in Private Use Area',
-    why: 'Document contains invalid code',
+    why: 'User cannot read all of the text',
     wcag: '3.1.3',
     weight: 4,
     max: 1,

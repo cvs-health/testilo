@@ -22,7 +22,7 @@ const preventionWeight = 300;
 // Maximum instance count addition weight (divisor of max).
 const maxWeight = 30;
 // Issue count weight.
-const issueCountWeight = 15;
+const issueCountWeight = 10;
 // Other weights.
 const severityWeights = [1, 2, 3, 4];
 const toolWeight = 0.1;

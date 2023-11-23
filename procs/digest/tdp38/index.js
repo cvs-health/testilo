@@ -43,7 +43,7 @@ const populateQuery = (report, query) => {
     summaryRows: [],
     issueRows: []
   };
-  ['total', 'issue', 'tool', 'prevention', 'log', 'latency'].forEach(sumItem => {
+  ['total', 'issueCount', 'issue', 'tool', 'prevention', 'log', 'latency'].forEach(sumItem => {
     query[sumItem] = summary[sumItem];
     rows.summaryRows.push(getScoreRow(sumItem, query[sumItem]));
   });

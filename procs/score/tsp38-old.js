@@ -21,8 +21,6 @@ const normalLatency = 9;
 const preventionWeight = 300;
 // Maximum instance count addition weight (divisor of max).
 const maxWeight = 30;
-// Issue count weight.
-const issueCountWeight = 15;
 // Other weights.
 const severityWeights = [1, 2, 3, 4];
 const toolWeight = 0.1;
@@ -82,7 +80,6 @@ exports.scorer = report => {
         normalLatency,
         summary: {
           total: 0,
-          issueCount: 0,
           issue: 0,
           solo: 0,
           tool: 0,
@@ -137,59 +134,57 @@ exports.scorer = report => {
                 return patternRE.test(instance.ruleID);
               });
             }
-            // If the rule ID belongs to a non-ignorable issue:
+            // If the rule ID belongs to an issue:
             if (canonicalRuleID) {
               // Get the issue.
               const issueName = issueIndex[which][canonicalRuleID];
               // Add the instance to the issue details of the score data.
-              if (issueName !== 'ignorable') {
-                if (! details.issue[issueName]) {
-                  details.issue[issueName] = {
-                    summary: issues[issueName].summary,
-                    score: 0,
-                    maxCount: 0,
-                    weight: issues[issueName].weight,
-                    countLimit: issues[issueName].max,
-                    tools: {}
-                  };
-                  if (! details.issue[issueName].countLimit) {
-                    delete details.issue[issueName].countLimit;
+              if (! details.issue[issueName]) {
+                details.issue[issueName] = {
+                  summary: issues[issueName].summary,
+                  score: 0,
+                  maxCount: 0,
+                  weight: issues[issueName].weight,
+                  countLimit: issues[issueName].max,
+                  tools: {}
+                };
+                if (! details.issue[issueName].countLimit) {
+                  delete details.issue[issueName].countLimit;
+                }
+              }
+              if (! details.issue[issueName].tools[which]) {
+                details.issue[issueName].tools[which] = {};
+              }
+              if (! details.issue[issueName].tools[which][canonicalRuleID]) {
+                const ruleData = issues[issueName].tools[which][canonicalRuleID];
+                details.issue[issueName].tools[which][canonicalRuleID] = {
+                  quality: ruleData.quality,
+                  what: ruleData.what,
+                  complaints: {
+                    countTotal: 0,
+                    texts: []
                   }
-                }
-                if (! details.issue[issueName].tools[which]) {
-                  details.issue[issueName].tools[which] = {};
-                }
-                if (! details.issue[issueName].tools[which][canonicalRuleID]) {
-                  const ruleData = issues[issueName].tools[which][canonicalRuleID];
-                  details.issue[issueName].tools[which][canonicalRuleID] = {
-                    quality: ruleData.quality,
-                    what: ruleData.what,
-                    complaints: {
-                      countTotal: 0,
-                      texts: []
-                    }
-                  };
-                }
+                };
+              }
+              details
+              .issue[issueName]
+              .tools[which][canonicalRuleID]
+              .complaints
+              .countTotal += instance.count || 1;
+              if (
+                ! details
+                .issue[issueName]
+                .tools[which][canonicalRuleID]
+                .complaints
+                .texts
+                .includes(instance.what)
+              ) {
                 details
                 .issue[issueName]
                 .tools[which][canonicalRuleID]
                 .complaints
-                .countTotal += instance.count || 1;
-                if (
-                  ! details
-                  .issue[issueName]
-                  .tools[which][canonicalRuleID]
-                  .complaints
-                  .texts
-                  .includes(instance.what)
-                ) {
-                  details
-                  .issue[issueName]
-                  .tools[which][canonicalRuleID]
-                  .complaints
-                  .texts
-                  .push(instance.what);
-                }
+                .texts
+                .push(instance.what);
               }
             }
             // Otherwise, i.e. if the rule ID belongs to no issue:
@@ -213,7 +208,7 @@ exports.scorer = report => {
           details.prevention[which] = preventionWeight;
         }
       });
-      // For each non-ignorable issue with any complaints:
+      // For each issue with any complaints:
       Object.keys(details.issue).forEach(issueName => {
         const issueData = details.issue[issueName];
         // For each tool with any complaints for the issue:
@@ -240,8 +235,6 @@ exports.scorer = report => {
         });
         return severityTotals;
       }, details.severity.total);
-      // Add the summary issue-count total to the score.
-      summary.issueCount = Object.keys(details.issue).length * issueCountWeight;
       // Add the summary issue total to the score.
       summary.issue = Object
       .values(details.issue)
@@ -284,8 +277,7 @@ exports.scorer = report => {
         details.severity.total[index] = Math.round(severityTotal);
       });
       // Add the summary total score to the score.
-      summary.total = summary.issueCount
-      + summary.issue
+      summary.total = summary.issue
       + summary.solo
       + summary.tool
       + summary.prevention

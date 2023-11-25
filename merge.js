@@ -8,6 +8,7 @@
     3. whether to provide test isolation
     4. value of the standard property
     5. whether reporting is to be granular
+    6. date and time as a compact timestamp for job execution, if not now
 */
 
 // ########## IMPORTS
@@ -24,27 +25,75 @@ const contaminantNames = new Set([
   'aslint',
   'axe',
   'htmlcs',
-  'ibm',
   'testaro'
 ]);
+const randomIDChars = (() => {
+  const digits = Array(10).fill('').map((digit, index) => index.toString());
+  const uppers = Array(26).fill('').map((letter, index) => String.fromCodePoint(65 + index));
+  const lowers = Array(26).fill('').map((letter, index) => String.fromCodePoint(97 + index));
+  return digits.concat(uppers, lowers);
+})();
+  
 
 // ########## FUNCTIONS
 
+// Inserts a character periodically in a string.
+const punctuate = (string, insertion, chunkSize) => {
+  const segments = [];
+  let startIndex = 0;
+  while (startIndex < string.length) {
+    segments.push(string.slice(startIndex, startIndex + chunkSize));
+    startIndex += chunkSize;
+  }
+  return segments.join(insertion);
+};
+// Converts a compact timestamp to a date.
+const dateOf = timeStamp => {
+  if (/^\d{6}T\d{6}$/.test(timeStamp)) {
+    const dateString = punctuate(timeStamp.slice(0, 6), '-', 2);
+    const timeString = punctuate(timeStamp.slice(7, 11), ':', 2);
+    return new Date(`${dateString}T${timeString}Z`);
+  } else {
+    return null;
+  }
+};
+// Converts a date and time to a compact timestamp.
+const stampTime = date => date.toISOString().replace(/[-:]/g, '').slice(2, 13);
+// Generates a random string.
+const getRandomID = length => {
+  const chars = [];
+  for (let i = 0; i < length; i++) {
+    chars.push(randomIDChars[Math.floor(62 * Math.random())]);
+  }
+  return chars.join('');
+};
 // Merges a script and a batch and returns jobs.
-exports.merge = (script, batch, requester, isolate, standard, isGranular) => {
+exports.merge = (script, batch, requester, isolate, standard, isGranular, timeStamp) => {
   if (isolate === 'false') {
     isolate = false;
   }
-  // If the requester is unspecified, make it the standard requester.
+  // If a timestamp was specified:
+  if (timeStamp) {
+    // If it is invalid:
+    if (! dateOf(timeStamp)) {
+      // Report this and quit.
+      console.log(`ERROR: Timestamp invalid`);
+      return jobs;
+    }
+  }
+  // Otherwise, i.e. if no timestamp was specified:
+  else {
+    // Create one for the job.
+    timeStamp = stampTime(new Date());
+  }
+  // If the requester is blank or unspecified, make it the standard requester.
   requester ||= stdRequester;
-  // Create a timestamp.
-  const timeStamp = new Date().toISOString().replace(/[-:]/g, '').slice(2, 15);
-  // Create a time description.
+  // Create a creation-time description.
   const creationTime = (new Date()).toISOString().slice(0, 19);
   // Initialize a target-independent job.
   const protoJob = JSON.parse(JSON.stringify(script));
-  // Add the timestamp to the ID of the job.
-  protoJob.id = `${timeStamp}-${protoJob.id}-`;
+  // Make the timestamp and a random string the ID of the job.
+  protoJob.id = `${timeStamp}-${getRandomID(process.env.RANDOM_ID_LENGTH)}`;
   // Add a sources property to the job.
   protoJob.sources = {
     script: script.id,
@@ -64,7 +113,7 @@ exports.merge = (script, batch, requester, isolate, standard, isGranular) => {
   protoJob.observe = isGranular || false;
   // If isolation was requested:
   if (isolate) {
-    // Perform it.
+    // Configure the job for it.
     let {acts} = protoJob;
     let lastPlaceholder = {};
     for (const actIndexString in acts) {

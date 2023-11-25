@@ -1,10 +1,6 @@
 /*
   batch.js
   Converts a target list to a batch.
-  Arguments:
-    0. batch ID
-    1. batch description
-    2. target list
 */
 
 // ########## FUNCTIONS

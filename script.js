@@ -1,9 +1,6 @@
 /*
   script.js
-  Creates and returns a script.
-  Arguments:
-    0. issue classification
-    1. issue IDs
+  Creates and returns a script to perform the tests for issues.
 */
 
 // ########## IMPORTS
@@ -13,6 +10,7 @@ require('dotenv').config();
 
 // ########## VARIABLES
 
+// List of presumptively needed tools.
 let toolIDs = [
   'alfa', 'aslint', 'axe', 'htmlcs', 'ibm', 'nuVal', 'qualWeb', 'testaro', 'wave'
 ];
@@ -21,7 +19,7 @@ let toolIDs = [
 
 // Creates and returns a script.
 exports.script = (id, issues = null, ... issueIDs) => {
-  // Initialize data on the tools and rules for the specified issues.
+  // Initialize data on the tools and their rules for the specified issues, if any.
   const neededTools = {};
   // If an issue classification and any issues were specified:
   if (issues && issueIDs.length) {
@@ -53,17 +51,18 @@ exports.script = (id, issues = null, ... issueIDs) => {
             }
           });
         });
+        // Remove unneeded tools from the tool list.
         toolIDs = Object.keys(neededTools);
       }
       // Otherwise, i.e. if it does not exist in the classification:
       else {
-        // Report this.
+        // Report this and quit.
         console.log(`ERROR: Issue ${issueID} not in issue classification`);
         return {};
       }
     });
   }
-  // If any rules have been identified:
+  // If, after any issue-based pruning, any needed tools remain:
   if (toolIDs.length) {
     // Initialize a script.
     const scriptObj = {
@@ -75,20 +74,20 @@ exports.script = (id, issues = null, ... issueIDs) => {
         {
           "type": "placeholder",
           "which": "main",
-          "launch": "chromium"
+          "launch": "webkit"
         }
       ]
     };
-    // For each identified tool:
+    // For each needed tool:
     toolIDs.forEach(toolID => {
       // Initialize a test act for it.
       const toolAct = {
         type: 'test',
         which: toolID
       };
-      // If rules were specified:
+      // If issues were specified:
       if (issues && issueIDs.length) {
-        // Add a rules property to the act.
+        // Add a rules array as a property to the act.
         toolAct.rules = neededTools[toolID];
         // If the tool is Testaro:
         if (toolID === 'testaro') {
@@ -96,13 +95,13 @@ exports.script = (id, issues = null, ... issueIDs) => {
           toolAct.rules.unshift('y');
         }
       }
-      // Add option specifications if necessary.
+      // Add any needed option specifications to the act.
       if (toolID === 'axe') {
         toolAct.detailLevel = 2;
       }
       else if (toolID === 'ibm') {
         toolAct.withItems = true;
-        toolAct.withNewContent = false;
+        toolAct.withNewContent = true;
       }
       else if (toolID === 'qualWeb') {
         toolAct.withNewContent = false;

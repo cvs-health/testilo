@@ -49,10 +49,10 @@ const punctuate = (string, insertion, chunkSize) => {
 };
 // Converts a compact timestamp to a date.
 const dateOf = timeStamp => {
-  if (/^\d{6}T\d{6}$/.test(timeStamp)) {
+  if (/^\d{6}T\d{4}$/.test(timeStamp)) {
     const dateString = punctuate(timeStamp.slice(0, 6), '-', 2);
     const timeString = punctuate(timeStamp.slice(7, 11), ':', 2);
-    return new Date(`${dateString}T${timeString}Z`);
+    return new Date(`20${dateString}T${timeString}Z`);
   } else {
     return null;
   }
@@ -78,7 +78,7 @@ exports.merge = (script, batch, requester, isolate, standard, isGranular, timeSt
     if (! dateOf(timeStamp)) {
       // Report this and quit.
       console.log(`ERROR: Timestamp invalid`);
-      return jobs;
+      return [];
     }
   }
   // Otherwise, i.e. if no timestamp was specified:
@@ -93,7 +93,7 @@ exports.merge = (script, batch, requester, isolate, standard, isGranular, timeSt
   // Initialize a target-independent job.
   const protoJob = JSON.parse(JSON.stringify(script));
   // Make the timestamp and a random string the ID of the job.
-  protoJob.id = `${timeStamp}-${getRandomID(process.env.RANDOM_ID_LENGTH)}`;
+  protoJob.id = `${timeStamp}-${getRandomID(Number.parseInt(process.env.RANDOM_ID_LENGTH, 10))}`;
   // Add a sources property to the job.
   protoJob.sources = {
     script: script.id,

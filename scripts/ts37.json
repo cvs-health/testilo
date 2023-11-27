@@ -1,0 +1,56 @@
+{
+  "id": "ts37",
+  "what": "comprehensive accessibility tests with webkit and redirection permitted",
+  "strict": false,
+  "timeLimit": 600,
+  "acts": [
+    {
+      "type": "placeholder",
+      "which": "main",
+      "launch": "webkit"
+    },
+    {
+      "type": "test",
+      "which": "alfa"
+    },
+    {
+      "type": "test",
+      "which": "aslint"
+    },
+    {
+      "type": "test",
+      "which": "axe",
+      "detailLevel": 2
+    },
+    {
+      "type": "test",
+      "which": "htmlcs"
+    },
+    {
+      "type": "test",
+      "which": "ibm",
+      "withItems": true,
+      "withNewContent": true
+    },
+    {
+      "type": "test",
+      "which": "nuVal"
+    },
+    {
+      "type": "test",
+      "which": "qualWeb",
+      "withNewContent": false
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": true,
+      "stopOnFail": false
+    },
+    {
+      "type": "test",
+      "which": "wave",
+      "reportType": 4
+    }
+  ]
+}

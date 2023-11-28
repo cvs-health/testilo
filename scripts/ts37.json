@@ -2,7 +2,11 @@
   "id": "ts37",
   "what": "comprehensive accessibility tests with webkit and redirection permitted",
   "strict": false,
+  "isolate": true,
   "timeLimit": 600,
+  "standard": "only",
+  "observe": true,
+  "timeStamp": "",
   "acts": [
     {
       "type": "placeholder",

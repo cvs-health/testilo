@@ -69,7 +69,11 @@ exports.script = (id, issues = null, ... issueIDs) => {
       id,
       what: `accessibility tests`,
       strict: true,
+      isolate: true,
       timeLimit: 30 + (10 * issueIDs.length || 30 * toolIDs.length),
+      standard: 'only',
+      observe: true,
+      timeStamp: '',
       acts: [
         {
           "type": "placeholder",

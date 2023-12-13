@@ -1,8 +1,12 @@
 {
-  "id": "ts36",
+  "id": "ts39",
   "what": "comprehensive accessibility tests with webkit and redirection permitted",
   "strict": false,
-  "timeLimit": 330,
+  "isolate": true,
+  "timeLimit": 600,
+  "standard": "only",
+  "observe": true,
+  "timeStamp": "",
   "acts": [
     {
       "type": "placeholder",
@@ -30,7 +34,7 @@
       "type": "test",
       "which": "ibm",
       "withItems": true,
-      "withNewContent": false
+      "withNewContent": true
     },
     {
       "type": "test",

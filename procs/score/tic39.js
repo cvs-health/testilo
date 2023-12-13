@@ -1,6 +1,6 @@
 /*
-  tic37
-  Testilo issue classification 38
+  tic39
+  Testilo issue classification 39
 
   Classifies about 900 rules of the tools of Testaro into about 300 issues.
 
@@ -4363,27 +4363,11 @@ exports.issues = {
       }
     }
   },
-  h1Multiple: {
-    summary: 'multiple h1 headings',
+  h1Not1: {
+    summary: 'not exactly 1 h1 heading',
     why: 'User cannot understand the topic of the document',
     wcag: '1.3.1',
     weight: 2,
-    max: 1,
-    tools: {
-      nuVal: {
-        'Consider using the h1 element as a top-level heading only (all h1 elements are treated as top-level headings by many screen readers and other tools).': {
-          variable: false,
-          quality: 1,
-          what: 'Page contains more than 1 h1 element'
-        }
-      }
-    }
-  },
-  h1Missing: {
-    summary: 'h1 missing',
-    why: 'User cannot understand the topic of the document',
-    wcag: '1.3.1',
-    weight: 3,
     max: 1,
     tools: {
       aslint: {
@@ -4398,6 +4382,20 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Document contains no level-one heading'
+        }
+      },
+      nuVal: {
+        'Consider using the h1 element as a top-level heading only (all h1 elements are treated as top-level headings by many screen readers and other tools).': {
+          variable: false,
+          quality: 1,
+          what: 'Page contains more than 1 h1 element'
+        }
+      },
+      qualWeb: {
+        'QW-BP28': {
+          variable: false,
+          quality: 1,
+          what: 'h1 element missing or used more than once'
         }
       },
       wave: {
@@ -4695,6 +4693,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element is not contained by a ul or ol element'
+        }
+      },
+      qualWeb: {
+        'QW-BP23': {
+          variable: false,
+          quality: 0.1,
+          what: 'Element is not in a true list'
         }
       }
     }

@@ -3,14 +3,14 @@
 // IMPORTS
 
 // Module to classify tool rules into issues
-const {issues} = require('../../score/tic38');
+const {issues} = require('../../score/tic39');
 // Module to process files.
 const fs = require('fs/promises');
 
 // CONSTANTS
 
 // Digester ID.
-const id = 'tdp38';
+const id = 'tdp39';
 // Newline with indentations.
 const innerJoiner = '\n        ';
 

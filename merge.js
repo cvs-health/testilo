@@ -95,8 +95,8 @@ exports.merge = (script, batch, requester, isolate, standard, observe, timeStamp
   const creationTime = (new Date()).toISOString().slice(0, 16);
   // Initialize a target-independent job.
   const protoJob = JSON.parse(JSON.stringify(script));
-  // Make the timestamp and a random string the ID of the job.
-  protoJob.id = `${timeStamp}-${getRandomID(Number.parseInt(randomIDLength, 10))}`;
+  // Make the timestamp and a random string the start of the job ID.
+  protoJob.id = `${timeStamp}-${getRandomID(Number.parseInt(randomIDLength, 10))}-`;
   // Add a sources property to the job.
   protoJob.sources = {
     script: script.id,

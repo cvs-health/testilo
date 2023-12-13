@@ -163,7 +163,7 @@ exports.issues = {
         'QW-WCAG-T20': {
           variable: false,
           quality: 0,
-          what: 'Link text is not supplemented with a title attribute [invalid]'
+          what: 'Link title may fail to describe the link correctly [speculative]'
         },
         'QW-WCAG-T23': {
           variable: false,

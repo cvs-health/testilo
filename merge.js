@@ -18,7 +18,10 @@ require('dotenv').config();
 
 // ########## CONSTANTS
 
-const stdRequester = process.env.REQUESTER;
+// Standard requester.
+const stdRequester = process.env.REQUESTER || 'nobody@nodomain.tld';
+// Length of the random part of a job ID, as a string.
+const randomIDLength = process.env.RANDOM_ID_LENGTH || '3';
 // Tools that alter the page.
 const contaminantNames = new Set([
   'alfa',
@@ -33,7 +36,7 @@ const randomIDChars = (() => {
   const lowers = Array(26).fill('').map((letter, index) => String.fromCodePoint(97 + index));
   return digits.concat(uppers, lowers);
 })();
-  
+
 
 // ########## FUNCTIONS
 
@@ -68,7 +71,7 @@ const getRandomID = length => {
   return chars.join('');
 };
 // Merges a script and a batch and returns jobs.
-exports.merge = (script, batch, requester, isolate, standard, isGranular, timeStamp) => {
+exports.merge = (script, batch, requester, isolate, standard, observe, timeStamp) => {
   if (isolate === 'false') {
     isolate = false;
   }
@@ -89,11 +92,11 @@ exports.merge = (script, batch, requester, isolate, standard, isGranular, timeSt
   // If the requester is blank or unspecified, make it the standard requester.
   requester ||= stdRequester;
   // Create a creation-time description.
-  const creationTime = (new Date()).toISOString().slice(0, 19);
+  const creationTime = (new Date()).toISOString().slice(0, 16);
   // Initialize a target-independent job.
   const protoJob = JSON.parse(JSON.stringify(script));
   // Make the timestamp and a random string the ID of the job.
-  protoJob.id = `${timeStamp}-${getRandomID(Number.parseInt(process.env.RANDOM_ID_LENGTH, 10))}`;
+  protoJob.id = `${timeStamp}-${getRandomID(Number.parseInt(randomIDLength, 10))}`;
   // Add a sources property to the job.
   protoJob.sources = {
     script: script.id,
@@ -110,7 +113,7 @@ exports.merge = (script, batch, requester, isolate, standard, isGranular, timeSt
   protoJob.creationTime = creationTime;
   protoJob.timeStamp = timeStamp;
   protoJob.standard = standard || 'only';
-  protoJob.observe = isGranular || false;
+  protoJob.observe = observe || false;
   // If isolation was requested:
   if (isolate) {
     // Configure the job for it.

@@ -10,8 +10,8 @@ const fs = require('fs/promises');
 
 // CONSTANTS
 
-// Digester ID.
-const id = 'tcp38';
+// Comparer ID.
+const id = 'tcp39';
 // Newlines with indentations.
 const joiner = '\n      ';
 const innerJoiner = '\n        ';
@@ -65,10 +65,6 @@ const getTableBody = async bodyData => {
 const populateQuery = async (scoredReports, query) => {
   const data = await getData(scoredReports);
   query.pageCount = data.pageCount;
-  query.script = 'ts37';
-  query.scorer = 'tsp38';
-  query.digester = 'tdp38';
-  query.comparer = 'tcp38';
   query.tableBody = await getTableBody(data.bodyData);
   const date = new Date();
   query.dateISO = date.toISOString().slice(0, 10);

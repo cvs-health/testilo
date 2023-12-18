@@ -1,16 +1,16 @@
-// index: digester for scoring procedure tsp39.
+// index: digester for scoring procedure tsp40.
 
 // IMPORTS
 
 // Module to classify tool rules into issues
-const {issues} = require('../../score/tic39');
+const {issues} = require('../../score/tic40');
 // Module to process files.
 const fs = require('fs/promises');
 
 // CONSTANTS
 
 // Digester ID.
-const id = 'tdp39';
+const id = 'tdp40';
 // Newline with indentations.
 const innerJoiner = '\n        ';
 

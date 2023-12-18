@@ -1,18 +1,18 @@
 /*
-  tsp39
-  Testilo score proc 39
+  tsp40
+  Testilo score proc 40
 
-  Computes target score data and adds them to a ts39 report.
+  Computes target score data and adds them to a ts40 report.
 */
 
 // IMPORTS
 
-const {issues} = require('./tic39');
+const {issues} = require('./tic40');
 
 // CONSTANTS
 
 // ID of this proc.
-const scoreProcID = 'tsp39';
+const scoreProcID = 'tsp40';
 // Latency weight (how much each second of excess latency adds to the score).
 const latencyWeight = 1;
 // Normal latency (6 visits, with 1.5 second per visit).

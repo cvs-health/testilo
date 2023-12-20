@@ -4011,14 +4011,21 @@ exports.issues = {
         'empty-heading': {
           variable: false,
           quality: 1,
-          what: 'Heading empty'
+          what: 'Heading is empty'
+        }
+      },
+      ed11y: {
+        headingEmpty: {
+          variable: false,
+          quality: 1,
+          what: 'Heading is empty'
         }
       },
       htmlcs: {
         'AAA.1_3_1.H42.2': {
           variable: false,
           quality: 1,
-          what: 'Heading empty'
+          what: 'Heading is empty'
         }
       },
       ibm: {

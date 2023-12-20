@@ -6979,7 +6979,7 @@ exports.issues = {
     weight: 1,
     tools: {
       ed11y: {
-        linkIsURL: {
+        linkTextIsURL: {
           variable: false,
           quality: 1,
           what: 'Name of the element is a file reference instead of a link purpose'

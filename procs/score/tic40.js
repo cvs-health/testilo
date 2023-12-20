@@ -4403,6 +4403,13 @@ exports.issues = {
           what: 'Heading levels do not increase by only one'
         }
       },
+      ed11y: {
+        headingLevelSkipped: {
+          variable: false,
+          quality: 1,
+          what: 'Heading level is more than 1 greater than that of the previous heading'
+        }
+      },
       wave: {
         heading_skipped: {
           variable: false,
@@ -4584,6 +4591,21 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'section has no heading'
+        }
+      }
+    }
+  },
+  headingLength: {
+    summary: 'heading abnormally long',
+    why: 'User has difficulty understanding the topic of a part of the document',
+    wcag: '1.3.1',
+    weight: 1,
+    tools: {
+      ed11y: {
+        headingIsLong: {
+          variable: false,
+          quality: 1,
+          what: 'Heading is longer than 160 characters'
         }
       }
     }
@@ -6921,8 +6943,8 @@ exports.issues = {
       }
     }
   },
-  linkComprehensionRisk: {
-    summary: 'link name dubious',
+  linkVaguenessRisk: {
+    summary: 'link name vague',
     why: 'User may misunderstand what a link points to',
     wcag: '2.4.4',
     weight: 1,
@@ -6946,6 +6968,21 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Suspicious link text'
+        }
+      }
+    }
+  },
+  linkFileName: {
+    summary: 'link names a file instead of a purpose',
+    why: 'User may fail to understand what a link points to',
+    wcag: '2.4.4',
+    weight: 1,
+    tools: {
+      ed11y: {
+        linkIsURL: {
+          variable: false,
+          quality: 1,
+          what: 'Name of the element is a file reference instead of a link purpose'
         }
       }
     }

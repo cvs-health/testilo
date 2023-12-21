@@ -220,7 +220,7 @@ The `call` module will save the batch as a JSON file in the `batches` subdirecto
 
 Testilo classifies tool rules into _issues_. The built-in classifications are located in the `procs/score` directory, in files whose names begin with `tic` (for “Testilo issue classification”). You can create additional `tic` files with custom classifications.
 
-For example, one of the issues in the `tic38.js` file is `mainNot1`. Four rules are classified as belonging to that issue: rule `main_element_only_one` of `aslint` and 3 more rules defined by 3 other tools.
+For example, one of the issues in the `tic40.js` file is `mainNot1`. Four rules are classified as belonging to that issue: rule `main_element_only_one` of `aslint` and 3 more rules defined by 3 other tools.
 
 If you want Testaro to test targets for only particular issues, you can name those issues and use the Testilo `script` module to create a script for that purpose. The only tools called by the script will be tools that define rules that are classified as belonging to one or more issues named.
 
@@ -487,6 +487,52 @@ The `score()` function of the `score` module takes two arguments:
 - an array of report objects
 
 A scoring function defines scoring rules. The Testilo package contains a `procs/score` directory, in which there are modules that export scoring functions. You can use one of those scoring functions, or you can create your own.
+
+### Scorers
+
+The built-in scoring functions are named `scorer` and are exported by files whose names begin with `tsp` (for Testilo scoring proc). Those functions make use of `issues` objects defined in files whose names begin with `tic`. An `issues` object defines an issue classification: a body of data about rules of tools and the tool-agnostic issues that those rules are deemed to belong to.
+
+The properties of an `issues` object are issue objects: objects containing data about issues. Here is an example from `tic40.js`:
+
+```javascript
+multipleLabelees: {
+  summary: 'labeled element ambiguous',
+  why: 'User cannot get help on the topic of a form item',
+  wcag: '1.3.1',
+  weight: 4,
+  tools: {
+    aslint: {
+      label_implicitly_associatedM: {
+        variable: false,
+        quality: 1,
+        what: 'Element contains more than 1 labelable element.'
+      }
+    },
+    nuVal: {
+      'The label element may contain at most one button, input, meter, output, progress, select, or textarea descendant.': {
+        variable: false,
+        quality: 1,
+        what: 'Element has more than 1 labelable descendant.'
+      },
+      'label element with multiple labelable descendants.': {
+        variable: false,
+        quality: 1,
+        what: 'Element has multiple labelable descendants.'
+      }
+    }
+  }
+},
+```
+
+In this example, `multipleLabelees` is the issue ID. The `weight` property represents the severity of the issue and ranges from 1 to 4. The `tools` property is an object containing data about the tools that have rules deemed to belong to the issue. Here there are 2 such tools: `aslint` and `nuVal`. The tool properties are objects containing data about the relevant rules of those tools: 1 from the `aslint` tool and 2 from the `nuVal` tool.
+
+The property for each rule has the rule ID as its name.
+
+The `variable` property is `true` if the rule ID is a regular expression or `false` if the rule ID is a string. Most rule IDs are strings, but some rules have patterns rather than constant strings as their identifiers, and in those cases regular expressions matching the patterns are the property names.
+
+The `quality` property is usually 1, but if the test of the rule is known to be inaccurate the value is a fraction of 1, so the result of that test will be downweighted.
+
+Some issue objects (such as `flash` in `tic40.js`) have a `max` property, equal to the maximum possible count of instances. That property allows a scorer to ascribe a greater weight to an instance of that issue.
 
 ### Invocation
 

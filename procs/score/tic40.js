@@ -182,6 +182,11 @@ exports.issues = {
           quality: 1,
           what: 'Blocks of repeated content cannot be bypassed [invalid]'
         },
+        'QW-BP1': {
+          variable: false,
+          quality: 1,
+          what: 'h1-h6 not used to identify headings [invalid]'
+        },
         'QW-WCAG-T4': {
           variable: false,
           quality: 0,
@@ -4489,13 +4494,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Document has no headings'
-        }
-      },
-      qualWeb: {
-        'QW-BP1': {
-          variable: false,
-          quality: 1,
-          what: 'h1-h6 not used to identify headings'
         }
       },
       wave: {

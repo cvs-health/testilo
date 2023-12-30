@@ -12,7 +12,7 @@ require('dotenv').config();
 
 // List of presumptively needed tools.
 let toolIDs = [
-  'alfa', 'aslint', 'axe', 'htmlcs', 'ibm', 'nuVal', 'qualWeb', 'testaro', 'wave'
+  'alfa', 'aslint', 'axe', 'ed11y', 'htmlcs', 'ibm', 'nuVal', 'qualWeb', 'testaro', 'wave'
 ];
 
 // ########## FUNCTIONS

@@ -21,8 +21,8 @@ const validate = async () => {
   const batch = JSON.parse(batchJSON);
   const requester = 'me@mydomain.tld';
   // Perform the merger without and with isolation.
-  const jobsNoIsolation = merge(script, batch, requester, false);
-  const jobsYesIsolation = merge(script, batch, requester, true);
+  const jobsNoIsolation = merge(script, batch, requester, false, 'no', false, '', 'reports/', '');
+  const jobsYesIsolation = merge(script, batch, requester, true, 'no', false, '', 'reports/', '');
   const jobArrays = [jobsNoIsolation, jobsYesIsolation];
   // Validate the jobs.
   if (jobsNoIsolation && jobsYesIsolation) {

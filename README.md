@@ -379,10 +379,12 @@ A module can invoke `merge` in this way:
 
 ```javaScript
 const {merge} = require('testilo/merge');
-const jobs = merge(script, batch, requester, true, 'only', false, '240115T1200');
+const jobs = merge(script, batch, requester, true, 'only', false, '240115T1200', 'jobs/', '.json');
 ```
 
-This invocation references `script`, `batch`, and `requester` variables that the module must have already defined. The `script` and `batch` variables are a script object and a batch object, respectively. The `requester` variable is an email address. The fourth argument is a boolean, specifying whether to perform test isolation. The fifth argument is a string that specifies the Testaro standardization option ('also', 'only', or 'no'). The sixth argument is a boolean, specifying whether Testaro will allow granular network watching of the job. The `merge()` function of the `merge` module generates jobs and returns them in an array. The invoking module can further dispose of the jobs as needed.
+This invocation references `script`, `batch`, and `requester` variables that the module must have already defined. The `script` and `batch` variables are a script object and a batch object, respectively. The `requester` variable is an email address. The fourth argument is a boolean, specifying whether to perform test isolation. The fifth argument is a string that specifies the Testaro standardization option ('also', 'only', or 'no'). The sixth argument is a boolean, specifying whether Testaro will allow granular network observation of the job. The seventh and eights arguments are strings that contain the parts, before and after the job ID, respectively, of the absolute or relative URL for retrieving the job report. In this case, a job with ID `20240420T1426-R7T-archive` will produce a report that can be retrieved at the relative URL `jobs/20240420T1426-R7T-archive.json`.
+
+The `merge()` function of the `merge` module generates jobs and returns them in an array. The invoking module can further dispose of the jobs as needed.
 
 ##### By a user
 
@@ -391,16 +393,18 @@ A user can invoke `merge` in this way:
 - Create a script and save it as a JSON file in the `scripts` subdirectory of the `process.env.SPECDIR` directory.
 - Create a batch and save it as a JSON file in the `batches` subdirectory of the `process.env.SPECDIR` directory.
 - In the Testilo project directory, execute this statement:
-    - `node call merge s b e i f g t`
+    - `node call merge scriptName batchName email isolate standard granular todoDir pre post`
 
 In these statements, replace:
-- `s` with the base name of the script file
-- `b` with the base name of the batch file
-- `e` with an email address, or with an empty string if the environment variable `process.env.REQUESTER` exists and you want to use it
-- `i` with `true` if you want test isolation or `false` if not
-- `f` with `'also'`, `'only'`, or `'no'` to specify the treatment of standard-format results.
-- `g` with `true` if reporting is to be granular, or `false` if not.
-- `t` with `true` if the job is to be saved in the `todo` subdirectory or `false` if it is to be saved in the `pending` subdirectory of the `process.env.JOBDIR` directory.
+- `scriptName` with the base name of the script file
+- `batchName` with the base name of the batch file
+- `email` with an email address, or with an empty string if the environment variable `process.env.REQUESTER` exists and you want to use it
+- `isolate` with `true` if you want test isolation or `false` if not
+- `standard` with `'also'`, `'only'`, or `'no'` to specify the treatment of standard-format results.
+- `granular` with `true` if granular observation is to be permitted, or `false` if not.
+- `todoDir` with `true` if the job is to be saved in the `todo` subdirectory or `false` if it is to be saved in the `pending` subdirectory of the `process.env.JOBDIR` directory.
+- `pre` with the pre-ID part of the report URL.
+- `post` with the post-ID part of the report URL.
 
 The `call` module will retrieve the named script and batch from their respective directories.
 The `merge` module will create an array of jobs, with or without test isolation.

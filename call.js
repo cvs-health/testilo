@@ -85,7 +85,9 @@ const callMerge = async (
   const batchJSON = await fs.readFile(`${specDir}/batches/${batchID}.json`, 'utf8');
   const batch = JSON.parse(batchJSON);
   // Merge them into an array of jobs.
-  const jobs = merge(script, batch, requester, withIsolation, standard, isGranular);
+  const jobs = merge(
+    script, batch, requester, withIsolation, standard, isGranular, null, urlPrefix, urlSuffix
+  );
   // Save the jobs.
   const destination = todo === 'true' ? 'todo' : 'pending';
   for (const job of jobs) {
@@ -245,7 +247,7 @@ else if (fn === 'script' && fnArgs.length) {
     console.log('Execution completed');
   });
 }
-else if (fn === 'merge' && fnArgs.length === 7) {
+else if (fn === 'merge' && fnArgs.length === 9) {
   callMerge(... fnArgs)
   .then(() => {
     console.log('Execution completed');

@@ -71,7 +71,9 @@ const getRandomID = length => {
   return chars.join('');
 };
 // Merges a script and a batch and returns jobs.
-exports.merge = (script, batch, requester, isolate, standard, observe, timeStamp) => {
+exports.merge = (
+  script, batch, requester, isolate, standard, observe, timeStamp, urlPrefix, urlSuffix
+) => {
   if (isolate === 'false') {
     isolate = false;
   }
@@ -107,7 +109,8 @@ exports.merge = (script, batch, requester, isolate, standard, observe, timeStamp
       what: ''
     },
     requester,
-    sendReportTo: process.env.REPORT_URL || ''
+    sendReportTo: process.env.REPORT_URL || '',
+    url: ''
   };
   // Add properties to the job.
   protoJob.creationTime = creationTime;
@@ -149,10 +152,11 @@ exports.merge = (script, batch, requester, isolate, standard, observe, timeStamp
       const job = JSON.parse(JSON.stringify(protoJob));
       // Append the target ID to the job ID.
       job.id += target.id;
-      // Add data on the target to the sources property of the job.
+      // Add data to the sources property of the job.
       job.sources.target.id = target.id;
       job.sources.target.which = target.which;
       job.sources.target.what = target.what;
+      job.sources.url = `${urlPrefix}${job.id}${urlSuffix}`;
       // Replace each placeholder object in the job with the named replacer array of the target.
       let {acts} = job;
       for (const actIndex in acts) {

@@ -5,7 +5,7 @@ Utilities for Testaro
 
 The Testilo package contains utilities that facilitate the use of the [Testaro](https://www.npmjs.com/package/testaro) package.
 
-Testaro performs digital accessibility tests on web artifacts and creates reports in JSON format. The utilities in Testilo fall into two categories:
+Testaro performs jobs and creates reports in JSON format. The utilities in Testilo fall into two categories:
 - Job preparation
 - Report enhancement
 
@@ -21,23 +21,33 @@ When Testilo is a dependency of another application, the `.env` file is not impo
 
 Testilo is written in Node.js. Commands are given to Testilo in a command-line (terminal) interface or programmatically.
 
-Shared routines are _procs_ and are located in the `procs` directory.
+Shared routines, called _procs_, are located in the `procs` directory.
 
 Testilo can be installed wherever Node.js (version 14 or later) is installed. This can be a server or the same workstation on which Testaro is installed.
 
-The reason for Testilo being an independent package, rather than part of Testaro, is that Testilo can be installed on any host, while Testaro can run successfully only on a Windows or Macintosh workstation (and perhaps on some workstations with Ubuntu operating systems). Testaro runs tests similar to those that a human accessibility tester would run, using whatever browsers, input devices, system settings, simulated and attached devices, and assistive technologies tests may require. Thus, Testaro is limited to functionalities that require workstation attributes. For maximum flexibility in the management of Testaro jobs, all other functionalities are located outside of Testaro. You could have software such as Testilo running on a server, communicating with multiple workstations running Testaro. The workstations could receive job orders from the server and return job results to the server for further processing.
+The reason for Testilo being an independent package, rather than part of Testaro, is that Testilo can be installed on any host, while Testaro can run successfully only on a Windows, Macintosh, Ubuntu, or Debian workstation. Testaro runs tests similar to those that a human accessibility tester would run, using whatever browsers, input devices, system settings, simulated and attached devices, and assistive technologies tests may require. Thus, Testaro is limited to functionalities that require workstation attributes. For maximum flexibility in the management of Testaro jobs, all other functionalities are located outside of Testaro. You could have software such as Testilo running on a server, communicating with multiple workstations running Testaro. The workstations could receive jobs from the server and return job reports to the server for further processing.
 
 ## Configuration
 
 Environment variables for Testilo can be specified in a `.env` file. An example:
 
 ```bash
-FUNCTIONDIR=../testdir/procs
+FUNCTIONDIR=./procs
 JOBDIR=../testdir/jobs
 REPORTDIR=../testdir/reports
 REQUESTER=a11ymgr@a11yorg.com
 SPECDIR=../testdir/specs
 ```
+
+The `FUNCTIONDIR` environment variable typically references the `procs` directory, but it could reference a different directory in the filesystem where Testilo resides, if you wanted to customize the procs that Testilo uses.
+
+`JOBDIR` references a directory in the filesystem where jobs created by the `merge` proc are to be saved.
+
+`REPORTDIR` references a directory in the filesystem where reports are saved.
+
+`REQUESTER` is an email address that will be used as a job property if no other email address is specified for the `sources.requester` property of the job.
+
+`SPECDIR` references a directory in the filesystem where tanrget lists, batches, and scripts can be found. Those are raw materials from which Testaro creates jobs.
 
 ## Job preparation
 
@@ -49,16 +59,27 @@ You can create a job for Testaro directly, without using Testilo.
 
 Testilo can, however, make job preparation more efficient in these scenarios:
 - You want to perform a battery of tests on multiple targets.
-- You want to test targets for particular issues, using whichever tools happen to have tests for those issues.
+- You want to test targets only for particular issues, using whichever tools happen to have tests for those issues.
 
 ### Target lists
 
-The simplest version of a list of targets is a _target list_. It is an array of arrays defining 1 or more targets. It is stored as a tab-delimited text file, with one line per target. Each line contains 3 items, with tabs between them:
-- An ID for the target
-- A description of the target
-- The URL of the target
+The simplest version of a list of targets is a _target list_. It is an array of arrays defining 1 or more targets. It can be stored as a tab-delimited text file.
 
-For example, a stored target list (with “→” representing the Tab character) might be:
+A target is defined by 3 items:
+- An ID
+- A description
+- A URL
+
+For example, a target list might be:
+
+```javaScript
+[
+  ['w3c', 'World Wide Web Consortium', 'https://www.w3.org/'],
+  ['moz', 'Mozilla Foundation', 'https://foundation.mozilla.org/en/']
+]
+```
+
+If this target list were stored as a file, its content would be this (with “→” representing the Tab character):
 
 ```text
 w3c→World Wide Web Consortium→https://www.w3.org/
@@ -128,9 +149,11 @@ Targets can be specified in a more complex way, too. That allows you to create j
 
 As shown, a batch, unlike a target list, defines named sequences of acts. They can be plugged into jobs, so various complex operations can be performed on each target.
 
+A batch is a JavaScript object. It can be converted to JSON and stored in a file.
+
 ### Scripts
 
-The generic, target-independent description of a job is _script_. A script can contain _placeholders_ that Testilo replaces with acts from a batch, creating one job per target. Thus, one script plus one batch can generate an unlimited number of jobs.
+The generic, target-independent description of a job is _script_. A script can contain _placeholders_ that Testilo replaces with acts from a batch, creating one job per target. Thus, one script plus a batch containing _n_ targets will generate _n_ jobs.
 
 Here is a script:
 
@@ -164,16 +187,17 @@ Here is a script:
       rules: ['QW-BP25', 'QW-BP26']
       what: 'QualWeb'
     }
-  ]
+  ],
+  …
 }
 ```
 
 A script has several properties that specify facts about the jobs to be created. They include:
-- `id`: an ID that uniquely distinguishes the script from other scripts.
+- `id`: an ID that uniquely distinguishes the script from other scripts. A script can be converted from a JavaScript object to JSON and saved in a file in the `SPECDIR` directory, where it will be named by its ID (e.g., if the ID is `ts99`, the file name will be `ts99.json`).
 - `what`: a description of the script.
-- `strict`: You decide whether Testaro is to throw an error on an attempt to navigate to a URL if the server redirects the request to a URL differing substantially from the specified URL. All differences are considered substantial unless the URLs differ only in the presence and absence of a trailing slash.
-- `isolate`: You decide whether to isolate test acts, as needed, from effects of previous test acts. If `true`, the `merge` module will add a copy of the latest placeholder after each target-modifying test act before the immediately following test act.
-- `standard`: You choose how the reports of test acts should be standardized. The alternatives are `'no'` (do not standardize), `'also'` (standardize and report both the original and the standardized results), and `'only'` (standardize and report only the standardized results).
+- `strict`: If Testaro is to abort a job on an attempt to navigate to a URL if the target redirects the request to a URL differing substantially from the specified URL, the value of `strict` is `true`; otherwise, it is `false`. All differences are considered substantial unless the URLs differ only in the presence and absence of a trailing slash.
+- `isolate`: If `isolate` is `true`, Testilo, before creating a job, will isolate test acts, as needed, from effects of previous test acts, by inserting a copy of the latest placeholder after each target-modifying test act other than the final act. If `false`, placeholders will not be duplicated.
+- `standard`: Testaro can standardize the results of the tests that tools perform. The `standard` property tells Testaro whether and how to do this. The alternatives are `'no'` (do not standardize), `'also'` (standardize and report both the original and the standardized results), and `'only'` (standardize and report only the standardized results).
 - `observe`: You decide how granularly Testaro will allow a server to observe job progress. If `true`, Testaro sends a message to the server to announce each test act (identifying the tool), and the `testaro` tool sends a message to the server to announce each rule when its test is performed. The server can further update the requesting client on the basis of these messages. It is generally user-friendly to make `observe` `true` if the user application makes the user wait while the job is assigned and performed. If the application allows the user to leave and sends the user a message when the job has been completed, `observe` can be set to `false`.
 - `timeStamp`: You can specify the date and time that the job is to wait for before it is performed. This specification is a string with the format `yymmddThhMM`.
 - `acts`: an array of acts.
@@ -275,8 +299,6 @@ When the `script` module creates a script for you, it does not ask you for all o
 ### Merge
 
 Testilo merges batches with scripts, producing jobs, by means of the `merge` module.
-
-The `merge` module needs to be given a batch and a script.
 
 #### Output
 
@@ -382,7 +404,9 @@ const {merge} = require('testilo/merge');
 const jobs = merge(script, batch, requester, true, 'only', false, '240115T1200', 'jobs/', '.json');
 ```
 
-This invocation references `script`, `batch`, and `requester` variables that the module must have already defined. The `script` and `batch` variables are a script object and a batch object, respectively. The `requester` variable is an email address. The fourth argument is a boolean, specifying whether to perform test isolation. The fifth argument is a string that specifies the Testaro standardization option ('also', 'only', or 'no'). The sixth argument is a boolean, specifying whether Testaro will allow granular network observation of the job. The seventh and eights arguments are strings that contain the parts, before and after the job ID, respectively, of the absolute or relative URL for retrieving the job report. In this case, a job with ID `20240420T1426-R7T-archive` will produce a report that can be retrieved at the relative URL `jobs/20240420T1426-R7T-archive.json`.
+The `merge` module uses these 9 arguments to This invocation references `script`, `batch`, and `requester` variables that the module must have already defined. The `script` and `batch` variables are a script object and a batch object, respectively. The `requester` variable is an email address, or an empty string if none. The fourth argument is a boolean, specifying whether to perform test isolation. The fifth argument is a string that specifies the Testaro standardization option ('also', 'only', or 'no'). The sixth argument is a boolean, specifying whether Testaro will allow granular network observation of the job. The seventh argument is a compact time stamp specifying a date and time, to the nearest minute. The eighth and ninth arguments are strings that contain the parts, before and after the job ID, respectively, of an absolute or relative URL.
+
+The `merge` module In this case, a job with ID `20240420T1426-R7T-archive` will produce a report that can be retrieved at the relative URL `jobs/20240420T1426-R7T-archive.json`.
 
 The `merge()` function of the `merge` module generates jobs and returns them in an array. The invoking module can further dispose of the jobs as needed.
 

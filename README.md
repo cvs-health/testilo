@@ -167,6 +167,9 @@ Here is a script:
   standard: 'also',
   observe: false,
   timeStamp: '240115T1200',
+  requester: 'you@yourdomain.com',
+  urlPrefix: '/file/reports',
+  urlSuffix: '.json',
   acts: [
     {
       type: 'placeholder',
@@ -187,19 +190,21 @@ Here is a script:
       rules: ['QW-BP25', 'QW-BP26']
       what: 'QualWeb'
     }
-  ],
-  …
+  ]
 }
 ```
 
 A script has several properties that specify facts about the jobs to be created. They include:
-- `id`: an ID that uniquely distinguishes the script from other scripts. A script can be converted from a JavaScript object to JSON and saved in a file in the `SPECDIR` directory, where it will be named by its ID (e.g., if the ID is `ts99`, the file name will be `ts99.json`).
+- `id`: an ID. A script can be converted from a JavaScript object to JSON and saved in a file in the `SPECDIR` directory, where it will be named by its ID (e.g., if the ID is `ts99`, the file name will be `ts99.json`). Thus, each script needs an `id` with a unique value.
 - `what`: a description of the script.
-- `strict`: If Testaro is to abort a job on an attempt to navigate to a URL if the target redirects the request to a URL differing substantially from the specified URL, the value of `strict` is `true`; otherwise, it is `false`. All differences are considered substantial unless the URLs differ only in the presence and absence of a trailing slash.
-- `isolate`: If `isolate` is `true`, Testilo, before creating a job, will isolate test acts, as needed, from effects of previous test acts, by inserting a copy of the latest placeholder after each target-modifying test act other than the final act. If `false`, placeholders will not be duplicated.
-- `standard`: Testaro can standardize the results of the tests that tools perform. The `standard` property tells Testaro whether and how to do this. The alternatives are `'no'` (do not standardize), `'also'` (standardize and report both the original and the standardized results), and `'only'` (standardize and report only the standardized results).
-- `observe`: You decide how granularly Testaro will allow a server to observe job progress. If `true`, Testaro sends a message to the server to announce each test act (identifying the tool), and the `testaro` tool sends a message to the server to announce each rule when its test is performed. The server can further update the requesting client on the basis of these messages. It is generally user-friendly to make `observe` `true` if the user application makes the user wait while the job is assigned and performed. If the application allows the user to leave and sends the user a message when the job has been completed, `observe` can be set to `false`.
-- `timeStamp`: You can specify the date and time that the job is to wait for before it is performed. This specification is a string with the format `yymmddThhMM`.
+- `strict`: `true` if Testaro is to abort jobs when a target redirects a request to a URL differing substantially from the one specified. If `false` Testaro is to allow redirection. All differences are considered substantial unless the URLs differ only in the presence and absence of a trailing slash.
+- `isolate`: If `true`, Testilo, before creating a job, will isolate test acts, as needed, from effects of previous test acts, by inserting a copy of the latest placeholder after each target-modifying test act other than the final act. If `false`, placeholders will not be duplicated.
+- `standard`: If `also`, jobs will tell Testaro to include in its reports both the original results of the tests of tools and the Testaro-standardized results. If `only`, reports are to include only the standardized test results. If `no`, reports are to include only the original results, without standardization.
+- `observe`: If `true`, jobs will tell Testaro to allow granular observation of job progress. If `false`, jobs will tell Testaro not to permit granular observation, but only to send the report to the server when the report is completed. It is generally user-friendly to allow granular observation, and for user applications to implement it, if they make users wait while jobs are assigned and performed, since that process typically takes about 3 minutes.
+- `timeStamp`: This string specifies a UTC date and time when jobs created with the script are to be permitted to be assigned to agents. Thus, jobs can be created from a script for later performance. The value of `timeStamp` is a compact representation in the format `yymmddThhMM`. If the value is an empty string, Testilo will make the date and time equal to the time when jobs are created.
+- `requester`: the email address that any notices of job completion can be sent to, or an empty string if there is a `REQUESTER` environment variable and it is to be used.
+- `urlPrefix`: the start of a URL that the Testaro reports will be retrievable at.
+- `urlSuffix`: the end of that URL. The job ID will be inserted between the `urlPrefix` and the `urlSuffix`.
 - `acts`: an array of acts.
 
 The first act in this example script is a placeholder, whose `which` property is `'private'`. If the above batch were merged with this script, in each job the placeholder would be replaced with the `private` acts of a target. For example, the first act of the first job would launch a Chromium browser, navigate to the Acme login page, complete and submit the login form, wait for the account page to load, run the Axe tests, and then run the QualWeb tests. If the batch contained additional targets, additional jobs would be created, with the login actions for each target specified in the `private` array of the `acts` object of that target.
@@ -231,22 +236,22 @@ The `batch()` function of the `batch` module generates a batch and returns it as
 
 A user can invoke `batch` in this way:
 
-- Create a target list and save it as a text file (with tab-delimited items in newline-delimited lines) in the `targetLists` subdirectory of the `process.env.SPECDIR` directory. Name the file `x.tsv`, where `x` is the list ID.
-- In the Testilo project directory, execute the statement `node call batch i w`.
+- Create a target list and save it as a text file (with tab-delimited items in newline-delimited lines) in the `targetLists` subdirectory of the `SPECDIR` directory. Name the file `x.tsv`, where `x` is the list ID.
+- In the Testilo project directory, execute the statement `node call batch id what`.
 
-In this statement, replace `i` with the list ID and `w` with a description of the batch.
+In this statement, replace `id` with the list ID and `what` with a string describing the batch.
 
 The `call` module will retrieve the named target list.
 The `batch` module will convert the target list to a batch.
-The `call` module will save the batch as a JSON file in the `batches` subdirectory of the `process.env.SPECDIR` directory.
+The `call` module will save the batch as a JSON file in the `batches` subdirectory of the `SPECDIR` directory.
 
 ### Issues to script
 
-Testilo classifies tool rules into _issues_. The built-in classifications are located in the `procs/score` directory, in files whose names begin with `tic` (for “Testilo issue classification”). You can create additional `tic` files with custom classifications.
+Testilo contains a classification of tool rules into _issues_. It is located in the `procs/score` directory and has a file name starting with `tic` (Testilo issue classification). You can create custom classifications and save them in a `score` subdirectory of the `FUNCTIONDIR` directory.
 
 For example, one of the issues in the `tic40.js` file is `mainNot1`. Four rules are classified as belonging to that issue: rule `main_element_only_one` of `aslint` and 3 more rules defined by 3 other tools.
 
-If you want Testaro to test targets for only particular issues, you can name those issues and use the Testilo `script` module to create a script for that purpose. The only tools called by the script will be tools that define rules that are classified as belonging to one or more issues named.
+If you want Testaro to test targets for only particular issues, you can use the `script` module to create a script. Jobs created from that script will make Testaro test for only the issues you specify to the `script` module.
 
 If you want Testaro to test targets for **all** the rules of all the available tools, you can use the `script` module to create a script that does not impose any issue restrictions.
 
@@ -264,9 +269,9 @@ const scriptObj = script(scriptID, issues, issueID0, issueID1, …);
 ```
 
 This invocation references `scriptID`, `issues`, and `issueID` variables.
-- The `scriptID` variable is an arbitrary alphanumeric string.
+- The `scriptID` variable specifies the ID that the script will have.
 - The `issues` variable (if present) is an object that classifies issues, such as the `issues` object in a `tic` file.
-- The `issueID` variables (if any) are strings, such as `'regionNoText'`, that name properties of the `issues` object.
+- The `issueID` variables (if any) are strings, such as `'regionNoText'`, that name issues, i.e. properties of the `issues` object, that you want jobs from the script to test for.
 
 The `script()` function of the `script` module generates a script and returns it as an object. The invoking module can further modify and use the script as needed.
 
@@ -279,22 +284,22 @@ const scriptObj = script(scriptID);
 
 ##### By a user
 
-A user can invoke `script` in this way: In the Testilo project directory, execute the statement `node call script s c i0 i1 i2 i3 …`.
+A user can invoke `script` in this way: In the Testilo project directory, execute the statement `node call script id ticnn issuea issueb …`.
 
 In this statement:
-- Replace `s` with an arbitrary ID for the script, such as `headings`.
-- Replace `c` with the base name, such as `tic99`, of an issue classification file in the `score` subdirectory of the `process.env.FUNCTIONDIR` directory.
-- Replace the remaining arguments (`i0` etc.) with issue IDs from that classification file.
+- Replace `id` with an ID for the script, such as `headings`.
+- Replace `ticnn` with the base, such as `tic99`, of the name of an issue classification file in the `score` subdirectory of the `FUNCTIONDIR` directory.
+- Replace the remaining arguments (`issuea` etc.) with issue names from that classification file.
 
 The `call` module will retrieve the named classification.
 The `script` module will create a script.
-The `call` module will save the script as a JSON file in the `scripts` subdirectory of the `process.env.SPECDIR` directory.
+The `call` module will save the script as a JSON file in the `scripts` subdirectory of the `SPECDIR` directory.
 
-To create a script without any issue restrictions, a user can execute the statement `node call script s`.
+To create a script without any issue restrictions, a user can execute the statement `node call script id`.
 
 #### Options
 
-When the `script` module creates a script for you, it does not ask you for all of the options that the script may require. Instead, it chooses options. After you invoke `script`, you can edit the script that it creates to revise options.
+When the `script` module creates a script for you, it does not ask you for all of the options that the script may require. Instead, it chooses default options. After you invoke `script`, you can edit the script that it creates to revise options.
 
 ### Merge
 
@@ -302,16 +307,17 @@ Testilo merges batches with scripts, producing jobs, by means of the `merge` mod
 
 #### Output
 
-##### Without isolation
-
-Suppose you ask for a merger of the above batch and script, **without** the isolation option. Then the first job produced by `merge` will look like this:
+Suppose you ask for a merger of the above batch and script. Then the first job produced by `merge` will look like this:
 
 ```javaScript
 {
-  id: '231120T1550-ts99-acme',
-  what: 'Axe on account page',
+  id: '240115T1200-4Rw-acme',
+  what: 'aside mislocation',
   strict: true,
   timeLimit: 60,
+  standard: 'also',
+  observe: false,
+  timeStamp: '240115T1200',
   acts: [
     {
       type: 'launch',
@@ -345,15 +351,45 @@ Suppose you ask for a merger of the above batch and script, **without** the isol
     {
       type: 'test',
       which: 'axe',
-      detailLevel: 1,
-      rules: [],
-      what: 'Axe core, all rules'
+      detailLevel: 2,
+      rules: ['landmark-complementary-is-top-level'],
+      what: 'Axe'
+    },
+    {
+      type: 'launch',
+      which: 'chromium'
+    },
+    {
+      type: 'url',
+      which: 'https://acmeclothes.com/login.html',
+      what: 'Acme Clothes login page'
+    },
+    {
+      type: 'text',
+      which: 'User Name',
+      what: 'tester34'
+    },
+    {
+      type: 'text',
+      which: 'Password',
+      what: '34SecretTester'
+    },
+    {
+      type: 'button',
+      which: 'Submit',
+      what: 'submit the login form'
+    },
+    {
+      type: 'wait',
+      which: 'title',
+      what: 'account'
     },
     {
       type: 'test',
       which: 'qualWeb',
       withNewContent: false,
-      what: 'QualWeb, all rules'
+      rules: ['QW-BP25', 'QW-BP26']
+      what: 'QualWeb'
     }
   ],
   sources: {
@@ -363,33 +399,21 @@ Suppose you ask for a merger of the above batch and script, **without** the isol
       id: 'acme',
       what: 'Acme Clothes'
     },
-    requester: 'you@yourdomain.tld'
+    requester: 'you@yourdomain.tld',
+    url: '/file/reports/240115T1200-4Rw-acme.json'
   },
-  creationTime: '2023-11-20T15:50:27',
-  timeStamp: '231120T155314'
+  creationTime: '2023-11-20T15:50:27'
 }
 ```
 
 Testilo has substituted the `private` acts from the `acme` target of the batch for the placeholder when creating the job. Testilo also has:
+- inserted a copy of those same acts after the `axe` test act, because `axe` is a target-modifying tool.
 - let the script determine the browser type of the `launch` act.
 - added the creation time to the job.
-- added a unique timestamp to the job (a more compact representation of the creation time).
-- given the job an ID that combines the timestamp with the script ID and the batch ID.
-- inserted a `sources` property into the job, recording facts about the script, the batch, the target, and the email address given by the user who requested the merger.
+- given the job an ID that combines the time stamp with a differentiator and the batch ID.
+- inserted a `sources` property into the job, recording facts about the script, the batch, the target, the requester, and the report URL.
 
 This is a valid Testaro job.
-
-##### With isolation
-
-If, however, you requested a merger **with** isolation, then Testilo would take cognizance of the fact that an `axe` test act is a target-modifying act. Testilo would therefore act as if another instance of the placeholder had been located in the script after the `axe` test act. So, copies of the same 6 acts that precede the `axe` test act would be inserted **after** the `axe` test act, too.
-
-Of the 9 tools providing tests for Testaro, 6 are target-modifying:
-- `alfa`
-- `aslint`
-- `axe`
-- `htmlcs`
-- `ibm`
-- `testaro`
 
 #### Invocation
 
@@ -401,12 +425,25 @@ A module can invoke `merge` in this way:
 
 ```javaScript
 const {merge} = require('testilo/merge');
-const jobs = merge(script, batch, requester, true, 'only', false, '240115T1200', 'jobs/', '.json');
+const jobs = merge(
+  script, batch, requester, isolate, standard, isGranular, timeStamp, 'file/reports/', '.json'
+);
 ```
 
-The `merge` module uses these 9 arguments to This invocation references `script`, `batch`, and `requester` variables that the module must have already defined. The `script` and `batch` variables are a script object and a batch object, respectively. The `requester` variable is an email address, or an empty string if none. The fourth argument is a boolean, specifying whether to perform test isolation. The fifth argument is a string that specifies the Testaro standardization option ('also', 'only', or 'no'). The sixth argument is a boolean, specifying whether Testaro will allow granular network observation of the job. The seventh argument is a compact time stamp specifying a date and time, to the nearest minute. The eighth and ninth arguments are strings that contain the parts, before and after the job ID, respectively, of an absolute or relative URL.
+The `merge` module uses these 9 arguments to create jobs from a script and a batch.
 
-The `merge` module In this case, a job with ID `20240420T1426-R7T-archive` will produce a report that can be retrieved at the relative URL `jobs/20240420T1426-R7T-archive.json`.
+The arguments are:
+- `script`: a script.
+- `batch`: a batch.
+- `requester`: an email address, or an empty string if there is a `REQUESTER` environment variable to be used.
+- `isolate`: `true` if test isolation is to be performed, or `false` if not.
+- `standard`: one of the standardization options (`'also'`, `'only'`, or `'no'`).
+- `isGranular`: `true` if Testaro is to allow granular observation of the job when performed under a network watch, or `false` if not.
+- `timeStamp`: a time stamp in the format `240115T1200`.
+- `urlPnrefix`: the start of an absolute or relative report URL.
+- `urlSuffix`: the end of a report URL.
+
+In this case, a job with ID `240115T1200-4Rw-acme` will produce a report that can be retrieved at the relative URL `file/reports/240115T1200-4Rw-acme.json`.
 
 The `merge()` function of the `merge` module generates jobs and returns them in an array. The invoking module can further dispose of the jobs as needed.
 

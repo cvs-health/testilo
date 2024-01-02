@@ -103,20 +103,14 @@ Targets can be specified in a more complex way, too. That allows you to create j
         public: [
           {
             type: 'launch'
-          },
-          {
-            type: 'url',
-            which: 'https://acmeclothes.com/',
+            url: 'https://acmeclothes.com/',
             what: 'Acme Clothes home page'
           }
         ],
         private: [
           {
             type: 'launch'
-          },
-          {
-            type: 'url',
-            which: 'https://acmeclothes.com/login.html',
+            url: 'https://acmeclothes.com/login.html',
             what: 'Acme Clothes login page'
           },
           {
@@ -225,10 +219,10 @@ A module can invoke `batch` in this way:
 
 ```javaScript
 const {batch} = require('testilo/batch');
-const batchObj = batch(listID, what, targets);
+const batchObj = batch(id, what, targets);
 ```
 
-This invocation references `listID`, `what`, and `targets` variables that the module must have already defined. The `listID` variable is a unique identifier for the target list. the `what` variable describes the target list. The `targets` variable is an array of arrays, with each array containing the 3 items (ID, description, and URL) defining one target.
+This invocation references `id`, `what`, and `targets` variables that the module must have already defined. The `id` variable is a unique identifier for the target list. The `what` variable describes the target list. The `targets` variable is an array of arrays, with each array containing the 3 items (ID, description, and URL) defining one target.
 
 The `batch()` function of the `batch` module generates a batch and returns it as an object. The invoking module can further dispose of the batch as needed.
 

@@ -74,6 +74,9 @@ exports.script = (id, issues = null, ... issueIDs) => {
       standard: 'only',
       observe: true,
       timeStamp: '',
+      requester: process.env.REQUESTER || '',
+      urlPrefix: '/file/reports/',
+      urlSuffix: '.json',
       acts: [
         {
           "type": "placeholder",
@@ -99,7 +102,7 @@ exports.script = (id, issues = null, ... issueIDs) => {
           toolAct.rules.unshift('y');
         }
       }
-      // Add any needed option specifications to the act.
+      // Add any needed option defaults to the act.
       if (toolID === 'axe') {
         toolAct.detailLevel = 2;
       }

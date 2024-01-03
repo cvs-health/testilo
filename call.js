@@ -93,7 +93,6 @@ const callMerge = async (
     const jobJSON = JSON.stringify(job, null, 2);
     await fs.writeFile(`${jobDir}/${destination}/${job.id}.json`, `${jobJSON}\n`);
   }
-  const {timeStamp} = jobs[0];
   console.log(
     `Script ${scriptID} and batch ${batchID} merged as ${timeStamp}-… in ${jobDir}/${destination}`
   );

@@ -100,6 +100,8 @@ exports.merge = (script, batch, requester, timeStamp, todoDir) => {
       job.url = `${job.urlPrefix}${job.id}${job.urlSuffix}`;
       delete job.urlPrefix;
       delete job.urlSuffix;
+      // Add a report destination to the job.
+      job.sendReportTo = process.env.SEND_REPORT_TO || '';
       // Add data to the sources property of the job.
       job.sources.target.id = targetID;
       job.sources.target.what = target.what;

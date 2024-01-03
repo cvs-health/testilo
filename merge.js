@@ -97,7 +97,7 @@ exports.merge = (script, batch, requester, timeStamp, todoDir) => {
       const targetID = alphaNumOf(index);
       job.id = `${timeStamp}-${mergeID}-${targetID}`;
       // Replace the URL affixes with a URL.
-      job.url = `${urlPrefix}${job.id}${urlSuffix}`;
+      job.url = `${job.urlPrefix}${job.id}${job.urlSuffix}`;
       delete job.urlPrefix;
       delete job.urlSuffix;
       // Add data to the sources property of the job.

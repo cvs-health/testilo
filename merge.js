@@ -1,20 +1,14 @@
 /*
   merge.js
   Merges a script and a batch and returns jobs.
-  Arguments:
-    0. script
-    1. batch
-    2. requester
-    3. whether to provide test isolation
-    4. value of the standard property
-    5. whether reporting is to be granular
-    6. date and time as a compact timestamp for job execution, if not now
 */
 
 // ########## IMPORTS
 
 // Module to keep secrets.
 require('dotenv').config();
+// Module to perform common actions.
+const {dateOf, nowStamp, punctuate} = require('procs/util');
 
 // ########## CONSTANTS
 
@@ -27,56 +21,17 @@ const contaminantNames = new Set([
   'alfa',
   'aslint',
   'axe',
+  'ed11y',
   'htmlcs',
   'testaro'
 ]);
-const randomIDChars = (() => {
-  const digits = Array(10).fill('').map((digit, index) => index.toString());
-  const uppers = Array(26).fill('').map((letter, index) => String.fromCodePoint(65 + index));
-  const lowers = Array(26).fill('').map((letter, index) => String.fromCodePoint(97 + index));
-  return digits.concat(uppers, lowers);
-})();
 
 
 // ########## FUNCTIONS
 
-// Inserts a character periodically in a string.
-const punctuate = (string, insertion, chunkSize) => {
-  const segments = [];
-  let startIndex = 0;
-  while (startIndex < string.length) {
-    segments.push(string.slice(startIndex, startIndex + chunkSize));
-    startIndex += chunkSize;
-  }
-  return segments.join(insertion);
-};
-// Converts a compact timestamp to a date.
-const dateOf = timeStamp => {
-  if (/^\d{6}T\d{4}$/.test(timeStamp)) {
-    const dateString = punctuate(timeStamp.slice(0, 6), '-', 2);
-    const timeString = punctuate(timeStamp.slice(7, 11), ':', 2);
-    return new Date(`20${dateString}T${timeString}Z`);
-  } else {
-    return null;
-  }
-};
-// Converts a date and time to a compact timestamp.
-const stampTime = date => date.toISOString().replace(/[-:]/g, '').slice(2, 13);
-// Generates a random string.
-const getRandomID = length => {
-  const chars = [];
-  for (let i = 0; i < length; i++) {
-    chars.push(randomIDChars[Math.floor(62 * Math.random())]);
-  }
-  return chars.join('');
-};
 // Merges a script and a batch and returns jobs.
-exports.merge = (
-  script, batch, requester, isolate, standard, observe, timeStamp, urlPrefix, urlSuffix
-) => {
-  if (isolate === 'false') {
-    isolate = false;
-  }
+exports.merge = (script, batch, targettimeStamp) => {
+  // Get a time stamp for the current time.
   // If a timestamp was specified:
   if (timeStamp) {
     // If it is invalid:
@@ -89,17 +44,11 @@ exports.merge = (
   // Otherwise, i.e. if no timestamp was specified:
   else {
     // Create one for the job.
-    timeStamp = stampTime(new Date());
+    timeStamp = nowStamp();
   }
-  // If the requester is blank or unspecified, make it the standard requester.
-  requester ||= stdRequester;
-  // Create a creation-time description.
-  const creationTime = (new Date()).toISOString().slice(0, 16);
-  // Initialize a target-independent job.
+  // Initialize a job as a copy of the script.
   const protoJob = JSON.parse(JSON.stringify(script));
-  // Make the timestamp and a random string the start of the job ID.
-  protoJob.id = `${timeStamp}-${getRandomID(Number.parseInt(randomIDLength, 10))}-`;
-  // Add a sources property to the job.
+  // Add a sources property to it.
   protoJob.sources = {
     script: script.id,
     batch: batch.id,
@@ -107,37 +56,35 @@ exports.merge = (
       id: '',
       which: '',
       what: ''
-    },
-    requester,
-    sendReportTo: process.env.REPORT_URL || '',
-    url: ''
+    }
   };
   // Add properties to the job.
-  protoJob.creationTime = creationTime;
+  protoJob.creationTimeStamp = creationTimeStamp;
   protoJob.timeStamp = timeStamp;
-  protoJob.standard = standard || 'only';
-  protoJob.observe = observe || false;
   // If isolation was requested:
-  if (isolate) {
-    // Configure the job for it.
+  if (script.isolate) {
+    // For each act:
     let {acts} = protoJob;
     let lastPlaceholder = {};
     for (const actIndexString in acts) {
+      // If it is a placeholder:
       const actIndex = Number.parseInt(actIndexString);
       const act = acts[actIndex];
-      const nextAct = acts[actIndex + 1];
       if (act.type === 'placeholder') {
+        // Identify it as the current one.
         lastPlaceholder = act;
       }
+      // Otherwise, if it is a non-final target-modifying test act:
       else if (
         act.type === 'test'
         && contaminantNames.has(act.which)
         && actIndex < acts.length - 1
-        && (nextAct.type === 'test')
       ) {
+        // Change it to an array of itself and the current placeholder.
         acts[actIndex] = JSON.parse(JSON.stringify([act, lastPlaceholder]));
       }
     };
+    // Flatten the acts.
     protoJob.acts = acts.flat();
   }
   // Initialize an array of jobs.
@@ -150,8 +97,8 @@ exports.merge = (
     if (id && which && what) {
       // Initialize a job.
       const job = JSON.parse(JSON.stringify(protoJob));
-      // Append the target ID to the job ID.
-      job.id += target.id;
+      // Make the job ID unique.
+      job.id
       // Add data to the sources property of the job.
       job.sources.target.id = target.id;
       job.sources.target.which = target.which;

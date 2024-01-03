@@ -65,8 +65,7 @@ Testilo can, however, make job preparation more efficient in these scenarios:
 
 The simplest version of a list of targets is a _target list_. It is an array of arrays defining 1 or more targets. It can be stored as a tab-delimited text file.
 
-A target is defined by 3 items:
-- An ID
+A target is defined by 2 items:
 - A description
 - A URL
 
@@ -74,16 +73,16 @@ For example, a target list might be:
 
 ```javaScript
 [
-  ['w3c', 'World Wide Web Consortium', 'https://www.w3.org/'],
-  ['moz', 'Mozilla Foundation', 'https://foundation.mozilla.org/en/']
+  ['World Wide Web Consortium', 'https://www.w3.org/'],
+  ['Mozilla Foundation', 'https://foundation.mozilla.org/en/']
 ]
 ```
 
 If this target list were stored as a file, its content would be this (with “→” representing the Tab character):
 
 ```text
-w3c→World Wide Web Consortium→https://www.w3.org/
-moz→Mozilla Foundation→https://foundation.mozilla.org/en/
+World Wide Web Consortium→https://www.w3.org/
+Mozilla Foundation→https://foundation.mozilla.org/en/
 ```
 
 ### Batches
@@ -160,8 +159,8 @@ Here is a script:
   timeLimit: 60,
   standard: 'also',
   observe: false,
-  timeStamp: '240115T1200',
   requester: 'you@yourdomain.com',
+  sendReportTo: 'https://ourdomain.com/api/report/special',
   urlPrefix: '/file/reports',
   urlSuffix: '.json',
   acts: [
@@ -195,15 +194,15 @@ A script has several properties that specify facts about the jobs to be created.
 - `isolate`: If `true`, Testilo, before creating a job, will isolate test acts, as needed, from effects of previous test acts, by inserting a copy of the latest placeholder after each target-modifying test act other than the final act. If `false`, placeholders will not be duplicated.
 - `standard`: If `also`, jobs will tell Testaro to include in its reports both the original results of the tests of tools and the Testaro-standardized results. If `only`, reports are to include only the standardized test results. If `no`, reports are to include only the original results, without standardization.
 - `observe`: If `true`, jobs will tell Testaro to allow granular observation of job progress. If `false`, jobs will tell Testaro not to permit granular observation, but only to send the report to the server when the report is completed. It is generally user-friendly to allow granular observation, and for user applications to implement it, if they make users wait while jobs are assigned and performed, since that process typically takes about 3 minutes.
-- `timeStamp`: This string specifies a UTC date and time when jobs created with the script are to be permitted to be assigned to agents. Thus, jobs can be created from a script for later performance. The value of `timeStamp` is a compact representation in the format `yymmddThhMM`. If the value is an empty string, Testilo will make the date and time equal to the time when jobs are created.
 - `requester`: the email address that any notices of job completion can be sent to, or an empty string if there is a `REQUESTER` environment variable and it is to be used.
+- `sendReportTo`: the URL of a POST request that the Testaro agent is to make when submitting reports of jobs produced from the script.
 - `urlPrefix`: the start of a URL that the Testaro reports will be retrievable at.
 - `urlSuffix`: the end of that URL. The job ID will be inserted between the `urlPrefix` and the `urlSuffix`.
 - `acts`: an array of acts.
 
 The first act in this example script is a placeholder, whose `which` property is `'private'`. If the above batch were merged with this script, in each job the placeholder would be replaced with the `private` acts of a target. For example, the first act of the first job would launch a Chromium browser, navigate to the Acme login page, complete and submit the login form, wait for the account page to load, run the Axe tests, and then run the QualWeb tests. If the batch contained additional targets, additional jobs would be created, with the login actions for each target specified in the `private` array of the `acts` object of that target.
 
-As shown in this example, when a browser is launched by placeholder substitution, the script can determine the browser type (`chromium`, `firefox`, or `webkit`) by assigning a value to a `launch` property of the placeholder.
+As shown in this example, when a browser is launched by placeholder substitution, the script can determine the browser type (`chromium`, `firefox`, or `webkit`) by assigning a value to a `launch` property of the placeholder. This allows a script to ensure that the tests it requires are performed with appropriate browser types. Some browser types are incompatible with some tests.
 
 ### Target list to batch
 
@@ -222,9 +221,11 @@ const {batch} = require('testilo/batch');
 const batchObj = batch(id, what, targets);
 ```
 
-This invocation references `id`, `what`, and `targets` variables that the module must have already defined. The `id` variable is a unique identifier for the target list. The `what` variable describes the target list. The `targets` variable is an array of arrays, with each array containing the 3 items (ID, description, and URL) defining one target.
+This invocation references `id`, `what`, and `targets` variables that the module must have already defined. The `id` variable is a unique identifier for the target list. The `what` variable describes the target list. The `targets` variable is an array of arrays, with each array containing the 2 items (description and URL) defining one target.
 
 The `batch()` function of the `batch` module generates a batch and returns it as an object. The invoking module can further dispose of the batch as needed.
+
+The ID assigned to each target by the `batch()` function is a sequential string, rather than a mnemonic like the one (`'acme'`) in the above example.
 
 ##### By a user
 
@@ -312,6 +313,8 @@ Suppose you ask for a merger of the above batch and script. Then the first job p
   standard: 'also',
   observe: false,
   timeStamp: '240115T1200',
+  requester: 'you@yourdomain.tld',
+  url: '/file/reports/240115T1200-4Rw-acme.json',
   acts: [
     {
       type: 'launch',
@@ -392,9 +395,7 @@ Suppose you ask for a merger of the above batch and script. Then the first job p
     target: {
       id: 'acme',
       what: 'Acme Clothes'
-    },
-    requester: 'you@yourdomain.tld',
-    url: '/file/reports/240115T1200-4Rw-acme.json'
+    }
   },
   creationTime: '2023-11-20T15:50:27'
 }
@@ -727,3 +728,11 @@ The third argument to `call` (`23pl` in this example) is optional. If it is omit
 ### Validation
 
 To test the `compare` module, in the project directory you can execute the statement `node validation/compare/validate`. If `compare` is valid, all logging statements will begin with “Success” and none will begin with “ERROR”.
+
+## Origin
+
+Work on the functionalities of Testaro and Testilo began in 2017. It was named [Autotest](https://github.com/jrpool/autotest) in early 2021 and then partitioned into the more single-purpose packages Testaro and Testilo in January 2022.
+
+## Etymology
+
+“Testilo” means “testing tool” in Esperanto.

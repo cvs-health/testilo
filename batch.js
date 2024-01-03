@@ -3,23 +3,26 @@
   Converts a target list to a batch.
 */
 
-// ########## FUNCTIONS
+// IMPORTS
+
+const {alphaNumOf} = require('./procs/util');
+
+// FUNCTIONS
 
 // Converts a target list to a batch and returns the batch.
-exports.batch = (id, what, targetList) => {
+exports.batch = (what, targetList) => {
   // If the arguments are valid:
   if (
     typeof id === 'string'
-    && id.length
     && typeof what === 'string'
     && what.length
     && Array.isArray(targetList)
     && targetList.length
     && targetList.every(
       target => Array.isArray(target)
+      && target.length === 2
       && target.every(item => typeof item === 'string')
     )
-    && targetList.some(target => target.length === 3)
   ) {
     // Initialize the batch.
     const batch = {
@@ -27,25 +30,23 @@ exports.batch = (id, what, targetList) => {
       what,
       targets: []
     };
-    // For each valid target:
+    // For each target:
     targetList.forEach(target => {
-      if (target.length === 3 && target.every(item => item.length)) {
-        // Add it to the batch.
-        batch.targets.push({
-          id: target[0],
-          which: target[2],
-          what: target[1],
-          acts: {
-            main: [
-              {
-                type: 'launch',
-                url: target[2],
-                what: target[1]
-              }
-            ]
-          }
-        });
-      }
+      // Add it to the batch.
+      batch.targets.push({
+        id: ,
+        which: target[1],
+        what: target[0],
+        acts: {
+          main: [
+            {
+              type: 'launch',
+              url: target[1],
+              what: target[0]
+            }
+          ]
+        }
+      });
     });
     // Return the batch.
     return batch;

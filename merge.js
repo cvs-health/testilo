@@ -8,7 +8,7 @@
 // Module to keep secrets.
 require('dotenv').config();
 // Module to perform common actions.
-const {alphaNumOf, dateOf, getRandomString, nowStamp, punctuate} = require('./procs/util');
+const {alphaNumOf, dateOf, getRandomString, getNowStamp} = require('./procs/util');
 
 // ########## CONSTANTS
 
@@ -39,7 +39,7 @@ exports.merge = (script, batch, requester, timeStamp, todoDir) => {
   // Otherwise, i.e. if no time stamp was specified:
   else {
     // Create one for the job.
-    timeStamp = nowStamp();
+    timeStamp = getNowStamp();
   }
   // Initialize a job as a copy of the script.
   const protoJob = JSON.parse(JSON.stringify(script));
@@ -54,7 +54,7 @@ exports.merge = (script, batch, requester, timeStamp, todoDir) => {
     }
   };
   // Add properties to the job.
-  protoJob.creationTimeStamp = nowStamp();
+  protoJob.creationTimeStamp = getNowStamp();
   protoJob.timeStamp = timeStamp;
   // If isolation was requested:
   if (script.isolate) {

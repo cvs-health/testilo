@@ -94,7 +94,7 @@ const callMerge = async (
     await fs.writeFile(`${jobDir}/${destination}/${job.id}.json`, `${jobJSON}\n`);
   }
   console.log(
-    `Script ${scriptID} and batch ${batchID} merged as ${timeStamp}-… in ${jobDir}/${destination}`
+    `Script ${scriptID} and batch ${batchID} merged as ${jobs[0].timeStamp}-… in ${jobDir}/${destination}`
   );
 };
 // Gets selected reports.

@@ -8,7 +8,7 @@
 // Module to keep secrets.
 require('dotenv').config();
 // Module to perform common actions.
-const {dateOf, nowStamp, punctuate} = require('procs/util');
+const {dateOf, nowStamp, punctuate} = require('./procs/util');
 
 // ########## CONSTANTS
 

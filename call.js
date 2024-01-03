@@ -43,16 +43,21 @@ const fnArgs = process.argv.slice(3);
 // ########## FUNCTIONS
 
 // Converts a target list to a batch.
-const callBatch = async (listID, what) => {
+const callBatch = async (id, what) => {
   // Get the target list.
-  const listString = await fs.readFile(`${specDir}/targetLists/${listID}.tsv`, 'utf8');
-  const list = listString.split('\n').map(target => target.split('\t'));
+  const listString = await fs.readFile(`${specDir}/targetLists/${id}.tsv`, 'utf8');
+  const list = listString
+  .split('\n')
+  .filter(target => target.length)
+  .map(target => target.split('\t'));
   // Convert it to a batch.
-  const batchObj = batch(listID, what, list);
+  const batchObj = batch(id, what, list);
   // Save the batch.
-  const batchJSON = JSON.stringify(batchObj, null, 2);
-  await fs.writeFile(`${specDir}/batches/${listID}.json`, `${batchJSON}\n`);
-  console.log(`Target list ${listID} converted to a batch and saved in ${specDir}/batches`);
+  if (batchObj) {
+    const batchJSON = JSON.stringify(batchObj, null, 2);
+    await fs.writeFile(`${specDir}/batches/${id}.json`, `${batchJSON}\n`);
+    console.log(`Target list ${id} converted to a batch and saved in ${specDir}/batches`);
+  }
 };
 // Fulfills a script-creation request.
 const callScript = async (scriptID, classificationID = null, ... issueIDs) => {

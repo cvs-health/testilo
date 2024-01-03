@@ -10,10 +10,11 @@ const {alphaNumOf} = require('./procs/util');
 // FUNCTIONS
 
 // Converts a target list to a batch and returns the batch.
-exports.batch = (what, targetList) => {
+exports.batch = (id, what, targetList) => {
   // If the arguments are valid:
   if (
     typeof id === 'string'
+    && id.length
     && typeof what === 'string'
     && what.length
     && Array.isArray(targetList)
@@ -31,18 +32,18 @@ exports.batch = (what, targetList) => {
       targets: []
     };
     // For each target:
-    targetList.forEach(target => {
+    targetList.forEach((target, index) => {
       // Add it to the batch.
       batch.targets.push({
-        id: ,
-        which: target[1],
+        id: alphaNumOf(index),
         what: target[0],
+        which: target[1],
         acts: {
           main: [
             {
               type: 'launch',
-              url: target[1],
-              what: target[0]
+              what: target[0],
+              url: target[1]
             }
           ]
         }
@@ -54,6 +55,7 @@ exports.batch = (what, targetList) => {
   // Otherwise, i.e. if the arguments are invalid:
   else {
     // Return this.
+    console.log('ERROR: information missing or invalid');
     return null;
   }
 };

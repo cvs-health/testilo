@@ -159,8 +159,7 @@ Here is a script:
   timeLimit: 60,
   standard: 'also',
   observe: false,
-  requester: 'you@yourdomain.com',
-  sendReportTo: 'https://ourdomain.com/api/report/special',
+  sendReportTo: 'https://ourdomain.com/testman/api/report'
   urlPrefix: '/file/reports',
   urlSuffix: '.json',
   acts: [
@@ -192,9 +191,9 @@ A script has several properties that specify facts about the jobs to be created.
 - `what`: a description of the script.
 - `strict`: `true` if Testaro is to abort jobs when a target redirects a request to a URL differing substantially from the one specified. If `false` Testaro is to allow redirection. All differences are considered substantial unless the URLs differ only in the presence and absence of a trailing slash.
 - `isolate`: If `true`, Testilo, before creating a job, will isolate test acts, as needed, from effects of previous test acts, by inserting a copy of the latest placeholder after each target-modifying test act other than the final act. If `false`, placeholders will not be duplicated.
+- `timeLimit`: This specifies the maximum duration, in seconds, of a job. Testaro will abort jobs that are not completed within that time.
 - `standard`: If `also`, jobs will tell Testaro to include in its reports both the original results of the tests of tools and the Testaro-standardized results. If `only`, reports are to include only the standardized test results. If `no`, reports are to include only the original results, without standardization.
 - `observe`: If `true`, jobs will tell Testaro to allow granular observation of job progress. If `false`, jobs will tell Testaro not to permit granular observation, but only to send the report to the server when the report is completed. It is generally user-friendly to allow granular observation, and for user applications to implement it, if they make users wait while jobs are assigned and performed, since that process typically takes about 3 minutes.
-- `requester`: the email address that any notices of job completion can be sent to, or an empty string if there is a `REQUESTER` environment variable and it is to be used.
 - `sendReportTo`: the URL of a POST request that the Testaro agent is to make when submitting reports of jobs produced from the script.
 - `urlPrefix`: the start of a URL that the Testaro reports will be retrievable at.
 - `urlSuffix`: the end of that URL. The job ID will be inserted between the `urlPrefix` and the `urlSuffix`.
@@ -225,7 +224,7 @@ This invocation references `id`, `what`, and `targets` variables that the module
 
 The `batch()` function of the `batch` module generates a batch and returns it as an object. The invoking module can further dispose of the batch as needed.
 
-The ID assigned to each target by the `batch()` function is a sequential string, rather than a mnemonic like the one (`'acme'`) in the above example.
+The ID assigned to each target by the `batch()` function is a sequential (base-62 alphanumeric) string, rather than a mnemonic like the one (`'acme'`) in the above example.
 
 ##### By a user
 
@@ -294,6 +293,8 @@ To create a script without any issue restrictions, a user can execute the statem
 
 #### Options
 
+The `script` module will use the value of the `SEND_REPORT_TO` environment variable as the value of the `sendReportTo` property of the script, if that variable exists, and otherwise will leave that property with an empty-string value.
+
 When the `script` module creates a script for you, it does not ask you for all of the options that the script may require. Instead, it chooses default options. After you invoke `script`, you can edit the script that it creates to revise options.
 
 ### Merge
@@ -312,6 +313,7 @@ Suppose you ask for a merger of the above batch and script. Then the first job p
   timeLimit: 60,
   standard: 'also',
   observe: false,
+  sendReportTo: 'https://ourdomain.com/testman/api/report'
   timeStamp: '240115T1200',
   requester: 'you@yourdomain.tld',
   url: '/file/reports/240115T1200-4Rw-acme.json',

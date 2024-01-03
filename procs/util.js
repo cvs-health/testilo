@@ -43,10 +43,10 @@ exports.dateOf = timeStamp => {
     return null;
   }
 };
-// Returns an alphanumeric representation of an integer.
+// Returns a base-62 alphanumeric representation of an integer.
 exports.alphaNumOf = num => {
   let resultDigits = [];
-  while (num) {
+  while (num || ! resultDigits.length) {
     const remainder = num % 62;
     resultDigits.unshift(alphaNumChars[remainder]);
     num = Math.floor(num / 62);

@@ -96,21 +96,21 @@ Targets can be specified in a more complex way, too. That allows you to create j
   targets: [
     {
       id: 'acme',
-      which: 'https://acmeclothes.com/',
       what: 'Acme Clothes',
+      which: 'https://acmeclothes.com/',
       acts: {
         public: [
           {
-            type: 'launch'
-            url: 'https://acmeclothes.com/',
-            what: 'Acme Clothes home page'
+            type: 'launch',
+            what: 'Acme Clothes home page',
+            url: 'https://acmeclothes.com/'
           }
         ],
         private: [
           {
-            type: 'launch'
-            url: 'https://acmeclothes.com/login.html',
-            what: 'Acme Clothes login page'
+            type: 'launch',
+            what: 'Acme Clothes login page',
+            url: 'https://acmeclothes.com/login.html'
           },
           {
             type: 'text',
@@ -320,12 +320,9 @@ Suppose you ask for a merger of the above batch and script. Then the first job p
   acts: [
     {
       type: 'launch',
-      which: 'chromium'
-    },
-    {
-      type: 'url',
-      which: 'https://acmeclothes.com/login.html',
-      what: 'Acme Clothes login page'
+      which: 'chromium',
+      what: 'Acme Clothes login page',
+      url: 'https://acmeclothes.com/login.html'
     },
     {
       type: 'text',
@@ -356,12 +353,9 @@ Suppose you ask for a merger of the above batch and script. Then the first job p
     },
     {
       type: 'launch',
-      which: 'chromium'
-    },
-    {
-      type: 'url',
-      which: 'https://acmeclothes.com/login.html',
-      what: 'Acme Clothes login page'
+      which: 'chromium',
+      what: 'Acme Clothes login page',
+      url: 'https://acmeclothes.com/login.html'
     },
     {
       type: 'text',
@@ -399,7 +393,7 @@ Suppose you ask for a merger of the above batch and script. Then the first job p
       what: 'Acme Clothes'
     }
   },
-  creationTime: '2023-11-20T15:50:27'
+  creationTime: '241120T1550'
 }
 ```
 
@@ -422,25 +416,16 @@ A module can invoke `merge` in this way:
 
 ```javaScript
 const {merge} = require('testilo/merge');
-const jobs = merge(
-  script, batch, requester, isolate, standard, isGranular, timeStamp, 'file/reports/', '.json'
-);
+const jobs = merge(script, batch, requester, timeStamp);
 ```
 
-The `merge` module uses these 9 arguments to create jobs from a script and a batch.
+The `merge` module uses these 4 arguments to create jobs from a script and a batch.
 
 The arguments are:
 - `script`: a script.
 - `batch`: a batch.
-- `requester`: an email address, or an empty string if there is a `REQUESTER` environment variable to be used.
-- `isolate`: `true` if test isolation is to be performed, or `false` if not.
-- `standard`: one of the standardization options (`'also'`, `'only'`, or `'no'`).
-- `isGranular`: `true` if Testaro is to allow granular observation of the job when performed under a network watch, or `false` if not.
-- `timeStamp`: a time stamp in the format `240115T1200`.
-- `urlPnrefix`: the start of an absolute or relative report URL.
-- `urlSuffix`: the end of a report URL.
-
-In this case, a job with ID `240115T1200-4Rw-acme` will produce a report that can be retrieved at the relative URL `/file/reports/240115T1200-4Rw-acme.json`.
+- `requester`: an email address.
+- `timeStamp`: the earliest UTC date and time when the jobs may be assigned (format `240415T1230`), or an empty string if now.
 
 The `merge()` function of the `merge` module generates jobs and returns them in an array. The invoking module can further dispose of the jobs as needed.
 
@@ -450,21 +435,16 @@ A user can invoke `merge` in this way:
 
 - Create a script and save it as a JSON file in the `scripts` subdirectory of the `SPECDIR` directory.
 - Create a batch and save it as a JSON file in the `batches` subdirectory of the `SPECDIR` directory.
-- In the Testilo project directory, execute the statement `node call merge scriptName batchName requester isolate standard observe todoDir urlPrefix urlSuffix`.
+- In the Testilo project directory, execute the statement `node call merge scriptID batchID requester timeStamp todoDir`.
 
 In this statement, replace:
-- `scriptName` with the base name of the script file.
-- `batchName` with the base name of the batch file.
-- `requester` with an email address, or with an empty string if the environment variable `REQUESTER` exists and you want to use it.
-- `isolate` with `true` if you want test isolation or `false` if not.
-- `standard` with `'also'`, `'only'`, or `'no'` to specify the treatment of standard-format results.
-- `observe` with `true` if granular observation is to be permitted, or `false` if not.
-- `todoDir` with `true` if the job is to be saved in the `todo` subdirectory, or `false` if it is to be saved in the `pending` subdirectory, of the `JOBDIR` directory.
-- `urlPrefix` with the pre-ID part of the report URL.
-- `urlSuffix` with the post-ID part of the report URL.
+- `scriptID` with the ID (which is also the base of the file name) of the script.
+- `batchID` with the ID (which is also the base of the file name) of the batch.
+- `requester` and `timeStamp` as described above.
+- `todoDir`: `true` if the jobs are to be saved in the `todo` subdirectory, or `false` if they are to be saved in the `pending` subdirectory, of the `JOBDIR` directory.
 
 The `call` module will retrieve the named script and batch from their respective directories.
-The `merge` module will create an array of jobs, with or without test isolation.
+The `merge` module will create an array of jobs.
 The `call` module will save the jobs as JSON files in the `todo` or `pending` subdirectory of the `JOBDIR` directory.
 
 #### Validation

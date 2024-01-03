@@ -8,14 +8,10 @@
 // Module to keep secrets.
 require('dotenv').config();
 // Module to perform common actions.
-const {dateOf, nowStamp, punctuate} = require('./procs/util');
+const {alphaNumOf, dateOf, getRandomString, nowStamp, punctuate} = require('./procs/util');
 
 // ########## CONSTANTS
 
-// Standard requester.
-const stdRequester = process.env.REQUESTER || 'nobody@nodomain.tld';
-// Length of the random part of a job ID, as a string.
-const randomIDLength = process.env.RANDOM_ID_LENGTH || '3';
 // Tools that alter the page.
 const contaminantNames = new Set([
   'alfa',
@@ -30,9 +26,8 @@ const contaminantNames = new Set([
 // ########## FUNCTIONS
 
 // Merges a script and a batch and returns jobs.
-exports.merge = (script, batch, targettimeStamp) => {
-  // Get a time stamp for the current time.
-  // If a timestamp was specified:
+exports.merge = (script, batch, requester, timeStamp, todoDir) => {
+  // If a time stamp was specified:
   if (timeStamp) {
     // If it is invalid:
     if (! dateOf(timeStamp)) {
@@ -41,25 +36,25 @@ exports.merge = (script, batch, targettimeStamp) => {
       return [];
     }
   }
-  // Otherwise, i.e. if no timestamp was specified:
+  // Otherwise, i.e. if no time stamp was specified:
   else {
     // Create one for the job.
     timeStamp = nowStamp();
   }
   // Initialize a job as a copy of the script.
   const protoJob = JSON.parse(JSON.stringify(script));
-  // Add a sources property to it.
+  // Add an initialized sources property to it.
   protoJob.sources = {
     script: script.id,
     batch: batch.id,
     target: {
       id: '',
-      which: '',
-      what: ''
+      what: '',
+      which: ''
     }
   };
   // Add properties to the job.
-  protoJob.creationTimeStamp = creationTimeStamp;
+  protoJob.creationTimeStamp = nowStamp();
   protoJob.timeStamp = timeStamp;
   // If isolation was requested:
   if (script.isolate) {
@@ -91,19 +86,24 @@ exports.merge = (script, batch, targettimeStamp) => {
   const jobs = [];
   // For each target in the batch:
   const {targets} = batch;
-  for (const target of targets) {
+  const mergeID = getRandomString(2);
+  targets.forEach((target, index) => {
     // If the target has the required identifiers:
-    const {id, which, what} = target;
-    if (id && which && what) {
+    const {id, what, which} = target;
+    if (id && what && which) {
       // Initialize a job.
       const job = JSON.parse(JSON.stringify(protoJob));
       // Make the job ID unique.
-      job.id
+      const targetID = alphaNumOf(index);
+      job.id = `${timeStamp}-${mergeID}-${targetID}`;
+      // Replace the URL affixes with a URL.
+      job.url = `${urlPrefix}${job.id}${urlSuffix}`;
+      delete job.urlPrefix;
+      delete job.urlSuffix;
       // Add data to the sources property of the job.
-      job.sources.target.id = target.id;
-      job.sources.target.which = target.which;
+      job.sources.target.id = targetID;
       job.sources.target.what = target.what;
-      job.sources.url = `${urlPrefix}${job.id}${urlSuffix}`;
+      job.sources.target.which = target.which;
       // Replace each placeholder object in the job with the named replacer array of the target.
       let {acts} = job;
       for (const actIndex in acts) {
@@ -131,13 +131,14 @@ exports.merge = (script, batch, targettimeStamp) => {
           }
         }
       }
+      // Flatten the acts.
       job.acts = acts.flat();
       // Append the job to the array of jobs.
       jobs.push(job);
     }
     else {
-      console.log('ERROR: Target in batch missing id, which, or what property');
+      console.log('ERROR: Target in batch missing id, what, or which property');
     }
-  };
+  });
   return jobs;
 };

@@ -73,9 +73,6 @@ exports.script = (id, issues = null, ... issueIDs) => {
       timeLimit: 30 + (10 * issueIDs.length || 30 * toolIDs.length),
       standard: 'only',
       observe: true,
-      sendReportTo: process.env.SEND_REPORT_TO || '',
-      urlPrefix: '/file/reports/',
-      urlSuffix: '.json',
       acts: [
         {
           "type": "placeholder",

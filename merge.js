@@ -97,6 +97,8 @@ exports.merge = (script, batch, requester, timeStamp) => {
       // Make the job ID unique.
       const targetID = alphaNumOf(index);
       job.id = `${timeStamp}-${mergeID}-${targetID}`;
+      // Delete the unnecessary job property.
+      delete job.isolate;
       // Add a report destination to the job.
       job.sendReportTo = process.env.SEND_REPORT_TO || '';
       // Add data to the sources property of the job.

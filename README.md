@@ -159,9 +159,6 @@ Here is a script:
   timeLimit: 60,
   standard: 'also',
   observe: false,
-  sendReportTo: 'https://ourdomain.com/testman/api/report'
-  urlPrefix: '/file/reports',
-  urlSuffix: '.json',
   acts: [
     {
       type: 'placeholder',
@@ -194,9 +191,6 @@ A script has several properties that specify facts about the jobs to be created.
 - `timeLimit`: This specifies the maximum duration, in seconds, of a job. Testaro will abort jobs that are not completed within that time.
 - `standard`: If `also`, jobs will tell Testaro to include in its reports both the original results of the tests of tools and the Testaro-standardized results. If `only`, reports are to include only the standardized test results. If `no`, reports are to include only the original results, without standardization.
 - `observe`: If `true`, jobs will tell Testaro to allow granular observation of job progress. If `false`, jobs will tell Testaro not to permit granular observation, but only to send the report to the server when the report is completed. It is generally user-friendly to allow granular observation, and for user applications to implement it, if they make users wait while jobs are assigned and performed, since that process typically takes about 3 minutes.
-- `sendReportTo`: the URL of a POST request that the Testaro agent is to make when submitting reports of jobs produced from the script.
-- `urlPrefix`: the start of a URL that the Testaro reports will be retrievable at.
-- `urlSuffix`: the end of that URL. The job ID will be inserted between the `urlPrefix` and the `urlSuffix`.
 - `acts`: an array of acts.
 
 The first act in this example script is a placeholder, whose `which` property is `'private'`. If the above batch were merged with this script, in each job the placeholder would be replaced with the `private` acts of a target. For example, the first act of the first job would launch a Chromium browser, navigate to the Acme login page, complete and submit the login form, wait for the account page to load, run the Axe tests, and then run the QualWeb tests. If the batch contained additional targets, additional jobs would be created, with the login actions for each target specified in the `private` array of the `acts` object of that target.
@@ -315,8 +309,6 @@ Suppose you ask for a merger of the above batch and script. Then the first job p
   observe: false,
   sendReportTo: 'https://ourdomain.com/testman/api/report'
   timeStamp: '240115T1200',
-  requester: 'you@yourdomain.tld',
-  url: '/file/reports/240115T1200-4Rw-acme.json',
   acts: [
     {
       type: 'launch',
@@ -391,7 +383,8 @@ Suppose you ask for a merger of the above batch and script. Then the first job p
     target: {
       id: 'acme',
       what: 'Acme Clothes'
-    }
+    },
+    requester: 'you@yourdomain.tld'
   },
   creationTime: '241120T1550'
 }
@@ -400,9 +393,9 @@ Suppose you ask for a merger of the above batch and script. Then the first job p
 Testilo has substituted the `private` acts from the `acme` target of the batch for the placeholder when creating the job. Testilo also has:
 - inserted a copy of those same acts after the `axe` test act, because `axe` is a target-modifying tool.
 - let the script determine the browser type of the `launch` act.
-- added the creation time to the job.
 - given the job an ID that combines the time stamp with a differentiator and the batch ID.
 - inserted a `sources` property into the job, recording facts about the script, the batch, the target, the requester, and the report URL.
+- added a time stamp describing the creation time to the job.
 
 This is a valid Testaro job.
 

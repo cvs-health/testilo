@@ -26,7 +26,7 @@ const contaminantNames = new Set([
 // ########## FUNCTIONS
 
 // Merges a script and a batch and returns jobs.
-exports.merge = (script, batch, requester, timeStamp, todoDir) => {
+exports.merge = (script, batch, requester, timeStamp) => {
   // If a time stamp was specified:
   if (timeStamp) {
     // If it is invalid:
@@ -51,7 +51,8 @@ exports.merge = (script, batch, requester, timeStamp, todoDir) => {
       id: '',
       what: '',
       which: ''
-    }
+    },
+    requester
   };
   // Add properties to the job.
   protoJob.creationTimeStamp = getNowStamp();
@@ -96,10 +97,6 @@ exports.merge = (script, batch, requester, timeStamp, todoDir) => {
       // Make the job ID unique.
       const targetID = alphaNumOf(index);
       job.id = `${timeStamp}-${mergeID}-${targetID}`;
-      // Replace the URL affixes with a URL.
-      job.url = `${job.urlPrefix}${job.id}${job.urlSuffix}`;
-      delete job.urlPrefix;
-      delete job.urlSuffix;
       // Add a report destination to the job.
       job.sendReportTo = process.env.SEND_REPORT_TO || '';
       // Add data to the sources property of the job.

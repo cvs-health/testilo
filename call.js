@@ -88,14 +88,13 @@ const callMerge = async (
   // Merge them into an array of jobs.
   const jobs = merge(script, batch, requester, timeStamp);
   // Save the jobs.
-  const destination = todoDir === 'true' ? 'todo' : 'pending';
+  const subdir = `${jobDir}/${todoDir === 'true' ? 'todo' : 'pending'}`;
   for (const job of jobs) {
     const jobJSON = JSON.stringify(job, null, 2);
-    await fs.writeFile(`${jobDir}/${destination}/${job.id}.json`, `${jobJSON}\n`);
+    await fs.writeFile(`${subdir}/${job.id}.json`, `${jobJSON}\n`);
   }
-  console.log(
-    `Script ${scriptID} and batch ${batchID} merged as ${jobs[0].timeStamp}-… in ${jobDir}/${destination}`
-  );
+  const truncatedID = `${jobs[0].timeStamp}-${jobs[0].mergeID}-…`;
+  console.log(`Script ${scriptID} and batch ${batchID} merged as ${truncatedID} in ${subdir}`);
 };
 // Gets selected reports.
 const getReports = async (type, selector = '') => {

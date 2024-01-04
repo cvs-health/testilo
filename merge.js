@@ -83,11 +83,14 @@ exports.merge = (script, batch, requester, timeStamp) => {
     // Flatten the acts.
     protoJob.acts = acts.flat();
   }
+  // Delete the no-longer-necessary job property.
+  delete protoJob.isolate;
   // Initialize an array of jobs.
   const jobs = [];
+  // Get an ID for the merger.
+  const mergeID = getRandomString(2);
   // For each target in the batch:
   const {targets} = batch;
-  const mergeID = getRandomString(2);
   targets.forEach((target, index) => {
     // If the target has the required identifiers:
     const {id, what, which} = target;
@@ -97,9 +100,8 @@ exports.merge = (script, batch, requester, timeStamp) => {
       // Make the job ID unique.
       const targetID = alphaNumOf(index);
       job.id = `${timeStamp}-${mergeID}-${targetID}`;
-      // Delete the unnecessary job property.
-      delete job.isolate;
-      // Add a report destination to the job.
+      // Add properties to the job.
+      job.mergeID = mergeID;
       job.sendReportTo = process.env.SEND_REPORT_TO || '';
       // Add data to the sources property of the job.
       job.sources.target.id = targetID;

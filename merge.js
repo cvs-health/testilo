@@ -21,12 +21,13 @@ const contaminantNames = new Set([
   'htmlcs',
   'testaro'
 ]);
-
+// Length of the random merger ID.
+const mergeIDLength = 2;
 
 // ########## FUNCTIONS
 
 // Merges a script and a batch and returns jobs.
-exports.merge = (script, batch, requester, timeStamp) => {
+exports.merge = (script, batch, standard, observe, requester, timeStamp) => {
   // If a time stamp was specified:
   if (timeStamp) {
     // If it is invalid:
@@ -55,8 +56,10 @@ exports.merge = (script, batch, requester, timeStamp) => {
     requester
   };
   // Add properties to the job.
-  protoJob.creationTimeStamp = getNowStamp();
+  protoJob.standard = standard;
+  protoJob.observe = observe;
   protoJob.timeStamp = timeStamp;
+  protoJob.creationTimeStamp = getNowStamp();
   // If isolation was requested:
   if (script.isolate) {
     // For each act:
@@ -88,7 +91,7 @@ exports.merge = (script, batch, requester, timeStamp) => {
   // Initialize an array of jobs.
   const jobs = [];
   // Get an ID for the merger.
-  const mergeID = getRandomString(2);
+  const mergeID = getRandomString(mergeIDLength);
   // For each target in the batch:
   const {targets} = batch;
   targets.forEach((target, index) => {

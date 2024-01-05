@@ -157,8 +157,6 @@ Here is a script:
   strict: true,
   isolate: true,
   timeLimit: 60,
-  standard: 'also',
-  observe: false,
   acts: [
     {
       type: 'placeholder',
@@ -189,8 +187,6 @@ A script has several properties that specify facts about the jobs to be created.
 - `strict`: `true` if Testaro is to abort jobs when a target redirects a request to a URL differing substantially from the one specified. If `false` Testaro is to allow redirection. All differences are considered substantial unless the URLs differ only in the presence and absence of a trailing slash.
 - `isolate`: If `true`, Testilo, before creating a job, will isolate test acts, as needed, from effects of previous test acts, by inserting a copy of the latest placeholder after each target-modifying test act other than the final act. If `false`, placeholders will not be duplicated.
 - `timeLimit`: This specifies the maximum duration, in seconds, of a job. Testaro will abort jobs that are not completed within that time.
-- `standard`: If `also`, jobs will tell Testaro to include in its reports both the original results of the tests of tools and the Testaro-standardized results. If `only`, reports are to include only the standardized test results. If `no`, reports are to include only the original results, without standardization.
-- `observe`: If `true`, jobs will tell Testaro to allow granular observation of job progress. If `false`, jobs will tell Testaro not to permit granular observation, but only to send the report to the server when the report is completed. It is generally user-friendly to allow granular observation, and for user applications to implement it, if they make users wait while jobs are assigned and performed, since that process typically takes about 3 minutes.
 - `acts`: an array of acts.
 
 The first act in this example script is a placeholder, whose `which` property is `'private'`. If the above batch were merged with this script, in each job the placeholder would be replaced with the `private` acts of a target. For example, the first act of the first job would launch a Chromium browser, navigate to the Acme login page, complete and submit the login form, wait for the account page to load, run the Axe tests, and then run the QualWeb tests. If the batch contained additional targets, additional jobs would be created, with the login actions for each target specified in the `private` array of the `acts` object of that target.
@@ -409,7 +405,7 @@ A module can invoke `merge` in this way:
 
 ```javaScript
 const {merge} = require('testilo/merge');
-const jobs = merge(script, batch, requester, timeStamp);
+const jobs = merge(script, batch, standard, observe, requester, timeStamp);
 ```
 
 The `merge` module uses these 4 arguments to create jobs from a script and a batch.
@@ -417,6 +413,8 @@ The `merge` module uses these 4 arguments to create jobs from a script and a bat
 The arguments are:
 - `script`: a script.
 - `batch`: a batch.
+- `standard`: how to handle standardization. If `also`, jobs will tell Testaro to include in its reports both the original results of the tests of tools and the Testaro-standardized results. If `only`, reports are to include only the standardized test results. If `no`, reports are to include only the original results, without standardization.
+- `observe`: whether to allow granular observation. If `true`, jobs will tell Testaro to permit granular observation of job progress. If `false`, jobs will tell Testaro not to permit granular observation, but only to send the report to the server when the report is completed. It is generally user-friendly to allow granular observation, and for user applications to implement it, if they make users wait while jobs are assigned and performed, since that process typically takes about 3 minutes.
 - `requester`: an email address.
 - `timeStamp`: the earliest UTC date and time when the jobs may be assigned (format `240415T1230`), or an empty string if now.
 
@@ -428,12 +426,16 @@ A user can invoke `merge` in this way:
 
 - Create a script and save it as a JSON file in the `scripts` subdirectory of the `SPECDIR` directory.
 - Create a batch and save it as a JSON file in the `batches` subdirectory of the `SPECDIR` directory.
-- In the Testilo project directory, execute the statement `node call merge scriptID batchID requester timeStamp todoDir`.
+- In the Testilo project directory, execute the statement:
+
+```javascript
+node call merge scriptID batchID standard observe requester timeStamp todoDir
+```
 
 In this statement, replace:
 - `scriptID` with the ID (which is also the base of the file name) of the script.
 - `batchID` with the ID (which is also the base of the file name) of the batch.
-- `requester` and `timeStamp` as described above.
+- `standard`, `observe`, `requester`, and `timeStamp` as described above.
 - `todoDir`: `true` if the jobs are to be saved in the `todo` subdirectory, or `false` if they are to be saved in the `pending` subdirectory, of the `JOBDIR` directory.
 
 The `call` module will retrieve the named script and batch from their respective directories.

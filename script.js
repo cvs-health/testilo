@@ -71,8 +71,6 @@ exports.script = (id, issues = null, ... issueIDs) => {
       strict: true,
       isolate: true,
       timeLimit: 30 + (10 * issueIDs.length || 30 * toolIDs.length),
-      standard: 'only',
-      observe: true,
       acts: [
         {
           "type": "placeholder",

@@ -88,7 +88,7 @@ const callMerge = async (
   const batchJSON = await fs.readFile(`${specDir}/batches/${batchID}.json`, 'utf8');
   const batch = JSON.parse(batchJSON);
   // Merge them into an array of jobs.
-  const jobs = merge(script, batch, requester, standard, observe, timeStamp);
+  const jobs = merge(script, batch, requester, standard, observe === 'true', timeStamp);
   // Save the jobs.
   const subdir = `${jobDir}/${todoDir === 'true' ? 'todo' : 'pending'}`;
   for (const job of jobs) {

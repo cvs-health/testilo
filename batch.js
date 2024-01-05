@@ -55,7 +55,7 @@ exports.batch = (id, what, targetList) => {
   // Otherwise, i.e. if the arguments are invalid:
   else {
     // Return this.
-    console.log('ERROR: information missing or invalid');
+    console.log('ERROR: Batch information missing or invalid');
     return null;
   }
 };

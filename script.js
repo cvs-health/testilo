@@ -90,8 +90,24 @@ exports.script = (id, issues = null, ... issueIDs) => {
       if (issues && issueIDs.length) {
         // Add a rules array as a property to the act.
         toolAct.rules = neededTools[toolID];
-        // If the tool is Testaro:
-        if (toolID === 'testaro') {
+        // If the tool is QualWeb:
+        if (toolID === 'qualWeb') {
+          // For each QualWeb module:
+          const specs = [];
+          const prefixes = {
+            act: 'QW-ACT-',
+            wcag: 'QW-WCAG-',
+            bp: 'QW-BP'
+          };
+          Object.keys(prefixes).forEach(prefix => {
+            // Specify the rules of that module to be tested for.
+            const ids = toolAct.rules.filter(id => id.startsWith(prefixes[prefix]));
+            const integers = ids.map(id => id.slice(prefixes[prefix].length));
+            specs.push(`${prefix}:${integers.join(',')}`);
+          });
+        }
+        // Otherwise, if the tool is Testaro:
+        else if (toolID === 'testaro') {
           // Prepend the inclusion option to the rule array.
           toolAct.rules.unshift('y');
         }

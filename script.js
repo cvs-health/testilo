@@ -105,6 +105,8 @@ exports.script = (id, issues = null, ... issueIDs) => {
             const integers = ids.map(id => id.slice(prefixes[prefix].length));
             specs.push(`${prefix}:${integers.join(',')}`);
           });
+          // Replace the generic rule list with the QualWeb-format list.
+          toolAct.rules = specs;
         }
         // Otherwise, if the tool is Testaro:
         else if (toolID === 'testaro') {

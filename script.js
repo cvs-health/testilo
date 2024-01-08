@@ -97,7 +97,7 @@ exports.script = (id, issues = null, ... issueIDs) => {
           const prefixes = {
             act: 'QW-ACT-R',
             wcag: 'QW-WCAG-T',
-            bp: 'QW-BP'
+            best: 'QW-BP'
           };
           Object.keys(prefixes).forEach(prefix => {
             // Specify the rules of that module to be tested for.

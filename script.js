@@ -95,8 +95,8 @@ exports.script = (id, issues = null, ... issueIDs) => {
           // For each QualWeb module:
           const specs = [];
           const prefixes = {
-            act: 'QW-ACT-',
-            wcag: 'QW-WCAG-',
+            act: 'QW-ACT-R',
+            wcag: 'QW-WCAG-T',
             bp: 'QW-BP'
           };
           Object.keys(prefixes).forEach(prefix => {

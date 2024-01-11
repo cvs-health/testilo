@@ -11,9 +11,6 @@ const {alphaNumOf} = require('./procs/util');
 
 // Converts a target list to a batch and returns the batch.
 exports.batch = (id, what, targetList) => {
-  console.log(`id: ${id}`);
-  console.log(`what: ${what}`);
-  console.log(`targetList: ${JSON.stringify(targetList, null, 2)}`);
   // If the arguments are valid:
   if (
     typeof id === 'string'

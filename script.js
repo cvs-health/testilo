@@ -70,7 +70,7 @@ exports.script = (id, issues = null, ... issueIDs) => {
       what: `accessibility tests`,
       strict: true,
       isolate: true,
-      timeLimit: 30 + (10 * issueIDs.length || 30 * toolIDs.length),
+      timeLimit: Math.round(30 + (issueIDs.length || 300) / 2 + 20 * toolIDs.length),
       acts: [
         {
           "type": "placeholder",

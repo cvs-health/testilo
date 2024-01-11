@@ -55,7 +55,7 @@ exports.batch = (id, what, targetList) => {
   // Otherwise, i.e. if the arguments are invalid:
   else {
     // Return this.
-    console.log('ERROR: Information for batch creation missing or invalid');
+    console.log(`ERROR: Information for ${id || 'ID-less'} batch creation missing or invalid`);
     return null;
   }
 };

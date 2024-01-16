@@ -32,7 +32,7 @@ const populateQuery = (report, query) => {
   query.sp = scoreProcID;
   query.dp = id;
   // Add the job data to the query.
-  query.dateISO = jobData.endTime.slice(0, 10);
+  query.dateISO = jobData.endTime.slice(0, 8);
   query.dateSlash = query.dateISO.replace(/-/g, '/');
   query.org = target.what;
   query.url = target.which;

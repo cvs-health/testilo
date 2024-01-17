@@ -571,7 +571,9 @@ The `digest` module digests a scored report. Its `digest()` function takes three
 - a digesting function
 - an array of scored report objects
 
-The digest template is an HTML document containing placeholders. A copy of the template, with its placeholders replaced by computed values, becomes the digest. The digesting function defines the rules for replacing the placeholders with values. The Testilo package contains a `procs/digest` directory, in which there are subdirectories containing pairs of templates and modules that export digesting functions. You can use one of those pairs, or you can create your own.
+The digest template is an HTML document containing placeholders. A copy of the template, with its placeholders replaced by computed values, becomes the digest. The digesting function defines the rules for replacing the placeholders with values. The Testilo package contains a `procs/digest` directory, in which there are subdirectories, each containing a template and a modules that exports a digesting function. You can use one of those template-module pairs, or you can create your own.
+
+The included template-module pairs format placeholders with leading and trailing underscore pairs (such as `__issueCount__`).
 
 ### Invocation
 
@@ -605,7 +607,7 @@ When a user invokes `digest` in this example, the `call` module:
 - gets the reports from the `scored` subdirectory of the `process.env.REPORTDIR` directory.
 - writes the digested reports to the `digested` subdirectory of the `process.env.REPORTDIR` directory.
 
-The optional third argument to call (`75m` in this example) is a report selector. Without the argument, `call` gets all the reports in the `scored` subdirectory of the `process.env.REPORTDIR` directory. With the argument, `call` gets only those reports whose names begin with the argument string.
+The optional third argument to `call` (`75m` in this example) is a report selector. Without the argument, `call` gets all the reports in the `scored` subdirectory of the `process.env.REPORTDIR` directory. With the argument, `call` gets only those reports whose names begin with the argument string.
 
 The digests created by `digest` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/digested/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where digested reports are written.
 

@@ -1,6 +1,6 @@
 /*
   index
-  Compares scores in reports scored by tsp38 for use by Testu.
+  Compares scores in reports scored by tsp39 for use by Testu.
 */
 
 // ########## IMPORTS

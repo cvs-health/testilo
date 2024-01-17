@@ -25,7 +25,7 @@ const getIssueScoreRow = (summary, wcag, score, tools) => {
 };
 // Adds parameters to a query for a digest.
 const populateQuery = (report, query) => {
-  const {sources, jobData, score} = report;
+  const {getReportFrom, sources, jobData, score} = report;
   const {script, target, requester} = sources;
   const {scoreProcID, summary, details} = score;
   query.ts = script;
@@ -37,7 +37,7 @@ const populateQuery = (report, query) => {
   query.org = target.what;
   query.url = target.which;
   query.requester = requester;
-  query.reportURL = `report?jobID=${report.id}`;
+  query.getReportFrom = getReportFrom || `/reports/${report.id}.json`;
   // Add values for the score-summary table to the query.
   const rows = {
     summaryRows: [],

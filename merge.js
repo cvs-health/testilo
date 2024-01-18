@@ -48,6 +48,7 @@ exports.merge = (script, batch, standard, observe, requester, timeStamp) => {
   protoJob.sources = {
     script: script.id,
     batch: batch.id,
+    lastTarget: false,
     target: {
       id: '',
       what: '',
@@ -103,11 +104,15 @@ exports.merge = (script, batch, standard, observe, requester, timeStamp) => {
       // Make the job ID unique.
       const targetID = alphaNumOf(index);
       job.id = `${timeStamp}-${mergeID}-${targetID}`;
-      // Add properties to the job.
+      // Add other properties to the job.
       job.mergeID = mergeID;
       job.sendReportTo = process.env.SEND_REPORT_TO || '';
       // Add data to the sources property of the job.
       job.sources.target.id = targetID;
+      if (index === targets.length - 1) {
+        // Add that fact to the job.
+        job.sources.lastTarget = true;
+      }
       job.sources.target.what = target.what;
       job.sources.target.which = target.which;
       // Replace each placeholder object in the job with the named replacer array of the target.

@@ -20,7 +20,9 @@ const getTimeString = date => date.toISOString().slice(0, 19);
 // Returns a string representing the date and time.
 exports.getNowString = () => getTimeString(new Date());
 // Returns a time stamp representing a date and time.
-const getTimeStamp = date => getTimeString(date).replace(/[-:]/g, '').slice(2, 13);
+const getTimeStamp
+= exports.getTimeStamp
+= date => getTimeString(date).replace(/[-:]/g, '').slice(2, 13);
 // Returns a time stamp representing the date and time.
 exports.getNowStamp = () => getTimeStamp(new Date());
 // Inserts a character periodically in a string.

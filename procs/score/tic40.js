@@ -8088,6 +8088,11 @@ exports.issues = {
           quality: 1,
           what: 'CSS font-weight property has a value smaller than 1'
         },
+        '^CSS: font-weight: .+ is not valid, only values lower than or equal to 1000.0 are allowed.*$': {
+          variable: true,
+          quality: 1,
+          what: 'CSS font-weight property has a value greater than 1000'
+        },
         '^CSS: .+: Parse Error.*$': {
           variable: true,
           quality: 1,

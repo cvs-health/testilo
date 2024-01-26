@@ -7,14 +7,13 @@
 
 // Module to access files.
 const fs = require('fs/promises');
+const {getBarCell} = require('../../procs/util');
 
 // CONSTANTS
 
 // Comparer ID.
 const id = 'tcp39';
 // Newlines with indentations.
-const joiner = '\n      ';
-const innerJoiner = '\n        ';
 const innestJoiner = '\n          ';
 
 // ########## FUNCTIONS
@@ -53,11 +52,7 @@ const getTableBody = async bodyData => {
     const pageCell = `<th scope="row"><a href="${url}">${org}</a></th>`;
     const numCell = `<td><a href="testu/digest?jobID=${id}">${score}</a></td>`;
     // Make the bar width proportional.
-    const barWidth = 100 * score / maxScore;
-    const bar = `<rect height="100%" width="${barWidth}%" fill="red"></rect>`;
-    const barCell = `<td aria-hidden="true"><svg width="100%" height="0.7em">${bar}</svg></td>`;
-    const row = `<tr>${pageCell}${numCell}${barCell}</tr>`;
-    return row;
+    return getBarCell(score, maxScore);
   });
   return rows.join(innestJoiner);
 };

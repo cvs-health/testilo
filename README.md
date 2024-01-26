@@ -571,7 +571,7 @@ The `digest` module digests a scored report. Its `digest()` function takes three
 - a digesting function
 - an array of scored report objects
 
-The digest template is an HTML document containing placeholders. A copy of the template, with its placeholders replaced by computed values, becomes the digest. The digesting function defines the rules for replacing the placeholders with values. The Testilo package contains a `procs/digest` directory, in which there are subdirectories, each containing a template and a modules that exports a digesting function. You can use one of those template-module pairs, or you can create your own.
+The digest template is an HTML document containing placeholders. A copy of the template, with its placeholders replaced by computed values, becomes the digest. The digesting function defines the rules for replacing the placeholders with values. The Testilo package contains a `procs/digest` directory, in which there are subdirectories, each containing a template and a module that exports a digesting function. You can use one of those template-module pairs, or you can create your own.
 
 The included template-module pairs format placeholders with leading and trailing underscore pairs (such as `__issueCount__`).
 
@@ -610,6 +610,52 @@ When a user invokes `digest` in this example, the `call` module:
 The optional third argument to `call` (`75m` in this example) is a report selector. Without the argument, `call` gets all the reports in the `scored` subdirectory of the `process.env.REPORTDIR` directory. With the argument, `call` gets only those reports whose names begin with the argument string.
 
 The digests created by `digest` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/digested/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where digested reports are written.
+
+## Report difgesting
+
+### Introduction
+
+A _difgest_ is a digest that compares two reports. They can be reports of different targets, or reports of the same target from two different times or under two different conditions.
+
+The `difgest` module difgests two scored reports. Its `difgest()` function takes three arguments:
+- a difgest template
+- a difgesting function
+- an array of two scored report objects
+
+The difgest template and module operate like the digest ones.
+
+### Invocation
+
+There are two ways to use the `difgest` module.
+
+#### By a module
+
+A module can invoke `difgest` in this way:
+
+```javaScript
+const {difgest} = require('testilo/difgest');
+const difgesterDir = `${process.env.FUNCTIONDIR}/difgest/tdp99a`;
+const {difgester} = require(`${difgesterDir}/index`);
+difgest(difgester, scoredReports)
+.then(difgestedReport => {…});
+```
+
+The `difgest()` function returns a difgested report. The invoking module can further dispose of the difgested report as needed.
+
+#### By a user
+
+A user can invoke `difgest` in this way:
+
+```bash
+node call difgest tdp99 20141215T1200-x7-3 20141215T1200-x7-4
+```
+
+When a user invokes `difgest` in this example, the `call` module:
+- gets the template and the difgesting module from subdirectory `tdp99` in the `difgest` subdirectory of the `process.env.FUNCTIONDIR` directory.
+- gets reports `20141215T1200-x7-3` and `20141215T1200-x7-4` from the `scored` subdirectory of the `process.env.REPORTDIR` directory.
+- writes the difgested report to the `difgested` subdirectory of the `process.env.REPORTDIR` directory.
+
+The difgests expect a `style.css` file to exist in their directory, as digests do.
 
 ### Validation
 

@@ -1,4 +1,4 @@
-// index: digester for scoring procedure tsp40.
+// index: difgester for scoring procedure tsp40.
 
 // IMPORTS
 
@@ -6,22 +6,23 @@
 const {issues} = require('../../score/tic40');
 // Module to process files.
 const fs = require('fs/promises');
+// Utility module.
+const {getBarCell} = require('../../util');
 
 // CONSTANTS
 
-// Digester ID.
-const id = 'tdp40';
+// Difgester ID.
+const id = 'tfp40';
 // Newline with indentations.
 const innerJoiner = '\n        ';
 
 // FUNCTIONS
 
-// Gets a row of the score-summary table.
-const getScoreRow = (componentName, score) => `<tr><th>${componentName}</th><td>${score}</td></tr>`;
 // Gets a row of the issue-score-summary table.
-const getIssueScoreRow = (summary, wcag, score, tools) => {
-  const toolList = tools.map(tool => `<code>${tool}</code>`).join(', ');
-  return `<tr><th>${summary}</th><td>${wcag}<td>${score}</td><td>${toolList}</td></tr>`;
+const getIssueScoreRow = (summary, wcag, scoreA, scoreB, bMoreMax, aMoreMax) => {
+  const bMore = scoreB - scoreA;
+  const barCell = getBarCell(bMore, bMore > 0 ? bMoreMax : aMoreMax);
+  return `<tr><th>${summary}</th><td>${wcag}<td>${scoreA}</td><td>${scoreB}</td><td>${scoreB - scoreA}</td><td>${barCell}</td></tr>`;
 };
 // Adds parameters to a query for a digest.
 const populateQuery = (report, query) => {

@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Testilo">
+    <meta name="creator" content="Testilo">
+    <meta name="publisher" name="Testilo">
+    <meta name="description" content="report of accessibility testing of a web page">
+    <meta name="keywords" content="accessibility a11y web testing">
+    <title>Accessibility difgest</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Accessibility difgest</h1>
+        <h2>Synopsis</h2>
+        <table class="allBorder">
+          <caption>Target A</caption>
+          <tr><th>Page</th><td>__orgA__</td></tr>
+          <tr><th>URL</th><td>__urlA__</td></tr>
+          <tr><th>Test date</th><td>__dateSlashA__</td></tr>
+          <tr><th>Score</th><td>__totalA__</td></tr>
+        </table>
+        <table class="allBorder">
+          <caption>Target B</caption>
+          <tr><th>Page</th><td>__orgB__</td></tr>
+          <tr><th>URL</th><td>__urlB__</td></tr>
+          <tr><th>Test date</th><td>__dateSlashB__</td></tr>
+          <tr><th>Score</th><td>__totalB__</td></tr>
+        </table>
+      </header>
+      <h2>Introduction</h2>
+      <p>This <q>difgest</q> summarizes the differences between the results of the two accessibility audits referenced in the synopsis above.</p>
+      <h2>Issue summary</h2>
+      <table class="allBorder thirdCellRight">
+        <caption>Differences in issue scores</caption>
+        <thead>
+          <tr><th>Issue</th><th>WCAG</th><th>Audit A</th><th>Audit B</th><th>B &minus; A</th><th>B &minus; A as a bar</th></tr>
+        </thead>
+        <tbody class="headersLeft">
+          __issueRows__
+        </tbody>
+      </table>
+      <footer>
+        <p class="date">Produced <time itemprop="datePublished" datetime="__dateISO__">__dateSlash__</time></p>
+      </footer>
+    </main>
+  </body>
+</html>

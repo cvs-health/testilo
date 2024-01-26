@@ -25,32 +25,29 @@ const getIssueScoreRow = (summary, wcag, scoreA, scoreB, bMoreMax, aMoreMax) => 
   return `<tr><th>${summary}</th><td>${wcag}<td>${scoreA}</td><td>${scoreB}</td><td>${scoreB - scoreA}</td><td>${barCell}</td></tr>`;
 };
 // Adds parameters to a query for a digest.
-const populateQuery = (report, query) => {
-  const {getReportFrom, sources, jobData, score} = report;
-  const {script, target, requester} = sources;
-  const {scoreProcID, summary, details} = score;
-  query.ts = script;
-  query.sp = scoreProcID;
-  query.dp = id;
-  // Add the job data to the query.
-  query.dateISO = jobData.endTime.slice(0, 8);
+const populateQuery = (reports, digestURLs, query) => {
+  // General parameters.
+  query.fp = id;
+  query.dateISO = new Date().toISOString().slice(0, 10);
   query.dateSlash = query.dateISO.replace(/-/g, '/');
-  query.org = target.what;
-  query.url = target.which;
-  query.requester = requester;
-  query.getReportFrom = getReportFrom || `reports/${report.id}.json`;
-  // Add values for the score-summary table to the query.
-  const rows = {
-    summaryRows: [],
-    issueRows: []
-  };
-  ['total', 'issueCount', 'issue', 'solo', 'tool', 'prevention', 'log', 'latency']
-  .forEach(sumItem => {
-    query[sumItem] = summary[sumItem];
-    rows.summaryRows.push(getScoreRow(sumItem, query[sumItem]));
+  // For each report:
+  const issueIDs = new Set();
+  reports.forEach((report, index) => {
+    // Add report-specific synopsis parameters to the query.
+    const suffix = ['A', 'B'].indexOf(index);
+    const {sources, jobData, score} = report;
+    const {target} = sources;
+    const {summary, details} = score;
+    query[`org${suffix}`] = target.what;
+    query[`url${suffix}`] = target.which;
+    const dateISO = jobData.endTime.slice(0, 10);
+    query[`dateSlash${suffix}`] = dateISO.replace(/-/g, '/');
+    query[`total${suffix}`] = summary.total;
+    query[`digest${suffix}`] = digestURLs[index];
+    // Get the union of the issues in the reports.
+    Object.keys(details.issue).forEach(issueID => issueIDs.add(issueID));
   });
   // Sort the issue IDs in descending score order.
-  const issueIDs = Object.keys(details.issue);
   issueIDs.sort((a, b) => details.issue[b].score - details.issue[a].score);
   // Get rows for the issue-score table.
   issueIDs.forEach(issueID => {
@@ -91,10 +88,10 @@ const populateQuery = (report, query) => {
   query.issueDetailRows = issueDetailRows.join(innerJoiner);
 };
 // Returns a digested report.
-exports.digester = async report => {
+exports.digester = async (reports, digestURLs) => {
   // Create a query to replace placeholders.
   const query = {};
-  populateQuery(report, query);
+  populateQuery(reports, digestURLs, query);
   // Get the template.
   let template = await fs.readFile(`${__dirname}/index.html`, 'utf8');
   // Replace its placeholders.

@@ -636,11 +636,13 @@ A module can invoke `difgest` in this way:
 const {difgest} = require('testilo/difgest');
 const difgesterDir = `${process.env.FUNCTIONDIR}/difgest/tdp99a`;
 const {difgester} = require(`${difgesterDir}/index`);
-difgest(difgester, scoredReports)
+difgest(difgester, scoredReports, digestURLs)
 .then(difgestedReport => {…});
 ```
 
-The `difgest()` function returns a difgested report. The invoking module can further dispose of the difgested report as needed.
+The `difgest()` function requires, compared with `digest()`, an additional argument: `digestURLs`. This is an array of 2 strings: the URLs of the digests of the two reports. The difgest will include links to those digests, which, in turn, contain links to the full reports.
+
+`difgest()` returns a difgest. The invoking module can further dispose of the difgest as needed.
 
 #### By a user
 
@@ -653,6 +655,7 @@ node call difgest tdp99 20141215T1200-x7-3 20141215T1200-x7-4
 When a user invokes `difgest` in this example, the `call` module:
 - gets the template and the difgesting module from subdirectory `tdp99` in the `difgest` subdirectory of the `process.env.FUNCTIONDIR` directory.
 - gets reports `20141215T1200-x7-3` and `20141215T1200-x7-4` from the `scored` subdirectory of the `process.env.REPORTDIR` directory.
+- assumes that the digests are files named `20141215T1200-x7-3.html` and `20141215T1200-x7-4.html` in the `digested` subdirectory of the `process.env.REPORTDIR` directory.
 - writes the difgested report to the `difgested` subdirectory of the `process.env.REPORTDIR` directory.
 
 The difgests expect a `style.css` file to exist in their directory, as digests do.

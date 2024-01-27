@@ -47,11 +47,19 @@ const populateQuery = (reports, digestURLs, query) => {
     // Get the union of the issues in the reports.
     Object.keys(details.issue).forEach(issueID => issueIDs.add(issueID));
   });
-  // Sort the issue IDs in descending score order.
-  issueIDs.sort((a, b) => details.issue[b].score - details.issue[a].score);
+  // Get data on the issues.
+  const issuesData = issueIDs.map(issueID => ({
+    id: issueID,
+    what: issues[issueID].summary,
+    wcag: issues[isssueID].wcag,
+    scoreA: reports[0].score.details.issue[issueID] ? reports[0].score.details[issueID].score : 0,
+    scoreB: reports[1].score.details.issue[issueID] ? reports[1].score.details[issueID].score : 0,
+  }));
+  // Sort the issue data in descending order of B less A scores.
+  issuesData.sort((i, j) => i[scoreB] - i[scoreA] - j[scoreB] + j[scoreA]);
   // Get rows for the issue-score table.
-  issueIDs.forEach(issueID => {
-    const {score, tools} = details.issue[issueID];
+  issuesData.forEach(issueData => {
+    const {id, what, wcag, scoreA, scoreB} = issueData;
     if (issues[issueID]) {
       rows.issueRows.push(
         getIssueScoreRow(issues[issueID].summary, issues[issueID].wcag, score, Object.keys(tools))

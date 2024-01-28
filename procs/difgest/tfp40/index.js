@@ -22,7 +22,7 @@ const innerJoiner = '\n        ';
 const getIssueScoreRow = (summary, wcag, scoreA, scoreB, bMoreMax, aMoreMax) => {
   const bMore = scoreB - scoreA;
   const barCell = getBarCell(bMore, bMore > 0 ? bMoreMax : aMoreMax);
-  return `<tr><th>${summary}</th><td>${wcag}<td>${scoreA}</td><td>${scoreB}</td><td>${scoreB - scoreA}</td><td>${barCell}</td></tr>`;
+  return `<tr><th>${summary}</th><td>${wcag}<td>${scoreA}</td><td>${scoreB}</td><td>${scoreB - scoreA}</td>${bMore > 0 ? barCell : '<td></td>'}${bMore > 0 ? '<td></td>' : barCell}</tr>`;
 };
 // Adds parameters to a query for a digest.
 const populateQuery = (reports, digestURLs, query) => {
@@ -48,58 +48,39 @@ const populateQuery = (reports, digestURLs, query) => {
     Object.keys(details.issue).forEach(issueID => issueIDs.add(issueID));
   });
   // Get data on the issues.
-  const issuesData = issueIDs.map(issueID => ({
+  const issuesData = Array.from(issueIDs).map(issueID => ({
     id: issueID,
     what: issues[issueID].summary,
-    wcag: issues[isssueID].wcag,
+    wcag: issues[issueID].wcag,
     scoreA: reports[0].score.details.issue[issueID] ? reports[0].score.details[issueID].score : 0,
     scoreB: reports[1].score.details.issue[issueID] ? reports[1].score.details[issueID].score : 0,
   }));
   // Sort the issue data in descending order of B less A scores.
   issuesData.sort((i, j) => i[scoreB] - i[scoreA] - j[scoreB] + j[scoreA]);
   // Get rows for the issue-score table.
+  const bMoreMax = issuesData[0].scoreB - issuesData[0].scoreA;
+  const lastIssue = issuesData[issueIDs.size - 1];
+  const aMoreMax = lastIssue.scoreA - lastIssue.scoreB;
+  const issueRows = [];
   issuesData.forEach(issueData => {
     const {id, what, wcag, scoreA, scoreB} = issueData;
-    if (issues[issueID]) {
-      rows.issueRows.push(
-        getIssueScoreRow(issues[issueID].summary, issues[issueID].wcag, score, Object.keys(tools))
+    if (issues[id]) {
+      issueRows.push(
+        getIssueScoreRow(what, wcag, scoreA, scoreB, bMoreMax, aMoreMax)
       );
     }
     else {
-      console.log(`ERROR: Issue ${issueID} not found`);
+      console.log(`ERROR: Issue ${id} not found`);
     }
   });
   // Add the rows to the query.
-  ['summaryRows', 'issueRows'].forEach(rowType => {
-    query[rowType] = rows[rowType].join(innerJoiner);
-  });
-  // Add paragraph groups about the issue details to the query.
-  const issueDetailRows = [];
-  issueIDs.forEach(issueID => {
-    issueDetailRows.push(`<h3 class="bars">Issue: ${issues[issueID].summary}</h3>`);
-    issueDetailRows.push(`<p>Impact: ${issues[issueID].why || 'N/A'}</p>`);
-    issueDetailRows.push(`<p>WCAG: ${issues[issueID].wcag || 'N/A'}</p>`);
-    const issueData = details.issue[issueID];
-    issueDetailRows.push(`<p>Score: ${issueData.score}</p>`);
-    const toolIDs = Object.keys(issueData.tools);
-    toolIDs.forEach(toolID => {
-      issueDetailRows.push(`<h4>Violations of <code>${toolID}</code> rules</h5>`);
-      const ruleIDs = Object.keys(issueData.tools[toolID]);
-      ruleIDs.forEach(ruleID => {
-        const ruleData = issueData.tools[toolID][ruleID];
-        issueDetailRows.push(`<h5>Rule <code>${ruleID}</code></h5>`);
-        issueDetailRows.push(`<p>Description: ${ruleData.what}</p>`);
-        issueDetailRows.push(`<p>Count of instances: ${ruleData.complaints.countTotal}</p>`);
-      });
-    });
-  });
-  query.issueDetailRows = issueDetailRows.join(innerJoiner);
+  query.issueRows = issueRows.join(innerJoiner);
 };
-// Returns a digested report.
-exports.digester = async (reports, digestURLs) => {
+// Returns a difgested report.
+exports.difgester = async (reports, difgestURLs) => {
   // Create a query to replace placeholders.
   const query = {};
-  populateQuery(reports, digestURLs, query);
+  populateQuery(reports, difgestURLs, query);
   // Get the template.
   let template = await fs.readFile(`${__dirname}/index.html`, 'utf8');
   // Replace its placeholders.

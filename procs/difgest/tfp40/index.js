@@ -25,14 +25,14 @@ const getIssueScoreRow = (summary, wcag, scoreA, scoreB, bMoreMax, aMoreMax) => 
   return `<tr><th>${summary}</th><td>${wcag}<td>${scoreA}</td><td>${scoreB}</td><td>${scoreB - scoreA}</td>${bMore > 0 ? barCell : '<td></td>'}${bMore > 0 ? '<td></td>' : barCell}</tr>`;
 };
 // Adds parameters to a query for a difgest.
-const populateQuery = (reports, difgestURLs, query) => {
+const populateQuery = (reportA, reportB, digestAURL, digestBURL, query) => {
   // General parameters.
   query.fp = id;
   query.dateISO = new Date().toISOString().slice(0, 10);
   query.dateSlash = query.dateISO.replace(/-/g, '/');
   // For each report:
   const issueIDs = new Set();
-  reports.forEach((report, index) => {
+  [reportA, reportB].forEach((report, index) => {
     // Add report-specific synopsis parameters to the query.
     const suffix = ['A', 'B'].indexOf(index);
     const {sources, jobData, score} = report;
@@ -43,18 +43,22 @@ const populateQuery = (reports, difgestURLs, query) => {
     const dateISO = jobData.endTime.slice(0, 10);
     query[`dateSlash${suffix}`] = dateISO.replace(/-/g, '/');
     query[`total${suffix}`] = summary.total;
-    query[`digest${suffix}`] = difgestURLs[index];
+    query[`digest${suffix}`] = [digestAURL, digestBURL][index];
     // Get the union of the issues in the reports.
     Object.keys(details.issue).forEach(issueID => issueIDs.add(issueID));
   });
   // Get data on the issues.
-  const issuesData = Array.from(issueIDs).map(issueID => ({
-    id: issueID,
-    what: issues[issueID].summary,
-    wcag: issues[issueID].wcag,
-    scoreA: reports[0].score.details.issue[issueID] ? reports[0].score.details[issueID].score : 0,
-    scoreB: reports[1].score.details.issue[issueID] ? reports[1].score.details[issueID].score : 0,
-  }));
+  const issuesData = Array.from(issueIDs).map(issueID => {
+    const issueDataA = reportA.score.details.issueID;
+    const issueDataB = reportB.score.details.issueID;
+    return {
+      id: issueID,
+      what: issues[issueDataA].summary,
+      wcag: issues[issueDataA].wcag,
+      scoreA: issueDataA ? issueDataA.score : 0,
+      scoreB: issueDataB ? issueDataB.score : 0
+    };
+  });
   // Sort the issue data in descending order of B less A scores.
   issuesData.sort((i, j) => i[scoreB] - i[scoreA] - j[scoreB] + j[scoreA]);
   // Get rows for the issue-score table.
@@ -77,10 +81,10 @@ const populateQuery = (reports, difgestURLs, query) => {
   query.issueRows = issueRows.join(innerJoiner);
 };
 // Returns a difgested report.
-exports.difgester = async (reports, difgestURLs) => {
+exports.difgester = async (reportA, reportB, digestAURL, digestBURL) => {
   // Create a query to replace placeholders.
   const query = {};
-  populateQuery(reports, difgestURLs, query);
+  populateQuery(reportA, reportB, digestAURL, digestBURL, query);
   // Get the template.
   let template = await fs.readFile(`${__dirname}/index.html`, 'utf8');
   // Replace its placeholders.

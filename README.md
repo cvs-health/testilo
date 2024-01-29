@@ -550,9 +550,9 @@ node call score tsp99 75m
 ```
 
 When a user invokes `score` in this example, the `call` module:
-- gets the scoring module `tsp99` from its JSON file `tsp99.json` in the `score` subdirectory of the `process.env.FUNCTIONDIR` directory.
-- gets the reports from the `raw` subdirectory of the `process.env.REPORTDIR` directory.
-- writes the scored reports in JSON format to the `scored` subdirectory of the `process.env.REPORTDIR` directory.
+- gets the scoring module `tsp99` from its JSON file `tsp99.json` in the `score` subdirectory of the `FUNCTIONDIR` directory.
+- gets the reports from the `raw` subdirectory of the `REPORTDIR` directory.
+- writes the scored reports in JSON format to the `scored` subdirectory of the `REPORTDIR` directory.
 
 The optional third argument to call (`75m` in this example) is a report selector. Without the argument, `call` gets all the reports in the `raw` subdirectory. With the argument, `call` gets only those reports whose names begin with the argument string.
 
@@ -603,11 +603,11 @@ node call digest tdp99 75m
 ```
 
 When a user invokes `digest` in this example, the `call` module:
-- gets the template and the digesting module from subdirectory `tdp99` in the `digest` subdirectory of the `process.env.FUNCTIONDIR` directory.
-- gets the reports from the `scored` subdirectory of the `process.env.REPORTDIR` directory.
-- writes the digested reports to the `digested` subdirectory of the `process.env.REPORTDIR` directory.
+- gets the template and the digesting module from subdirectory `tdp99` in the `digest` subdirectory of the `FUNCTIONDIR` directory.
+- gets the reports from the `scored` subdirectory of the `REPORTDIR` directory.
+- writes the digested reports to the `digested` subdirectory of the `REPORTDIR` directory.
 
-The optional third argument to `call` (`75m` in this example) is a report selector. Without the argument, `call` gets all the reports in the `scored` subdirectory of the `process.env.REPORTDIR` directory. With the argument, `call` gets only those reports whose names begin with the argument string.
+The optional third argument to `call` (`75m` in this example) is a report selector. Without the argument, `call` gets all the reports in the `scored` subdirectory of the `REPORTDIR` directory. With the argument, `call` gets only those reports whose names begin with the argument string.
 
 The digests created by `digest` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/digested/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where digested reports are written.
 
@@ -653,11 +653,13 @@ node call difgest tfp99 20141215T1200-x7-3 20141215T1200-x7-4
 ```
 
 When a user invokes `difgest` in this example, the `call` module:
-- gets the template and the difgesting module from subdirectory `tfp99` in the `difgest` subdirectory of the `process.env.FUNCTIONDIR` directory.
-- gets reports `20141215T1200-x7-3` and `20141215T1200-x7-4` from the `scored` subdirectory of the `process.env.REPORTDIR` directory.
-- writes the difgested report to the `difgested` subdirectory of the `process.env.REPORTDIR` directory.
+- gets the template and the difgesting module from subdirectory `tfp99` in the `difgest` subdirectory of the `FUNCTIONDIR` directory.
+- gets reports `20141215T1200-x7-3` and `20141215T1200-x7-4` from the `scored` subdirectory of the `REPORTDIR` directory.
+- writes the difgested report to the `difgested` subdirectory of the `REPORTDIR` directory.
 
-The difgests expect a `style.css` file to exist in their directory, as digests do.
+Difgests include links to the digests of the two reports. The `call` module assumes that those digests are located in a `digested` subdirectory of the `REPORTDIR` directory.
+
+Difgests expect a `style.css` file to exist in their directory, as digests do.
 
 ### Validation
 
@@ -700,9 +702,9 @@ node call compare tcp99 legislators 23pl
 ```
 
 When a user invokes `compare` in this example, the `call` module:
-- gets the comparison module from subdirectory `tcp99` of the subdirectory `compare` in the `process.env.FUNCTIONDIR` directory.
-- gets all the reports in the `scored` subdirectory of the `process.env.REPORTDIR` directory whose file names begin with `23pl`.
-- writes the comparative report as an HTML file named `legislators.html` to the `comparative` subdirectory of the `process.env.REPORTDIR` directory.
+- gets the comparison module from subdirectory `tcp99` of the subdirectory `compare` in the `FUNCTIONDIR` directory.
+- gets all the reports in the `scored` subdirectory of the `REPORTDIR` directory whose file names begin with `23pl`.
+- writes the comparative report as an HTML file named `legislators.html` to the `comparative` subdirectory of the `REPORTDIR` directory.
 
 The fourth argument to `call` (`23pl` in this example) is optional. If it is omitted, `call` will get and `comparer` will compare all the reports in the `scored` directory.
 
@@ -747,8 +749,8 @@ node call credit legislators 23pl
 ```
 
 When a user invokes `credit` in this example, the `call` module:
-- gets all the reports in the `scored` subdirectory of the `process.env.REPORTDIR` directory whose file names begin with `23pl`.
-- writes the credit report as a JSON file named `legislators.json` to the `credit` subdirectory of the `process.env.REPORTDIR` directory.
+- gets all the reports in the `scored` subdirectory of the `REPORTDIR` directory whose file names begin with `23pl`.
+- writes the credit report as a JSON file named `legislators.json` to the `credit` subdirectory of the `REPORTDIR` directory.
 
 The third argument to `call` (`23pl` in this example) is optional. If it is omitted, `call` will get and `credit()` will tabulate all the reports in the `scored` directory.
 

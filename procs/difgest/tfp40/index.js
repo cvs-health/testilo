@@ -49,12 +49,13 @@ const populateQuery = (reportA, reportB, digestAURL, digestBURL, query) => {
   });
   // Get data on the issues.
   const issuesData = Array.from(issueIDs).map(issueID => {
-    const issueDataA = reportA.score.details.issueID;
-    const issueDataB = reportB.score.details.issueID;
+    console.log(issueID);
+    const issueDataA = reportA.score.details[issueID] || null;
+    const issueDataB = reportB.score.details[issueID] || null;
     return {
       id: issueID,
-      what: issues[issueDataA].summary,
-      wcag: issues[issueDataA].wcag,
+      what: issueDataA ? issueDataA.summary : issueDataB.summary,
+      wcag: issueDataA ? issueDataA.wcag : issueDataB.wcag,
       scoreA: issueDataA ? issueDataA.score : 0,
       scoreB: issueDataB ? issueDataB.score : 0
     };

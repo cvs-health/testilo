@@ -24,8 +24,8 @@ const getIssueScoreRow = (summary, wcag, scoreA, scoreB, bMoreMax, aMoreMax) => 
   const barCell = getBarCell(bMore, bMore > 0 ? bMoreMax : aMoreMax);
   return `<tr><th>${summary}</th><td>${wcag}<td>${scoreA}</td><td>${scoreB}</td><td>${scoreB - scoreA}</td>${bMore > 0 ? barCell : '<td></td>'}${bMore > 0 ? '<td></td>' : barCell}</tr>`;
 };
-// Adds parameters to a query for a digest.
-const populateQuery = (reports, digestURLs, query) => {
+// Adds parameters to a query for a difgest.
+const populateQuery = (reports, difgestURLs, query) => {
   // General parameters.
   query.fp = id;
   query.dateISO = new Date().toISOString().slice(0, 10);
@@ -43,7 +43,7 @@ const populateQuery = (reports, digestURLs, query) => {
     const dateISO = jobData.endTime.slice(0, 10);
     query[`dateSlash${suffix}`] = dateISO.replace(/-/g, '/');
     query[`total${suffix}`] = summary.total;
-    query[`digest${suffix}`] = digestURLs[index];
+    query[`digest${suffix}`] = difgestURLs[index];
     // Get the union of the issues in the reports.
     Object.keys(details.issue).forEach(issueID => issueIDs.add(issueID));
   });

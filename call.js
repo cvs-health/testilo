@@ -16,6 +16,8 @@
 
 // Module to keep secrets.
 require('dotenv').config();
+// Module to perform common operations.
+const {getNowStamp, getRandomString} = require('./procs/util');
 // Function to process files.
 const fs = require('fs/promises');
 // Function to process a list-to-batch conversion.
@@ -28,6 +30,8 @@ const {merge} = require('./merge');
 const {score} = require('./score');
 // Function to digest reports.
 const {digest} = require('./digest');
+// Function to difgest reports.
+const {difgest} = require('./difgest');
 // Function to compare scores.
 const {compare} = require('./compare');
 
@@ -164,6 +168,32 @@ const callDigest = async (digesterID, selector = '') => {
     console.log('ERROR: No scored reports to be digested');
   }
 };
+// Fulfills a digesting request.
+const callDifgest = async (difgesterID, reportIDs) => {
+  // Get the scored reports to be difgested.
+  const reportA = await getReports('scored', reportIDs[0]);
+  const reportB = await getReports('scored', reportIDs[1]);
+  const reports = [reportA[0], reportB[0]];
+  // If both exist:
+  if (reports.length === 2) {
+    // Get the difgester.
+    const difgesterDir = `${functionDir}/difgest/${difgesterID}`;
+    const {difgester} = require(`${difgesterDir}/index`);
+    // Difgest the reports.
+    const difgestedReport = await difgest(difgester, reports);
+    const difgestedReportDir = `${reportDir}/difgested`;
+    // Save the difgested report.
+    const reportID = `${getNowStamp()}-${getRandomString(2)}-0`;
+    const difgestPath = `${difgestedReportDir}/${reportID}.html`;
+    await fs.writeFile(difgestPath, difgestedReport);
+    console.log(`Reports difgested and saved as ${difgestPath}`);
+  }
+  // Otherwise, i.e. if no scored reports are to be digested:
+  else {
+    // Report this.
+    console.log('ERROR: No scored reports to be digested');
+  }
+};
 // Fulfills a comparison request.
 // Get the scored reports to be scored.
 const callCompare = async (compareProcID, comparisonNameBase, selector = '') => {
@@ -247,8 +277,8 @@ else if (fn === 'digest' && fnArgs.length > 0 && fnArgs.length < 3) {
     console.log('Execution completed');
   });
 }
-else if (fn === 'multiDigest' && fnArgs.length === 1) {
-  callMultiDigest(... fnArgs)
+else if (fn === 'difgest' && fnArgs.length === 3) {
+  callDifgest(... fnArgs)
   .then(() => {
     console.log('Execution completed');
   });

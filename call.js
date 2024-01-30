@@ -128,6 +128,7 @@ const callScore = async (scorerID, selector = '') => {
     // Score the reports.
     score(scorer, reports);
     const scoredReportDir = `${reportDir}/scored`;
+    await fs.mkdir(scoredReportDir, {recursive: true});
     // For each scored report:
     for (const report of reports) {
       // Save it.
@@ -155,6 +156,7 @@ const callDigest = async (digesterID, selector = '') => {
     // Digest the reports.
     const digestedReports = await digest(digester, reports);
     const digestedReportDir = `${reportDir}/digested`;
+    await fs.mkdir(digestedReportDir, {recursive: true});
     // For each digested report:
     for (const reportID of Object.keys(digestedReports)) {
       // Save it.
@@ -185,6 +187,7 @@ const callDifgest = async (difgesterID, reportAID, reportBID) => {
     // Difgest the reports.
     const difgestedReport = await difgest(difgester, reportA, reportB, digestAURL, digestBURL);
     const difgestedReportDir = `${reportDir}/difgested`;
+    await fs.mkdir(difgestedReportDir, {recursive: true});
     // Save the difgested report.
     const reportID = `${getNowStamp()}-${getRandomString(2)}-0`;
     const difgestPath = `${difgestedReportDir}/${reportID}.html`;
@@ -210,6 +213,7 @@ const callCompare = async (compareProcID, comparisonNameBase, selector = '') => 
     const comparison = await compare(comparer, reports);
     // Save the comparison.
     const comparisonDir = `${reportDir}/comparative`;
+    await fs.mkdir(comparisonDir, {recursive: true}); 
     await fs.writeFile(`${comparisonDir}/${comparisonNameBase}.html`, comparison);
     console.log(`Comparison completed and saved in ${comparisonDir}`);
   }
@@ -225,8 +229,10 @@ const callCredit = async (tallyID, selector = '') => {
     // Tally the reports.
     const tally = credit(reports);
     // Save the tally.
-    await fs.writeFile(`${reportDir}/credit/${tallyID}.json`, JSON.stringify(tally, null, 2));
-    console.log(`Reports tallied and credit report saved in ${reportDir}/credit`);
+    const creditDir = `${reportDir}/credit`;
+    await fs.mkdir(creditDir, {recursive: true}); 
+    await fs.writeFile(`${creditDir}/${tallyID}.json`, JSON.stringify(tally, null, 2));
+    console.log(`Reports tallied and credit report saved in ${creditDir}`);
   }
   // Otherwise, i.e. if no scored reports are to be tallied:
   else {

@@ -73,15 +73,15 @@ const populateQuery = (reportA, reportB, digestAURL, digestBURL, query) => {
   // Sort the issue data in descending order of B less A scores.
   issuesData.sort((i, j) => i.scoreB - i.scoreA - j.scoreB + j.scoreA);
   // Get rows for the issue-score table.
-  const bMoreMax = issuesData[0].scoreB - issuesData[0].scoreA;
+  const bSuperiorityMax = Math.max(0, issuesData[0].scoreA - issuesData[0].scoreB);
   const lastIssue = issuesData[issueIDs.size - 1];
-  const aMoreMax = lastIssue.scoreA - lastIssue.scoreB;
+  const aSuperiorityMax = Math.max(0, lastIssue.scoreB - lastIssue.scoreA);
   const issueRows = [];
   issuesData.forEach(issueData => {
     const {id, what, wcag, scoreA, scoreB} = issueData;
     if (issues[id]) {
       issueRows.push(
-        getIssueScoreRow(what, wcag, scoreA, scoreB, bMoreMax, aMoreMax)
+        getIssueScoreRow(what, wcag, scoreA, scoreB, bSuperiorityMax, aSuperiorityMax)
       );
     }
     else {

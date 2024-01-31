@@ -33,21 +33,19 @@ Environment variables for Testilo can be specified in a `.env` file. An example:
 
 ```bash
 FUNCTIONDIR=./procs
+SPECDIR=../testdir/specs
 JOBDIR=../testdir/jobs
 REPORTDIR=../testdir/reports
-REQUESTER=a11ymgr@a11yorg.com
-SPECDIR=../testdir/specs
+RAW_REPORT_URL=https://abc.com/testing/reports/__id__.json
+SCORED_REPORT_URL=https://abc.com/testing/reports/__id__.json
+DIGEST_URL=https://abc.com/testing/reports/__id__.html
+DIFGEST_URL=https://abc.com/testing/reports/__id__.html
+COMPARISON_URL=https://abc.com/testing/reports/__id__.html
 ```
 
-The `FUNCTIONDIR` environment variable typically references the `procs` directory, but it could reference a different directory in the filesystem where Testilo resides, if you wanted to customize the procs that Testilo uses.
+The first four variables above tell Testilo where to find or save files. Reports and their derivatives are saved in particular subdirectories of the `REPORTDIR` directory.
 
-`JOBDIR` references a directory in the filesystem where jobs created by the `merge` proc are to be saved.
-
-`REPORTDIR` references a directory in the filesystem where reports are saved.
-
-`REQUESTER` is an email address that will be used as a job property if no other email address is specified for the `sources.requester` property of the job.
-
-`SPECDIR` references a directory in the filesystem where tanrget lists, batches, and scripts can be found. Those are raw materials from which Testaro creates jobs.
+The other variables specify the URLs by which reports and their derivatives can be retrieved. Testilo needs these variables so it can embed correct links into web pages derived from reports. Thus, importing modules need their own identically named environment variables.
 
 ## Job preparation
 
@@ -195,7 +193,7 @@ As shown in this example, when a browser is launched by placeholder substitution
 
 ### Target list to batch
 
-If you have a target list, the `batch` module of Testilo can convert it to a batch. The batch will contain, for each target, one array of acts named `main`, containing a `launch` act (depending on the script to specify the browser type and the target to specify the URL).
+If you have a target list, the `batch` module of Testilo can convert it to a simple batch. The batch will contain, for each target, only one array of acts, named `main`, containing only a `launch` act (depending on the script to specify the browser type and the target to specify the URL).
 
 #### Invocation
 
@@ -203,27 +201,33 @@ There are two ways to use the `batch` module.
 
 ##### By a module
 
-A module can invoke `batch` in this way:
+A module can invoke `batch()` in this way:
 
 ```javaScript
 const {batch} = require('testilo/batch');
+const id = 'divns';
+const what = 'divisions';
+const targets = [
+  ['Energy', 'https://abc.com/energy'],
+  ['Water', 'https://abc.com/water']
+];
 const batchObj = batch(id, what, targets);
 ```
 
-This invocation references `id`, `what`, and `targets` variables that the module must have already defined. The `id` variable is a unique identifier for the target list. The `what` variable describes the target list. The `targets` variable is an array of arrays, with each array containing the 2 items (description and URL) defining one target.
+The `id` argument to `batch()` is a unique identifier for the target list. The `what` variable describes the target list. The `targets` variable is an array of arrays, with each array containing the 2 items (description and URL) defining one target.
 
-The `batch()` function of the `batch` module generates a batch and returns it as an object. The invoking module can further dispose of the batch as needed.
+The `batch()` function of the `batch` module generates a batch and returns it as an object. Within the batch, each target is given a sequential (base-62 alphanumeric) string as an ID.
 
-The ID assigned to each target by the `batch()` function is a sequential (base-62 alphanumeric) string, rather than a mnemonic like the one (`'acme'`) in the above example.
+The invoking module can further dispose of the batch as needed.
 
 ##### By a user
 
-A user can invoke `batch` in this way:
+A user can invoke `batch()` in this way:
 
 - Create a target list and save it as a text file (with tab-delimited items in newline-delimited lines) in the `targetLists` subdirectory of the `SPECDIR` directory. Name the file `x.tsv`, where `x` is the list ID.
 - In the Testilo project directory, execute the statement `node call batch id what`.
 
-In this statement, replace `id` with the list ID and `what` with a string describing the batch.
+In this statement, replace `id` with the list ID and `what` with a string describing the batch. Example: `node call batch divns 'ABC company divisions'`.
 
 The `call` module will retrieve the named target list.
 The `batch` module will convert the target list to a batch.
@@ -231,13 +235,11 @@ The `call` module will save the batch as a JSON file in the `batches` subdirecto
 
 ### Issues to script
 
-Testilo contains a classification of tool rules into _issues_. It is located in the `procs/score` directory and has a file name starting with `tic` (Testilo issue classification). You can create custom classifications and save them in a `score` subdirectory of the `FUNCTIONDIR` directory.
+You can use the `script()` function of the `script` module to simplify the creation of scripts.
 
-For example, one of the issues in the `tic40.js` file is `mainNot1`. Four rules are classified as belonging to that issue: rule `main_element_only_one` of `aslint` and 3 more rules defined by 3 other tools.
+In its simplest form, `script()` requires only one argument, a string that will serve as the ID of the script. Called in this way, `script()` produces a script that tells Testaro to perform all of the tests defined by all of the tools integrated by Testaro.
 
-If you want Testaro to test targets for only particular issues, you can use the `script` module to create a script. Jobs created from that script will make Testaro test for only the issues you specify to the `script` module.
-
-If you want Testaro to test targets for **all** the rules of all the available tools, you can use the `script` module to create a script that does not impose any issue restrictions.
+If you want a more focused script, you can add additional arguments to `script()`. Each additional argument is the ID of an _issue_. There is a Testilo issue classification that classifies about a thousand rules of the 10 Testaro tools into about 300 issues. The classification is found in a file whose name begins with `tic` in the `procs/score` directory. For example, one issue in the `tic40.js` file is `mainNot1`. Four rules are classified as belonging to that issue: rule `main_element_only_one` of the `aslint` tool and 3 more rules defined by 3 other tools. You can also create custom classifications and save them in a `score` subdirectory of the `FUNCTIONDIR` directory.
 
 #### Invocation
 
@@ -249,151 +251,44 @@ A module can invoke `script` in this way:
 
 ```javaScript
 const {script} = require('testilo/script');
-const scriptObj = script(scriptID, issues, issueID0, issueID1, …);
+const {issues} = require('testilo/procs/score/tic99');
+const scriptObj = script('monthly', issues, 'regionNoText', 'mainNot1');
 ```
 
-This invocation references `scriptID`, `issues`, and `issueID` variables.
-- The `scriptID` variable specifies the ID that the script will have.
-- The `issues` variable (if present) is an object that classifies issues, such as the `issues` object in a `tic` file.
-- The `issueID` variables (if any) are strings, such as `'regionNoText'`, that name issues, i.e. properties of the `issues` object, that you want jobs from the script to test for.
+In this example, the script will have `'monthly'` as its ID. It will tell Testaro to test for all, and only, the rules that are classified into either the `regionNoText` or the `mainNot1` issue.
 
-The `script()` function of the `script` module generates a script and returns it as an object. The invoking module can further modify and use the script as needed.
+The invoking module can further modify and use the script (`scriptObj`) as needed.
 
-To create a script **without** issue restrictions, a module can use this invocation:
-
-```javaScript
-const {script} = require('testilo/script');
-const scriptObj = script(scriptID);
-```
+To create a script **without** issue restrictions, a module can call `script()` with only the first (ID) argument.
 
 ##### By a user
 
-A user can invoke `script` in this way: In the Testilo project directory, execute the statement `node call script id ticnn issuea issueb …`.
+A user can invoke `script()` by executing one of these statements in the Testilo project directory:
 
-In this statement:
-- Replace `id` with an ID for the script, such as `headings`.
+```javascript
+node call script id ticnn issuea issueb …
+node call script id
+```
+
+In this statement, replace `id` with an ID for the script, such as `headings`.
+
+If specifying issues:
 - Replace `ticnn` with the base, such as `tic99`, of the name of an issue classification file in the `score` subdirectory of the `FUNCTIONDIR` directory.
 - Replace the remaining arguments (`issuea` etc.) with issue names from that classification file.
 
-The `call` module will retrieve the named classification.
+The `call` module will retrieve the named classification, if any.
 The `script` module will create a script.
 The `call` module will save the script as a JSON file in the `scripts` subdirectory of the `SPECDIR` directory.
-
-To create a script without any issue restrictions, a user can execute the statement `node call script id`.
 
 #### Options
 
 The `script` module will use the value of the `SEND_REPORT_TO` environment variable as the value of the `sendReportTo` property of the script, if that variable exists, and otherwise will leave that property with an empty-string value.
 
-When the `script` module creates a script for you, it does not ask you for all of the options that the script may require. Instead, it chooses default options. After you invoke `script`, you can edit the script that it creates to revise options.
+When the `script` module creates a script for you, it does not ask you for all of the options that the script may require. Instead, it chooses default options. For example, it sets the values of `isolate` and `strict` to `true`. After you invoke `script`, you can edit the script that it creates to revise options.
 
 ### Merge
 
-Testilo merges batches with scripts, producing jobs, by means of the `merge` module.
-
-#### Output
-
-Suppose you ask for a merger of the above batch and script. Then the first job produced by `merge` will look like this:
-
-```javaScript
-{
-  id: '240115T1200-4Rw-acme',
-  what: 'aside mislocation',
-  strict: true,
-  timeLimit: 60,
-  standard: 'also',
-  observe: false,
-  sendReportTo: 'https://ourdomain.com/testman/api/report'
-  timeStamp: '240115T1200',
-  acts: [
-    {
-      type: 'launch',
-      which: 'chromium',
-      what: 'Acme Clothes login page',
-      url: 'https://acmeclothes.com/login.html'
-    },
-    {
-      type: 'text',
-      which: 'User Name',
-      what: 'tester34'
-    },
-    {
-      type: 'text',
-      which: 'Password',
-      what: '34SecretTester'
-    },
-    {
-      type: 'button',
-      which: 'Submit',
-      what: 'submit the login form'
-    },
-    {
-      type: 'wait',
-      which: 'title',
-      what: 'account'
-    },
-    {
-      type: 'test',
-      which: 'axe',
-      detailLevel: 2,
-      rules: ['landmark-complementary-is-top-level'],
-      what: 'Axe'
-    },
-    {
-      type: 'launch',
-      which: 'chromium',
-      what: 'Acme Clothes login page',
-      url: 'https://acmeclothes.com/login.html'
-    },
-    {
-      type: 'text',
-      which: 'User Name',
-      what: 'tester34'
-    },
-    {
-      type: 'text',
-      which: 'Password',
-      what: '34SecretTester'
-    },
-    {
-      type: 'button',
-      which: 'Submit',
-      what: 'submit the login form'
-    },
-    {
-      type: 'wait',
-      which: 'title',
-      what: 'account'
-    },
-    {
-      type: 'test',
-      which: 'qualWeb',
-      withNewContent: false,
-      rules: ['QW-BP25', 'QW-BP26']
-      what: 'QualWeb'
-    }
-  ],
-  sources: {
-    script: 'ts99',
-    batch: 'clothing-stores',
-    target: {
-      id: 'acme',
-      what: 'Acme Clothes'
-    },
-    requester: 'you@yourdomain.tld'
-  },
-  creationTime: '241120T1550'
-}
-```
-
-Testilo has substituted the `private` acts from the `acme` target of the batch for the placeholder when creating the job. Testilo also has:
-- inserted a copy of those same acts after the `axe` test act, because `axe` is a target-modifying tool.
-- let the script determine the browser type of the `launch` act.
-- given the job an ID that combines the time stamp with a differentiator and the batch ID.
-- inserted a `sources` property into the job, recording facts about the script, the batch, the target, the requester, and the report URL.
-- added a time stamp describing the creation time to the job.
-
-This is a valid Testaro job.
+Testilo merges batches with scripts, producing Testaro jobs, by means of the `merge` module.
 
 #### Invocation
 
@@ -405,24 +300,28 @@ A module can invoke `merge` in this way:
 
 ```javaScript
 const {merge} = require('testilo/merge');
+const script = …;
+const batch = …;
+const standard = 'only';
+const observe = false;
+const requester = 'me@mydomain.tld';
+const timeStamp = '241215T1200';
 const jobs = merge(script, batch, standard, observe, requester, timeStamp);
 ```
 
-The `merge` module uses these 4 arguments to create jobs from a script and a batch.
+The first two arguments are a script and a batch obtained from files or from prior calls to `script()` and `batch()`.
 
-The arguments are:
-- `script`: a script.
-- `batch`: a batch.
-- `standard`: how to handle standardization. If `also`, jobs will tell Testaro to include in its reports both the original results of the tests of tools and the Testaro-standardized results. If `only`, reports are to include only the standardized test results. If `no`, reports are to include only the original results, without standardization.
-- `observe`: whether to allow granular observation. If `true`, jobs will tell Testaro to permit granular observation of job progress. If `false`, jobs will tell Testaro not to permit granular observation, but only to send the report to the server when the report is completed. It is generally user-friendly to allow granular observation, and for user applications to implement it, if they make users wait while jobs are assigned and performed, since that process typically takes about 3 minutes.
-- `requester`: an email address.
-- `timeStamp`: the earliest UTC date and time when the jobs may be assigned (format `240415T1230`), or an empty string if now.
+The `standard` argument specifies how to handle standardization. If `also`, jobs will tell Testaro to include in its reports both the original results of the tests of tools and the Testaro-standardized results. If `only`, reports are to include only the standardized test results. If `no`, reports are to include only the original results, without standardization.
 
-The `merge()` function of the `merge` module generates jobs and returns them in an array. The invoking module can further dispose of the jobs as needed.
+The `observe` argument tells Testaro whether the jobs should allow granular observation. If `false`, Testaro will not report job progress, but will only send reports to the server when the reports are completed. It is generally user-friendly to allow granular observation, and for user applications to implement it, if they make users wait while jobs are assigned and performed, since that process typically takes a few minutes.
+
+The `timeStamp` argument specifies the earliest UTC date and time when the jobs may be assigned, or it may be an empty string if now.
+
+The `merge()` function returns the jobs in an array. The invoking module can further dispose of the jobs as needed.
 
 ##### By a user
 
-A user can invoke `merge` in this way:
+A user can invoke `merge()` in this way:
 
 - Create a script and save it as a JSON file in the `scripts` subdirectory of the `SPECDIR` directory.
 - Create a batch and save it as a JSON file in the `batches` subdirectory of the `SPECDIR` directory.
@@ -442,11 +341,67 @@ The `call` module will retrieve the named script and batch from their respective
 The `merge` module will create an array of jobs.
 The `call` module will save the jobs as JSON files in the `todo` or `pending` subdirectory of the `JOBDIR` directory.
 
+#### Output
+
+A Testaro job produced by `merge` may look like this:
+
+```javaScript
+{
+  id: '240115T1200-4R-0',
+  what: 'aside mislocation',
+  strict: true,
+  timeLimit: 60,
+  standard: 'also',
+  observe: false,
+  sendReportTo: 'https://ourdomain.com/testman/api/report'
+  timeStamp: '240115T1200',
+  acts: [
+    {
+      type: 'launch',
+      which: 'webkit',
+      what: 'Acme Clothes',
+      url: 'https://acmeclothes.com/'
+    },
+    {
+      type: 'test',
+      which: 'axe',
+      detailLevel: 2,
+      rules: ['landmark-complementary-is-top-level'],
+      what: 'Axe'
+    },
+    {
+      type: 'launch',
+      which: 'webkit',
+      what: 'Acme Clothes',
+      url: 'https://acmeclothes.com/'
+    },
+    {
+      type: 'test',
+      which: 'qualWeb',
+      withNewContent: false,
+      rules: ['QW-BP25', 'QW-BP26']
+      what: 'QualWeb'
+    }
+  ],
+  sources: {
+    script: 'ts99',
+    batch: 'clothing-stores',
+    lastTarget: false,
+    target: {
+      id: 'acme',
+      what: 'Acme Clothes'
+    },
+    requester: 'you@yourdomain.tld'
+  },
+  creationTimeStamp: '241120T1550'
+}
+```
+
 #### Validation
 
 To test the `merge` module, in the project directory you can execute the statement `node validation/merge/validate`. If `merge` is valid, all logging statements will begin with “Success” and none will begin with “ERROR”.
 
-## Report scoring
+## Report enhancement
 
 ### Introduction
 
@@ -459,16 +414,22 @@ Thus, a report produced by Testaro contains these properties:
 - `what`
 - `strict`
 - `timeLimit`
+- `standard`
+- `observe`
+- `sendReportTo`
+- `timeStamp`
 - `acts`
 - `sources`
-- `creationTime`
-- `timeStamp`
+- `creationTimeStamp`
 - `jobData`
 
-Testilo can enhance such a report in three ways:
+Testilo can enhance such a report by:
 - adding scores
 - creating digests
-- creating comprisons
+- creating difgests
+- creating comparisons
+
+## Scoring
 
 To add scores to reports, the `score` module of Testilo performs computations on the test results and adds a `score` property to each report.
 
@@ -480,7 +441,7 @@ A scoring function defines scoring rules. The Testilo package contains a `procs/
 
 ### Scorers
 
-The built-in scoring functions are named `scorer` and are exported by files whose names begin with `tsp` (for Testilo scoring proc). Those functions make use of `issues` objects defined in files whose names begin with `tic`. An `issues` object defines an issue classification: a body of data about rules of tools and the tool-agnostic issues that those rules are deemed to belong to.
+The built-in scoring functions are named `scorer()` and are exported by files whose names begin with `tsp` (for Testilo scoring proc). Those functions make use of `issues` objects defined in files whose names begin with `tic`. An `issues` object defines an issue classification: a body of data about rules of tools and the tool-agnostic issues that those rules are deemed to belong to.
 
 The properties of an `issues` object are issue objects: objects containing data about issues. Here is an example from `tic40.js`:
 
@@ -530,31 +491,36 @@ There are two ways to invoke the `score` module.
 
 #### By a module
 
-A module can invoke `score` in this way:
+A module can invoke `score()` in this way:
 
 ```javaScript
 const {score} = require('testilo/score');
 const {scorer} = require('testilo/procs/score/tsp99');
+const reports = …;
 score(scorer, reports);
 ```
 
-The first argument to `score()` is a scoring function. In this example, it has been obtained from a module in the Testilo package, but it could be a custom function. The second argument to `score()` is an array of report objects. The invoking module can further dispose of the scored reports as needed.
+The first argument to `score()` is a scoring function. In this example, it has been obtained from a module in the Testilo package, but it could be a custom function.
+
+The second argument to `score()` is an array of report objects. They may have been read from JSON   files and parsed, or the array may contain a single report object parsed from the body of a `POST` request received from a Testaro agent.
+
+The invoking module can further dispose of the scored reports as needed.
 
 #### By a user
 
-A user can invoke `score` in this way:
+A user can invoke `score()` in this way:
 
 ```bash
 node call score tsp99
 node call score tsp99 75m
 ```
 
-When a user invokes `score` in this example, the `call` module:
+When a user invokes `score()` in this example, the `call` module:
 - gets the scoring module `tsp99` from its JSON file `tsp99.json` in the `score` subdirectory of the `FUNCTIONDIR` directory.
 - gets the reports from the `raw` subdirectory of the `REPORTDIR` directory.
 - writes the scored reports in JSON format to the `scored` subdirectory of the `REPORTDIR` directory.
 
-The optional third argument to call (`75m` in this example) is a report selector. Without the argument, `call` gets all the reports in the `raw` subdirectory. With the argument, `call` gets only those reports whose names begin with the argument string.
+The optional third argument to `call()` (`75m` in this example) is a report selector. Without the argument, `call()` gets all the reports in the `raw` subdirectory. With the argument, `call()` gets only those reports whose names begin with the argument string.
 
 ### Validation
 
@@ -564,16 +530,16 @@ To test the `score` module, in the project directory you can execute the stateme
 
 ### Introduction
 
-Reports from Testaro are JavaScript objects. When represented as JSON, they are human-readable, but not human-friendly. They are basically designed for machine tractability. Testilo can _digest_ a scored report, converting it to a human-oriented HTML document, or _digest_.
+Reports from Testaro are JavaScript objects. When represented as JSON, they are human-readable, but not human-friendly. They are basically designed for machine tractability. This is equally true for reports that have been scored by Testilo. But Testilo can _digest_ a scored report, converting it to a human-oriented HTML document, or _digest_.
 
 The `digest` module digests a scored report. Its `digest()` function takes three arguments:
-- a digest template
 - a digesting function
 - an array of scored report objects
+- the URL of a directory containing the scored reports
 
-The digest template is an HTML document containing placeholders. A copy of the template, with its placeholders replaced by computed values, becomes the digest. The digesting function defines the rules for replacing the placeholders with values. The Testilo package contains a `procs/digest` directory, in which there are subdirectories, each containing a template and a module that exports a digesting function. You can use one of those template-module pairs, or you can create your own.
+The digesting function populates an HTML digest template. A copy of the template, with its placeholders replaced by computed values, becomes the digest. The digesting function defines the rules for replacing the placeholders with values. The Testilo package contains a `procs/digest` directory, in which there are subdirectories, each containing a template and a module that exports a digesting function. You can use one of those modules, or you can create your own.
 
-The included template-module pairs format placeholders with leading and trailing underscore pairs (such as `__issueCount__`).
+The included templates format placeholders with leading and trailing underscore pairs (such as `__issueCount__`).
 
 ### Invocation
 
@@ -581,39 +547,46 @@ There are two ways to use the `digest` module.
 
 #### By a module
 
-A module can invoke `digest` in this way:
+A module can invoke `digest()` in this way:
 
 ```javaScript
 const {digest} = require('testilo/digest');
 const digesterDir = `${process.env.FUNCTIONDIR}/digest/tdp99a`;
 const {digester} = require(`${digesterDir}/index`);
-const reportDir = 'https://xyz.org/a11yTesting/reports';
-digest(digester, scoredReports, reportDir)
+const scoredReports = …;
+const reportDirURL = 'https://xyz.org/a11yTesting/reports';
+digest(digester, scoredReports, reportDirURL)
 .then(digestedReports => {…});
 ```
 
-The first argument to `digest()` is a digesting function. In this example, it has been obtained from a file in the Testilo package, but it could be custom-made. The second argument to `digest()` is an array of scored report objects. The third argument is the URL of a directory where the reports being digested are located. The `digest()` function needs that URL because a digest includes a link to the full report. The link concatenates the directory URL with the report ID and a `.json` suffix. The `digest()` function returns an array of digested reports. The invoking module can further dispose of the digested reports as needed.
+The first argument to `digest()` is a digesting function. In this example, it has been obtained from a file in the Testilo package, but it could be custom-made.
+
+The second argument to `digest()` is an array of scored report objects. They may have been read from JSON files and parsed, or the array may contain a single scored report output by `score()`.
+
+The third argument is the absolute or relative URL of a directory where the reports being digested are located. The `digest()` function needs that URL because a digest includes a link to the full report. The link concatenates the directory URL with the report ID and a `.json` suffix.
+
+The `digest()` function returns an array of digested reports. The invoking module can further dispose of the digested reports as needed.
 
 #### By a user
 
-A user can invoke `digest` in this way:
+A user can invoke `digest()` in this way:
 
 ```bash
-node call digest tdp99 ../scored
-node call digest tdp99 ../scored 75m
+node call digest tdp99 https://xyz.org/a11yTesting/reports
+node call digest tdp99 https://xyz.org/a11yTesting/reports 75m
 ```
 
-When a user invokes `digest` in this example, the `call` module:
+When a user invokes `digest()` in this example, the `call` module:
 - gets the template and the digesting module from subdirectory `tdp99` in the `digest` subdirectory of the `FUNCTIONDIR` directory.
 - gets the reports from the `scored` subdirectory of the `REPORTDIR` directory.
 - writes the digested reports to the `digested` subdirectory of the `REPORTDIR` directory.
-- includes in each digest a link to the scored report, whose destination is `..scored/id.json`, where `id` is replaced with the ID of the report.
+- includes in each digest a link to the scored report, whose destination is `https://xyz.org/a11yTesting/reports/id.json`, where `id` is replaced with the ID of the report.
 
-The optional fourth argument to `call` (`75m` in this example) is a report selector. Without the argument, `call` gets all the reports in the `scored` subdirectory of the `REPORTDIR` directory. With the argument, `call` gets only those reports whose names begin with the argument string.
+The third argument to `call()` can be an absolute URL, as shown, or a URL that is relative to the URL of the digest. For example, if it is known that the scored reports and the digests will inhabit the same directory and be retrievable with identical URLs except for the file extensions, then the third argument can be `./`.
 
-The digests created by `digest` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/digested/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where digested reports are written.
+The optional fourth argument to `call()` (`75m` in this example) is a report selector. Without the argument, `call` gets all the reports in the `scored` subdirectory of the `REPORTDIR` directory. With the argument, `call` gets only those reports whose names begin with the argument string.
 
-As illustrated by these examples, the URL argument can be absolute or relative to the digest.
+The digests created by `digest()` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/digested/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where digested reports are written.
 
 ## Report difgesting
 
@@ -621,10 +594,13 @@ As illustrated by these examples, the URL argument can be absolute or relative t
 
 A _difgest_ is a digest that compares two reports. They can be reports of different targets, or reports of the same target from two different times or under two different conditions.
 
-The `difgest` module difgests two scored reports. Its `difgest()` function takes three arguments:
+The `difgest` module difgests two scored reports. Its `difgest()` function takes five arguments:
 - a difgest template
 - a difgesting function
-- an array of two scored report objects
+- a scored report object
+- another scored report object
+- the URL of the digest of the first scored report
+- the URL of the digest of the second scored report
 
 The difgest template and module operate like the digest ones.
 
@@ -634,12 +610,16 @@ There are two ways to use the `difgest` module.
 
 #### By a module
 
-A module can invoke `difgest` in this way:
+A module can invoke `difgest()` in this way:
 
 ```javaScript
 const {difgest} = require('testilo/difgest');
 const difgesterDir = `${process.env.FUNCTIONDIR}/difgest/tdp99a`;
 const {difgester} = require(`${difgesterDir}/index`);
+const scoredReportA = …;
+const scoredReportB = …;
+const digestAURL = 'https://abc.com/testing/reports/digested/241022T1458-0.html';
+const digestBURL = 'https://abc.com/testing/reports/digested/241029T1458-0.html';
 difgest(difgester, scoredReportA, scoredReportB, digestAURL, digestBURL)
 .then(difgestedReport => {…});
 ```
@@ -653,7 +633,7 @@ The difgest will include links to the two digests, which, in turn, contain links
 A user can invoke `difgest` in this way:
 
 ```bash
-node call difgest tfp99 20141215T1200-x7-3 20141215T1200-x7-4
+node call difgest tfp99 20141215T1200-x7-3 20141215T1200-x7-4 https://abc.com/testing/reports/digested/241022T1458-0.html https://abc.com/testing/reports/digested/241029T1458-0.html
 ```
 
 When a user invokes `difgest` in this example, the `call` module:

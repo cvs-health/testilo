@@ -9,12 +9,12 @@
 // ########## FUNCTIONS
 
 // Digests the scored reports and returns them, digested.
-exports.digest = async (digester, reports, reportDir) => {
+exports.digest = async (digester, reports, reportDirURL) => {
   const digests = {};
   // For each report:
   for (const report of reports) {
     // Use it to create a digest.
-    const digestedReport = await digester(report, `${reportDir}/${report.id}.json`);
+    const digestedReport = await digester(report, `${reportDirURL}/${report.id}.json`);
     // Add the digest to the array of digests.
     digests[report.id] = digestedReport;
     console.log(`Report ${report.id} digested`);

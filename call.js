@@ -145,7 +145,7 @@ const callScore = async (scorerID, selector = '') => {
   }
 };
 // Fulfills a digesting request.
-const callDigest = async (digesterID, selector = '') => {
+const callDigest = async (digesterID, reportDirURL, selector = '') => {
   // Get the scored reports to be digested.
   const reports = await getReports('scored', selector);
   // If any exist:
@@ -154,7 +154,7 @@ const callDigest = async (digesterID, selector = '') => {
     const digesterDir = `${functionDir}/digest/${digesterID}`;
     const {digester} = require(`${digesterDir}/index`);
     // Digest the reports.
-    const digestedReports = await digest(digester, reports);
+    const digestedReports = await digest(digester, reports, reportDirURL);
     const digestedReportDir = `${reportDir}/digested`;
     await fs.mkdir(digestedReportDir, {recursive: true});
     // For each digested report:
@@ -280,7 +280,7 @@ else if (fn === 'multiScore' && fnArgs.length === 1) {
     console.log('Execution completed');
   });
 }
-else if (fn === 'digest' && fnArgs.length > 0 && fnArgs.length < 3) {
+else if (fn === 'digest' && fnArgs.length > 1 && fnArgs.length < 4) {
   callDigest(... fnArgs)
   .then(() => {
     console.log('Execution completed');

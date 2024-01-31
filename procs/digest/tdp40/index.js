@@ -37,7 +37,6 @@ const populateQuery = (report, query) => {
   query.org = target.what;
   query.url = target.which;
   query.requester = requester;
-  query.getReportFrom = getReportFrom || `reports/${report.id}.json`;
   // Add values for the score-summary table to the query.
   const rows = {
     summaryRows: [],
@@ -90,9 +89,11 @@ const populateQuery = (report, query) => {
   query.issueDetailRows = issueDetailRows.join(innerJoiner);
 };
 // Returns a digested report.
-exports.digester = async report => {
+exports.digester = async (report, reportURL) => {
   // Create a query to replace placeholders.
-  const query = {};
+  const query = {
+    reportURL
+  };
   populateQuery(report, query);
   // Get the template.
   let template = await fs.readFile(`${__dirname}/index.html`, 'utf8');

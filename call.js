@@ -177,8 +177,8 @@ const callDifgest = async (difgesterID, reportAID, reportBID) => {
   const reportBArray = await getReports('scored', reportBID);
   const reportA = reportAArray[0];
   const reportB = reportBArray[0];
-  const digestAURL = `${reportDir}/digested/${reportAID}.html`;
-  const digestBURL = `${reportDir}/digested/${reportBID}.html`;
+  const digestAURL = `../digested/${reportAID}.html`;
+  const digestBURL = `../digested/${reportBID}.html`;
   // If both exist:
   if (reportAID && reportBID) {
     // Get the difgester.

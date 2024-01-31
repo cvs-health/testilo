@@ -587,29 +587,33 @@ A module can invoke `digest` in this way:
 const {digest} = require('testilo/digest');
 const digesterDir = `${process.env.FUNCTIONDIR}/digest/tdp99a`;
 const {digester} = require(`${digesterDir}/index`);
-digest(digester, scoredReports)
+const reportDir = 'https://xyz.org/a11yTesting/reports';
+digest(digester, scoredReports, reportDir)
 .then(digestedReports => {…});
 ```
 
-The first argument to `digest()` is a digesting function. In this example, it has been obtained from a files in the Testilo package, but it could be custom-made. The second argument to `digest()` is an array of scored report objects. The `digest()` function returns an array of digested reports. The invoking module can further dispose of the digested reports as needed.
+The first argument to `digest()` is a digesting function. In this example, it has been obtained from a file in the Testilo package, but it could be custom-made. The second argument to `digest()` is an array of scored report objects. The third argument is the URL of a directory where the reports being digested are located. The `digest()` function needs that URL because a digest includes a link to the full report. The link concatenates the directory URL with the report ID and a `.json` suffix. The `digest()` function returns an array of digested reports. The invoking module can further dispose of the digested reports as needed.
 
 #### By a user
 
 A user can invoke `digest` in this way:
 
 ```bash
-node call digest tdp99
-node call digest tdp99 75m
+node call digest tdp99 ../scored
+node call digest tdp99 ../scored 75m
 ```
 
 When a user invokes `digest` in this example, the `call` module:
 - gets the template and the digesting module from subdirectory `tdp99` in the `digest` subdirectory of the `FUNCTIONDIR` directory.
 - gets the reports from the `scored` subdirectory of the `REPORTDIR` directory.
 - writes the digested reports to the `digested` subdirectory of the `REPORTDIR` directory.
+- includes in each digest a link to the scored report, whose destination is `..scored/id.json`, where `id` is replaced with the ID of the report.
 
-The optional third argument to `call` (`75m` in this example) is a report selector. Without the argument, `call` gets all the reports in the `scored` subdirectory of the `REPORTDIR` directory. With the argument, `call` gets only those reports whose names begin with the argument string.
+The optional fourth argument to `call` (`75m` in this example) is a report selector. Without the argument, `call` gets all the reports in the `scored` subdirectory of the `REPORTDIR` directory. With the argument, `call` gets only those reports whose names begin with the argument string.
 
 The digests created by `digest` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/digested/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where digested reports are written.
+
+As illustrated by these examples, the URL argument can be absolute or relative to the digest.
 
 ## Report difgesting
 
@@ -636,11 +640,11 @@ A module can invoke `difgest` in this way:
 const {difgest} = require('testilo/difgest');
 const difgesterDir = `${process.env.FUNCTIONDIR}/difgest/tdp99a`;
 const {difgester} = require(`${difgesterDir}/index`);
-difgest(difgester, scoredReports, digestURLs)
+difgest(difgester, scoredReportA, scoredReportB, digestAURL, digestBURL)
 .then(difgestedReport => {…});
 ```
 
-The `difgest()` function requires, compared with `digest()`, an additional argument: `digestURLs`. This is an array of 2 strings: the URLs of the digests of the two reports. The difgest will include links to those digests, which, in turn, contain links to the full reports.
+The difgest will include links to the two digests, which, in turn, contain links to the full reports.
 
 `difgest()` returns a difgest. The invoking module can further dispose of the difgest as needed.
 

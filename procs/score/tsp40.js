@@ -146,6 +146,7 @@ exports.scorer = report => {
                 if (! details.issue[issueName]) {
                   details.issue[issueName] = {
                     summary: issues[issueName].summary,
+                    wcag: issues[issueName].wcag || '',
                     score: 0,
                     maxCount: 0,
                     weight: issues[issueName].weight,

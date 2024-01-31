@@ -14,15 +14,26 @@ const {getBarCell} = require('../../util');
 // Difgester ID.
 const id = 'tfp40';
 // Newline with indentations.
-const innerJoiner = '\n        ';
+const innerJoiner = '\n          ';
 
 // FUNCTIONS
 
 // Gets a row of the issue-score-summary table.
-const getIssueScoreRow = (summary, wcag, scoreA, scoreB, bMoreMax, aMoreMax) => {
-  const bMore = scoreB - scoreA;
-  const barCell = getBarCell(bMore, bMore > 0 ? bMoreMax : aMoreMax);
-  return `<tr><th>${summary}</th><td>${wcag}<td>${scoreA}</td><td>${scoreB}</td><td>${scoreB - scoreA}</td>${bMore > 0 ? barCell : '<td></td>'}${bMore > 0 ? '<td></td>' : barCell}</tr>`;
+const getIssueScoreRow = (summary, wcag, scoreA, scoreB, bSuperiorityMax, aSuperiorityMax) => {
+  const bSuperiority = scoreA - scoreB;
+  const barCell = getBarCell(
+    Math.abs(bSuperiority), bSuperiority > 0 ? bSuperiorityMax : aSuperiorityMax, bSuperiority < 0
+  );
+  const cells = [
+    `<th>${summary}</th>`,
+    `<td class="center">${wcag}</td>`,
+    `<td class="right">${scoreA}</td>`,
+    `<td class="right">${scoreB}</td>`,
+    `<td class="right">${scoreA - scoreB}</td>`,
+    bSuperiority < 0 ? barCell : '<td></td>',
+    bSuperiority > 0 ? barCell : '<td></td>'
+  ];
+  return `<tr>${cells.join('')}</tr>`;
 };
 // Adds parameters to a query for a difgest.
 const populateQuery = (reportA, reportB, digestAURL, digestBURL, query) => {
@@ -34,13 +45,13 @@ const populateQuery = (reportA, reportB, digestAURL, digestBURL, query) => {
   const issueIDs = new Set();
   [reportA, reportB].forEach((report, index) => {
     // Add report-specific synopsis parameters to the query.
-    const suffix = ['A', 'B'].indexOf(index);
+    const suffix = ['A', 'B'][index];
     const {sources, jobData, score} = report;
     const {target} = sources;
     const {summary, details} = score;
     query[`org${suffix}`] = target.what;
     query[`url${suffix}`] = target.which;
-    const dateISO = jobData.endTime.slice(0, 10);
+    const dateISO = jobData.endTime.slice(0, 8);
     query[`dateSlash${suffix}`] = dateISO.replace(/-/g, '/');
     query[`total${suffix}`] = summary.total;
     query[`digest${suffix}`] = [digestAURL, digestBURL][index];
@@ -49,9 +60,8 @@ const populateQuery = (reportA, reportB, digestAURL, digestBURL, query) => {
   });
   // Get data on the issues.
   const issuesData = Array.from(issueIDs).map(issueID => {
-    console.log(issueID);
-    const issueDataA = reportA.score.details[issueID] || null;
-    const issueDataB = reportB.score.details[issueID] || null;
+    const issueDataA = reportA.score.details.issue[issueID] || null;
+    const issueDataB = reportB.score.details.issue[issueID] || null;
     return {
       id: issueID,
       what: issueDataA ? issueDataA.summary : issueDataB.summary,
@@ -61,7 +71,7 @@ const populateQuery = (reportA, reportB, digestAURL, digestBURL, query) => {
     };
   });
   // Sort the issue data in descending order of B less A scores.
-  issuesData.sort((i, j) => i[scoreB] - i[scoreA] - j[scoreB] + j[scoreA]);
+  issuesData.sort((i, j) => i.scoreB - i.scoreA - j.scoreB + j.scoreA);
   // Get rows for the issue-score table.
   const bMoreMax = issuesData[0].scoreB - issuesData[0].scoreA;
   const lastIssue = issuesData[issueIDs.size - 1];

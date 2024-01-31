@@ -67,8 +67,8 @@ exports.getRandomString = length => {
 exports.getBarCell = (num, max, isRight = false) => {
   // Make the bar width proportional.
   const barWidth = 100 * num / max;
-  const bar = `<rect height="100%" width="${barWidth}%" fill="red"></rect>`;
-  const classAttribute = isRight ? ' class="right"' : '';
-  const barCell = `<td${classAttribute} aria-hidden="true"><svg width="100%" height="0.7em">${bar}</svg></td>`;
+  const xAtt = isRight ? ` x=${100 - barWidth}%` : '';
+  const bar = `<rect height="100%"${xAtt} width="${barWidth}%" fill="red"></rect>`;
+  const barCell = `<td aria-hidden="true"><svg width="100%" height="0.7em">${bar}</svg></td>`;
   return barCell;
 };

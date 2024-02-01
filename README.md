@@ -231,7 +231,7 @@ In this statement, replace `id` with the list ID and `what` with a string descri
 
 The `call` module will retrieve the named target list.
 The `batch` module will convert the target list to a batch.
-The `call` module will save the batch as a JSON file in the `batches` subdirectory of the `SPECDIR` directory.
+The `call` module will save the batch as a JSON file named `x.json` (replacing `x` with the list ID) in the `batches` subdirectory of the `SPECDIR` directory.
 
 ### Issues to script
 

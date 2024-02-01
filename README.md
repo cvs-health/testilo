@@ -45,7 +45,7 @@ COMPARISON_URL=https://abc.com/testing/reports/__id__.html
 
 The first four variables above tell Testilo where to find or save files. Reports and their derivatives are saved in particular subdirectories of the `REPORTDIR` directory.
 
-The other variables specify the URLs by which reports and their derivatives can be retrieved. Testilo needs these variables so it can embed correct links into web pages derived from reports. Thus, importing modules need their own identically named environment variables.
+The other variables specify the URLs by which reports and their derivatives can be retrieved. They include the substring `__id__`. A function that needs the URL of a report or one of its derivatives is expected to substitute the ID of that document for `__id__` to produce the URL. Testilo needs these variables so it can embed correct links into web pages derived from reports. Since the `.env` file is excluded from the repository, importing modules need their own identically named environment variables.
 
 ## Job preparation
 
@@ -633,7 +633,7 @@ The difgest will include links to the two digests, which, in turn, contain links
 A user can invoke `difgest` in this way:
 
 ```bash
-node call difgest tfp99 20141215T1200-x7-3 20141215T1200-x7-4 https://abc.com/testing/reports/digested/241022T1458-0.html https://abc.com/testing/reports/digested/241029T1458-0.html
+node call difgest tfp99 20141215T1200-x7-3 20141215T1200-x7-4
 ```
 
 When a user invokes `difgest` in this example, the `call` module:
@@ -641,7 +641,7 @@ When a user invokes `difgest` in this example, the `call` module:
 - gets reports `20141215T1200-x7-3` and `20141215T1200-x7-4` from the `scored` subdirectory of the `REPORTDIR` directory.
 - writes the difgested report to the `difgested` subdirectory of the `REPORTDIR` directory.
 
-Difgests include links to the digests of the two reports. The `call` module assumes that those digests are located in a `digested` subdirectory of the `REPORTDIR` directory.
+Difgests include links to the digests of the two reports. The destinations of those links are obtained from the `DIFGEST_URL` environment variable.
 
 Difgests expect a `style.css` file to exist in their directory, as digests do.
 

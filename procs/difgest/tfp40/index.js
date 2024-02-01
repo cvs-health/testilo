@@ -46,7 +46,7 @@ const populateQuery = (reportA, reportB, digestAURL, digestBURL, query) => {
   [reportA, reportB].forEach((report, index) => {
     // Add report-specific synopsis parameters to the query.
     const suffix = ['A', 'B'][index];
-    const {sources, jobData, score} = report;
+    const {id, sources, jobData, score} = report;
     const {target} = sources;
     const {summary, details} = score;
     query[`org${suffix}`] = target.what;
@@ -54,7 +54,7 @@ const populateQuery = (reportA, reportB, digestAURL, digestBURL, query) => {
     const dateISO = jobData.endTime.slice(0, 8);
     query[`dateSlash${suffix}`] = dateISO.replace(/-/g, '/');
     query[`total${suffix}`] = summary.total;
-    query[`digest${suffix}`] = [digestAURL, digestBURL][index];
+    query[`digest${suffix}`] = process.env.DIFGEST_URL.replace('__id__', id);
     // Get the union of the issues in the reports.
     Object.keys(details.issue).forEach(issueID => issueIDs.add(issueID));
   });
@@ -92,10 +92,10 @@ const populateQuery = (reportA, reportB, digestAURL, digestBURL, query) => {
   query.issueRows = issueRows.join(innerJoiner);
 };
 // Returns a difgested report.
-exports.difgester = async (reportA, reportB, digestAURL, digestBURL) => {
+exports.difgester = async (reportA, reportB) => {
   // Create a query to replace placeholders.
   const query = {};
-  populateQuery(reportA, reportB, digestAURL, digestBURL, query);
+  populateQuery(reportA, reportB, query);
   // Get the template.
   let template = await fs.readFile(`${__dirname}/index.html`, 'utf8');
   // Replace its placeholders.

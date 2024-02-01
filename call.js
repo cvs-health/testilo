@@ -256,7 +256,7 @@ else if (fn === 'batch' && fnArgs.length === 2) {
     console.log('Execution completed');
   });
 }
-else if (fn === 'script' && fnArgs.length) {
+else if (fn === 'script' && fnArgs.length === 1 || fnArgs.length > 2) {
   callScript(... fnArgs)
   .then(() => {
     console.log('Execution completed');

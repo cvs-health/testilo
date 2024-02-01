@@ -9,8 +9,8 @@
 // ########## FUNCTIONS
 
 // Difgests the scored reports and returns a difgest.
-exports.difgest = async (difgester, reportA, reportB, digestAURL, digestBURL) => {
-  const difgestedReport = await difgester(reportA, reportB, digestAURL, digestBURL);
+exports.difgest = async (difgester, reportA, reportB) => {
+  const difgestedReport = await difgester(reportA, reportB);
   console.log(`Reports ${reportA.id} and ${reportB.id} difgested`);
   // Return the difgest.
   return difgestedReport;

@@ -36,16 +36,13 @@ FUNCTIONDIR=./procs
 SPECDIR=../testdir/specs
 JOBDIR=../testdir/jobs
 REPORTDIR=../testdir/reports
-RAW_REPORT_URL=https://abc.com/testing/reports/__id__.json
-SCORED_REPORT_URL=https://abc.com/testing/reports/__id__.json
-DIGEST_URL=https://abc.com/testing/reports/__id__.html
-DIFGEST_URL=https://abc.com/testing/reports/__id__.html
-COMPARISON_URL=https://abc.com/testing/reports/__id__.html
+SCORED_REPORT_URL=../scored/__id__.json
+DIGEST_URL=../digested/__id__.html
 ```
 
 The first four variables above tell Testilo where to find or save files. Reports and their derivatives are saved in particular subdirectories of the `REPORTDIR` directory.
 
-The other variables specify the URLs by which reports and their derivatives can be retrieved. They include the substring `__id__`. A function that needs the URL of a report or one of its derivatives is expected to substitute the ID of that document for `__id__` to produce the URL. Testilo needs these variables so it can embed correct links into web pages derived from reports. Since the `.env` file is excluded from the repository, importing modules need their own identically named environment variables.
+The other two variables specify the URLs by which scored reports and digests can be retrieved from the documents that link to them. Specifically, digests link to scored reports, and difgests link to digests. The URLs can be absolute, or, if digests and difgests will be opened from a local filesystem, they can be relative to the linking document, as shown. They include the substring `__id__`. A function that needs the URL of a scored report or digest is expected to substitute the ID of that document for `__id__` to produce the URL. Testilo needs these variables so it can embed correct links into digests and difgests derived from reports. Since the `.env` file is excluded from the repository, importing modules need their own identically named environment variables.
 
 ## Job preparation
 
@@ -682,15 +679,14 @@ The first argument to `compare()` is a comparison function. In this example, it 
 A user can invoke `compare` in this way:
 
 ```bash
+node call compare tcp99 legislators
 node call compare tcp99 legislators 23pl
 ```
 
 When a user invokes `compare` in this example, the `call` module:
 - gets the comparison module from subdirectory `tcp99` of the subdirectory `compare` in the `FUNCTIONDIR` directory.
-- gets all the reports in the `scored` subdirectory of the `REPORTDIR` directory whose file names begin with `23pl`.
+- gets all the reports in the `scored` subdirectory of the `REPORTDIR` directory, or, if there is a fourth argument, whose file names begin with `23pl`.
 - writes the comparative report as an HTML file named `legislators.html` to the `comparative` subdirectory of the `REPORTDIR` directory.
-
-The fourth argument to `call` (`23pl` in this example) is optional. If it is omitted, `call` will get and `comparer` will compare all the reports in the `scored` directory.
 
 The comparative report created by `compare` is an HTML file, and it expects a `style.css` file to exist in its directory. The `reports/comparative/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where comparative reports are written.
 

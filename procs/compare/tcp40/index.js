@@ -7,7 +7,7 @@
 
 // Module to access files.
 const fs = require('fs/promises');
-const {getBarCell} = require('../../procs/util');
+const {getBarCell} = require('../../util');
 
 // CONSTANTS
 
@@ -52,7 +52,9 @@ const getTableBody = async bodyData => {
     const pageCell = `<th scope="row"><a href="${url}">${org}</a></th>`;
     const numCell = `<td><a href="testu/digest?jobID=${id}">${score}</a></td>`;
     // Make the bar width proportional.
-    return getBarCell(score, maxScore);
+    const barCell = getBarCell(score, maxScore);
+    const row = `<tr>${pageCell}${numCell}${barCell}</tr>`;
+    return row;
   });
   return rows.join(innestJoiner);
 };

@@ -2,6 +2,8 @@
 
 // IMPORTS
 
+// Module to keep secrets.
+require('dotenv').config();
 // Module to classify tool rules into issues
 const {issues} = require('../../score/tic40');
 // Module to process files.
@@ -37,7 +39,7 @@ const populateQuery = (report, query) => {
   query.org = target.what;
   query.url = target.which;
   query.requester = requester;
-  query.reportURL = process.env.REPORT_URL.replace('__id__', id);
+  query.reportURL = process.env.SCORED_REPORT_URL.replace('__id__', id);
   // Add values for the score-summary table to the query.
   const rows = {
     summaryRows: [],

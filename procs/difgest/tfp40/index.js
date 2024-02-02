@@ -2,6 +2,8 @@
 
 // IMPORTS
 
+// Module to keep secrets.
+require('dotenv').config();
 // Module to classify tool rules into issues
 const {issues} = require('../../score/tic40');
 // Module to process files.

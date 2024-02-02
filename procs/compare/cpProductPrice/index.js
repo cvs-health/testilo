@@ -12,14 +12,14 @@ const fs = require('fs/promises');
 
 // ########## CONSTANTS
 
-const reportDirScored = process.env.REPORTDIR_SCORED || 'reports/scored';
+const reportDir = process.env.REPORTDIR;
 const query = {};
 
 // ########## FUNCTIONS
 
 // Returns data on the hosts in the report directory.
 const getData = async () => {
-  const reportDirAbs = `${__dirname}/../../../${reportDirScored}`;
+  const reportDirAbs = `${__dirname}/../../../${reportDir}/scored`;
   const reportFileNamesAll = await fs.readdir(reportDirAbs);
   const reportFileNamesSource = reportFileNamesAll.filter(fileName => fileName.endsWith('.json'));
   const pageCount = reportFileNamesSource.length;

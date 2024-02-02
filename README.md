@@ -40,9 +40,9 @@ SCORED_REPORT_URL=../scored/__id__.json
 DIGEST_URL=../digested/__id__.html
 ```
 
-The first four variables above tell Testilo where to find or save files. Reports and their derivatives are saved in particular subdirectories of the `REPORTDIR` directory.
+The first four variables above tell Testilo where to find or save files when a user invokes a function. This decreases the count of arguments that the user would otherwise need to specify.
 
-The other two variables specify the URLs by which scored reports and digests can be retrieved from the documents that link to them. Specifically, digests link to scored reports, and difgests link to digests. The URLs can be absolute, or, if digests and difgests will be opened from a local filesystem, they can be relative to the linking document, as shown. They include the substring `__id__`. A function that needs the URL of a scored report or digest is expected to substitute the ID of that document for `__id__` to produce the URL. Testilo needs these variables so it can embed correct links into digests and difgests derived from reports. Since the `.env` file is excluded from the repository, importing modules need their own identically named environment variables.
+The other two variables specify the destinations of links to scored reports and digests. Digests produced by Testilo digesters link to scored reports, and difgests produced by Testilo difgesters link to digests. The URLs can be absolute, or, if digests and difgests will be opened from a local filesystem, they can be relative to the linking document, as shown. They include the substring `__id__`. A function that needs the URL of a scored report or digest is expected to substitute the ID of that document for `__id__` to produce the URL. Since the `.env` file is excluded from the repository, importing modules that will use `digest()` need a `SCORED_REPORT_URL` environment variable, and importing modules that will use `difgest()` need a `DIGEST_URL` environment variable.
 
 ## Job preparation
 

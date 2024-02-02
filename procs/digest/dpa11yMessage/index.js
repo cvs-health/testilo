@@ -1,14 +1,13 @@
 /*
   index: digester for scoring procedure spA11yMessage.
   Creator of parameters for substitution into index.html.
-  Usage example for selected files in REPORTDIR_SCORED: node digest dpA11yMessage 35k1r
-  Usage example for all files in REPORTDIR_SCORED: node digest dpA11yMessage
+  Usage example for selected files in REPORTDIR/scored: node digest dpA11yMessage 35k1r
+  Usage example for all files in REPORTDIR/scored: node digest dpA11yMessage
 */
 
 // CONSTANTS
 
   // Newlines with indentations.
-  const joiner = '\n      ';
   const innerJoiner = '\n        ';
 
 // FUNCTIONS

@@ -145,7 +145,7 @@ const callScore = async (scorerID, selector = '') => {
   }
 };
 // Fulfills a digesting request.
-const callDigest = async (digesterID, reportDirURL, selector = '') => {
+const callDigest = async (digesterID, selector = '') => {
   // Get the scored reports to be digested.
   const reports = await getReports('scored', selector);
   // If any exist:
@@ -154,7 +154,7 @@ const callDigest = async (digesterID, reportDirURL, selector = '') => {
     const digesterDir = `${functionDir}/digest/${digesterID}`;
     const {digester} = require(`${digesterDir}/index`);
     // Digest the reports.
-    const digestedReports = await digest(digester, reports, reportDirURL);
+    const digestedReports = await digest(digester, reports);
     const digestedReportDir = `${reportDir}/digested`;
     await fs.mkdir(digestedReportDir, {recursive: true});
     // For each digested report:
@@ -177,27 +177,25 @@ const callDifgest = async (difgesterID, reportAID, reportBID) => {
   const reportBArray = await getReports('scored', reportBID);
   const reportA = reportAArray[0];
   const reportB = reportBArray[0];
-  const digestAURL = `../digested/${reportAID}.html`;
-  const digestBURL = `../digested/${reportBID}.html`;
   // If both exist:
   if (reportAID && reportBID) {
     // Get the difgester.
     const difgesterDir = `${functionDir}/difgest/${difgesterID}`;
     const {difgester} = require(`${difgesterDir}/index`);
     // Difgest the reports.
-    const difgestedReport = await difgest(difgester, reportA, reportB, digestAURL, digestBURL);
+    const difgestedReport = await difgest(difgester, reportA, reportB);
     const difgestedReportDir = `${reportDir}/difgested`;
     await fs.mkdir(difgestedReportDir, {recursive: true});
     // Save the difgested report.
-    const reportID = `${getNowStamp()}-${getRandomString(2)}-0`;
-    const difgestPath = `${difgestedReportDir}/${reportID}.html`;
+    const difgestID = `${getNowStamp()}-${getRandomString(2)}-0`;
+    const difgestPath = `${difgestedReportDir}/${difgestID}.html`;
     await fs.writeFile(difgestPath, difgestedReport);
     console.log(`Reports ${reportAID} and ${reportBID} difgested and saved as ${difgestPath}`);
   }
   // Otherwise, i.e. if no scored reports are to be digested:
   else {
     // Report this.
-    console.log('ERROR: No scored reports to be digested');
+    console.log('ERROR: No pair of scored reports to be digested');
   }
 };
 // Fulfills a comparison request.
@@ -280,7 +278,7 @@ else if (fn === 'multiScore' && fnArgs.length === 1) {
     console.log('Execution completed');
   });
 }
-else if (fn === 'digest' && fnArgs.length > 1 && fnArgs.length < 4) {
+else if (fn === 'digest' && fnArgs.length && fnArgs.length < 3) {
   callDigest(... fnArgs)
   .then(() => {
     console.log('Execution completed');

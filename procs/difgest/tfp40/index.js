@@ -36,7 +36,7 @@ const getIssueScoreRow = (summary, wcag, scoreA, scoreB, bSuperiorityMax, aSuper
   return `<tr>${cells.join('')}</tr>`;
 };
 // Adds parameters to a query for a difgest.
-const populateQuery = (reportA, reportB, digestAURL, digestBURL, query) => {
+const populateQuery = (reportA, reportB, query) => {
   // General parameters.
   query.fp = id;
   query.dateISO = new Date().toISOString().slice(0, 10);
@@ -54,7 +54,7 @@ const populateQuery = (reportA, reportB, digestAURL, digestBURL, query) => {
     const dateISO = jobData.endTime.slice(0, 8);
     query[`dateSlash${suffix}`] = dateISO.replace(/-/g, '/');
     query[`total${suffix}`] = summary.total;
-    query[`digest${suffix}`] = process.env.DIFGEST_URL.replace('__id__', id);
+    query[`digest${suffix}URL`] = process.env.DIGEST_URL.replace('__id__', id);
     // Get the union of the issues in the reports.
     Object.keys(details.issue).forEach(issueID => issueIDs.add(issueID));
   });

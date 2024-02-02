@@ -572,15 +572,15 @@ The `digest()` function returns an array of digested reports. The invoking modul
 A user can invoke `digest()` in this way:
 
 ```bash
-node call digest tdp99 https://xyz.org/a11yTesting/reports
-node call digest tdp99 https://xyz.org/a11yTesting/reports 75m
+node call digest tdp99
+node call digest tdp99 75m
 ```
 
 When a user invokes `digest()` in this example, the `call` module:
 - gets the template and the digesting module from subdirectory `tdp99` in the `digest` subdirectory of the `FUNCTIONDIR` directory.
 - gets the reports from the `scored` subdirectory of the `REPORTDIR` directory.
 - writes the digested reports to the `digested` subdirectory of the `REPORTDIR` directory.
-- includes in each digest a link to the scored report, whose destination is `https://xyz.org/a11yTesting/reports/id.json`, where `id` is replaced with the ID of the report.
+- includes in each digest a link to the scored report, with the link destination being based on `DIGEST_URL`.
 
 The third argument to `call()` can be an absolute URL, as shown, or a URL that is relative to the URL of the digest. For example, if it is known that the scored reports and the digests will inhabit the same directory and be retrievable with identical URLs except for the file extensions, then the third argument can be `./`.
 

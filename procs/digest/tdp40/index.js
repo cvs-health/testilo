@@ -10,7 +10,7 @@ const fs = require('fs/promises');
 // CONSTANTS
 
 // Digester ID.
-const id = 'tdp40';
+const digesterID = 'tdp40';
 // Newline with indentations.
 const innerJoiner = '\n        ';
 
@@ -25,18 +25,19 @@ const getIssueScoreRow = (summary, wcag, score, tools) => {
 };
 // Adds parameters to a query for a digest.
 const populateQuery = (report, query) => {
-  const {getReportFrom, sources, jobData, score} = report;
+  const {id, sources, jobData, score} = report;
   const {script, target, requester} = sources;
   const {scoreProcID, summary, details} = score;
   query.ts = script;
   query.sp = scoreProcID;
-  query.dp = id;
+  query.dp = digesterID;
   // Add the job data to the query.
   query.dateISO = jobData.endTime.slice(0, 8);
   query.dateSlash = query.dateISO.replace(/-/g, '/');
   query.org = target.what;
   query.url = target.which;
   query.requester = requester;
+  query.reportURL = process.env.REPORT_URL.replace('__id__', id);
   // Add values for the score-summary table to the query.
   const rows = {
     summaryRows: [],
@@ -89,11 +90,9 @@ const populateQuery = (report, query) => {
   query.issueDetailRows = issueDetailRows.join(innerJoiner);
 };
 // Returns a digested report.
-exports.digester = async (report, reportURL) => {
+exports.digester = async report => {
   // Create a query to replace placeholders.
-  const query = {
-    reportURL
-  };
+  const query = {};
   populateQuery(report, query);
   // Get the template.
   let template = await fs.readFile(`${__dirname}/index.html`, 'utf8');

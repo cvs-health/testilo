@@ -300,6 +300,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'id attribute value is not unique'
+        },
+        'QW-WCAG-T35': {
+          variable: false,
+          quality: 1,
+          what: 'Several elements have this id attribute value'
         }
       }
     }

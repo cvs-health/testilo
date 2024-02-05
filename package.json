@@ -1,8 +1,8 @@
 {
   "name": "testilo",
-  "version": "25.0.1",
+  "version": "25.0.2",
   "description": "Prepares and processes Testaro reports",
-  "main": "aim.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

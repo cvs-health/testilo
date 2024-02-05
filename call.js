@@ -242,13 +242,7 @@ const callCredit = async (tallyID, selector = '') => {
 // ########## OPERATION
 
 // Execute the requested function.
-if (fn === 'aim' && fnArgs.length === 5) {
-  callAim(... fnArgs)
-  .then(() => {
-    console.log('Execution completed');
-  });
-}
-else if (fn === 'batch' && fnArgs.length === 2) {
+if (fn === 'batch' && fnArgs.length === 2) {
   callBatch(... fnArgs)
   .then(() => {
     console.log('Execution completed');

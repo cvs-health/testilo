@@ -20,20 +20,25 @@ const innerJoiner = '\n          ';
 
 // FUNCTIONS
 
-// Gets a row of the issue-score-summary table.
-const getIssueScoreRow = (summary, wcag, scoreA, scoreB, bSuperiorityMax, aSuperiorityMax) => {
+// Gets a row of the issue-score-summary table with a two-column bar graph.
+const getIssueScoreRow = (summary, wcag, scoreA, scoreB, aSuperiorityMax, bSuperiorityMax) => {
+  const svgWidthSum = 25;
+  const maxSum = aSuperiorityMax + bSuperiorityMax;
+  const aSVGWidth = svgWidthSum * aSuperiorityMax / maxSum;
+  const bSVGWidth = svgWidthSum * bSuperiorityMax / maxSum;
   const bSuperiority = scoreA - scoreB;
-  const barCell = getBarCell(
-    Math.abs(bSuperiority), bSuperiority > 0 ? bSuperiorityMax : aSuperiorityMax, bSuperiority < 0
-  );
   const cells = [
     `<th>${summary}</th>`,
     `<td class="center">${wcag}</td>`,
     `<td class="right">${scoreA}</td>`,
     `<td class="right">${scoreB}</td>`,
     `<td class="right">${scoreA - scoreB}</td>`,
-    bSuperiority < 0 ? barCell : '<td></td>',
-    bSuperiority > 0 ? barCell : '<td></td>'
+    bSuperiority < 0
+    ? getBarCell(Math.abs(bSuperiority), aSuperiorityMax, aSVGWidth, true)
+    : '<td class="right"></td>',
+    bSuperiority > 0
+    ? getBarCell(Math.abs(bSuperiority), bSuperiorityMax, bSVGWidth, false)
+    : '<td></td>'
   ];
   return `<tr>${cells.join('')}</tr>`;
 };
@@ -75,16 +80,14 @@ const populateQuery = (reportA, reportB, query) => {
   // Sort the issue data in descending order of B less A scores.
   issuesData.sort((i, j) => i.scoreB - i.scoreA - j.scoreB + j.scoreA);
   // Get rows for the issue-score table.
-  const bSuperiorityMax = Math.max(0, issuesData[0].scoreA - issuesData[0].scoreB);
   const lastIssue = issuesData[issueIDs.size - 1];
   const aSuperiorityMax = Math.max(0, lastIssue.scoreB - lastIssue.scoreA);
+  const bSuperiorityMax = Math.max(0, issuesData[0].scoreA - issuesData[0].scoreB);
   const issueRows = [];
   issuesData.forEach(issueData => {
     const {id, what, wcag, scoreA, scoreB} = issueData;
     if (issues[id]) {
-      issueRows.push(
-        getIssueScoreRow(what, wcag, scoreA, scoreB, bSuperiorityMax, aSuperiorityMax)
-      );
+      issueRows.push(getIssueScoreRow(what, wcag, scoreA, scoreB, aSuperiorityMax, bSuperiorityMax));
     }
     else {
       console.log(`ERROR: Issue ${id} not found`);

@@ -63,12 +63,16 @@ exports.getRandomString = length => {
   }
   return chars.join('');
 };
-// Returns a graph bar.
-exports.getBarCell = (num, max, isRight = false) => {
-  // Make the bar width proportional.
-  const barWidth = 100 * num / max;
-  const xAtt = isRight ? ` x=${100 - barWidth}%` : '';
-  const bar = `<rect height="100%"${xAtt} width="${barWidth}%" fill="red"></rect>`;
-  const barCell = `<td aria-hidden="true"><svg width="100%" height="0.7em">${bar}</svg></td>`;
-  return barCell;
+// Returns a horizontal SVG graph bar.
+const getSVGBar = (num, max, isRight) => {
+  const widthFrac = num / max;
+  const x = isRight ? `${100 - widthFrac}%` : '0';
+  return `<rect height="100%" x="${x}" width="${widthFrac}%"></rect>`;
+};
+// Returns a table cell containing an SVG graph bar.
+exports.getBarCell = (num, colMax, svgWidth, isRight = false) => {
+  const bar = getSVGBar(num, colMax, isRight);
+  const svg = `<svg height="0.7rem" width="${svgWidth}rem">${bar}</svg>`;
+  const cell = `<td aria-hidden="true">${svg}</td>`;
+  return cell;
 };

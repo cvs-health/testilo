@@ -52,7 +52,7 @@ const getTableBody = async bodyData => {
     const pageCell = `<th scope="row"><a href="${url}">${org}</a></th>`;
     const numCell = `<td><a href="testu/digest?jobID=${id}">${score}</a></td>`;
     // Make the bar width proportional.
-    const barCell = getBarCell(score, maxScore);
+    const barCell = getBarCell(score, maxScore, maxScore);
     const row = `<tr>${pageCell}${numCell}${barCell}</tr>`;
     return row;
   });

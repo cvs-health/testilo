@@ -244,7 +244,7 @@ There are two ways to use the `script` module.
 
 ##### By a module
 
-A module can invoke `script` in this way:
+A module can invoke `script()` in this way:
 
 ```javaScript
 const {script} = require('testilo/script');
@@ -293,7 +293,7 @@ There are two ways to use the `merge` module.
 
 ##### By a module
 
-A module can invoke `merge` in this way:
+A module can invoke `merge()` in this way:
 
 ```javaScript
 const {merge} = require('testilo/merge');
@@ -426,7 +426,7 @@ Testilo can enhance such a report by:
 - creating difgests
 - creating comparisons
 
-## Scoring
+### Scoring
 
 To add scores to reports, the `score` module of Testilo performs computations on the test results and adds a `score` property to each report.
 
@@ -436,7 +436,7 @@ The `score()` function of the `score` module takes two arguments:
 
 A scoring function defines scoring rules. The Testilo package contains a `procs/score` directory, in which there are modules that export scoring functions. You can use one of those scoring functions, or you can create your own.
 
-### Scorers
+#### Scorers
 
 The built-in scoring functions are named `scorer()` and are exported by files whose names begin with `tsp` (for Testilo scoring proc). Those functions make use of `issues` objects defined in files whose names begin with `tic`. An `issues` object defines an issue classification: a body of data about rules of tools and the tool-agnostic issues that those rules are deemed to belong to.
 
@@ -482,11 +482,11 @@ The `quality` property is usually 1, but if the test of the rule is known to be 
 
 Some issue objects (such as `flash` in `tic40.js`) have a `max` property, equal to the maximum possible count of instances. That property allows a scorer to ascribe a greater weight to an instance of that issue.
 
-### Invocation
+#### Invocation
 
 There are two ways to invoke the `score` module.
 
-#### By a module
+##### By a module
 
 A module can invoke `score()` in this way:
 
@@ -503,7 +503,7 @@ The second argument to `score()` is an array of report objects. They may have be
 
 The invoking module can further dispose of the scored reports as needed.
 
-#### By a user
+##### By a user
 
 A user can invoke `score()` in this way:
 
@@ -519,13 +519,13 @@ When a user invokes `score()` in this example, the `call` module:
 
 The optional third argument to `call()` (`75m` in this example) is a report selector. Without the argument, `call()` gets all the reports in the `raw` subdirectory. With the argument, `call()` gets only those reports whose names begin with the argument string.
 
-### Validation
+#### Validation
 
 To test the `score` module, in the project directory you can execute the statement `node validation/score/validate`. If `score` is valid, all logging statements will begin with “Success” and none will begin with “ERROR”.
 
-## Report digesting
+### Report digesting
 
-### Introduction
+#### Introduction
 
 Reports from Testaro are JavaScript objects. When represented as JSON, they are human-readable, but not human-friendly. They are basically designed for machine tractability. This is equally true for reports that have been scored by Testilo. But Testilo can _digest_ a scored report, converting it to a human-oriented HTML document, or _digest_.
 
@@ -538,11 +538,11 @@ The digesting function populates an HTML digest template. A copy of the template
 
 The included templates format placeholders with leading and trailing underscore pairs (such as `__issueCount__`).
 
-### Invocation
+#### Invocation
 
 There are two ways to use the `digest` module.
 
-#### By a module
+##### By a module
 
 A module can invoke `digest()` in this way:
 
@@ -564,7 +564,7 @@ The third argument is the absolute or relative URL of a directory where the repo
 
 The `digest()` function returns an array of digested reports. The invoking module can further dispose of the digested reports as needed.
 
-#### By a user
+##### By a user
 
 A user can invoke `digest()` in this way:
 
@@ -585,9 +585,9 @@ The optional fourth argument to `call()` (`75m` in this example) is a report sel
 
 The digests created by `digest()` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/digested/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where digested reports are written.
 
-## Report difgesting
+### Report difgesting
 
-### Introduction
+#### Introduction
 
 A _difgest_ is a digest that compares two reports. They can be reports of different targets, or reports of the same target from two different times or under two different conditions.
 
@@ -601,11 +601,11 @@ The `difgest` module difgests two scored reports. Its `difgest()` function takes
 
 The difgest template and module operate like the digest ones.
 
-### Invocation
+#### Invocation
 
 There are two ways to use the `difgest` module.
 
-#### By a module
+##### By a module
 
 A module can invoke `difgest()` in this way:
 
@@ -625,9 +625,9 @@ The difgest will include links to the two digests, which, in turn, contain links
 
 `difgest()` returns a difgest. The invoking module can further dispose of the difgest as needed.
 
-#### By a user
+##### By a user
 
-A user can invoke `difgest` in this way:
+A user can invoke `difgest()` in this way:
 
 ```bash
 node call difgest tfp99 20141215T1200-x7-3 20141215T1200-x7-4
@@ -642,7 +642,7 @@ Difgests include links to the digests of the two reports. The destinations of th
 
 Difgests expect a `style.css` file to exist in their directory, as digests do.
 
-### Validation
+#### Validation
 
 To test the `digest` module, in the project directory you can execute the statement `node validation/digest/validate`. If `digest` is valid, all logging statements will begin with “Success” and none will begin with “ERROR”.
 
@@ -656,13 +656,13 @@ The `compare` module compares the scores in a collection of scored reports. Its 
 
 The comparison function defines the rules for generating an HTML file comparing the scored reports. The Testilo package contains a `procs/compare` directory, in which there are subdirectories containing modules that export comparison functions. You can use one of those functions, or you can create your own.
 
-### Invocation
+#### Invocation
 
 There are two ways to use the `compare` module.
 
-#### By a module
+##### By a module
 
-A module can invoke `compare` in this way:
+A module can invoke `compare()` in this way:
 
 ```javaScript
 const {compare} = require('testilo/compare');
@@ -674,9 +674,9 @@ compare(comparer, scoredReports)
 
 The first argument to `compare()` is a comparison function. In this example, it been obtained from a file in the Testilo package, but it could be custom-made. The second argument to `compare()` is an array of report objects. The `compare()` function returns a comparative report. The invoking module can further dispose of the comparative report as needed.
 
-#### By a user
+##### By a user
 
-A user can invoke `compare` in this way:
+A user can invoke `compare()` in this way:
 
 ```bash
 node call compare tcp99 legislators
@@ -689,6 +689,10 @@ When a user invokes `compare` in this example, the `call` module:
 - writes the comparative report as an HTML file named `legislators.html` to the `comparative` subdirectory of the `REPORTDIR` directory.
 
 The comparative report created by `compare` is an HTML file, and it expects a `style.css` file to exist in its directory. The `reports/comparative/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where comparative reports are written.
+
+#### Validation
+
+To test the `compare` module, in the project directory you can execute the statement `node validation/compare/validate`. If `compare` is valid, all logging statements will begin with “Success” and none will begin with “ERROR”.
 
 ### Tool crediting
 
@@ -704,13 +708,13 @@ The credit report contains four sections:
     - `onlies`: a list of the issues that only the tool reported instances of
     - `mosts`: a list of the issues for which the instance count of the tool was not surpassed by that of any other tool
 
-### Invocation
+#### Invocation
 
 There are two ways to use the `credit` module.
 
-#### By a module
+##### By a module
 
-A module can invoke `credit` in this way:
+A module can invoke `credit()` in this way:
 
 ```javaScript
 const {credit} = require('testilo/credit');
@@ -720,9 +724,9 @@ credit(scoredReports)
 
 The argument to `credit()` is an array of scored report objects. The `credit()` function returns a credit report. The invoking module can further dispose of the credit report as needed.
 
-#### By a user
+##### By a user
 
-A user can invoke `credit` in this way:
+A user can invoke `credit()` in this way:
 
 ```bash
 node call credit legislators 23pl
@@ -734,9 +738,37 @@ When a user invokes `credit` in this example, the `call` module:
 
 The third argument to `call` (`23pl` in this example) is optional. If it is omitted, `call` will get and `credit()` will tabulate all the reports in the `scored` directory.
 
-### Validation
+### Summarization
 
-To test the `compare` module, in the project directory you can execute the statement `node validation/compare/validate`. If `compare` is valid, all logging statements will begin with “Success” and none will begin with “ERROR”.
+The `summarize` module of Testilo can summarize a collection of scored reports. A summary contains, for each report, the report ID, end time, order ID, target description, URL, and total score.
+
+#### Invocation
+
+##### By a module
+
+A module can invoke `summarize()` in this way:
+
+```javaScript
+const {summarize} = require('testilo/summarize');
+const reports = […];
+const summary = summarize(reports);
+…
+```
+
+The `reports` argument is an array of scored reports. The `summary` constant is an object. The module can further dispose of `summary` as needed.
+
+##### By a user
+
+A user can invoke `summarize()` in either of these two ways:
+
+```javaScript
+node call summarize divisions
+node call summarize divisions 2411
+```
+
+When a user invokes `summarize` in this example, the `call` module:
+- gets all the reports in the `scored` subdirectory of the `REPORTDIR` directory, or (if the third argument is present) all those whose file names begin with `2411`.
+- writes the summary as a JSON file named `divisions.json` to the `summarized` subdirectory of the `REPORTDIR` directory.
 
 ## Origin
 

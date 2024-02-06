@@ -24,7 +24,7 @@ const getTimeStamp
 = exports.getTimeStamp
 = date => getTimeString(date).replace(/[-:]/g, '').slice(2, 13);
 // Returns a time stamp representing the date and time.
-exports.getNowStamp = () => getTimeStamp(new Date());
+const getNowStamp = exports.getNowStamp = () => getTimeStamp(new Date());
 // Inserts a character periodically in a string.
 const punctuate = (string, insertion, chunkSize) => {
   const segments = [];
@@ -56,12 +56,18 @@ exports.alphaNumOf = num => {
   return resultDigits.join('');
 };
 // Returns a random string.
-exports.getRandomString = length => {
+const getRandomString = exports.getRandomString = length => {
   const chars = [];
   for (let i = 0; i < length; i++) {
     chars.push(alphaNumChars[Math.floor(62 * Math.random())]);
   }
   return chars.join('');
+};
+// Returns a file ID.
+exports.getFileID = randomLength => {
+  const timePart = getNowStamp();
+  const randomPart = getRandomString(randomLength);
+  return `${timePart}-${randomPart}-0`;
 };
 // Returns a horizontal SVG graph bar.
 const getSVGBar = (num, max, isRight) => {

@@ -34,6 +34,8 @@ const {digest} = require('./digest');
 const {difgest} = require('./difgest');
 // Function to compare scores.
 const {compare} = require('./compare');
+// Function to summarize reports.
+const {summarize} = require('./summarize');
 
 // ########## CONSTANTS
 
@@ -230,12 +232,37 @@ const callCredit = async (tallyID, selector = '') => {
     const creditDir = `${reportDir}/credit`;
     await fs.mkdir(creditDir, {recursive: true}); 
     await fs.writeFile(`${creditDir}/${tallyID}.json`, JSON.stringify(tally, null, 2));
-    console.log(`Reports tallied and credit report saved in ${creditDir}`);
+    console.log(`Reports tallied and credit report ${tallyID} saved in ${creditDir}`);
   }
   // Otherwise, i.e. if no scored reports are to be tallied:
   else {
     // Report this.
     console.log('ERROR: No scored reports to be tallied');
+  }
+};
+// Fulfills a summarize request.
+const callSummarize = async (what, selector = '') => {
+  // Get the scored reports to be summarized.
+  const reports = await getReports('scored', selector);
+  // If any exist:
+  if (reports.length) {
+    // Summarize them.
+    const summary = summarize(what, reports);
+    // Add the selector, if any, to the summary.
+    if (selector) {
+      summary.selector = selector;
+    }
+    // Save the summary.
+    const summaryDir = `${reportDir}/summarized`;
+    await fs.mkdir(summaryDir, {recursive: true}); 
+    const filePath = `${summaryDir}/${summary.timeStamp}-${getRandomString(2)}-0.json`;
+    await fs.writeFile(filePath, `${JSON.stringify(summary, null, 2)}\n`);
+    console.log(`Reports summarized and summary saved as ${filePath}`);
+  }
+  // Otherwise, i.e. if no scored reports are to be summarized:
+  else {
+    // Report this.
+    console.log('ERROR: No scored reports to be summarized');
   }
 };
 
@@ -292,6 +319,12 @@ else if (fn === 'compare' && fnArgs.length > 1 && fnArgs.length < 4) {
 }
 else if (fn === 'credit' && fnArgs.length > 0 && fnArgs.length < 3) {
   callCredit(... fnArgs)
+  .then(() => {
+    console.log('Execution completed');
+  });
+}
+else if (fn === 'summarize' && fnArgs.length > 0 && fnArgs.length < 3) {
+  callSummarize(... fnArgs)
   .then(() => {
     console.log('Execution completed');
   });

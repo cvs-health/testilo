@@ -65,7 +65,7 @@ exports.getRandomString = length => {
 };
 // Returns a horizontal SVG graph bar.
 const getSVGBar = (num, max, isRight) => {
-  const widthFrac = num / max;
+  const widthFrac = 100 * num / max;
   const x = isRight ? `${100 - widthFrac}%` : '0';
   return `<rect height="100%" x="${x}" width="${widthFrac}%"></rect>`;
 };

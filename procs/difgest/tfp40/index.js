@@ -58,8 +58,7 @@ const populateQuery = (reportA, reportB, query) => {
     const {summary, details} = score;
     query[`org${suffix}`] = target.what;
     query[`url${suffix}`] = target.which;
-    const dateISO = jobData.endTime.slice(0, 8);
-    query[`dateSlash${suffix}`] = dateISO.replace(/-/g, '/');
+    query[`dateTime${suffix}`] = jobData.replace(/-/g, '/').replace('T', ', ');
     query[`total${suffix}`] = summary.total;
     query[`digest${suffix}URL`] = process.env.DIGEST_URL.replace('__id__', id);
     // Get the union of the issues in the reports.

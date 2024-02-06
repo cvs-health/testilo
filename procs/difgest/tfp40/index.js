@@ -35,10 +35,10 @@ const getIssueScoreRow = (summary, wcag, scoreA, scoreB, aSuperiorityMax, bSuper
     `<td class="right">${scoreA - scoreB}</td>`,
     bSuperiority < 0
     ? getBarCell(Math.abs(bSuperiority), aSuperiorityMax, aSVGWidth, true)
-    : '<td class="right"></td>',
+    : '<td aria-hidden="true" class="right"></td>',
     bSuperiority > 0
     ? getBarCell(Math.abs(bSuperiority), bSuperiorityMax, bSVGWidth, false)
-    : '<td></td>'
+    : '<td aria-hidden="true"></td>'
   ];
   return `<tr>${cells.join('')}</tr>`;
 };

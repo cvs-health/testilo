@@ -73,6 +73,7 @@ const getSVGBar = (num, max, isRight) => {
 exports.getBarCell = (num, colMax, svgWidth, isRight = false) => {
   const bar = getSVGBar(num, colMax, isRight);
   const svg = `<svg height="0.7rem" width="${svgWidth}rem">${bar}</svg>`;
-  const cell = `<td aria-hidden="true">${svg}</td>`;
+  const rightClass = isRight ? ' class="right"' : '';
+  const cell = `<td aria-hidden="true"${rightClass}>${svg}</td>`;
   return cell;
 };

@@ -768,7 +768,43 @@ node call summarize divisions 2411
 
 When a user invokes `summarize` in this example, the `call` module:
 - gets all the reports in the `scored` subdirectory of the `REPORTDIR` directory, or (if the third argument is present) all those whose file names begin with `2411`.
-- writes the summary as a JSON file named `divisions.json` to the `summarized` subdirectory of the `REPORTDIR` directory.
+- writes the summary, with `divisions` as its description, in JSON format to the `summarized` subdirectory of the `REPORTDIR` directory.
+
+### Track
+
+The `track` module of Testilo selects, organizes, and presents data from summaries to show changes over time in total scores. Changes are shown in a table and also in a line graph on a web page.
+
+#### Invocation
+
+##### By a module
+
+A module can invoke `track()` in this way:
+
+```javaScript
+const {track} = require('testilo/track');
+const trackerDir = `${process.env.FUNCTIONDIR}/track/ttp99a`;
+const {tracker} = require(`${trackerDir}/index`);
+const summary = …;
+const trackReport = track(tracker, summary);
+```
+
+The `track()` function returns an HTML tracking report that shows data for all of the audits in the summary. The invoking module can further dispose of the report as needed.
+
+##### By a user
+
+A user can invoke `track()` in this way:
+
+```javaScript
+node call track ttp99a 241016T2045-Uf-0 4 'ABC Foundation'
+```
+
+When a user invokes `track()` in this example, the `call` module:
+- gets the summary from the `241016T2045-Uf-0.json` file in the `summarized` subdirectory of the `REPORTDIR` directory.
+- selects the summarized data for all audits with the `order` value of `'4'` and the `target.what` value of `'ABC Foundation'`. If the third or fourth argument to `call()` is `null` (or omitted), then `call()` does not select audits by `order` or by `target.what`, respectively.
+- uses tracker `ttp99a` to create a tracking report.
+- writes the tracking report to the `tracking` subdirectory of the `REPORTDIR` directory.
+
+The tracking reports created by `track()` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/tracking/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where tracking reports are written.
 
 ## Origin
 

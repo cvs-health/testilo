@@ -36,6 +36,8 @@ const {difgest} = require('./difgest');
 const {compare} = require('./compare');
 // Function to summarize reports.
 const {summarize} = require('./summarize');
+// Function to track audits.
+const {track} = require('./track');
 
 // ########## CONSTANTS
 
@@ -153,8 +155,7 @@ const callDigest = async (digesterID, selector = '') => {
   // If any exist:
   if (reports.length) {
     // Get the digester.
-    const digesterDir = `${functionDir}/digest/${digesterID}`;
-    const {digester} = require(`${digesterDir}/index`);
+    const {digester} = require(`${functionDir}/digest/${digesterID}/index`);
     // Digest the reports.
     const digestedReports = await digest(digester, reports);
     const digestedReportDir = `${reportDir}/digested`;
@@ -172,7 +173,7 @@ const callDigest = async (digesterID, selector = '') => {
     console.log('ERROR: No scored reports to be digested');
   }
 };
-// Fulfills a digesting request.
+// Fulfills a difgesting request.
 const callDifgest = async (difgesterID, reportAID, reportBID) => {
   // Get the scored reports to be difgested.
   const reportAArray = await getReports('scored', reportAID);
@@ -240,7 +241,7 @@ const callCredit = async (tallyID, selector = '') => {
     console.log('ERROR: No scored reports to be tallied');
   }
 };
-// Fulfills a summarize request.
+// Fulfills a summarization request.
 const callSummarize = async (what, selector = '') => {
   // Get the scored reports to be summarized.
   const reports = await getReports('scored', selector);
@@ -255,7 +256,7 @@ const callSummarize = async (what, selector = '') => {
     // Save the summary.
     const summaryDir = `${reportDir}/summarized`;
     await fs.mkdir(summaryDir, {recursive: true}); 
-    const filePath = `${summaryDir}/${summary.timeStamp}-${getRandomString(2)}-0.json`;
+    const filePath = `${summaryDir}/${summary.id}.json`;
     await fs.writeFile(filePath, `${JSON.stringify(summary, null, 2)}\n`);
     console.log(`Reports summarized and summary saved as ${filePath}`);
   }
@@ -263,6 +264,42 @@ const callSummarize = async (what, selector = '') => {
   else {
     // Report this.
     console.log('ERROR: No scored reports to be summarized');
+  }
+};
+// Fulfills a tracking request.
+const callTrack = async (trackerID, summaryID, orderID, targetWhat) => {
+  // Get the summary.
+  try {
+    const summaryJSON = await fs.readFile(`${reportDir}/summarized/${summaryID}.json`, 'utf8');
+    const summary = JSON.parse(summaryJSON);
+    // Remove unwanted audits from it.
+    summary.data = summary.data.filter(audit => {
+      if (orderID && audit.order !== orderID) {
+        return false;
+      }
+      if (targetWhat && audit.target && audit.target.what !== targetWhat) {
+        return false;
+      }
+      return true;
+    });
+    // If any audits remain:
+    if (summary.data.length) {
+      // Get the tracker.
+      const {tracker} = require(`${functionDir}/track/${trackerID}/index`);
+      // Track the audits.
+      const trackingReport = await track(tracker, summary);
+      // Save the tracking report.
+      const reportPath = `${reportDir}/tracking/${trackingReport.id}.html`;
+      await fs.writeFile(reportPath, trackingReport);
+      console.log(`Tracking report saved in ${reportPath}`);
+    }
+    // Otherwise, i.e. if no audits remain:
+    else {
+      console.log('ERROR: No audits match the request');
+    }
+  }
+  catch(error) {
+    console.log(`ERROR: Tracking request invalid (${error.message})`);
   }
 };
 
@@ -325,6 +362,12 @@ else if (fn === 'credit' && fnArgs.length > 0 && fnArgs.length < 3) {
 }
 else if (fn === 'summarize' && fnArgs.length > 0 && fnArgs.length < 3) {
   callSummarize(... fnArgs)
+  .then(() => {
+    console.log('Execution completed');
+  });
+}
+else if (fn === 'track' && fnArgs.length > 1 && fnArgs.length < 5) {
+  callTrack(... fnArgs)
   .then(() => {
     console.log('Execution completed');
   });

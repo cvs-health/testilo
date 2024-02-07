@@ -8,7 +8,7 @@
 // Module to keep secrets.
 require('dotenv').config();
 // Module to perform common operations.
-const {getNowStamp} = require('./procs/util');
+const {getFileID} = require('./procs/util');
 
 // ########## FUNCTIONS
 
@@ -27,8 +27,8 @@ exports.summarize = (what, reports) => {
     };
   });
   const summary = {
+    id: getFileID(2),
     what,
-    timeStamp: getNowStamp(),
     data
   };
   return summary;

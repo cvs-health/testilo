@@ -740,7 +740,7 @@ The third argument to `call` (`23pl` in this example) is optional. If it is omit
 
 ### Summarization
 
-The `summarize` module of Testilo can summarize a collection of scored reports. A summary contains, for each report, the report ID, end time, order ID, target description, URL, and total score.
+The `summarize` module of Testilo can summarize a collection of scored reports. The summary of each report contains, insofar as they exist in the report, its ID, end time, order ID, target data, and total score.
 
 #### Invocation
 

@@ -22,8 +22,7 @@ exports.summarize = (what, reports) => {
       id: id || '',
       endTime: jobData && jobData.endTime || '',
       order: order || '',
-      targetWhat: target && target.what || '',
-      targetURL: target && target.url || '',
+      target,
       score: score && score.summary && score.summary.total || null
     };
   });

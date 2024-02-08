@@ -9,7 +9,7 @@ const {issues} = require('../../score/tic40');
 // Module to process files.
 const fs = require('fs/promises');
 // Utility module.
-const {getBarCell} = require('../../util');
+const {getBarCell, getNowDate, getNowDateSlash} = require('../../util');
 
 // CONSTANTS
 
@@ -46,8 +46,8 @@ const getIssueScoreRow = (summary, wcag, scoreA, scoreB, aSuperiorityMax, bSuper
 const populateQuery = (reportA, reportB, query) => {
   // General parameters.
   query.fp = id;
-  query.dateISO = new Date().toISOString().slice(0, 10);
-  query.dateSlash = query.dateISO.replace(/-/g, '/');
+  query.dateISO = getNowDate();
+  query.dateSlash = getNowDateSlash();
   // For each report:
   const issueIDs = new Set();
   [reportA, reportB].forEach((report, index) => {

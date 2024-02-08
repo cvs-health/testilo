@@ -287,9 +287,10 @@ const callTrack = async (trackerID, summaryID, orderID, targetWhat) => {
       // Get the tracker.
       const {tracker} = require(`${functionDir}/track/${trackerID}/index`);
       // Track the audits.
-      const trackingReport = await track(tracker, summary);
+      const [reportID, trackingReport] = await track(tracker, summary);
       // Save the tracking report.
-      const reportPath = `${reportDir}/tracking/${trackingReport.id}.html`;
+      await fs.mkdir(`${reportDir}/tracking`, {recursive: true});
+      const reportPath = `${reportDir}/tracking/${reportID}.html`;
       await fs.writeFile(reportPath, trackingReport);
       console.log(`Tracking report saved in ${reportPath}`);
     }

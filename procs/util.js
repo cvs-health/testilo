@@ -18,7 +18,11 @@ const alphaNumChars = (() => {
 // Returns a string representing a date and time.
 const getTimeString = date => date.toISOString().slice(0, 19);
 // Returns a string representing the date and time.
-exports.getNowString = () => getTimeString(new Date());
+const getNowString = exports.getNowString = () => getTimeString(new Date());
+// Returns a string representing an ISO date.
+const getNowDate = exports.getNowDate = () => getNowString().slice(0, 10);
+// Returns a string representing a date with slashes.
+exports.getNowDateSlash = () => getNowDate().replace(/-/g, '/');
 // Returns a time stamp representing a date and time.
 const getTimeStamp
 = exports.getTimeStamp

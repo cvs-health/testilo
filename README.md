@@ -772,7 +772,7 @@ When a user invokes `summarize` in this example, the `call` module:
 
 ### Track
 
-The `track` module of Testilo selects, organizes, and presents data from summaries to show changes over time in total scores. Changes are shown in a table and also in a line graph on a web page.
+The `track` module of Testilo selects, organizes, and presents data from summaries to show changes over time in total scores. The module produces a web page, showing changes in a table and (in the future) also in a line graph.
 
 #### Invocation
 
@@ -785,10 +785,10 @@ const {track} = require('testilo/track');
 const trackerDir = `${process.env.FUNCTIONDIR}/track/ttp99a`;
 const {tracker} = require(`${trackerDir}/index`);
 const summary = …;
-const trackReport = track(tracker, summary);
+const [reportID, trackReport] = track(tracker, summary);
 ```
 
-The `track()` function returns an HTML tracking report that shows data for all of the audits in the summary. The invoking module can further dispose of the report as needed.
+The `track()` function returns an ID and an HTML tracking report that shows data for all of the results in the summary. The invoking module can further dispose of the report as needed.
 
 ##### By a user
 

@@ -8,6 +8,8 @@ require('dotenv').config();
 const {issues} = require('../../score/tic40');
 // Module to process files.
 const fs = require('fs/promises');
+// Utility module.
+const {getNowDate, getNowDateSlash} = require('../../util');
 
 // CONSTANTS
 
@@ -34,8 +36,8 @@ const populateQuery = (report, query) => {
   query.sp = scoreProcID;
   query.dp = digesterID;
   // Add the job data to the query.
-  query.dateISO = jobData.endTime.slice(0, 8);
-  query.dateSlash = query.dateISO.replace(/-/g, '/');
+  query.dateISO = getNowDate();
+  query.dateSlash = getNowDateSlash();
   query.org = target.what;
   query.url = target.which;
   query.requester = requester;

@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/jrpool/testilo",
   "dependencies": {
-    "dotenv": "*"
+    "dotenv": "*",
+    "@observablehq/plot": "*"
   },
   "devDependencies": {
     "eslint": "*"

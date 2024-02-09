@@ -23,8 +23,12 @@
       <h2>Results as a graph</h2>
       <figure>
         <figcaption>Accessibility scores</figcaption>
-        __svg__
       </figure>
+      <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6"></script>
+      <script type="module">
+        const summaryJSON = __summaryJSON__;
+      </script>
       <h2>Results as a table</h2>
       <table class="allBorder secondCellRight thirdCellRight">
         <caption>Accessibility scores</caption>

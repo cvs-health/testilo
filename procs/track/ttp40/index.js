@@ -27,13 +27,14 @@ const populateQuery = async (id, summary, query) => {
   query.tp = trackerID;
   query.dateISO = getNowDate();
   query.dateSlash = getNowDateSlash();
+  query.summaryJSON = JSON.stringify(summary);
   // Graph.
   const Plot = await import('@observablehq/plot');
   const graphData = [];
   summary.data.forEach(result => {
     graphData.push({
       target: result.target.what,
-      time: `20${result.endTime}Z`,
+      time: new Date(`20${result.endTime}Z`),
       score: result.score
     });
   });

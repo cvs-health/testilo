@@ -751,11 +751,11 @@ A module can invoke `summarize()` in this way:
 ```javaScript
 const {summarize} = require('testilo/summarize');
 const reports = […];
-const summary = summarize(reports);
+const summary = summarize('external', reports);
 …
 ```
 
-The `reports` argument is an array of scored reports. The `summary` constant is an object. The module can further dispose of `summary` as needed.
+The first argument to `summarize()` is a description of the set of summarized repeorts. The `reports` argument is an array of scored reports. The `summary` constant is an object. The module can further dispose of `summary` as needed.
 
 ##### By a user
 

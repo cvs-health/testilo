@@ -1,35 +1,26 @@
 /*
   summarize.js
-  Returns a summary of reports.
+  Returns a summary of a report.
 */
 
 // ########## IMPORTS
 
 // Module to keep secrets.
 require('dotenv').config();
-// Module to perform common operations.
-const {getFileID} = require('./procs/util');
 
 // ########## FUNCTIONS
 
-// Returns a summary.
-exports.summarize = (what, reports) => {
-  const data = reports.map(report => {
-    const {id, jobData, score, sources} = report;
-    const order = sources && sources.order || '';
-    const target = sources && sources.target || '';
-    return {
-      id: id || '',
-      endTime: jobData && jobData.endTime || '',
-      order: order || '',
-      target,
-      score: score && score.summary && score.summary.total || null
-    };
-  });
+// Returns a report summary.
+exports.summarize = report => {
+  const {id, jobData, score, sources} = report;
+  const order = sources && sources.order || '';
+  const target = sources && sources.target || '';
   const summary = {
-    id: getFileID(2),
-    what,
-    data
+    id: id || '',
+    endTime: jobData && jobData.endTime || '',
+    order: order || '',
+    target,
+    score: score && score.summary && score.summary.total || null
   };
   return summary;
 };

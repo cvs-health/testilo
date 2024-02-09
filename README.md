@@ -428,11 +428,11 @@ Testilo can enhance such a report by:
 
 ### Scoring
 
-To add scores to reports, the `score` module of Testilo performs computations on the test results and adds a `score` property to each report.
+The `score` module of Testilo performs computations on test results and adds a `score` property to a report.
 
 The `score()` function of the `score` module takes two arguments:
 - a scoring function
-- an array of report objects
+- a report object
 
 A scoring function defines scoring rules. The Testilo package contains a `procs/score` directory, in which there are modules that export scoring functions. You can use one of those scoring functions, or you can create your own.
 
@@ -493,15 +493,15 @@ A module can invoke `score()` in this way:
 ```javaScript
 const {score} = require('testilo/score');
 const {scorer} = require('testilo/procs/score/tsp99');
-const reports = …;
-score(scorer, reports);
+const report = …;
+score(scorer, report);
 ```
 
 The first argument to `score()` is a scoring function. In this example, it has been obtained from a module in the Testilo package, but it could be a custom function.
 
-The second argument to `score()` is an array of report objects. They may have been read from JSON   files and parsed, or the array may contain a single report object parsed from the body of a `POST` request received from a Testaro agent.
+The second argument to `score()` is a report object. It may have been read from a JSON file and parsed, or parsed from the body of a `POST` request received from a Testaro agent.
 
-The invoking module can further dispose of the scored reports as needed.
+The invoking module can further dispose of the scored report as needed.
 
 ##### By a user
 
@@ -509,15 +509,14 @@ A user can invoke `score()` in this way:
 
 ```bash
 node call score tsp99
-node call score tsp99 75m
+node call score tsp99 240922
 ```
 
 When a user invokes `score()` in this example, the `call` module:
 - gets the scoring module `tsp99` from its JSON file `tsp99.json` in the `score` subdirectory of the `FUNCTIONDIR` directory.
-- gets the reports from the `raw` subdirectory of the `REPORTDIR` directory.
-- writes the scored reports in JSON format to the `scored` subdirectory of the `REPORTDIR` directory.
-
-The optional third argument to `call()` (`75m` in this example) is a report selector. Without the argument, `call()` gets all the reports in the `raw` subdirectory. With the argument, `call()` gets only those reports whose names begin with the argument string.
+- gets all reports, or if the third argument to `call()` exists the reports whose file names begin with `'240922'`, from the `raw` subdirectory of the `REPORTDIR` directory.
+- adds score data to each report.
+- writes each scored report in JSON format to the `scored` subdirectory of the `REPORTDIR` directory.
 
 #### Validation
 
@@ -530,11 +529,11 @@ To test the `score` module, in the project directory you can execute the stateme
 Reports from Testaro are JavaScript objects. When represented as JSON, they are human-readable, but not human-friendly. They are basically designed for machine tractability. This is equally true for reports that have been scored by Testilo. But Testilo can _digest_ a scored report, converting it to a human-oriented HTML document, or _digest_.
 
 The `digest` module digests a scored report. Its `digest()` function takes three arguments:
-- a digesting function
-- an array of scored report objects
+- a digester (a digesting function)
+- a scored report object
 - the URL of a directory containing the scored reports
 
-The digesting function populates an HTML digest template. A copy of the template, with its placeholders replaced by computed values, becomes the digest. The digesting function defines the rules for replacing the placeholders with values. The Testilo package contains a `procs/digest` directory, in which there are subdirectories, each containing a template and a module that exports a digesting function. You can use one of those modules, or you can create your own.
+The digester populates an HTML digest template. A copy of the template, with its placeholders replaced by computed values, becomes the digest. The digester defines the rules for replacing the placeholders with values. The Testilo package contains a `procs/digest` directory, in which there are subdirectories, each containing a template and a module that exports a digester. You can use one of those modules, or you can create your own.
 
 The included templates format placeholders with leading and trailing underscore pairs (such as `__issueCount__`).
 
@@ -550,19 +549,19 @@ A module can invoke `digest()` in this way:
 const {digest} = require('testilo/digest');
 const digesterDir = `${process.env.FUNCTIONDIR}/digest/tdp99a`;
 const {digester} = require(`${digesterDir}/index`);
-const scoredReports = …;
+const scoredReport = …;
 const reportDirURL = 'https://xyz.org/a11yTesting/reports';
-digest(digester, scoredReports, reportDirURL)
-.then(digestedReports => {…});
+digest(digester, scoredReport, reportDirURL)
+.then(digestedReport => {…});
 ```
 
-The first argument to `digest()` is a digesting function. In this example, it has been obtained from a file in the Testilo package, but it could be custom-made.
+The first argument to `digest()` is a digester. In this example, it has been obtained from a file in the Testilo package, but it could be custom-made.
 
-The second argument to `digest()` is an array of scored report objects. They may have been read from JSON files and parsed, or the array may contain a single scored report output by `score()`.
+The second argument to `digest()` is a scored report object. It may have been read from a JSON file and parsed, or may be a scored report output by `score()`.
 
-The third argument is the absolute or relative URL of a directory where the reports being digested are located. The `digest()` function needs that URL because a digest includes a link to the full report. The link concatenates the directory URL with the report ID and a `.json` suffix.
+The third argument is the absolute or relative URL of a directory where the reports being digested are located. The `digest()` function needs that URL because a digest includes a link to the full scored report. The link concatenates the directory URL with the report ID and a `.json` suffix.
 
-The `digest()` function returns an array of digested reports. The invoking module can further dispose of the digested reports as needed.
+The `digest()` function returns a promise resolved with a digest. The invoking module can further dispose of the digest as needed.
 
 ##### By a user
 
@@ -570,18 +569,15 @@ A user can invoke `digest()` in this way:
 
 ```bash
 node call digest tdp99
-node call digest tdp99 75m
+node call digest tdp99 241105
 ```
 
 When a user invokes `digest()` in this example, the `call` module:
 - gets the template and the digesting module from subdirectory `tdp99` in the `digest` subdirectory of the `FUNCTIONDIR` directory.
-- gets the reports from the `scored` subdirectory of the `REPORTDIR` directory.
+- gets all reports, or if the third argument to `call()` exists all reports whose file names begin with `'241105'`, from the `scored` subdirectory of the `REPORTDIR` directory.
+- digests each report.
 - writes the digested reports to the `digested` subdirectory of the `REPORTDIR` directory.
-- includes in each digest a link to the scored report, with the link destination being based on `DIGEST_URL`.
-
-The third argument to `call()` can be an absolute URL, as shown, or a URL that is relative to the URL of the digest. For example, if it is known that the scored reports and the digests will inhabit the same directory and be retrievable with identical URLs except for the file extensions, then the third argument can be `./`.
-
-The optional fourth argument to `call()` (`75m` in this example) is a report selector. Without the argument, `call` gets all the reports in the `scored` subdirectory of the `REPORTDIR` directory. With the argument, `call` gets only those reports whose names begin with the argument string.
+- includes in each digest a link to the scored report, with the link destination being based on `SCORED_REPORT_URL`.
 
 The digests created by `digest()` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/digested/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where digested reports are written.
 
@@ -740,7 +736,7 @@ The third argument to `call` (`23pl` in this example) is optional. If it is omit
 
 ### Summarization
 
-The `summarize` module of Testilo can summarize a collection of scored reports. The summary of each report contains, insofar as they exist in the report, its ID, end time, order ID, target data, and total score.
+The `summarize` module of Testilo can summarize a scored report. The summary contains, insofar as they exist in the report, its ID, end time, order ID, target data, and total score.
 
 #### Invocation
 
@@ -750,12 +746,12 @@ A module can invoke `summarize()` in this way:
 
 ```javaScript
 const {summarize} = require('testilo/summarize');
-const reports = […];
-const summary = summarize('external', reports);
+const reports = …;
+const summary = summarize(report);
 …
 ```
 
-The first argument to `summarize()` is a description of the set of summarized repeorts. The `reports` argument is an array of scored reports. The `summary` constant is an object. The module can further dispose of `summary` as needed.
+The `reports` argument is a scored report. The `summary` constant is an object. The module can further dispose of `summary` as needed.
 
 ##### By a user
 
@@ -768,7 +764,10 @@ node call summarize divisions 2411
 
 When a user invokes `summarize` in this example, the `call` module:
 - gets all the reports in the `scored` subdirectory of the `REPORTDIR` directory, or (if the third argument is present) all those whose file names begin with `2411`.
-- writes the summary, with `divisions` as its description, in JSON format to the `summarized` subdirectory of the `REPORTDIR` directory.
+- creates a summary of each report.
+- combines the summaries into an array.
+- creates an object containing three properties: an ID, a description (here `'divisions'`), and the array of summaries.
+- writes the object in JSON format to the `summarized` subdirectory of the `REPORTDIR` directory, using the ID as the base of the file name.
 
 ### Track
 

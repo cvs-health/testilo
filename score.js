@@ -1,20 +1,15 @@
 /*
   score.js
-  Scores Testaro reports.
+  Scores a Testaro report.
   Arguments:
     0. Scoring function.
-    1. Array of reports.
+    1. Report.
 */
 
 // ########## FUNCTIONS
 
-// Scores the specified raw reports.
-exports.score = (scorer, reports) => {
-  // For each report:
-  for (const report of reports) {
-    // Score it.
-    scorer(report);
-    console.log(`Report ${report.id} scored`);
-  }
-  console.log(`Scoring complete; report count ${reports.length}`);
+// Scores the specified raw report.
+exports.score = (scorer, report) => {
+  scorer(report);
+  console.log(`Report ${report.id} scored`);
 };

@@ -106,42 +106,41 @@ const callMerge = async (
   const truncatedID = `${jobs[0].timeStamp}-${jobs[0].mergeID}-…`;
   console.log(`Script ${scriptID} and batch ${batchID} merged as ${truncatedID} in ${subdir}`);
 };
-// Gets selected reports.
-const getReports = async (type, selector = '') => {
+// Gets the file base names (equal to the IDs) of the selected reports.
+const getReportIDs = async (type, selector = '') => {
   const allFileNames = await fs.readdir(`${reportDir}/${type}`);
   const reportIDs = allFileNames
   .filter(fileName => fileName.endsWith('.json'))
   .filter(fileName => fileName.startsWith(selector))
   .map(fileName => fileName.slice(0, -5));
-  const reports = [];
-  for (const reportID of reportIDs) {
-    const reportJSON = await fs.readFile(`${reportDir}/${type}/${reportID}.json`, 'utf8');
-    const report = JSON.parse(reportJSON);
-    reports.push(report);
-  }
-  return reports;
+  return reportIDs;
+};
+// Gets and returns a report.
+const getReport = async (type, id) => {
+  const reportJSON = await fs.readFile(`${reportDir}/${type}/${id}.json`, 'utf8');
+  const report = JSON.parse(reportJSON);
+  return report;
 };
 // Fulfills a scoring request.
 const callScore = async (scorerID, selector = '') => {
   // Get the raw reports to be scored.
-  const reports = await getReports('raw', selector);
+  const reportIDs = await getReportIDs('raw', selector);
   // If any exist:
-  if (reports.length) {
+  if (reportIDs.length) {
     // Get the scorer.
     const {scorer} = require(`${functionDir}/score/${scorerID}`);
-    // Score the reports.
-    score(scorer, reports);
+    // Score and save the reports.
     const scoredReportDir = `${reportDir}/scored`;
     await fs.mkdir(scoredReportDir, {recursive: true});
-    // For each scored report:
-    for (const report of reports) {
-      // Save it.
+    for (const reportID of reportIDs) {
+      const report = await getReport('raw', reportID);
+      score(scorer, report);
       await fs.writeFile(
-        `${scoredReportDir}/${report.id}.json`, `${JSON.stringify(report, null, 2)}\n`
+        `${scoredReportDir}/${reportID}.json`, `${JSON.stringify(report, null, 2)}\n`
       );
-    };
-    console.log(`Reports scored and saved in ${scoredReportDir}`);
     }
+    console.log(`Reports scored and saved in ${scoredReportDir}`);
+  }
   // Otherwise, i.e. if no raw reports are to be scored:
   else {
     // Report this.

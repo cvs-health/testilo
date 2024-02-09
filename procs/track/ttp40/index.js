@@ -21,12 +21,42 @@ const digestURL = process.env.DIGEST_URL;
 // FUNCTIONS
 
 // Adds parameters to a query for a tracking report.
-const populateQuery = (id, summary, query) => {
+const populateQuery = async (id, summary, query) => {
   // General parameters.
   query.id = id;
   query.tp = trackerID;
   query.dateISO = getNowDate();
   query.dateSlash = getNowDateSlash();
+  // Graph.
+  const Plot = await import('@observablehq/plot');
+  const graphData = [];
+  summary.data.forEach(result => {
+    graphData.push({
+      target: result.target.what,
+      time: `20${result.endTime}Z`,
+      score: result.score
+    });
+  });
+  query.svg = Plot.plot({
+    style: 'overflow: visible;',
+    y: {grid: true},
+    marks: [
+      Plot.ruleY([0]),
+      Plot.lineY(graphData, {
+        x: 'time',
+        y: 'score',
+        stroke: 'target'
+      }),
+      Plot.text(graphData, Plot.selectLast({
+        x: 'time',
+        y: 'score',
+        z: 'target',
+        text: 'target',
+        textAnchor: 'start',
+        dx: 3
+      }))
+    ]
+  });
   // For each score:
   const rows = [];
   const results = summary.data;
@@ -51,7 +81,7 @@ const populateQuery = (id, summary, query) => {
 exports.tracker = async (id, summary) => {
   // Create a query to replace placeholders.
   const query = {};
-  populateQuery(id, summary, query);
+  await populateQuery(id, summary, query);
   // Get the template.
   let template = await fs.readFile(`${__dirname}/index.html`, 'utf8');
   // Replace its placeholders.

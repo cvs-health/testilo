@@ -19,15 +19,46 @@
       </header>
       <h2>Introduction</h2>
       <p>This is tracking report <code>__id__</code>.</p>
-      <p>It tracks accessibility scores over time. A perfect score is 0. The tracking was performed by procedure __tp__.</p>
+      <p>It tracks accessibility scores over time. A perfect score is 0. The tracking was performed by Testilo procedure __tp__.</p>
+      <p>The results are presented first as a graph, and then as a table.</p>
       <h2>Results as a graph</h2>
-      <figure>
+      <figure id="graph">
         <figcaption>Accessibility scores</figcaption>
       </figure>
       <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
       <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6"></script>
       <script type="module">
         const summaryJSON = __summaryJSON__;
+        const summary = JSON.parse(summaryJSON);
+        const graphData = [];
+        summary.data.forEach(result => {
+          graphData.push({
+            target: result.target.what,
+            time: new Date(`20${result.endTime}Z`),
+            score: result.score
+          });
+        });
+        const svg = Plot.plot({
+          style: 'overflow: visible;',
+          y: {grid: true},
+          marks: [
+            Plot.ruleY([0]),
+            Plot.lineY(graphData, {
+              x: 'time',
+              y: 'score',
+              stroke: 'target'
+            }),
+            Plot.text(graphData, Plot.selectLast({
+              x: 'time',
+              y: 'score',
+              z: 'target',
+              text: 'target',
+              textAnchor: 'start',
+              dx: 3
+            }))
+          ]
+        });
+        document.getElementById('graph').insertAdjacentElement('beforeend', svg);
       </script>
       <h2>Results as a table</h2>
       <table class="allBorder secondCellRight thirdCellRight">

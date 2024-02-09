@@ -27,37 +27,13 @@ const populateQuery = async (id, summary, query) => {
   query.tp = trackerID;
   query.dateISO = getNowDate();
   query.dateSlash = getNowDateSlash();
-  query.summaryJSON = JSON.stringify(summary);
-  // Graph.
-  const Plot = await import('@observablehq/plot');
-  const graphData = [];
+  // JSON of pruned summary.
   summary.data.forEach(result => {
-    graphData.push({
-      target: result.target.what,
-      time: new Date(`20${result.endTime}Z`),
-      score: result.score
-    });
+    delete result.id;
+    delete result.target.id;
+    delete result.target.which;
   });
-  query.svg = Plot.plot({
-    style: 'overflow: visible;',
-    y: {grid: true},
-    marks: [
-      Plot.ruleY([0]),
-      Plot.lineY(graphData, {
-        x: 'time',
-        y: 'score',
-        stroke: 'target'
-      }),
-      Plot.text(graphData, Plot.selectLast({
-        x: 'time',
-        y: 'score',
-        z: 'target',
-        text: 'target',
-        textAnchor: 'start',
-        dx: 3
-      }))
-    ]
-  });
+  query.summaryJSON = JSON.stringify(summary);
   // For each score:
   const rows = [];
   const results = summary.data;

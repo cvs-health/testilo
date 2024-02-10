@@ -199,7 +199,7 @@ const callDigest = async (digesterID, selector = '') => {
         const digestedReport = await digest(digester, report);
         await fs.writeFile(`${digestDir}/${reportID}.html`, digestedReport);
       };
-      console.log(`Reports digested and saved in ${digestedReportDir}`);
+      console.log(`Reports digested and saved in ${digestDir}`);
     }
     catch(error) {
       console.log(`ERROR digesting reports (${error.message})`);

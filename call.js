@@ -252,7 +252,7 @@ const callSummarize = async (what, selector = '') => {
     // For each report to be summarized:
     for (const reportID of reportIDs) {
       // Get it.
-      const report = getReport('scored', reportID);
+      const report = await getReport('scored', reportID);
       // Add a summary of it to the summary report.
       const summary = summarize(report);
       summaryReport.data.push(summary);
@@ -261,7 +261,7 @@ const callSummarize = async (what, selector = '') => {
     const summaryDir = `${reportDir}/summarized`;
     await fs.mkdir(summaryDir, {recursive: true}); 
     const filePath = `${summaryDir}/${summaryReport.id}.json`;
-    await fs.writeFile(filePath, `${JSON.stringify(summary, null, 2)}\n`);
+    await fs.writeFile(filePath, `${JSON.stringify(summaryReport, null, 2)}\n`);
     console.log(`Reports summarized and summary report saved as ${filePath}`);
   }
   // Otherwise, i.e. if no scored reports are to be summarized:

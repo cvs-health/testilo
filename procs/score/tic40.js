@@ -5801,6 +5801,13 @@ exports.issues = {
     wcag: '2.5.5',
     weight: 3,
     tools: {
+      alfa: {
+        r111: {
+          variable: false,
+          quality: 1,
+          what: 'Target size is substandard'
+        }
+      },
       testaro: {
         targetSize: {
           variable: false,

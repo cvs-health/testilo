@@ -1,16 +1,16 @@
 /*
   compare.js
-  Creates a comparison from scored reports.
+  Creates a comparison from a summary report.
   Arguments:
     0. Comparing function.
-    1. Array of scored reports.
+    1. Summary report.
 */
 
 // ########## FUNCTIONS
 
-// Compares the scored reports and returns a comparison.
-exports.compare = async (comparer, scoredReports) => {
+// Compares the summarized reports and returns a comparison.
+exports.compare = async (id, what, comparer, summaryReport) => {
   // Return the comparison.
-  console.log(`Comparison complete. Report count: ${scoredReports.length}`);
-  return comparer(scoredReports);
+  console.log(`Comparison complete. Report count: ${summaryReport.data.length}`);
+  return comparer(id, what, summaryReport);
 };

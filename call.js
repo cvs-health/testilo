@@ -17,7 +17,7 @@
 // Module to keep secrets.
 require('dotenv').config();
 // Module to perform common operations.
-const {getNowStamp, getRandomString} = require('./procs/util');
+const {getFileID, getNowStamp, getRandomString} = require('./procs/util');
 // Function to process files.
 const fs = require('fs/promises');
 // Function to process a list-to-batch conversion.
@@ -50,6 +50,12 @@ const fnArgs = process.argv.slice(3);
 
 // ########## FUNCTIONS
 
+// Gets a summary report.
+const getSummaryReport = async selector => {
+  const summaryReportNames = await fs.readdir(`${reportDir}/summarized`);
+  const summaryReportName = summaryReportNames.find(reportName => reportName.startsWith(selector));
+  return summaryReportName;
+};
 // Converts a target list to a batch.
 const callBatch = async (id, what) => {
   // Get the target list.
@@ -149,20 +155,19 @@ const callScore = async (scorerID, selector = '') => {
 };
 // Fulfills a digesting request.
 const callDigest = async (digesterID, selector = '') => {
-  // Get the scored reports to be digested.
-  const reports = await getReports('scored', selector);
+  // Get the base base names (equal to the IDs) of the scored reports to be digested.
+  const reportIDs = await getReportIDs('scored', selector);
   // If any exist:
-  if (reports.length) {
+  if (reportIDs.length) {
     // Get the digester.
     const {digester} = require(`${functionDir}/digest/${digesterID}/index`);
-    // Digest the reports.
-    const digestedReports = await digest(digester, reports);
-    const digestedReportDir = `${reportDir}/digested`;
-    await fs.mkdir(digestedReportDir, {recursive: true});
-    // For each digested report:
-    for (const reportID of Object.keys(digestedReports)) {
-      // Save it.
-      await fs.writeFile(`${digestedReportDir}/${reportID}.html`, digestedReports[reportID]);
+    // Digest and save the reports.
+    const digestDir = `${reportDir}/digested`;
+    await fs.mkdir(digestDir, {recursive: true});
+    for (const reportID of reportIDs) {
+      const report = await getReport('scored', reportID);
+      const digest = await digest(digester, report);
+      await fs.writeFile(`${digestDir}/${reportID}.html`, digest);
     };
     console.log(`Reports digested and saved in ${digestedReportDir}`);
   }
@@ -175,10 +180,8 @@ const callDigest = async (digesterID, selector = '') => {
 // Fulfills a difgesting request.
 const callDifgest = async (difgesterID, reportAID, reportBID) => {
   // Get the scored reports to be difgested.
-  const reportAArray = await getReports('scored', reportAID);
-  const reportBArray = await getReports('scored', reportBID);
-  const reportA = reportAArray[0];
-  const reportB = reportBArray[0];
+  const reportA = await getReport('scored', reportAID);
+  const reportB = await getReport('scored', reportBID);
   // If both exist:
   if (reportAID && reportBID) {
     // Get the difgester.
@@ -200,69 +203,89 @@ const callDifgest = async (difgesterID, reportAID, reportBID) => {
     console.log('ERROR: No pair of scored reports to be digested');
   }
 };
-// Fulfills a comparison request.
-// Get the scored reports to be scored.
-const callCompare = async (compareProcID, comparisonNameBase, selector = '') => {
-  const reports = await getReports('scored', selector);
-  // If any exist:
-  if (reports.length) {
-    // Get the comparer.
-    const comparerDir = `${functionDir}/compare/${compareProcID}`;
-    const {comparer} = require(`${comparerDir}/index`);
-    // Compare the reports.
-    const comparison = await compare(comparer, reports);
-    // Save the comparison.
-    const comparisonDir = `${reportDir}/comparative`;
-    await fs.mkdir(comparisonDir, {recursive: true}); 
-    await fs.writeFile(`${comparisonDir}/${comparisonNameBase}.html`, comparison);
-    console.log(`Comparison completed and saved in ${comparisonDir}`);
-  }
-};
-// Fulfills a credit request.
-const callCredit = async (tallyID, selector = '') => {
-  // Get the scored reports to be tallied.
-  const reports = await getReports('scored', selector);
-  // If any exist:
-  if (reports.length) {
-    // Get the tallier.
-    const {credit} = require(`${functionDir}/analyze/credit`);
-    // Tally the reports.
-    const tally = credit(reports);
-    // Save the tally.
-    const creditDir = `${reportDir}/credit`;
-    await fs.mkdir(creditDir, {recursive: true}); 
-    await fs.writeFile(`${creditDir}/${tallyID}.json`, JSON.stringify(tally, null, 2));
-    console.log(`Reports tallied and credit report ${tallyID} saved in ${creditDir}`);
-  }
-  // Otherwise, i.e. if no scored reports are to be tallied:
-  else {
-    // Report this.
-    console.log('ERROR: No scored reports to be tallied');
-  }
-};
 // Fulfills a summarization request.
 const callSummarize = async (what, selector = '') => {
-  // Get the scored reports to be summarized.
-  const reports = await getReports('scored', selector);
+  // Get the IDs of the scored reports to be summarized.
+  const reportIDs = await getReportIDs('scored', selector);
   // If any exist:
-  if (reports.length) {
-    // Summarize them.
-    const summary = summarize(what, reports);
-    // Add the selector, if any, to the summary.
-    if (selector) {
-      summary.selector = selector;
-    }
-    // Save the summary.
+  if (reportIDs.length) {
+    // Initialize a summary report.
+    const summaryReport = {
+      id: getFileID(2),
+      what,
+      data: []
+    };
+    // For each report to be summarized:
+    for (const reportID of reportIDs) {
+      // Get it.
+      const report = getReport('scored', reportID);
+      // Add a summary of it to the summary report.
+      const summary = summarize(report);
+      summaryReport.data.push(summary);
+    };
+    // Save the summary report.
     const summaryDir = `${reportDir}/summarized`;
     await fs.mkdir(summaryDir, {recursive: true}); 
-    const filePath = `${summaryDir}/${summary.id}.json`;
+    const filePath = `${summaryDir}/${summaryReport.id}.json`;
     await fs.writeFile(filePath, `${JSON.stringify(summary, null, 2)}\n`);
-    console.log(`Reports summarized and summary saved as ${filePath}`);
+    console.log(`Reports summarized and summary report saved as ${filePath}`);
   }
   // Otherwise, i.e. if no scored reports are to be summarized:
   else {
     // Report this.
     console.log('ERROR: No scored reports to be summarized');
+  }
+};
+// Fulfills a comparison request.
+const callCompare = async (what, compareProcID, selector) => {
+  // Get the specified summary report.
+  const summaryReport = await getSummaryReport(selector);
+  // If it exists:
+  if (summaryReport) {
+    // Get the comparer.
+    const comparerDir = `${functionDir}/compare/${compareProcID}`;
+    const {comparer} = require(`${comparerDir}/index`);
+    // Compare the reports and save the comparison.
+    const comparisonDir = `${reportDir}/comparative`;
+    await fs.mkdir(comparisonDir, {recursive: true}); 
+    const id = getFileID(2);
+    const comparison = await compare(id, what, comparer, summaryReport);
+    const comparisonPath = `${comparisonDir}/${id}.html`;
+    await fs.writeFile(comparisonPath, comparison);
+      console.log(`Comparison completed and saved as ${comparisonPath}`);
+  }
+};
+// Fulfills a credit request.
+const callCredit = async (what, selector = '') => {
+  // Get the scored reports to be tallied.
+  const reportIDs = await getReportIDs('scored', selector);
+  // If any exist:
+  if (reportIDs.length) {
+    // Get the creditor.
+    const {credit} = require(`${functionDir}/analyze/credit`);
+    // Get, prune, and collect the reports to be credited.
+    const reports = [];
+    for (const id of reportIDs) {
+      const report = await getReport('scored', id);
+      ['acts', 'sources', 'jobData'].forEach(property => {
+        delete report[property];
+      });
+      reports.push(report);
+    }
+    // Credit the reports.
+    const tally = credit(reports);
+    // Save the tally.
+    const creditDir = `${reportDir}/credit`;
+    await fs.mkdir(creditDir, {recursive: true});
+    const creditReportID = getFileID(2);
+    const reportPath = `${creditDir}/${creditReportID}.json`;
+    await fs.writeFile(reportPath, JSON.stringify(tally, null, 2));
+    console.log(`Reports credited and credit report saved as ${reportPath}`);
+  }
+  // Otherwise, i.e. if no scored reports are to be credited:
+  else {
+    // Report this.
+    console.log('ERROR: No scored reports to be credited');
   }
 };
 // Fulfills a tracking request.
@@ -348,7 +371,13 @@ else if (fn === 'difgest' && fnArgs.length === 3) {
     console.log('Execution completed');
   });
 }
-else if (fn === 'compare' && fnArgs.length > 1 && fnArgs.length < 4) {
+else if (fn === 'summarize' && fnArgs.length > 0 && fnArgs.length < 3) {
+  callSummarize(... fnArgs)
+  .then(() => {
+    console.log('Execution completed');
+  });
+}
+else if (fn === 'compare' && fnArgs.length === 3) {
   callCompare(... fnArgs)
   .then(() => {
     console.log('Execution completed');
@@ -356,12 +385,6 @@ else if (fn === 'compare' && fnArgs.length > 1 && fnArgs.length < 4) {
 }
 else if (fn === 'credit' && fnArgs.length > 0 && fnArgs.length < 3) {
   callCredit(... fnArgs)
-  .then(() => {
-    console.log('Execution completed');
-  });
-}
-else if (fn === 'summarize' && fnArgs.length > 0 && fnArgs.length < 3) {
-  callSummarize(... fnArgs)
   .then(() => {
     console.log('Execution completed');
   });

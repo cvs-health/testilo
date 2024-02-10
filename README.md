@@ -642,13 +642,48 @@ Difgests expect a `style.css` file to exist in their directory, as digests do.
 
 To test the `digest` module, in the project directory you can execute the statement `node validation/digest/validate`. If `digest` is valid, all logging statements will begin with “Success” and none will begin with “ERROR”.
 
-### Report comparison
+### Summarization
 
-If you use Testilo to perform a battery of tests on multiple targets, you may want a single report that compares the total scores received by the targets. Testilo can produce such a _comparative report_.
+The `summarize` module of Testilo can summarize a scored report. The summary contains, insofar as they exist in the report, its ID, end time, order ID, target data, and total score.
 
-The `compare` module compares the scores in a collection of scored reports. Its `compare()` function takes two arguments:
+#### Invocation
+
+##### By a module
+
+A module can invoke `summarize()` in this way:
+
+```javaScript
+const {summarize} = require('testilo/summarize');
+const report = …;
+const summary = summarize(report);
+…
+```
+
+The `report` argument is a scored report. The `summary` constant is an object. The module can further dispose of `summary` as needed.
+
+##### By a user
+
+A user can invoke `summarize()` in either of these two ways:
+
+```javaScript
+node call summarize divisions
+node call summarize divisions 2411
+```
+
+When a user invokes `summarize` in this example, the `call` module:
+- gets all the reports in the `scored` subdirectory of the `REPORTDIR` directory, or (if the third argument is present) all those whose file names begin with `2411`.
+- creates a summary of each report.
+- combines the summaries into an array.
+- creates a _summary report_, an object containing three properties: an ID, a description (here `'divisions'`), and the array of summaries.
+- writes the summary report in JSON format to the `summarized` subdirectory of the `REPORTDIR` directory, using the ID as the base of the file name.
+
+### Comparison
+
+If you use Testilo to perform a battery of tests on multiple targets, you may want a single report that compares the total scores received by the targets. Testilo can produce such a _comparison_.
+
+The `compare` module compares the scores in a summary of scored reports. Its `compare()` function takes two arguments:
 - a comparison function
-- an array of scored reports
+- a summary report
 
 The comparison function defines the rules for generating an HTML file comparing the scored reports. The Testilo package contains a `procs/compare` directory, in which there are subdirectories containing modules that export comparison functions. You can use one of those functions, or you can create your own.
 
@@ -664,25 +699,27 @@ A module can invoke `compare()` in this way:
 const {compare} = require('testilo/compare');
 const comparerDir = `${process.env.FUNCTIONDIR}/compare/tcp99`;
 const {comparer} = require(`${comparerDir}/index`);
-compare(comparer, scoredReports)
+const id = …;
+compare(id, comparer, summaryReport)
 .then(comparison => {…});
 ```
 
-The first argument to `compare()` is a comparison function. In this example, it been obtained from a file in the Testilo package, but it could be custom-made. The second argument to `compare()` is an array of report objects. The `compare()` function returns a comparative report. The invoking module can further dispose of the comparative report as needed.
+The first argument to `compare()` is an ID that will be named in the comparison. The second argument is a comparison function. In this example, it been obtained from a file in the Testilo package, but it could be custom-made. The third argument is a summary report. The `compare()` function returns a comparison. The invoking module can further dispose of the comparison as needed.
 
 ##### By a user
 
 A user can invoke `compare()` in this way:
 
 ```bash
-node call compare tcp99 legislators
-node call compare tcp99 legislators 23pl
+node call compare 'state legislators' tcp99 240813
 ```
 
 When a user invokes `compare` in this example, the `call` module:
 - gets the comparison module from subdirectory `tcp99` of the subdirectory `compare` in the `FUNCTIONDIR` directory.
-- gets all the reports in the `scored` subdirectory of the `REPORTDIR` directory, or, if there is a fourth argument, whose file names begin with `23pl`.
-- writes the comparative report as an HTML file named `legislators.html` to the `comparative` subdirectory of the `REPORTDIR` directory.
+- gets the summary report whose file name begins with `'240813'` from the `summarized` subdirectory of the `REPORTDIR` directory.
+- creates an ID for the comparison.
+- creates the comparison as an HTML document.
+- writes the comparison in the `comparative` subdirectory of the `REPORTDIR` directory, with `state legislators` as a description and the ID as the base of the file name.
 
 The comparative report created by `compare` is an HTML file, and it expects a `style.css` file to exist in its directory. The `reports/comparative/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where comparative reports are written.
 
@@ -718,56 +755,22 @@ credit(scoredReports)
 .then(creditReport => {…});
 ```
 
-The argument to `credit()` is an array of scored report objects. The `credit()` function returns a credit report. The invoking module can further dispose of the credit report as needed.
+The argument to `credit()` is an array of scored report objects. It is possible for the calling module to have deleted the `acts`, `sources`, and `jobData` properties of each scored report to mitigate the demand on memory. The `credit()` function returns a credit report. The invoking module can further dispose of the credit report as needed.
 
 ##### By a user
 
-A user can invoke `credit()` in this way:
+A user can invoke `credit()` in one of these ways:
 
 ```bash
-node call credit legislators 23pl
+node call credit legislators
+node call credit legislators 241106
 ```
 
 When a user invokes `credit` in this example, the `call` module:
-- gets all the reports in the `scored` subdirectory of the `REPORTDIR` directory whose file names begin with `23pl`.
-- writes the credit report as a JSON file named `legislators.json` to the `credit` subdirectory of the `REPORTDIR` directory.
-
-The third argument to `call` (`23pl` in this example) is optional. If it is omitted, `call` will get and `credit()` will tabulate all the reports in the `scored` directory.
-
-### Summarization
-
-The `summarize` module of Testilo can summarize a scored report. The summary contains, insofar as they exist in the report, its ID, end time, order ID, target data, and total score.
-
-#### Invocation
-
-##### By a module
-
-A module can invoke `summarize()` in this way:
-
-```javaScript
-const {summarize} = require('testilo/summarize');
-const reports = …;
-const summary = summarize(report);
-…
-```
-
-The `reports` argument is a scored report. The `summary` constant is an object. The module can further dispose of `summary` as needed.
-
-##### By a user
-
-A user can invoke `summarize()` in either of these two ways:
-
-```javaScript
-node call summarize divisions
-node call summarize divisions 2411
-```
-
-When a user invokes `summarize` in this example, the `call` module:
-- gets all the reports in the `scored` subdirectory of the `REPORTDIR` directory, or (if the third argument is present) all those whose file names begin with `2411`.
-- creates a summary of each report.
-- combines the summaries into an array.
-- creates an object containing three properties: an ID, a description (here `'divisions'`), and the array of summaries.
-- writes the object in JSON format to the `summarized` subdirectory of the `REPORTDIR` directory, using the ID as the base of the file name.
+- gets all reports, or if the third argument to `call()` exists all reports whose file names begin with `'241106'`, in the `scored` subdirectory of the `REPORTDIR` directory. 
+- deletes the `acts`, `sources`, and `jobData` properties of the copies it has made of the scored reports to save memory.
+- creates an ID for the credit report.
+- writes the credit report as a JSON file, with the ID as the base of its file name and `legislators` as its description, to the `credit` subdirectory of the `REPORTDIR` directory.
 
 ### Track
 

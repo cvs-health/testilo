@@ -1,6 +1,7 @@
 /*
   credit.js
-  Analyzes tool coverages of issues in a set of reports.
+  Analyzes tool coverages of issues in a set of reports. The acts, sources, and jobData properties
+  of the reports can have been deleted for mitigation of demand on memory.
 */
 
 // Returns a tabulation of the instance counts of issues reported by tools in scored reports.

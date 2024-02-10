@@ -1,6 +1,6 @@
 /*
   index
-  Compares scores in reports scored by tsp39 for use by Testu.
+  Compares scores in a summary report.
 */
 
 // ########## IMPORTS
@@ -11,46 +11,26 @@ const {getBarCell, getNowDate, getNowDateSlash} = require('../../util');
 
 // CONSTANTS
 
-// Comparer ID.
-const id = 'tcp39';
 // Newlines with indentations.
 const innestJoiner = '\n          ';
 
 // ########## FUNCTIONS
 
-// Returns data on the targets.
-const getData = async scoredReports => {
-  // For each scored report:
-  const bodyData = [];
-  for (const report of scoredReports) {
-    // Get data.
-    const {id, sources, score} = report;
-    if (id && sources && sources.script && score) {
-      bodyData.push({
-        id,
-        org: sources.target.what,
-        url: sources.target.which,
-        score: score.summary.total
-      });
-    }
-  };
-  // Return the report count, the script ID of the first report, and the data of all the reports.
-  return {
-    pageCount: scoredReports.length,
-    bodyData
-  }
-};
 // Returns the maximum score.
-const getMaxScore = tableData => tableData.reduce((max, item) => Math.max(max, item.score), 0);
-// Converts report data to a table body.
-const getTableBody = async bodyData => {
-  const maxScore = getMaxScore(bodyData);
-  const rows = bodyData
+const getMaxScore = summaryReport => summaryReport.data.reduce(
+  (max, result) => Math.max(max, result.score), 0
+);
+// Converts summary report data to a table body.
+const getTableBody = async summaryReport => {
+  const maxScore = getMaxScore(summaryReport);
+  const rows = summaryReport.data
   .sort((a, b) => a.score - b.score)
-  .map(item => {
-    const {id, org, url, score} = item;
-    const pageCell = `<th scope="row"><a href="${url}">${org}</a></th>`;
-    const numCell = `<td><a href="testu/digest?jobID=${id}">${score}</a></td>`;
+  .map(result => {
+    const {id, target, score} = result;
+    const {what, which} = target;
+    const pageCell = `<th scope="row"><a href="${which}">${what}</a></th>`;
+    const scoreDestination = process.env.DIGEST_URL.replace('__id__', id);
+    const numCell = `<td><a href="${scoreDestination}">${score}</a></td>`;
     // Make the bar width proportional.
     const barCell = getBarCell(score, maxScore, 25, false);
     const row = `<tr>${pageCell}${numCell}${barCell}</tr>`;
@@ -59,18 +39,19 @@ const getTableBody = async bodyData => {
   return rows.join(innestJoiner);
 };
 // Populates a query for a comparative table.
-const populateQuery = async (scoredReports, query) => {
-  const data = await getData(scoredReports);
-  query.pageCount = data.pageCount;
-  query.tableBody = await getTableBody(data.bodyData);
+const populateQuery = async (id, what, summaryReport, query) => {
+  query.id = id;
+  query.what = what;
+  query.pageCount = summaryReport.data.length;
+  query.tableBody = await getTableBody(summaryReport);
   query.dateISO = getNowDate();
   query.dateSlash = getNowDateSlash();
 };
-// Returns a comparative report.
-exports.comparer = async scoredReports => {
+// Returns a comparison.
+exports.comparer = async (id, what, summaryReport) => {
   // Create a query to replace placeholders.
   const query = {};
-  populateQuery(scoredReports, query);
+  populateQuery(id, what, summaryReport, query);
   // Get the template.
   let template = await fs.readFile(`${__dirname}/index.html`, 'utf8');
   // Replace its placeholders.

@@ -61,19 +61,24 @@ const getSummaryReport = async selector => {
 // Converts a target list to a batch.
 const callBatch = async (id, what) => {
   // Get the target list.
-  const listString = await fs.readFile(`${specDir}/targetLists/${id}.txt`, 'utf8');
-  const list = listString
-  .split('\n')
-  .filter(target => target.length)
-  .map(target => target.split('|'));
-  // Convert it to a batch.
-  const batchObj = batch(id, what, list);
-  // Save the batch.
-  if (batchObj) {
-    const batchJSON = JSON.stringify(batchObj, null, 2);
-    const batchPath = `${specDir}/batches/${id}.json`;
-    await fs.writeFile(batchPath, `${batchJSON}\n`);
-    console.log(`Target list ${id} converted to a batch and saved as ${batchPath}`);
+  try {
+    const listString = await fs.readFile(`${specDir}/targetLists/${id}.txt`, 'utf8');
+    const list = listString
+    .split('\n')
+    .filter(target => target.length)
+    .map(target => target.split('|'));
+    // Convert it to a batch.
+    const batchObj = batch(id, what, list);
+    // Save the batch.
+    if (batchObj) {
+      const batchJSON = JSON.stringify(batchObj, null, 2);
+      const batchPath = `${specDir}/batches/${id}.json`;
+      await fs.writeFile(batchPath, `${batchJSON}\n`);
+      console.log(`Target list ${id} converted to a batch and saved as ${batchPath}`);
+    }
+  }
+  catch(error) {
+    console.log(`ERROR converting target list to batch (${error.message})`);
   }
 };
 // Fulfills a script-creation request.
@@ -82,12 +87,18 @@ const callScript = async (scriptID, classificationID = null, ... issueIDs) => {
   const issues = classificationID
   ? require(`${functionDir}/score/${classificationID}`).issues
   : null;
+  // Sanitize the ID.
+  scriptID = scriptID.replace(/[^a-zA-Z0-9]/, '');
+  if (scriptID === '') {
+    scriptID = `script-${getRandomString(2)}`;
+  }
   // Create a script.
   const scriptObj = script(scriptID, issues, ... issueIDs);
   // Save the script.
   const scriptJSON = JSON.stringify(scriptObj, null, 2);
-  await fs.writeFile(`${specDir}/scripts/${scriptID}.json`, `${scriptJSON}\n`);
-  console.log(`Script ${scriptID} created and saved in ${specDir}/scripts`);
+  const scriptPath = `${specDir}/scripts/${scriptID}.json`;
+  await fs.writeFile(scriptPath, `${scriptJSON}\n`);
+  console.log(`Script created and saved as ${scriptPath}`);
 };
 // Fulfills a merging request.
 const callMerge = async (

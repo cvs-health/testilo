@@ -267,7 +267,7 @@ node call script id ticnn issuea issueb …
 node call script id
 ```
 
-In this statement, replace `id` with an ID for the script, such as `headings`.
+In this statement, replace `id` with an ID for the script, such as `headings1`, consisting of ASCII alphanumeric characters.
 
 If specifying issues:
 - Replace `ticnn` with the base, such as `tic99`, of the name of an issue classification file in the `score` subdirectory of the `FUNCTIONDIR` directory.
@@ -275,7 +275,7 @@ If specifying issues:
 
 The `call` module will retrieve the named classification, if any.
 The `script` module will create a script.
-The `call` module will save the script as a JSON file in the `scripts` subdirectory of the `SPECDIR` directory.
+The `call` module will save the script as a JSON file in the `scripts` subdirectory of the `SPECDIR` directory, using the `id` value as the base of the file name.
 
 #### Options
 

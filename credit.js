@@ -1,12 +1,12 @@
 /*
   credit.js
-  Analyzes tool coverages of issues in a set of reports. The acts, sources, and jobData properties
-  of the reports can have been deleted for mitigation of demand on memory.
+  Analyzes tool coverages of issues in an array of score properties of scored reports.
 */
 
 // Returns a tabulation of the instance counts of issues reported by tools in scored reports.
-exports.credit = reports => {
+exports.credit = (what, reportScores) => {
   const tally = {
+    what,
     instanceCounts: {},
     onlies: {},
     mosts: {},
@@ -20,11 +20,11 @@ exports.credit = reports => {
   };
   const {instanceCounts, onlies, mosts, tools, issueCounts} = tally;
   // For each report:
-  reports.forEach(report => {
+  reportScores.forEach(reportScore => {
     // If it is valid:
-    if (report.score && report.score.details && report.score.details.issue) {
+    if (reportScore && reportScore.details && reportScore.details.issue) {
       // For each issue:
-      const issues = report.score.details && report.score.details.issue;
+      const issues = reportScore.details && reportScore.details.issue;
       Object.keys(issues).forEach(issueID => {
         // For each tool with any complaints about it:
         if (! instanceCounts[issueID]) {
@@ -52,13 +52,6 @@ exports.credit = reports => {
                 }
                 instanceCounts[issueID][toolID].rules[ruleID] += complaints.countTotal;
               }
-              // Otherwise, i.e. if no instance count was recorded:
-              else {
-                // Report this.
-                console.log(
-                  `ERROR: Report ${report.id} missing countTotal for ${toolID} in ${issueID}`
-                );
-              }
             });
           });
         }
@@ -66,11 +59,6 @@ exports.credit = reports => {
           console.log(`ERROR: Missing tools for ${issueID}`);
         }
       });
-    }
-    // Otherwise, i.e. if it is invalid:
-    else {
-      // Report this.
-      console.log(`ERROR: Report ${report.id} missing score data`);
     }
   });
   // Populate the total and initial non-only issue counts.

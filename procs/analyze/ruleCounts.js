@@ -1,9 +1,9 @@
 /*
   ruleCounts.js
-  Tabulates tool rules from a issue classification.
+  Tabulates tool rules from an issue classification.
 */
 
-const {issues} = require('../score/tic36');
+const {issues} = require('../score/tic40');
 
 const counts = {
   total: 0

@@ -731,7 +731,7 @@ To test the `compare` module, in the project directory you can execute the state
 
 If you use Testaro to perform all the tests of all the tools on multiple targets and score the reports with a score proc that maps tool rules onto tool-agnostic issues, you may want to tabulate the comparative efficacy of each tool in discovering instances of issues. Testilo can help you do this by producing a _credit report_.
 
-The `credit` module tabulates the contribution of each tool to the discovery of issue instances in a collection of scored reports. Its `credit()` function takes one argument: an array of scored reports.
+The `credit` module tabulates the contribution of each tool to the discovery of issue instances in a collection of scored reports. Its `credit()` function takes two arguments: a report description and an array of `score` properties of scored reports.
 
 The credit report contains four sections:
 - `counts`: for each issue, how many instances each tool reported
@@ -751,11 +751,12 @@ A module can invoke `credit()` in this way:
 
 ```javaScript
 const {credit} = require('testilo/credit');
-credit(scoredReports)
+const reportScores = […];
+credit('June 2025', reportScores)
 .then(creditReport => {…});
 ```
 
-The argument to `credit()` is an array of scored report objects. It is possible for the calling module to have deleted the `acts`, `sources`, and `jobData` properties of each scored report to mitigate the demand on memory. The `credit()` function returns a credit report. The invoking module can further dispose of the credit report as needed.
+The first argument to `credit()` is a description to be included in the credit report. The second argument is an array of `score` properties of scored report objects. The `credit()` function returns a credit report. The invoking module can further dispose of the credit report as needed.
 
 ##### By a user
 
@@ -768,7 +769,7 @@ node call credit legislators 241106
 
 When a user invokes `credit` in this example, the `call` module:
 - gets all reports, or if the third argument to `call()` exists all reports whose file names begin with `'241106'`, in the `scored` subdirectory of the `REPORTDIR` directory. 
-- deletes the `acts`, `sources`, and `jobData` properties of the copies it has made of the scored reports to save memory.
+- gets the `score` properties of those reports.
 - creates an ID for the credit report.
 - writes the credit report as a JSON file, with the ID as the base of its file name and `legislators` as its description, to the `credit` subdirectory of the `REPORTDIR` directory.
 

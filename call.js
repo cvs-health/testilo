@@ -34,6 +34,8 @@ const {digest} = require('./digest');
 const {difgest} = require('./difgest');
 // Function to compare scores.
 const {compare} = require('./compare');
+// Function to credit tools for issues in reports.
+const {credit} = require('./credit');
 // Function to summarize reports.
 const {summarize} = require('./summarize');
 // Function to track audits.
@@ -166,8 +168,8 @@ const callDigest = async (digesterID, selector = '') => {
     await fs.mkdir(digestDir, {recursive: true});
     for (const reportID of reportIDs) {
       const report = await getReport('scored', reportID);
-      const digest = await digest(digester, report);
-      await fs.writeFile(`${digestDir}/${reportID}.html`, digest);
+      const digestedReport = await digest(digester, report);
+      await fs.writeFile(`${digestDir}/${reportID}.html`, digestedReport);
     };
     console.log(`Reports digested and saved in ${digestedReportDir}`);
   }
@@ -257,24 +259,19 @@ const callCompare = async (what, compareProcID, selector) => {
 };
 // Fulfills a credit request.
 const callCredit = async (what, selector = '') => {
-  // Get the scored reports to be tallied.
+  // Get the IDs of the scored reports to be credited.
   const reportIDs = await getReportIDs('scored', selector);
   // If any exist:
   if (reportIDs.length) {
-    // Get the creditor.
-    const {credit} = require(`${functionDir}/analyze/credit`);
-    // Get, prune, and collect the reports to be credited.
-    const reports = [];
+    // Get an array of the score properties of the reports to be credited.
+    const reportScores = [];
     for (const id of reportIDs) {
       const report = await getReport('scored', id);
-      ['acts', 'sources', 'jobData'].forEach(property => {
-        delete report[property];
-      });
-      reports.push(report);
+      reportScores.push(report.score);
     }
     // Credit the reports.
-    const tally = credit(reports);
-    // Save the tally.
+    const tally = credit(what, reportScores);
+    // Save the credit report.
     const creditDir = `${reportDir}/credit`;
     await fs.mkdir(creditDir, {recursive: true});
     const creditReportID = getFileID(2);
@@ -295,20 +292,20 @@ const callTrack = async (trackerID, summaryID, orderID, targetWhat) => {
     const summaryJSON = await fs.readFile(`${reportDir}/summarized/${summaryID}.json`, 'utf8');
     const summary = JSON.parse(summaryJSON);
     // Remove unwanted audits from it.
-    summary.data = summary.data.filter(audit => {
-      if (orderID && audit.order !== orderID) {
+    summary.data = summary.data.filter(result => {
+      if (orderID && result.order !== orderID) {
         return false;
       }
-      if (targetWhat && audit.target && audit.target.what !== targetWhat) {
+      if (targetWhat && result.target && result.target.what !== targetWhat) {
         return false;
       }
       return true;
     });
-    // If any audits remain:
+    // If any results remain:
     if (summary.data.length) {
       // Get the tracker.
       const {tracker} = require(`${functionDir}/track/${trackerID}/index`);
-      // Track the audits.
+      // Track the results.
       const [reportID, trackingReport] = await track(tracker, summary);
       // Save the tracking report.
       await fs.mkdir(`${reportDir}/tracking`, {recursive: true});

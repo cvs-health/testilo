@@ -18,7 +18,7 @@ let toolIDs = [
 // ########## FUNCTIONS
 
 // Creates and returns a script.
-exports.script = (id, issues = null, ... issueIDs) => {
+exports.script = (id, what, issues = null, ... issueIDs) => {
   // Initialize data on the tools and their rules for the specified issues, if any.
   const neededTools = {};
   // If an issue classification and any issues were specified:
@@ -67,7 +67,7 @@ exports.script = (id, issues = null, ... issueIDs) => {
     // Initialize a script.
     const scriptObj = {
       id,
-      what: `accessibility tests`,
+      what,
       strict: true,
       isolate: true,
       timeLimit: Math.round(30 + (issueIDs.length || 300) / 2 + 20 * toolIDs.length),

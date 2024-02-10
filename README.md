@@ -249,22 +249,22 @@ A module can invoke `script()` in this way:
 ```javaScript
 const {script} = require('testilo/script');
 const {issues} = require('testilo/procs/score/tic99');
-const scriptObj = script('monthly', issues, 'regionNoText', 'mainNot1');
+const scriptObj = script('monthly', 'landmarks', issues, 'regionNoText', 'mainNot1');
 ```
 
-In this example, the script will have `'monthly'` as its ID. It will tell Testaro to test for all, and only, the rules that are classified into either the `regionNoText` or the `mainNot1` issue.
+In this example, the script will have `'monthly'` as its ID and `'landmarks'` as its description. It will tell Testaro to test for all, and only, the rules that are classified into either the `regionNoText` or the `mainNot1` issue.
 
 The invoking module can further modify and use the script (`scriptObj`) as needed.
 
-To create a script **without** issue restrictions, a module can call `script()` with only the first (ID) argument.
+To create a script **without** issue restrictions, a module can call `script()` with only the first two arguments (the ID and the description).
 
 ##### By a user
 
 A user can invoke `script()` by executing one of these statements in the Testilo project directory:
 
 ```javascript
-node call script id ticnn issuea issueb …
-node call script id
+node call script id what ticnn issuea issueb …
+node call script id what
 ```
 
 In this statement, replace `id` with an ID for the script, such as `headings1`, consisting of ASCII alphanumeric characters.

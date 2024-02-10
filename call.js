@@ -82,7 +82,7 @@ const callBatch = async (id, what) => {
   }
 };
 // Fulfills a script-creation request.
-const callScript = async (scriptID, classificationID = null, ... issueIDs) => {
+const callScript = async (scriptID, what, classificationID = null, ... issueIDs) => {
   // Get any issue classification.
   const issues = classificationID
   ? require(`${functionDir}/score/${classificationID}`).issues
@@ -93,7 +93,7 @@ const callScript = async (scriptID, classificationID = null, ... issueIDs) => {
     scriptID = `script-${getRandomString(2)}`;
   }
   // Create a script.
-  const scriptObj = script(scriptID, issues, ... issueIDs);
+  const scriptObj = script(scriptID, what, issues, ... issueIDs);
   // Save the script.
   const scriptJSON = JSON.stringify(scriptObj, null, 2);
   const scriptPath = `${specDir}/scripts/${scriptID}.json`;
@@ -344,7 +344,7 @@ if (fn === 'batch' && fnArgs.length === 2) {
     console.log('Execution completed');
   });
 }
-else if (fn === 'script' && (fnArgs.length === 1 || fnArgs.length > 2)) {
+else if (fn === 'script' && (fnArgs.length === 2 || fnArgs.length > 3)) {
   callScript(... fnArgs)
   .then(() => {
     console.log('Execution completed');

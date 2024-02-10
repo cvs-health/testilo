@@ -28,6 +28,18 @@ const mergeIDLength = 2;
 
 // Merges a script and a batch and returns jobs.
 exports.merge = (script, batch, standard, observe, requester, timeStamp) => {
+  // If standard is invalid:
+  if (! ['also', 'only', 'no'].includes(standard)) {
+    // Report this and quit.
+    console.log('ERROR: Invalid standard treatment specified');
+    return [];
+  }
+  // If observe is invalid:
+  if (! [true, false].includes(observe)) {
+    // Report this and quit.
+    console.log('ERROR: Invalid observe configuration specified');
+    return [];
+  }
   // If a time stamp was specified:
   if (timeStamp) {
     // If it is invalid:

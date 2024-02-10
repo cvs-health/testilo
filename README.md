@@ -310,7 +310,9 @@ The first two arguments are a script and a batch obtained from files or from pri
 
 The `standard` argument specifies how to handle standardization. If `also`, jobs will tell Testaro to include in its reports both the original results of the tests of tools and the Testaro-standardized results. If `only`, reports are to include only the standardized test results. If `no`, reports are to include only the original results, without standardization.
 
-The `observe` argument tells Testaro whether the jobs should allow granular observation. If `false`, Testaro will not report job progress, but will only send reports to the server when the reports are completed. It is generally user-friendly to allow granular observation, and for user applications to implement it, if they make users wait while jobs are assigned and performed, since that process typically takes a few minutes.
+The `observe` argument tells Testaro whether the jobs should allow granular observation. If `true`, it will. If `false`, Testaro will not report job progress, but will send reports to the server only when the reports are completed. It is generally user-friendly to allow granular observation, and for user applications to implement it, if they make users wait while jobs are assigned and performed, since that process typically takes a few minutes.
+
+The `requester` argument is an email address to which any notices about the job are to be sent.
 
 The `timeStamp` argument specifies the earliest UTC date and time when the jobs may be assigned, or it may be an empty string if now.
 

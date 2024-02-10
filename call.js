@@ -115,21 +115,31 @@ const callMerge = async (
   timeStamp,
   todoDir
 ) => {
-  // Get the script and the batch.
-  const scriptJSON = await fs.readFile(`${specDir}/scripts/${scriptID}.json`, 'utf8');
-  const script = JSON.parse(scriptJSON);
-  const batchJSON = await fs.readFile(`${specDir}/batches/${batchID}.json`, 'utf8');
-  const batch = JSON.parse(batchJSON);
-  // Merge them into an array of jobs.
-  const jobs = merge(script, batch, standard, observe === 'true', requester, timeStamp);
-  // Save the jobs.
-  const subdir = `${jobDir}/${todoDir === 'true' ? 'todo' : 'pending'}`;
-  for (const job of jobs) {
-    const jobJSON = JSON.stringify(job, null, 2);
-    await fs.writeFile(`${subdir}/${job.id}.json`, `${jobJSON}\n`);
+  try {
+    // If the todoDir argument is invalid:
+    if (! ['true', 'false'].includes(todoDir)) {
+      // Report this.
+      throw new Error('Invalid todoDir configuration');
+    }
+    // Get the script and the batch.
+    const scriptJSON = await fs.readFile(`${specDir}/scripts/${scriptID}.json`, 'utf8');
+    const script = JSON.parse(scriptJSON);
+    const batchJSON = await fs.readFile(`${specDir}/batches/${batchID}.json`, 'utf8');
+    const batch = JSON.parse(batchJSON);
+    // Merge them into an array of jobs.
+    const jobs = merge(script, batch, standard, observe === 'true', requester, timeStamp);
+    // Save the jobs.
+    const subdir = `${jobDir}/${todoDir === 'true' ? 'todo' : 'pending'}`;
+    for (const job of jobs) {
+      const jobJSON = JSON.stringify(job, null, 2);
+      await fs.writeFile(`${subdir}/${job.id}.json`, `${jobJSON}\n`);
+    }
+    const truncatedID = `${jobs[0].timeStamp}-${jobs[0].mergeID}-…`;
+    console.log(`Script ${scriptID} and batch ${batchID} merged as ${truncatedID} in ${subdir}`);
   }
-  const truncatedID = `${jobs[0].timeStamp}-${jobs[0].mergeID}-…`;
-  console.log(`Script ${scriptID} and batch ${batchID} merged as ${truncatedID} in ${subdir}`);
+  catch(error) {
+    console.log(`ERROR merging script and batch (${error.message})`);
+  }
 };
 // Gets the file base names (equal to the IDs) of the selected reports.
 const getReportIDs = async (type, selector = '') => {

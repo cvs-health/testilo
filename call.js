@@ -61,11 +61,11 @@ const getSummaryReport = async selector => {
 // Converts a target list to a batch.
 const callBatch = async (id, what) => {
   // Get the target list.
-  const listString = await fs.readFile(`${specDir}/targetLists/${id}.tsv`, 'utf8');
+  const listString = await fs.readFile(`${specDir}/targetLists/${id}.txt`, 'utf8');
   const list = listString
   .split('\n')
   .filter(target => target.length)
-  .map(target => target.split('\t'));
+  .map(target => target.split('|'));
   // Convert it to a batch.
   const batchObj = batch(id, what, list);
   // Save the batch.

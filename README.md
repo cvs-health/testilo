@@ -58,7 +58,7 @@ Testilo can, however, make job preparation more efficient in these scenarios:
 
 ### Target lists
 
-The simplest version of a list of targets is a _target list_. It is an array of arrays defining 1 or more targets. It can be stored as a tab-delimited text file.
+The simplest version of a list of targets is a _target list_. It is an array of arrays defining 1 or more targets. It can be stored as a text file.
 
 A target is defined by 2 items:
 - A description
@@ -73,11 +73,11 @@ For example, a target list might be:
 ]
 ```
 
-If this target list were stored as a file, its content would be this (with “→” representing the Tab character):
+If this target list were stored as a file, its content would be this, with vertical bars separating the URLs from the descriptions:
 
 ```text
-World Wide Web Consortium→https://www.w3.org/
-Mozilla Foundation→https://foundation.mozilla.org/en/
+World Wide Web Consortium|https://www.w3.org/
+Mozilla Foundation|https://foundation.mozilla.org/en/
 ```
 
 ### Batches
@@ -221,7 +221,7 @@ The invoking module can further dispose of the batch as needed.
 
 A user can invoke `batch()` in this way:
 
-- Create a target list and save it as a text file (with tab-delimited items in newline-delimited lines) in the `targetLists` subdirectory of the `SPECDIR` directory. Name the file `x.tsv`, where `x` is the list ID.
+- Create a target list and save it as a text file (with tab-delimited items in newline-delimited lines) in the `targetLists` subdirectory of the `SPECDIR` directory. Name the file `x.txt`, where `x` is the list ID.
 - In the Testilo project directory, execute the statement `node call batch id what`.
 
 In this statement, replace `id` with the list ID and `what` with a string describing the batch. Example: `node call batch divns 'ABC company divisions'`.

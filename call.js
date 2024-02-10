@@ -83,22 +83,27 @@ const callBatch = async (id, what) => {
 };
 // Fulfills a script-creation request.
 const callScript = async (scriptID, what, classificationID = null, ... issueIDs) => {
-  // Get any issue classification.
-  const issues = classificationID
-  ? require(`${functionDir}/score/${classificationID}`).issues
-  : null;
-  // Sanitize the ID.
-  scriptID = scriptID.replace(/[^a-zA-Z0-9]/g, '');
-  if (scriptID === '') {
-    scriptID = `script-${getRandomString(2)}`;
+  try {
+    // Get any issue classification.
+    const issues = classificationID
+    ? require(`${functionDir}/score/${classificationID}`).issues
+    : null;
+    // Sanitize the ID.
+    scriptID = scriptID.replace(/[^a-zA-Z0-9]/g, '');
+    if (scriptID === '') {
+      scriptID = `script-${getRandomString(2)}`;
+    }
+    // Create a script.
+    const scriptObj = script(scriptID, what, issues, ... issueIDs);
+    // Save the script.
+    const scriptJSON = JSON.stringify(scriptObj, null, 2);
+    const scriptPath = `${specDir}/scripts/${scriptID}.json`;
+    await fs.writeFile(scriptPath, `${scriptJSON}\n`);
+    console.log(`Script created and saved as ${scriptPath}`);
   }
-  // Create a script.
-  const scriptObj = script(scriptID, what, issues, ... issueIDs);
-  // Save the script.
-  const scriptJSON = JSON.stringify(scriptObj, null, 2);
-  const scriptPath = `${specDir}/scripts/${scriptID}.json`;
-  await fs.writeFile(scriptPath, `${scriptJSON}\n`);
-  console.log(`Script created and saved as ${scriptPath}`);
+  catch(error) {
+    console.log(`ERROR creating script (${error.message})`);
+  }
 };
 // Fulfills a merging request.
 const callMerge = async (

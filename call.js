@@ -71,8 +71,9 @@ const callBatch = async (id, what) => {
   // Save the batch.
   if (batchObj) {
     const batchJSON = JSON.stringify(batchObj, null, 2);
-    await fs.writeFile(`${specDir}/batches/${id}.json`, `${batchJSON}\n`);
-    console.log(`Target list ${id} converted to a batch and saved in ${specDir}/batches`);
+    const batchPath = `${specDir}/batches/${id}.json`;
+    await fs.writeFile(batchPath, `${batchJSON}\n`);
+    console.log(`Target list ${id} converted to a batch and saved as ${batchPath}`);
   }
 };
 // Fulfills a script-creation request.

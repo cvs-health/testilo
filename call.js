@@ -88,7 +88,7 @@ const callScript = async (scriptID, classificationID = null, ... issueIDs) => {
   ? require(`${functionDir}/score/${classificationID}`).issues
   : null;
   // Sanitize the ID.
-  scriptID = scriptID.replace(/[^a-zA-Z0-9]/, '');
+  scriptID = scriptID.replace(/[^a-zA-Z0-9]/g, '');
   if (scriptID === '') {
     scriptID = `script-${getRandomString(2)}`;
   }

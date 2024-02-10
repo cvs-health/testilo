@@ -188,17 +188,22 @@ const callDigest = async (digesterID, selector = '') => {
   const reportIDs = await getReportIDs('scored', selector);
   // If any exist:
   if (reportIDs.length) {
-    // Get the digester.
-    const {digester} = require(`${functionDir}/digest/${digesterID}/index`);
-    // Digest and save the reports.
-    const digestDir = `${reportDir}/digested`;
-    await fs.mkdir(digestDir, {recursive: true});
-    for (const reportID of reportIDs) {
-      const report = await getReport('scored', reportID);
-      const digestedReport = await digest(digester, report);
-      await fs.writeFile(`${digestDir}/${reportID}.html`, digestedReport);
-    };
-    console.log(`Reports digested and saved in ${digestedReportDir}`);
+    try {
+      // Get the digester.
+      const {digester} = require(`${functionDir}/digest/${digesterID}/index`);
+      // Digest and save the reports.
+      const digestDir = `${reportDir}/digested`;
+      await fs.mkdir(digestDir, {recursive: true});
+      for (const reportID of reportIDs) {
+        const report = await getReport('scored', reportID);
+        const digestedReport = await digest(digester, report);
+        await fs.writeFile(`${digestDir}/${reportID}.html`, digestedReport);
+      };
+      console.log(`Reports digested and saved in ${digestedReportDir}`);
+    }
+    catch(error) {
+      console.log(`ERROR digesting reports (${error.message})`);
+    }
   }
   // Otherwise, i.e. if no scored reports are to be digested:
   else {

@@ -54,9 +54,17 @@ const fnArgs = process.argv.slice(3);
 
 // Gets a summary report.
 const getSummaryReport = async selector => {
-  const summaryReportNames = await fs.readdir(`${reportDir}/summarized`);
+  const summaryDir = `${reportDir}/summarized`;
+  const summaryReportNames = await fs.readdir(summaryDir);
   const summaryReportName = summaryReportNames.find(reportName => reportName.startsWith(selector));
-  return summaryReportName;
+  if (summaryReportName) {
+    const summaryReportJSON = await fs.readFile(`${summaryDir}/${summaryReportName}`, 'utf8');
+    const summaryReport = JSON.parse(summaryReportJSON);
+    return summaryReport;
+  }
+  else {
+    throw new Error(`ERROR: No summary report name starts with ${selector}`);
+  }
 };
 // Converts a target list to a batch.
 const callBatch = async (id, what) => {
@@ -276,17 +284,22 @@ const callCompare = async (what, compareProcID, selector) => {
   const summaryReport = await getSummaryReport(selector);
   // If it exists:
   if (summaryReport) {
-    // Get the comparer.
-    const comparerDir = `${functionDir}/compare/${compareProcID}`;
-    const {comparer} = require(`${comparerDir}/index`);
-    // Compare the reports and save the comparison.
-    const comparisonDir = `${reportDir}/comparative`;
-    await fs.mkdir(comparisonDir, {recursive: true}); 
-    const id = getFileID(2);
-    const comparison = await compare(id, what, comparer, summaryReport);
-    const comparisonPath = `${comparisonDir}/${id}.html`;
-    await fs.writeFile(comparisonPath, comparison);
+    try {
+      // Get the comparer.
+      const comparerDir = `${functionDir}/compare/${compareProcID}`;
+      const {comparer} = require(`${comparerDir}/index`);
+      // Compare the reports and save the comparison.
+      const comparisonDir = `${reportDir}/comparative`;
+      await fs.mkdir(comparisonDir, {recursive: true}); 
+      const id = getFileID(2);
+      const comparison = await compare(id, what, comparer, summaryReport);
+      const comparisonPath = `${comparisonDir}/${id}.html`;
+      await fs.writeFile(comparisonPath, comparison);
       console.log(`Comparison completed and saved as ${comparisonPath}`);
+    }
+    catch(error) {
+      console.log(`ERROR comparing scores (${error.message})`);
+    }
   }
 };
 // Fulfills a credit request.

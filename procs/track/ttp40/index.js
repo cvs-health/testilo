@@ -21,29 +21,30 @@ const digestURL = process.env.DIGEST_URL;
 // FUNCTIONS
 
 // Adds parameters to a query for a tracking report.
-const populateQuery = async (id, summary, query) => {
+const populateQuery = async (id, summaryReport, query) => {
   // General parameters.
   query.id = id;
   query.tp = trackerID;
   query.dateISO = getNowDate();
   query.dateSlash = getNowDateSlash();
-  // JSON of pruned summary.
-  summary.data.forEach(result => {
-    delete result.target.id;
+  // JSON of pruned summary report.
+  summaryReport.data.forEach(result => {
+    delete result.sources.target.id;
   });
-  query.summaryJSON = JSON.stringify(summary);
+  query.summaryReportJSON = JSON.stringify(summaryReport);
   // For each score:
   const rows = [];
-  const results = summary.data;
-  const targetWhats = Array.from(new Set(results.map(result => result.target.what))).sort();
-  summary.data.forEach(result => {
+  const results = summaryReport.data;
+  const targetWhats = Array.from(new Set(results.map(result => result.sources.target.what))).sort();
+  summaryReport.data.forEach(result => {
     // Create an HTML table row for it.
     const timeCell = `<td>${result.endTime}</td>`;
     const digestLinkDestination = digestURL.replace('__id__', result.id);
     const scoreCell = `<td><a href=${digestLinkDestination}>${result.score}</a></td>`;
     const orderCell = `<td class="center">${result.order}</td>`;
-    const targetID = alphaNumOf(targetWhats.indexOf(result.target.what));
-    const targetLink = `<a href="${result.target.which}">${result.target.what}</a>`;
+    const {target} = result.sources;
+    const targetID = alphaNumOf(targetWhats.indexOf(target.what));
+    const targetLink = `<a href="${target.which}">${target.what}</a>`;
     const targetCell = `<td>${targetID}: ${targetLink}</td>`;
     const row = `<tr>${[timeCell, scoreCell, orderCell, targetCell].join('')}</tr>`;
     // Add the row to the array of rows.
@@ -53,10 +54,10 @@ const populateQuery = async (id, summary, query) => {
   query.scoreRows = rows.join(innerJoiner);
 };
 // Returns a tracking report.
-exports.tracker = async (id, summary) => {
+exports.tracker = async (id, summaryReport) => {
   // Create a query to replace placeholders.
   const query = {};
-  await populateQuery(id, summary, query);
+  await populateQuery(id, summaryReport, query);
   // Get the template.
   let template = await fs.readFile(`${__dirname}/index.html`, 'utf8');
   // Replace its placeholders.

@@ -28,12 +28,12 @@
       <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
       <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6"></script>
       <script type="module">
-        const summaryJSON = '__summaryJSON__';
-        const summary = JSON.parse(summaryJSON);
+        const summaryReportJSON = '__summaryReportJSON__';
+        const summaryReport = JSON.parse(summaryReportJSON);
         const graphData = [];
-        summary.data.forEach(result => {
+        summaryReport.data.forEach(result => {
           graphData.push({
-            target: result.target.what,
+            target: result.sources.target.what,
             time: new Date(`20${result.endTime}Z`),
             score: result.score
           });

@@ -38,7 +38,7 @@ const {compare} = require('./compare');
 const {credit} = require('./credit');
 // Function to summarize reports.
 const {summarize} = require('./summarize');
-// Function to track audits.
+// Function to track results.
 const {track} = require('./track');
 
 // ########## CONSTANTS
@@ -332,32 +332,33 @@ const callCredit = async (what, selector = '') => {
   }
 };
 // Fulfills a tracking request.
-const callTrack = async (trackerID, selector, orderID, targetWhat) => {
+const callTrack = async (trackerID, selector, targetWhat) => {
   // Get the summary report.
   try {
     const summaryReport = await getSummaryReport(selector);
-    // Remove unwanted audits from it.
-    summaryReport.data = summary.data.filter(
+    // Remove unwanted results from it.
+    summaryReport.data = summaryReport.data.filter(
       result => targetWhat
-      && result.sources
+      ? result.sources
       && result.sources.target
       && result.sources.target.what !== targetWhat
+      : true
     );
     // If any results remain:
-    if (summary.data.length) {
+    if (summaryReport.data.length) {
       // Get the tracker.
       const {tracker} = require(`${functionDir}/track/${trackerID}/index`);
       // Track the results.
-      const [reportID, trackingReport] = await track(tracker, summary);
+      const [reportID, trackingReport] = await track(tracker, summaryReport);
       // Save the tracking report.
       await fs.mkdir(`${reportDir}/tracking`, {recursive: true});
       const reportPath = `${reportDir}/tracking/${reportID}.html`;
       await fs.writeFile(reportPath, trackingReport);
       console.log(`Tracking report saved in ${reportPath}`);
     }
-    // Otherwise, i.e. if no audits remain:
+    // Otherwise, i.e. if no results remain:
     else {
-      console.log('ERROR: No audits match the request');
+      console.log('ERROR: No results match the request');
     }
   }
   catch(error) {

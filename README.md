@@ -680,11 +680,13 @@ When a user invokes `summarize` in this example, the `call` module:
 
 If you use Testilo to perform a battery of tests on multiple targets, you may want a single report that compares the total scores received by the targets. Testilo can produce such a _comparison_.
 
-The `compare` module compares the scores in a summary of scored reports. Its `compare()` function takes two arguments:
+The `compare` module compares the scores in a summary report. Its `compare()` function takes two arguments:
 - a comparison function
 - a summary report
 
 The comparison function defines the rules for generating an HTML file comparing the scored reports. The Testilo package contains a `procs/compare` directory, in which there are subdirectories containing modules that export comparison functions. You can use one of those functions, or you can create your own.
+
+Summary reports suitable for comparisons are those that contain one result per target. If a summary report contains results from multiple times per target, tracking (described below) is appropriate, rather than comparison.
 
 #### Invocation
 
@@ -715,7 +717,7 @@ node call compare 'state legislators' tcp99 240813
 
 When a user invokes `compare` in this example, the `call` module:
 - gets the comparison module from subdirectory `tcp99` of the subdirectory `compare` in the `FUNCTIONDIR` directory.
-- gets the summary report whose file name begins with `'240813'` from the `summarized` subdirectory of the `REPORTDIR` directory.
+- gets the first summary report whose file name begins with `'240813'` from the `summarized` subdirectory of the `REPORTDIR` directory.
 - creates an ID for the comparison.
 - creates the comparison as an HTML document.
 - writes the comparison in the `comparative` subdirectory of the `REPORTDIR` directory, with `state legislators` as a description and the ID as the base of the file name.
@@ -725,6 +727,46 @@ The comparative report created by `compare` is an HTML file, and it expects a `s
 #### Validation
 
 To test the `compare` module, in the project directory you can execute the statement `node validation/compare/validate`. If `compare` is valid, all logging statements will begin with “Success” and none will begin with “ERROR”.
+
+### Track
+
+The `track` module of Testilo selects, organizes, and presents data from summaries to show changes over time in total scores. The module produces a web page, showing changes in a table and a line graph. The line graph contains a line for each target (namely, each value of the `sources.target.what` property).
+
+A typical use case for tracking is monitoring, i.e. periodic auditing of one or more web pages.
+
+#### Invocation
+
+##### By a module
+
+A module can invoke `track()` in this way:
+
+```javaScript
+const {track} = require('testilo/track');
+const trackerDir = `${process.env.FUNCTIONDIR}/track/ttp99a`;
+const {tracker} = require(`${trackerDir}/index`);
+const summaryReport = …;
+const [reportID, trackReport] = track(tracker, summaryReport);
+```
+
+The `track()` function returns an ID and an HTML tracking report that shows data for all of the results in the summary report. The invoking module can further dispose of the tracking report as needed.
+
+##### By a user
+
+A user can invoke `track()` in one of these ways:
+
+```javaScript
+node call track ttp99a 241016
+node call track ttp99a 241016 'ABC Foundation'
+```
+
+When a user invokes `track()` in this example, the `call` module:
+- gets the summary report from the first file in the `summarized` subdirectory of the `REPORTDIR` directory whose name begins with `'241016'`.
+- selects the summarized data for all results in the summary report, or if the fourth argument to `call()` exists from all results whose `target.what` property has the value `'ABC Foundation'`.
+- uses tracker `ttp99a` to create a tracking report.
+- assigns an ID to the tracking report.
+- writes the tracking report to the `tracking` subdirectory of the `REPORTDIR` directory, with the ID as the base of its file name.
+
+The tracking reports created by `track()` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/tracking/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where tracking reports are written.
 
 ### Tool crediting
 
@@ -771,46 +813,6 @@ When a user invokes `credit` in this example, the `call` module:
 - gets the `score` properties of those reports.
 - creates an ID for the credit report.
 - writes the credit report as a JSON file, with the ID as the base of its file name and `legislators` as its description, to the `credit` subdirectory of the `REPORTDIR` directory.
-
-### Track
-
-The `track` module of Testilo selects, organizes, and presents data from summaries to show changes over time in total scores. The module produces a web page, showing changes in a table and (in the future) also in a line graph. The line graph contains a line for each target (namely, each value of the `sources.target.what` property).
-
-A typical use case for tracking is monitoring, i.e. periodic auditing of one or more web pages.
-
-#### Invocation
-
-##### By a module
-
-A module can invoke `track()` in this way:
-
-```javaScript
-const {track} = require('testilo/track');
-const trackerDir = `${process.env.FUNCTIONDIR}/track/ttp99a`;
-const {tracker} = require(`${trackerDir}/index`);
-const summaryReport = …;
-const [reportID, trackReport] = track(tracker, summaryReport);
-```
-
-The `track()` function returns an ID and an HTML tracking report that shows data for all of the results in the summary report. The invoking module can further dispose of the tracking report as needed.
-
-##### By a user
-
-A user can invoke `track()` in one of these ways:
-
-```javaScript
-node call track ttp99a 241016
-node call track ttp99a 241016 'ABC Foundation'
-```
-
-When a user invokes `track()` in this example, the `call` module:
-- gets the summary report from the first file in the `summarized` subdirectory of the `REPORTDIR` directory whose name begins with `'241016'`.
-- selects the summarized data for all results in the summary report, or if the fourth argument to `call()` exists from all results whose `target.what` property has the value `'ABC Foundation'`.
-- uses tracker `ttp99a` to create a tracking report.
-- assigns an ID to the tracking report.
-- writes the tracking report to the `tracking` subdirectory of the `REPORTDIR` directory, with the ID as the base of its file name.
-
-The tracking reports created by `track()` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/tracking/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where tracking reports are written.
 
 ## Origin
 

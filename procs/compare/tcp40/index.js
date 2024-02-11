@@ -26,8 +26,8 @@ const getTableBody = async summaryReport => {
   const rows = summaryReport.data
   .sort((a, b) => a.score - b.score)
   .map(result => {
-    const {id, target, score} = result;
-    const {what, which} = target;
+    const {id, sources, score} = result;
+    const {what, which} = sources.target;
     const pageCell = `<th scope="row"><a href="${which}">${what}</a></th>`;
     const scoreDestination = process.env.DIGEST_URL.replace('__id__', id);
     const numCell = `<td><a href="${scoreDestination}">${score}</a></td>`;

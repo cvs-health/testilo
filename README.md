@@ -643,7 +643,7 @@ To test the `digest` module, in the project directory you can execute the statem
 
 ### Summarization
 
-The `summarize` module of Testilo can summarize a scored report. The summary contains, insofar as they exist in the report, its ID, end time, order ID, target data, and total score.
+The `summarize` module of Testilo can summarize a scored report. The summary contains, insofar as they exist in the report, its ID, end time, `sources` property, and total score.
 
 #### Invocation
 
@@ -774,7 +774,9 @@ When a user invokes `credit` in this example, the `call` module:
 
 ### Track
 
-The `track` module of Testilo selects, organizes, and presents data from summaries to show changes over time in total scores. The module produces a web page, showing changes in a table and (in the future) also in a line graph.
+The `track` module of Testilo selects, organizes, and presents data from summaries to show changes over time in total scores. The module produces a web page, showing changes in a table and (in the future) also in a line graph. The line graph contains a line for each target (namely, each value of the `sources.target.what` property).
+
+A typical use case for tracking is monitoring, i.e. periodic auditing of one or more web pages.
 
 #### Invocation
 
@@ -786,25 +788,27 @@ A module can invoke `track()` in this way:
 const {track} = require('testilo/track');
 const trackerDir = `${process.env.FUNCTIONDIR}/track/ttp99a`;
 const {tracker} = require(`${trackerDir}/index`);
-const summary = …;
-const [reportID, trackReport] = track(tracker, summary);
+const summaryReport = …;
+const [reportID, trackReport] = track(tracker, summaryReport);
 ```
 
-The `track()` function returns an ID and an HTML tracking report that shows data for all of the results in the summary. The invoking module can further dispose of the report as needed.
+The `track()` function returns an ID and an HTML tracking report that shows data for all of the results in the summary report. The invoking module can further dispose of the tracking report as needed.
 
 ##### By a user
 
-A user can invoke `track()` in this way:
+A user can invoke `track()` in one of these ways:
 
 ```javaScript
-node call track ttp99a 241016T2045-Uf-0 4 'ABC Foundation'
+node call track ttp99a 241016
+node call track ttp99a 241016 'ABC Foundation'
 ```
 
 When a user invokes `track()` in this example, the `call` module:
-- gets the summary from the `241016T2045-Uf-0.json` file in the `summarized` subdirectory of the `REPORTDIR` directory.
-- selects the summarized data for all results with the `order` value of `'4'` and the `target.what` value of `'ABC Foundation'`. If the third or fourth argument to `call()` is `null` (or omitted), then `call()` does not select results by `order` or by `target.what`, respectively.
+- gets the summary report from the first file in the `summarized` subdirectory of the `REPORTDIR` directory whose name begins with `'241016'`.
+- selects the summarized data for all results in the summary report, or if the fourth argument to `call()` exists from all results whose `target.what` property has the value `'ABC Foundation'`.
 - uses tracker `ttp99a` to create a tracking report.
-- writes the tracking report to the `tracking` subdirectory of the `REPORTDIR` directory.
+- assigns an ID to the tracking report.
+- writes the tracking report to the `tracking` subdirectory of the `REPORTDIR` directory, with the ID as the base of its file name.
 
 The tracking reports created by `track()` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/tracking/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where tracking reports are written.
 

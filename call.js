@@ -332,21 +332,17 @@ const callCredit = async (what, selector = '') => {
   }
 };
 // Fulfills a tracking request.
-const callTrack = async (trackerID, summaryID, orderID, targetWhat) => {
-  // Get the summary.
+const callTrack = async (trackerID, selector, orderID, targetWhat) => {
+  // Get the summary report.
   try {
-    const summaryJSON = await fs.readFile(`${reportDir}/summarized/${summaryID}.json`, 'utf8');
-    const summary = JSON.parse(summaryJSON);
+    const summaryReport = await getSummaryReport(selector);
     // Remove unwanted audits from it.
-    summary.data = summary.data.filter(result => {
-      if (orderID && result.order !== orderID) {
-        return false;
-      }
-      if (targetWhat && result.target && result.target.what !== targetWhat) {
-        return false;
-      }
-      return true;
-    });
+    summaryReport.data = summary.data.filter(
+      result => targetWhat
+      && result.sources
+      && result.sources.target
+      && result.sources.target.what !== targetWhat
+    );
     // If any results remain:
     if (summary.data.length) {
       // Get the tracker.

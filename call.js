@@ -320,8 +320,9 @@ const callCredit = async (what, selector = '') => {
     const creditDir = `${reportDir}/credit`;
     await fs.mkdir(creditDir, {recursive: true});
     const creditReportID = getFileID(2);
+    tally.id = creditReportID;
     const reportPath = `${creditDir}/${creditReportID}.json`;
-    await fs.writeFile(reportPath, JSON.stringify(tally, null, 2));
+    await fs.writeFile(reportPath, `${JSON.stringify(tally, null, 2)}\n`);
     console.log(`Reports credited and credit report saved as ${reportPath}`);
   }
   // Otherwise, i.e. if no scored reports are to be credited:

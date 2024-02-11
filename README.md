@@ -805,7 +805,7 @@ node call track ttp99a 241016T2045-Uf-0 4 'ABC Foundation'
 
 When a user invokes `track()` in this example, the `call` module:
 - gets the summary from the `241016T2045-Uf-0.json` file in the `summarized` subdirectory of the `REPORTDIR` directory.
-- selects the summarized data for all audits with the `order` value of `'4'` and the `target.what` value of `'ABC Foundation'`. If the third or fourth argument to `call()` is `null` (or omitted), then `call()` does not select audits by `order` or by `target.what`, respectively.
+- selects the summarized data for all results with the `order` value of `'4'` and the `target.what` value of `'ABC Foundation'`. If the third or fourth argument to `call()` is `null` (or omitted), then `call()` does not select results by `order` or by `target.what`, respectively.
 - uses tracker `ttp99a` to create a tracking report.
 - writes the tracking report to the `tracking` subdirectory of the `REPORTDIR` directory.
 

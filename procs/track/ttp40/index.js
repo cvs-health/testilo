@@ -29,9 +29,7 @@ const populateQuery = async (id, summary, query) => {
   query.dateSlash = getNowDateSlash();
   // JSON of pruned summary.
   summary.data.forEach(result => {
-    delete result.id;
     delete result.target.id;
-    delete result.target.which;
   });
   query.summaryJSON = JSON.stringify(summary);
   // For each score:

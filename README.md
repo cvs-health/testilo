@@ -552,16 +552,13 @@ const {digest} = require('testilo/digest');
 const digesterDir = `${process.env.FUNCTIONDIR}/digest/tdp99a`;
 const {digester} = require(`${digesterDir}/index`);
 const scoredReport = …;
-const reportDirURL = 'https://xyz.org/a11yTesting/reports';
-digest(digester, scoredReport, reportDirURL)
+digest(digester, scoredReport)
 .then(digestedReport => {…});
 ```
 
 The first argument to `digest()` is a digester. In this example, it has been obtained from a file in the Testilo package, but it could be custom-made.
 
 The second argument to `digest()` is a scored report object. It may have been read from a JSON file and parsed, or may be a scored report output by `score()`.
-
-The third argument is the absolute or relative URL of a directory where the reports being digested are located. The `digest()` function needs that URL because a digest includes a link to the full scored report. The link concatenates the directory URL with the report ID and a `.json` suffix.
 
 The `digest()` function returns a promise resolved with a digest. The invoking module can further dispose of the digest as needed.
 

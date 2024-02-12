@@ -21,7 +21,7 @@ const digestURL = process.env.DIGEST_URL;
 // FUNCTIONS
 
 // Adds parameters to a query for a tracking report.
-const populateQuery = async (id, summaryReport, query) => {
+const populateQuery = async (id, what, summaryReport, query) => {
   // General parameters.
   query.id = id;
   query.tp = trackerID;
@@ -41,7 +41,6 @@ const populateQuery = async (id, summaryReport, query) => {
     const timeCell = `<td>${result.endTime}</td>`;
     const digestLinkDestination = digestURL.replace('__id__', result.id);
     const scoreCell = `<td><a href=${digestLinkDestination}>${result.score}</a></td>`;
-    const orderCell = `<td class="center">${result.order}</td>`;
     const {target} = result.sources;
     const targetID = alphaNumOf(targetWhats.indexOf(target.what));
     const targetLink = `<a href="${target.which}">${target.what}</a>`;
@@ -54,7 +53,7 @@ const populateQuery = async (id, summaryReport, query) => {
   query.scoreRows = rows.join(innerJoiner);
 };
 // Returns a tracking report.
-exports.tracker = async (id, summaryReport) => {
+exports.tracker = async (id, what, summaryReport) => {
   // Create a query to replace placeholders.
   const query = {};
   await populateQuery(id, summaryReport, query);

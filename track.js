@@ -14,9 +14,9 @@ const {getFileID} = require('./procs/util');
 // ########## FUNCTIONS
 
 // Creates and returns a tracking report from a summary.
-exports.track = async (tracker, summaryReport) => {
+exports.track = async (tracker, what, summaryReport) => {
   // Use the tracker to create a tracking report.
   const id = getFileID(2);
-  const trackingReport = await tracker(id, summaryReport);
+  const trackingReport = await tracker(id, what, summaryReport);
   return [id, trackingReport];
 };

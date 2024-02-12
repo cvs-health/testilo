@@ -309,24 +309,24 @@ const callCompare = async (what, compareProcID, selector) => {
   }
 };
 // Fulfills a tracking request.
-const callTrack = async (trackerID, selector, targetWhat) => {
+const callTrack = async (trackerID, what, selector, targetWhat) => {
   // Get the summary report.
   try {
     const summaryReport = await getSummaryReport(selector);
-    // Remove unwanted results from it.
-    summaryReport.summaries = summaryReport.summaries.filter(
-      result => targetWhat
-      ? result.sources
-      && result.sources.target
-      && result.sources.target.what === targetWhat
-      : true
-    );
+    // Remove unwanted results, if any, from it.
+    if (targetWhat) {
+      summaryReport.summaries = summaryReport.summaries.filter(
+        result => result.sources
+        && result.sources.target
+        && result.sources.target.what === targetWhat
+      );
+    }
     // If any results remain:
     if (summaryReport.summaries.length) {
       // Get the tracker.
       const {tracker} = require(`${functionDir}/track/${trackerID}/index`);
       // Track the results.
-      const [reportID, trackingReport] = await track(tracker, summaryReport);
+      const [reportID, trackingReport] = await track(tracker, what, summaryReport);
       // Save the tracking report.
       await fs.mkdir(`${reportDir}/tracking`, {recursive: true});
       const reportPath = `${reportDir}/tracking/${reportID}.html`;
@@ -429,14 +429,14 @@ else if (fn === 'compare' && fnArgs.length === 3) {
     console.log('Execution completed');
   });
 }
-else if (fn === 'credit' && fnArgs.length > 0 && fnArgs.length < 3) {
-  callCredit(... fnArgs)
+else if (fn === 'track' && fnArgs.length > 2 && fnArgs.length < 6) {
+  callTrack(... fnArgs)
   .then(() => {
     console.log('Execution completed');
   });
 }
-else if (fn === 'track' && fnArgs.length > 1 && fnArgs.length < 5) {
-  callTrack(... fnArgs)
+else if (fn === 'credit' && fnArgs.length > 0 && fnArgs.length < 3) {
+  callCredit(... fnArgs)
   .then(() => {
     console.log('Execution completed');
   });

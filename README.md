@@ -745,25 +745,25 @@ const {track} = require('testilo/track');
 const trackerDir = `${process.env.FUNCTIONDIR}/track/ttp99a`;
 const {tracker} = require(`${trackerDir}/index`);
 const summaryReport = …;
-const [reportID, trackReport] = track(tracker, summaryReport);
+const [reportID, 'main competitors', trackReport] = track(tracker, summaryReport);
 ```
 
-The `track()` function returns an ID and an HTML tracking report that shows data for all of the results in the summary report. The invoking module can further dispose of the tracking report as needed.
+The `track()` function returns an ID and an HTML tracking report that shows data for all of the results in the summary report and identifies “main competitors” as its subject. The invoking module can further dispose of the tracking report as needed.
 
 ##### By a user
 
 A user can invoke `track()` in one of these ways:
 
 ```javaScript
-node call track ttp99a
-node call track ttp99a 241016
-node call track ttp99a 241016 'ABC Foundation'
+node call track ttp99a 'main competitors'
+node call track ttp99a 'main competitors' 241016
+node call track ttp99a 'main competitors' 241016 'ABC Foundation'
 ```
 
 When a user invokes `track()` in this example, the `call` module:
 - gets the summary report from the last file in the `summarized` subdirectory of the `REPORTDIR` directory, or if the third argument to `call()` exists the last one whose name begins with `'241016'`.
 - selects the summarized data for all results in the summary report, or if the fourth argument to `call()` exists from all results whose `target.what` property has the value `'ABC Foundation'`.
-- uses tracker `ttp99a` to create a tracking report.
+- uses tracker `ttp99a` to create a tracking report that identifies “main competitors” as its subject.
 - assigns an ID to the tracking report.
 - writes the tracking report to the `tracking` subdirectory of the `REPORTDIR` directory, with the ID as the base of its file name.
 

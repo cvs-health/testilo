@@ -28,15 +28,15 @@ const populateQuery = async (id, summaryReport, query) => {
   query.dateISO = getNowDate();
   query.dateSlash = getNowDateSlash();
   // JSON of pruned summary report.
-  summaryReport.data.forEach(result => {
+  const {summaries} = summaryReport;
+  summaries.forEach(result => {
     delete result.sources.target.id;
   });
   query.summaryReportJSON = JSON.stringify(summaryReport);
   // For each score:
   const rows = [];
-  const results = summaryReport.data;
-  const targetWhats = Array.from(new Set(results.map(result => result.sources.target.what))).sort();
-  summaryReport.data.forEach(result => {
+  const targetWhats = Array.from(new Set(summaries.map(result => result.sources.target.what))).sort();
+  summaries.forEach(result => {
     // Create an HTML table row for it.
     const timeCell = `<td>${result.endTime}</td>`;
     const digestLinkDestination = digestURL.replace('__id__', result.id);

@@ -56,7 +56,13 @@ const fnArgs = process.argv.slice(3);
 const getSummaryReport = async selector => {
   const summaryDir = `${reportDir}/summarized`;
   const summaryReportNames = await fs.readdir(summaryDir);
-  const summaryReportName = summaryReportNames.find(reportName => reportName.startsWith(selector));
+  let summaryReportName;
+  if (summaryReportNames && summaryReportNames.length) {
+    summaryReportName = summaryReportNames.find(reportName => reportName.startsWith(selector));
+  }
+  else {
+    summaryReportName = summaryReportNames.pop();
+  }
   if (summaryReportName) {
     const summaryReportJSON = await fs.readFile(`${summaryDir}/${summaryReportName}`, 'utf8');
     const summaryReport = JSON.parse(summaryReportJSON);
@@ -255,7 +261,7 @@ const callSummarize = async (what, selector = '') => {
     const summaryReport = {
       id: getFileID(2),
       what,
-      data: []
+      summaries: []
     };
     // For each report to be summarized:
     for (const reportID of reportIDs) {
@@ -263,7 +269,7 @@ const callSummarize = async (what, selector = '') => {
       const report = await getReport('scored', reportID);
       // Add a summary of it to the summary report.
       const summary = summarize(report);
-      summaryReport.data.push(summary);
+      summaryReport.summaries.push(summary);
     };
     // Save the summary report.
     const summaryDir = `${reportDir}/summarized`;
@@ -337,7 +343,7 @@ const callTrack = async (trackerID, selector, targetWhat) => {
   try {
     const summaryReport = await getSummaryReport(selector);
     // Remove unwanted results from it.
-    summaryReport.data = summaryReport.data.filter(
+    summaryReport.summaries = summaryReport.summaries.filter(
       result => targetWhat
       ? result.sources
       && result.sources.target
@@ -345,7 +351,7 @@ const callTrack = async (trackerID, selector, targetWhat) => {
       : true
     );
     // If any results remain:
-    if (summaryReport.data.length) {
+    if (summaryReport.summaries.length) {
       // Get the tracker.
       const {tracker} = require(`${functionDir}/track/${trackerID}/index`);
       // Track the results.

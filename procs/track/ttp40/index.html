@@ -31,7 +31,7 @@
         const summaryReportJSON = '__summaryReportJSON__';
         const summaryReport = JSON.parse(summaryReportJSON);
         const graphData = [];
-        summaryReport.data.forEach(result => {
+        summaryReport.summaries.forEach(result => {
           graphData.push({
             target: result.sources.target.what,
             time: new Date(`20${result.endTime}Z`),

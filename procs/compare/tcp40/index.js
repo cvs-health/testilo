@@ -17,13 +17,13 @@ const innestJoiner = '\n          ';
 // ########## FUNCTIONS
 
 // Returns the maximum score.
-const getMaxScore = summaryReport => summaryReport.data.reduce(
+const getMaxScore = summaryReport => summaryReport.summaries.reduce(
   (max, result) => Math.max(max, result.score), 0
 );
 // Converts summary report data to a table body.
 const getTableBody = async summaryReport => {
   const maxScore = getMaxScore(summaryReport);
-  const rows = summaryReport.data
+  const rows = summaryReport.summaries
   .sort((a, b) => a.score - b.score)
   .map(result => {
     const {id, sources, score} = result;
@@ -42,7 +42,7 @@ const getTableBody = async summaryReport => {
 const populateQuery = async (id, what, summaryReport, query) => {
   query.id = id;
   query.what = what;
-  query.pageCount = summaryReport.data.length;
+  query.pageCount = summaryReport.summaries.length;
   query.tableBody = await getTableBody(summaryReport);
   query.dateISO = getNowDate();
   query.dateSlash = getNowDateSlash();

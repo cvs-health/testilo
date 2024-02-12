@@ -52,13 +52,13 @@ const fnArgs = process.argv.slice(3);
 
 // ########## FUNCTIONS
 
-// Gets a summary report.
+// Gets the last matching summary report.
 const getSummaryReport = async selector => {
   const summaryDir = `${reportDir}/summarized`;
   const summaryReportNames = await fs.readdir(summaryDir);
   let summaryReportName;
   if (summaryReportNames && summaryReportNames.length) {
-    summaryReportName = summaryReportNames.find(reportName => reportName.startsWith(selector));
+    summaryReportName = summaryReportNames.findLast(reportName => reportName.startsWith(selector));
   }
   else {
     summaryReportName = summaryReportNames.pop();
@@ -308,6 +308,40 @@ const callCompare = async (what, compareProcID, selector) => {
     }
   }
 };
+// Fulfills a tracking request.
+const callTrack = async (trackerID, selector, targetWhat) => {
+  // Get the summary report.
+  try {
+    const summaryReport = await getSummaryReport(selector);
+    // Remove unwanted results from it.
+    summaryReport.summaries = summaryReport.summaries.filter(
+      result => targetWhat
+      ? result.sources
+      && result.sources.target
+      && result.sources.target.what === targetWhat
+      : true
+    );
+    // If any results remain:
+    if (summaryReport.summaries.length) {
+      // Get the tracker.
+      const {tracker} = require(`${functionDir}/track/${trackerID}/index`);
+      // Track the results.
+      const [reportID, trackingReport] = await track(tracker, summaryReport);
+      // Save the tracking report.
+      await fs.mkdir(`${reportDir}/tracking`, {recursive: true});
+      const reportPath = `${reportDir}/tracking/${reportID}.html`;
+      await fs.writeFile(reportPath, trackingReport);
+      console.log(`Tracking report saved in ${reportPath}`);
+    }
+    // Otherwise, i.e. if no results remain:
+    else {
+      console.log('ERROR: No results match the request');
+    }
+  }
+  catch(error) {
+    console.log(`ERROR: Tracking request invalid (${error.message})`);
+  }
+};
 // Fulfills a credit request.
 const callCredit = async (what, selector = '') => {
   // Get the IDs of the scored reports to be credited.
@@ -335,40 +369,6 @@ const callCredit = async (what, selector = '') => {
   else {
     // Report this.
     console.log('ERROR: No scored reports to be credited');
-  }
-};
-// Fulfills a tracking request.
-const callTrack = async (trackerID, selector, targetWhat) => {
-  // Get the summary report.
-  try {
-    const summaryReport = await getSummaryReport(selector);
-    // Remove unwanted results from it.
-    summaryReport.summaries = summaryReport.summaries.filter(
-      result => targetWhat
-      ? result.sources
-      && result.sources.target
-      && result.sources.target.what !== targetWhat
-      : true
-    );
-    // If any results remain:
-    if (summaryReport.summaries.length) {
-      // Get the tracker.
-      const {tracker} = require(`${functionDir}/track/${trackerID}/index`);
-      // Track the results.
-      const [reportID, trackingReport] = await track(tracker, summaryReport);
-      // Save the tracking report.
-      await fs.mkdir(`${reportDir}/tracking`, {recursive: true});
-      const reportPath = `${reportDir}/tracking/${reportID}.html`;
-      await fs.writeFile(reportPath, trackingReport);
-      console.log(`Tracking report saved in ${reportPath}`);
-    }
-    // Otherwise, i.e. if no results remain:
-    else {
-      console.log('ERROR: No results match the request');
-    }
-  }
-  catch(error) {
-    console.log(`ERROR: Tracking request invalid (${error.message})`);
   }
 };
 

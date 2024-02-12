@@ -755,12 +755,13 @@ The `track()` function returns an ID and an HTML tracking report that shows data
 A user can invoke `track()` in one of these ways:
 
 ```javaScript
+node call track ttp99a
 node call track ttp99a 241016
 node call track ttp99a 241016 'ABC Foundation'
 ```
 
 When a user invokes `track()` in this example, the `call` module:
-- gets the summary report from the first file in the `summarized` subdirectory of the `REPORTDIR` directory whose name begins with `'241016'`.
+- gets the summary report from the last file in the `summarized` subdirectory of the `REPORTDIR` directory, or if the third argument to `call()` exists the last one whose name begins with `'241016'`.
 - selects the summarized data for all results in the summary report, or if the fourth argument to `call()` exists from all results whose `target.what` property has the value `'ABC Foundation'`.
 - uses tracker `ttp99a` to create a tracking report.
 - assigns an ID to the tracking report.

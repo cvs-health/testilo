@@ -24,6 +24,7 @@ const digestURL = process.env.DIGEST_URL;
 const populateQuery = async (id, what, summaryReport, query) => {
   // General parameters.
   query.id = id;
+  query.what = what;
   query.tp = trackerID;
   query.dateISO = getNowDate();
   query.dateSlash = getNowDateSlash();
@@ -45,7 +46,7 @@ const populateQuery = async (id, what, summaryReport, query) => {
     const targetID = alphaNumOf(targetWhats.indexOf(target.what));
     const targetLink = `<a href="${target.which}">${target.what}</a>`;
     const targetCell = `<td>${targetID}: ${targetLink}</td>`;
-    const row = `<tr>${[timeCell, scoreCell, orderCell, targetCell].join('')}</tr>`;
+    const row = `<tr>${[timeCell, scoreCell, targetCell].join('')}</tr>`;
     // Add the row to the array of rows.
     rows.push(row);
   });
@@ -56,7 +57,7 @@ const populateQuery = async (id, what, summaryReport, query) => {
 exports.tracker = async (id, what, summaryReport) => {
   // Create a query to replace placeholders.
   const query = {};
-  await populateQuery(id, summaryReport, query);
+  await populateQuery(id, what, summaryReport, query);
   // Get the template.
   let template = await fs.readFile(`${__dirname}/index.html`, 'utf8');
   // Replace its placeholders.

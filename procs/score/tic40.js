@@ -88,49 +88,49 @@ exports.issues = {
         },
         'frame-tested': {
           variable: false,
-          quality: 0.2,
+          quality: 0,
           what: 'Some content is in an iframe and so may not be testable for accessibility [speculative]'
         },
         'hidden-content': {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'Some content is hidden and so may not be testable for accessibility [speculative]'
         }
       },
       ed11y: {
         altNull: {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'img element not inside a link has an empty alt attribute [speculative]'
         },
         altPartOfLinkWithText: {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'Name of the link enclosing the img element includes its alt attribute, so may be unclear [speculative]'
         },
         embedAudio: {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'Element is audio, so may lack an accurate transcript [speculative]'
         },
         embedCustom: {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'Embedded custom element may fail to be accessible [speculative]'
         },
         embedTwitter: {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'Element is a Twitter feed, so may add many items on scroll and thus be impractical to exit by keyboard [speculative]'
         },
         embedVideo: {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'Element is video, so may lack captions [speculative]'
         },
         embedVisualization: {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'Element is a visualization, so may lack a nonvisual equivalent [speculative]'
         }
       },
@@ -164,28 +164,33 @@ exports.issues = {
         },
         'QW-ACT-R64': {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'Document has no heading for non-repeated content'
         },
         'QW-ACT-R73': {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'Block of repeated content is not collapsible [invalid]'
         },
         'QW-ACT-R74': {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'Document has no instrument to move focus to non-repeated content [invalid]'
         },
         'QW-ACT-R75': {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'Blocks of repeated content cannot be bypassed [invalid]'
         },
         'QW-BP1': {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'h1-h6 not used to identify headings [invalid]'
+        },
+        'QW-BP29': {
+          variable: false,
+          quality: 0,
+          what: 'lang and xml:lang attribute of html element differ [invalid]'
         },
         'QW-WCAG-T4': {
           variable: false,
@@ -209,7 +214,7 @@ exports.issues = {
         },
         'QW-WCAG-T23': {
           variable: false,
-          quality: 1,
+          quality: 0,
           what: 'No link at the top of the page goes directly to the main content area [invalid]'
         }
       }

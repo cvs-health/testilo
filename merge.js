@@ -7,7 +7,7 @@
 
 // Module to keep secrets.
 require('dotenv').config();
-// Module to perform common actions.
+// Utility module.
 const {alphaNumOf, dateOf, getRandomString, getNowStamp} = require('./procs/util');
 
 // ########## CONSTANTS
@@ -119,12 +119,13 @@ exports.merge = (script, batch, standard, observe, requester, timeStamp) => {
       // Add other properties to the job.
       job.mergeID = mergeID;
       job.sendReportTo = process.env.SEND_REPORT_TO || '';
-      // Add data to the sources property of the job.
-      job.sources.target.id = targetID;
+      // If the target is the last one:
       if (index === targets.length - 1) {
-        // Add that fact to the job.
+        // Add that fact to the sources property of the job.
         job.sources.lastTarget = true;
       }
+      // Add other data to the sources property of the job.
+      job.sources.target.id = targetID;
       job.sources.target.what = target.what;
       job.sources.target.which = target.which;
       // Replace each placeholder object in the job with the named replacer array of the target.

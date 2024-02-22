@@ -2478,11 +2478,12 @@ exports.issues = {
       }
     }
   },
-  cssBansRotate: {
-    summary: 'CSS bans rotation',
+  cssBansPageRotate: {
+    summary: 'CSS bans page rotation',
     why: 'User must read sideways after rotating a device',
     wcag: '1.3.4',
     weight: 4,
+    max: 1,
     tools: {
       aslint: {
         orientation: {
@@ -2496,6 +2497,21 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Orientation of the page is restricted by a CSS transform property'
+        }
+      }
+    }
+  },
+  cssBansElementRotate: {
+    summary: 'CSS bans element rotation',
+    why: 'User must read sideways after rotating a device',
+    wcag: '1.3.4',
+    weight: 4,
+    tools: {
+      ibm: {
+        element_orientation_unlocked: {
+          variable: false,
+          quality: 1,
+          what: 'Element orientation is restricted by a CSS transform'
         }
       }
     }
@@ -4785,7 +4801,7 @@ exports.issues = {
         }
       },
       ed11y: {
-        testPossibleHeading: {
+        textPossibleHeading: {
           variable: false,
           quality: 1,
           what: 'Styled p element may be misused as a heading'

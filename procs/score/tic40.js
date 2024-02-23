@@ -7152,18 +7152,18 @@ exports.issues = {
     weight: 2,
     max: 1,
     tools: {
-      testaro: {
-        motion: {
-          variable: false,
-          quality: 1,
-          what: 'Change of visible content not requested by user'
-        }
-      },
       aslint: {
         animationM: {
           variable: false,
           quality: 1,
           what: 'Animation may fail to give user a pause, stop, or hide mechanism'
+        }
+      },
+      testaro: {
+        motion: {
+          variable: false,
+          quality: 1,
+          what: 'Change of visible content not requested by user'
         }
       }
     }

@@ -187,7 +187,14 @@ exports.issues = {
           quality: 0,
           what: 'h1-h6 not used to identify headings [invalid]'
         },
-        'QW-BP29': {
+        qualWeb: {
+          'QW-BP28': {
+            variable: false,
+            quality: 1,
+            what: 'h1 element missing or used more than once [invalid]'
+          }
+        },
+          'QW-BP29': {
           variable: false,
           quality: 0,
           what: 'lang and xml:lang attribute of html element differ [invalid]'
@@ -4562,13 +4569,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Page contains more than 1 h1 element'
-        }
-      },
-      qualWeb: {
-        'QW-BP28': {
-          variable: false,
-          quality: 1,
-          what: 'h1 element missing or used more than once'
         }
       },
       wave: {

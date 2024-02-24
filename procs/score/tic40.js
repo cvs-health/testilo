@@ -187,14 +187,17 @@ exports.issues = {
           quality: 0,
           what: 'h1-h6 not used to identify headings [invalid]'
         },
-        qualWeb: {
-          'QW-BP28': {
-            variable: false,
-            quality: 1,
-            what: 'h1 element missing or used more than once [invalid]'
-          }
+        'QW-BP24': {
+          variable: false,
+          quality: 1,
+          what: 'ul or ol element has a child other than li, script, or template [invalid]'
         },
-          'QW-BP29': {
+        'QW-BP28': {
+          variable: false,
+          quality: 1,
+          what: 'h1 element missing or used more than once [invalid]'
+        },
+        'QW-BP29': {
           variable: false,
           quality: 0,
           what: 'lang and xml:lang attribute of html element differ [invalid]'
@@ -4853,12 +4856,12 @@ exports.issues = {
         list: {
           variable: false,
           quality: 1,
-          what: 'List element ul or ol has a child element other than li, script, and template'
+          what: 'List element ul or ol has a child element other than li, script, or template'
         },
         'definition-list': {
           variable: false,
           quality: 1,
-          what: 'List element dl has a child element other than properly ordered dt and dt group, script, template, and div'
+          what: 'List element dl has a child element other than properly ordered dt or dt group, script, template, or div'
         }
       },
       nuVal: {
@@ -4866,13 +4869,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'dl element has no child element'
-        }
-      },
-      qualWeb: {
-        'QW-BP24': {
-          variable: false,
-          quality: 1,
-          what: 'ul or ol element has a child other than li, script, or template'
         }
       }
     }

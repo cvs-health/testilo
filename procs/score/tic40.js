@@ -29,6 +29,11 @@ exports.issues = {
     weight: 0,
     tools: {
       alfa: {
+        r66: {
+          variable: false,
+          quality: 1,
+          what: 'Text contrast less than AAA requires [invalid]'
+        },
         r69: {
           variable: false,
           quality: 1,
@@ -203,6 +208,16 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'No link at the beginning of a block of repeated content goes to the end of the block [invalid]'
+        },
+        'QW-BP20': {
+          variable: false,
+          quality: 1,
+          what: 'Document has more than 1 banner landmark [invalid; counts hidden elements]'
+        },
+        'QW-BP22': {
+          variable: false,
+          quality: 1,
+          what: 'Document has more than 1 element with a main role [invalid]'
         },
         'QW-BP23': {
           variable: false,
@@ -3874,13 +3889,6 @@ exports.issues = {
     wcag: '1.4.6',
     weight: 1,
     tools: {
-      alfa: {
-        r66: {
-          variable: false,
-          quality: 1,
-          what: 'Text contrast less than AAA requires'
-        }
-      },
       aslint: {
         'color_contrast_aaa': {
           variable: false,
@@ -6284,13 +6292,6 @@ exports.issues = {
           quality: 1,
           what: 'Page includes more than 1 visible main element'
         }
-      },
-      qualWeb: {
-        'QW-BP22': {
-          variable: false,
-          quality: 1,
-          what: 'Document has more than 1 element with a main role'
-        }
       }
     }
   },
@@ -6313,13 +6314,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'More than one element with a banner role is on the page'
-        }
-      },
-      qualWeb: {
-        'QW-BP20': {
-          variable: false,
-          quality: 1,
-          what: 'Document has more than 1 banner landmark'
         }
       }
     }

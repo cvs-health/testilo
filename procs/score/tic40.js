@@ -7102,7 +7102,7 @@ exports.issues = {
   },
   menuNavigation: {
     summary: 'menu navigation nonstandard',
-    why: 'Menu items behave improperly for a keyboard-only user',
+    why: 'Menus behave improperly for a keyboard-only user',
     wcag: '2.1.1',
     weight: 2,
     tools: {
@@ -7110,7 +7110,7 @@ exports.issues = {
         buttonMenu: {
           variable: false,
           quality: 1,
-          what: 'Button menu items respond nonstandardly to navigation keys'
+          what: 'Menu buttons and menus behave nonstandardly'
         }
       }
     }

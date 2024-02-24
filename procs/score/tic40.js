@@ -187,6 +187,11 @@ exports.issues = {
           quality: 0,
           what: 'h1-h6 not used to identify headings [invalid]'
         },
+        'QW-BP17': {
+          variable: false,
+          quality: 1,
+          what: 'No link at the beginning of a block of repeated content goes to the end of the block [invalid]'
+        },
         'QW-BP24': {
           variable: false,
           quality: 1,
@@ -7796,11 +7801,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'First focusable element is not a link to the non-repeated content'
-        },
-        'QW-BP17': {
-          variable: false,
-          quality: 1,
-          what: 'No link at the beginning of a block of repeated content goes to the end of the block'
         }
       }
     }

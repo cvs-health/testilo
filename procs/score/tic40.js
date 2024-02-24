@@ -28,6 +28,13 @@ exports.issues = {
     wcag: '',
     weight: 0,
     tools: {
+      alfa: {
+        r69: {
+          variable: false,
+          quality: 1,
+          what: 'Text outside widget has subminimum contrast [invalid, reported as issue 1582]'
+        }
+      },
       aslint: {
         color_contrast_aa: {
           variable: false,
@@ -135,6 +142,11 @@ exports.issues = {
         }
       },
       nuVal: {
+        'Element head is missing a required instance of child element title.': {
+          variable: false,
+          quality: 1,
+          what: 'head element has no child title element [invalid]'
+        },
         'Element mediaelementwrapper not allowed as child of element div in this context. (Suppressing further errors from this subtree.)': {
           variable: false,
           quality: 0,
@@ -145,12 +157,12 @@ exports.issues = {
         'QW-ACT-R52': {
           variable: false,
           quality: 0,
-          what: 'video element visual-only content has no description track (description tracks and this ACT rule have been deprecated)'
+          what: 'video element visual-only content has no description track [description tracks and this ACT rule have been deprecated]'
         },
         'QW-ACT-R57': {
           variable: false,
           quality: 0,
-          what: 'video element visual content has no description track (description tracks and this ACT rule have been deprecated)'
+          what: 'video element visual content has no description track [description tracks and this ACT rule have been deprecated]'
         },
         'QW-ACT-R62': {
           variable: false,
@@ -165,7 +177,7 @@ exports.issues = {
         'QW-ACT-R64': {
           variable: false,
           quality: 0,
-          what: 'Document has no heading for non-repeated content'
+          what: 'Document has no heading for non-repeated content [invalid]'
         },
         'QW-ACT-R73': {
           variable: false,
@@ -191,6 +203,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'No link at the beginning of a block of repeated content goes to the end of the block [invalid]'
+        },
+        'QW-BP23': {
+          variable: false,
+          quality: 0.1,
+          what: 'Element is not in a true list [invalid]'
         },
         'QW-BP24': {
           variable: false,
@@ -3762,13 +3779,6 @@ exports.issues = {
     wcag: '1.4.3',
     weight: 4,
     tools: {
-      alfa: {
-        r69: {
-          variable: false,
-          quality: 1,
-          what: 'Text outside widget has subminimum contrast'
-        }
-      },
       aslint: {
         'color_contrast_state_pseudo_classes_abstract3': {
           variable: false,
@@ -4403,13 +4413,6 @@ exports.issues = {
           what: 'Page has no title'
         }
       },
-      nuVal: {
-        'Element head is missing a required instance of child element title.': {
-          variable: false,
-          quality: 1,
-          what: 'head element has no child title element'
-        }
-      },
       qualWeb: {
         'QW-ACT-R1': {
           variable: false,
@@ -4889,13 +4892,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element is not contained by a ul or ol element'
-        }
-      },
-      qualWeb: {
-        'QW-BP23': {
-          variable: false,
-          quality: 0.1,
-          what: 'Element is not in a true list'
         }
       }
     }

@@ -4934,21 +4934,6 @@ exports.issues = {
       }
     }
   },
-  listAbuseRisk: {
-    summary: 'list-item use dubious',
-    why: 'User may be unable to get help on which items are in lists',
-    wcag: '1.3.1',
-    weight: 1,
-    tools: {
-      qualWeb: {
-        'QW-BP23': {
-          variable: false,
-          quality: 1,
-          what: 'List item is used nonsemantically'
-        }
-      }
-    }
-  },
   pseudoListRisk: {
     summary: 'list possibly not marked as such',
     why: 'User may be unable to get help on which items are in lists',

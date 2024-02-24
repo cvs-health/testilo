@@ -850,6 +850,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'img alt value longer than 160 characters'
+        },
+        altLongLinked: {
+          variable: false,
+          quality: 1,
+          what: 'Linked img alt value longer than 160 characters'
         }
       },
       qualWeb: {
@@ -4952,6 +4957,13 @@ exports.issues = {
           what: 'List may be miscoded as a paragraph sequence'
         }
       },
+      htmlcs: {
+        'AAA.1_3_1.H48.1': {
+          variable: false,
+          quality: 1,
+          what: 'Content seems to simulate an unordered list without a ul'
+        }
+      },
       wave: {
         list_possible: {
           variable: false,
@@ -8054,6 +8066,11 @@ exports.issues = {
     weight: 3,
     tools: {
       ibm: {
+        combobox_design_valid: {
+          variable: false,
+          quality: 1,
+          what: 'combobox design pattern is ARIA 1.1, not allowed by ARIA 1.2'
+        },
         combobox_version: {
           variable: false,
           quality: 1,

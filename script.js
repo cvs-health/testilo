@@ -50,7 +50,8 @@ exports.script = (id, what, options = {}) => {
           const issueToolIDs = Object.keys(issueData.tools);
           issueToolIDs.forEach(issueToolID => {
             // For each of the rules of the tool for the issue:
-            const toolRuleIDs = toolsRulesData[issueToolID] || [];
+            toolsRulesData[issueToolID] ??= [];
+            const toolRuleIDs = toolsRulesData[issueToolID];
             const toolData = issueData.tools[issueToolID];
             Object.keys(toolData).forEach(ruleID => {
               // Add the rule to the data on tools and rules.

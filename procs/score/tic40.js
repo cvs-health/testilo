@@ -289,7 +289,7 @@ exports.issues = {
       }
     }
   },
-  IDUnique: {
+  duplicateID: {
     summary: 'ID not unique',
     why: 'User may be pointed to the wrong item',
     wcag: '4.1.1',

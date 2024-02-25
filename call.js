@@ -123,11 +123,18 @@ const callScript = async (scriptID, what, optionType, ... optionDetails) => {
         if (optionDetails[0].startsWith('tic')) {
           try {
             const {issues} = require(`${functionDir}/score/${optionDetails[0]}`);
-            optionArg.type = 'issues';
-            optionArg.specs = {
-              issues,
-              issueIDs: optionDetails.slice(1)
-            };
+            const issueIDs = Object.keys(issues);
+            if (optionDetails.slice(1).every(issueID => issueIDs.includes(issueID))) {
+              optionArg.type = 'issues';
+              optionArg.specs = {
+                issues,
+                issueIDs: optionDetails.slice(1)
+              };
+            }
+            else {
+              console.log('ERROR: Issue IDs invalid');
+              return;
+            }
           }
           catch(error) {
             console.log(`ERROR getting issue classification (${error.message})`);

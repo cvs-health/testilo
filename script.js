@@ -6,7 +6,7 @@
 // ########## VARIABLES
 
 // Testaro tool IDs.
-let toolIDs = [
+const toolIDs = exports.toolIDs = [
   'alfa', 'aslint', 'axe', 'ed11y', 'htmlcs', 'ibm', 'nuVal', 'qualWeb', 'testaro', 'wave'
 ];
 

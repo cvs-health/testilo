@@ -230,13 +230,52 @@ The `call` module will retrieve the named target list.
 The `batch` module will convert the target list to a batch.
 The `call` module will save the batch as a JSON file named `x.json` (replacing `x` with the list ID) in the `batches` subdirectory of the `SPECDIR` directory.
 
-### Issues to script
+### Script creation
 
 You can use the `script()` function of the `script` module to simplify the creation of scripts.
 
-In its simplest form, `script()` requires only one argument, a string that will serve as the ID of the script. Called in this way, `script()` produces a script that tells Testaro to perform all of the tests defined by all of the tools integrated by Testaro.
+#### Without options
 
-If you want a more focused script, you can add additional arguments to `script()`. First you must add the ID of a Testilo issue classification (such as `tic99`). After that, you must add one or more arguments giving the IDs of issues in that classification. The latest Testilo issue classification classifies about a thousand rules of the 10 Testaro tools into about 300 _issues_. The classification is found in a file whose name begins with `tic` in the `procs/score` directory. For example, one issue in the `tic40.js` file is `mainNot1`. Four rules are classified as belonging to that issue: rule `main_element_only_one` of the `aslint` tool and 3 more rules defined by 3 other tools. You can also create custom classifications and save them in a `score` subdirectory of the `FUNCTIONDIR` directory.
+In its simplest form, `script()` requires two string arguments:
+- An ID for the script
+- A description of the script
+
+Called in this way, `script()` produces a script that tells Testaro to perform the tests for all of the evaluation rules defined by all of the tools integrated by Testaro.
+
+#### With options
+
+If you want a more focused script, you can add an additional option argument to `script()`. The option argument lets you restrict the rules to be tested for. You may choose between restrictions of two types:
+- Tools
+- Issues
+
+The option argument is an object. Its properties depend on the restriction type.
+
+For a tool restriction, it has this structure:
+
+```javascript
+{
+  type: 'tools',
+  specs: ['toolID0', 'toolID1', 'toolIDn']
+}
+```
+
+For an issue restriction, it has this structure:
+
+```javascript
+{
+  type: 'issues',
+  specs: {
+    issues: issueClassification,
+    issueIDs: ['issue0', 'issue1', 'issueN']
+  }
+}
+```
+
+If you specify tool options, the script will prescribe the tests for all evaluation rules of the tools that you specify.
+
+If you specify issue options, the script will prescribe the tests for all evaluation rules that are classified in the issues whose IDs you specify. Any tools that do not have any of those rules will be omitted. The value of `specs/issues` is an issue classification object, with a structure like the one in `procs/score/tic40.js`. That one classifies about 1000 rules into about 300 issues.
+
+For example, one issue in the `tic40.js` file is `mainNot1`. Four rules are classified as belonging to that issue: rule `main_element_only_one` of the `aslint` tool and 3 more rules defined by 3 other tools. You can also create custom classifications and save them in a `score` subdirectory of the `FUNCTIONDIR` directory.
 
 #### Invocation
 
@@ -244,34 +283,40 @@ There are two ways to use the `script` module.
 
 ##### By a module
 
-A module can invoke `script()` in this way:
+A module can invoke `script()` in one of these ways:
 
 ```javaScript
 const {script} = require('testilo/script');
-const {issues} = require('testilo/procs/score/tic99');
-const scriptObj = script('monthly', 'landmarks', issues, 'regionNoText', 'mainNot1');
+const scriptObj = script('monthly', 'landmarks');
 ```
 
-In this example, the script will have `'monthly'` as its ID and `'landmarks'` as its description. It will tell Testaro to test for all, and only, the rules that are classified into either the `regionNoText` or the `mainNot1` issue.
+```javaScript
+const {script} = require('testilo/script');
+const options = {…};
+const scriptObj = script('monthly', 'landmarks', options);
+```
+
+In this example, the script will have `'monthly'` as its ID and `'landmarks'` as its description. It will tell Testaro to test for all evaluation rules if the first form is used, or for all rules specified by the options argument if the second form is used.
 
 The invoking module can further modify and use the script (`scriptObj`) as needed.
-
-To create a script **without** issue restrictions, a module can call `script()` with only the first two arguments (the ID and the description).
 
 ##### By a user
 
 A user can invoke `script()` by executing one of these statements in the Testilo project directory:
 
 ```javascript
-node call script id what ticnn issuea issueb …
 node call script id what
+node call script id what tools toolID0 toolID1 toolID2 …
+node call script id what issues tic99 issueID0 issueID1 …
 ```
 
-In this statement, replace `id` with an ID for the script, such as `headings1`, consisting of ASCII alphanumeric characters.
+The first form will create a script with no restrictions.
 
-If specifying issues:
-- Replace `ticnn` with the base, such as `tic99`, of the name of an issue classification file in the `score` subdirectory of the `FUNCTIONDIR` directory.
-- Replace the remaining arguments (`issuea` etc.) with issue names from that classification file.
+The second form will create a script that prescribes tests for all the rules of the specified tools.
+
+The third form will create a script that prescribes tests for all the rules classified by the specified issue classification into any of the specified issues.
+
+In this statement, replace `id` with an ID for the script, such as `headings1`, consisting of ASCII alphanumeric characters.
 
 The `call` module will retrieve the named classification, if any.
 The `script` module will create a script.
@@ -281,7 +326,7 @@ The `call` module will save the script as a JSON file in the `scripts` subdirect
 
 The `script` module will use the value of the `SEND_REPORT_TO` environment variable as the value of the `sendReportTo` property of the script, if that variable exists, and otherwise will leave that property with an empty-string value.
 
-When the `script` module creates a script for you, it does not ask you for all of the options that the script may require. Instead, it chooses default options. For example, it sets the values of `isolate` and `strict` to `true`. After you invoke `script`, you can edit the script that it creates to revise options.
+When the `script` module creates a script for you, it does not ask you for all of the other options that the script may require. Instead, it chooses default options. For example, it sets the values of `isolate` and `strict` to `true`. After you invoke `script`, you can edit the script that it creates to revise options.
 
 ### Merge
 

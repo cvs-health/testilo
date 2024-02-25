@@ -23,7 +23,7 @@ const fs = require('fs/promises');
 // Function to process a list-to-batch conversion.
 const {batch} = require('./batch');
 // Function to create a script from rule specifications.
-const {script} = require('./script');
+const {script, toolIDs} = require('./script');
 // Function to process a merger.
 const {merge} = require('./merge');
 // Function to score reports.
@@ -96,27 +96,68 @@ const callBatch = async (id, what) => {
   }
 };
 // Fulfills a script-creation request.
-const callScript = async (scriptID, what, classificationID = null, ... issueIDs) => {
-  try {
-    // Get any issue classification.
-    const issues = classificationID
-    ? require(`${functionDir}/score/${classificationID}`).issues
-    : null;
-    // Sanitize the ID.
-    scriptID = scriptID.replace(/[^a-zA-Z0-9]/g, '');
-    if (scriptID === '') {
-      scriptID = `script-${getRandomString(2)}`;
+const callScript = async (scriptID, what, optionType, ... optionDetails) => {
+  // Sanitize the script ID.
+  scriptID = scriptID.replace(/[^a-zA-Z0-9]/g, '');
+  if (scriptID === '') {
+    scriptID = `script-${getRandomString(2)}`;
+  }
+  // Create the option argument.
+  const optionArg = {};
+  if (optionType) {
+    if (! ['tools', 'rules'].includes(optionType)) {
+      console.log('ERROR: Option type invalid');
     }
-    // Create a script.
-    const scriptObj = script(scriptID, what, issues, ... issueIDs);
-    // Save the script.
+    if (optionType === 'tools') {
+      if (
+        optionDetails.length === new Set(optionDetails).size
+        && optionDetails.every(toolID => toolIDs.includes(toolID))
+      ) {
+        optionArg.type = 'tools';
+        optionArg.specs = optionDetails;
+      }
+      else {
+        console.log('ERROR: Option type invalid');
+      }
+    }
+    else if (optionType === 'issues') {
+      if (optionDetails.length > 1) {
+        if (optionDetails[0].startsWith('tic')) {
+          try {
+            const {issues} = require(`${functionDir}/score/${optionDetails[0]}`);
+            optionArg.type = 'issues';
+            optionArg.specs = {
+              issues,
+              issueIDs: optionDetails.slice(1)
+            };
+          }
+          catch(error) {
+            console.log(`ERROR getting issue classification (${error.message})`);
+          }
+        }
+        else {
+          console.log('ERROR: Issue classification ID invalid');
+        }
+      }
+      else {
+        console.log('ERROR: No issue IDs specified');
+      }
+    }
+    else {
+      console.log('ERROR: Option type invalid');
+    }
+  }
+  // Create a script.
+  const scriptObj = script(scriptID, what, optionArg);
+  try {
+    // Save it.
     const scriptJSON = JSON.stringify(scriptObj, null, 2);
     const scriptPath = `${specDir}/scripts/${scriptID}.json`;
     await fs.writeFile(scriptPath, `${scriptJSON}\n`);
     console.log(`Script created and saved as ${scriptPath}`);
   }
   catch(error) {
-    console.log(`ERROR creating script (${error.message})`);
+    console.log(`ERROR saving script (${error.message})`);
   }
 };
 // Fulfills a merging request.

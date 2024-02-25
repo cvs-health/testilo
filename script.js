@@ -3,14 +3,9 @@
   Creates and returns a script to perform the tests for issues.
 */
 
-// ########## IMPORTS
-
-// Module to keep secrets.
-require('dotenv').config();
-
 // ########## VARIABLES
 
-// List of presumptively needed tools.
+// Testaro tool IDs.
 let toolIDs = [
   'alfa', 'aslint', 'axe', 'ed11y', 'htmlcs', 'ibm', 'nuVal', 'qualWeb', 'testaro', 'wave'
 ];
@@ -18,129 +13,153 @@ let toolIDs = [
 // ########## FUNCTIONS
 
 // Creates and returns a script.
-exports.script = (id, what, issues = null, ... issueIDs) => {
-  // Initialize data on the tools and their rules for the specified issues, if any.
-  const neededTools = {};
-  // If an issue classification and any issues were specified:
-  if (issues && issueIDs.length) {
-    // For each specified issue:
-    issueIDs.forEach(issueID => {
-      // If it exists in the classification:
-      const issueData = issues[issueID];
-      if (issueData) {
-        // For each tool that tests for the issue:
-        const issueToolIDs = Object.keys(issueData.tools);
-        issueToolIDs.forEach(issueToolID => {
-          // For each of the rules of the tool for the issue:
-          if (! neededTools[issueToolID]) {
-            neededTools[issueToolID] = [];
-          }
-          Object.keys(issueData.tools[issueToolID]).forEach(ruleID => {
-            // Add data on the rule.
-            const ruleData = issueData.tools[issueToolID][ruleID];
-            if (issueToolID === 'nuVal') {
-              if (ruleData.variable) {
-                neededTools[issueToolID].push(`~${ruleID}`);
+exports.script = (id, what, options = {}) => {
+  const toolsRulesData = {};
+  // If options are specified:
+  if (options.type && options.specs) {
+    const {type, specs} = options;
+    // If the option type is tools and is valid:
+    if (
+      type === 'tools'
+      && Array.isArray(specs)
+      && specs.length
+      && specs.every(spec => toolIDs.includes(spec))
+    ) {
+      // Populate the data on tools and rules.
+      specs.forEach(spec => {
+        toolsRulesData[spec] = [];
+      });
+    }
+    // Otherwise, if the option type is issues and is valid:
+    else if (
+      type === 'issues'
+      && typeof specs === 'object'
+      && specs.issues
+      && specs.issueIDs
+      && typeof specs.issues === 'object'
+      && Array.isArray(specs.issueIDs)
+      && specs.issueIDs.length
+    ) {
+      // For each specified issue:
+      const {issueIDs, issues} = specs;
+      issueIDs.forEach(issueID => {
+        // If it exists in the classification:
+        const issueData = issues[issueID];
+        if (issueData) {
+          // For each tool that tests for the issue:
+          const issueToolIDs = Object.keys(issueData.tools);
+          issueToolIDs.forEach(issueToolID => {
+            // For each of the rules of the tool for the issue:
+            const toolRuleIDs = toolsRulesData[issueToolID] || [];
+            Object.keys(issueData.tools[issueToolID]).forEach(ruleID => {
+              // Add the rule to the data on tools and rules.
+              let rulePrefix = '';
+              if (issueToolID === 'nuVal') {
+                rulePrefix = issueData.tools[issueToolID][ruleID].variable ? '~' : '=';
               }
-              else {
-                neededTools[issueToolID].push(`=${ruleID}`);
+              const fullRuleID = `${rulePrefix}${ruleID}`;
+              if (! toolRuleIDs.includes(fullRuleID)) {
+                toolRuleIDs.push(fullRuleID);
               }
-            }
-            else {
-              neededTools[issueToolID].push(ruleID);
-            }
+            });
           });
-        });
-        // Remove unneeded tools from the tool list.
-        toolIDs = Object.keys(neededTools);
-      }
-      // Otherwise, i.e. if it does not exist in the classification:
-      else {
-        // Report this and quit.
-        console.log(`ERROR: Issue ${issueID} not in issue classification`);
-        return {};
-      }
-    });
-  }
-  // If, after any issue-based pruning, any needed tools remain:
-  if (toolIDs.length) {
-    // Initialize a script.
-    const scriptObj = {
-      id,
-      what,
-      strict: true,
-      isolate: true,
-      timeLimit: Math.round(30 + (issueIDs.length || 300) / 2 + 20 * toolIDs.length),
-      acts: [
-        {
-          "type": "placeholder",
-          "which": "main",
-          "launch": "webkit"
         }
-      ]
-    };
-    // For each needed tool:
-    toolIDs.forEach(toolID => {
-      // Initialize a test act for it.
-      const toolAct = {
-        type: 'test',
-        which: toolID
-      };
-      // If issues were specified:
-      if (issues && issueIDs.length) {
-        // Add a rules array as a property to the act.
-        toolAct.rules = neededTools[toolID];
-        // If the tool is QualWeb:
-        if (toolID === 'qualWeb') {
-          // For each QualWeb module:
-          const specs = [];
-          const prefixes = {
-            act: 'QW-ACT-R',
-            wcag: 'QW-WCAG-T',
-            best: 'QW-BP'
+        // Otherwise, i.e. if it does not exist in the classification:
+        else {
+          // Report this and quit.
+          console.log(`ERROR: Issue ${issueID} not in issue classification`);
+          return {};
+        }
+      });
+        // Initialize a script.
+        const scriptObj = {
+          id,
+          what,
+          strict: true,
+          isolate: true,
+          timeLimit: Math.round(30 + (issueIDs.length || 300) / 2 + 20 * toolIDs.length),
+          acts: [
+            {
+              "type": "placeholder",
+              "which": "main",
+              "launch": "webkit"
+            }
+          ]
+        };
+        // For each needed tool:
+        toolIDs.forEach(toolID => {
+          // Initialize a test act for it.
+          const toolAct = {
+            type: 'test',
+            which: toolID
           };
-          Object.keys(prefixes).forEach(prefix => {
-            // Specify the rules of that module to be tested for.
-            const ids = toolAct.rules.filter(id => id.startsWith(prefixes[prefix]));
-            const integers = ids.map(id => id.slice(prefixes[prefix].length));
-            specs.push(`${prefix}:${integers.join(',')}`);
-          });
-          // Replace the generic rule list with the QualWeb-format list.
-          toolAct.rules = specs;
-        }
-        // Otherwise, if the tool is Testaro:
-        else if (toolID === 'testaro') {
-          // Prepend the inclusion option to the rule array.
-          toolAct.rules.unshift('y');
-        }
+          // If issues were specified:
+          if (issues && issueIDs.length) {
+            // Add a rules array as a property to the act.
+            toolAct.rules = neededTools[toolID];
+            // If the tool is QualWeb:
+            if (toolID === 'qualWeb') {
+              // For each QualWeb module:
+              const specs = [];
+              const prefixes = {
+                act: 'QW-ACT-R',
+                wcag: 'QW-WCAG-T',
+                best: 'QW-BP'
+              };
+              Object.keys(prefixes).forEach(prefix => {
+                // Specify the rules of that module to be tested for.
+                const ids = toolAct.rules.filter(id => id.startsWith(prefixes[prefix]));
+                const integers = ids.map(id => id.slice(prefixes[prefix].length));
+                specs.push(`${prefix}:${integers.join(',')}`);
+              });
+              // Replace the generic rule list with the QualWeb-format list.
+              toolAct.rules = specs;
+            }
+            // Otherwise, if the tool is Testaro:
+            else if (toolID === 'testaro') {
+              // Prepend the inclusion option to the rule array.
+              toolAct.rules.unshift('y');
+            }
+          }
+          // Add any needed option defaults to the act.
+          if (toolID === 'axe') {
+            toolAct.detailLevel = 2;
+          }
+          else if (toolID === 'ibm') {
+            toolAct.withItems = true;
+            toolAct.withNewContent = true;
+          }
+          else if (toolID === 'qualWeb') {
+            toolAct.withNewContent = false;
+          }
+          else if (toolID === 'testaro') {
+            toolAct.withItems = true;
+            toolAct.stopOnFail = false;
+          }
+          else if (toolID === 'wave') {
+            toolAct.reportType = 4;
+          }
+          // Add the act to the script.
+          scriptObj.acts.push(toolAct);
+        });
+        // Return the script.
+        return scriptObj;
       }
-      // Add any needed option defaults to the act.
-      if (toolID === 'axe') {
-        toolAct.detailLevel = 2;
-      }
-      else if (toolID === 'ibm') {
-        toolAct.withItems = true;
-        toolAct.withNewContent = true;
-      }
-      else if (toolID === 'qualWeb') {
-        toolAct.withNewContent = false;
-      }
-      else if (toolID === 'testaro') {
-        toolAct.withItems = true;
-        toolAct.stopOnFail = false;
-      }
-      else if (toolID === 'wave') {
-        toolAct.reportType = 4;
-      }
-      // Add the act to the script.
-      scriptObj.acts.push(toolAct);
-    });
-    // Return the script.
-    return scriptObj;
+    }
+    // Otherwise, i.e. if the option specification is invalid:
+    else {
+      // Report this and quit.
+      console.log(`ERROR: Options invalid`);
+      return {};
+    }
   }
-  // Otherwise, i.e. if no rules have been identified:
+  // Otherwise, i.e. if options are not specified:
   else {
-    // Report this.
+    // Populate the data on tools and rules.
+    toolIDs.forEach(toolID => {
+      toolsRulesData[toolID] = [];
+    });
+  }
     console.log(`ERROR: No rules for the specified issues found`);
     return {};
   }

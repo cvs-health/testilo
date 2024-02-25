@@ -119,7 +119,7 @@ const callScript = async (scriptID, what, optionType, ... optionDetails) => {
       }
     }
     else if (optionType === 'issues') {
-      if (optionDetails.length) {
+      if (optionDetails.length > 1) {
         if (optionDetails[0].startsWith('tic')) {
           try {
             const {issues} = require(`${functionDir}/score/${optionDetails[0]}`);

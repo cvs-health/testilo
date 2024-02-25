@@ -17,8 +17,9 @@ const scoreProcID = 'tsp40';
 const latencyWeight = 1;
 // Normal latency (6 visits, with 1.5 second per visit).
 const normalLatency = 9;
-// Prevention weight (how much each prevention adds to the score).
+// Prevention weights (how much each prevention adds to the score).
 const preventionWeight = 300;
+const testaroRulePreventionWeight = 30;
 // Maximum instance count addition weight (divisor of max).
 const maxWeight = 30;
 // Issue count weight.
@@ -77,6 +78,7 @@ exports.scorer = report => {
           log: logWeights,
           latency: latencyWeight,
           prevention: preventionWeight,
+          testaroRulePrevention: testaroRulePreventionWeight,
           maxInstanceCount: maxWeight
         },
         normalLatency,
@@ -104,9 +106,14 @@ exports.scorer = report => {
       const {summary, details} = score;
       // For each test act:
       testActs.forEach(act => {
-        // If the page prevented the tool from operating:
-        const {which, standardResult} = act;
-        if (! standardResult || standardResult.prevented) {
+        const {data, which, standardResult} = act;
+        // If the tool is Testaro and the count of rule preventions was reported:
+        if (which === 'testaro' && data && data.rulePreventions) {
+          // Add their score to the score.
+          details.prevention[testaro] = testaroRulePreventionWeight * data.rulePreventions.length;
+        }
+        // Otherwile, if the page prevented the tool from operating:
+        else if (! standardResult || standardResult.prevented) {
           // Add this to the score.
           details.prevention[which] = preventionWeight;
         }

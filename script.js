@@ -51,11 +51,12 @@ exports.script = (id, what, options = {}) => {
           issueToolIDs.forEach(issueToolID => {
             // For each of the rules of the tool for the issue:
             const toolRuleIDs = toolsRulesData[issueToolID] || [];
-            Object.keys(issueData.tools[issueToolID]).forEach(ruleID => {
+            const toolData = issueData.tools[issueToolID];
+            Object.keys(toolData).forEach(ruleID => {
               // Add the rule to the data on tools and rules.
               let rulePrefix = '';
               if (issueToolID === 'nuVal') {
-                rulePrefix = issueData.tools[issueToolID][ruleID].variable ? '~' : '=';
+                rulePrefix = toolData[ruleID].variable ? '~' : '=';
               }
               const fullRuleID = `${rulePrefix}${ruleID}`;
               if (! toolRuleIDs.includes(fullRuleID)) {
@@ -71,80 +72,6 @@ exports.script = (id, what, options = {}) => {
           return {};
         }
       });
-        // Initialize a script.
-        const scriptObj = {
-          id,
-          what,
-          strict: true,
-          isolate: true,
-          timeLimit: Math.round(30 + (issueIDs.length || 300) / 2 + 20 * toolIDs.length),
-          acts: [
-            {
-              "type": "placeholder",
-              "which": "main",
-              "launch": "webkit"
-            }
-          ]
-        };
-        // For each needed tool:
-        toolIDs.forEach(toolID => {
-          // Initialize a test act for it.
-          const toolAct = {
-            type: 'test',
-            which: toolID
-          };
-          // If issues were specified:
-          if (issues && issueIDs.length) {
-            // Add a rules array as a property to the act.
-            toolAct.rules = neededTools[toolID];
-            // If the tool is QualWeb:
-            if (toolID === 'qualWeb') {
-              // For each QualWeb module:
-              const specs = [];
-              const prefixes = {
-                act: 'QW-ACT-R',
-                wcag: 'QW-WCAG-T',
-                best: 'QW-BP'
-              };
-              Object.keys(prefixes).forEach(prefix => {
-                // Specify the rules of that module to be tested for.
-                const ids = toolAct.rules.filter(id => id.startsWith(prefixes[prefix]));
-                const integers = ids.map(id => id.slice(prefixes[prefix].length));
-                specs.push(`${prefix}:${integers.join(',')}`);
-              });
-              // Replace the generic rule list with the QualWeb-format list.
-              toolAct.rules = specs;
-            }
-            // Otherwise, if the tool is Testaro:
-            else if (toolID === 'testaro') {
-              // Prepend the inclusion option to the rule array.
-              toolAct.rules.unshift('y');
-            }
-          }
-          // Add any needed option defaults to the act.
-          if (toolID === 'axe') {
-            toolAct.detailLevel = 2;
-          }
-          else if (toolID === 'ibm') {
-            toolAct.withItems = true;
-            toolAct.withNewContent = true;
-          }
-          else if (toolID === 'qualWeb') {
-            toolAct.withNewContent = false;
-          }
-          else if (toolID === 'testaro') {
-            toolAct.withItems = true;
-            toolAct.stopOnFail = false;
-          }
-          else if (toolID === 'wave') {
-            toolAct.reportType = 4;
-          }
-          // Add the act to the script.
-          scriptObj.acts.push(toolAct);
-        });
-        // Return the script.
-        return scriptObj;
-      }
     }
     // Otherwise, i.e. if the option specification is invalid:
     else {
@@ -160,7 +87,79 @@ exports.script = (id, what, options = {}) => {
       toolsRulesData[toolID] = [];
     });
   }
-    console.log(`ERROR: No rules for the specified issues found`);
-    return {};
-  }
-};
+  // Initialize a script.
+  const timeLimit = Math.round(50 + 30 * Object.keys(toolsRulesData).length);
+  const scriptObj = {
+    id,
+    what,
+    strict: true,
+    isolate: true,
+    timeLimit,
+    acts: [
+      {
+        "type": "placeholder",
+        "which": "main",
+        "launch": "webkit"
+      }
+    ]
+  };
+  // For each tool used:
+  Object.keys(toolsRulesData).forEach(toolID => {
+    // Initialize a test act for it.
+    const toolAct = {
+      type: 'test',
+      which: toolID
+    };
+    // If rules were specified:
+    const ruleIDs = toolsRulesData[toolID];
+    if (ruleIDs.length) {
+      // Add a rules array as a property to the act.
+      toolAct.rules = ruleIDs;
+      // If the tool is QualWeb:
+      if (toolID === 'qualWeb') {
+        // For each QualWeb module:
+        const specs = [];
+        const prefixes = {
+          act: 'QW-ACT-R',
+          wcag: 'QW-WCAG-T',
+          best: 'QW-BP'
+        };
+        Object.keys(prefixes).forEach(prefix => {
+          // Specify the rules of that module to be tested for.
+          const ids = toolAct.rules.filter(id => id.startsWith(prefixes[prefix]));
+          const integers = ids.map(id => id.slice(prefixes[prefix].length));
+          specs.push(`${prefix}:${integers.join(',')}`);
+        });
+        // Replace the generic rule list with the QualWeb-format list.
+        toolAct.rules = specs;
+      }
+      // Otherwise, if the tool is Testaro:
+      else if (toolID === 'testaro') {
+        // Prepend the inclusion option to the rule array.
+        toolAct.rules.unshift('y');
+      }
+    }
+    // Add any needed option defaults to the act.
+    if (toolID === 'axe') {
+      toolAct.detailLevel = 2;
+    }
+    else if (toolID === 'ibm') {
+      toolAct.withItems = true;
+      toolAct.withNewContent = true;
+    }
+    else if (toolID === 'qualWeb') {
+      toolAct.withNewContent = false;
+    }
+    else if (toolID === 'testaro') {
+      toolAct.withItems = true;
+      toolAct.stopOnFail = false;
+    }
+    else if (toolID === 'wave') {
+      toolAct.reportType = 4;
+    }
+    // Add the act to the script.
+    scriptObj.acts.push(toolAct);
+  });
+  // Return the script.
+  return scriptObj;
+}

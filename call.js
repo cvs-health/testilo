@@ -105,9 +105,6 @@ const callScript = async (scriptID, what, optionType, ... optionDetails) => {
   // Create the option argument.
   const optionArg = {};
   if (optionType) {
-    if (! ['tools', 'rules'].includes(optionType)) {
-      console.log('ERROR: Option type invalid');
-    }
     if (optionType === 'tools') {
       if (
         optionDetails.length === new Set(optionDetails).size
@@ -117,7 +114,8 @@ const callScript = async (scriptID, what, optionType, ... optionDetails) => {
         optionArg.specs = optionDetails;
       }
       else {
-        console.log('ERROR: Option type invalid');
+        console.log('ERROR: Tool IDs invalid');
+        return;
       }
     }
     else if (optionType === 'issues') {
@@ -133,18 +131,22 @@ const callScript = async (scriptID, what, optionType, ... optionDetails) => {
           }
           catch(error) {
             console.log(`ERROR getting issue classification (${error.message})`);
+            return;
           }
         }
         else {
           console.log('ERROR: Issue classification ID invalid');
+          return;
         }
       }
       else {
         console.log('ERROR: No issue IDs specified');
+        return;
       }
     }
     else {
       console.log('ERROR: Option type invalid');
+      return;
     }
   }
   // Create a script.

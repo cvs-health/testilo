@@ -110,7 +110,7 @@ exports.scorer = report => {
         // If the tool is Testaro and the count of rule preventions was reported:
         if (which === 'testaro' && data && data.rulePreventions) {
           // Add their score to the score.
-          details.prevention[testaro] = testaroRulePreventionWeight * data.rulePreventions.length;
+          details.prevention.testaro = testaroRulePreventionWeight * data.rulePreventions.length;
         }
         // Otherwile, if the page prevented the tool from operating:
         else if (! standardResult || standardResult.prevented) {

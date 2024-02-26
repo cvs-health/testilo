@@ -326,7 +326,7 @@ The `call` module will save the script as a JSON file in the `scripts` subdirect
 
 The `script` module will use the value of the `SEND_REPORT_TO` environment variable as the value of the `sendReportTo` property of the script, if that variable exists, and otherwise will leave that property with an empty-string value.
 
-When the `script` module creates a script for you, it does not ask you for all of the other options that the script may require. Instead, it chooses default options. For example, it sets the values of `isolate` and `strict` to `true`. After you invoke `script`, you can edit the script that it creates to revise options.
+When the `script` module creates a script for you, it does not ask you for all of the other options that the script may require. Instead, it chooses default options. For example, it sets the values of `isolate` and `strict` to `true`, and it sets the `withNewContent` property of the `ibm` tool to `false` to prevent occasional infinite loops or crashes when targets cause HTTP2 protocol errors. After you invoke `script`, you can edit the script that it creates to revise options.
 
 ### Merge
 

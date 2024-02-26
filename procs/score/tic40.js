@@ -2535,7 +2535,6 @@ exports.issues = {
     why: 'User must read sideways after rotating a device',
     wcag: '1.3.4',
     weight: 4,
-    max: 1,
     tools: {
       aslint: {
         orientation: {

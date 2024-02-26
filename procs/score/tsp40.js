@@ -112,8 +112,8 @@ exports.scorer = report => {
           // Add their score to the score.
           details.prevention.testaro = testaroRulePreventionWeight * data.rulePreventions.length;
         }
-        // Otherwile, if the page prevented the tool from operating:
-        else if (! standardResult || standardResult.prevented) {
+        // If the page prevented the tool from operating:
+        if (! standardResult || standardResult.prevented) {
           // Add this to the score.
           details.prevention[which] = preventionWeight;
         }

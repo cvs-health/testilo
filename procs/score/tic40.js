@@ -4036,7 +4036,7 @@ exports.issues = {
     weight: 4,
     tools: {
       nuVal: {
-        '^Bad value  for attribute .+ on element .+: An ID must not be the empty string.+$': {
+        '^Bad value  for attribute .+ on element .+: An ID must not be the empty string.*$': {
           variable: true,
           quality: 1,
           what: 'id attribute has an empty value'
@@ -6412,6 +6412,21 @@ exports.issues = {
       }
     }
   },
+  documentConfusion: {
+    summary: 'document elements not distinctly named',
+    why: 'User cannot get help on how some of the document is organized',
+    wcag: '1.3.6',
+    weight: 3,
+    tools: {
+      ibm: {
+        aria_document_label_unique: {
+          variable: false,
+          quality: 1,
+          what: 'Multiple elements with a document role have no unique labels'
+        }
+      }
+    }
+  },
   formConfusion: {
     summary: 'forms not distinctly named',
     why: 'User cannot get help on how some of the document is organized',
@@ -7938,7 +7953,7 @@ exports.issues = {
           quality: 1,
           what: 'border element is obsolete'
         },
-        '^The .+ attribute on the .+ element is obsolete.+$': {
+        '^The .+ attribute on the .+ element is obsolete.*$': {
           variable: true,
           quality: 1,
           what: 'Attribute is obsolete on its element'
@@ -7953,7 +7968,7 @@ exports.issues = {
           quality: 1,
           what: 'name attribute is obsolete'
         },
-        '^Potentially bad value .+ for attribute .+ on element .+: The language subtag .+ is deprecated.+$': {
+        '^Potentially bad value .+ for attribute .+ on element .+: The language subtag .+ is deprecated.*$': {
           variable: true,
           quality: 1,
           what: 'Attribute value is a deprecated language subtag'
@@ -8157,7 +8172,7 @@ exports.issues = {
           quality: 1,
           what: 'Invalid CSS'
         },
-        '^CSS: .+: Too many values or values are not recognized.+$': {
+        '^CSS: .+: Too many values or values are not recognized.*$': {
           variable: true,
           quality: 1,
           what: 'Invalid CSS value or too many values'
@@ -8382,11 +8397,6 @@ exports.issues = {
     weight: 3,
     tools: {
       nuVal: {
-        'Text run is not in Unicode Normalization Form C.': {
-          variable: false,
-          quality: 1,
-          what: 'Text run is not in Unicode Normalization Form C.'
-        },
         '^The text content of element .+ was not in the required format: Expected .+ but found .+ instead.*$': {
           variable: true,
           quality: 1,
@@ -8472,16 +8482,6 @@ exports.issues = {
           quality: 1,
           what: 'Invalid element name'
         },
-        '^Forbidden code point U+.+$': {
-          variable: true,
-          quality: 1,
-          what: 'Invalid Unicode code point'
-        },
-        '^Internal encoding declaration .+ disagrees with the actual encoding of the document.*$': {
-          variable: true,
-          quality: 1,
-          what: 'Encoding declaration disagrees with the actual encoding of the page'
-        },
         'Quote \" in attribute name. Probable cause: Matching quote missing somewhere earlier.': {
           variable: false,
           quality: 1,
@@ -8521,6 +8521,16 @@ exports.issues = {
           variable: true,
           quality: 1,
           what: 'Idle timeout expired'
+        },
+        'style element between head and body.': {
+          variable: false,
+          quality: 1,
+          what: 'style element exists between the head and the body elements'
+        },
+        '^HTML start tag .+ in a foreign namespace context.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Element is invalid because its namespace is not HTML'
         }
       },
       qualWeb: {
@@ -8550,6 +8560,47 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Void element has a useless trailing slash.'
+        }
+      }
+    }
+  },
+  encodingMisdeclared: {
+    summary: 'text not Unicode-compliant',
+    why: 'User cannot read all of the text',
+    wcag: '3.1.3',
+    weight: 4,
+    max: 1,
+    tools: {
+      nuVal: {
+        '^Internal encoding declaration .+ disagrees with the actual encoding of the document.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Encoding declaration disagrees with the actual encoding of the page'
+        }
+      }
+    }
+  },
+  encodingBad: {
+    summary: 'text not Unicode-compliant',
+    why: 'User cannot read all of the text',
+    wcag: '3.1.3',
+    weight: 4,
+    tools: {
+      nuVal: {
+        'Text run is not in Unicode Normalization Form C.': {
+          variable: false,
+          quality: 1,
+          what: 'Text run is not in Unicode Normalization Form C.'
+        },
+        '^The value of attribute .+ on element .+ from namespace .+ is not in Unicode Normalization Form C.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Value of attribute is not in Unicode Normalization Form C.'
+        },
+        '^Forbidden code point U+.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Invalid Unicode code point'
         }
       }
     }

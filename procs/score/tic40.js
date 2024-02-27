@@ -3936,7 +3936,7 @@ exports.issues = {
     }
   },
   contrastRisk: {
-    summary: 'text contrast issues not testable',
+    summary: 'text contrast not testable',
     why: 'Text may be difficult to read',
     wcag: '1.4.3',
     weight: 1,

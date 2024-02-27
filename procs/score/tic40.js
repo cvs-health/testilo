@@ -28,18 +28,6 @@ exports.issues = {
     wcag: '',
     weight: 0,
     tools: {
-      alfa: {
-        r66: {
-          variable: false,
-          quality: 1,
-          what: 'Text contrast less than AAA requires [invalid]'
-        },
-        r69: {
-          variable: false,
-          quality: 1,
-          what: 'Text outside widget has subminimum contrast [invalid, reported as issue 1582]'
-        }
-      },
       aslint: {
         color_contrast_aa: {
           variable: false,
@@ -3793,6 +3781,13 @@ exports.issues = {
     wcag: '1.4.3',
     weight: 4,
     tools: {
+      alfa: {
+        r69: {
+          variable: false,
+          quality: 1,
+          what: 'Text outside widget has subminimum contrast'
+        }
+      },
       aslint: {
         'color_contrast_state_pseudo_classes_abstract3': {
           variable: false,
@@ -3888,6 +3883,13 @@ exports.issues = {
     wcag: '1.4.6',
     weight: 1,
     tools: {
+      alfa: {
+        r66: {
+          variable: false,
+          quality: 1,
+          what: 'Text contrast less than AAA requires'
+        }
+      },
       aslint: {
         'color_contrast_aaa': {
           variable: false,
@@ -8599,8 +8601,23 @@ exports.issues = {
     }
   },
   notValidatable: {
+    summary: 'item makes testing inconclusive',
+    why: 'Item prevents a conclusive accessibility test',
+    wcag: '4.1',
+    weight: 1,
+    tools: {
+      alfa: {
+        cantTell: {
+          variable: false,
+          quality: 1,
+          what: 'Test could not give a conclusive result'
+        }
+      }
+    }
+  },
+  svgNotValidatable: {
     summary: 'SVG version not 1.1',
-    why: 'Item prevents testing for accessibility',
+    why: 'Item prevents testing image for accessibility',
     wcag: '4.1',
     weight: 1,
     tools: {

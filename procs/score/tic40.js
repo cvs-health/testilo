@@ -3942,7 +3942,7 @@ exports.issues = {
     weight: 1,
     tools: {
       alfa: {
-        cantTellContrast: {
+        cantTellTextContrast: {
           variable: false,
           quality: 1,
           what: 'Test of text contrast could not give a conclusive result'

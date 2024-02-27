@@ -3941,6 +3941,13 @@ exports.issues = {
     wcag: '1.4.3',
     weight: 1,
     tools: {
+      alfa: {
+        cantTellContrast: {
+          variable: false,
+          quality: 1,
+          what: 'Test of text contrast could not give a conclusive result'
+        }
+      },
       aslint: {
         color_contrast_state_pseudo_classes_abstractF: {
           variable: false,

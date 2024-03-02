@@ -471,7 +471,10 @@ Testilo can enhance such a report by:
 - adding scores
 - creating digests
 - creating difgests
-- creating comparisons
+- summarizing reports
+- comparing scores
+- tracking score changes
+- crediting tools
 
 ### Scoring
 
@@ -485,7 +488,11 @@ A scoring function defines scoring rules. The Testilo package contains a `procs/
 
 #### Scorers
 
-The built-in scoring functions are named `scorer()` and are exported by files whose names begin with `tsp` (for Testilo scoring proc). Those functions make use of `issues` objects defined in files whose names begin with `tic`. An `issues` object defines an issue classification: a body of data about rules of tools and the tool-agnostic issues that those rules are deemed to belong to.
+The built-in scoring functions are named `scorer()` and are exported by files whose names begin with `tsp` (for Testilo scoring proc).
+
+##### Issues
+
+Those functions make use of `issues` objects defined in files whose names begin with `tic`. An `issues` object defines an issue classification: a body of data about rules of tools and the tool-agnostic issues that those rules are deemed to belong to.
 
 The properties of an `issues` object are issue objects: objects containing data about issues. Here is an example from `tic40.js`:
 
@@ -529,6 +536,10 @@ The `quality` property is usually 1, but if the test of the rule is known to be 
 
 Some issue objects (such as `flash` in `tic40.js`) have a `max` property, equal to the maximum possible count of instances. That property allows a scorer to ascribe a greater weight to an instance of that issue.
 
+##### Output
+
+A scorer adds a `score` property to the report that it scores.
+
 #### Invocation
 
 There are two ways to invoke the `score` module.
@@ -569,7 +580,69 @@ When a user invokes `score()` in this example, the `call` module:
 
 To test the `score` module, in the project directory you can execute the statement `node validation/score/validate`. If `score` is valid, all logging statements will begin with “Success” and none will begin with “ERROR”.
 
-### Report digesting
+### Rescoring
+
+The `rescore` module of Testilo creates a new report for a subset of the results in an existing report.
+
+Any scored report is based on a set of tests of a set of tools. Suppose you want to disregard some of those tests and get a revised report for only the remaining tests. The `rescore` module does this for you.
+
+A typical use case is your desire to examine results for only one or only some of the tools that were used for a report. All the needed information is in the report, so it is not necessary to create, perform, and await a new job and report. You want a new report whose standard results and score data are what a new job would have produced.
+
+The `rescore()` function of the `rescore` module takes four arguments:
+- a scoring function
+- a report object
+- a restriction type (`'tools'` or `'issues'`)
+- an array of IDs of the tools or issues to be included
+
+Then the `rescore()` function copies the report, removes the no-longer-relevant acts, removes the no-longer-relevant instances from and revises the totals of the `standardResult` properties, replaces the `score` property with a new one, and returns the revised report.
+
+The new report is not identical to the report that a new job would have produced, because:
+- Any original (non-standardized) results and data that survive in the new report are not revised.
+- Any scores arising from causes other than test results, such as latency or browser warnings, are not revised.
+- The `score` property object now includes a `rescore` property that identifies the original report ID, the date and time of the rescoring, the restriction type, and an array of the restricted tool or issue IDs.
+
+#### Invocation
+
+There are two ways to invoke the `rescore` module.
+
+##### By a module
+
+A module can invoke `rescore()` in this way:
+
+```javaScript
+const {rescore} = require('testilo/rescore');
+const {scorer} = require('testilo/procs/score/tsp99');
+const report = …;
+const restrictionType = 'tools';
+const restrictions = ['axe', 'nuVal'];
+rescore(scorer, report, restrictionType, restrictions);
+```
+
+The invoking module can further dispose of the rescored report as needed. Disposal may require revising the ID of the report so that the original and the rescored reports have distinct IDs.
+
+##### By a user
+
+A user can invoke `rescore()` in this way:
+
+```bash
+node call rescore tsp99 '' tools axe nuVal
+node call score tsp99 240922 tools axe nuVal
+```
+
+When a user invokes `rescore()` in this example, the `call` module:
+- gets the scoring module `tsp99` from its JSON file `tsp99.json` in the `score` subdirectory of the `FUNCTIONDIR` directory.
+- gets all reports, or if the third argument to `call()` is nonempty the reports whose file names begin with `'240922'`, from the `scored` subdirectory of the `REPORTDIR` directory.
+- defines an ID suffix.
+- revises the `stardardResult` properties in each report.
+- replaces the `score` property in each report.
+- appends the ID suffix to the ID of each report.
+- writes each rescored report in JSON format to the `scored` subdirectory of the `REPORTDIR` directory.
+
+#### Validation
+
+To test the `rescore` module, in the project directory you can execute the statement `node validation/rescore/validate`. If `rescore` is valid, all logging statements will begin with “Success” and none will begin with “ERROR”.
+
+### Digesting
 
 #### Introduction
 
@@ -603,7 +676,7 @@ digest(digester, scoredReport)
 
 The first argument to `digest()` is a digester. In this example, it has been obtained from a file in the Testilo package, but it could be custom-made.
 
-The second argument to `digest()` is a scored report object. It may have been read from a JSON file and parsed, or may be a scored report output by `score()`.
+The second argument to `digest()` is a scored report object. It may have been read from a JSON file and parsed, or may be a report scored by `score()`.
 
 The `digest()` function returns a promise resolved with a digest. The invoking module can further dispose of the digest as needed.
 
@@ -625,7 +698,7 @@ When a user invokes `digest()` in this example, the `call` module:
 
 The digests created by `digest()` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/digested/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where digested reports are written.
 
-### Report difgesting
+### Difgesting
 
 #### Introduction
 
@@ -688,7 +761,7 @@ To test the `digest` module, in the project directory you can execute the statem
 
 ### Summarization
 
-The `summarize` module of Testilo can summarize a scored report. The summary contains, insofar as they exist in the report, its ID, end time, `sources` property, and total score.
+The `summarize` module of Testilo can summarize a scored report. The summary is an object that contains these properties from the report: `id`, `endTime`, `sources`, and `score` (the value of the `score.total` property of the report).
 
 #### Invocation
 

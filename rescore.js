@@ -29,9 +29,14 @@ exports.rescore = async (scorer, report, restrictionType, includedIDs) => {
       acts.forEach(act => {
       // If it is a test act of another tool:
         if (act.type === 'test' && ! includedIDs.includes(act.which)) {
-          // Delete its result and standard result.
+          // Delete its result and data.
           delete act.result;
-          delete act.standardResult;
+          delete act.data;
+          // Reinitialize its standard result to prevent the scorer from considering it prevented.
+          act.standardResult = {
+            totals: [0, 0, 0, 0],
+            instances: []
+          };
         }
       });
     }

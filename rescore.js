@@ -25,20 +25,8 @@ exports.rescore = async (scorer, report, restrictionType, includedIDs) => {
     if (includedIDs.every(
       includedID => acts.some(act => act.type === 'test' && act.which === includedID)
     )) {
-      // For each act:
-      acts.forEach(act => {
-      // If it is a test act of another tool:
-        if (act.type === 'test' && ! includedIDs.includes(act.which)) {
-          // Delete its result and data.
-          delete act.result;
-          delete act.data;
-          // Reinitialize its standard result to prevent the scorer from considering it prevented.
-          act.standardResult = {
-            totals: [0, 0, 0, 0],
-            instances: []
-          };
-        }
-      });
+      // Delete the acts that are tests of other tools.
+      report.acts = acts.filter(act => act.type !== 'test' || includedIDs.includes(act.which));
     }
     // Otherwise, i.e. if any tool included by the restriction is not in the report:
     else {

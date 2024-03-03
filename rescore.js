@@ -11,14 +11,14 @@
 // ########## IMPORTS
 
 // Module to perform common operations.
-const {getRandomString} = require('./procs/util');
+const {getNowTimeStamp} = require('./procs/util');
 
 // ########## FUNCTIONS
 
-// Rescores and returns a report.
+// Rescores a report.
 exports.rescore = async (scorer, report, restrictionType, includedIDs) => {
   // If tools are restricted:
-  const {acts, score} = report;
+  const {acts, id, score} = report;
   if (restrictionType === 'tools') {
     // If all the tools included by the restriction are in the report:
     const reportToolIDs = new Set(acts.filter(act => act.type === 'test').map(act => act.which));
@@ -37,9 +37,8 @@ exports.rescore = async (scorer, report, restrictionType, includedIDs) => {
     }
     // Otherwise, i.e. if any tool included by the restriction is not in the report:
     else {
-      // Report this and quit.
+      // Report this.
       console.log(`ERROR: Report includes only tools ${Array.from(reportToolIDs).join(', ')}`);
-      return {};
     }
   }
   // Otherwise, if issues are restricted:
@@ -101,12 +100,16 @@ exports.rescore = async (scorer, report, restrictionType, includedIDs) => {
   }
   // Otherwise, i.e. if neither tools nor issues are restricted:
   else {
-    // Report this and quit.
+    // Report this.
     console.log('ERROR: Neither tools nor issues are restricted');
-    return {};
+  }
+  // Add rescoring data to the report.
+  report.rescore = {
+    originalID: id,
+    timeStamp: getNowTimeStamp(),
+    restrictionType,
+    includedIDs
   }
   // Score the revised report.
   scorer(report);
-  // Return it.
-  return report;
 }

@@ -28,6 +28,8 @@ const {script, toolIDs} = require('./script');
 const {merge} = require('./merge');
 // Function to score reports.
 const {score} = require('./score');
+// Function to rescore reports.
+const {rescore} = require('./rescore');
 // Function to digest reports.
 const {digest} = require('./digest');
 // Function to difgest reports.
@@ -246,6 +248,37 @@ const callScore = async (scorerID, selector = '') => {
     console.log('ERROR: No raw reports to be scored');
   }
 };
+// Fulfills a rescoring request.
+const callRescore = async (scorerID, selector, restrictionType, ... includedIDs) => {
+  // Get the raw reports to be rescored.
+  const reportIDs = await getReportIDs('scored', selector);
+  // If any exist:
+  if (reportIDs.length) {
+    // Get the scorer.
+    const {scorer} = require(`${functionDir}/score/${scorerID}`);
+    // Rescore and save the reports.
+    const scoredReportDir = `${reportDir}/scored`;
+    await fs.mkdir(scoredReportDir, {recursive: true});
+    const rescoreIDSuffix = `-${getRandomString(2)}`;
+    for (const reportID of reportIDs) {
+      const report = await getReport('scored', reportID);
+      rescore(scorer, report, restrictionType, includedIDs);
+      const newID = report.id += rescoreIDSuffix;
+      report.id = newID;
+      await fs.writeFile(
+        `${scoredReportDir}/${newID}.json`, `${JSON.stringify(report, null, 2)}\n`
+      );
+    }
+    console.log(
+      `Reports rescored and saved with ID suffix ${rescoreIDSuffix} in ${scoredReportDir}`
+    );
+  }
+  // Otherwise, i.e. if no raw reports are to be scored:
+  else {
+    // Report this.
+    console.log('ERROR: No scored reports to be rescored');
+  }
+};
 // Fulfills a digesting request.
 const callDigest = async (digesterID, selector = '') => {
   // Get the base base names (equal to the IDs) of the scored reports to be digested.
@@ -445,6 +478,12 @@ else if (fn === 'merge' && fnArgs.length === 7) {
 }
 else if (fn === 'score' && fnArgs.length > 0 && fnArgs.length < 3) {
   callScore(... fnArgs)
+  .then(() => {
+    console.log('Execution completed');
+  });
+}
+else if (fn === 'rescore' && fnArgs.length > 3) {
+  callRescore(... fnArgs)
   .then(() => {
     console.log('Execution completed');
   });

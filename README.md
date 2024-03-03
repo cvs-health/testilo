@@ -599,7 +599,7 @@ Then the `rescore()` function copies the report, removes the no-longer-relevant 
 The new report is not identical to the report that a new job would have produced, because:
 - Any original (non-standardized) results and data that survive in the new report are not revised.
 - Any scores arising from causes other than test results, such as latency or browser warnings, are not revised.
-- The `score` property object now includes a `rescore` property that identifies the original report ID, the date and time of the rescoring, the restriction type, and an array of the restricted tool or issue IDs.
+- The `score` property object now includes a `rescore` property that identifies the original report ID (in case it is later changed), the date and time of the rescoring, the restriction type, and an array of the tool or issue IDs included by the restriction.
 
 #### Invocation
 
@@ -626,7 +626,7 @@ A user can invoke `rescore()` in this way:
 
 ```bash
 node call rescore tsp99 '' tools axe nuVal
-node call score tsp99 240922 tools axe nuVal
+node call rescore tsp99 240922 tools axe nuVal
 ```
 
 When a user invokes `rescore()` in this example, the `call` module:

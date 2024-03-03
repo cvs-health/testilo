@@ -11,7 +11,7 @@
 // ########## IMPORTS
 
 // Module to perform common operations.
-const {getNowTimeStamp} = require('./procs/util');
+const {getNowStamp} = require('./procs/util');
 
 // ########## FUNCTIONS
 
@@ -106,7 +106,7 @@ exports.rescore = async (scorer, report, restrictionType, includedIDs) => {
   // Add rescoring data to the report.
   report.rescore = {
     originalID: id,
-    timeStamp: getNowTimeStamp(),
+    timeStamp: getNowStamp(),
     restrictionType,
     includedIDs
   }

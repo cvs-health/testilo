@@ -16,26 +16,73 @@ const {getRandomString} = require('./procs/util');
 // ########## FUNCTIONS
 
 // Rescores and returns a report.
-const rescore = async (scorer, report, restrictionType, includeds) => {
+const rescore = async (scorer, report, restrictionType, includedIDs) => {
   // If the restriction is of tools:
   const {acts, score} = report;
   if (restrictionType === 'tools') {
     // If any tool to be included is not in the report:
-    const reportTools = new Set(acts.filter(act => act.type === 'test').map(act => act.which));
-    if (includeds.some(includedTool => ! reportTools.has(includedTool))) {
+    const reportToolIDs = new Set(acts.filter(act => act.type === 'test').map(act => act.which));
+    // If all the included tools are in the report:
+    if (includedIDs.every(
+      includedID => acts.some(act => act.type === 'test' && act.which === includedID)
+    )) {
+      // For each act:
+      acts.forEach(act => {
+      // If it is a test act of another tool:
+        if (act.type === 'test' && ! includedIDs.includes(act.which)) {
+          // Delete its result and standard result.
+          delete act.result;
+          delete act.standardResult;
+        }
+      });
+    }
+    // Otherwise, i.e. if any included tools are not in the report:
+    else {
       // Report this and quit.
-      console.log(`ERROR: Report includes only tools ${Array.from(reportTools).join(', ')}`);
+      console.log(`ERROR: Report includes only tools ${Array.from(reportToolIDs).join(', ')}`);
       return {};
     }
   }
   // Otherwise, if the restriction is of issues:
   else if (restrictionType === 'issues') {
-    // Get data on any violated rules of the issues to be included.
+    // Initialize data on the violated rules of the included issues.
+    const ruleData = {};
+    // For each issue with any rule violations:
     const issueDetails = score.details.issue;
-    const reportIssues = Object.keys(issueDetails);
-    reportIssues.forEach(reportIssue => {
-      if (! includeds.includes(reportIssue)) {
-        delete issueDetails[reportIssupe];
+    const reportIssueIDs = Object.keys(issueDetails);
+    reportIssueIDs.forEach(reportIssueID => {
+      // If the issue is an included:
+      if (includedIDs.includes(reportIssueID)) {
+        // For each tool with any violated rules of the issue:
+        const issueToolIDs = Object.keys(issueDetails[reportIssueID].tools);
+        issueToolIDs.forEach(issueToolID => {
+          // For each violated rule of the issue of the tool:
+          const issueToolRuleIDs = Object.keys(issueDetails[reportIssueID].tools[issueToolID]);
+          issueToolRuleIDs.forEach(issueToolRuleID => {
+            // Add the rule to the rule data.
+            ruleData[issueToolID] ??= [];
+            ruleData[issueToolID].push(issueToolRuleID);
+          });
+        });
+      }
+    });
+    // For each act:
+    acts.forEach(act => {
+      // If it is a test act:
+      if (act.type === 'test') {
+        // Delete any standard instances of rules not included.
+        const {standardResult} = act;
+        standardResult.instances = standardResult.instances.filter(
+          instance => ruleData[act.which].includes(instance.ruleID)
+        );
+        // For each instance of the standard result:
+        act.standardResult.instances.forEach((instance, index) => {
+
+        });
+        // If its tool is Testaro:
+        if (act.which === 'testaro') {
+
+        }
       }
     });
   }

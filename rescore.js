@@ -16,7 +16,7 @@ const {getNowStamp} = require('./procs/util');
 // ########## FUNCTIONS
 
 // Rescores a report.
-exports.rescore = async (scorer, report, restrictionType, includedIDs) => {
+exports.rescore = (scorer, report, restrictionType, includedIDs) => {
   // If tools are restricted:
   const {acts, id, score} = report;
   if (restrictionType === 'tools') {

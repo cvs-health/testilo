@@ -17,6 +17,9 @@ const {getNowStamp} = require('./procs/util');
 
 // Rescores a report.
 exports.rescore = (scorer, report, restrictionType, includedIDs) => {
+  const result = {
+    success: true
+  };
   // If tools are restricted:
   const {acts, id, score} = report;
   if (restrictionType === 'tools') {
@@ -30,9 +33,11 @@ exports.rescore = (scorer, report, restrictionType, includedIDs) => {
     }
     // Otherwise, i.e. if any tool included by the restriction is not in the report:
     else {
-      // Report this and quit.
-      console.log(`ERROR: Report includes only tools ${Array.from(reportToolIDs).join(', ')}`);
-      return;
+      // Report this and abort rescoring.
+      const message = `Report includes only tools ${Array.from(reportToolIDs).join(', ')}`;
+      result.success = false;
+      result.error = message;
+      console.log(`ERROR: ${message}`);
     }
   }
   // Otherwise, if issues are restricted:
@@ -94,17 +99,23 @@ exports.rescore = (scorer, report, restrictionType, includedIDs) => {
   }
   // Otherwise, i.e. if neither tools nor issues are restricted:
   else {
-    // Report this and quit.
-    console.log('ERROR: Neither tools nor issues are restricted');
-    return;
+    // Report this and abort rescoring.
+    const message = 'Neither tools nor issues are restricted';
+    result.success = false;
+    result.error = message;
+    console.log(`ERROR: ${message}`);
   }
   // Add rescoring data to the report.
   report.rescore = {
     originalID: id,
     timeStamp: getNowStamp(),
     restrictionType,
-    includedIDs
+    includedIDs,
+    result
   }
-  // Score the revised report.
-  scorer(report);
+  // If rescoring was not aborted:
+  if (result.success) {
+    // Rescore the revised report.
+    scorer(report);
+  }
 }

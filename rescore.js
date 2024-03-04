@@ -30,8 +30,9 @@ exports.rescore = (scorer, report, restrictionType, includedIDs) => {
     }
     // Otherwise, i.e. if any tool included by the restriction is not in the report:
     else {
-      // Report this.
+      // Report this and quit.
       console.log(`ERROR: Report includes only tools ${Array.from(reportToolIDs).join(', ')}`);
+      return;
     }
   }
   // Otherwise, if issues are restricted:
@@ -93,8 +94,9 @@ exports.rescore = (scorer, report, restrictionType, includedIDs) => {
   }
   // Otherwise, i.e. if neither tools nor issues are restricted:
   else {
-    // Report this.
+    // Report this and quit.
     console.log('ERROR: Neither tools nor issues are restricted');
+    return;
   }
   // Add rescoring data to the report.
   report.rescore = {

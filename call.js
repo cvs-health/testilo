@@ -60,18 +60,24 @@ const getSummaryReport = async selector => {
   const summaryReportNames = await fs.readdir(summaryDir);
   let summaryReportName;
   if (summaryReportNames && summaryReportNames.length) {
-    summaryReportName = summaryReportNames.findLast(reportName => reportName.startsWith(selector));
+    if (selector) {
+      summaryReportName = summaryReportNames
+      .findLast(reportName => reportName.startsWith(selector));
+    }
+    else {
+      summaryReportName = summaryReportNames.pop();
+    }
+    if (summaryReportName) {
+      const summaryReportJSON = await fs.readFile(`${summaryDir}/${summaryReportName}`, 'utf8');
+      const summaryReport = JSON.parse(summaryReportJSON);
+      return summaryReport;
+    }
+    else {
+      throw new Error('ERROR: Requested summary report not found');
+    }
   }
   else {
-    summaryReportName = summaryReportNames.pop();
-  }
-  if (summaryReportName) {
-    const summaryReportJSON = await fs.readFile(`${summaryDir}/${summaryReportName}`, 'utf8');
-    const summaryReport = JSON.parse(summaryReportJSON);
-    return summaryReport;
-  }
-  else {
-    throw new Error(`ERROR: No summary report name starts with ${selector}`);
+    throw new Error('ERROR: No summary reports exist');
   }
 };
 // Converts a target list to a batch.
@@ -518,7 +524,7 @@ else if (fn === 'compare' && fnArgs.length === 3) {
     console.log('Execution completed');
   });
 }
-else if (fn === 'track' && fnArgs.length > 2 && fnArgs.length < 6) {
+else if (fn === 'track' && fnArgs.length > 1 && fnArgs.length < 5) {
   callTrack(... fnArgs)
   .then(() => {
     console.log('Execution completed');

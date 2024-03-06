@@ -875,11 +875,12 @@ A user can invoke `track()` in one of these ways:
 ```javaScript
 node call track ttp99a 'main competitors'
 node call track ttp99a 'main competitors' 241016
+node call track ttp99a 'main competitors' '' 'ABC Foundation'
 node call track ttp99a 'main competitors' 241016 'ABC Foundation'
 ```
 
 When a user invokes `track()` in this example, the `call` module:
-- gets the summary report from the last file in the `summarized` subdirectory of the `REPORTDIR` directory, or if the third argument to `call()` exists the last one whose name begins with `'241016'`.
+- gets the summary report from the last file in the `summarized` subdirectory of the `REPORTDIR` directory, or if the third argument to `call()` exists and is not empty the last one whose name begins with `'241016'`.
 - selects the summarized data for all results in the summary report, or if the fourth argument to `call()` exists from all results whose `target.what` property has the value `'ABC Foundation'`.
 - uses tracker `ttp99a` to create a tracking report that identifies “main competitors” as its subject.
 - assigns an ID to the tracking report.

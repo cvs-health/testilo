@@ -46,16 +46,17 @@
             Plot.lineY(graphData, {
               x: 'time',
               y: 'score',
-              stroke: 'target'
+              stroke: 'target',
+              marker: 'circle-stroke'
             }),
-            Plot.text(graphData, Plot.selectLast({
+            Plot.text(graphData, {
               x: 'time',
               y: 'score',
               z: 'target',
               text: 'target',
               textAnchor: 'start',
               dx: 3
-            }))
+            })
           ]
         });
         document.getElementById('graph').insertAdjacentElement('beforeend', svg);

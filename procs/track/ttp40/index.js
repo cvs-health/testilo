@@ -28,11 +28,8 @@ const populateQuery = async (id, what, summaryReport, query) => {
   query.tp = trackerID;
   query.dateISO = getNowDate();
   query.dateSlash = getNowDateSlash();
-  // JSON of pruned summary report.
+  // JSON of summary report.
   const {summaries} = summaryReport;
-  summaries.forEach(result => {
-    delete result.sources.target.id;
-  });
   query.summaryReportJSON = JSON.stringify(summaryReport);
   // For each score:
   const rows = [];

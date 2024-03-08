@@ -31,18 +31,32 @@ const populateQuery = async (id, what, summaryReport, query) => {
   // JSON of summary report.
   const {summaries} = summaryReport;
   query.summaryReportJSON = JSON.stringify(summaryReport);
-  // For each score:
+  // Legend.
+
+  // Get an array of target descriptions and assign to each an ID.
   const rows = [];
-  const targetWhats = Array.from(new Set(summaries.map(result => result.sources.target.what))).sort();
+  const targets = Array
+  .from(new Set(summaries.map(result => result.sources.target.what)))
+  .sort()
+  .map((targetWhat, index) => [alphaNumOf(index), targetWhat]);
+  const targetIDs = {};
+  targets.forEach(target => {
+    targetIDs[target[1]] = target[0];
+  });
+  // Add legend items to the query.
+  const legendItems = targets.map(target => `<li>${target[0]}: ${target[1]}</li>`);
+  query.legendItems = legendItems.join('\n        ');
+  // For each result:
   summaries.forEach(result => {
-    // Create an HTML table row for it.
+    // Create a date-time cell.
     const timeCell = `<td>${result.endTime}</td>`;
+    // Create a score cell.
     const digestLinkDestination = digestURL.replace('__id__', result.id);
     const scoreCell = `<td><a href=${digestLinkDestination}>${result.score}</a></td>`;
+    // Create a target cell.
     const {target} = result.sources;
-    const targetID = alphaNumOf(targetWhats.indexOf(target.what));
     const targetLink = `<a href="${target.which}">${target.what}</a>`;
-    const targetCell = `<td>${targetID}: ${targetLink}</td>`;
+    const targetCell = `<td>${targetIDs[target.what]}: ${targetLink}</td>`;
     const row = `<tr>${[timeCell, scoreCell, targetCell].join('')}</tr>`;
     // Add the row to the array of rows.
     rows.push(row);

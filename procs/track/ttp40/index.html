@@ -22,32 +22,44 @@
       <p>It tracks accessibility scores over time. A perfect score is 0. The tracking was performed by Testilo procedure <code>__tp__</code>.</p>
       <p>The results are presented first as a graph, and then as a table.</p>
       <h2>Results as a graph</h2>
+      <h3>Legend</h3>
+      <ul id="legendItems">
+        __legendItems__
+      </ul>
+      <h3>Line graph</h3>
       <figure id="graph">
         <figcaption>Accessibility scores</figcaption>
       </figure>
       <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
       <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6"></script>
-      <script type="module">
+      <script type="module" defer>
         const summaryReportJSON = '__summaryReportJSON__';
         const summaryReport = JSON.parse(summaryReportJSON);
         const graphData = [];
+        const targetIDs = {};
+        Array.from(document.getElementById('legendItems').children).forEach(li => {
+          const targetData = li.textContent.split(': ');
+          targetIDs[targetData[1]] = targetData[0];
+        });
         summaryReport.summaries.forEach(result => {
+          const {what} = result.sources.target;
           graphData.push({
-            targetID: result.sources.target.id,
-            targetWhat: result.sources.target.what,
+            targetID: targetIDs[what],
+            targetWhat: what,
             time: new Date(`20${result.endTime}Z`),
             score: result.score
           });
         });
         const svg = Plot.plot({
           style: 'overflow: visible;',
+          height: 600,
           y: {grid: true},
           marks: [
             Plot.ruleY([0]),
             Plot.lineY(graphData, {
               x: 'time',
               y: 'score',
-              stroke: 'targetWhat'
+              stroke: 'targetID'
             }),
             Plot.dot(graphData, {
               x: 'time',
@@ -83,7 +95,7 @@
         document.getElementById('graph').insertAdjacentElement('beforeend', svg);
       </script>
       <h2>Results as a table</h2>
-      <table class="allBorder secondCellRight thirdCellRight">
+      <table class="allBorder secondCellRight">
         <caption>Accessibility scores</caption>
         <thead>
           <tr>

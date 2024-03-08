@@ -18,5 +18,6 @@ exports.track = async (tracker, what, summaryReport) => {
   // Use the tracker to create a tracking report.
   const id = getFileID(2);
   const trackingReport = await tracker(id, what, summaryReport);
+  // Return an ID usable for the report and the report.
   return [id, trackingReport];
 };

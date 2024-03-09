@@ -794,11 +794,15 @@ When a user invokes `summarize` in this example, the `call` module:
 - creates a _summary report_, an object containing three properties: an ID, a description (here `'divisions'`), and the array of summaries.
 - writes the summary report in JSON format to the `summarized` subdirectory of the `REPORTDIR` directory, using the ID as the base of the file name.
 
+#### Summary reports
+
+A summary report serves as a necessary input to the `compare` and `track` modules described below. When a user invokes the `compare` module, a summary report is produced. A module can create a summary report by invoking `compare` multiple times on different scored reports, assembling the resulting summaries into an array, and creating an object like the one the `call` module creates for a user.
+
 ### Comparison
 
 If you use Testilo to perform a battery of tests on multiple targets, you may want a single report that compares the total scores received by the targets. Testilo can produce such a _comparison_.
 
-The `compare` module compares the scores in a summary report. Its `compare()` function takes two arguments:
+The `compare` module compares the scores in a summary report. The `compare()` function of the `compare` module takes two arguments:
 - a comparison function
 - a summary report
 
@@ -866,7 +870,7 @@ const summaryReport = …;
 const [reportID, 'main competitors', trackReport] = track(tracker, summaryReport);
 ```
 
-The `track()` function returns an ID and an HTML tracking report that shows data for all of the results in the summary report and identifies “main competitors” as its subject. The invoking module can further dispose of the tracking report as needed.
+The `track()` function returns, as an array, an ID and an HTML tracking report that shows data for all of the results in the summary report and identifies “main competitors” as its subject. The invoking module can further dispose of the tracking report as needed.
 
 ##### By a user
 
@@ -940,4 +944,4 @@ Work on the functionalities of Testaro and Testilo began in 2017. It was named [
 
 ## Etymology
 
-“Testilo” means “testing tool” in Esperanto.
+“Testilo” means “testing utility” in Esperanto.

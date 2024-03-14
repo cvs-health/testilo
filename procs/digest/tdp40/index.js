@@ -25,7 +25,7 @@ const getScoreRow = (componentName, score) => `<tr><th>${componentName}</th><td>
 // Gets a row of the issue-score-summary table.
 const getIssueScoreRow = (summary, wcag, score, tools) => {
   const toolList = tools.map(tool => `<code>${tool}</code>`).join(', ');
-  return `<tr><th>${summary}</th><td>${wcag}<td>${score}</td><td>${toolList}</td></tr>`;
+  return `<tr><th>${summary}</th><td class="center">${wcag}<td class="right">${score}</td><td>${toolList}</td></tr>`;
 };
 // Adds parameters to a query for a digest.
 const populateQuery = (report, query) => {

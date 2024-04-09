@@ -938,6 +938,46 @@ When a user invokes `credit` in this example, the `call` module:
 - creates an ID for the credit report.
 - writes the credit report as a JSON file, with the ID as the base of its file name and `legislators` as its description, to the `credit` subdirectory of the `REPORTDIR` directory.
 
+### Tool reconciliation
+
+If you use Testaro to perform all the tests of some or all the tools on a target and score the report with a score proc that maps tool rules onto tool-agnostic issues, you may want to investigate disagreements among the tools. One fact on which tools can disagree is the count of instances of violations of rules that are classified in an issue. If the rules of an issue were equivalent, then each tool with any rule of an issue would report the same count of issue instances. When they do not, Testilo can help you investigate the reasons by reporting to you differences in instance counts per issue.
+
+The `reconcile` module reports the instance counts of tools per issue in a scored report. The module depends on the score proc having performed the tabulation and stored the results in the `score.detail.instanceCount` property of the report, as score proc `tic41.js` does.
+
+The output is an HTML document making the instance counts easy to read. The document references the original JSON-format report, so that the reader can examine the instances to diagnose the discrepancies.
+
+#### Invocation
+
+There are two ways to use the `reconcile` module.
+
+##### By a module
+
+A module can invoke `reconcile()` in this way:
+
+```javaScript
+const {reconcile} = require('testilo/reconcile');
+const reportScore = {…};
+credit('June 2025', reportScores)
+.then(creditReport => {…});
+```
+
+The first argument to `reconcile()` is a description to be included in the reconciliation report. The second argument is the `score` property of a scored report object. The `reconcile()` function returns a reconciliation report. The invoking module can further dispose of the reconciliation report as needed.
+
+##### By a user
+
+A user can invoke `credit()` in one of these ways:
+
+```bash
+node call credit legislators
+node call credit legislators 241106
+```
+
+When a user invokes `credit` in this example, the `call` module:
+- gets all reports, or if the third argument to `call()` exists all reports whose file names begin with `'241106'`, in the `scored` subdirectory of the `REPORTDIR` directory. 
+- gets the `score` properties of those reports.
+- creates an ID for the credit report.
+- writes the credit report as a JSON file, with the ID as the base of its file name and `legislators` as its description, to the `credit` subdirectory of the `REPORTDIR` directory.
+
 ## Origin
 
 Work on the functionalities of Testaro and Testilo began in 2017. It was named [Autotest](https://github.com/jrpool/autotest) in early 2021 and then partitioned into the more single-purpose packages Testaro and Testilo in January 2022.

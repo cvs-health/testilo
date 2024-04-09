@@ -68,6 +68,7 @@ exports.scorer = report => {
   if (Array.isArray(acts) && acts.length) {
     // If any of them are test acts:
     const testActs = acts.filter(act => act.type === 'test');
+    const testTools = new Set(testActs.map(act => act.which));
     if (testActs.length) {
       // Initialize the score data.
       const score = {
@@ -245,6 +246,14 @@ exports.scorer = report => {
         // Get the score for the issue, including any addition for the instance count limit.
         const maxAddition = issueData.countLimit ? maxWeight / issueData.countLimit : 0;
         issueData.score = Math.round(issueData.weight * issueData.maxCount * (1 + maxAddition));
+        // For each tool that has any rule of the issue:
+        Object.keys(issues[issueName].tools).forEach(toolName => {
+          // If the tool was in the job and has no instances of the issue:
+          if (testTools.has(toolName) && ! issueData.instanceCounts[toolName]) {
+            // Report its instance count as 0.
+            issueData.instanceCounts[toolName] = 0;
+          }
+        });
       });
       // Add the severity detail totals to the score.
       details.severity.total = Object.keys(details.severity.byTool).reduce((severityTotals, toolID) => {

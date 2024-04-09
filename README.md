@@ -917,8 +917,7 @@ A module can invoke `credit()` in this way:
 ```javaScript
 const {credit} = require('testilo/credit');
 const reportScores = […];
-credit('June 2025', reportScores)
-.then(creditReport => {…});
+const creditReport = credit('June 2025', reportScores);
 ```
 
 The first argument to `credit()` is a description to be included in the credit report. The second argument is an array of `score` properties of scored report objects. The `credit()` function returns a credit report. The invoking module can further dispose of the credit report as needed.
@@ -940,11 +939,22 @@ When a user invokes `credit` in this example, the `call` module:
 
 ### Tool reconciliation
 
-If you use Testaro to perform all the tests of some or all the tools on a target and score the report with a score proc that maps tool rules onto tool-agnostic issues, you may want to investigate disagreements among the tools. One fact on which tools can disagree is the count of instances of violations of rules that are classified in an issue. If the rules of an issue were equivalent, then each tool with any rule of an issue would report the same count of issue instances. When they do not, Testilo can help you investigate the reasons by reporting to you differences in instance counts per issue.
+#### Introduction
 
-The `reconcile` module reports the instance counts of tools per issue in a scored report. The module depends on the score proc having performed the tabulation and stored the results in the `score.detail.instanceCount` property of the report, as score proc `tic41.js` does.
+Suppose you use Testaro to perform all the tests of some or all the tools on a target and you use Testilo to score the report with a score proc that maps tool rules onto tool-agnostic issues. For any issue, multiple tools may have tested conformity with rules of the issue. The tools may agree or disagree in what they found.
 
-The output is an HTML document making the instance counts easy to read. The document references the original JSON-format report, so that the reader can examine the instances to diagnose the discrepancies.
+One fact on which tools can disagree is the count of instances of violations of rules that are classified in an issue. If rule 1 of tool A and rule 2 of tool B are classified in the same issue, and if they are equivalent, then their instance counts should be identical. When they differ, Testilo can help you investigate the reasons by reporting the differences to you.
+
+Testilo can _reconcile_ the tools in a scored report, converting the score data to a human-oriented HTML document about inter-tool differences in instance counts per issue, namely a _reconciliation report_.
+
+The `reconcile` module performs such reconciliations. It depends on the `score` property including a `score.detail.instanceCount` property, such as that produced by the score proc `tsp41`. Its `reconcile()` function takes three arguments:
+- a reconciler (a reconciliation function)
+- the `score` property object from a scored report
+- the URL of a directory containing the scored reports
+
+The reconciler populates an HTML reconciliation template. A copy of the template, with its placeholders replaced by computed values, becomes the reconciliation report. The reconciler defines the rules for replacing the placeholders with values. The Testilo package contains a `procs/reconcile` directory, in which there are subdirectories, each containing a template and a module that exports a reconciler. You can use one of those modules, or you can create your own.
+
+The included templates format placeholders with leading and trailing underscore pairs (such as `__issueCount__`).
 
 #### Invocation
 
@@ -956,27 +966,36 @@ A module can invoke `reconcile()` in this way:
 
 ```javaScript
 const {reconcile} = require('testilo/reconcile');
-const reportScore = {…};
-credit('June 2025', reportScores)
-.then(creditReport => {…});
+const reconcilerDir = `${process.env.FUNCTIONDIR}/reconcile/trp99`;
+const {reconciler} = require(`${reconcilerDir}/index`);
+const scoredReport = …;
+reconcile(reconciler, scoredReport)
+.then(reconciliationReport => {…});
 ```
 
-The first argument to `reconcile()` is a description to be included in the reconciliation report. The second argument is the `score` property of a scored report object. The `reconcile()` function returns a reconciliation report. The invoking module can further dispose of the reconciliation report as needed.
+The first argument to `reconcile()` is a reconciler. In this example, it has been obtained from a file in the Testilo package, but it could be custom-made.
+
+The second argument to `reconcile()` is a scored report. It may have been read from a JSON file and parsed, or may be a report scored by `score()`.
+
+The `reconcile()` function returns a promise resolved with a reconciliation report. The invoking module can further dispose of the reconciliation report as needed.
 
 ##### By a user
 
-A user can invoke `credit()` in one of these ways:
+A user can invoke `reconcile()` in this way:
 
 ```bash
-node call credit legislators
-node call credit legislators 241106
+node call reconcile trp99
+node call reconcile trp99 241105
 ```
 
-When a user invokes `credit` in this example, the `call` module:
-- gets all reports, or if the third argument to `call()` exists all reports whose file names begin with `'241106'`, in the `scored` subdirectory of the `REPORTDIR` directory. 
-- gets the `score` properties of those reports.
-- creates an ID for the credit report.
-- writes the credit report as a JSON file, with the ID as the base of its file name and `legislators` as its description, to the `credit` subdirectory of the `REPORTDIR` directory.
+When a user invokes `reconcile()` in this example, the `call` module:
+- gets the template and the reconciling module from subdirectory `trp99` in the `reconcile` subdirectory of the `FUNCTIONDIR` directory.
+- gets the first report, or if the third argument to `call()` exists the first report whose file name begins with `'241105'`, from the `scored` subdirectory of the `REPORTDIR` directory.
+- reconciles the tools in the `score` property object.
+- writes the reconciliation report to the `reconciled` subdirectory of the `REPORTDIR` directory.
+- includes in the reconciliation report a link to the scored report, with the link destination being based on `SCORED_REPORT_URL`.
+
+The reconciliation report created by `reconcile()` is an HTML file, and it expects a `style.css` file to exist in its directory. The `reports/reconciled/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where reconciliation reports are written.
 
 ## Origin
 

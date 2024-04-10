@@ -29,6 +29,9 @@ caption {
   font-weight: 700;
   font-style: italic;
 }
+.center {
+  text-align: center;
+}
 code {
   font-family: sans-serif;
   color: #832703;
@@ -78,8 +81,14 @@ input {
 legend {
   font-weight: 700;
 }
+.num {
+  font-family: monospace;
+}
 pre {
   white-space: break-spaces;
+}
+.right {
+  text-align: right;
 }
 .secondCellRight td:nth-child(2) {
   text-align: right;

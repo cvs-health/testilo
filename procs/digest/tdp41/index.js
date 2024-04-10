@@ -23,12 +23,14 @@ const innerJoiner = '\n        ';
 // Gets a row of the score-summary table.
 const getScoreRow = (componentName, score) => `<tr><th>${componentName}</th><td>${score}</td></tr>`;
 // Gets a row of the issue-score-summary table.
-const getIssueScoreRow = (summary, wcag, score, instanceCounts) => {
+const getIssueScoreRow = (issueConstants, issueDetails) => {
+  const {summary, wcag} = issueConstants;
+  const {instanceCounts, score} = issueDetails;
   const toolList = Object
   .keys(instanceCounts)
   .map(tool => `<code>${tool}</code>:${instanceCounts[tool]}`)
   .join(', ');
-  return `<tr><th>${summary}</th><td class="center">${wcag}<td class="right">${score}</td><td>${toolList}</td></tr>`;
+  return `<tr><th>${summary}</th><td class="center">${wcag}<td class="right num">${score}</td><td>${toolList}</td></tr>`;
 };
 // Adds parameters to a query for a digest.
 const populateQuery = (report, query) => {
@@ -60,12 +62,8 @@ const populateQuery = (report, query) => {
   issueIDs.sort((a, b) => details.issue[b].score - details.issue[a].score);
   // Get rows for the issue-score table.
   issueIDs.forEach(issueID => {
-    const {score, tools} = details.issue[issueID];
-    const instanceCounts = details.instanceCount[issueID];
     if (issues[issueID]) {
-      rows.issueRows.push(
-        getIssueScoreRow(issues[issueID].summary, issues[issueID].wcag, score, instanceCounts)
-      );
+      rows.issueRows.push(getIssueScoreRow(issues[issueID], details.issue[issueID]));
     }
     else {
       console.log(`ERROR: Issue ${issueID} not found`);

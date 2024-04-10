@@ -1,4 +1,4 @@
-// index: reconciler for scoring procedure tsp41.
+// index: digester for scoring procedure tsp40.
 
 // IMPORTS
 
@@ -13,8 +13,8 @@ const {getNowDate, getNowDateSlash} = require('../../util');
 
 // CONSTANTS
 
-// Reconciler ID.
-const reconcilerID = 'trp41';
+// Digester ID.
+const digesterID = 'tdp41';
 // Newline with indentations.
 const innerJoiner = '\n        ';
 
@@ -23,18 +23,21 @@ const innerJoiner = '\n        ';
 // Gets a row of the score-summary table.
 const getScoreRow = (componentName, score) => `<tr><th>${componentName}</th><td>${score}</td></tr>`;
 // Gets a row of the issue-score-summary table.
-const getIssueScoreRow = (summary, wcag, score, tools) => {
-  const toolList = tools.map(tool => `<code>${tool}</code>`).join(', ');
+const getIssueScoreRow = (summary, wcag, score, instanceCounts) => {
+  const toolList = Object
+  .keys(instanceCounts)
+  .map(tool => `<code>${tool}</code>:${instanceCounts[tool]}`)
+  .join(', ');
   return `<tr><th>${summary}</th><td class="center">${wcag}<td class="right">${score}</td><td>${toolList}</td></tr>`;
 };
-// Adds parameters to a query for a reconciliation report.
+// Adds parameters to a query for a digest.
 const populateQuery = (report, query) => {
   const {id, sources, score} = report;
   const {script, target, requester} = sources;
-  const {scoreProcID, details} = score;
+  const {scoreProcID, summary, details} = score;
   query.ts = script;
   query.sp = scoreProcID;
-  query.rp = reconcilerID;
+  query.dp = digesterID;
   // Add the job data to the query.
   query.dateISO = getNowDate();
   query.dateSlash = getNowDateSlash();
@@ -42,15 +45,26 @@ const populateQuery = (report, query) => {
   query.url = target.which;
   query.requester = requester;
   query.reportURL = process.env.SCORED_REPORT_URL.replace('__id__', id);
+  // Add values for the score-summary table to the query.
+  const rows = {
+    summaryRows: [],
+    issueRows: []
+  };
+  ['total', 'issueCount', 'issue', 'solo', 'tool', 'prevention', 'log', 'latency']
+  .forEach(sumItem => {
+    query[sumItem] = summary[sumItem];
+    rows.summaryRows.push(getScoreRow(sumItem, query[sumItem]));
+  });
   // Sort the issue IDs in descending score order.
   const issueIDs = Object.keys(details.issue);
   issueIDs.sort((a, b) => details.issue[b].score - details.issue[a].score);
-  // Get the instance-count tables.
+  // Get rows for the issue-score table.
   issueIDs.forEach(issueID => {
     const {score, tools} = details.issue[issueID];
+    const instanceCounts = details.instanceCount[issueID];
     if (issues[issueID]) {
       rows.issueRows.push(
-        getIssueScoreRow(issues[issueID].summary, issues[issueID].wcag, score, Object.keys(tools))
+        getIssueScoreRow(issues[issueID].summary, issues[issueID].wcag, score, instanceCounts)
       );
     }
     else {
@@ -84,7 +98,7 @@ const populateQuery = (report, query) => {
   query.issueDetailRows = issueDetailRows.join(innerJoiner);
 };
 // Returns a digested report.
-exports.reconciler = async report => {
+exports.digester = async report => {
   // Create a query to replace placeholders.
   const query = {};
   populateQuery(report, query);
@@ -94,6 +108,6 @@ exports.reconciler = async report => {
   Object.keys(query).forEach(param => {
     template = template.replace(new RegExp(`__${param}__`, 'g'), query[param]);
   });
-  // Return the reconciliation report.
+  // Return the digest.
   return template;
 };

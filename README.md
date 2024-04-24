@@ -58,7 +58,7 @@ Testilo can, however, make job preparation more efficient in these scenarios:
 
 ### Target lists
 
-The simplest version of a list of targets is a _target list_. It is an array of arrays defining 1 or more targets. It can be stored as a text file.
+The simplest version of a list of targets is a _target list_. It is an array of arrays defining 1 or more targets.
 
 A target is defined by 2 items:
 - A description
@@ -73,12 +73,7 @@ For example, a target list might be:
 ]
 ```
 
-If this target list were stored as a file, its content would be this, with vertical bars separating the URLs from the descriptions:
-
-```text
-World Wide Web Consortium|https://www.w3.org/
-Mozilla Foundation|https://foundation.mozilla.org/en/
-```
+A target list can be represented by a text file, in which each target is specified on a line with a Tab character delimiting its description and its URL, which are not quoted.
 
 ### Batches
 
@@ -791,7 +786,7 @@ When a user invokes `summarize` in this example, the `call` module:
 - gets all the reports in the `scored` subdirectory of the `REPORTDIR` directory, or (if the third argument is present) all those whose file names begin with `2411`.
 - creates a summary of each report.
 - combines the summaries into an array.
-- creates a _summary report_, an object containing three properties: an ID, a description (here `'divisions'`), and the array of summaries.
+- creates a _summary report_, an object containing three properties: `id` (an ID), `what` (a description, such as `'divisions'`), and `summaries` (the array of summaries).
 - writes the summary report in JSON format to the `summarized` subdirectory of the `REPORTDIR` directory, using the ID as the base of the file name.
 
 #### Summary reports

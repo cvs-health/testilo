@@ -2,8 +2,10 @@
   compare.js
   Creates a comparison from a summary report.
   Arguments:
-    0. Comparing function.
-    1. Summary report.
+    0. Comparison ID.
+    1. Comparison description.
+    2. Comparing function.
+    3. Summary report.
 */
 
 // ########## FUNCTIONS

@@ -30,7 +30,7 @@ const getTableBody = async summaryReport => {
     const {what, which} = sources.target;
     const pageCell = `<th scope="row"><a href="${which}">${what}</a></th>`;
     const scoreDestination = process.env.DIGEST_URL.replace('__id__', id);
-    const numCell = `<td><a href="${scoreDestination}">${score}</a></td>`;
+    const numCell = `<td class="num"><a href="${scoreDestination}">${score}</a></td>`;
     // Make the bar width proportional.
     const barCell = getBarCell(score, maxScore, 25, false);
     const row = `<tr>${pageCell}${numCell}${barCell}</tr>`;

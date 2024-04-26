@@ -76,7 +76,8 @@ const populateQuery = (report, query) => {
   // Add paragraph groups about the issue details to the query.
   const issueDetailRows = [];
   issueIDs.forEach(issueID => {
-    issueDetailRows.push(`<h3 class="bars">Issue: ${issues[issueID].summary}</h3>`);
+    const issueSummary = issues[issueID].summary;
+    issueDetailRows.push(`<h3 class="bars">Issue: ${issueSummary}</h3>`);
     issueDetailRows.push(`<p>Impact: ${issues[issueID].why || 'N/A'}</p>`);
     issueDetailRows.push(`<p>WCAG: ${issues[issueID].wcag || 'N/A'}</p>`);
     const issueData = details.issue[issueID];
@@ -90,8 +91,10 @@ const populateQuery = (report, query) => {
         issueDetailRows.push(`<h5>Rule <code>${ruleID}</code></h5>`);
         issueDetailRows.push(`<p>Description: ${ruleData.what}</p>`);
         issueDetailRows.push(`<p>Count of instances: ${ruleData.complaints.countTotal}</p>`);
+        const href = `${query.reportURL}?tool=${toolID}&rule=${ruleID}`;
+        const detailLabel = `Issue ${issueSummary} tool ${toolID} rule ${ruleID} instance details`;
         issueDetailRows.push(
-          `<p><a href="${query.reportURL}?tool=${toolID}&rule=${ruleID}">Instance details</a></p>`
+          `<p><a href="${href}" aria-label="${detailLabel}">Instance details</a></p>`
         );
       });
     });

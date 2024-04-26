@@ -691,6 +691,8 @@ When a user invokes `digest()` in this example, the `call` module:
 - writes the digested reports to the `digested` subdirectory of the `REPORTDIR` directory.
 - includes in each digest a link to the scored report, with the link destination being based on `SCORED_REPORT_URL`.
 
+The included digesters create digests that have links. The server that serves such a digest must also respond correctly when a user activates one of the links. One link is to the scored report. Other links are to collections of standard instances of violations of particular rules from the scored report.
+
 The digests created by `digest()` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/digested/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where digested reports are written.
 
 ### Difgesting

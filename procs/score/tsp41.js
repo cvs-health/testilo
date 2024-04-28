@@ -7,7 +7,7 @@
 
 // IMPORTS
 
-const {issues} = require('./tic40');
+const {issues} = require('./tic41');
 
 // CONSTANTS
 

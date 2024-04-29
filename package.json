@@ -1,6 +1,6 @@
 {
   "name": "testilo",
-  "version": "33.6.2",
+  "version": "34.0.0",
   "description": "Prepares Testaro jobs and processes Testaro reports",
   "main": "call.js",
   "scripts": {
@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/jrpool/testilo",
   "dependencies": {
-    "dotenv": "*"
+    "dotenv": "*",
+    "playwright": "*"
   },
   "devDependencies": {
     "eslint": "*"

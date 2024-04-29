@@ -8,7 +8,7 @@
 // Module to keep secrets.
 require('dotenv').config();
 // Utility module.
-const {alphaNumOf, dateOf, getRandomString, getNowStamp} = require('./procs/util');
+const {alphaNumOf, dateOf, getRandomString, getNowStamp, isValidDeviceID} = require('./procs/util');
 
 // ########## CONSTANTS
 
@@ -45,7 +45,7 @@ exports.merge = (script, batch, standard, observe, requester, timeStamp, deviceI
     // If it is invalid:
     if (! dateOf(timeStamp)) {
       // Report this and quit.
-      console.log(`ERROR: Timestamp invalid`);
+      console.log('ERROR: Timestamp invalid');
       return [];
     }
   }
@@ -53,6 +53,12 @@ exports.merge = (script, batch, standard, observe, requester, timeStamp, deviceI
   else {
     // Create one for the job.
     timeStamp = getNowStamp();
+  }
+  // If deviceID is invalid:
+  if (! isValidDeviceID(deviceID)) {
+    // Report this and quit.
+    console.log('ERROR: Device ID invalid');
+    return [];
   }
   // Initialize a job as a copy of the script.
   const protoJob = JSON.parse(JSON.stringify(script));

@@ -477,7 +477,7 @@ else if (fn === 'script' && (fnArgs.length === 2 || fnArgs.length > 3)) {
     console.log('Execution completed');
   });
 }
-else if (fn === 'merge' && fnArgs.length === 7) {
+else if (fn === 'merge' && fnArgs.length === 8) {
   callMerge(... fnArgs)
   .then(() => {
     console.log('Execution completed');

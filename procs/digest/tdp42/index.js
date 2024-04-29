@@ -14,7 +14,7 @@ const {getNowDate, getNowDateSlash} = require('../../util');
 // CONSTANTS
 
 // Digester ID.
-const digesterID = 'tdp41';
+const digesterID = 'tdp42';
 // Newline with indentations.
 const innerJoiner = '\n        ';
 
@@ -34,7 +34,7 @@ const getIssueScoreRow = (issueConstants, issueDetails) => {
 };
 // Adds parameters to a query for a digest.
 const populateQuery = (report, query) => {
-  const {id, sources, score} = report;
+  const {acts, id, sources, score} = report;
   const {script, target, requester} = sources;
   const {scoreProcID, summary, details} = score;
   query.ts = script;
@@ -46,6 +46,13 @@ const populateQuery = (report, query) => {
   query.org = target.what;
   query.url = target.which;
   query.requester = requester;
+  const firstLaunch = acts.find(act => act.type === 'launch');
+  if (firstLaunch) {
+    query.device = firstLaunch.deviceID || 'unknown';
+  }
+  else {
+    query.device = 'unknown';
+  }
   query.reportURL = process.env.SCORED_REPORT_URL.replace('__id__', id);
   // Add values for the score-summary table to the query.
   const rows = {

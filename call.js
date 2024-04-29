@@ -185,6 +185,7 @@ const callMerge = async (
   observe,
   requester,
   timeStamp,
+  deviceID,
   todoDir
 ) => {
   try {
@@ -199,7 +200,7 @@ const callMerge = async (
     const batchJSON = await fs.readFile(`${specDir}/batches/${batchID}.json`, 'utf8');
     const batch = JSON.parse(batchJSON);
     // Merge them into an array of jobs.
-    const jobs = merge(script, batch, standard, observe === 'true', requester, timeStamp);
+    const jobs = merge(script, batch, standard, observe === 'true', requester, timeStamp, deviceID);
     // Save the jobs.
     const subdir = `${jobDir}/${todoDir === 'true' ? 'todo' : 'pending'}`;
     for (const job of jobs) {
@@ -362,7 +363,7 @@ const callSummarize = async (what, selector = '') => {
     };
     // Save the summary report.
     const summaryDir = `${reportDir}/summarized`;
-    await fs.mkdir(summaryDir, {recursive: true}); 
+    await fs.mkdir(summaryDir, {recursive: true});
     const filePath = `${summaryDir}/${summaryReport.id}.json`;
     await fs.writeFile(filePath, `${JSON.stringify(summaryReport, null, 2)}\n`);
     console.log(`Reports summarized and summary report saved as ${filePath}`);
@@ -385,7 +386,7 @@ const callCompare = async (what, compareProcID, selector) => {
       const {comparer} = require(`${comparerDir}/index`);
       // Compare the reports and save the comparison.
       const comparisonDir = `${reportDir}/comparative`;
-      await fs.mkdir(comparisonDir, {recursive: true}); 
+      await fs.mkdir(comparisonDir, {recursive: true});
       const id = getFileID(2);
       const comparison = await compare(id, what, comparer, summaryReport);
       const comparisonPath = `${comparisonDir}/${id}.html`;

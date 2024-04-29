@@ -343,7 +343,7 @@ const standard = 'only';
 const observe = false;
 const requester = 'me@mydomain.tld';
 const timeStamp = '241215T1200';
-const jobs = merge(script, batch, standard, observe, requester, timeStamp);
+const jobs = merge(script, batch, standard, observe, requester, timeStamp, deviceID);
 ```
 
 The first two arguments are a script and a batch obtained from files or from prior calls to `script()` and `batch()`.
@@ -356,6 +356,8 @@ The `requester` argument is an email address to which any notices about the job 
 
 The `timeStamp` argument specifies the earliest UTC date and time when the jobs may be assigned, or it may be an empty string if now.
 
+The `deviceID` argument specifies the ID of the test device. It must be either `'default'` or the ID of one of the test devices recognized by Playwright, published at `https://github.com/microsoft/playwright/blob/main/packages/playwright-core/src/server/deviceDescriptorsSource.json`.
+
 The `merge()` function returns the jobs in an array. The invoking module can further dispose of the jobs as needed.
 
 ##### By a user
@@ -367,13 +369,13 @@ A user can invoke `merge()` in this way:
 - In the Testilo project directory, execute the statement:
 
 ```javascript
-node call merge scriptID batchID standard observe requester timeStamp todoDir
+node call merge scriptID batchID standard observe requester timeStamp deviceID todoDir
 ```
 
 In this statement, replace:
 - `scriptID` with the ID (which is also the base of the file name) of the script.
 - `batchID` with the ID (which is also the base of the file name) of the batch.
-- `standard`, `observe`, `requester`, and `timeStamp` as described above.
+- `standard`, `observe`, `requester`, `timeStamp`, and `deviceID` as described above.
 - `todoDir`: `true` if the jobs are to be saved in the `todo` subdirectory, or `false` if they are to be saved in the `pending` subdirectory, of the `JOBDIR` directory.
 
 The `call` module will retrieve the named script and batch from their respective directories.
@@ -399,6 +401,7 @@ A Testaro job produced by `merge` may look like this:
       type: 'launch',
       which: 'webkit',
       what: 'Acme Clothes',
+      deviceID: 'Galaxy S8',
       url: 'https://acmeclothes.com/'
     },
     {
@@ -412,6 +415,7 @@ A Testaro job produced by `merge` may look like this:
       type: 'launch',
       which: 'webkit',
       what: 'Acme Clothes',
+      deviceID: 'Galaxy S8',
       url: 'https://acmeclothes.com/'
     },
     {
@@ -929,7 +933,7 @@ node call credit legislators 241106
 ```
 
 When a user invokes `credit` in this example, the `call` module:
-- gets all reports, or if the third argument to `call()` exists all reports whose file names begin with `'241106'`, in the `scored` subdirectory of the `REPORTDIR` directory. 
+- gets all reports, or if the third argument to `call()` exists all reports whose file names begin with `'241106'`, in the `scored` subdirectory of the `REPORTDIR` directory.
 - gets the `score` properties of those reports.
 - creates an ID for the credit report.
 - writes the credit report as a JSON file, with the ID as the base of its file name and `legislators` as its description, to the `credit` subdirectory of the `REPORTDIR` directory.

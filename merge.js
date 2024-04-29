@@ -27,7 +27,7 @@ const mergeIDLength = 2;
 // ########## FUNCTIONS
 
 // Merges a script and a batch and returns jobs.
-exports.merge = (script, batch, standard, observe, requester, timeStamp) => {
+exports.merge = (script, batch, standard, observe, requester, timeStamp, deviceID) => {
   // If standard is invalid:
   if (! ['also', 'only', 'no'].includes(standard)) {
     // Report this and quit.
@@ -137,11 +137,12 @@ exports.merge = (script, batch, standard, observe, requester, timeStamp) => {
           if (replacerName && target.acts) {
             let replacerActs = target.acts[replacerName];
             if (replacerActs) {
-              // Add a which property to any launch act in the replacer.
+              // Add properties to any launch act in the replacer.
               replacerActs = JSON.parse(JSON.stringify(replacerActs));
               for (const replacerAct of replacerActs) {
                 if (replacerAct.type === 'launch') {
                   replacerAct.which = act.launch;
+                  replacerAct.deviceID = deviceID;
                 }
               }
               acts[actIndex] = replacerActs;

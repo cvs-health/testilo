@@ -1,13 +1,19 @@
 # testilo
-Utilities for Testaro
+Utilities for ensemble web accessibility testing
 
 ## Introduction
 
-The Testilo package contains utilities that facilitate the use of the [Testaro](https://www.npmjs.com/package/testaro) package.
+Testilo is an application that facilitates automated web accessibility testing.
 
-Testaro performs jobs and creates reports in JSON format. The utilities in Testilo fall into two categories:
-- Job preparation
-- Report enhancement
+Testilo is designed to be used in conjunction with [Testaro](https://www.npmjs.com/package/testaro).
+
+## Testilo and Testaro
+
+The two applications collaborate as follows:
+
+- Testaro runs on a computer workstation (typically MacOS or Windows) and **performs** testing jobs.
+- Testilo runs on a server and **manages** testing jobs.
+- A user-facing application learns from users what testing they want done. That application uses Testilo to get that testing done. Testilo prepares testing jobs and assigns them to Testaro agents. Testaro agents perform the jobs and send reports back to Testilo. Testilo analyzes the Testaro reports and derives from them enhanced reports to satisfy user requirements.
 
 Because Testilo supports Testaro, this `README` file presumes that you have access to the Testaro `README` file and therefore does not repeat information provided there.
 
@@ -23,9 +29,9 @@ Testilo is written in Node.js. Commands are given to Testilo in a command-line (
 
 Shared routines, called _procs_, are located in the `procs` directory.
 
-Testilo can be installed wherever Node.js (version 14 or later) is installed. This can be a server or the same workstation on which Testaro is installed.
+Testilo can be installed wherever Node.js (version 18 or later) is installed. This can be a server or the same workstation on which Testaro is installed.
 
-The reason for Testilo being an independent package, rather than part of Testaro, is that Testilo can be installed on any host, while Testaro can run successfully only on a Windows, Macintosh, Ubuntu, or Debian workstation. Testaro runs tests similar to those that a human accessibility tester would run, using whatever browsers, input devices, system settings, simulated and attached devices, and assistive technologies tests may require. Thus, Testaro is limited to functionalities that require workstation attributes. For maximum flexibility in the management of Testaro jobs, all other functionalities are located outside of Testaro. You could have software such as Testilo running on a server, communicating with multiple workstations running Testaro. The workstations could receive jobs from the server and return job reports to the server for further processing.
+The reason for Testilo being an independent package, rather than part of Testaro, is that Testilo can be installed on any host, while Testaro can run successfully only on a Windows, Macintosh, Ubuntu, or Debian workstation. Testaro runs tests similar to those that a human accessibility tester would run, using whatever browsers, input devices, system settings, simulated and attached devices, and assistive technologies tests may require. Thus, Testaro is mostly limited to functionalities that require workstation attributes. For flexibility in the management of Testaro jobs, other functionalities are located outside of Testaro. You could have software such as Testilo running on a server, communicating with multiple agents running Testaro. The agents could receive jobs from the server and return job reports to the server for further processing. In an advanced configuration, Testilo could even split jobs into segments and assign segments to different Testaro agents for faster processing.
 
 ## Configuration
 
@@ -40,9 +46,7 @@ SCORED_REPORT_URL=../scored/__id__.json
 DIGEST_URL=../digested/__id__.html
 ```
 
-The first four variables above tell Testilo where to find or save files when a user invokes a function. This decreases the count of arguments that the user would otherwise need to specify.
-
-The other two variables specify the destinations of links to scored reports and digests. Digests produced by Testilo digesters link to scored reports, and difgests produced by Testilo difgesters link to digests. The URLs can be absolute, or, if digests and difgests will be opened from a local filesystem, they can be relative to the linking document, as shown. They include the substring `__id__`. A function that needs the URL of a scored report or digest is expected to substitute the ID of that document for `__id__` to produce the URL. Since the `.env` file is excluded from the repository, importing modules that will use `digest()` need a `SCORED_REPORT_URL` environment variable, and importing modules that will use `difgest()` need a `DIGEST_URL` environment variable.
+The use of these environment variables is explained below.
 
 ## Job preparation
 
@@ -73,7 +77,12 @@ For example, a target list might be:
 ]
 ```
 
-A target list can be represented by a text file, in which each target is specified on a line with a Tab character delimiting its description and its URL, which are not quoted.
+A target list can be represented by a text file, in which each target is specified on a line with a Tab character delimiting its description and its URL, which are not quoted. Such a file representing the above target list would have this content, where “➡︎” represents a tab character:
+
+```text
+World Wide Web Consortium➡︎https://www.w3.org/
+Mozilla Foundation➡︎https://foundation.mozilla.org/en/
+```
 
 ### Batches
 
@@ -185,7 +194,7 @@ As shown in this example, when a browser is launched by placeholder substitution
 
 ### Target list to batch
 
-If you have a target list, the `batch` module of Testilo can convert it to a simple batch. The batch will contain, for each target, only one array of acts, named `main`, containing only a `launch` act (depending on the script to specify the browser type and the target to specify the URL).
+If you have a target list, the `batch` module of Testilo can convert it to a simple batch. The batch will contain, for each target, only one array of acts, named `main`, containing only a `launch` act (depending on the script to specify the browser type and depending on the target to specify the URL).
 
 #### Invocation
 
@@ -942,6 +951,34 @@ When a user invokes `credit` in this example, the `call` module:
 
 Work on the functionalities of Testaro and Testilo began in 2017. It was named [Autotest](https://github.com/jrpool/autotest) in early 2021 and then partitioned into the more single-purpose packages Testaro and Testilo in January 2022.
 
+On 5 May 2024 ownership of the Testilo repository was transfered from the personal account of contributor Jonathan Pool to the organization account `cvs-health` of CVS Health. The MIT license of the repository did not change.
+
+## Contributing
+
+As of 5 May 2024, upon the transfer of the repository ownership to CVS Health, contributors of code to Testilo are required to execute the [CVS Health OSS Project Contributor License Agreement](https://forms.office.com/r/SS09Tn1j6L) for Testilo before any pull request will be approved and merged.
+
 ## Etymology
 
 “Testilo” means “testing utility” in Esperanto.
+
+/*
+  © 2024 CVS Health and/or one of its affiliates. All rights reserved.
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+*/

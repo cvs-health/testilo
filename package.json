@@ -1,6 +1,6 @@
 {
   "name": "testilo",
-  "version": "34.0.2",
+  "version": "35.0.0",
   "description": "Prepares Testaro jobs and processes Testaro reports",
   "main": "call.js",
   "scripts": {
@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jrpool/testilo"
+    "url": "https://github.com/cvs-health/testilo"
   },
   "keywords": ["accessibility", "a11y", "testing"],
-  "author": "Jonathan Pool <pool@jpdev.pro>",
+  "author": "Jonathan Pool <jonathan.pool@cvshealth.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jrpool/testilo/issues"
+    "url": "https://github.com/cvs-health/testilo/issues"
   },
-  "homepage": "https://github.com/jrpool/testilo",
+  "homepage": "https://github.com/cvs-health/testilo",
   "dependencies": {
     "dotenv": "*",
     "playwright": "*"

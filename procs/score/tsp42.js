@@ -49,7 +49,7 @@ const issueCountWeight = 10;
 // Other weights.
 const severityWeights = [1, 2, 3, 4];
 const toolWeight = 0.1;
-const elementWeight = 1;
+const elementWeight = 3;
 const logWeights = {
   logCount: 0.1,
   logSize: 0.002,

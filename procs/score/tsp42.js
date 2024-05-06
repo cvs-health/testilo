@@ -21,8 +21,8 @@
 */
 
 /*
-  tsp41
-  Testilo score proc 41
+  tsp42
+  Testilo score proc 42
 
   Computes target score data and adds them to a ts40 report.
 */
@@ -34,7 +34,7 @@ const {issues} = require('./tic41');
 // CONSTANTS
 
 // ID of this proc.
-const scoreProcID = 'tsp41';
+const scoreProcID = 'tsp42';
 // Latency weight (how much each second of excess latency adds to the score).
 const latencyWeight = 1;
 // Normal latency (6 visits, with 1.5 second per visit).
@@ -49,6 +49,7 @@ const issueCountWeight = 10;
 // Other weights.
 const severityWeights = [1, 2, 3, 4];
 const toolWeight = 0.1;
+const elementWeight = 1;
 const logWeights = {
   logCount: 0.1,
   logSize: 0.002,
@@ -98,6 +99,7 @@ exports.scorer = report => {
         weights: {
           severities: severityWeights,
           tool: toolWeight,
+          element: elementWeight,
           log: logWeights,
           latency: latencyWeight,
           prevention: preventionWeight,
@@ -111,6 +113,7 @@ exports.scorer = report => {
           issue: 0,
           solo: 0,
           tool: 0,
+          element: 0,
           prevention: 0,
           log: 0,
           latency: 0
@@ -126,6 +129,8 @@ exports.scorer = report => {
           tool: {}
         }
       };
+      // Initialize the set of path-identified elements.
+      const pathIDs = new Set();
       const {summary, details} = score;
       // For each test act:
       testActs.forEach(act => {
@@ -156,15 +161,15 @@ exports.scorer = report => {
           );
           // For each instance of the tool:
           standardResult.instances.forEach(instance => {
+            const {count, ordinalSeverity, pathID, ruleID, what} = instance;
             // Get the rule ID.
-            const {ruleID, ordinalSeverity, count} = instance;
             // If it is not in the table of tool rules:
             let canonicalRuleID = ruleID;
             if (! issueIndex[which][ruleID]) {
               // Convert it to the variably named tool rule that it matches, if any.
               canonicalRuleID = issueMatcher.find(pattern => {
                 const patternRE = new RegExp(pattern);
-                return patternRE.test(instance.ruleID);
+                return patternRE.test(ruleID);
               });
             }
             // If the rule ID belongs to a non-ignorable issue:
@@ -194,7 +199,7 @@ exports.scorer = report => {
                 if (! details.issue[issueName].instanceCounts[which]) {
                   details.issue[issueName].instanceCounts[which] = 0;
                 }
-                details.issue[issueName].instanceCounts[which] += instance.count || 1;
+                details.issue[issueName].instanceCounts[which] += count || 1;
                 if (! details.issue[issueName].tools[which][canonicalRuleID]) {
                   const ruleData = issues[issueName].tools[which][canonicalRuleID];
                   details.issue[issueName].tools[which][canonicalRuleID] = {
@@ -210,21 +215,21 @@ exports.scorer = report => {
                 .issue[issueName]
                 .tools[which][canonicalRuleID]
                 .complaints
-                .countTotal += instance.count || 1;
+                .countTotal += count || 1;
                 if (
                   ! details
                   .issue[issueName]
                   .tools[which][canonicalRuleID]
                   .complaints
                   .texts
-                  .includes(instance.what)
+                  .includes(what)
                 ) {
                   details
                   .issue[issueName]
                   .tools[which][canonicalRuleID]
                   .complaints
                   .texts
-                  .push(instance.what);
+                  .push(what);
                 }
               }
             }
@@ -239,7 +244,11 @@ exports.scorer = report => {
               }
               details.solo[which][ruleID] += (count || 1) * (ordinalSeverity + 1);
               // Report this.
-              console.log(`ERROR: ${instance.ruleID} of ${which} not found in issues`);
+              console.log(`ERROR: ${ruleID} of ${which} not found in issues`);
+            }
+            // Ensure that the element, if path-identified, is in the set of elements.
+            if (pathID) {
+              pathIDs.add(pathID);
             }
           });
         }
@@ -278,7 +287,9 @@ exports.scorer = report => {
         });
       });
       // Add the severity detail totals to the score.
-      details.severity.total = Object.keys(details.severity.byTool).reduce((severityTotals, toolID) => {
+      details.severity.total = Object
+      .keys(details.severity.byTool)
+      .reduce((severityTotals, toolID) => {
         details.severity.byTool[toolID].forEach((severityScore, index) => {
           severityTotals[index] += severityScore;
         });
@@ -300,6 +311,8 @@ exports.scorer = report => {
       summary.tool = toolWeight * details.severity.total.reduce(
         (total, current, index) => total + severityWeights[index] * current, 0
       );
+      // Add the summary element total to the score.
+      summary.element = elementWeight * pathIDs.size;
       // Add the summary prevention total to the score.
       summary.prevention = Object.values(details.prevention).reduce(
         (total, current) => total + current, 0
@@ -332,6 +345,7 @@ exports.scorer = report => {
       + summary.issue
       + summary.solo
       + summary.tool
+      + summary.element
       + summary.prevention
       + summary.log
       + summary.latency;

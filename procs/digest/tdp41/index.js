@@ -20,14 +20,14 @@
   SOFTWARE.
 */
 
-// index: digester for scoring procedure tsp40.
+// index: digester for scoring procedure tsp41.
 
 // IMPORTS
 
 // Module to keep secrets.
 require('dotenv').config();
 // Module to classify tool rules into issues
-const {issues} = require('../../score/tic40');
+const {issues} = require('../../score/tic41');
 // Module to process files.
 const fs = require('fs/promises');
 // Utility module.

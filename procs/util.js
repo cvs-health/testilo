@@ -117,5 +117,5 @@ exports.getBarCell = (num, colMax, svgWidth, isRight = false) => {
 // Returns whether a device ID is recognized by Playwright.
 exports.isValidDeviceID = deviceID => {
   const deviceIDs = Object.keys(devices);
-  return deviceIDs.includes(deviceID);
+  return deviceIDs.concat('default').includes(deviceID);
 };

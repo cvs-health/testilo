@@ -5874,12 +5874,7 @@ exports.issues = {
         r111: {
           variable: false,
           quality: 1,
-          what: 'Target size is substandard'
-        },
-        r113: {
-          variable: false,
-          quality: 1,
-          what: 'Target size is substandard'
+          what: 'Target size is suboptimal'
         }
       },
       testaro: {
@@ -5898,22 +5893,10 @@ exports.issues = {
     weight: 3,
     tools: {
       alfa: {
-        r111: {
-          variable: false,
-          quality: 1,
-          what: 'Target size is substandard'
-        },
         r113: {
           variable: false,
           quality: 1,
           what: 'Target size is substandard'
-        }
-      },
-      testaro: {
-        targetSize: {
-          variable: false,
-          quality: 1,
-          what: 'Button, input, or non-inline link is smaller than 44 px wide and high'
         }
       }
     }

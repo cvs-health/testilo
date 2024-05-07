@@ -27,7 +27,7 @@
 // Module to keep secrets.
 require('dotenv').config();
 // Module to classify tool rules into issues
-const {issues} = require('../../score/tic41');
+const {issues} = require('../../score/tic43');
 // Module to process files.
 const fs = require('fs/promises');
 // Utility module.

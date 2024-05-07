@@ -29,7 +29,7 @@
 
 // IMPORTS
 
-const {issues} = require('./tic41');
+const {issues} = require('./tic43');
 
 // CONSTANTS
 
@@ -49,7 +49,7 @@ const issueCountWeight = 10;
 // Other weights.
 const severityWeights = [1, 2, 3, 4];
 const toolWeight = 0.1;
-const elementWeight = 3;
+const elementWeight = 2;
 const logWeights = {
   logCount: 0.1,
   logSize: 0.002,
@@ -233,10 +233,10 @@ exports.scorer = report => {
                   .texts
                   .push(what);
                 }
+                issuePaths[issueName] ??= new Set();
                 // If the element has a path ID:
                 if (pathID) {
                   // Ensure that it is in the issue-specific set of paths.
-                  issuePaths[issueName] ??= new Set();
                   issuePaths[issueName].add(pathID);
                 }
               }

@@ -111,9 +111,18 @@ const populateQuery = (report, query) => {
     issueDetailRows.push(`<p>WCAG: ${issues[issueID].wcag || 'N/A'}</p>`);
     const issueData = details.issue[issueID];
     issueDetailRows.push(`<p>Score: ${issueData.score}</p>`);
-    issueDetailRows.push('<h4>')
+    issueDetailRows.push('<h4>Elements</h4>');
     const issuePaths = details.element[issueID];
-
+    if (issuePaths.length) {
+      issueDetailRows.push('<ul>');
+      issuePaths.forEach(pathID => {
+        issueDetailRows.push(`<li>${pathID}</li>`);
+      });
+      issueDetailRows.push('</ul>');
+    }
+    else {
+      issueDetailRows.push('<p>None identified</p>');
+    }
     const toolIDs = Object.keys(issueData.tools);
     toolIDs.forEach(toolID => {
       issueDetailRows.push(`<h4>Violations of <code>${toolID}</code> rules</h4>`);

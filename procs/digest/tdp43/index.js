@@ -20,7 +20,7 @@
   SOFTWARE.
 */
 
-// index: digester for scoring procedure tsp42.
+// index: digester for scoring procedure tsp43.
 
 // IMPORTS
 
@@ -36,7 +36,7 @@ const {getNowDate, getNowDateSlash} = require('../../util');
 // CONSTANTS
 
 // Digester ID.
-const digesterID = 'tdp42';
+const digesterID = 'tdp43';
 // Newline with indentations.
 const innerJoiner = '\n        ';
 
@@ -111,6 +111,9 @@ const populateQuery = (report, query) => {
     issueDetailRows.push(`<p>WCAG: ${issues[issueID].wcag || 'N/A'}</p>`);
     const issueData = details.issue[issueID];
     issueDetailRows.push(`<p>Score: ${issueData.score}</p>`);
+    issueDetailRows.push('<h4>')
+    const issuePaths = details.element[issueID];
+
     const toolIDs = Object.keys(issueData.tools);
     toolIDs.forEach(toolID => {
       issueDetailRows.push(`<h4>Violations of <code>${toolID}</code> rules</h4>`);

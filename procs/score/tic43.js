@@ -3212,12 +3212,20 @@ exports.issues = {
           quality: 1,
           what: 'explicit role is redundant for a text-type input element without a list attribute'
         }
-      },
+      }
+    }
+  },
+  roleConfusion: {
+    summary: 'role assigned instead of implicit',
+    why: 'User may misunderstand the purpose of an item',
+    wcag: '4.1.2',
+    weight: 1,
+    tools: {
       testaro: {
         role: {
           variable: false,
           quality: 1,
-          what: 'Invalid, native-replacing, or redundant role'
+          what: 'Explicitly assigned ARIA role is also an implicit element role'
         }
       }
     }

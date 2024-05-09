@@ -118,7 +118,7 @@ const populateQuery = (report, query) => {
     if (issuePaths.length) {
       issueDetailRows.push('<ul>');
       issuePaths.forEach(pathID => {
-        issueDetailRows.push(`<li>${pathID}</li>`);
+        issueDetailRows.push(`  <li>${pathID}</li>`);
       });
       issueDetailRows.push('</ul>');
     }

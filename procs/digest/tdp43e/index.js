@@ -76,7 +76,7 @@ const populateQuery = (report, query) => {
   else {
     query.device = 'unknown';
   }
-  query.agent = `on agent ${agent}` || '';
+  query.agent = ` on agent ${agent}` || '';
   query.reportURL = process.env.SCORED_REPORT_URL.replace('__id__', id);
   // Add values for the score-summary table to the query.
   const rows = {

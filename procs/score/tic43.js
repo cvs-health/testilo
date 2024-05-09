@@ -4362,6 +4362,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Page does not start with <!DOCTYPE html>'
+        },
+        'End of file seen without seeing a doctype first. Expected <!DOCTYPE html>.': {
+          variable: false,
+          quality: 1,
+          what: 'Page does not include <!DOCTYPE html>'
         }
       },
       testaro: {
@@ -4969,6 +4974,21 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element is not contained by a valid dl element'
+        }
+      }
+    }
+  },
+  descriptionOrder: {
+    summary: 'description list misordered',
+    why: 'User cannot get help on the structure of a list',
+    wcag: '1.3.1',
+    weight: 4,
+    tools: {
+      qualWeb: {
+        'QW-WCAG-T34': {
+          variable: false,
+          quality: 1,
+          what: 'Description list element is not ordered correctly'
         }
       }
     }

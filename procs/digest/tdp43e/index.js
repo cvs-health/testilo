@@ -160,7 +160,7 @@ const populateQuery = (report, query) => {
       multiIssueElementRows.push(
         `<h5>Element <code>${pathID}</code></h5>`,
         '<ul>',
-        ... elementIssues.map(issueID => `<li>${issues[issueID].summary}</li>`),
+        ... elementIssues.map(issueID => `  <li>${issues[issueID].summary}</li>`),
         '</ul>'
       );
     }

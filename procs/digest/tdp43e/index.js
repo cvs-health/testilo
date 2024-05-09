@@ -39,6 +39,7 @@ const {getNowDate, getNowDateSlash} = require('../../util');
 const digesterID = 'tdp43e';
 // Newline with indentations.
 const innerJoiner = '\n        ';
+const outerJoiner = '\n        ';
 
 // FUNCTIONS
 
@@ -141,7 +142,7 @@ const populateQuery = (report, query) => {
       });
     });
   });
-  query.issueDetailRows = issueDetailRows.join(innerJoiner);
+  query.issueDetailRows = issueDetailRows.join(outerJoiner);
   // Add paragraphs about the multi-issue elements to the query.
   const multiIssueElementRows = [];
   const issueElements = {};
@@ -164,7 +165,7 @@ const populateQuery = (report, query) => {
       );
     }
   });
-  query.multiIssueElementRows = multiIssueElementRows.join(innerJoiner);
+  query.multiIssueElementRows = multiIssueElementRows.join(outerJoiner);
 };
 // Returns a digested report.
 exports.digester = async report => {

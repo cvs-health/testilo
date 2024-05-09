@@ -39,7 +39,7 @@ const {getNowDate, getNowDateSlash} = require('../../util');
 const digesterID = 'tdp43e';
 // Newline with indentations.
 const innerJoiner = '\n        ';
-const outerJoiner = '\n        ';
+const outerJoiner = '\n      ';
 
 // FUNCTIONS
 

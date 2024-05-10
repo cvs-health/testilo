@@ -57,7 +57,7 @@ const getIssueScoreRow = (issueConstants, issueDetails) => {
 };
 // Adds parameters to a query for a digest.
 const populateQuery = (report, query) => {
-  const {deviceID, id, launch, score, sources} = report;
+  const {browserID, deviceID, id, score, sources} = report;
   const {agent, script, target, requester} = sources;
   const {scoreProcID, summary, details} = score;
   query.ts = script;
@@ -70,7 +70,7 @@ const populateQuery = (report, query) => {
   query.url = target.which;
   query.requester = requester;
   query.device = deviceID;
-  query.launch = launch || 'variable';
+  query.browser = browserID;
   query.agent = ` on agent ${agent}` || '';
   query.reportURL = process.env.SCORED_REPORT_URL.replace('__id__', id);
   // Add values for the score-summary table to the query.

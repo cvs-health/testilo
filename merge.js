@@ -49,7 +49,7 @@ const mergeIDLength = 2;
 // ########## FUNCTIONS
 
 // Merges a script and a batch and returns jobs.
-exports.merge = (script, batch, standard, observe, requester, timeStamp, deviceID) => {
+exports.merge = (script, batch, standard, observe, requester, timeStamp, browserID, deviceID) => {
   // If standard is invalid:
   if (! ['also', 'only', 'no'].includes(standard)) {
     // Report this and quit.
@@ -82,6 +82,12 @@ exports.merge = (script, batch, standard, observe, requester, timeStamp, deviceI
     console.log('ERROR: Device ID invalid');
     return [];
   }
+  // If browserID is invalid:
+  if (! ['chromium', 'firefox', 'webkit'].includes(browserID)) {
+    // Report this and quit.
+    console.log('ERROR: Browser ID invalid');
+    return [];
+  }
   // Initialize a job as a copy of the script.
   const protoJob = JSON.parse(JSON.stringify(script));
   // Add an initialized sources property to it.
@@ -96,7 +102,17 @@ exports.merge = (script, batch, standard, observe, requester, timeStamp, deviceI
     },
     requester
   };
-  // Add properties to the job.
+  // If a device ID was specified for the jobs:
+  if (deviceID) {
+    // Substitute it for the device ID in the script.
+    protoJob.deviceID = deviceID;
+  }
+  // If a browser ID was specified for the jobs:
+  if (browserID) {
+    // Substitute it for the browser ID in the script.
+    protoJob.browserID = browserID;
+  }
+  // Add other properties to the job.
   protoJob.standard = standard;
   protoJob.observe = observe;
   protoJob.timeStamp = timeStamp;
@@ -124,7 +140,7 @@ exports.merge = (script, batch, standard, observe, requester, timeStamp, deviceI
         acts[actIndex] = JSON.parse(JSON.stringify([act, lastPlaceholder]));
       }
     };
-    // Flatten the acts.
+    // Flatten the acts, causing insertion of placeholder copies before acts needing them.
     protoJob.acts = acts.flat();
   }
   // Delete the no-longer-necessary job property.
@@ -169,8 +185,9 @@ exports.merge = (script, batch, standard, observe, requester, timeStamp, deviceI
               replacerActs = JSON.parse(JSON.stringify(replacerActs));
               for (const replacerAct of replacerActs) {
                 if (replacerAct.type === 'launch') {
-                  replacerAct.which = act.launch;
-                  replacerAct.deviceID = deviceID;
+                  if (act.browserID) {
+                    replacerAct.browserID = act.browserID;
+                  }
                 }
               }
               acts[actIndex] = replacerActs;

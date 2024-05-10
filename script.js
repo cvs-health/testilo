@@ -35,7 +35,9 @@ const toolIDs = exports.toolIDs = [
 // ########## FUNCTIONS
 
 // Creates and returns a script.
-exports.script = (id, what, options = {}) => {
+exports.script = (
+  id, deviceID = 'default', browserID = 'webkit', what = 'Testaro job', options = {}
+) => {
   const toolsRulesData = {};
   // If options are specified:
   if (options.type && options.specs) {
@@ -118,11 +120,12 @@ exports.script = (id, what, options = {}) => {
     strict: true,
     isolate: true,
     timeLimit,
+    deviceID,
+    browserID,
     acts: [
       {
-        "type": "placeholder",
-        "which": "main",
-        "launch": "webkit"
+        type: 'placeholder',
+        which: 'main'
       }
     ]
   };

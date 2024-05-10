@@ -156,6 +156,7 @@ Here is a script:
   strict: true,
   isolate: true,
   timeLimit: 60,
+  launch: 'webkit',
   acts: [
     {
       type: 'placeholder',
@@ -186,11 +187,14 @@ A script has several properties that specify facts about the jobs to be created.
 - `strict`: `true` if Testaro is to abort jobs when a target redirects a request to a URL differing substantially from the one specified. If `false` Testaro is to allow redirection. All differences are considered substantial unless the URLs differ only in the presence and absence of a trailing slash.
 - `isolate`: If `true`, Testilo, before creating a job, will isolate test acts, as needed, from effects of previous test acts, by inserting a copy of the latest placeholder after each target-modifying test act other than the final act. If `false`, placeholders will not be duplicated.
 - `timeLimit`: This specifies the maximum duration, in seconds, of a job. Testaro will abort jobs that are not completed within that time.
+- `launch`: This specifies the default browser type (`'chromium'`, `'firefox'`, or `'webkit'`) of the job.
 - `acts`: an array of acts.
 
 The first act in this example script is a placeholder, whose `which` property is `'private'`. If the above batch were merged with this script, in each job the placeholder would be replaced with the `private` acts of a target. For example, the first act of the first job would launch a Chromium browser, navigate to the Acme login page, complete and submit the login form, wait for the account page to load, run the Axe tests, and then run the QualWeb tests. If the batch contained additional targets, additional jobs would be created, with the login actions for each target specified in the `private` array of the `acts` object of that target.
 
-As shown in this example, when a browser is launched by placeholder substitution, the script can determine the browser type (`chromium`, `firefox`, or `webkit`) by assigning a value to a `launch` property of the placeholder. This allows a script to ensure that the tests it requires are performed with appropriate browser types. Some browser types are incompatible with some tests.
+As shown in this example, it is possible for any particular placeholder to override the default browser type by having its own `launch` property.
+
+The ability of a script to ensure that the tests it requires are performed with appropriate browser types arises from the fact that some browser types are incompatible with some tests.
 
 ### Target list to batch
 

@@ -134,11 +134,14 @@ const populateQuery = (report, query) => {
         issueDetailRows.push(`<h5>Rule <code>${ruleID}</code></h5>`);
         issueDetailRows.push(`<p>Description: ${ruleData.what}</p>`);
         issueDetailRows.push(`<p>Count of instances: ${ruleData.complaints.countTotal}</p>`);
+        /*
+        This fails unless the caller handles such URLs and has compatible scored report URLs.
         const href = `${query.reportURL}?tool=${toolID}&rule=${ruleID}`;
         const detailLabel = `Issue ${issueSummary} tool ${toolID} rule ${ruleID} instance details`;
         issueDetailRows.push(
           `<p><a href="${href}" aria-label="${detailLabel}">Instance details</a></p>`
         );
+        */
       });
     });
   });

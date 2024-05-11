@@ -77,7 +77,7 @@ const populateQuery = async (id, what, summaryReport, query) => {
     const scoreCell = `<td><a href=${digestLinkDestination}>${result.score}</a></td>`;
     // Create a target cell.
     const {target} = result.sources;
-    const targetLink = `<a href="${target.which}">${target.what}</a>`;
+    const targetLink = `<a href="${target.url}">${target.what}</a>`;
     const targetCell = `<td>${targetIDs[target.what]}: ${targetLink}</td>`;
     const row = `<tr>${[timeCell, scoreCell, targetCell].join('')}</tr>`;
     // Add the row to the array of rows.

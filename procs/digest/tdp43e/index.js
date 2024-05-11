@@ -67,7 +67,7 @@ const populateQuery = (report, query) => {
   query.dateISO = getNowDate();
   query.dateSlash = getNowDateSlash();
   query.org = target.what;
-  query.url = target.which;
+  query.url = target.url;
   query.requester = requester;
   query.device = deviceID;
   query.browser = browserID;

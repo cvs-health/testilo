@@ -97,7 +97,7 @@ Targets can be specified in a more complex way, too. That allows you to create j
       id: 'acme',
       what: 'Acme Clothes',
       url: 'https://acmeclothes.com/',
-      acts: {
+      actGroups: {
         public: [
           {
             type: 'launch',
@@ -138,9 +138,9 @@ Targets can be specified in a more complex way, too. That allows you to create j
 }
 ```
 
-As shown, a batch, unlike a target list, defines named sequences of acts. They can be substituted for script placeholders, so various complex operations can be performed on each target.
+As shown, a batch, unlike a target list, defines named groups of acts. They can be substituted for script placeholders, so various complex operations can be performed on each target.
 
-In this example, the `public` act sequence contains only 1 act, of type `launch`. A `launch` act can have a `what` property and a `url` property, but, if not, those property values are inherited from the corresponding properties of the target. In this case, the `what` value is specified, but the `url` value will be inherited.
+In this example, the `public` act group contains only 1 act, of type `launch`. A `launch` act in an act group is permitted to have only two properties, `what` and `url`. If either of these is omitted, its value is inherited from the corresponding property of the target. In the `public` act group in this case, the `what` value is specified, but the `url` value will be `https://acmeclothes.com/`, inherited from the target.
 
 A batch is a JavaScript object. It can be converted to JSON and stored in a file.
 
@@ -194,13 +194,13 @@ A script has several properties that specify facts about the jobs to be created.
 - `browserID`: This specifies the default browser type (`'chromium'`, `'firefox'`, or `'webkit'`) of the job.
 - `acts`: an array of acts.
 
-In this example, the script contains 3 acts. The first is a placeholder, and the others are `test` acts. whose `which` property is `'private'`. If the above batch were merged with this script, in each job the placeholder would be replaced with the `private` acts of a target. For example, the first act of the first job would launch a Chromium browser, navigate to the Acme login page, complete and submit the login form, wait for the account page to load, run the Axe tests, and then run the QualWeb tests. If the batch contained additional targets, additional jobs would be created, with the login actions for each target specified in the `private` array of the `acts` object of that target.
+In this example, the script contains 3 acts, of which the first is a placeholder. If the above batch were merged with this script, in each job the placeholder would be replaced with the acts in the `private` act group of a target. For example, the first act of the first job would launch a Chromium browser on a default device, navigate to the Acme login page, complete and submit the login form, wait for the account page to load, run the Axe tests, and then run the QualWeb tests. If the batch contained additional targets, additional jobs would be created, with the acts for each target specified by the `private` property of the `actGroups` object of that target.
 
-As shown in this example, it is possible for any particular placeholder to override the default device type and/or browser type by having its own optional `deviceID` and/or `browserID` property. Some rules are particularly relevant to some device types and/or can be successfully tested only with particular browser types. Overriding the default device and browser types lets you handle such constraints.
+As shown in this example, it is possible for any particular placeholder to override the default device type and/or browser type of the script by having its own optional `deviceID` and/or `browserID` property. Some rules are particularly relevant to some device types and/or can be successfully tested only with particular browser types. Overriding the default device and browser types lets you handle such constraints.
 
 ### Target list to batch
 
-If you have a target list, the `batch` module of Testilo can convert it to a simple batch. The batch will contain, for each target, only one array of acts, named `main`, containing only a `launch` act (depending on the script to specify the browser and device types and depending on the target to specify the target description and URL).
+If you have a target list, the `batch` module of Testilo can convert it to a simple batch. The batch will contain, for each target, only one act group, named `main`, containing only a `launch` act. The target’s entry in the target list will determine the `what` and `url` properties of the target, and the `launch` acts will not override the values of those properties.
 
 #### Invocation
 
@@ -358,8 +358,8 @@ const standard = 'only';
 const observe = false;
 const requester = 'me@mydomain.tld';
 const timeStamp = '241215T1200';
-const deviceID = 'default';
-const browserID = null;
+const deviceID = '';
+const browserID = 'firefox';
 const jobs = merge(script, batch, standard, observe, requester, timeStamp, deviceID, browserID);
 ```
 
@@ -373,9 +373,9 @@ The `requester` argument is an email address to which any notices about the job 
 
 The `timeStamp` argument specifies the earliest UTC date and time when the jobs may be assigned, or it may be an empty string if now.
 
-The `deviceID` argument specifies the ID of the test device, or `null` to inherit the default device ID from the script.
+The `deviceID` argument specifies the ID of the test device, or `''` to inherit the default device ID from the script.
 
-The `browserID` argument specifies `'chromium'`, `'firefox'`, `'webkit'`, or (to make the job inherit its default browser ID from the script) `null`.
+The `browserID` argument specifies `'chromium'`, `'firefox'`, `'webkit'`, or (to make the job inherit its default browser ID from the script) `''`.
 
 The `merge()` function returns the jobs in an array. The invoking module can further dispose of the jobs as needed.
 
@@ -419,9 +419,7 @@ A Testaro job produced by `merge` may look like this:
   timeStamp: '240115T1200',
   acts: [
     {
-      type: 'launch',
-      what: 'Acme Clothes',
-      url: 'https://acmeclothes.com/'
+      type: 'launch'
     },
     {
       type: 'test',
@@ -431,9 +429,7 @@ A Testaro job produced by `merge` may look like this:
       what: 'Axe'
     },
     {
-      type: 'launch',
-      what: 'Acme Clothes',
-      url: 'https://acmeclothes.com/'
+      type: 'launch'
     },
     {
       type: 'test',
@@ -448,8 +444,8 @@ A Testaro job produced by `merge` may look like this:
     batch: 'clothing-stores',
     lastTarget: false,
     target: {
-      id: 'acme',
-      what: 'Acme Clothes'
+      what: 'Acme Clothes',
+      url: 'https://acmeclothes.com/'
     },
     requester: 'you@yourdomain.tld'
   },

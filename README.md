@@ -77,11 +77,11 @@ For example, a target list might be:
 ]
 ```
 
-A target list can be represented by a text file, in which each target is specified on a line with a Tab character delimiting its description and its URL, which are not quoted. Such a file representing the above target list would have this content, where “➡︎” represents a tab character:
+A target list can be represented by a text file, in which each target is specified on a line with a Vertical Line character (`|`) delimiting its description and its URL, which are not quoted. Such a file representing the above target list would have this content:
 
 ```text
-World Wide Web Consortium➡︎https://www.w3.org/
-Mozilla Foundation➡︎https://foundation.mozilla.org/en/
+World Wide Web Consortium|https://www.w3.org/
+Mozilla Foundation|https://foundation.mozilla.org/en/
 ```
 
 ### Batches
@@ -96,13 +96,12 @@ Targets can be specified in a more complex way, too. That allows you to create j
     {
       id: 'acme',
       what: 'Acme Clothes',
-      which: 'https://acmeclothes.com/',
+      url: 'https://acmeclothes.com/',
       acts: {
         public: [
           {
             type: 'launch',
             what: 'Acme Clothes home page',
-            url: 'https://acmeclothes.com/'
           }
         ],
         private: [
@@ -139,7 +138,9 @@ Targets can be specified in a more complex way, too. That allows you to create j
 }
 ```
 
-As shown, a batch, unlike a target list, defines named sequences of acts. They can be plugged into jobs, so various complex operations can be performed on each target.
+As shown, a batch, unlike a target list, defines named sequences of acts. They can be substituted for script placeholders, so various complex operations can be performed on each target.
+
+In this example, the `public` act sequence contains only 1 act, of type `launch`. A `launch` act can have a `what` property and a `url` property, but, if not, those property values are inherited from the corresponding properties of the target. In this case, the `what` value is specified, but the `url` value will be inherited.
 
 A batch is a JavaScript object. It can be converted to JSON and stored in a file.
 
@@ -156,12 +157,14 @@ Here is a script:
   strict: true,
   isolate: true,
   timeLimit: 60,
-  launch: 'webkit',
+  deviceID: 'Kindle Fire HDX',
+  browserID: 'webkit',
   acts: [
     {
       type: 'placeholder',
       which: 'private',
-      launch: 'chromium'
+      deviceID: 'default',
+      browserID: 'chromium'
     },
     {
       type: 'test',
@@ -187,18 +190,17 @@ A script has several properties that specify facts about the jobs to be created.
 - `strict`: `true` if Testaro is to abort jobs when a target redirects a request to a URL differing substantially from the one specified. If `false` Testaro is to allow redirection. All differences are considered substantial unless the URLs differ only in the presence and absence of a trailing slash.
 - `isolate`: If `true`, Testilo, before creating a job, will isolate test acts, as needed, from effects of previous test acts, by inserting a copy of the latest placeholder after each target-modifying test act other than the final act. If `false`, placeholders will not be duplicated.
 - `timeLimit`: This specifies the maximum duration, in seconds, of a job. Testaro will abort jobs that are not completed within that time.
-- `launch`: This specifies the default browser type (`'chromium'`, `'firefox'`, or `'webkit'`) of the job.
+- `deviceID`: This specifies the default device type of the job.
+- `browserID`: This specifies the default browser type (`'chromium'`, `'firefox'`, or `'webkit'`) of the job.
 - `acts`: an array of acts.
 
-The first act in this example script is a placeholder, whose `which` property is `'private'`. If the above batch were merged with this script, in each job the placeholder would be replaced with the `private` acts of a target. For example, the first act of the first job would launch a Chromium browser, navigate to the Acme login page, complete and submit the login form, wait for the account page to load, run the Axe tests, and then run the QualWeb tests. If the batch contained additional targets, additional jobs would be created, with the login actions for each target specified in the `private` array of the `acts` object of that target.
+In this example, the script contains 3 acts. The first is a placeholder, and the others are `test` acts. whose `which` property is `'private'`. If the above batch were merged with this script, in each job the placeholder would be replaced with the `private` acts of a target. For example, the first act of the first job would launch a Chromium browser, navigate to the Acme login page, complete and submit the login form, wait for the account page to load, run the Axe tests, and then run the QualWeb tests. If the batch contained additional targets, additional jobs would be created, with the login actions for each target specified in the `private` array of the `acts` object of that target.
 
-As shown in this example, it is possible for any particular placeholder to override the default browser type by having its own `launch` property.
-
-The ability of a script to ensure that the tests it requires are performed with appropriate browser types arises from the fact that some browser types are incompatible with some tests.
+As shown in this example, it is possible for any particular placeholder to override the default device type and/or browser type by having its own optional `deviceID` and/or `browserID` property. Some rules are particularly relevant to some device types and/or can be successfully tested only with particular browser types. Overriding the default device and browser types lets you handle such constraints.
 
 ### Target list to batch
 
-If you have a target list, the `batch` module of Testilo can convert it to a simple batch. The batch will contain, for each target, only one array of acts, named `main`, containing only a `launch` act (depending on the script to specify the browser type and depending on the target to specify the URL).
+If you have a target list, the `batch` module of Testilo can convert it to a simple batch. The batch will contain, for each target, only one array of acts, named `main`, containing only a `launch` act (depending on the script to specify the browser and device types and depending on the target to specify the target description and URL).
 
 #### Invocation
 
@@ -219,7 +221,7 @@ const targets = [
 const batchObj = batch(id, what, targets);
 ```
 
-The `id` argument to `batch()` is a unique identifier for the target list. The `what` variable describes the target list. The `targets` variable is an array of arrays, with each array containing the 2 items (description and URL) defining one target.
+The `id` argument to `batch()` is an identifier for the target list. The `what` variable describes the target list. The `targets` variable is an array of arrays, with each array containing the 2 items (description and URL) defining one target.
 
 The `batch()` function of the `batch` module generates a batch and returns it as an object. Within the batch, each target is given a sequential (base-62 alphanumeric) string as an ID.
 
@@ -229,7 +231,7 @@ The invoking module can further dispose of the batch as needed.
 
 A user can invoke `batch()` in this way:
 
-- Create a target list and save it as a text file (with tab-delimited items in newline-delimited lines) in the `targetLists` subdirectory of the `SPECDIR` directory. Name the file `x.txt`, where `x` is the list ID.
+- Create a target list and save it as a text file (with Vertical-Line-delimited items in Newline-delimited lines) in the `targetLists` subdirectory of the `SPECDIR` directory. Name the file `x.txt`, where `x` is the list ID.
 - In the Testilo project directory, execute the statement `node call batch id what`.
 
 In this statement, replace `id` with the list ID and `what` with a string describing the batch. Example: `node call batch divns 'ABC company divisions'`.

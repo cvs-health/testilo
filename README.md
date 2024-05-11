@@ -334,7 +334,7 @@ The `call` module will save the script as a JSON file in the `scripts` subdirect
 
 The `script` module will use the value of the `SEND_REPORT_TO` environment variable as the value of the `sendReportTo` property of the script, if that variable exists, and otherwise will leave that property with an empty-string value.
 
-When the `script` module creates a script for you, it does not ask you for all of the other options that the script may require. Instead, it chooses default options. For example, it sets the values of `isolate` and `strict` to `true`, and it sets the `withNewContent` property of the `ibm` tool to `false` to prevent occasional infinite loops or crashes when targets cause HTTP2 protocol errors. After you invoke `script`, you can edit the script that it creates to revise options.
+When the `script` module creates a script for you, it does not ask you for all of the other options that the script may require. Instead, it chooses default options. For example, it sets the values of `isolate` and `strict` to `true`, sets `deviceID` to `'default'`, sets `browserID` to `'webkit'`, and sets the `withNewContent` property of the `ibm` tool to `false` to prevent occasional infinite loops or crashes when targets cause HTTP2 protocol errors. After you invoke `script`, you can edit the script that it creates to revise options.
 
 ### Merge
 
@@ -356,7 +356,9 @@ const standard = 'only';
 const observe = false;
 const requester = 'me@mydomain.tld';
 const timeStamp = '241215T1200';
-const jobs = merge(script, batch, standard, observe, requester, timeStamp, deviceID);
+const deviceID = 'default';
+const browserID = null;
+const jobs = merge(script, batch, standard, observe, requester, timeStamp, deviceID, browserID);
 ```
 
 The first two arguments are a script and a batch obtained from files or from prior calls to `script()` and `batch()`.
@@ -369,7 +371,9 @@ The `requester` argument is an email address to which any notices about the job 
 
 The `timeStamp` argument specifies the earliest UTC date and time when the jobs may be assigned, or it may be an empty string if now.
 
-The `deviceID` argument specifies the ID of the test device. It must be either `'default'` or the ID of one of the test devices recognized by Playwright, published at `https://github.com/microsoft/playwright/blob/main/packages/playwright-core/src/server/deviceDescriptorsSource.json`.
+The `deviceID` argument specifies the ID of the test device, or `null` to inherit the default device ID from the script.
+
+The `browserID` argument specifies `'chromium'`, `'firefox'`, `'webkit'`, or (to make the job inherit its default browser ID from the script) `null`.
 
 The `merge()` function returns the jobs in an array. The invoking module can further dispose of the jobs as needed.
 
@@ -382,13 +386,13 @@ A user can invoke `merge()` in this way:
 - In the Testilo project directory, execute the statement:
 
 ```javascript
-node call merge scriptID batchID standard observe requester timeStamp deviceID todoDir
+node call merge scriptID batchID standard observe requester timeStamp deviceID browserID todoDir
 ```
 
 In this statement, replace:
 - `scriptID` with the ID (which is also the base of the file name) of the script.
 - `batchID` with the ID (which is also the base of the file name) of the batch.
-- `standard`, `observe`, `requester`, `timeStamp`, and `deviceID` as described above.
+- `standard`, `observe`, `requester`, `timeStamp`, `deviceID`, and `browserID` as described above.
 - `todoDir`: `true` if the jobs are to be saved in the `todo` subdirectory, or `false` if they are to be saved in the `pending` subdirectory, of the `JOBDIR` directory.
 
 The `call` module will retrieve the named script and batch from their respective directories.
@@ -405,6 +409,8 @@ A Testaro job produced by `merge` may look like this:
   what: 'aside mislocation',
   strict: true,
   timeLimit: 60,
+  deviceID: 'default',
+  browserID: 'webkit',
   standard: 'also',
   observe: false,
   sendReportTo: 'https://ourdomain.com/testman/api/report'
@@ -412,9 +418,7 @@ A Testaro job produced by `merge` may look like this:
   acts: [
     {
       type: 'launch',
-      which: 'webkit',
       what: 'Acme Clothes',
-      deviceID: 'Galaxy S8',
       url: 'https://acmeclothes.com/'
     },
     {
@@ -426,9 +430,7 @@ A Testaro job produced by `merge` may look like this:
     },
     {
       type: 'launch',
-      which: 'webkit',
       what: 'Acme Clothes',
-      deviceID: 'Galaxy S8',
       url: 'https://acmeclothes.com/'
     },
     {
@@ -449,6 +451,7 @@ A Testaro job produced by `merge` may look like this:
     },
     requester: 'you@yourdomain.tld'
   },
+  timeStamp: '241120T1550',
   creationTimeStamp: '241120T1550'
 }
 ```
@@ -476,6 +479,7 @@ Thus, a report produced by Testaro contains these properties:
 - `timeStamp`
 - `acts`
 - `sources`
+- `timeStamp`
 - `creationTimeStamp`
 - `jobData`
 

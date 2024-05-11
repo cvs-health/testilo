@@ -186,8 +186,8 @@ const callScript = async (scriptID, what, optionType, ... optionDetails) => {
       return;
     }
   }
-  // Create a script.
-  const scriptObj = script(scriptID, what, optionArg);
+  // Create a script with default device and browser IDs.
+  const scriptObj = script(scriptID, undefined, undefined, what, optionArg);
   try {
     // Save it.
     const scriptJSON = JSON.stringify(scriptObj, null, 2);

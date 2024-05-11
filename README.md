@@ -285,7 +285,7 @@ If you specify tool options, the script will prescribe the tests for all evaluat
 
 If you specify issue options, the script will prescribe the tests for all evaluation rules that are classified in the issues whose IDs you specify. Any tools that do not have any of those rules will be omitted. The value of `specs/issues` is an issue classification object, with a structure like the one in `procs/score/tic40.js`. That one classifies about 1000 rules into about 300 issues.
 
-For example, one issue in the `tic40.js` file is `mainNot1`. Four rules are classified as belonging to that issue: rule `main_element_only_one` of the `aslint` tool and 3 more rules defined by 3 other tools. You can also create custom classifications and save them in a `score` subdirectory of the `FUNCTIONDIR` directory.
+For example, one issue in the `tic43.js` file is `mainNot1`. Four rules are classified as belonging to that issue: rule `main_element_only_one` of the `aslint` tool and 3 more rules defined by 3 other tools. You can also create custom classifications and save them in a `score` subdirectory of the `FUNCTIONDIR` directory.
 
 #### Invocation
 
@@ -326,7 +326,7 @@ The second form will create a script that prescribes tests for all the rules of 
 
 The third form will create a script that prescribes tests for all the rules classified by the specified issue classification into any of the specified issues.
 
-In this statement, replace `id` with an ID for the script, such as `headings1`, consisting of ASCII alphanumeric characters.
+In this statement, replace `id` with an ID for the script, such as `headings1`, consisting of ASCII alphanumeric characters, or with `''` if you want Testilo to create an ID. Replace `what` with a string describing the script, or with `''` if you want Testilo to create a generic description.
 
 The `call` module will retrieve the named classification, if any.
 The `script` module will create a script.

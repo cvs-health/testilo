@@ -409,7 +409,7 @@ node call merge scriptID batchID executionTimeStamp todoDir
 In this statement, replace:
 - `scriptID` with the ID (which is also the base of the file name) of the script.
 - `batchID` with the ID (which is also the base of the file name) of the batch.
-- `executionTimeStamp` with a time stamp in format `yymmddThhMM` representing the UTC date and time before which the jobs are not to be executed.
+- `executionTimeStamp` with a time stamp in format `yymmddThhMM` representing the UTC date and time before which the jobs are not to be executed, or `''` if it is now.
 - `todoDir`: `true` if the jobs are to be saved in the `todo` subdirectory, or `false` if they are to be saved in the `pending` subdirectory, of the `JOBDIR` directory.
 
 The `call` module will retrieve the named script and batch from their respective directories.

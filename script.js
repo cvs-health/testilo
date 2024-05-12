@@ -117,7 +117,7 @@ exports.script = (
   const scriptObj = {
     id,
     what,
-    strict: true,
+    strict: false,
     isolate: true,
     timeLimit,
     deviceID,

@@ -251,9 +251,7 @@ A script has several properties that specify facts about the jobs to be created.
 - `timeLimit`: This specifies the maximum duration, in seconds, of a job. Testaro will abort jobs that are not completed within that time.
 - `deviceID`: This specifies the default device type of the job.
 - `browserID`: This specifies the default browser type (`'chromium'`, `'firefox'`, or `'webkit'`) of the job.
-- `creationTimeStamp`: Initially empty. In a job, it will get a value describing the time when the job was created.
-- `executionTimeStamp`: Initially empty. In a job, it will get a value describing the time before which the job must not be performed.
-- `sources`: Facts about the origin of jobs derived from the script. Except for the script ID, the properties of this object will become populated when the jobs are created.
+- `creationTimeStamp`, `executionTimeStamp`, and `sources`: These properties will have values assigned to them when jobs are created from the script, except for the `sources.script` property, which will preserve the ID of the script after the `id` property has been replaced with a job ID.
 - `acts`: an array of acts.
 
 In this example, the script contains 3 acts, of which the first is a placeholder. If the above batch were merged with this script, in each job the placeholder would be replaced with the acts in the `private` act group of a target. For example, the first act of the first job would launch a Chromium browser on a default device, navigate to the Acme login page, complete and submit the login form, wait for the account page to load, run the Axe tests, and then run the QualWeb tests. If the batch contained additional targets, additional jobs would be created, with the acts for each target specified by the `private` property of the `actGroups` object of that target.
@@ -352,32 +350,23 @@ The `call` module will retrieve the named classification, if any.
 The `script` module will create a script.
 The `call` module will save the script as a JSON file in the `scripts` subdirectory of the `SPECDIR` directory, using the `id` value as the base of the file name.
 
-#### Configuration
+#### Properties
 
-When the `script` module creates a script for you, it does not ask you for all of the other property values that the script may require. Instead, it chooses these default values:
+When the `script` module creates a script for you, it does not ask you for all of the property values that the script may require. Instead, it chooses these default values:
 - `strict`: `false`
 - `isolate`: `true`
 - `standard`: `'only'`
 - `observe`: `false`
-- `timeLimit`: 50 plus 30 per tool
 - `deviceID`: `'default'`
 - `browserID`: `'webkit'`
-- `sendReportTo`: `process.env.SEND_REPORT_TO`, or `''` if that variable does not exist
-- `axe`: `detailLevel` = 2
-- `ibm`: `withItems` = `true`, `withNewContent` = `false`
-- `qualWeb`: `withNewContent` = `false`
-- `testaro`: `withItems` = true, `stopOnFail` = `false`
-- `wave`: `reportType` = 4
+- `timeLimit`: 50 plus 30 per tool
+- `axe` test act: `detailLevel` = 2
+- `ibm` test act: `withItems` = `true`, `withNewContent` = `false`
+- `qualWeb` test act: `withNewContent` = `false`
+- `testaro` test act: `withItems` = true, `stopOnFail` = `false`
+- `wave` test act: `reportType` = 4
 
-The `requester` argument is an email address to which any notices about the job are to be sent.
-
-The `timeStamp` argument specifies the earliest UTC date and time when the jobs may be assigned, or it may be an empty string if now.
-
-The `deviceID` argument specifies the ID of the test device, or `''` to inherit the default device ID from the script.
-
-The `browserID` argument specifies `'chromium'`, `'firefox'`, `'webkit'`, or (to make the job inherit its default browser ID from the script) `''`.
-
-The `webkit` browser type is selected because the other browser types corrupt some tests. The `ibm` test is performed on the existing page because some targets cause HTTP2 protocol errors when the `ibm` tool tries to visit them.
+The `webkit` browser type is selected because the other browser types corrupt some tests. The `ibm` test is performed on the existing page content because some targets cause HTTP2 protocol errors when the `ibm` tool tries to visit them.
 
 After you invoke `script`, you can edit the script that it creates to revise any of these options.
 
@@ -403,19 +392,7 @@ const jobs = merge(script, batch, timeStamp);
 
 The first two arguments are a script and a batch obtained from files or from prior calls to `script()` and `batch()`.
 
-The `standard` argument specifies how to handle standardization. If `also`, jobs will tell Testaro to include in its reports both the original results of the tests of tools and the Testaro-standardized results. If `only`, reports are to include only the standardized test results. If `no`, reports are to include only the original results, without standardization.
-
-The `observe` argument tells Testaro whether the jobs should allow granular observation. If `true`, it will. If `false`, Testaro will not report job progress, but will send reports to the server only when the reports are completed. It is generally user-friendly to allow granular observation, and for user applications to implement it, if they make users wait while jobs are assigned and performed, since that process typically takes a few minutes.
-
-The `requester` argument is an email address to which any notices about the job are to be sent.
-
-The `timeStamp` argument specifies the earliest UTC date and time when the jobs may be assigned, or it may be an empty string if now.
-
-The `deviceID` argument specifies the ID of the test device, or `''` to inherit the default device ID from the script.
-
-The `browserID` argument specifies `'chromium'`, `'firefox'`, `'webkit'`, or (to make the job inherit its default browser ID from the script) `''`.
-
-The `merge()` function returns the jobs in an array. The invoking module can further dispose of the jobs as needed.
+The `merge()` function returns an array of jobs, one job per target in the batch. The invoking module can further dispose of the jobs as needed.
 
 ##### By a user
 
@@ -426,13 +403,13 @@ A user can invoke `merge()` in this way:
 - In the Testilo project directory, execute the statement:
 
 ```javascript
-node call merge scriptID batchID standard observe requester timeStamp deviceID browserID todoDir
+node call merge scriptID batchID executionTimeStamp todoDir
 ```
 
 In this statement, replace:
 - `scriptID` with the ID (which is also the base of the file name) of the script.
 - `batchID` with the ID (which is also the base of the file name) of the batch.
-- `standard`, `observe`, `requester`, `timeStamp`, `deviceID`, and `browserID` as described above.
+- `executionTimeStamp` with a time stamp in format `yymmddThhMM` representing the UTC date and time before which the jobs are not to be executed.
 - `todoDir`: `true` if the jobs are to be saved in the `todo` subdirectory, or `false` if they are to be saved in the `pending` subdirectory, of the `JOBDIR` directory.
 
 The `call` module will retrieve the named script and batch from their respective directories.
@@ -441,56 +418,28 @@ The `call` module will save the jobs as JSON files in the `todo` or `pending` su
 
 #### Output
 
-A Testaro job produced by `merge` may look like this:
+A Testaro job produced by `merge` will be identical to the script from which it was derived (see the example above), except that the originally empty properties will be populated, as in this example:
 
 ```javaScript
-{
-  id: '240115T1200-4R-0',
-  what: 'aside mislocation',
-  strict: true,
-  timeLimit: 60,
-  deviceID: 'default',
-  browserID: 'webkit',
-  standard: 'also',
-  observe: false,
-  sendReportTo: 'https://ourdomain.com/testman/api/report'
-  timeStamp: '240115T1200',
-  acts: [
-    {
-      type: 'launch'
-    },
-    {
-      type: 'test',
-      which: 'axe',
-      detailLevel: 2,
-      rules: ['landmark-complementary-is-top-level'],
-      what: 'Axe'
-    },
-    {
-      type: 'launch'
-    },
-    {
-      type: 'test',
-      which: 'qualWeb',
-      withNewContent: false,
-      rules: ['QW-BP25', 'QW-BP26']
-      what: 'QualWeb'
-    }
-  ],
-  sources: {
-    script: 'ts99',
-    batch: 'clothing-stores',
-    lastTarget: false,
-    target: {
-      what: 'Acme Clothes',
-      url: 'https://acmeclothes.com/'
-    },
-    requester: 'you@yourdomain.tld'
+…
+creationTimeStamp: '241229T0537',
+executionTimeStamp: '250110T1200',
+sources: {
+  script: 'ts99',
+  batch: 'departments',
+  mergeID: '7f',
+  sendReportTo: 'https://abccorp.com/api/report',
+  requester: 'malavu@abccorp.com'
+  target: {
+    what: 'Real Estate Management',
+    url: 'https://abccorp.com/mgmt/realproperty.html'
   },
-  timeStamp: '241120T1550',
-  creationTimeStamp: '241120T1550'
-}
+  lastTarget: false,
+},
+…
 ```
+
+The `merge()` function will populate the `sources.sendReportTo` property with the value, if any, of the environment variable `SEND_REPORT_TO`, and populate the `sources.requester` property with the value, if any, of the environment variable `REQUESTER`.
 
 #### Validation
 

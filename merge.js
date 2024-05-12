@@ -30,7 +30,7 @@
 // Module to keep secrets.
 require('dotenv').config();
 // Utility module.
-const {alphaNumOf, dateOf, getRandomString, getNowStamp, isValidDeviceID} = require('./procs/util');
+const {alphaNumOf, dateOf, getRandomString, getNowStamp} = require('./procs/util');
 
 // ########## CONSTANTS
 
@@ -49,19 +49,7 @@ const mergeIDLength = 2;
 // ########## FUNCTIONS
 
 // Merges a script and a batch and returns jobs.
-exports.merge = (script, batch, standard, observe, requester, timeStamp, browserID, deviceID) => {
-  // If standard is invalid:
-  if (! ['also', 'only', 'no'].includes(standard)) {
-    // Report this and quit.
-    console.log('ERROR: Invalid standard treatment specified');
-    return [];
-  }
-  // If observe is invalid:
-  if (! [true, false].includes(observe)) {
-    // Report this and quit.
-    console.log('ERROR: Invalid observe configuration specified');
-    return [];
-  }
+exports.merge = (script, batch, executionTimeStamp) => {
   // If a time stamp was specified:
   if (timeStamp) {
     // If it is invalid:
@@ -76,48 +64,19 @@ exports.merge = (script, batch, standard, observe, requester, timeStamp, browser
     // Create one for the job.
     timeStamp = getNowStamp();
   }
-  // If deviceID is invalid:
-  if (deviceID && ! isValidDeviceID(deviceID)) {
-    // Report this and quit.
-    console.log('ERROR: Device ID invalid');
-    return [];
-  }
-  // If browserID is invalid:
-  if (browserID && ! ['chromium', 'firefox', 'webkit'].includes(browserID)) {
-    // Report this and quit.
-    console.log('ERROR: Browser ID invalid');
-    return [];
-  }
   // Initialize a job template as a copy of the script.
   const protoJob = JSON.parse(JSON.stringify(script));
-  // Add an initialized sources property to it.
-  protoJob.sources = {
-    script: script.id,
-    batch: batch.id,
-    lastTarget: false,
-    target: {
-      what: '',
-      url: ''
-    },
-    requester
-  };
-  // If a device ID was specified for the jobs:
-  if (deviceID) {
-    // Substitute it for the device ID from the script.
-    protoJob.deviceID = deviceID;
-  }
-  // If a browser ID was specified for the jobs:
-  if (browserID) {
-    // Substitute it for the browser ID from the script.
-    protoJob.browserID = browserID;
-  }
-  // Add other properties to the job template.
-  protoJob.standard = standard;
-  protoJob.observe = observe;
-  protoJob.timeStamp = timeStamp;
+  // Populate empty properties of the template.
   protoJob.creationTimeStamp = getNowStamp();
+  protoJob.executionTimeStamp = executionTimeStamp;
+  const {sources} = protoJob;
+  sources.script = script.id;
+  sources.batch = batch.id;
+  sources.mergeID = getRandomString(mergeIDLength);
+  sources.sendReportTo = process.env.SEND_REPORT_TO || '';
+  sources.requester = process.env.REQUESTER || '';
   // If isolation was requested:
-  if (script.isolate) {
+  if (protoJob.isolate) {
     // For each act:
     let {acts} = protoJob;
     let lastPlaceholder = {};
@@ -142,12 +101,8 @@ exports.merge = (script, batch, standard, observe, requester, timeStamp, browser
     // Flatten the acts, causing insertion of placeholder copies before acts needing them.
     protoJob.acts = acts.flat();
   }
-  // Delete the no-longer-necessary job property.
-  delete protoJob.isolate;
   // Initialize an array of jobs.
   const jobs = [];
-  // Get an ID for the merger.
-  const mergeID = getRandomString(mergeIDLength);
   // For each target in the batch:
   const {targets} = batch;
   const targetIDs = Object.keys(targets);
@@ -157,20 +112,18 @@ exports.merge = (script, batch, standard, observe, requester, timeStamp, browser
     if (actGroups && url) {
       // Initialize a job.
       const job = JSON.parse(JSON.stringify(protoJob));
+      const {sources} = job;
       // Make the job ID unique.
       const targetSuffix = alphaNumOf(index);
-      job.id = `${timeStamp}-${mergeID}-${targetSuffix}`;
-      // Add other properties to the job.
-      job.mergeID = mergeID;
-      job.sendReportTo = process.env.SEND_REPORT_TO || '';
+      job.id = `${executionTimeStamp}-${sources.mergeID}-${targetSuffix}`;
       // If the target is the last one:
       if (index === targetIDs.length - 1) {
         // Add that fact to the sources property of the job.
-        job.sources.lastTarget = true;
+        sources.lastTarget = true;
       }
-      // Add other data to the sources property of the job.
-      job.sources.target.what = what;
-      job.sources.target.url = url;
+      // Populate the target-specific properties of the job.
+      sources.target.what = what;
+      sources.target.url = url;
       // Replace each placeholder object in the job with the named act group of the target.
       let {acts} = job;
       for (const actIndex in acts) {
@@ -203,7 +156,7 @@ exports.merge = (script, batch, standard, observe, requester, timeStamp, browser
       jobs.push(job);
     }
     else {
-      console.log('ERROR: Target in batch missing id, what, or url property');
+      console.log(`ERROR: Target ${what} in batch missing actGroups or url property`);
     }
   });
   return jobs;

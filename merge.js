@@ -103,12 +103,12 @@ exports.merge = (script, batch, standard, observe, requester, timeStamp, browser
   };
   // If a device ID was specified for the jobs:
   if (deviceID) {
-    // Substitute it for the device ID in the script.
+    // Substitute it for the device ID from the script.
     protoJob.deviceID = deviceID;
   }
   // If a browser ID was specified for the jobs:
   if (browserID) {
-    // Substitute it for the browser ID in the script.
+    // Substitute it for the browser ID from the script.
     protoJob.browserID = browserID;
   }
   // Add other properties to the job template.
@@ -150,20 +150,21 @@ exports.merge = (script, batch, standard, observe, requester, timeStamp, browser
   const mergeID = getRandomString(mergeIDLength);
   // For each target in the batch:
   const {targets} = batch;
-  targets.forEach((target, index) => {
+  const targetIDs = Object.keys(targets);
+  targetIDs.forEach((what, index) => {
     // If the target has the required identifiers:
-    const {actGroups, url, what} = target;
-    if (actGroups && what && url) {
+    const {actGroups, url} = targets[what];
+    if (actGroups && url) {
       // Initialize a job.
       const job = JSON.parse(JSON.stringify(protoJob));
       // Make the job ID unique.
-      const targetID = alphaNumOf(index);
-      job.id = `${timeStamp}-${mergeID}-${targetID}`;
+      const targetSuffix = alphaNumOf(index);
+      job.id = `${timeStamp}-${mergeID}-${targetSuffix}`;
       // Add other properties to the job.
       job.mergeID = mergeID;
       job.sendReportTo = process.env.SEND_REPORT_TO || '';
       // If the target is the last one:
-      if (index === targets.length - 1) {
+      if (index === targetIDs.length - 1) {
         // Add that fact to the sources property of the job.
         job.sources.lastTarget = true;
       }
@@ -176,26 +177,20 @@ exports.merge = (script, batch, standard, observe, requester, timeStamp, browser
         const act = acts[actIndex];
         if (act.type === 'placeholder') {
           const replacerName = act.which;
-          if (replacerName && actGroups && actGroups[replacerName]) {
-            let replacerActs = actGroups[replacerName];
-            if (replacerActs) {
-              // Add properties to any launch act in the replacer.
-              replacerActs = JSON.parse(JSON.stringify(replacerActs));
-              for (const replacerAct of replacerActs) {
-                if (replacerAct.type === 'launch') {
-                  if (act.deviceID) {
-                    replacerAct.deviceID = act.deviceID;
-                  }
-                  if (act.browserID) {
-                    replacerAct.browserID = act.browserID;
-                  }
+          const replacerActs = actGroups[replacerName];
+          if (replacerName && actGroups && replacerActs) {
+            // Add properties to any launch act in the replacer.
+            for (const replacerAct of replacerActs) {
+              if (replacerAct.type === 'launch') {
+                if (act.deviceID) {
+                  replacerAct.deviceID = act.deviceID;
+                }
+                if (act.browserID) {
+                  replacerAct.browserID = act.browserID;
                 }
               }
-              acts[actIndex] = replacerActs;
-            }
-            else {
-              console.log(`ERROR: Target ${what} has no ${replacerName} act group`);
-            }
+            };
+            acts[actIndex] = replacerActs;
           }
           else {
             console.log(`ERROR: Placeholder for target ${what} not replaceable`);

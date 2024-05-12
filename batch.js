@@ -47,13 +47,12 @@ exports.batch = (id, what, targetList) => {
     const batch = {
       id,
       what,
-      targets: []
+      targets: {}
     };
     // For each target:
     targetList.forEach(target => {
       // Add it to the batch.
-      batch.targets.push({
-        what: target[0],
+      batch.targets[target.what] = {
         url: target[1],
         actGroups: {
           main: [
@@ -62,7 +61,7 @@ exports.batch = (id, what, targetList) => {
             }
           ]
         }
-      });
+      };
     });
     // Return the batch.
     return batch;

@@ -92,9 +92,8 @@ Targets can be specified in a more complex way, too. That allows you to create j
 {
   id: 'clothing-stores',
   what: 'clothing stores',
-  targets: [
-    {
-      id: 'acme',
+  targets: {
+    acme: {
       what: 'Acme Clothes',
       url: 'https://acmeclothes.com/',
       actGroups: {

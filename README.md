@@ -201,6 +201,7 @@ Here is a script:
   observe: false,
   deviceID: 'Kindle Fire HDX',
   browserID: 'webkit',
+  lowMotion: false,
   timeLimit: 80,
   creationTimeStamp: ''
   executionTimeStamp: '',
@@ -251,6 +252,7 @@ A script has several properties that specify facts about the jobs to be created.
 - `timeLimit`: This specifies the maximum duration, in seconds, of a job. Testaro will abort jobs that are not completed within that time.
 - `deviceID`: This specifies the default device type of the job.
 - `browserID`: This specifies the default browser type (`'chromium'`, `'firefox'`, or `'webkit'`) of the job.
+- `lowMotion`: This is true if the browser is to create tabs with the `reduce-motion` option set to `reduce` instead of `no-preference`. This makes the browser act as if the user has chosen a [motion-reduction option in the settings of the operating system or browser](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion#user_preferences). Motions on pages are, however, often immune to this setting.
 - `creationTimeStamp`, `executionTimeStamp`, and `sources`: These properties will have values assigned to them when jobs are created from the script, except for the `sources.script` property, which will preserve the ID of the script after the `id` property has been replaced with a job ID.
 - `acts`: an array of acts.
 
@@ -418,26 +420,28 @@ The `call` module will save the jobs as JSON files in the `todo` or `pending` su
 
 #### Output
 
-A Testaro job produced by `merge` will be identical to the script from which it was derived (see the example above), except that the originally empty properties will be populated, as in this example:
+A Testaro job produced by `merge` will be identical to the script from which it was derived (see the example above), except that:
+- The `id` property of the job will be revised to uniquely identify the job.
+- The originally empty properties will be populated, as in this example:
 
-```javaScript
-…
-creationTimeStamp: '241229T0537',
-executionTimeStamp: '250110T1200',
-sources: {
-  script: 'ts99',
-  batch: 'departments',
-  mergeID: '7f',
-  sendReportTo: 'https://abccorp.com/api/report',
-  requester: 'malavu@abccorp.com'
-  target: {
-    what: 'Real Estate Management',
-    url: 'https://abccorp.com/mgmt/realproperty.html'
-  },
-  lastTarget: false,
-},
-…
-```
+    ```javaScript
+    …
+    creationTimeStamp: '241229T0537',
+    executionTimeStamp: '250110T1200',
+    sources: {
+      script: 'ts99',
+      batch: 'departments',
+      mergeID: '7f',
+      sendReportTo: 'https://abccorp.com/api/report',
+      requester: 'malavu@abccorp.com'
+      target: {
+        what: 'Real Estate Management',
+        url: 'https://abccorp.com/mgmt/realproperty.html'
+      },
+      lastTarget: false,
+    },
+    …
+    ```
 
 The `merge()` function will populate the `sources.sendReportTo` property with the value, if any, of the environment variable `SEND_REPORT_TO`, and populate the `sources.requester` property with the value, if any, of the environment variable `REQUESTER`.
 

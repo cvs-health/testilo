@@ -51,18 +51,18 @@ const mergeIDLength = 2;
 // Merges a script and a batch and returns jobs.
 exports.merge = (script, batch, executionTimeStamp) => {
   // If a time stamp was specified:
-  if (timeStamp) {
+  if (executionTimeStamp) {
     // If it is invalid:
-    if (! dateOf(timeStamp)) {
+    if (! dateOf(executionTimeStamp)) {
       // Report this and quit.
-      console.log('ERROR: Timestamp invalid');
+      console.log('ERROR: Execution time stamp invalid');
       return [];
     }
   }
   // Otherwise, i.e. if no time stamp was specified:
   else {
     // Create one for the job.
-    timeStamp = getNowStamp();
+    executionTimeStamp = getNowStamp();
   }
   // Initialize a job template as a copy of the script.
   const protoJob = JSON.parse(JSON.stringify(script));

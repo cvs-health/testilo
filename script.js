@@ -35,9 +35,7 @@ const toolIDs = exports.toolIDs = [
 // ########## FUNCTIONS
 
 // Creates and returns a script.
-exports.script = (
-  id, deviceID = 'default', browserID = 'webkit', what = 'Testaro job', options = {}
-) => {
+exports.script = (id, what, options = {}) => {
   const toolsRulesData = {};
   // If options are specified:
   if (options.type && options.specs) {
@@ -113,16 +111,31 @@ exports.script = (
     });
   }
   // Initialize a script.
-  const timeLimit = Math.round(50 + 30 * Object.keys(toolsRulesData).length);
   const scriptObj = {
     id,
     what,
     strict: false,
     isolate: true,
-    timeLimit,
-    deviceID,
-    browserID,
-    acts: [
+    standard: 'only',
+    observe: false,
+    deviceID: 'default',
+    browserID: 'webkit',
+    timeLimit: Math.round(50 + 30 * Object.keys(toolsRulesData).length),
+    creationTimeStamp: '',
+    executionTimeStamp: '',
+    sources: {
+      script: id,
+      batch: '',
+      target: {
+        what: '',
+        url: ''
+      },
+      lastTarget: false,
+      mergeID: '',
+      sendReportTo: '',
+      requester: ''
+    },
+      acts: [
       {
         type: 'placeholder',
         which: 'main'

@@ -143,60 +143,6 @@ In this example, the `public` act group contains only 1 act, of type `launch`. A
 
 A batch is a JavaScript object. It can be converted to JSON and stored in a file.
 
-### Scripts
-
-The generic, target-independent description of a job is _script_. A script can contain _placeholders_ that Testilo replaces with acts from a batch, creating one job per target. Thus, one script plus a batch containing _n_ targets will generate _n_ jobs.
-
-Here is a script:
-
-```javaScript
-{
-  id: 'ts99',
-  what: 'aside mislocation',
-  strict: true,
-  isolate: true,
-  timeLimit: 60,
-  deviceID: 'Kindle Fire HDX',
-  browserID: 'webkit',
-  acts: [
-    {
-      type: 'placeholder',
-      which: 'private',
-      deviceID: 'default',
-      browserID: 'chromium'
-    },
-    {
-      type: 'test',
-      which: 'axe',
-      detailLevel: 2,
-      rules: ['landmark-complementary-is-top-level'],
-      what: 'Axe'
-    },
-    {
-      type: 'test',
-      which: 'qualWeb',
-      withNewContent: false,
-      rules: ['QW-BP25', 'QW-BP26']
-      what: 'QualWeb'
-    }
-  ]
-}
-```
-
-A script has several properties that specify facts about the jobs to be created. They include:
-- `id`: an ID. A script can be converted from a JavaScript object to JSON and saved in a file in the `SPECDIR` directory, where it will be named by its ID (e.g., if the ID is `ts99`, the file name will be `ts99.json`). Thus, each script needs an `id` with a unique value.
-- `what`: a description of the script.
-- `strict`: `true` if Testaro is to abort jobs when a target redirects a request to a URL differing substantially from the one specified. If `false` Testaro is to allow redirection. All differences are considered substantial unless the URLs differ only in the presence and absence of a trailing slash.
-- `isolate`: If `true`, Testilo, before creating a job, will isolate test acts, as needed, from effects of previous test acts, by inserting a copy of the latest placeholder after each target-modifying test act other than the final act. If `false`, placeholders will not be duplicated.
-- `timeLimit`: This specifies the maximum duration, in seconds, of a job. Testaro will abort jobs that are not completed within that time.
-- `deviceID`: This specifies the default device type of the job.
-- `browserID`: This specifies the default browser type (`'chromium'`, `'firefox'`, or `'webkit'`) of the job.
-- `acts`: an array of acts.
-
-In this example, the script contains 3 acts, of which the first is a placeholder. If the above batch were merged with this script, in each job the placeholder would be replaced with the acts in the `private` act group of a target. For example, the first act of the first job would launch a Chromium browser on a default device, navigate to the Acme login page, complete and submit the login form, wait for the account page to load, run the Axe tests, and then run the QualWeb tests. If the batch contained additional targets, additional jobs would be created, with the acts for each target specified by the `private` property of the `actGroups` object of that target.
-
-As shown in this example, it is possible for any particular placeholder to override the default device type and/or browser type of the script by having its own optional `deviceID` and/or `browserID` property. Some rules are particularly relevant to some device types and/or can be successfully tested only with particular browser types. Overriding the default device and browser types lets you handle such constraints.
-
 ### Target list to batch
 
 If you have a target list, the `batch` module of Testilo can convert it to a simple batch. The batch will contain, for each target, only one act group, named `main`, containing only a `launch` act. The target’s entry in the target list will determine the `what` and `url` properties of the target, and the `launch` acts will not override the values of those properties.
@@ -238,6 +184,81 @@ In this statement, replace `id` with the list ID and `what` with a string descri
 The `call` module will retrieve the named target list.
 The `batch` module will convert the target list to a batch.
 The `call` module will save the batch as a JSON file named `x.json` (replacing `x` with the list ID) in the `batches` subdirectory of the `SPECDIR` directory.
+
+### Scripts
+
+The generic, target-independent description of a job is _script_. A script can contain _placeholders_ that Testilo replaces with acts from a batch, creating one job per target. Thus, one script plus a batch containing _n_ targets will generate _n_ jobs.
+
+Here is a script:
+
+```javaScript
+{
+  id: 'ts99',
+  what: 'aside mislocation',
+  strict: true,
+  isolate: true,
+  standard: 'also',
+  observe: false,
+  deviceID: 'Kindle Fire HDX',
+  browserID: 'webkit',
+  timeLimit: 80,
+  creationTimeStamp: ''
+  executionTimeStamp: '',
+  sources: {
+    script: 'ts99',
+    batch: '',
+    target: {
+      what: '',
+      url: ''
+    },
+    lastTarget: false,
+    mergeID: '',
+    sendReportTo: '',
+    requester: ''
+  },
+  acts: [
+    {
+      type: 'placeholder',
+      which: 'private',
+      deviceID: 'default',
+      browserID: 'chromium'
+    },
+    {
+      type: 'test',
+      which: 'axe',
+      detailLevel: 2,
+      rules: ['landmark-complementary-is-top-level'],
+      what: 'Axe'
+    },
+    {
+      type: 'test',
+      which: 'qualWeb',
+      withNewContent: false,
+      rules: ['QW-BP25', 'QW-BP26']
+      what: 'QualWeb'
+    }
+  ]
+}
+```
+
+A script has several properties that specify facts about the jobs to be created. They include:
+- `id`: an ID. A script can be converted from a JavaScript object to JSON and saved in a file in the `SPECDIR` directory, where it will be named by its ID (e.g., if the ID is `ts99`, the file name will be `ts99.json`). Each script needs an `id` with a unique value composed of alphanumeric ASCII characters.
+- `what`: a description of the script.
+- `strict`: `true` if Testaro is to abort jobs when a target redirects a request to a URL differing substantially from the one specified. If `false` Testaro is to allow redirection. All differences are considered substantial unless the URLs differ only in the presence and absence of a trailing slash.
+- `isolate`: If `true`, Testilo, before creating a job, will isolate test acts, as needed, from effects of previous test acts, by inserting a copy of the latest placeholder after each target-modifying test act other than the final act. If `false`, placeholders will not be duplicated.
+- `standard`: When Testaro performs a job, every tool produces its own report. Testaro can convert the test results of each tool report to standard results. The `standard` property specifies how to handle standardization. If `also`, Testaro will include in its reports both the original results of the tests of tools and the Testaro-standardized results. If `only`, reports will include only the standardized test results. If `no`, reports will include only the original results, without standardization.
+- `observe`: Testaro jobs can allow granular observation. If `true`, the job will do so. If `false`, Testaro will not report job progress, but will send a report to the server only when the report is completed. It is generally user-friendly to allow granular observation, and for user applications to implement it, if they make users wait while jobs are assigned and performed, since that process typically takes a few minutes.
+- `timeLimit`: This specifies the maximum duration, in seconds, of a job. Testaro will abort jobs that are not completed within that time.
+- `deviceID`: This specifies the default device type of the job.
+- `browserID`: This specifies the default browser type (`'chromium'`, `'firefox'`, or `'webkit'`) of the job.
+- `creationTimeStamp`: Initially empty. In a job, it will get a value describing the time when the job was created.
+- `executionTimeStamp`: Initially empty. In a job, it will get a value describing the time before which the job must not be performed.
+- `sources`: Facts about the origin of jobs derived from the script. Except for the script ID, the properties of this object will become populated when the jobs are created.
+- `acts`: an array of acts.
+
+In this example, the script contains 3 acts, of which the first is a placeholder. If the above batch were merged with this script, in each job the placeholder would be replaced with the acts in the `private` act group of a target. For example, the first act of the first job would launch a Chromium browser on a default device, navigate to the Acme login page, complete and submit the login form, wait for the account page to load, run the Axe tests, and then run the QualWeb tests. If the batch contained additional targets, additional jobs would be created, with the acts for each target specified by the `private` property of the `actGroups` object of that target.
+
+As shown in this example, it is possible for any particular placeholder to override the default device type and/or browser type of the script by having its own optional `deviceID` and/or `browserID` property. Some rules are particularly relevant to some device types and/or can be successfully tested only with particular browser types. Overriding the default device and browser types lets you handle such constraints.
 
 ### Script creation
 
@@ -282,7 +303,7 @@ For an issue restriction, it has this structure:
 
 If you specify tool options, the script will prescribe the tests for all evaluation rules of the tools that you specify.
 
-If you specify issue options, the script will prescribe the tests for all evaluation rules that are classified in the issues whose IDs you specify. Any tools that do not have any of those rules will be omitted. The value of `specs/issues` is an issue classification object, with a structure like the one in `procs/score/tic40.js`. That one classifies about 1000 rules into about 300 issues.
+If you specify issue options, the script will prescribe the tests for all evaluation rules that are classified into the issues whose IDs you specify. Any tools that do not have any of those rules will be omitted. The value of `specs.issues` is an issue classification object, with a structure like the one in `procs/score/tic43.js`. That one classifies about 1000 rules into about 300 issues.
 
 For example, one issue in the `tic43.js` file is `mainNot1`. Four rules are classified as belonging to that issue: rule `main_element_only_one` of the `aslint` tool and 3 more rules defined by 3 other tools. You can also create custom classifications and save them in a `score` subdirectory of the `FUNCTIONDIR` directory.
 
@@ -323,7 +344,7 @@ The first form will create a script with no restrictions.
 
 The second form will create a script that prescribes tests for all the rules of the specified tools.
 
-The third form will create a script that prescribes tests for all the rules classified by the specified issue classification into any of the specified issues.
+The third form will create a script that prescribes tests for all the rules classified by the named issue-classification file into any of the specified issues.
 
 In this statement, replace `id` with an ID for the script, such as `headings1`, consisting of ASCII alphanumeric characters, or with `''` if you want Testilo to create an ID. Replace `what` with a string describing the script, or with `''` if you want Testilo to create a generic description.
 
@@ -331,11 +352,34 @@ The `call` module will retrieve the named classification, if any.
 The `script` module will create a script.
 The `call` module will save the script as a JSON file in the `scripts` subdirectory of the `SPECDIR` directory, using the `id` value as the base of the file name.
 
-#### Options
+#### Configuration
 
-The `script` module will use the value of the `SEND_REPORT_TO` environment variable as the value of the `sendReportTo` property of the script, if that variable exists, and otherwise will leave that property with an empty-string value.
+When the `script` module creates a script for you, it does not ask you for all of the other property values that the script may require. Instead, it chooses these default values:
+- `strict`: `false`
+- `isolate`: `true`
+- `standard`: `'only'`
+- `observe`: `false`
+- `timeLimit`: 50 plus 30 per tool
+- `deviceID`: `'default'`
+- `browserID`: `'webkit'`
+- `sendReportTo`: `process.env.SEND_REPORT_TO`, or `''` if that variable does not exist
+- `axe`: `detailLevel` = 2
+- `ibm`: `withItems` = `true`, `withNewContent` = `false`
+- `qualWeb`: `withNewContent` = `false`
+- `testaro`: `withItems` = true, `stopOnFail` = `false`
+- `wave`: `reportType` = 4
 
-When the `script` module creates a script for you, it does not ask you for all of the other options that the script may require. Instead, it chooses default options. For example, it sets the values of `isolate` and `strict` to `true`, sets `deviceID` to `'default'`, sets `browserID` to `'webkit'`, and sets the `withNewContent` property of the `ibm` tool to `false` to prevent occasional infinite loops or crashes when targets cause HTTP2 protocol errors. After you invoke `script`, you can edit the script that it creates to revise options.
+The `requester` argument is an email address to which any notices about the job are to be sent.
+
+The `timeStamp` argument specifies the earliest UTC date and time when the jobs may be assigned, or it may be an empty string if now.
+
+The `deviceID` argument specifies the ID of the test device, or `''` to inherit the default device ID from the script.
+
+The `browserID` argument specifies `'chromium'`, `'firefox'`, `'webkit'`, or (to make the job inherit its default browser ID from the script) `''`.
+
+The `webkit` browser type is selected because the other browser types corrupt some tests. The `ibm` test is performed on the existing page because some targets cause HTTP2 protocol errors when the `ibm` tool tries to visit them.
+
+After you invoke `script`, you can edit the script that it creates to revise any of these options.
 
 ### Merge
 
@@ -353,13 +397,8 @@ A module can invoke `merge()` in this way:
 const {merge} = require('testilo/merge');
 const script = …;
 const batch = …;
-const standard = 'only';
-const observe = false;
-const requester = 'me@mydomain.tld';
 const timeStamp = '241215T1200';
-const deviceID = '';
-const browserID = 'firefox';
-const jobs = merge(script, batch, standard, observe, requester, timeStamp, deviceID, browserID);
+const jobs = merge(script, batch, timeStamp);
 ```
 
 The first two arguments are a script and a batch obtained from files or from prior calls to `script()` and `batch()`.

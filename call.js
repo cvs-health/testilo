@@ -225,7 +225,7 @@ const callMerge = async (
       const jobJSON = JSON.stringify(job, null, 2);
       await fs.writeFile(`${subdir}/${job.id}.json`, `${jobJSON}\n`);
     }
-    const truncatedID = `${jobs[0].executionTimeStamp}-${jobs[0].mergeID}-…`;
+    const truncatedID = `${jobs[0].id.replace(/[^-]+$/, '')}…`;
     console.log(`Script ${scriptID} and batch ${batchID} merged as ${truncatedID} in ${subdir}`);
   }
   catch(error) {

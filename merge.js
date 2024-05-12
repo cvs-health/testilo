@@ -168,7 +168,6 @@ exports.merge = (script, batch, standard, observe, requester, timeStamp, browser
         job.sources.lastTarget = true;
       }
       // Add other data to the sources property of the job.
-      job.sources.target.id = targetID;
       job.sources.target.what = what;
       job.sources.target.url = url;
       // Replace each placeholder object in the job with the named act group of the target.
@@ -195,11 +194,11 @@ exports.merge = (script, batch, standard, observe, requester, timeStamp, browser
               acts[actIndex] = replacerActs;
             }
             else {
-              console.log(`ERROR: Target ${target.id} has no ${replacerName} act group`);
+              console.log(`ERROR: Target ${what} has no ${replacerName} act group`);
             }
           }
           else {
-            console.log(`ERROR: Placeholder for target ${target.id} not replaceable`);
+            console.log(`ERROR: Placeholder for target ${what} not replaceable`);
           }
         }
       }

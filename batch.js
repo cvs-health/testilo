@@ -52,7 +52,7 @@ exports.batch = (id, what, targetList) => {
     // For each target:
     targetList.forEach(target => {
       // Add it to the batch.
-      batch.targets[target.what] = {
+      batch.targets[target[0]] = {
         url: target[1],
         actGroups: {
           main: [

@@ -361,6 +361,7 @@ When the `script` module creates a script for you, it does not ask you for all o
 - `observe`: `false`
 - `deviceID`: `'default'`
 - `browserID`: `'webkit'`
+- `lowMotion`: `false`
 - `timeLimit`: 50 plus 30 per tool
 - `axe` test act: `detailLevel` = 2
 - `ibm` test act: `withItems` = `true`, `withNewContent` = `false`

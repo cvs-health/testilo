@@ -120,6 +120,7 @@ exports.script = (id, what, options = {}) => {
     observe: false,
     deviceID: 'default',
     browserID: 'webkit',
+    lowMotion: false,
     timeLimit: Math.round(50 + 30 * Object.keys(toolsRulesData).length),
     creationTimeStamp: '',
     executionTimeStamp: '',

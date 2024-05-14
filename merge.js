@@ -70,11 +70,8 @@ exports.merge = (script, batch, executionTimeStamp) => {
   protoJob.creationTimeStamp = getNowStamp();
   protoJob.executionTimeStamp = executionTimeStamp;
   const {sources} = protoJob;
-  sources.script = script.id;
   sources.batch = batch.id;
   sources.mergeID = getRandomString(mergeIDLength);
-  sources.sendReportTo = process.env.SEND_REPORT_TO || '';
-  sources.requester = process.env.REQUESTER || '';
   // If isolation was requested:
   if (protoJob.isolate) {
     // For each act:

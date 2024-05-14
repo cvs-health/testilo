@@ -133,8 +133,8 @@ exports.script = (id, what, options = {}) => {
       },
       lastTarget: false,
       mergeID: '',
-      sendReportTo: '',
-      requester: ''
+      sendReportTo: process.env.SEND_REPORT_TO || '',
+      requester: process.env.REQUESTER || ''
     },
       acts: [
       {

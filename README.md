@@ -214,8 +214,8 @@ Here is a script:
     },
     lastTarget: false,
     mergeID: '',
-    sendReportTo: '',
-    requester: ''
+    sendReportTo: 'https://abccorp.com/api/report',
+    requester: 'anama@abccorp.com'
   },
   acts: [
     {
@@ -253,7 +253,10 @@ A script has several properties that specify facts about the jobs to be created.
 - `deviceID`: This specifies the default device type of the job.
 - `browserID`: This specifies the default browser type (`'chromium'`, `'firefox'`, or `'webkit'`) of the job.
 - `lowMotion`: This is true if the browser is to create tabs with the `reduce-motion` option set to `reduce` instead of `no-preference`. This makes the browser act as if the user has chosen a [motion-reduction option in the settings of the operating system or browser](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion#user_preferences). Motions on pages are, however, often immune to this setting.
-- `creationTimeStamp`, `executionTimeStamp`, and `sources`: These properties will have values assigned to them when jobs are created from the script, except for the `sources.script` property, which will preserve the ID of the script after the `id` property has been replaced with a job ID.
+- `creationTimeStamp` and `executionTimeStamp`: These properties will have values assigned to them when jobs are created from the script.
+- `sources.script`: This preserves the ID of the script after the `id` property is replaced with a job ID.
+- `sources.sendReportTo`: This (if not `''`) is the URL to which a Testaro agent is to send its report after it performs a job derived from the script.
+- `sources.requester`: This is the email address to which a message announcing the completion of the job is to be sent, if any.
 - `acts`: an array of acts.
 
 In this example, the script contains 3 acts, of which the first is a placeholder. If the above batch were merged with this script, in each job the placeholder would be replaced with the acts in the `private` act group of a target. For example, the first act of the first job would launch a Chromium browser on a default device, navigate to the Acme login page, complete and submit the login form, wait for the account page to load, run the Axe tests, and then run the QualWeb tests. If the batch contained additional targets, additional jobs would be created, with the acts for each target specified by the `private` property of the `actGroups` object of that target.
@@ -306,6 +309,8 @@ If you specify tool options, the script will prescribe the tests for all evaluat
 If you specify issue options, the script will prescribe the tests for all evaluation rules that are classified into the issues whose IDs you specify. Any tools that do not have any of those rules will be omitted. The value of `specs.issues` is an issue classification object, with a structure like the one in `procs/score/tic43.js`. That one classifies about 1000 rules into about 300 issues.
 
 For example, one issue in the `tic43.js` file is `mainNot1`. Four rules are classified as belonging to that issue: rule `main_element_only_one` of the `aslint` tool and 3 more rules defined by 3 other tools. You can also create custom classifications and save them in a `score` subdirectory of the `FUNCTIONDIR` directory.
+
+The `script()` function will populate the `sources.sendReportTo` property with the value, if any, of the environment variable `SEND_REPORT_TO`, and populate the `sources.requester` property with the value, if any, of the environment variable `REQUESTER`.
 
 #### Invocation
 
@@ -443,8 +448,6 @@ A Testaro job produced by `merge` will be identical to the script from which it 
     },
     …
     ```
-
-The `merge()` function will populate the `sources.sendReportTo` property with the value, if any, of the environment variable `SEND_REPORT_TO`, and populate the `sources.requester` property with the value, if any, of the environment variable `REQUESTER`.
 
 #### Validation
 

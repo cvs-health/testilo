@@ -29,6 +29,6 @@
 
 // Adds parameters to a query for a digest.
 exports.digester = (report, query) => {
-  query.target = report.sources.target.what;
+  query.target = report.target.what;
   query.testCount = report.score.testCount;
 };

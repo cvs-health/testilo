@@ -124,16 +124,15 @@ exports.script = (id, what, options = {}) => {
     timeLimit: Math.round(50 + 30 * Object.keys(toolsRulesData).length),
     creationTimeStamp: '',
     executionTimeStamp: '',
+    sendReportTo: process.env.SEND_REPORT_TO || '',
+    target: {
+      what: '',
+      url: ''
+    },
     sources: {
       script: id,
       batch: '',
-      target: {
-        what: '',
-        url: ''
-      },
-      lastTarget: false,
       mergeID: '',
-      sendReportTo: process.env.SEND_REPORT_TO || '',
       requester: process.env.REQUESTER || ''
     },
       acts: [

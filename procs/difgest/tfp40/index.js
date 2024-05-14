@@ -75,8 +75,7 @@ const populateQuery = (reportA, reportB, query) => {
   [reportA, reportB].forEach((report, index) => {
     // Add report-specific synopsis parameters to the query.
     const suffix = ['A', 'B'][index];
-    const {id, sources, jobData, score} = report;
-    const {target} = sources;
+    const {id, jobData, score, target} = report;
     const {summary, details} = score;
     query[`org${suffix}`] = target.what;
     query[`url${suffix}`] = target.which;

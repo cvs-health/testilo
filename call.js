@@ -424,9 +424,7 @@ const callTrack = async (trackerID, what, selector, targetWhat) => {
     // Remove unwanted results, if any, from it.
     if (targetWhat) {
       summaryReport.summaries = summaryReport.summaries.filter(
-        result => result.sources
-        && result.sources.target
-        && result.sources.target.what === targetWhat
+        result => result.target && result.target.what === targetWhat
       );
     }
     // If any results remain:

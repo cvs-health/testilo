@@ -30,7 +30,7 @@
 // Adds parameters to a query for a comparison.
 exports.comparer = (reports, query) => {
   const entries = reports.map(report => ({
-    target: report.sources.target.what,
+    target: report.target.what,
     score: report.score.total
   }));
   const entriesHTML = entries

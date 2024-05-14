@@ -51,8 +51,8 @@ const getIssueScoreRow = (summary, wcag, score, tools) => {
 };
 // Adds parameters to a query for a digest.
 const populateQuery = (report, query) => {
-  const {id, sources, score} = report;
-  const {script, target, requester} = sources;
+  const {id, score, sources, target} = report;
+  const {script, requester} = sources;
   const {scoreProcID, summary, details} = score;
   query.ts = script;
   query.sp = scoreProcID;

@@ -57,8 +57,8 @@ const getIssueScoreRow = (issueConstants, issueDetails) => {
 };
 // Adds parameters to a query for a digest.
 const populateQuery = (report, query) => {
-  const {browserID, deviceID, id, isolate, lowMotion, score, sources, standard, strict} = report;
-  const {agent, script, target, requester} = sources;
+  const {browserID, deviceID, id, isolate, lowMotion, score, sources, standard, strict, target} = report;
+  const {agent, requester, script} = sources;
   const {scoreProcID, summary, details} = score;
   query.ts = script;
   query.sp = scoreProcID;

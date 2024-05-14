@@ -109,7 +109,7 @@ exports.merge = (script, batch, executionTimeStamp) => {
     if (actGroups && url) {
       // Initialize a job.
       const job = JSON.parse(JSON.stringify(protoJob));
-      const {sources} = job;
+      const {sources, target} = job;
       // Make the job ID unique.
       const targetSuffix = alphaNumOf(index);
       job.id = `${executionTimeStamp}-${sources.mergeID}-${targetSuffix}`;
@@ -119,8 +119,8 @@ exports.merge = (script, batch, executionTimeStamp) => {
         sources.lastTarget = true;
       }
       // Populate the target-specific properties of the job.
-      sources.target.what = what;
-      sources.target.url = url;
+      target.what = what;
+      target.url = url;
       // Replace each placeholder object in the job with the named act group of the target.
       let {acts} = job;
       for (const actIndex in acts) {

@@ -66,7 +66,7 @@ const validate = async () => {
   if (jobArrays.every(array => [0, 1].every(
     jobIndex => {
       const job = array[jobIndex];
-      return job.id === `${job.timeStamp}-${job.sources.script}-${job.sources.target.id}`;
+      return job.id === `${job.timeStamp}-${job.sources.script}-${job.target.id}`;
     }
   ))) {
     console.log('Success: Every job has a correct ID');
@@ -117,21 +117,21 @@ const validate = async () => {
     return;
   }
   if (jobArrays.every(array => [0, 1].every(
-    jobIndex => array[jobIndex].sources.target.id === batch.targets[jobIndex].id
+    jobIndex => array[jobIndex].target.id === batch.targets[jobIndex].id
   ))) {
-    console.log('Success: Every job has a correct sources.target.id property');
+    console.log('Success: Every job has a correct target.id property');
   }
   else {
-    console.log('ERROR: A job does not have a correct sources.target.id property');
+    console.log('ERROR: A job does not have a correct target.id property');
     return;
   }
   if (jobArrays.every(array => [0, 1].every(
-    jobIndex => array[jobIndex].sources.target.what === batch.targets[jobIndex].what
+    jobIndex => array[jobIndex].target.what === batch.targets[jobIndex].what
   ))) {
-    console.log('Success: Every job has a correct sources.target.what property');
+    console.log('Success: Every job has a correct target.what property');
   }
   else {
-    console.log('ERROR: A job does not have a correct sources.target.what property');
+    console.log('ERROR: A job does not have a correct target.what property');
     return;
   }
   if (jobArrays.every(

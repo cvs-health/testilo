@@ -205,16 +205,15 @@ Here is a script:
   timeLimit: 80,
   creationTimeStamp: ''
   executionTimeStamp: '',
+  sendReportTo: 'https://abccorp.com/api/report',
+  target: {
+    what: '',
+    url: ''
+  },
   sources: {
     script: 'ts99',
     batch: '',
-    target: {
-      what: '',
-      url: ''
-    },
-    lastTarget: false,
     mergeID: '',
-    sendReportTo: 'https://abccorp.com/api/report',
     requester: 'anama@abccorp.com'
   },
   acts: [
@@ -254,8 +253,9 @@ A script has several properties that specify facts about the jobs to be created.
 - `browserID`: This specifies the default browser type (`'chromium'`, `'firefox'`, or `'webkit'`) of the job.
 - `lowMotion`: This is true if the browser is to create tabs with the `reduce-motion` option set to `reduce` instead of `no-preference`. This makes the browser act as if the user has chosen a [motion-reduction option in the settings of the operating system or browser](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion#user_preferences). Motions on pages are, however, often immune to this setting.
 - `creationTimeStamp` and `executionTimeStamp`: These properties will have values assigned to them when jobs are created from the script.
-- `sources.script`: This preserves the ID of the script after the `id` property is replaced with a job ID.
-- `sources.sendReportTo`: This (if not `''`) is the URL to which a Testaro agent is to send its report after it performs a job derived from the script.
+- `sendReportTo`: This is a URL that Testaro is to send its job reports to, or `''` if the jobs will not be network jobs.
+- `target`: This object contains blank `url` and `what` properties, which will be populated each time the script is converted to a job.
+- `sources.script`: This preserves the ID of the script. The `id` property may be revised to a job ID when the script is converted to a job.
 - `sources.requester`: This is the email address to which a message announcing the completion of the job is to be sent, if any.
 - `acts`: an array of acts.
 
@@ -309,8 +309,6 @@ If you specify tool options, the script will prescribe the tests for all evaluat
 If you specify issue options, the script will prescribe the tests for all evaluation rules that are classified into the issues whose IDs you specify. Any tools that do not have any of those rules will be omitted. The value of `specs.issues` is an issue classification object, with a structure like the one in `procs/score/tic43.js`. That one classifies about 1000 rules into about 300 issues.
 
 For example, one issue in the `tic43.js` file is `mainNot1`. Four rules are classified as belonging to that issue: rule `main_element_only_one` of the `aslint` tool and 3 more rules defined by 3 other tools. You can also create custom classifications and save them in a `score` subdirectory of the `FUNCTIONDIR` directory.
-
-The `script()` function will populate the `sources.sendReportTo` property with the value, if any, of the environment variable `SEND_REPORT_TO`, and populate the `sources.requester` property with the value, if any, of the environment variable `REQUESTER`.
 
 #### Invocation
 
@@ -368,6 +366,9 @@ When the `script` module creates a script for you, it does not ask you for all o
 - `browserID`: `'webkit'`
 - `lowMotion`: `false`
 - `timeLimit`: 50 plus 30 per tool
+- `sendReportTo`: `process.env.SEND_REPORT_TO`, or `''` if none
+- `sources.id`: script ID
+- `sources.requester`: `process.env.REQUESTER`, or `''` if none
 - `axe` test act: `detailLevel` = 2
 - `ibm` test act: `withItems` = `true`, `withNewContent` = `false`
 - `qualWeb` test act: `withNewContent` = `false`
@@ -434,17 +435,15 @@ A Testaro job produced by `merge` will be identical to the script from which it 
     …
     creationTimeStamp: '241229T0537',
     executionTimeStamp: '250110T1200',
+    target: {
+      what: 'Real Estate Management',
+      url: 'https://abccorp.com/mgmt/realproperty.html'
+    },
     sources: {
-      script: 'ts99',
+      …,
       batch: 'departments',
       mergeID: '7f',
-      sendReportTo: 'https://abccorp.com/api/report',
-      requester: 'malavu@abccorp.com'
-      target: {
-        what: 'Real Estate Management',
-        url: 'https://abccorp.com/mgmt/realproperty.html'
-      },
-      lastTarget: false,
+      …
     },
     …
     ```
@@ -863,7 +862,7 @@ To test the `compare` module, in the project directory you can execute the state
 
 ### Track
 
-The `track` module of Testilo selects, organizes, and presents data from summaries to show changes over time in total scores. The module produces a web page, showing changes in a table and a line graph. The line graph contains a line for each target (namely, each value of the `sources.target.what` property).
+The `track` module of Testilo selects, organizes, and presents data from summaries to show changes over time in total scores. The module produces a web page, showing changes in a table and a line graph. The line graph contains a line for each target (namely, each value of the `target.what` property).
 
 A typical use case for tracking is monitoring, i.e. periodic auditing of one or more web pages.
 

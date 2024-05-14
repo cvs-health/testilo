@@ -394,8 +394,8 @@ A module can invoke `merge()` in this way:
 const {merge} = require('testilo/merge');
 const script = …;
 const batch = …;
-const timeStamp = '241215T1200';
-const jobs = merge(script, batch, timeStamp);
+const executionTimeStamp = '241215T1200';
+const jobs = merge(script, batch, executionTimeStamp);
 ```
 
 The first two arguments are a script and a batch obtained from files or from prior calls to `script()` and `batch()`.

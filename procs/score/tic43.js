@@ -3130,16 +3130,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element has an event handler but no valid ARIA role'
-        },
-        table_aria_descendants: {
-          variable: false,
-          quality: 1,
-          what: 'Table structure element specifies an explicit role within the table container'
-        },
-        aria_child_valid: {
-          variable: false,
-          quality: 1,
-          what: 'Child element has a role not allowed for the role of the parent'
         }
       },
       nuVal: {
@@ -3153,20 +3143,10 @@ exports.issues = {
           quality: 1,
           what: 'img element has a role attribute but no alt attribute'
         },
-        'A figure element with a figcaption descendant must not have a role attribute.': {
-          variable: false,
-          quality: 1,
-          what: 'figure element has a figcaption descendant but has a role attribute'
-        },
         '^Discarding unrecognized token .+ from value of attribute role. Browsers ignore any token that is not a defined ARIA non-abstract role.*$': {
           variable: true,
           quality: 1,
           what: 'Invalid role'
-        },
-        '^The role attribute must not be used on a .+ element which has a table ancestor with no role attribute, or with a role attribute whose value is table, grid, or treegrid.*$': {
-          variable: true,
-          quality: 1,
-          what: 'Table cell has a role attribute'
         }
       },
       qualWeb: {
@@ -3174,6 +3154,43 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'role attribute has an invalid value'
+        }
+      }
+    }
+  },
+  roleHierarchyBad: {
+    summary: 'ancestor and descendant elements have incompatible roles',
+    why: 'User may misunderstand or be blocked from exposure to an item',
+    wcag: '4.1.2',
+    weight: 4,
+    tools: {
+      ibm: {
+        aria_child_valid: {
+          variable: false,
+          quality: 1,
+          what: 'Child element has a role not allowed for the role of the parent'
+        },
+        aria_descendant_valid: {
+          variable: false,
+          quality: 1,
+          what: 'Element and descendant roles make browsers ignore a descendant'
+        },
+        table_aria_descendants: {
+          variable: false,
+          quality: 1,
+          what: 'Table structure element specifies an explicit role within the table container'
+        }
+      },
+      nuVal: {
+        'A figure element with a figcaption descendant must not have a role attribute.': {
+          variable: false,
+          quality: 1,
+          what: 'figure element has a figcaption descendant but has a role attribute'
+        },
+        '^The role attribute must not be used on a .+ element which has a table ancestor with no role attribute, or with a role attribute whose value is table, grid, or treegrid.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Table cell has a role attribute'
         }
       }
     }

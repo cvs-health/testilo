@@ -118,7 +118,12 @@ exports.script = (id, what, options = {}) => {
     isolate: true,
     standard: 'only',
     observe: false,
-    deviceID: 'default',
+    device: {
+      id: 'default',
+      browserTabOptions: {
+        reduceMotion: 'no-preference'
+      }
+    },
     browserID: 'webkit',
     lowMotion: false,
     timeLimit: Math.round(50 + 30 * Object.keys(toolsRulesData).length),

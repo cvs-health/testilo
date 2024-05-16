@@ -199,9 +199,22 @@ Here is a script:
   isolate: true,
   standard: 'also',
   observe: false,
-  deviceID: 'Kindle Fire HDX',
+  device: {
+    id: 'iPhone 8',
+    browserTabOptions: {
+      reduceMotion: 'no-preference',
+      userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/17.4 Mobile/15A372 Safari/604.1',
+      viewport: {
+        width: 375,
+        height: 667
+      },
+      deviceScaleFactor: 2,
+      isMobile: true,
+      hasTouch: true,
+      defaultBrowserType: 'webkit'
+    }
+  },
   browserID: 'webkit',
-  lowMotion: false,
   timeLimit: 80,
   creationTimeStamp: ''
   executionTimeStamp: '',
@@ -249,9 +262,8 @@ A script has several properties that specify facts about the jobs to be created.
 - `standard`: When Testaro performs a job, every tool produces its own report. Testaro can convert the test results of each tool report to standard results. The `standard` property specifies how to handle standardization. If `also`, Testaro will include in its reports both the original results of the tests of tools and the Testaro-standardized results. If `only`, reports will include only the standardized test results. If `no`, reports will include only the original results, without standardization.
 - `observe`: Testaro jobs can allow granular observation. If `true`, the job will do so. If `false`, Testaro will not report job progress, but will send a report to the server only when the report is completed. It is generally user-friendly to allow granular observation, and for user applications to implement it, if they make users wait while jobs are assigned and performed, since that process typically takes a few minutes.
 - `timeLimit`: This specifies the maximum duration, in seconds, of a job. Testaro will abort jobs that are not completed within that time.
-- `deviceID`: This specifies the default device type of the job.
+- `device`: This specifies the ID of a device and properties that each new browser tab (technically called a browser _context_) will have that correspond to that device. The permitted devices are those (about 125 in number) recognized by Playwright.
 - `browserID`: This specifies the default browser type (`'chromium'`, `'firefox'`, or `'webkit'`) of the job.
-- `lowMotion`: This is true if the browser is to create tabs with the `reduce-motion` option set to `reduce` instead of `no-preference`. This makes the browser act as if the user has chosen a [motion-reduction option in the settings of the operating system or browser](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion#user_preferences). Motions on pages are, however, often immune to this setting.
 - `creationTimeStamp` and `executionTimeStamp`: These properties will have values assigned to them when jobs are created from the script.
 - `sendReportTo`: This is a URL that Testaro is to send its job reports to, or `''` if the jobs will not be network jobs.
 - `target`: This object contains blank `url` and `what` properties, which will be populated each time the script is converted to a job.
@@ -362,7 +374,8 @@ When the `script` module creates a script for you, it does not ask you for all o
 - `isolate`: `true`
 - `standard`: `'only'`
 - `observe`: `false`
-- `deviceID`: `'default'`
+- `device.id`: `'default'`
+- `device.browserTabOptions.reduce-motion`: `'no-preference'`
 - `browserID`: `'webkit'`
 - `lowMotion`: `false`
 - `timeLimit`: 50 plus 30 per tool

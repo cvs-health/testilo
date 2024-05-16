@@ -50,7 +50,7 @@ const mergeIDLength = 2;
 
 // Merges a script and a batch and returns jobs.
 exports.merge = (script, batch, executionTimeStamp) => {
-  // If a time stamp was specified:
+  // If an execution time stamp was specified:
   if (executionTimeStamp) {
     // If it is invalid:
     if (! dateOf(executionTimeStamp)) {
@@ -100,43 +100,38 @@ exports.merge = (script, batch, executionTimeStamp) => {
   }
   // Initialize an array of jobs.
   const jobs = [];
-  // For each target in the batch:
   const {targets} = batch;
   const targetIDs = Object.keys(targets);
+  // For each target in the batch:
   targetIDs.forEach((what, index) => {
-    // If the target has the required identifiers:
     const {actGroups, url} = targets[what];
+    // If the target has the required identifiers:
     if (actGroups && url) {
-      // Initialize a job.
+      // Initialize a job as a copy of the template.
       const job = JSON.parse(JSON.stringify(protoJob));
       const {sources, target} = job;
       // Make the job ID unique.
       const targetSuffix = alphaNumOf(index);
       job.id = `${executionTimeStamp}-${sources.mergeID}-${targetSuffix}`;
-      // If the target is the last one:
-      if (index === targetIDs.length - 1) {
-        // Add that fact to the sources property of the job.
-        sources.lastTarget = true;
-      }
       // Populate the target-specific properties of the job.
       target.what = what;
       target.url = url;
-      // Replace each placeholder object in the job with the named act group of the target.
+      // Replace each placeholder in the job with a copy of the named act group of the target.
       let {acts} = job;
       for (const actIndex in acts) {
         const act = acts[actIndex];
         if (act.type === 'placeholder') {
           const replacerName = act.which;
-          const replacerActs = actGroups[replacerName];
+          const replacerActs = JSON.parse(JSON.stringify(actGroups[replacerName]));
           if (replacerName && actGroups && replacerActs) {
-            // Add properties to any launch act in the replacer.
+            // Add any override properties to any launch act in the replacer.
             for (const replacerAct of replacerActs) {
               if (replacerAct.type === 'launch') {
-                if (act.deviceID) {
-                  replacerAct.deviceID = act.deviceID;
-                }
                 if (act.browserID) {
                   replacerAct.browserID = act.browserID;
+                }
+                if (act.target) {
+                  replacerAct.target = act.target;
                 }
               }
             };
@@ -146,7 +141,7 @@ exports.merge = (script, batch, executionTimeStamp) => {
             console.log(`ERROR: Placeholder for target ${what} not replaceable`);
           }
         }
-      }
+      };
       // Flatten the acts.
       job.acts = acts.flat();
       // Append the job to the array of jobs.

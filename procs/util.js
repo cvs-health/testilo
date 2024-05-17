@@ -34,6 +34,10 @@ const alphaNumChars = (() => {
   const lowers = Array(26).fill('').map((letter, index) => String.fromCodePoint(97 + index));
   return digits.concat(uppers, lowers);
 })();
+// Tools.
+const toolIDs = exports.toolIDs = [
+  'alfa', 'aslint', 'axe', 'ed11y', 'htmlcs', 'ibm', 'nuVal', 'qualWeb', 'testaro', 'wave'
+];
 
 // FUNCTIONS
 
@@ -110,6 +114,4 @@ exports.getBarCell = (num, colMax, svgWidth, isRight = false) => {
   return cell;
 };
 // Returns whether a tool ID is the ID of a Testaro-integrated tool.
-exports.isToolID = toolID => [
-  'alfa', 'aslint', 'axe', 'ed11y', 'htmlcs', 'ibm', 'nuVal', 'qualWeb', 'testaro', 'wave'
-].includes(toolID);
+exports.isToolID = toolID => toolIDs.includes(toolID);

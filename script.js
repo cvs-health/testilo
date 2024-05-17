@@ -30,7 +30,7 @@
 // Devices recognized by Playwright.
 const {devices} = require('playwright');
 // Utility module.
-const {isToolID} = require('./procs/util');
+const {isToolID, toolIDs} = require('./procs/util');
 
 // ########## FUNCTIONS
 
@@ -153,11 +153,10 @@ exports.script = (id, what, deviceID, options = {}) => {
       standard: 'only',
       observe: false,
       device: {
-        id: 'default',
+        id: deviceID,
         windowOptions: {}
       },
       browserID: 'webkit',
-      lowMotion: false,
       timeLimit: Math.round(50 + 30 * Object.keys(toolsRulesData).length),
       creationTimeStamp: '',
       executionTimeStamp: '',

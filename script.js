@@ -27,6 +27,8 @@
 
 // IMPORTS
 
+// Module to handle secrets.
+require('dotenv').config();
 // Devices recognized by Playwright.
 const {devices} = require('playwright');
 // Utility module.

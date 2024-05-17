@@ -323,8 +323,17 @@ exports.scorer = report => {
       summary.tool = toolWeight * details.severity.total.reduce(
         (total, current, index) => total + severityWeights[index] * current, 0
       );
-      // Add the summary element total to the score.
-      summary.element = elementWeight * pathIDs.size;
+      // Get the minimum count of violating elements.
+      const sortedRuleIDs = standardResult.instances.map(instance => instance.ruleID).sort();
+      const instanceCounts = Array
+      .from(new Set(sortedRuleIDs))
+      .map(ruleID => sortedRuleIDs.filter(sortedRuleID => sortedRuleID === ruleID).length);
+      /*
+        Add the summary element total to the score, based on the count of identified violating
+        elements or the largest count of instances of violations of any rule, whichever is
+        greater.
+      */
+      summary.element = elementWeight * Math.max(pathIDs.size, ... instanceCounts);
       // Add the summary prevention total to the score.
       summary.prevention = Object.values(details.prevention).reduce(
         (total, current) => total + current, 0

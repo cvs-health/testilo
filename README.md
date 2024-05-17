@@ -201,7 +201,7 @@ Here is a script:
   observe: false,
   device: {
     id: 'iPhone 8',
-    browserTabOptions: {
+    windowOptions: {
       reduceMotion: 'no-preference',
       userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/17.4 Mobile/15A372 Safari/604.1',
       viewport: {
@@ -262,7 +262,7 @@ A script has several properties that specify facts about the jobs to be created.
 - `standard`: When Testaro performs a job, every tool produces its own report. Testaro can convert the test results of each tool report to standard results. The `standard` property specifies how to handle standardization. If `also`, Testaro will include in its reports both the original results of the tests of tools and the Testaro-standardized results. If `only`, reports will include only the standardized test results. If `no`, reports will include only the original results, without standardization.
 - `observe`: Testaro jobs can allow granular observation. If `true`, the job will do so. If `false`, Testaro will not report job progress, but will send a report to the server only when the report is completed. It is generally user-friendly to allow granular observation, and for user applications to implement it, if they make users wait while jobs are assigned and performed, since that process typically takes a few minutes.
 - `timeLimit`: This specifies the maximum duration, in seconds, of a job. Testaro will abort jobs that are not completed within that time.
-- `device`: This specifies the ID of a device and properties that each new browser tab (technically called a browser _context_) will have that correspond to that device. The permitted devices are those (about 125 in number) [recognized by Playwright](https://github.com/microsoft/playwright/blob/main/packages/playwright-core/src/server/deviceDescriptorsSource.json), as well as `'default'`.
+- `device`: This specifies the ID of a device and properties that each new browser context (window) will have that correspond to that device. The permitted devices are those (about 125 in number) [recognized by Playwright](https://github.com/microsoft/playwright/blob/main/packages/playwright-core/src/server/deviceDescriptorsSource.json), as well as `'default'`.
 - `browserID`: This specifies the default browser type (`'chromium'`, `'firefox'`, or `'webkit'`) of the job.
 - `creationTimeStamp` and `executionTimeStamp`: These properties will have values assigned to them when jobs are created from the script.
 - `sendReportTo`: This is a URL that Testaro is to send its job reports to, or `''` if the jobs will not be network jobs.
@@ -375,7 +375,7 @@ When the `script` module creates a script for you, it does not ask you for all o
 - `isolate`: `true`
 - `standard`: `'only'`
 - `observe`: `false`
-- `device.browserTabOptions.reduce-motion`: `'no-preference'`
+- `device.windowOptions.reduce-motion`: `'no-preference'`
 - `browserID`: `'webkit'`
 - `lowMotion`: `false`
 - `timeLimit`: 50 plus 30 per tool
@@ -388,7 +388,7 @@ When the `script` module creates a script for you, it does not ask you for all o
 - `testaro` test act: `withItems` = true, `stopOnFail` = `false`
 - `wave` test act: `reportType` = 4
 
-The `device.browserTabOptions` object has, in addition to `reduceMotion`, other properties shown in the above script example. The `script` module will set them according to the specified device. They will all be omitted if you specify `'default'` as the device ID.
+The `device.windowOptions` object has, in addition to `reduceMotion`, other properties shown in the above script example. The `script` module will set them according to the specified device. They will all be omitted if you specify `'default'` as the device ID.
 
 The `webkit` browser type is selected because the other browser types corrupt some tests. The `ibm` test is performed on the existing page content because some targets cause HTTP2 protocol errors when the `ibm` tool tries to visit them.
 

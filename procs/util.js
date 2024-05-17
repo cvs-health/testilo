@@ -25,11 +25,6 @@
   Utility functions.
 */
 
-// IMPORTS
-
-// Devices recognized by Playwright.
-const {devices} = require('playwright');
-
 // CONSTANTS
 
 // Array of 62 alphanumeric characters.
@@ -114,8 +109,7 @@ exports.getBarCell = (num, colMax, svgWidth, isRight = false) => {
   const cell = `<td aria-hidden="true"${rightClass}>${svg}</td>`;
   return cell;
 };
-// Returns whether a device ID is recognized by Playwright.
-exports.isValidDeviceID = deviceID => {
-  const deviceIDs = Object.keys(devices);
-  return deviceIDs.concat('default').includes(deviceID);
-};
+// Returns whether a tool ID is the ID of a Testaro-integrated tool.
+exports.isToolID = toolID => [
+  'alfa', 'aslint', 'axe', 'ed11y', 'htmlcs', 'ibm', 'nuVal', 'qualWeb', 'testaro', 'wave'
+].includes(toolID);

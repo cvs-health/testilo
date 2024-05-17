@@ -39,13 +39,13 @@
 // Module to keep secrets.
 require('dotenv').config();
 // Module to perform common operations.
-const {getFileID, getNowStamp, getRandomString} = require('./procs/util');
+const {getFileID, getNowStamp, getRandomString, isToolID} = require('./procs/util');
 // Function to process files.
 const fs = require('fs/promises');
 // Function to process a list-to-batch conversion.
 const {batch} = require('./batch');
 // Function to create a script from rule specifications.
-const {script, toolIDs} = require('./script');
+const {script} = require('./script');
 // Function to process a merger.
 const {merge} = require('./merge');
 // Function to score reports.
@@ -138,7 +138,7 @@ const callScript = async (scriptID, what, optionType, ... optionDetails) => {
     if (optionType === 'tools') {
       if (
         optionDetails.length === new Set(optionDetails).size
-        && optionDetails.every(toolID => toolIDs.includes(toolID))
+        && optionDetails.every(toolID => isToolID(toolID))
       ) {
         optionArg.type = 'tools';
         optionArg.specs = optionDetails;

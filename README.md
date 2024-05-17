@@ -262,7 +262,7 @@ A script has several properties that specify facts about the jobs to be created.
 - `standard`: When Testaro performs a job, every tool produces its own report. Testaro can convert the test results of each tool report to standard results. The `standard` property specifies how to handle standardization. If `also`, Testaro will include in its reports both the original results of the tests of tools and the Testaro-standardized results. If `only`, reports will include only the standardized test results. If `no`, reports will include only the original results, without standardization.
 - `observe`: Testaro jobs can allow granular observation. If `true`, the job will do so. If `false`, Testaro will not report job progress, but will send a report to the server only when the report is completed. It is generally user-friendly to allow granular observation, and for user applications to implement it, if they make users wait while jobs are assigned and performed, since that process typically takes a few minutes.
 - `timeLimit`: This specifies the maximum duration, in seconds, of a job. Testaro will abort jobs that are not completed within that time.
-- `device`: This specifies the ID of a device and properties that each new browser tab (technically called a browser _context_) will have that correspond to that device. The permitted devices are those (about 125 in number) recognized by Playwright.
+- `device`: This specifies the ID of a device and properties that each new browser tab (technically called a browser _context_) will have that correspond to that device. The permitted devices are those (about 125 in number) [recognized by Playwright](https://github.com/microsoft/playwright/blob/main/packages/playwright-core/src/server/deviceDescriptorsSource.json), as well as `'default'`.
 - `browserID`: This specifies the default browser type (`'chromium'`, `'firefox'`, or `'webkit'`) of the job.
 - `creationTimeStamp` and `executionTimeStamp`: These properties will have values assigned to them when jobs are created from the script.
 - `sendReportTo`: This is a URL that Testaro is to send its job reports to, or `''` if the jobs will not be network jobs.
@@ -281,9 +281,10 @@ You can use the `script()` function of the `script` module to simplify the creat
 
 #### Without options
 
-In its simplest form, `script()` requires two string arguments:
-- An ID for the script
-- A description of the script
+In its simplest form, `script()` requires 3 string arguments:
+1. An ID for the script
+1. A description of the script
+1. A device ID
 
 Called in this way, `script()` produces a script that tells Testaro to perform the tests for all of the evaluation rules defined by all of the tools integrated by Testaro.
 
@@ -332,16 +333,16 @@ A module can invoke `script()` in one of these ways:
 
 ```javaScript
 const {script} = require('testilo/script');
-const scriptObj = script('monthly', 'landmarks');
+const scriptObj = script('monthly', 'landmarks', 'default');
 ```
 
 ```javaScript
 const {script} = require('testilo/script');
 const options = {…};
-const scriptObj = script('monthly', 'landmarks', options);
+const scriptObj = script('monthly', 'landmarks', 'default', options);
 ```
 
-In this example, the script will have `'monthly'` as its ID and `'landmarks'` as its description. It will tell Testaro to test for all evaluation rules if the first form is used, or for all rules specified by the options argument if the second form is used.
+In this example, the script will have `'monthly'` as its ID, `'landmarks'` as its description, and `'default'` as its device. It will tell Testaro to test for all evaluation rules if the first form is used, or for all rules specified by the options argument if the second form is used.
 
 The invoking module can further modify and use the script (`scriptObj`) as needed.
 
@@ -350,9 +351,9 @@ The invoking module can further modify and use the script (`scriptObj`) as neede
 A user can invoke `script()` by executing one of these statements in the Testilo project directory:
 
 ```javascript
-node call script id what
-node call script id what tools toolID0 toolID1 toolID2 …
-node call script id what issues tic99 issueID0 issueID1 …
+node call script id what deviceID
+node call script id what deviceID tools toolID0 toolID1 toolID2 …
+node call script id what deviceID issues tic99 issueID0 issueID1 …
 ```
 
 The first form will create a script with no restrictions.
@@ -361,7 +362,7 @@ The second form will create a script that prescribes tests for all the rules of 
 
 The third form will create a script that prescribes tests for all the rules classified by the named issue-classification file into any of the specified issues.
 
-In this statement, replace `id` with an ID for the script, such as `headings1`, consisting of ASCII alphanumeric characters, or with `''` if you want Testilo to create an ID. Replace `what` with a string describing the script, or with `''` if you want Testilo to create a generic description.
+In this statement, replace `id` with an ID for the script, such as `headings1`, consisting of ASCII alphanumeric characters, or with `''` if you want Testilo to create an ID. Replace `what` with a string describing the script, or with `''` if you want Testilo to create a generic description. Replace `device` with a valid device ID.
 
 The `call` module will retrieve the named classification, if any.
 The `script` module will create a script.
@@ -374,7 +375,6 @@ When the `script` module creates a script for you, it does not ask you for all o
 - `isolate`: `true`
 - `standard`: `'only'`
 - `observe`: `false`
-- `device.id`: `'default'`
 - `device.browserTabOptions.reduce-motion`: `'no-preference'`
 - `browserID`: `'webkit'`
 - `lowMotion`: `false`
@@ -387,6 +387,8 @@ When the `script` module creates a script for you, it does not ask you for all o
 - `qualWeb` test act: `withNewContent` = `false`
 - `testaro` test act: `withItems` = true, `stopOnFail` = `false`
 - `wave` test act: `reportType` = 4
+
+The `device.browserTabOptions` object has, in addition to `reduceMotion`, other properties shown in the above script example. The `script` module will set them according to the specified device. They will all be omitted if you specify `'default'` as the device ID.
 
 The `webkit` browser type is selected because the other browser types corrupt some tests. The `ibm` test is performed on the existing page content because some targets cause HTTP2 protocol errors when the `ibm` tool tries to visit them.
 

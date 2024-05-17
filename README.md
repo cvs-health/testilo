@@ -202,7 +202,7 @@ Here is a script:
   device: {
     id: 'iPhone 8',
     windowOptions: {
-      reduceMotion: 'no-preference',
+      reducedMotion: 'no-preference',
       userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/17.4 Mobile/15A372 Safari/604.1',
       viewport: {
         width: 375,
@@ -388,7 +388,7 @@ When the `script` module creates a script for you, it does not ask you for all o
 - `testaro` test act: `withItems` = true, `stopOnFail` = `false`
 - `wave` test act: `reportType` = 4
 
-The `device.windowOptions` object has, in addition to `reduceMotion`, other properties shown in the above script example. The `script` module will set them according to the specified device. They will all be omitted if you specify `'default'` as the device ID.
+The `device.windowOptions` object has, in addition to `reducedMotion`, other properties shown in the above script example. The `script` module will set them according to the specified device. If you specify `'default'` as the device ID, the only property will be `reducedMotion`.
 
 The `webkit` browser type is selected because the other browser types corrupt some tests. The `ibm` test is performed on the existing page content because some targets cause HTTP2 protocol errors when the `ibm` tool tries to visit them.
 

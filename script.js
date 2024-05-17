@@ -39,16 +39,16 @@ const {isToolID, toolIDs} = require('./procs/util');
 // Returns whether a device ID is recognized by Playwright.
 const isDeviceID = deviceID => deviceID === 'default' || !! devices[deviceID];
 // Returns options for a new browser context (window).
-const getWindowOptions = (deviceID, motion) => {
-  // If the arguments are valid:
-  if (isDeviceID(deviceID) && ['no-preference', 'reduced-motion'].includes(motion)) {
-    // Set the reduceMotion option.
+const getWindowOptions = deviceID => {
+  // If the argument is valid:
+  if (isDeviceID(deviceID)) {
+    // Set the reducedMotion option.
     const options = {
-      reduceMotion: motion
+      reducedMotion: 'no-preference'
     };
     // If the default device was specified:
     if (deviceID === 'default') {
-      // Return the reduce-motion option.
+      // Return the set option.
       return options;
     }
     // Otherwise, i.e. if a non-default device was specified:
@@ -181,7 +181,7 @@ exports.script = (id, what, deviceID, options = {}) => {
       ]
     };
     // Add the window options to the script.
-    scriptObj.device.windowOptions = getWindowOptions(deviceID, 'no-preference');
+    scriptObj.device.windowOptions = getWindowOptions(deviceID);
     // For each tool used:
     Object.keys(toolsRulesData).forEach(toolID => {
       // Initialize a test act for it.

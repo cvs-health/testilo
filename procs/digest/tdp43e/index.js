@@ -57,7 +57,9 @@ const getIssueScoreRow = (issueConstants, issueDetails) => {
 };
 // Adds parameters to a query for a digest.
 const populateQuery = (report, query) => {
-  const {browserID, deviceID, id, isolate, lowMotion, score, sources, standard, strict, target} = report;
+  const {
+    browserID, device, id, isolate, lowMotion, score, sources, standard, strict, target
+  } = report;
   const {agent, requester, script} = sources;
   const {scoreProcID, summary, details} = score;
   query.ts = script;
@@ -74,7 +76,7 @@ const populateQuery = (report, query) => {
   = ['original', 'standard', 'original and standard'][['no', 'only', 'also'].indexOf(standard)];
   query.motion = lowMotion ? 'requested' : 'not requested';
   query.requester = requester;
-  query.device = deviceID;
+  query.device = device.id;
   query.browser = browserID;
   query.agent = agent ? ` on agent ${agent}` : '';
   query.reportURL = process.env.SCORED_REPORT_URL.replace('__id__', id);

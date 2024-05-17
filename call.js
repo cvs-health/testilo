@@ -126,7 +126,7 @@ const callBatch = async (id, what) => {
   }
 };
 // Fulfills a script-creation request.
-const callScript = async (scriptID, what, optionType, ... optionDetails) => {
+const callScript = async (scriptID, what, deviceID, optionType, ... optionDetails) => {
   // Sanitize the script ID.
   scriptID = scriptID.replace(/[^a-zA-Z0-9]/g, '');
   if (scriptID === '') {

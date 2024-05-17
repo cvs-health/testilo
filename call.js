@@ -188,15 +188,20 @@ const callScript = async (scriptID, what, deviceID, optionType, ... optionDetail
   }
   // Create a script with specified device ID and default browser ID.
   const scriptObj = script(scriptID, what, deviceID, optionArg);
-  try {
-    // Save it.
-    const scriptJSON = JSON.stringify(scriptObj, null, 2);
-    const scriptPath = `${specDir}/scripts/${scriptID}.json`;
-    await fs.writeFile(scriptPath, `${scriptJSON}\n`);
-    console.log(`Script created and saved as ${scriptPath}`);
+  if (scriptObj) {
+    try {
+      // Save it.
+      const scriptJSON = JSON.stringify(scriptObj, null, 2);
+      const scriptPath = `${specDir}/scripts/${scriptID}.json`;
+      await fs.writeFile(scriptPath, `${scriptJSON}\n`);
+      console.log(`Script created and saved as ${scriptPath}`);
+    }
+    catch(error) {
+      console.log(`ERROR saving script (${error.message})`);
+    }
   }
-  catch(error) {
-    console.log(`ERROR saving script (${error.message})`);
+  else {
+    console.log('ERROR: Script creation failed');
   }
 };
 // Fulfills a merging request.

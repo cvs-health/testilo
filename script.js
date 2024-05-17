@@ -126,7 +126,7 @@ exports.script = (id, what, deviceID, options = {}) => {
           else {
             // Report this and quit.
             console.log(`ERROR: Issue ${issueID} not in issue classification`);
-            return {};
+            return null;
           }
         });
       }
@@ -134,7 +134,7 @@ exports.script = (id, what, deviceID, options = {}) => {
       else {
         // Report this and quit.
         console.log(`ERROR: Options invalid`);
-        return {};
+        return null;
       }
     }
     // Otherwise, i.e. if options are not specified:
@@ -245,6 +245,6 @@ exports.script = (id, what, deviceID, options = {}) => {
   else {
     // Report this and quit.
     console.log(`ERROR: Arguments invalid`);
-    return {};
+    return null;
   }
 }

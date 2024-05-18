@@ -37,7 +37,7 @@ const {isToolID, toolIDs} = require('./procs/util');
 // ########## FUNCTIONS
 
 // Returns whether a device ID is recognized by Playwright.
-const isDeviceID = deviceID => deviceID === 'default' || !! devices[deviceID];
+const isDeviceID = exports.isDeviceID = deviceID => deviceID === 'default' || !! devices[deviceID];
 // Returns options for a new browser context (window).
 const getWindowOptions = deviceID => {
   // If the argument is valid:

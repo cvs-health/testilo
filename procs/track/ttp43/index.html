@@ -42,10 +42,10 @@
           targetIDs[targetData[1]] = targetData[0];
         });
         summaryReport.summaries.forEach(result => {
-          const {what} = result.sources.target;
+          const {targetWhat} = result;
           graphData.push({
-            targetID: targetIDs[what],
-            targetWhat: what,
+            targetID: targetIDs[targetWhat],
+            targetWhat,
             time: new Date(`20${result.endTime}Z`),
             score: result.score
           });

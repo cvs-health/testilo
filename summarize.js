@@ -34,9 +34,12 @@ require('dotenv').config();
 
 // Returns a report summary.
 exports.summarize = report => {
-  const {id, jobData, score, sources} = report;
+  const {id, jobData, score, sources, target} = report;
+  const foundTarget = target || sources.target;
   const summary = {
     id: id || null,
+    url: foundTarget && (foundTarget.url || foundTarget.which) || null,
+    targetWhat: foundTarget.what || null,
     endTime: jobData && jobData.endTime || null,
     sources: sources || null,
     score: score && score.summary && score.summary.total || null

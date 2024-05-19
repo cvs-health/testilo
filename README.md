@@ -786,7 +786,7 @@ To test the `digest` module, in the project directory you can execute the statem
 
 ### Summarization
 
-The `summarize` module of Testilo can summarize a scored report. The summary is an object that contains these properties from the report: `id`, `endTime`, `sources`, and `score` (the value of the `score.total` property of the report).
+The `summarize` module of Testilo can summarize a scored report. The summary is an object that contains these properties from the report: `id`, `endTime`, `targetWhat` (description of the target), `url` (of the target), `sources`, and `score` (only the value of the `score.total` property of the report).
 
 #### Invocation
 
@@ -818,10 +818,6 @@ When a user invokes `summarize` in this example, the `call` module:
 - combines the summaries into an array.
 - creates a _summary report_, an object containing three properties: `id` (an ID), `what` (a description, such as `'divisions'`), and `summaries` (the array of summaries).
 - writes the summary report in JSON format to the `summarized` subdirectory of the `REPORTDIR` directory, using the ID as the base of the file name.
-
-#### Summary reports
-
-A summary report serves as a necessary input to the `compare` and `track` modules described below. When a user invokes the `compare` module, a summary report is produced. A module can create a summary report by invoking `compare` multiple times on different scored reports, assembling the resulting summaries into an array, and creating an object like the one the `call` module creates for a user.
 
 ### Comparison
 
@@ -864,7 +860,7 @@ node call compare 'state legislators' tcp99 240813
 
 When a user invokes `compare` in this example, the `call` module:
 - gets the comparison module from subdirectory `tcp99` of the subdirectory `compare` in the `FUNCTIONDIR` directory.
-- gets the first summary report whose file name begins with `'240813'` from the `summarized` subdirectory of the `REPORTDIR` directory.
+- gets the last summary report whose file name begins with `'240813'` from the `summarized` subdirectory of the `REPORTDIR` directory.
 - creates an ID for the comparison.
 - creates the comparison as an HTML document.
 - writes the comparison in the `comparative` subdirectory of the `REPORTDIR` directory, with `state legislators` as a description and the ID as the base of the file name.

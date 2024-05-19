@@ -53,8 +53,6 @@ const populateQuery = async (id, what, summaryReport, query) => {
   // JSON of summary report.
   const {summaries} = summaryReport;
   query.summaryReportJSON = JSON.stringify(summaryReport);
-  // Legend.
-
   // Get an array of target descriptions and assign to each an ID.
   const rows = [];
   const targets = Array

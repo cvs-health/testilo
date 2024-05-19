@@ -788,7 +788,11 @@ To test the `digest` module, in the project directory you can execute the statem
 
 The `summarize` module of Testilo can summarize a scored report. The summary is an object that contains these properties from the report: `id`, `endTime`, `targetWhat` (description of the target), `url` (of the target), `sources`, and `score` (only the value of the `score.total` property of the report).
 
+Report summaries make some operations more efficient by allowing other modules to get needed data from summaries instead of from reports. The size of a summary tends to be about 0.01% of the size of a report.
+
 #### Invocation
+
+The `summarize` module summarizes one report when invoked by a module, but the `call` module invoked by a user can call `summarize` multiple times to summarize multiple reports and combine those summaries into a file.
 
 ##### By a module
 
@@ -829,7 +833,7 @@ The `compare` module compares the scores in a summary report. The `compare()` fu
 
 The comparison function defines the rules for generating an HTML file comparing the scored reports. The Testilo package contains a `procs/compare` directory, in which there are subdirectories containing modules that export comparison functions. You can use one of those functions, or you can create your own.
 
-Summary reports suitable for comparisons are those that contain one result per target. If a summary report contains results from multiple times per target, tracking (described below) is appropriate, rather than comparison.
+The built-in comparison functions compare all of the scores in the summary report. Thus, if the summary report contains multiple scores for the same target, based on tests performed at various times, those scores will all appear in the comparison, labeled identically with the `what` description of the target. If you want only one score per target to appear, you can create a new summary report that includes only one summary per target in its `summaries` array.
 
 #### Invocation
 

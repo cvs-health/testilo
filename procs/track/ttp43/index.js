@@ -20,7 +20,7 @@
   SOFTWARE.
 */
 
-// index: tracker for tracking procedure ttp40.
+// index: tracker for tracking procedure ttp43.
 
 // IMPORTS
 
@@ -34,7 +34,7 @@ const {alphaNumOf, getNowDate, getNowDateSlash} = require('../../util');
 // CONSTANTS
 
 // Tracker ID.
-const trackerID = 'ttp40';
+const trackerID = 'ttp43';
 // Newline with indentations.
 const innerJoiner = '\n          ';
 // Digest URL.
@@ -68,15 +68,15 @@ const populateQuery = async (id, what, summaryReport, query) => {
   query.legendItems = legendItems.join('\n        ');
   // For each result:
   summaries.forEach(result => {
-    const {id, score, target} = result;
+    const {endTime, id, score, targetWhat, url} = result;
     // Create a date-time cell.
-    const timeCell = `<td>${result.endTime}</td>`;
+    const timeCell = `<td>${endTime}</td>`;
     // Create a score cell.
-    const digestLinkDestination = digestURL.replace('__id__', result.id);
-    const scoreCell = `<td><a href=${digestLinkDestination}>${result.score}</a></td>`;
+    const digestLinkDestination = digestURL.replace('__id__', id);
+    const scoreCell = `<td><a href=${digestLinkDestination}>${score}</a></td>`;
     // Create a target cell.
-    const targetLink = `<a href="${target.url}">${target.what}</a>`;
-    const targetCell = `<td>${targetIDs[target.what]}: ${targetLink}</td>`;
+    const targetLink = `<a href="${url}">${targetWhat}</a>`;
+    const targetCell = `<td>${targetIDs[targetWhat]}: ${targetLink}</td>`;
     const row = `<tr>${[timeCell, scoreCell, targetCell].join('')}</tr>`;
     // Add the row to the array of rows.
     rows.push(row);

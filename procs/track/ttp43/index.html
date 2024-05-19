@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Testilo">
+    <meta name="creator" content="Testilo">
+    <meta name="publisher" name="Testilo">
+    <meta name="description" content="report of accessibility testing of web pages">
+    <meta name="keywords" content="accessibility a11y web testing">
+    <title>Accessibility tracking report</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Accessibility tracking report</h1>
+      </header>
+      <h2>Introduction</h2>
+      <p>This is tracking report <code>__id__</code>, for __what__.</p>
+      <p>It tracks accessibility scores over time. A perfect score is 0. The tracking was performed by Testilo procedure <code>__tp__</code>.</p>
+      <p>The results are presented first as a graph, and then as a table.</p>
+      <h2>Results as a graph</h2>
+      <h3>Legend</h3>
+      <ul id="legendItems">
+        __legendItems__
+      </ul>
+      <h3>Line graph</h3>
+      <figure id="graph">
+        <figcaption>Accessibility scores</figcaption>
+      </figure>
+      <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6"></script>
+      <script type="module" defer>
+        const summaryReportJSON = '__summaryReportJSON__';
+        const summaryReport = JSON.parse(summaryReportJSON);
+        const graphData = [];
+        const targetIDs = {};
+        Array.from(document.getElementById('legendItems').children).forEach(li => {
+          const targetData = li.textContent.split(': ');
+          targetIDs[targetData[1]] = targetData[0];
+        });
+        summaryReport.summaries.forEach(result => {
+          const {what} = result.sources.target;
+          graphData.push({
+            targetID: targetIDs[what],
+            targetWhat: what,
+            time: new Date(`20${result.endTime}Z`),
+            score: result.score
+          });
+        });
+        const svg = Plot.plot({
+          style: 'overflow: visible;',
+          height: 600,
+          y: {grid: true},
+          marks: [
+            Plot.ruleY([0]),
+            Plot.lineY(graphData, {
+              x: 'time',
+              y: 'score',
+              stroke: 'targetID'
+            }),
+            Plot.dot(graphData, {
+              x: 'time',
+              y: 'score',
+              z: 'targetID',
+              r: 9
+            }),
+            Plot.text(graphData, {
+              x: 'time',
+              y: 'score',
+              z: 'targetID',
+              text: 'targetID',
+              textAnchor: 'middle'
+            }),
+            Plot.text(graphData, Plot.selectFirst({
+              x: 'time',
+              y: 'score',
+              z: 'targetID',
+              text: 'targetWhat',
+              textAnchor: 'start',
+              dx: 15
+            })),
+            Plot.text(graphData, Plot.selectLast({
+              x: 'time',
+              y: 'score',
+              z: 'targetID',
+              text: 'targetWhat',
+              textAnchor: 'start',
+              dx: 15
+            }))
+          ]
+        });
+        document.getElementById('graph').insertAdjacentElement('beforeend', svg);
+      </script>
+      <h2>Results as a table</h2>
+      <table class="allBorder secondCellRight">
+        <caption>Accessibility scores</caption>
+        <thead>
+          <tr>
+            <th>Date and time</th>
+            <th>Score</th>
+            <th>Target</th>
+          </tr>
+        </thead>
+        <tbody>
+          __scoreRows__
+        </tbody>
+      </table>
+      <footer>
+        <p class="date">Produced <time itemprop="datePublished" datetime="__dateISO__">__dateSlash__</time></p>
+      </footer>
+    </main>
+  </body>
+</html>

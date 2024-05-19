@@ -27,7 +27,7 @@
 // Module to keep secrets.
 require('dotenv').config();
 // Module to classify tool rules into issues
-const {issues} = require('../../score/tic40');
+const {issues} = require('../../score/tic43');
 // Module to process files.
 const fs = require('fs/promises');
 // Utility module.
@@ -75,11 +75,14 @@ const populateQuery = (reportA, reportB, query) => {
   [reportA, reportB].forEach((report, index) => {
     // Add report-specific synopsis parameters to the query.
     const suffix = ['A', 'B'][index];
-    const {id, jobData, score, target} = report;
+    const {id, jobData, score, sources} = report;
+    const target = report.target || sources.target;
     const {summary, details} = score;
     query[`org${suffix}`] = target.what;
-    query[`url${suffix}`] = target.which;
-    query[`dateTime${suffix}`] = jobData.endTime.replace(/-/g, '/').replace('T', ', ');
+    query[`url${suffix}`] = target.url || target.which;
+    query[`dateTime${suffix}`] = jobData.endTime
+    && jobData.endTime.replace(/-/g, '/').replace('T', ', ')
+    || '';
     query[`total${suffix}`] = summary.total;
     query[`digest${suffix}URL`] = process.env.DIGEST_URL.replace('__id__', id);
     // Get the union of the issues in the reports.

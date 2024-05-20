@@ -1146,6 +1146,13 @@ exports.issues = {
           what: 'Language specified in the lang attribute of the element does not appear to be well-formed'
         }
       },
+      ibm: {
+        element_lang_valid: {
+          variable: false,
+          quality: 1,
+          what: 'Element lang attribute does not include a valid primary language'
+        }
+      },
       nuVal: {
         'When the attribute xml:lang in no namespace is specified, the element must also have the attribute lang present with the same value.': {
           variable: false,
@@ -1238,6 +1245,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'object element contains no text alternative'
+        }
+      },
+      ibm: {
+        object_text_exists: {
+          variable: false,
+          quality: 1,
+          what: 'object element has no text alternative'
         }
       },
       qualWeb: {

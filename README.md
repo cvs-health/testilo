@@ -383,7 +383,7 @@ When the `script` module creates a script for you, it does not ask you for all o
 - `sources.id`: script ID
 - `sources.requester`: `process.env.REQUESTER`, or `''` if none
 - `axe` test act: `detailLevel` = 2
-- `ibm` test act: `withItems` = `true`, `withNewContent` = `false`
+- `ibm` test act: `withItems` = `true`, `withNewContent` = `true`
 - `qualWeb` test act: `withNewContent` = `false`
 - `testaro` test act: `withItems` = true, `stopOnFail` = `false`
 - `wave` test act: `reportType` = 4

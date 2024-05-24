@@ -224,7 +224,7 @@ exports.script = (id, what, deviceID, options = {}) => {
       }
       else if (toolID === 'ibm') {
         toolAct.withItems = true;
-        toolAct.withNewContent = false;
+        toolAct.withNewContent = true;
       }
       else if (toolID === 'qualWeb') {
         toolAct.withNewContent = false;

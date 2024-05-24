@@ -324,7 +324,7 @@ exports.scorer = report => {
         (total, current, index) => total + severityWeights[index] * current, 0
       );
       // Get the minimum count of violating elements.
-      const actRuleIDs = testActs.map(
+      const actRuleIDs = testActs.filter(act => act.standardResult).map(
         act => act.standardResult.instances.map(instance => `${act.which}:${instance.ruleID}`)
       );
       const allRuleIDs = actRuleIDs.flat();

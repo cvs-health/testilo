@@ -8697,7 +8697,7 @@ exports.issues = {
     }
   },
   encodingMisdeclared: {
-    summary: 'text not Unicode-compliant',
+    summary: 'text encoding wrongly declared',
     why: 'User cannot read all of the text',
     wcag: '3.1.3',
     weight: 4,

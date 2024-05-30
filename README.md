@@ -19,6 +19,8 @@ Because Testilo supports Testaro, this `README` file presumes that you have acce
 
 ## Dependencies
 
+Testilo depends on Plot for the creation of line graphs by trackers used by the `track` module. Plot is inserted as a script from the Plot content delivery network.
+
 The `dotenv` dependency lets you set environment variables in an untracked `.env` file. This prevents secret data, such as passwords, from being shared as part of this package.
 
 When Testilo is a dependency of another application, the `.env` file is not imported, because it is not tracked, so all needed environment variables must be provided by the importing application.

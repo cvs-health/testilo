@@ -11,7 +11,40 @@
     <title>Accessibility digest</title>
     <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <script id="script" type="module">
+      const sortButton = document.getElementById('sortButton');
+      const sortBasisSpan = document.getElementById('sortBasis');
+      const sumBody = document.getElementById('sumBody');
+      const rows = Array.from(sumBody.children);
+      const sortRowsBy = basis => {
+        if (basis === 'wcag') {
+          rows.sort((a, b) => {
+            const sorters = [a, b].map(row => {
+              const wcagParts = row.children[1].textContent.split('.');
+              const wcagNums = wcagParts.map(part => Number.parseInt(part, 10));
+              return 100 * (wcagNums[0] || 0) + 20 * (wcagNums[1] || 0) + (wcagNums[2] || 0);
+            });
+            return sorters[0] - sorters[1];
+          });
+        }
+        else if (basis === 'score') {
+          rows.sort((a, b) => {
+            const sorters = [a, b].map(row => Number.parseInt(row.children[2].textContent));
+            return sorters[1] - sorters[0];
+          });
+        }
+        sumBody.textContent = '';
+        rows.forEach(row => {
+          sumBody.appendChild(row);
+        });
+        sortBasisSpan.textContent = basis === 'score' ? 'score' : 'WCAG';
+      };
+      sortButton.addEventListener('click', event => {
+        // Determine the current sorting basis.
+        const oldBasis = sortBasisSpan.textContent;
+        sortRowsBy(oldBasis === 'score' ? 'wcag' : 'score');
+      });
+    </script>
   </head>
   <body>
     <main>
@@ -57,7 +90,7 @@
       <p>This table shows the numbers of rule violations (<q>instances</q>) reported by one or more tools, classified by issue. When an instance count is 0, that means the tool has a rule belonging to the issue but reported no violations of that rule.</p>
       <p>Tools often disagree on instance counts. Disagreements may be due to non-equivalent rules or invalid tests. You can inspect the <a href="__reportURL__">full report</a> to diagnose differences.</p>
       <h3>Table sorting</h3>
-      <p>You can sort this table by WCAG or score. It is now sorted by <span id="sortBasis">score</span>.</p>
+      <p>You can sort this table by WCAG or score. It is now sorted by <span id="sortBasis" role="status">score</span>.</p>
       <p><button id="sortButton" type="button">Change sorting</button></p>
       <table class="allBorder thirdCellRight">
         <caption>How many violations each tool reported, by issue</caption>

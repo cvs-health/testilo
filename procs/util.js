@@ -36,7 +36,7 @@ const alphaNumChars = (() => {
 })();
 // Tools.
 const toolIDs = exports.toolIDs = [
-  'alfa', 'aslint', 'axe', 'ed11y', 'htmlcs', 'ibm', 'nuVal', 'qualWeb', 'testaro', 'wave'
+  'alfa', 'aslint', 'axe', 'ed11y', 'htmlcs', 'ibm', 'nuVal', 'qualWeb', 'testaro', 'wax', 'wave'
 ];
 
 // FUNCTIONS

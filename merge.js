@@ -44,7 +44,7 @@ const contaminantNames = new Set([
   'testaro'
 ]);
 // Length of the random merger ID.
-const mergeIDLength = 2;
+const mergeIDLength = 3;
 
 // ########## FUNCTIONS
 
@@ -102,6 +102,8 @@ exports.merge = (script, batch, executionTimeStamp) => {
   const jobs = [];
   const {targets} = batch;
   const targetIDs = Object.keys(targets);
+  const targetCount = targetIDs.length;
+  const targetSuffixWidth = Math.ceil(Math.pow(targetCount, 1 / 36));
   // For each target in the batch:
   targetIDs.forEach((what, index) => {
     const {actGroups, url} = targets[what];
@@ -111,7 +113,7 @@ exports.merge = (script, batch, executionTimeStamp) => {
       const job = JSON.parse(JSON.stringify(protoJob));
       const {sources, target} = job;
       // Make the job ID unique.
-      const targetSuffix = alphaNumOf(index);
+      const targetSuffix = alphaNumOf(index).padStart(targetSuffixWidth, '0');
       job.id = `${executionTimeStamp}-${sources.mergeID}-${targetSuffix}`;
       // Populate the target-specific properties of the job.
       target.what = what;

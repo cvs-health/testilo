@@ -27,16 +27,15 @@
 
 // CONSTANTS
 
-// Array of 62 alphanumeric characters.
+// Array of 36 alphanumeric characters.
 const alphaNumChars = (() => {
   const digits = Array(10).fill('').map((digit, index) => index.toString());
-  const uppers = Array(26).fill('').map((letter, index) => String.fromCodePoint(65 + index));
   const lowers = Array(26).fill('').map((letter, index) => String.fromCodePoint(97 + index));
-  return digits.concat(uppers, lowers);
+  return digits.concat(lowers);
 })();
 // Tools.
 const toolIDs = exports.toolIDs = [
-  'alfa', 'aslint', 'axe', 'ed11y', 'htmlcs', 'ibm', 'nuVal', 'qualWeb', 'testaro', 'wax', 'wave'
+  'alfa', 'aslint', 'axe', 'ed11y', 'htmlcs', 'ibm', 'nuVal', 'qualWeb', 'testaro', 'wave', 'wax'
 ];
 
 // FUNCTIONS
@@ -75,13 +74,13 @@ exports.dateOf = timeStamp => {
     return null;
   }
 };
-// Returns a base-62 alphanumeric representation of an integer.
+// Returns a base-36 alphanumeric representation of an integer.
 exports.alphaNumOf = num => {
   let resultDigits = [];
   while (num || ! resultDigits.length) {
-    const remainder = num % 62;
+    const remainder = num % 36;
     resultDigits.unshift(alphaNumChars[remainder]);
-    num = Math.floor(num / 62);
+    num = Math.floor(num / 36);
   }
   return resultDigits.join('');
 };
@@ -89,7 +88,7 @@ exports.alphaNumOf = num => {
 const getRandomString = exports.getRandomString = length => {
   const chars = [];
   for (let i = 0; i < length; i++) {
-    chars.push(alphaNumChars[Math.floor(62 * Math.random())]);
+    chars.push(alphaNumChars[Math.floor(36 * Math.random())]);
   }
   return chars.join('');
 };

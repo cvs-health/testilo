@@ -30,9 +30,10 @@ const {issues} = require('../score/tic45');
 const counts = {
   total: 0
 };
-// For each issue:
-Object.values(issues).forEach(issue => {
+// For each issue other than ignorable:
+Object.keys(issues).filter(issueName => issueName !== 'ignorable').forEach(issueName => {
   // For each tool with any rules of the issue:
+  const issue = issues[issueName];
   Object.keys(issue.tools).forEach(toolName => {
     if (! counts[toolName]) {
       counts[toolName] = 0;

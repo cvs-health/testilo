@@ -25,7 +25,7 @@
   Tabulates tool rules from an issue classification.
 */
 
-const {issues} = require('../score/tic40');
+const {issues} = require('../score/tic45');
 
 const counts = {
   total: 0

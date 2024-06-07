@@ -843,6 +843,36 @@ exports.issues = {
       }
     }
   },
+  borderBad: {
+    summary: 'CSS border invalid',
+    why: 'Border is displayed improperly',
+    wcag: '4.1',
+    weight: 4,
+    tools: {
+      nuVal: {
+        '^CSS: border-.+ negative values are not allowed.*$': {
+          variable: true,
+          quality: 1,
+          what: 'CSS border includes a negative-valued property'
+        }
+      }
+    }
+  },
+  flexBad: {
+    summary: 'CSS flex invalid',
+    why: 'Content is displayed improperly',
+    wcag: '4.1',
+    weight: 4,
+    tools: {
+      nuVal: {
+        '^CSS: flex: .+ negative values are not allowed.*$': {
+          variable: true,
+          quality: 1,
+          what: 'CSS flex value is negative'
+        }
+      }
+    }
+  },
   backgroundBad: {
     summary: 'CSS background invalid',
     why: 'Background is displayed improperly',
@@ -864,7 +894,7 @@ exports.issues = {
           variable: true,
           quality: 1,
           what: 'CSS background URL is invalid'
-        },
+        }
       }
     }
   },
@@ -2858,6 +2888,28 @@ exports.issues = {
       }
     }
   },
+  lineHeightBad: {
+    summary: 'line height misdefined',
+    why: 'Text is difficult to read',
+    wcag: '1.4.8',
+    weight: 4,
+    tools: {
+      nuVal: {
+        '^CSS: line-height: .* negative values are not allowed.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Text line height is negative'
+        }
+      },
+      testaro: {
+        lineHeight: {
+          variable: false,
+          quality: 1,
+          what: 'Text has a line height less than 1.5 times its font size'
+        }
+      }
+    }
+  },
   overflowHidden: {
     summary: 'overflow hidden',
     why: 'User cannot enlarge the text for readability',
@@ -3030,12 +3082,17 @@ exports.issues = {
         'Element script must not have attribute defer unless attribute src is also specified.': {
           variable: false,
           quality: 1,
-          what: 'script element has a defer attribute without a src attribute'
+          what: 'Element is script and has a defer attribute but no src attribute'
+        },
+        'Element script should not have attribute fetchpriority unless attribute src is also specified.': {
+          variable: false,
+          quality: 1,
+          what: 'Element is script and has a fetchpriority attribute but no src attribute'
         },
         'A script element with a src attribute must not have a type attribute whose value is anything other than the empty string, a JavaScript MIME type, or module.': {
           variable: false,
           quality: 1,
-          what: 'script element has a src attribute but its type is not empty, a JS MIME type, or module'
+          what: 'Element is script and has a src attribute but its type is not empty, a JS MIME type, or module'
         }
       }
     }
@@ -3231,6 +3288,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'img element has a role attribute but no alt attribute'
+        },
+        'The document role is not allowed for element select without a multiple attribute and without a size attribute whose value is greater than 1.': {
+          variable: false,
+          quality: 1,
+          what: 'select element is not multiple or has no size greater than 1 but has a document role'
         },
         '^Discarding unrecognized token .+ from value of attribute role. Browsers ignore any token that is not a defined ARIA non-abstract role.*$': {
           variable: true,
@@ -3668,7 +3730,7 @@ exports.issues = {
         aria_semantics_attribute: {
           variable: false,
           quality: 1,
-          what: 'ARIA attributes is invalid for the element or ARIA role to which it is assigned'
+          what: 'ARIA attribute is invalid for the element or ARIA role to which it is assigned'
         },
         Rpt_Aria_ValidProperty: {
           variable: false,
@@ -3770,6 +3832,11 @@ exports.issues = {
           variable: true,
           quality: 1,
           what: 'ARIA attribute is redundant with the synonymous native attribute'
+        },
+        'The aria-valuemax attribute must not be used on an element which has a max attribute.': {
+          variable: false,
+          quality: 1,
+          what: 'Element has the max attribute but also the aria-valuemax attribute'
         }
       }
     }
@@ -5829,6 +5896,13 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 2,
     tools: {
+      axe: {
+        'empty-table-header': {
+          variable: false,
+          quality: 1,
+          what: 'Element is a table header but has no text'
+        }
+      },
       ed11y: {
         tableEmptyHeaderCell: {
           variable: false,
@@ -5886,6 +5960,36 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'table element is inside another table element'
+        }
+      }
+    }
+  },
+  divInTable: {
+    summary: 'div embedded in table',
+    why: 'Blocks of content within a table cell may confuse a user',
+    wcag: '1.4',
+    weight: 1,
+    tools: {
+      nuVal: {
+        'Start tag div seen in table.': {
+          variable: false,
+          quality: 1,
+          what: 'div element is inside a table element'
+        }
+      }
+    }
+  },
+  formInTable: {
+    summary: 'form embedded in table',
+    why: 'Navigation in a form may confuse a keyboard-only user',
+    wcag: '2.1.1',
+    weight: 1,
+    tools: {
+      nuVal: {
+        'Start tag form seen in table.': {
+          variable: false,
+          quality: 1,
+          what: 'form element is inside a table element'
         }
       }
     }
@@ -6145,6 +6249,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'button element is a descendant of an element with a button role'
+        },
+        'An element with the attribute role=button must not appear as a descendant of an element with the attribute role=button.': {
+          variable: false,
+          quality: 1,
+          what: 'Element with a button role is a descendant of an element with a button role'
         },
         'The element label must not appear as a descendant of an element with the attribute role=button.': {
           variable: false,
@@ -8591,6 +8700,11 @@ exports.issues = {
           quality: 1,
           what: 'Invalid closing tag'
         },
+        '^End tag [a-z]+\.$': {
+          variable: true,
+          quality: 1,
+          what: 'Closing tag of an ineligible element'
+        },
         '^Start tag .+ seen but an element of the same type was already open.*$': {
           variable: true,
           quality: 1,
@@ -8906,15 +9020,20 @@ exports.issues = {
     weight: 4,
     tools: {
       nuVal: {
+        '^Internal encoding declaration named an unsupported chararacter encoding .*$': {
+          variable: true,
+          quality: 1,
+          what: 'Encoding declaration names an unsupported character encoding'
+        },
         'Text run is not in Unicode Normalization Form C.': {
           variable: false,
           quality: 1,
-          what: 'Text run is not in Unicode Normalization Form C.'
+          what: 'Text run is not in Unicode Normalization Form C'
         },
         '^The value of attribute .+ on element .+ from namespace .+ is not in Unicode Normalization Form C.*$': {
           variable: true,
           quality: 1,
-          what: 'Value of attribute is not in Unicode Normalization Form C.'
+          what: 'Value of attribute is not in Unicode Normalization Form C'
         },
         '^Forbidden code point U+.*$': {
           variable: true,

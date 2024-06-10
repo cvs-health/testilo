@@ -34,9 +34,19 @@ const alphaNumChars = (() => {
   return digits.concat(lowers);
 })();
 // Tools.
-const toolIDs = exports.toolIDs = [
-  'alfa', 'aslint', 'axe', 'ed11y', 'htmlcs', 'ibm', 'nuVal', 'qualWeb', 'testaro', 'wave', 'wax'
-];
+const tools = exports.tools = {
+  alfa: 'Alfa',
+  aslint: 'ASLint',
+  axe: 'Axe',
+  ed11y: 'Editoria11y',
+  htmlcs: 'HTML CodeSniffer',
+  ibm: 'Accessibility Checker',
+  nuVal: 'Nu Html Checker',
+  qualWeb: 'QualWeb',
+  testaro: 'Testaro',
+  wave: 'WAVE',
+  wax: 'WallyAX'
+};
 
 // FUNCTIONS
 

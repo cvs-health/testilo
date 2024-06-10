@@ -288,7 +288,7 @@ In its simplest form, `script()` requires 3 string arguments:
 1. A description of the script
 1. A device ID
 
-Called in this way, `script()` produces a script that tells Testaro to perform the tests for all of the evaluation rules defined by all of the tools integrated by Testaro.
+Called in this way, `script()` produces a script that tells Testaro to perform the tests for all of the evaluation rules defined by all of the tools integrated by Testaro. In this case, the script launches a new Webkit browser before performing the tests of each tool.
 
 #### With options
 
@@ -384,6 +384,7 @@ When the `script` module creates a script for you, it does not ask you for all o
 - `sendReportTo`: `process.env.SEND_REPORT_TO`, or `''` if none
 - `sources.id`: script ID
 - `sources.requester`: `process.env.REQUESTER`, or `''` if none
+- test acts: `launch` = {}
 - `axe` test act: `detailLevel` = 2
 - `ibm` test act: `withItems` = `true`, `withNewContent` = `true`
 - `qualWeb` test act: `withNewContent` = `false`

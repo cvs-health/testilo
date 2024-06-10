@@ -32,7 +32,7 @@ require('dotenv').config();
 // Devices recognized by Playwright.
 const {devices} = require('playwright');
 // Utility module.
-const {isToolID, toolIDs} = require('./procs/util');
+const {isToolID, tools} = require('./procs/util');
 
 // ########## FUNCTIONS
 
@@ -142,7 +142,7 @@ exports.script = (id, what, deviceID, options = {}) => {
     // Otherwise, i.e. if options are not specified:
     else {
       // Populate the data on tools and rules.
-      toolIDs.forEach(toolID => {
+      Object.keys(tools).forEach(toolID => {
         toolsRulesData[toolID] = [];
       });
     }
@@ -173,12 +173,7 @@ exports.script = (id, what, deviceID, options = {}) => {
         mergeID: '',
         requester: process.env.REQUESTER || ''
       },
-        acts: [
-        {
-          type: 'placeholder',
-          which: 'main'
-        }
-      ]
+        acts: []
     };
     // Add the window options to the script.
     scriptObj.device.windowOptions = getWindowOptions(deviceID);
@@ -187,7 +182,9 @@ exports.script = (id, what, deviceID, options = {}) => {
       // Initialize a test act for it.
       const toolAct = {
         type: 'test',
-        which: toolID
+        launch: {},
+        which: toolID,
+        what: tools[toolID]
       };
       // If rules were specified:
       const ruleIDs = toolsRulesData[toolID];

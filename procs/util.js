@@ -34,7 +34,7 @@ const alphaNumChars = (() => {
   return digits.concat(lowers);
 })();
 // Tools.
-const tools = exports.tools = {
+exports.tools = {
   alfa: 'Alfa',
   aslint: 'ASLint',
   axe: 'Axe',

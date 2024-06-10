@@ -151,7 +151,6 @@ exports.script = (id, what, deviceID, options = {}) => {
       id,
       what,
       strict: false,
-      isolate: true,
       standard: 'only',
       observe: false,
       device: {
@@ -171,7 +170,7 @@ exports.script = (id, what, deviceID, options = {}) => {
         script: id,
         batch: '',
         mergeID: '',
-        requester: process.env.REQUESTER || ''
+        requester: ''
       },
         acts: []
     };

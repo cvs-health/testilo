@@ -99,12 +99,7 @@ Targets can be specified in a more complex way, too. That allows you to create j
       what: 'Acme Clothes',
       url: 'https://acmeclothes.com/',
       actGroups: {
-        public: [
-          {
-            type: 'launch',
-            what: 'Acme Clothes home page',
-          }
-        ],
+        public: [],
         private: [
           {
             type: 'launch',
@@ -141,13 +136,13 @@ Targets can be specified in a more complex way, too. That allows you to create j
 
 As shown, a batch, unlike a target list, defines named groups of acts. They can be substituted for script placeholders, so various complex operations can be performed on each target.
 
-In this example, the `public` act group contains only 1 act, of type `launch`. A `launch` act in an act group is permitted to have only two properties, `what` and `url`. If either of these is omitted, its value is inherited from the corresponding property of the target. In the `public` act group in this case, the `what` value is specified, but the `url` value will be `https://acmeclothes.com/`, inherited from the target.
+In this example, the `public` act group contains no acts. The `private` act group contains 5 acts. A `launch` act in an act group is permitted to have only two properties, `what` and `url`. If either of these is omitted, its value is inherited from the corresponding property of the target.
 
 A batch is a JavaScript object. It can be converted to JSON and stored in a file.
 
 ### Target list to batch
 
-If you have a target list, the `batch` module of Testilo can convert it to a simple batch. The batch will contain, for each target, only one act group, named `main`, containing only a `launch` act. The target’s entry in the target list will determine the `what` and `url` properties of the target, and the `launch` acts will not override the values of those properties.
+If you have a target list, the `batch` module of Testilo can convert it to a simple batch. The batch will contain, for each target, only one act group, named `main`, containing no acts.
 
 #### Invocation
 
@@ -170,7 +165,7 @@ const batchObj = batch(id, what, targets);
 
 The `id` argument to `batch()` is an identifier for the target list. The `what` variable describes the target list. The `targets` variable is an array of arrays, with each array containing the 2 items (description and URL) defining one target.
 
-The `batch()` function of the `batch` module generates a batch and returns it as an object. Within the batch, each target is given a sequential (base-62 alphanumeric) string as an ID.
+The `batch()` function of the `batch` module generates a batch and returns it as an object. Within the batch, each target is given a sequential (base-36 alphanumeric) string as an ID.
 
 The invoking module can further dispose of the batch as needed.
 

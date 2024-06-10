@@ -55,11 +55,7 @@ exports.batch = (id, what, targetList) => {
       batch.targets[target[0]] = {
         url: target[1],
         actGroups: {
-          main: [
-            {
-              type: 'launch'
-            }
-          ]
+          main: []
         }
       };
     });

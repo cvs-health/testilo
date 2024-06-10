@@ -34,15 +34,6 @@ const {alphaNumOf, dateOf, getRandomString, getNowStamp} = require('./procs/util
 
 // ########## CONSTANTS
 
-// Tools that alter the page.
-const contaminantNames = new Set([
-  'alfa',
-  'aslint',
-  'axe',
-  'ed11y',
-  'htmlcs',
-  'testaro'
-]);
 // Length of the random merger ID.
 const mergeIDLength = 3;
 
@@ -85,12 +76,8 @@ exports.merge = (script, batch, executionTimeStamp) => {
         // Identify it as the current one.
         lastPlaceholder = act;
       }
-      // Otherwise, if it is a non-final target-modifying test act:
-      else if (
-        act.type === 'test'
-        && contaminantNames.has(act.which)
-        && actIndex < acts.length - 1
-      ) {
+      // Otherwise, if it is a test act:
+      else if (act.type === 'test') {
         // Change it to an array of itself and the current placeholder.
         acts[actIndex] = JSON.parse(JSON.stringify([act, lastPlaceholder]));
       }

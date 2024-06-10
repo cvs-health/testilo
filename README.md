@@ -378,7 +378,7 @@ When the `script` module creates a script for you, it does not ask you for all o
 - `timeLimit`: 50 plus 30 per tool
 - `sendReportTo`: `process.env.SEND_REPORT_TO`, or `''` if none
 - `sources.id`: script ID
-- `sources.requester`: `process.env.REQUESTER`, or `''` if none
+- `sources.requester`: `''`
 - test acts: `launch` = {}
 - `axe` test act: `detailLevel` = 2
 - `ibm` test act: `withItems` = `true`, `withNewContent` = `true`

@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="style.css">
     <script id="script" type="module">
       const sortButton = document.getElementById('sortButton');
-      const sortBasisSpan = document.getElementById('sortBasis');
+      const sortChangeSpan = document.getElementById('sortChange');
       const sumBody = document.getElementById('sumBody');
       const rows = Array.from(sumBody.children);
       const sortRowsBy = basis => {
@@ -37,12 +37,15 @@
         rows.forEach(row => {
           sumBody.appendChild(row);
         });
-        sortBasisSpan.textContent = basis === 'score' ? 'score' : 'WCAG';
       };
       sortButton.addEventListener('click', event => {
-        // Determine the current sorting basis.
-        const oldBasis = sortBasisSpan.textContent;
-        sortRowsBy(oldBasis === 'score' ? 'wcag' : 'score');
+        // Add the new sorting basis to the page.
+        sortChangeSpan.textContent = sortChangeSpan.textContent === 'score to WCAG'
+        ? 'WCAG to score'
+        : 'score to WCAG';
+        const newBasis = sortChangeSpan.textContent === 'score to WCAG' ? 'score' : 'wcag';
+        // Re-sort the table.
+        sortRowsBy(newBasis);
       });
     </script>
   </head>
@@ -97,11 +100,9 @@
         <li>You can sort this table by WCAG or score.</li>
       </ul>
       <h3>The summary</h3>
+      <p><button id="sortButton" type="button">Change sorting from <span id="sortChange">score to WCAG</span></button></p>
       <table class="allBorder thirdCellRight">
-        <caption>
-          <p>How many violations each tool reported, by issue, sorted by <span id="sortBasis" role="status">score</span></p>
-          <p><button id="sortButton" type="button">Change sorting</button></p>
-        </caption>
+        <caption>How many violations each tool reported, by issue</caption>
         <thead>
           <tr><th>Issue</th><th>WCAG</th><th>Score</th><th>Instance counts</th></tr>
         </thead>

@@ -34,7 +34,7 @@ const alphaNumChars = (() => {
   return digits.concat(lowers);
 })();
 // Tools.
-exports.tools = {
+const tools = exports.tools = {
   alfa: 'Alfa',
   aslint: 'ASLint',
   axe: 'Axe',
@@ -123,4 +123,4 @@ exports.getBarCell = (num, colMax, svgWidth, isRight = false) => {
   return cell;
 };
 // Returns whether a tool ID is the ID of a Testaro-integrated tool.
-exports.isToolID = toolID => toolIDs.includes(toolID);
+exports.isToolID = toolID => Object.keys(tools).includes(toolID);

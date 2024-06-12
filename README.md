@@ -669,10 +669,9 @@ To test the `rescore` module, in the project directory you can execute the state
 
 Reports from Testaro are JavaScript objects. When represented as JSON, they are human-readable, but not human-friendly. They are basically designed for machine tractability. This is equally true for reports that have been scored by Testilo. But Testilo can _digest_ a scored report, converting it to a human-oriented HTML document, or _digest_.
 
-The `digest` module digests a scored report. Its `digest()` function takes three arguments:
+The `digest` module digests a scored report. Its `digest()` function takes two arguments:
 - a digester (a digesting function)
 - a scored report object
-- the URL of a directory containing the scored reports
 
 The digester populates an HTML digest template. A copy of the template, with its placeholders replaced by computed values, becomes the digest. The digester defines the rules for replacing the placeholders with values. The Testilo package contains a `procs/digest` directory, in which there are subdirectories, each containing a template and a module that exports a digester. You can use one of those modules, or you can create your own.
 
@@ -717,9 +716,9 @@ When a user invokes `digest()` in this example, the `call` module:
 - writes the digested reports to the `digested` subdirectory of the `REPORTDIR` directory.
 - includes in each digest a link to the scored report, with the link destination being based on `SCORED_REPORT_URL`.
 
-The included digesters create digests that have links. The server that serves such a digest must also respond correctly when a user activates one of the links. One link is to the scored report. Other links are to collections of standard instances of violations of particular rules from the scored report.
+The included digesters create digests that have links. The server that serves such a digest must also respond correctly when a user activates one of the links. One link is to the scored report. Other links are to World Wide Web Consortium documents on WCAG principles, guidelines, and success criteria.
 
-The digests created by `digest()` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/digested/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where digested reports are written.
+The digests created by `digest()` are HTML files, and they expect a `style.css` file to exist in their directory. If you use an included digester, the `reports/digested/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where digested reports are written.
 
 ### Difgesting
 

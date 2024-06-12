@@ -1359,7 +1359,7 @@ exports.issues = {
     }
   },
   objectAudioRisk: {
-    summary: 'non-audio element possibly plays audio',
+    summary: 'non-audio element plays audio?',
     why: 'User may get inadequate help consuming audio content',
     wcag: '1.1.1',
     weight: 1,
@@ -1459,7 +1459,7 @@ exports.issues = {
     }
   },
   customKeyboardRisk: {
-    summary: 'custom button possibly keyboard-inoperable',
+    summary: 'custom button keyboard-inoperable?',
     why: 'Custom item may prevent a keyboard-only user from operating it',
     wcag: '2.1.1',
     weight: 1,
@@ -1474,7 +1474,7 @@ exports.issues = {
     }
   },
   objectBlurKeyboardRisk: {
-    summary: 'object possibly not keyboard-blurrable',
+    summary: 'object not keyboard-blurrable?',
     why: 'Custom item may trap a keyboard-only user',
     wcag: '2.1.1',
     weight: 1,
@@ -1489,7 +1489,7 @@ exports.issues = {
     }
   },
   eventKeyboardRisk: {
-    summary: 'event possibly not keyboard-triggerable',
+    summary: 'event not keyboard-triggerable?',
     why: 'Keyboard-only user may be unable to perform an action',
     wcag: '2.1.1',
     weight: 1,
@@ -2316,7 +2316,7 @@ exports.issues = {
     }
   },
   newTabSurpriseRisk: {
-    summary: 'tab-opening link action possibly unstated',
+    summary: 'tab-opening link action unstated?',
     why: 'Following a link opens a new window, possibly surprising a user',
     wcag: '3.2.5',
     weight: 1,
@@ -2350,7 +2350,7 @@ exports.issues = {
     }
   },
   selectNavSurpriseRisk: {
-    summary: 'navigating selection-change action possibly unstated',
+    summary: 'navigating selection-change action unstated?',
     why: 'Changing a selected option opens a new window, possibly surprising a user',
     wcag: '3.2.5',
     weight: 1,
@@ -2995,7 +2995,7 @@ exports.issues = {
     }
   },
   overflowHiddenRisk: {
-    summary: 'overflow possibly hidden',
+    summary: 'overflow hidden?',
     why: 'User may be unable to enlarge the text for readability',
     wcag: '1.4.4',
     weight: 1,
@@ -3394,7 +3394,7 @@ exports.issues = {
     }
   },
   roleHierarchyBad: {
-    summary: 'ancestor and descendant elements have incompatible roles',
+    summary: 'ancestor and descendant roles incompatible',
     why: 'User may misunderstand or be blocked from exposure to an item',
     wcag: '4.1.2',
     weight: 4,
@@ -3707,7 +3707,7 @@ exports.issues = {
     }
   },
   roleMissingRisk: {
-    summary: 'role possibly missing',
+    summary: 'role missing?',
     why: 'Item may behave improperly',
     wcag: '4.1.2',
     weight: 1,
@@ -3751,7 +3751,7 @@ exports.issues = {
     }
   },
   ariaMissingRisk: {
-    summary: 'aria attribute possibly missing',
+    summary: 'aria attribute missing?',
     why: 'Item may behave improperly',
     wcag: '4.1.2',
     weight: 2,
@@ -4157,7 +4157,7 @@ exports.issues = {
     }
   },
   colorNamedRisk: {
-    summary: 'color perception possibly required',
+    summary: 'color perception required?',
     why: 'Content is impossible to perceive under some conditions',
     wcag: '1.4.1',
     weight: 1,
@@ -5047,7 +5047,7 @@ exports.issues = {
     }
   },
   justificationRisk: {
-    summary: 'justification possibly undefined',
+    summary: 'justification undefined?',
     why: 'Text may be difficult to read',
     wcag: '1.4.8',
     weight: 1,
@@ -5323,7 +5323,7 @@ exports.issues = {
     }
   },
   pseudoListRisk: {
-    summary: 'list possibly not marked as such',
+    summary: 'list not marked as such?',
     why: 'User may be unable to get help on which items are in lists',
     wcag: '1.3.1',
     weight: 1,
@@ -5445,7 +5445,7 @@ exports.issues = {
     }
   },
   selectFlatRisk: {
-    summary: 'option groups possibly not marked',
+    summary: 'option groups not marked?',
     why: 'User may be unable to get help recognizing groups of options',
     wcag: '1.3.1',
     weight: 1,
@@ -5526,7 +5526,7 @@ exports.issues = {
     }
   },
   fieldSetRisk: {
-    summary: 'fieldset possibly missing',
+    summary: 'fieldset missing?',
     why: 'User may be unable to get help recognizing a group of related form items',
     wcag: '1.3.1',
     weight: 1,
@@ -5889,7 +5889,7 @@ exports.issues = {
     }
   },
   cellHeadersAmbiguityRisk: {
-    summary: 'cell headers possibly ambiguous',
+    summary: 'cell headers ambiguous?',
     why: 'User may be unable to get help on relationships in a table',
     wcag: '1.3.1',
     weight: 2,
@@ -6001,7 +6001,7 @@ exports.issues = {
     }
   },
   TableHeaderScopeRisk: {
-    summary: 'Table scope possibly ambiguous',
+    summary: 'Table scope ambiguous?',
     why: 'User may be unable to get help on relationships in a table',
     wcag: '1.3.1',
     weight: 1,
@@ -8108,7 +8108,7 @@ exports.issues = {
     }
   },
   audioTextRisk: {
-    summary: 'audio possibly not named',
+    summary: 'audio not named?',
     why: 'User may be unable to get help reading speech as text',
     wcag: '1.2.1',
     weight: 1,
@@ -8185,7 +8185,7 @@ exports.issues = {
     }
   },
   videoCaptionRisk: {
-    summary: 'audio or video alternatives possibly missing',
+    summary: 'audio or video alternatives missing?',
     why: 'User may be unable to get help reading video content as text',
     wcag: '1.2.2',
     weight: 1,
@@ -8306,7 +8306,7 @@ exports.issues = {
     }
   },
   scrollFocus: {
-    summary: 'scrollable element and its children not focusable',
+    summary: 'scrollable element and children nonfocusable',
     why: 'User may be unable to see all of an item without scrolling in both dimensions',
     wcag: '2.1.1',
     weight: 3,
@@ -8371,7 +8371,7 @@ exports.issues = {
     }
   },
   repeatedContentRisk: {
-    summary: 'skip method possibly missing or invalid',
+    summary: 'skip method missing or invalid?',
     why: 'Keyboard-only user may be unable easily to reach the specific content of the document',
     wcag: '2.4.1',
     weight: 1,
@@ -8453,7 +8453,7 @@ exports.issues = {
     }
   },
   noScriptRisk: {
-    summary: 'noscript element possibly not equivalent',
+    summary: 'noscript element not equivalent?',
     why: 'User who has disabled JavaScript may be denied some content',
     wcag: '4.1',
     weight: 1,

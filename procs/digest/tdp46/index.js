@@ -36,27 +36,75 @@ const {getNowDate, getNowDateSlash} = require('../../util');
 // CONSTANTS
 
 // Digester ID.
-const digesterID = 'tdp44';
+const digesterID = 'tdp45';
 // Newline with indentations.
 const innerJoiner = '\n        ';
 const outerJoiner = '\n      ';
+// Directory of WCAG links.
+const wcagPhrases = {};
 
 // FUNCTIONS
 
 // Gets a row of the score-summary table.
 const getScoreRow = (componentName, score) => `<tr><th>${componentName}</th><td>${score}</td></tr>`;
+// Gets a WCAG link or, if not obtainable, a numeric identifier.
+const getWCAGTerm = wcag => {
+  const wcagPhrase = wcagPhrases[wcag];
+  const wcagTerm = wcagPhrase
+  ? `<a href="https://www.w3.org/WAI/WCAG22/Understanding/${wcagPhrase}.html">${wcag}</a>`
+  : wcag;
+  return wcagTerm;
+};
 // Gets a row of the issue-score-summary table.
 const getIssueScoreRow = (issueConstants, issueDetails) => {
   const {summary, wcag} = issueConstants;
+  const wcagTerm = getWCAGTerm(wcag);
   const {instanceCounts, score} = issueDetails;
   const toolList = Object
   .keys(instanceCounts)
   .map(tool => `<code>${tool}</code>:${instanceCounts[tool]}`)
   .join(', ');
-  return `<tr><th>${summary}</th><td class="center">${wcag}<td class="right num">${score}</td><td>${toolList}</td></tr>`;
+  return `<tr><th>${summary}</th><td class="center">${wcagTerm}<td class="right num">${score}</td><td>${toolList}</td></tr>`;
+};
+// Populates the directory of WCAG understanding verbal IDs.
+const getWCAGPhrases = async () => {
+  // Get the copy of file https://raw.githubusercontent.com/w3c/wcag/main/guidelines/wcag.json.
+  const wcagJSON = await fs.readFile(`${__dirname}/../../../wcag.json`, 'utf8');
+  const wcag = JSON.parse(wcagJSON);
+  const {principles} = wcag;
+  // For each principle in it:
+  principles.forEach(principle => {
+    // If it is usable:
+    if (principle.num && principle.id && principle.id.startsWith('WCAG2:')) {
+      // Add it to the directory.
+      wcagPhrases[principle.num] = principle.id.slice(6);
+      const {guidelines} = principle;
+      // For each guideline in the principle:
+      guidelines.forEach(guideline => {
+        // If it is usable:
+        if (guideline.num && guideline.id && guideline.id.startsWith('WCAG2:')) {
+          // Add it to the directory.
+          wcagPhrases[guideline.num] = guideline.id.slice(6);
+          const {successcriteria} = guideline;
+          // For each success criterion in the guideline:
+          successcriteria.forEach(successCriterion => {
+            // If it is usable:
+            if (
+              successCriterion.num
+              && successCriterion.id
+              && successCriterion.id.startsWith('WCAG2:')
+            ) {
+              // Add it to the directory.
+              wcagPhrases[successCriterion.num] = successCriterion.id.slice(6);
+            }
+          });
+        }
+      });
+    }
+  });
 };
 // Adds parameters to a query for a digest.
-const populateQuery = (report, query) => {
+const populateQuery = async (report, query) => {
   const {
     browserID, device, id, isolate, lowMotion, score, sources, standard, strict, target
   } = report;
@@ -80,6 +128,8 @@ const populateQuery = (report, query) => {
   query.browser = browserID;
   query.agent = agent ? ` on agent ${agent}` : '';
   query.reportURL = process.env.SCORED_REPORT_URL.replace('__id__', id);
+  // Populate the WCAG phrase directory.
+  await getWCAGPhrases();
   // Add values for the score-summary table to the query.
   const rows = {
     summaryRows: [],
@@ -112,7 +162,9 @@ const populateQuery = (report, query) => {
     const issueSummary = issues[issueID].summary;
     issueDetailRows.push(`<h3 class="bars">Issue: ${issueSummary}</h3>`);
     issueDetailRows.push(`<p>Impact: ${issues[issueID].why || 'N/A'}</p>`);
-    issueDetailRows.push(`<p>WCAG: ${issues[issueID].wcag || 'N/A'}</p>`);
+    const wcag = issues[issueID].wcag;
+    const wcagTerm = wcag ? getWCAGTerm(wcag) : 'N/A';
+    issueDetailRows.push(`<p>WCAG: ${wcagTerm}</p>`);
     const issueData = details.issue[issueID];
     issueDetailRows.push(`<p>Score: ${issueData.score}</p>`);
     issueDetailRows.push('<h4>Elements</h4>');
@@ -176,7 +228,7 @@ const populateQuery = (report, query) => {
 exports.digester = async report => {
   // Create a query to replace placeholders.
   const query = {};
-  populateQuery(report, query);
+  await populateQuery(report, query);
   // Get the template.
   let template = await fs.readFile(`${__dirname}/index.html`, 'utf8');
   // Replace its placeholders.

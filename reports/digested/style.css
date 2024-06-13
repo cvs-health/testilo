@@ -36,6 +36,10 @@ code {
   font-family: sans-serif;
   color: #832703;
 }
+details {
+  padding: 0.5rem;
+  border: solid #000 1px;
+}
 .error {
   font-weight: 700;
   color: #c00;

@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Testilo">
+    <meta name="creator" content="Testilo">
+    <meta name="publisher" name="Testilo">
+    <meta name="description" content="report of accessibility testing of a web page">
+    <meta name="keywords" content="accessibility a11y web testing">
+    <title>tsp46 | Scoring | Testilo</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Testilo scoring: procedure tsp46</h1>
+      </header>
+      <h2>Introduction</h2>
+      <p>This document explains how web pages are scored for accessibility by the above-named scoring procedure built into Testilo.</p>
+      <h2>Motivations for scoring</h2>
+      <p>Why score? Specifically, why aggregate many facts about a page into a single number?</p>
+      <p>One motivation is to simplify comparison and tracking. If you want to compare a page with other pages, or if you want to track changes in a page over time, aggregating many test results for each page into one page score simplifies the task. It becomes possible to say things like <q>Page A is more accessible than page B</q> or <q>Page A is becoming more accessible over time</q>.</p>
+      <p>Another motivation is to influence behavior. A score arises from decisions about importance, urgency, and other attributes. People may use scores to award benefits, impose costs, or prioritize work. So, scoring can influence who gets and does what.</p>
+      <h2>How to score?</h2>
+      <p>Scoring is subjective. Accessibility testing tools use various scoring procedures, based on various ideas.</p>
+      <p>The built-in scoring procedures of Testilo are based on the idea that multiple attributes should affect a web-page accessibility score, including:</p>
+      <ul>
+        <li>conformity to standards</li>
+        <li>adherence to best practices</li>
+        <li>how many different issues exist</li>
+        <li>how many instances of each issue exist</li>
+        <li>how many tools report violations of their rules</li>
+        <li>how trustworthy each test of each tool is</li>
+        <li>how serious each violation of a rule is</li>
+        <li>simplicity</li>
+        <li>speed of page responses</li>
+        <li>testability</li>
+        <li>conformity to expectations of browsers</li>
+      </ul>
+      <p>Some ideas found elsewhere in accessibility scoring are <em>rejected</em> by the Testilo procedures:</p>
+      <ul>
+        <li>density: that an accessibility score should be based on the count of accessibility faults as a fraction of the count of potential accessibility faults (so, the score of a large page with particular faults should be better than the score of a smaller page with exactly those faults)</li>
+        <li>applicability: that the score of a page should depend on the types of its content (so, the score of a page with accessible video content should be better than the score of an otherwise identical page without video content)</li>
+      </ul>
+      <h2>Scoring method summary</h2>
+      <p>The scoring method is found in the code of the procedure. The file for any procedure <code>tspnn</code> is in the file <code>procs/score/tspnn.js</code>.</p>
+      <p>The score computed by this procedure for any page is a non-negative number. The numbers represent accessibility faults, so a higher-scoring page is considered <em>less</em> accessible than a lower-scoring page. The best possible score is 0.</p>
+      <p>The procedure makes the score of a page the sum of 7 components:</p>
+      <ul>
+        <li>issue score: how many instances of issues were reported</li>
+        <li>solo score: how many violations of rules not yet classified into issues were reported</li>
+        <li>tool score: how many violations of their rules did tools report</li>
+        <li>element score: how many HTML elements did any tool identify as violating at least one tool rule</li>
+        <li>prevention score: how many tools were unable to perform their tests on the page</li>
+        <li>log score: how much logging of page errors and other events did the browser do</li>
+        <li>latency score: how long did the page take to load and become stable</li>
+      </ul>
+      <h2>Scoring method details</h2>
+      <p>The above component descriptions omit various details.</p>
+      <p>About a thousand tool rules are classified into <dfn>issues</dfn> in the <code>tic45.js</code> file used by this procedure. Each of those rules has a <dfn>quality</dfn>, ranging from 0 to 1. When the <em>issue score</em> is computed, the count of violations of each rule is multiplied by the quality of that rule. Whichever tool has the largest quality-weighted violation count for an issue, that count is treated as the instance count for the issue. Thus, if 8 tools each report 15 violations within the issue, and their rule qualities are all 1, the instance count is 15, not 120. Moreover, the issue itself has a <dfn>weight</dfn>, ranging from 1 to 4, representing its importance. This instance count is multiplied by that weight. That product is further multiplied by the <code>issueCountWeight</code> value, namely 10. That final product is further adjusted if the issue is inherently limited in instance count. For example, if the issue is that the page <code>html</code> element has no <code>lang</code> attribute, the instance count is limited to 1. If there is such a limit, the <code>maxWeight</code> value, namely 30, is divided by the actual instance count, the quotient is added to 1. That product (or 1 if there is no limit) is multiplied by the instance count, and then the result is treated as the contribution of the issue to the issue score.</p>
+      <p>Each <dfn>solo</dfn> (not yet issue-classified) rule violation is multiplied by the sum of 1 and the ordinal severity of the rule, to produce the <em>sole score</em>.</p>
+      <p>Each rule violation reported by each tool is severity-weighted in the same way as solo rule violations are. Then the sum of those violations is multiplied by the <code>toolWeight</code> value, namely 0.1, to produce the <em>tool score</em>.</p>
+      <p>The count of elements reported as violators of any rule is multiplied by the <code>elementWeight</code> value, namely 2, to produce the <em>element score</em>.</p>
+      <p>The count of prevented Testaro rules is multiplied by the <code>testaroRulePreventionWeight</code> quantity, namely 30. The count of other prevented tools is multiplied by the <code>preventionWeight</code> value, namely 300, to produce the <em>prevention score</em>.</p>
+      <p>The <em>log score</em> is the sum of several components:</p>
+      <ul>
+        <li>log count: how many times the browser logged a message</li>
+        <li>log size: how many characters large the collection of browser log messages was</li>
+        <li>error log count: how many browser log messages reported page errors</li>
+        <li>error log size: how many characters large the collection of browser log messages reporting page errors was</li>
+        <li>prohibition count: how many times the browser logged a prohibited response status (403)</li>
+        <li>visit rejection count: how many times the browser logged an abnormal response status</li>
+      </ul>
+      <p>Each of these components is multiplied by a weight found in the <code>logWeights</code> object.</p>
+      <p>Finally, the <em>latency score</em> is based on how much longer it took for the page to become loaded and stable than expected. The expected total duration in seconds is the <code>normalLatency</code> value, namely 22 seconds (that is 2 seconds per visit, multiplied by the 11 visits of the 11 tools). This is subtracted from the actual total latency, and that difference is multiplied by the <code>latencyWeight</code> amount, namely 2.</p>
+      <footer>
+        <p class="date">Produced <time itemprop="datePublished" datetime="__dateISO__">__dateSlash__</time></p>
+      </footer>
+    </main>
+  </body>
+</html>

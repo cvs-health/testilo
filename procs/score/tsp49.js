@@ -195,8 +195,8 @@ exports.scorer = report => {
           );
           // For each instance of the tool:
           standardResult.instances.forEach(instance => {
-            const {count, ordinalSeverity, pathID, ruleID, what} = instance;
-            count ??= 1;
+            const {ordinalSeverity, pathID, ruleID, what} = instance;
+            const count = instance.count || 1;
             // If the rule ID is not in the table of tool rules:
             let canonicalRuleID = ruleID;
             if (! issueIndex[which][ruleID]) {

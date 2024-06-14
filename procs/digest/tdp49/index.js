@@ -27,7 +27,7 @@
 // Module to keep secrets.
 require('dotenv').config();
 // Module to classify tool rules into issues
-const {issues} = require('../../score/tic45');
+const {issues} = require('../../score/tic49');
 // Module to process files.
 const fs = require('fs/promises');
 // Utility module.
@@ -36,7 +36,7 @@ const {getNowDate, getNowDateSlash} = require('../../util');
 // CONSTANTS
 
 // Digester ID.
-const digesterID = 'tdp48';
+const digesterID = 'tdp49';
 // Newline with indentations.
 const innerJoiner = '\n        ';
 const outerJoiner = '\n      ';

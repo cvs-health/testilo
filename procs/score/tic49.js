@@ -21,8 +21,8 @@
 */
 
 /*
-  tic43
-  Testilo issue classification 43
+  tic49
+  Testilo issue classification 49
 
   Classifies about 990 rules of the tools of Testaro into about 310 issues.
 
@@ -55,6 +55,11 @@ exports.issues = {
           variable: false,
           quality: 0,
           what: 'Text has contrast less than 4.5:1 [speculative]'
+        },
+        'color_contrast_aaa': {
+          variable: false,
+          quality: 1,
+          what: 'Text contrast may be less than enhanced but the element is invisible [invalid]'
         },
         css_images_convey_information: {
           variable: false,
@@ -212,7 +217,7 @@ exports.issues = {
         'QW-BP1': {
           variable: false,
           quality: 0,
-          what: 'h1-h6 not used to identify headings [invalid]'
+          what: 'h1-h6 may fail to be used to identify headings [speculative]'
         },
         'QW-BP17': {
           variable: false,
@@ -273,6 +278,13 @@ exports.issues = {
           variable: false,
           quality: 0,
           what: 'No link at the top of the page goes directly to the main content area [invalid]'
+        },
+        qualWeb: {
+          'QW-WCAG-T32': {
+            variable: false,
+            quality: 1,
+            what: 'ol, ul or dl may fail to be used for a list or group of links [speculative]'
+          }
         }
       }
     }
@@ -457,55 +469,15 @@ exports.issues = {
         }
       },
       htmlcs: {
-        'AAA.4_1_2.H91.InputText.Name': {
+        'AAA.4_1_2.H91.Input.Name': {
           variable: false,
           quality: 1,
           what: 'Text input has no accessible name'
         },
-        'AAA.4_1_2.H91.InputEmail.Name': {
-          variable: false,
+        '^AAA.4_1_2.H91.Input[-a-zA-Z]+.Name$': {
+          variable: true,
           quality: 1,
-          what: 'Email input has no accessible name'
-        },
-        'AAA.4_1_2.H91.InputPhone.Name': {
-          variable: false,
-          quality: 1,
-          what: 'Telephone input has no accessible name'
-        },
-        'AAA.4_1_2.H91.InputFile.Name': {
-          variable: false,
-          quality: 1,
-          what: 'File input element has no accessible name'
-        },
-        'AAA.4_1_2.H91.InputTel.Name': {
-          variable: false,
-          quality: 1,
-          what: 'Telephone input has no accessible name'
-        },
-        'AAA.4_1_2.H91.InputNumber.Name': {
-          variable: false,
-          quality: 1,
-          what: 'Number input has no accessible name'
-        },
-        'AAA.4_1_2.H91.InputPassword.Name': {
-          variable: false,
-          quality: 1,
-          what: 'Password input has no accessible name'
-        },
-        'AAA.4_1_2.H91.InputSearch.Name': {
-          variable: false,
-          quality: 1,
-          what: 'Search input has no accessible name'
-        },
-        'AAA.4_1_2.H91.InputCheckbox.Name': {
-          variable: false,
-          quality: 1,
-          what: 'Checkbox input has no accessible name'
-        },
-        'AAA.4_1_2.H91.InputRadio.Name': {
-          variable: false,
-          quality: 1,
-          what: 'Radio input has no accessible name'
+          what: 'input element has no accessible name'
         }
       }
     }
@@ -710,6 +682,13 @@ exports.issues = {
           quality: 1,
           what: 'Spacer image has no text alternative'
         }
+      },
+      wax: {
+        'Images must have alternate text': {
+          variable: false,
+          quality: 1,
+          what: 'Image has no text alternative'
+        }
       }
     }
   },
@@ -739,6 +718,26 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'alt attribute of the element states the image is an image'
+        },
+        altImageOfLinked: {
+          variable: false,
+          quality: 1,
+          what: 'alt attribute of the intra-link element states the image is an image instead of describing the link purpose'
+        }
+      }
+    }
+  },
+  decorativeAlt: {
+    summary: 'decorative image is named',
+    why: 'User gets an uninformative image description or misses an informative image',
+    wcag: '1.1.1',
+    weight: 1,
+    tools: {
+      ibm: {
+        img_alt_decorative: {
+          variable: false,
+          quality: 1,
+          what: 'element is marked as an uninformative image but has an alt attribute'
         }
       }
     }
@@ -836,6 +835,66 @@ exports.issues = {
       }
     }
   },
+  borderBad: {
+    summary: 'CSS border invalid',
+    why: 'Border is displayed improperly',
+    wcag: '4.1',
+    weight: 4,
+    tools: {
+      nuVal: {
+        '^CSS: border-.+ negative values are not allowed.*$': {
+          variable: true,
+          quality: 1,
+          what: 'CSS border includes a negative-valued property'
+        }
+      }
+    }
+  },
+  flexBad: {
+    summary: 'CSS flex invalid',
+    why: 'Content is displayed improperly',
+    wcag: '4.1',
+    weight: 4,
+    tools: {
+      nuVal: {
+        '^CSS: flex: .+ negative values are not allowed.*$': {
+          variable: true,
+          quality: 1,
+          what: 'CSS flex value is negative'
+        }
+      }
+    }
+  },
+  paddingBad: {
+    summary: 'CSS padding invalid',
+    why: 'Content is displayed improperly',
+    wcag: '4.1',
+    weight: 4,
+    tools: {
+      nuVal: {
+        '^CSS: padding[-a-z]*: .+ negative values are not allowed\.$': {
+          variable: true,
+          quality: 1,
+          what: 'One of the CSS padding values is negative'
+        }
+      }
+    }
+  },
+  gapBad: {
+    summary: 'CSS padding invalid',
+    why: 'Content is displayed improperly',
+    wcag: '4.1',
+    weight: 4,
+    tools: {
+      nuVal: {
+        '^CSS: gap: .+ negative values are not allowed\.$': {
+          variable: true,
+          quality: 1,
+          what: 'CSS gap value is negative'
+        }
+      }
+    }
+  },
   backgroundBad: {
     summary: 'CSS background invalid',
     why: 'Background is displayed improperly',
@@ -857,7 +916,7 @@ exports.issues = {
           variable: true,
           quality: 1,
           what: 'CSS background URL is invalid'
-        },
+        }
       }
     }
   },
@@ -1081,6 +1140,13 @@ exports.issues = {
           quality: 1,
           what: 'Language missing or invalid'
         }
+      },
+      wax: {
+        '<html> element must have a lang attribute': {
+          variable: false,
+          quality: 1,
+          what: 'html element has no lang attribute'
+        }
       }
     }
   },
@@ -1117,6 +1183,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Language specified in the lang attribute of the document does not appear to be well-formed'
+        }
+      },
+      ibm: {
+        html_lang_valid: {
+          variable: false,
+          quality: 1,
+          what: 'lang attribute of the html element does not include a valid primary language'
         }
       },
       qualWeb: {
@@ -1217,6 +1290,13 @@ exports.issues = {
           quality: 1,
           what: 'ARIA dialog or alertdialog node has no accessible name'
         }
+      },
+      wax: {
+        'ARIA dialog and alertdialog nodes should have an accessible name': {
+          variable: false,
+          quality: 1,
+          what: 'Node is ARIA dialog or alertdialog but has no accessible name'
+        }
       }
     }
   },
@@ -1245,6 +1325,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'object element contains no text alternative'
+        },
+        'AAA.1_1_1.H53,ARIA6': {
+          variable: false,
+          quality: 1,
+          what: 'object element contains no text alternative after all other alternatives are exhausted'
         }
       },
       ibm: {
@@ -1286,7 +1371,7 @@ exports.issues = {
     }
   },
   objectAudioRisk: {
-    summary: 'non-audio element possibly plays audio',
+    summary: 'non-audio element plays audio?',
     why: 'User may get inadequate help consuming audio content',
     wcag: '1.1.1',
     weight: 1,
@@ -1386,7 +1471,7 @@ exports.issues = {
     }
   },
   customKeyboardRisk: {
-    summary: 'custom button possibly keyboard-inoperable',
+    summary: 'custom button keyboard-inoperable?',
     why: 'Custom item may prevent a keyboard-only user from operating it',
     wcag: '2.1.1',
     weight: 1,
@@ -1401,7 +1486,7 @@ exports.issues = {
     }
   },
   objectBlurKeyboardRisk: {
-    summary: 'object possibly not keyboard-blurrable',
+    summary: 'object not keyboard-blurrable?',
     why: 'Custom item may trap a keyboard-only user',
     wcag: '2.1.1',
     weight: 1,
@@ -1416,7 +1501,7 @@ exports.issues = {
     }
   },
   eventKeyboardRisk: {
-    summary: 'event possibly not keyboard-triggerable',
+    summary: 'event not keyboard-triggerable?',
     why: 'Keyboard-only user may be unable to perform an action',
     wcag: '2.1.1',
     weight: 1,
@@ -1458,7 +1543,7 @@ exports.issues = {
       wave: {
         event_handler: {
           variable: false,
-          quality: 1,
+          quality: 0.5,
           what: 'Device-dependent event handler'
         }
       }
@@ -1892,7 +1977,14 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Linked image has no text alternative'
-        },
+        }
+      },
+      wax: {
+        'Links must have discernible text': {
+          variable: false,
+          quality: 1,
+          what: 'Link has no discernible text'
+        }
       }
     }
   },
@@ -1929,6 +2021,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'link element has an empty href attribute'
+        },
+        'Attribute href without an explicit value seen. The attribute may be dropped by IE7.': {
+          variable: false,
+          quality: 1,
+          what: 'Element has an empty href attribute'
         }
       }
     }
@@ -2231,7 +2328,7 @@ exports.issues = {
     }
   },
   newTabSurpriseRisk: {
-    summary: 'tab-opening link action possibly unstated',
+    summary: 'tab-opening link action unstated?',
     why: 'Following a link opens a new window, possibly surprising a user',
     wcag: '3.2.5',
     weight: 1,
@@ -2265,7 +2362,7 @@ exports.issues = {
     }
   },
   selectNavSurpriseRisk: {
-    summary: 'navigating selection-change action possibly unstated',
+    summary: 'navigating selection-change action unstated?',
     why: 'Changing a selected option opens a new window, possibly surprising a user',
     wcag: '3.2.5',
     weight: 1,
@@ -2290,6 +2387,31 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'No option has been made the default with a selected attribute'
+        }
+      }
+    }
+  },
+  selectBad: {
+    summary: 'select element invalid',
+    why: 'User cannot properly select among options',
+    wcag: '4.1.2',
+    weight: 4,
+    tools: {
+      nuVal: {
+        'The document role is not allowed for element select without a multiple attribute and without a size attribute whose value is greater than 1.': {
+          variable: false,
+          quality: 1,
+          what: 'select element is not multiple or has no size greater than 1 but has a document role'
+        },
+        'The first child option element of a select element with a required attribute, and without a multiple attribute, and without a size attribute whose value is greater than 1, must have either an empty value attribute, or must have no text content. Consider either adding a placeholder option label, or adding a size attribute with a value equal to the number of option elements.': {
+          variable: false,
+          quality: 1,
+          what: 'option element has a nonempty value'
+        },
+        'The select element cannot have more than one selected option descendant unless the multiple attribute is specified.': {
+          variable: false,
+          quality: 1,
+          what: 'Element is select and has no multiple attribute, but has more than 1 selected option'
         }
       }
     }
@@ -2319,14 +2441,14 @@ exports.issues = {
         r12: {
           variable: false,
           quality: 1,
-          what: 'Button has no accessible name'
+          what: 'button element has no accessible name'
         }
       },
       aslint: {
         empty_button_description: {
           variable: false,
           quality: 1,
-          what: 'Button has no visible accessible name'
+          what: 'button element has no visible accessible name'
         }
       },
       axe: {
@@ -2338,7 +2460,7 @@ exports.issues = {
         'button-name': {
           variable: false,
           quality: 1,
-          what: 'Button has no discernible text'
+          what: 'button element has no discernible text'
         },
         'input-button-name': {
           variable: false,
@@ -2360,7 +2482,7 @@ exports.issues = {
         'AAA.4_1_2.H91.Button.Name': {
           variable: false,
           quality: 1,
-          what: 'Button element has no accessible name'
+          what: 'button element has no accessible name'
         },
         'AAA.4_1_2.H91.Img.Name': {
           variable: false,
@@ -2389,14 +2511,26 @@ exports.issues = {
         'QW-ACT-R11': {
           variable: false,
           quality: 1,
-          what: 'Button has no accessible name'
+          what: 'button element has no accessible name'
         }
       },
       wave: {
         button_empty: {
           variable: false,
           quality: 1,
-          what: 'Button is empty or has no value text'
+          what: 'button element is empty or has no value text'
+        }
+      },
+      wax: {
+        'Buttons must have discernible text': {
+          variable: false,
+          quality: 1,
+          what: 'button element has no discernible text'
+        },
+        'Input buttons must have discernible text': {
+          variable: false,
+          quality: 1,
+          what: 'input element with button type has no discernible text'
         }
       }
     }
@@ -2456,6 +2590,13 @@ exports.issues = {
           quality: 1,
           what: 'Element has no ARIA required context role'
         }
+      },
+      wax: {
+        'Certain ARIA roles must be contained by particular parents': {
+          variable: false,
+          quality: 1,
+          what: 'ARIA role is not contained by a required parent'
+        }
       }
     }
   },
@@ -2484,6 +2625,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element has no ARIA required owned element'
+        }
+      },
+      wax: {
+        'Certain ARIA roles must contain particular children': {
+          variable: false,
+          quality: 1,
+          what: 'ARIA role does not contain a required child'
         }
       }
     }
@@ -2527,7 +2675,7 @@ exports.issues = {
         'svg-img-alt': {
           variable: false,
           quality: 1,
-          what: 'Element with an img role has no text alternative'
+          what: 'Element is svg and has an img role but has no text alternative'
         }
       },
       qualWeb: {
@@ -2535,6 +2683,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element with an explicit role has no accessible name'
+        }
+      },
+      wax: {
+        '<svg> elements with an img role must have an alternative text': {
+          variable: false,
+          quality: 1,
+          what: 'Element is svg and has an img role but has no text alternative'
         }
       }
     }
@@ -2653,6 +2808,13 @@ exports.issues = {
           quality: 1,
           what: 'meta viewport prevents zoom'
         }
+      },
+      wax: {
+        'Zooming and scaling must not be disabled': {
+          variable: false,
+          quality: 1,
+          what: 'Element disables zooming or scaling'
+        }
       }
     }
   },
@@ -2714,9 +2876,50 @@ exports.issues = {
       }
     }
   },
-  textSpacingFrozen: {
-    summary: 'text spacing frozen',
-    why: 'User cannot adjust the text spacing for readability',
+  horizontalSpacingFrozen: {
+    summary: 'horizontal text spacing frozen',
+    why: 'User cannot adjust the horizontal text spacing for readability',
+    wcag: '1.4.12',
+    weight: 4,
+    tools: {
+      alfa: {
+        r91: {
+          variable: false,
+          quality: 1,
+          what: 'Style attribute with !important makes letter spacing insufficient'
+        }
+      },
+      axe: {
+        'avoid-inline-spacing': {
+          variable: false,
+          quality: 1,
+          what: 'Inline text spacing is not adjustable with a custom stylesheet'
+        }
+      },
+      ibm: {
+        text_spacing_valid: {
+          variable: false,
+          quality: 1,
+          what: 'CSS !important is used in an inline letter-spacing style'
+        }
+      },
+      qualWeb: {
+        'QW-ACT-R67': {
+          variable: false,
+          quality: 1,
+          what: 'Letter spacing in a style attribute is !important'
+        },
+        'QW-ACT-R69': {
+          variable: false,
+          quality: 1,
+          what: 'Word spacing in a style attribute is !important'
+        }
+      }
+    }
+  },
+  verticalSpacingFrozen: {
+    summary: 'vertical text spacing frozen',
+    why: 'User cannot adjust the vertical text spacing for readability',
     wcag: '1.4.12',
     weight: 4,
     tools: {
@@ -2727,28 +2930,11 @@ exports.issues = {
           what: 'Style attribute with !important prevents adjusting line height'
         }
       },
-      axe: {
-        'avoid-inline-spacing': {
-          variable: false,
-          quality: 1,
-          what: 'Inline text spacing is not adjustable with a custom stylesheet'
-        }
-      },
       qualWeb: {
-        'QW-ACT-R67': {
-          variable: false,
-          quality: 1,
-          what: 'Letter spacing in a style attribute is !important'
-        },
         'QW-ACT-R68': {
           variable: false,
           quality: 1,
           what: 'Line height in a style attribute is !important'
-        },
-        'QW-ACT-R69': {
-          variable: false,
-          quality: 1,
-          what: 'Word spacing in a style attribute is !important'
         }
       }
     }
@@ -2790,6 +2976,21 @@ exports.issues = {
       }
     }
   },
+  lineHeightBad: {
+    summary: 'line height misdefined',
+    why: 'Text is difficult to read',
+    wcag: '1.4.8',
+    weight: 4,
+    tools: {
+      nuVal: {
+        '^CSS: line-height: .* negative values are not allowed.*$': {
+          variable: true,
+          quality: 1,
+          what: 'Text line height is negative'
+        }
+      }
+    }
+  },
   overflowHidden: {
     summary: 'overflow hidden',
     why: 'User cannot enlarge the text for readability',
@@ -2806,7 +3007,7 @@ exports.issues = {
     }
   },
   overflowHiddenRisk: {
-    summary: 'overflow possibly hidden',
+    summary: 'overflow hidden?',
     why: 'User may be unable to enlarge the text for readability',
     wcag: '1.4.4',
     weight: 1,
@@ -2836,6 +3037,21 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element width is specified in an absolute value'
+        }
+      }
+    }
+  },
+  elementBad: {
+    summary: 'nonexistent element',
+    why: 'User cannot understand the content',
+    wcag: '4.1.2',
+    weight: 4,
+    tools: {
+      nuVal: {
+        '^Saw a start tag [a-z]+\.$': {
+          variable: true,
+          quality: 1,
+          what: 'Element does not exist in HTML'
         }
       }
     }
@@ -2962,12 +3178,17 @@ exports.issues = {
         'Element script must not have attribute defer unless attribute src is also specified.': {
           variable: false,
           quality: 1,
-          what: 'script element has a defer attribute without a src attribute'
+          what: 'Element is script and has a defer attribute but no src attribute'
+        },
+        'Element script should not have attribute fetchpriority unless attribute src is also specified.': {
+          variable: false,
+          quality: 1,
+          what: 'Element is script and has a fetchpriority attribute but no src attribute'
         },
         'A script element with a src attribute must not have a type attribute whose value is anything other than the empty string, a JavaScript MIME type, or module.': {
           variable: false,
           quality: 1,
-          what: 'script element has a src attribute but its type is not empty, a JS MIME type, or module'
+          what: 'Element is script and has a src attribute but its type is not empty, a JS MIME type, or module'
         }
       }
     }
@@ -3059,6 +3280,13 @@ exports.issues = {
           quality: 1,
           what: 'iframe element has no accessible name'
         }
+      },
+      wax: {
+        'Frames must have an accessible name': {
+          variable: false,
+          quality: 1,
+          what: 'iframe element has no accessible name'
+        }
       }
     }
   },
@@ -3144,6 +3372,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element has an event handler but no valid ARIA role'
+        },
+        combobox_haspopup_valid: {
+          variable: false,
+          quality: 1,
+          what: 'Element has a combobox role but controls an element that has no listbox, grid, tree, or dialog role'
         }
       },
       nuVal: {
@@ -3173,7 +3406,7 @@ exports.issues = {
     }
   },
   roleHierarchyBad: {
-    summary: 'ancestor and descendant elements have incompatible roles',
+    summary: 'ancestor and descendant roles incompatible',
     why: 'User may misunderstand or be blocked from exposure to an item',
     wcag: '4.1.2',
     weight: 4,
@@ -3369,7 +3602,14 @@ exports.issues = {
           quality: 1,
           what: 'Element with a srcset attribute with a width has no valid sizes attribute'
         }
-      }
+      },
+      wax: {
+        'Elements must only use allowed ARIA attributes': {
+          variable: false,
+          quality: 1,
+          what: 'Element has an attribute that is not allowed'
+        }
+      },
     }
   },
   attributeValueBad: {
@@ -3479,7 +3719,7 @@ exports.issues = {
     }
   },
   roleMissingRisk: {
-    summary: 'role possibly missing',
+    summary: 'role missing?',
     why: 'Item may behave improperly',
     wcag: '4.1.2',
     weight: 1,
@@ -3523,7 +3763,7 @@ exports.issues = {
     }
   },
   ariaMissingRisk: {
-    summary: 'aria attribute possibly missing',
+    summary: 'aria attribute missing?',
     why: 'Item may behave improperly',
     wcag: '4.1.2',
     weight: 2,
@@ -3586,7 +3826,7 @@ exports.issues = {
         aria_semantics_attribute: {
           variable: false,
           quality: 1,
-          what: 'ARIA attributes is invalid for the element or ARIA role to which it is assigned'
+          what: 'ARIA attribute is invalid for the element or ARIA role to which it is assigned'
         },
         Rpt_Aria_ValidProperty: {
           variable: false,
@@ -3688,6 +3928,11 @@ exports.issues = {
           variable: true,
           quality: 1,
           what: 'ARIA attribute is redundant with the synonymous native attribute'
+        },
+        'The aria-valuemax attribute must not be used on an element which has a max attribute.': {
+          variable: false,
+          quality: 1,
+          what: 'Element has the max attribute but also the aria-valuemax attribute'
         }
       }
     }
@@ -3924,7 +4169,7 @@ exports.issues = {
     }
   },
   colorNamedRisk: {
-    summary: 'color perception possibly required',
+    summary: 'color perception required?',
     why: 'Content is impossible to perceive under some conditions',
     wcag: '1.4.1',
     weight: 1,
@@ -3952,11 +4197,6 @@ exports.issues = {
         }
       },
       aslint: {
-        'color_contrast_aaa': {
-          variable: false,
-          quality: 1,
-          what: 'Text contrast may be less than enhanced but the element is invisible'
-        },
         'color_contrast_aaa4': {
           variable: false,
           quality: 1,
@@ -4121,6 +4361,21 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'target attribute on an a element is empty'
+        }
+      }
+    }
+  },
+  headingsEmbedded: {
+    summary: 'heading within a heading',
+    why: 'User cannot understand the page organization',
+    wcag: '4.1.2',
+    weight: 4,
+    tools: {
+      nuVal: {
+        'Heading cannot be a child of another heading.': {
+          variable: false,
+          quality: 1,
+          what: 'Heading is within a heading'
         }
       }
     }
@@ -4517,6 +4772,13 @@ exports.issues = {
           quality: 1,
           what: 'HTML page has no title'
         }
+      },
+      wax: {
+        'Documents must have <title> element to aid in navigation': {
+          variable: false,
+          quality: 1,
+          what: 'Document contains no title element'
+        }
       }
     }
   },
@@ -4574,6 +4836,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Skipped heading level'
+        }
+      },
+      wax: {
+        'Heading levels should only increase by one': {
+          variable: false,
+          quality: 1,
+          what: 'Heading levels do not increase by only one'
         }
       }
     }
@@ -4785,7 +5054,7 @@ exports.issues = {
     }
   },
   justificationRisk: {
-    summary: 'justification possibly undefined',
+    summary: 'justification undefined?',
     why: 'Text may be difficult to read',
     wcag: '1.4.8',
     weight: 1,
@@ -4970,11 +5239,25 @@ exports.issues = {
           what: 'List element dl has a child element other than properly ordered dt or dt group, script, template, or div'
         }
       },
+      ibm: {
+        list_children_valid: {
+          variable: false,
+          quality: 1,
+          what: 'Element has a group role but has a child whose role is not listitem'
+        }
+      },
       nuVal: {
         'Element dl is missing a required child element.': {
           variable: false,
           quality: 1,
           what: 'dl element has no child element'
+        }
+      },
+      wax: {
+        '<ul> and <ol> must only directly contain <li>, <script> or <template> elements': {
+          variable: false,
+          quality: 1,
+          what: 'Element is ul or ol but directly contains an element other than li, script, or template'
         }
       }
     }
@@ -4990,6 +5273,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element is not contained by a ul or ol element'
+        }
+      },
+      wax: {
+        '<li> elements must be contained in a <ul> or <ol>': {
+          variable: false,
+          quality: 1,
+          what: 'Element is li but is not contained by a ul or ol element'
         }
       }
     }
@@ -5040,7 +5330,7 @@ exports.issues = {
     }
   },
   pseudoListRisk: {
-    summary: 'list possibly not marked as such',
+    summary: 'list not marked as such?',
     why: 'User may be unable to get help on which items are in lists',
     wcag: '1.3.1',
     weight: 1,
@@ -5095,13 +5385,6 @@ exports.issues = {
           quality: 1,
           what: 'Navigation links are not coded as a list'
         }
-      },
-      qualWeb: {
-        'QW-WCAG-T32': {
-          variable: false,
-          quality: 1,
-          what: 'ol, ul or dl is not used for a list or group of links'
-        }
       }
     }
   },
@@ -5136,6 +5419,13 @@ exports.issues = {
           quality: 1,
           what: 'Select element has no label'
         }
+      },
+      wax: {
+        'Select element must have an accessible name': {
+          variable: false,
+          quality: 1,
+          what: 'select element has no accessible name'
+        }
       }
     }
   },
@@ -5155,7 +5445,7 @@ exports.issues = {
     }
   },
   selectFlatRisk: {
-    summary: 'option groups possibly not marked',
+    summary: 'option groups not marked?',
     why: 'User may be unable to get help recognizing groups of options',
     wcag: '1.3.1',
     weight: 1,
@@ -5236,7 +5526,7 @@ exports.issues = {
     }
   },
   fieldSetRisk: {
-    summary: 'fieldset possibly missing',
+    summary: 'fieldset missing?',
     why: 'User may be unable to get help recognizing a group of related form items',
     wcag: '1.3.1',
     weight: 1,
@@ -5419,6 +5709,11 @@ exports.issues = {
           variable: true,
           quality: 1,
           what: 'Table row has a column count larger than that of the first row'
+        },
+        '^Table column \d+ established by element td has no cells beginning in it\.$': {
+          variable: true,
+          quality: 1,
+          what: 'Element is td but the prior cells in its table column do not exist'
         }
       }
     }
@@ -5460,6 +5755,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'caption element not used to associate a caption with a data table'
+        }
+      },
+      wave: {
+        table_caption_possible: {
+          variable: false,
+          quality: 1,
+          what: 'table cell apparently misused as the table caption'
         }
       }
     }
@@ -5561,6 +5863,13 @@ exports.issues = {
           quality: 1,
           what: 'Complex table is missing headers attributes of cells'
         }
+      },
+      ibm: {
+        table_headers_related: {
+          variable: false,
+          quality: 1,
+          what: 'Element is a cell in a complex table but has no headers associated with headers or scope attributes'
+        }
       }
     }
   },
@@ -5580,7 +5889,7 @@ exports.issues = {
     }
   },
   cellHeadersAmbiguityRisk: {
-    summary: 'cell headers possibly ambiguous',
+    summary: 'cell headers ambiguous?',
     why: 'User may be unable to get help on relationships in a table',
     wcag: '1.3.1',
     weight: 2,
@@ -5692,7 +6001,7 @@ exports.issues = {
     }
   },
   TableHeaderScopeRisk: {
-    summary: 'Table scope possibly ambiguous',
+    summary: 'Table scope ambiguous?',
     why: 'User may be unable to get help on relationships in a table',
     wcag: '1.3.1',
     weight: 1,
@@ -5712,6 +6021,13 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 2,
     tools: {
+      axe: {
+        'empty-table-header': {
+          variable: false,
+          quality: 1,
+          what: 'Element is a table header but has no text'
+        }
+      },
       ed11y: {
         tableEmptyHeaderCell: {
           variable: false,
@@ -5769,6 +6085,51 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'table element is inside another table element'
+        }
+      }
+    }
+  },
+  divInTable: {
+    summary: 'div embedded in table',
+    why: 'Blocks of content within a table cell may confuse a user',
+    wcag: '1.4',
+    weight: 1,
+    tools: {
+      nuVal: {
+        'Start tag div seen in table.': {
+          variable: false,
+          quality: 1,
+          what: 'div element is inside a table element'
+        }
+      }
+    }
+  },
+  formInTable: {
+    summary: 'form embedded in table',
+    why: 'Navigation in a form may confuse a keyboard-only user',
+    wcag: '2.1.1',
+    weight: 1,
+    tools: {
+      nuVal: {
+        'Start tag form seen in table.': {
+          variable: false,
+          quality: 1,
+          what: 'form element is inside a table element'
+        }
+      }
+    }
+  },
+  inputInTable: {
+    summary: 'input embedded in table',
+    why: 'Entry of data in a form may confuse a keyboard-only user',
+    wcag: '2.1.1',
+    weight: 1,
+    tools: {
+      nuVal: {
+        'Start tag input seen in table.': {
+          variable: false,
+          quality: 1,
+          what: 'input element is inside a table element'
         }
       }
     }
@@ -5835,6 +6196,13 @@ exports.issues = {
           quality: 1,
           what: 'form element has no label'
         }
+      },
+      wax: {
+        'Form elements must have labels': {
+          variable: false,
+          quality: 1,
+          what: 'Form input element has no label'
+        }
       }
     }
   },
@@ -5853,6 +6221,13 @@ exports.issues = {
       },
       axe: {
         'label-title-only': {
+          variable: false,
+          quality: 1,
+          what: 'Form control has no visible label'
+        }
+      },
+      wax: {
+        'Form elements should have a visible label': {
           variable: false,
           quality: 1,
           what: 'Form control has no visible label'
@@ -6015,6 +6390,16 @@ exports.issues = {
           quality: 1,
           what: 'button element is a descendant of an element with a button role'
         },
+        'An element with the attribute role=button must not appear as a descendant of an element with the attribute role=button.': {
+          variable: false,
+          quality: 1,
+          what: 'Element with a button role is a descendant of an element with a button role'
+        },
+        'An element with the attribute role=button must not appear as a descendant of the button element.': {
+          variable: false,
+          quality: 1,
+          what: 'Element with a button role is a descendant of a button element'
+        },
         'The element label must not appear as a descendant of an element with the attribute role=button.': {
           variable: false,
           quality: 1,
@@ -6072,6 +6457,13 @@ exports.issues = {
           quality: 1,
           what: 'Active element is embedded in a link or button'
         }
+      },
+      wax: {
+        'Interactive controls must not be nested': {
+          variable: false,
+          quality: 1,
+          what: 'Interactive controls are nested'
+        }
       }
     }
   },
@@ -6096,8 +6488,8 @@ exports.issues = {
         },
         'QW-WCAG-T24': {
           variable: false,
-          quality: 1,
-          what: 'Script removes the focus when focus is received'
+          quality: 0.5,
+          what: 'Script removes the focus when focus is received?'
         }
       },
       testaro: {
@@ -6260,6 +6652,13 @@ exports.issues = {
           quality: 1,
           what: 'Content is not within a landmark element'
         }
+      },
+      wax: {
+        'All page content should be contained by landmarks': {
+          variable: false,
+          quality: 1,
+          what: 'Content is not within a landmark element'
+        }
       }
     }
   },
@@ -6274,6 +6673,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'contentinfo landmark (footer) is contained in another landmark'
+        }
+      },
+      wax: {
+        'Contentinfo landmark should not be contained in another landmark': {
+          variable: false,
+          quality: 1,
+          what: 'Element is contentinfo but is within another landmark'
         }
       }
     }
@@ -6301,6 +6707,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'complementary landmark is not at the top level'
+        }
+      },
+      wax: {
+        'Aside should not be contained in another landmark': {
+          variable: false,
+          quality: 1,
+          what: 'Element is aside but is within another landmark'
         }
       }
     }
@@ -6420,6 +6833,13 @@ exports.issues = {
           quality: 1,
           what: 'More than one element with a banner role is on the page'
         }
+      },
+      wax: {
+        'Document should not have more than one banner landmark': {
+          variable: false,
+          quality: 1,
+          what: 'Page has more than 1 banner landmark'
+        }
       }
     }
   },
@@ -6494,6 +6914,13 @@ exports.issues = {
           quality: 0.5,
           what: 'There are multiple contentinfo or banner landmarks'
         }
+      },
+      wax: {
+        'Document should not have more than one contentinfo landmark': {
+          variable: false,
+          quality: 1,
+          what: 'Page has more than 1 contentinfo landmark'
+        }
       }
     }
   },
@@ -6520,6 +6947,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Multiple landmarks with the same parent region are not distinguished from one another'
+        }
+      },
+      wax: {
+        'Ensures landmarks are unique': {
+          variable: false,
+          quality: 1,
+          what: 'Landmark is indistinguishable from another by role or accessible name'
         }
       }
     }
@@ -6565,6 +6999,21 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Multiple elements with a form role do not have unique labels'
+        }
+      }
+    }
+  },
+  applicationNoText: {
+    summary: 'application not named',
+    why: 'User cannot get help on how some of the document is organized',
+    wcag: '1.3.6',
+    weight: 4,
+    tools: {
+      ibm: {
+        aria_application_labelled: {
+          variable: false,
+          quality: 1,
+          what: 'Element with an application role has no purpose label'
         }
       }
     }
@@ -7436,6 +7885,13 @@ exports.issues = {
           quality: 1,
           what: 'Element has a refresh delay (no exception)'
         }
+      },
+      wave: {
+        meta_refresh: {
+          variable: false,
+          quality: 1,
+          what: 'Page refreshes or redirects'
+        }
       }
     }
   },
@@ -7531,6 +7987,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'tabIndex value positive'
+        }
+      },
+      wax: {
+        'Elements should not have tabindex greater than zero': {
+          variable: false,
+          quality: 1,
+          what: 'Element has a positive tabIndex attribute'
         }
       }
     }
@@ -7645,7 +8108,7 @@ exports.issues = {
     }
   },
   audioTextRisk: {
-    summary: 'audio possibly not named',
+    summary: 'audio not named?',
     why: 'User may be unable to get help reading speech as text',
     wcag: '1.2.1',
     weight: 1,
@@ -7722,7 +8185,7 @@ exports.issues = {
     }
   },
   videoCaptionRisk: {
-    summary: 'audio or video alternatives possibly missing',
+    summary: 'audio or video alternatives missing?',
     why: 'User may be unable to get help reading video content as text',
     wcag: '1.2.2',
     weight: 1,
@@ -7843,7 +8306,7 @@ exports.issues = {
     }
   },
   scrollFocus: {
-    summary: 'scrollable element and its children not focusable',
+    summary: 'scrollable element and children nonfocusable',
     why: 'User may be unable to see all of an item without scrolling in both dimensions',
     wcag: '2.1.1',
     weight: 3,
@@ -7908,7 +8371,7 @@ exports.issues = {
     }
   },
   repeatedContentRisk: {
-    summary: 'skip method possibly missing or invalid',
+    summary: 'skip method missing or invalid?',
     why: 'Keyboard-only user may be unable easily to reach the specific content of the document',
     wcag: '2.4.1',
     weight: 1,
@@ -7990,7 +8453,7 @@ exports.issues = {
     }
   },
   noScriptRisk: {
-    summary: 'noscript element possibly not equivalent',
+    summary: 'noscript element not equivalent?',
     why: 'User who has disabled JavaScript may be denied some content',
     wcag: '4.1',
     weight: 1,
@@ -8222,6 +8685,36 @@ exports.issues = {
       }
     }
   },
+  atRuleInvalid: {
+    summary: 'invalid at-rule',
+    why: 'Document cannot be properly displayed in particular contexts',
+    wcag: '4.1',
+    weight: 3,
+    tools: {
+      nuVal: {
+        '^CSS: Unrecognized at-rule @.+$': {
+          variable: true,
+          quality: 1,
+          what: 'At-rule not recognized by CSS'
+        },
+        'CSS: This profile has a very specific syntax for @charset: @charset followed by exactly one space, followed by the name of the encoding in quotes, followed immediately by a semicolon.': {
+          variable: false,
+          quality: 1,
+          what: 'CSS @charset at-rule has an invalid format'
+        },
+        'CSS: The @charset rule may only occur at the start of the style sheet. Please check that there are no spaces before it.': {
+          variable: false,
+          quality: 1,
+          what: 'CSS @charset at-rule is not at the start of its style sheet'
+        },
+        'CSS: @import are not allowed after any valid statement other than @charset and @import.': {
+          variable: false,
+          quality: 1,
+          what: 'CSS @import at-rule is after an at-rule other than @charset or @import'
+        }
+      }
+    }
+  },
   cssInvalid: {
     summary: 'CSS invalid',
     why: 'Document cannot be properly displayed',
@@ -8329,6 +8822,11 @@ exports.issues = {
           quality: 1,
           what: 'Space is misused as a CSS operator'
         },
+        '^CSS: .+: , is an incorrect operator\.$': {
+          variable: true,
+          quality: 1,
+          what: 'Comma is misused as a CSS operator'
+        },
         '^CSS: Unknown pseudo-element or pseudo-class :.+$': {
           variable: true,
           quality: 1,
@@ -8339,11 +8837,6 @@ exports.issues = {
           quality: 1,
           what: 'Unrecognized media value'
         },
-        'CSS: This profile has a very specific syntax for @charset: @charset followed by exactly one space, followed by the name of the encoding in quotes, followed immediately by a semicolon.': {
-          variable: false,
-          quality: 1,
-          what: 'CSS @charset at-rule has an invalid format'
-        },
         '^CSS: .+ is not a :lang.+ value.*$': {
           variable: true,
           quality: 1,
@@ -8353,16 +8846,6 @@ exports.issues = {
           variable: true,
           quality: 1,
           what: 'semicolon missing in CSS'
-        },
-        'CSS: The @charset rule may only occur at the start of the style sheet. Please check that there are no spaces before it.': {
-          variable: false,
-          quality: 1,
-          what: 'CSS @charset at-rule is not at the start of its style sheet'
-        },
-        'CSS: @import are not allowed after any valid statement other than @charset and @import.': {
-          variable: false,
-          quality: 1,
-          what: 'CSS @import at-rule is after an at-rule other than @charset or @import'
         },
         '^CSS: perspective: .+ is not valid, only values greater than 0 allowed.*$': {
           variable: true,
@@ -8378,6 +8861,11 @@ exports.issues = {
           variable: true,
           quality: 0.5,
           what: 'CSS transition property has a value greater than 1'
+        },
+        'CSS: -webkit-mask: too few values for the property linear-gradient.': {
+          variable: false,
+          quality: 1,
+          what: 'CSS webkit-mask linear-gradient property has too few values'
         },
         '^CSS: In CSS1, a class name could start with a digit .+, unless it was a dimension .+ In CSS2, such classes are parsed as unknown dimensions .+ To make .+ a valid class, CSS2 requires the first digit to be escaped: .+$': {
           variable: true,
@@ -8397,12 +8885,17 @@ exports.issues = {
         '^Stray start tag .+$': {
           variable: true,
           quality: 1,
-          what: 'Invalid opening tag'
+          what: 'Invalid start tag'
         },
         '^Stray end tag .+$': {
           variable: true,
           quality: 1,
           what: 'Invalid closing tag'
+        },
+        '^End tag [a-z]+\.$': {
+          variable: true,
+          quality: 1,
+          what: 'Closing tag of an ineligible element'
         },
         '^Start tag .+ seen but an element of the same type was already open.*$': {
           variable: true,
@@ -8433,6 +8926,11 @@ exports.issues = {
           variable: true,
           quality: 1,
           what: 'End tag for an element that is not in scope'
+        },
+        'End tag had attributes.': {
+          variable: false,
+          quality: 1,
+          what: 'End tag has an attribute'
         }
       }
     }
@@ -8518,6 +9016,21 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Numeric character entity represents a carriage return'
+        }
+      }
+    }
+  },
+  entityBad: {
+    summary: 'named character reference invalid',
+    why: 'User may be unable to read all the document text',
+    wcag: '4.1',
+    weight: 4,
+    tools: {
+      nuVal: {
+        'Named character reference was not terminated by a semicolon. (Or & should have been escaped as &amp;.)': {
+          variable: false,
+          quality: 1,
+          what: '& not escaped or used in an unterminated character reference'
         }
       }
     }
@@ -8614,10 +9127,10 @@ exports.issues = {
           quality: 1,
           what: 'Invalid element name'
         },
-        'Quote \" in attribute name. Probable cause: Matching quote missing somewhere earlier.': {
-          variable: false,
+        '^Quote . in attribute name\. Probable cause: Matching quote missing somewhere earlier\.$': {
+          variable: true,
           quality: 1,
-          what: 'Attribute name includes a double quotation mark'
+          what: 'Attribute name includes an apostrophe or double quotation mark'
         },
         'Element script must not have attribute async unless attribute src is also specified or unless attribute type is specified with value module.': {
           variable: false,
@@ -8639,11 +9152,6 @@ exports.issues = {
           quality: 1,
           what: 'Element has an invalid ancestor'
         },
-        'The first child option element of a select element with a required attribute, and without a multiple attribute, and without a size attribute whose value is greater than 1, must have either an empty value attribute, or must have no text content. Consider either adding a placeholder option label, or adding a size attribute with a value equal to the number of option elements.': {
-          variable: false,
-          quality: 1,
-          what: 'option element has a nonempty value'
-        },
         'Element script must not have attribute charset unless attribute src is also specified.': {
           variable: false,
           quality: 1,
@@ -8663,6 +9171,11 @@ exports.issues = {
           variable: true,
           quality: 1,
           what: 'Element is invalid because its namespace is not HTML'
+        },
+        'A slash was not immediately followed by >.': {
+          variable: false,
+          quality: 1,
+          what: 'Element start tag contains a nonfinal slash'
         }
       },
       qualWeb: {
@@ -8719,15 +9232,20 @@ exports.issues = {
     weight: 4,
     tools: {
       nuVal: {
+        '^Internal encoding declaration named an unsupported chararacter encoding .*$': {
+          variable: true,
+          quality: 1,
+          what: 'Encoding declaration names an unsupported character encoding'
+        },
         'Text run is not in Unicode Normalization Form C.': {
           variable: false,
           quality: 1,
-          what: 'Text run is not in Unicode Normalization Form C.'
+          what: 'Text run is not in Unicode Normalization Form C'
         },
         '^The value of attribute .+ on element .+ from namespace .+ is not in Unicode Normalization Form C.*$': {
           variable: true,
           quality: 1,
-          what: 'Value of attribute is not in Unicode Normalization Form C.'
+          what: 'Value of attribute is not in Unicode Normalization Form C'
         },
         '^Forbidden code point U+.*$': {
           variable: true,

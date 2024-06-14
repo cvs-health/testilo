@@ -21,35 +21,58 @@
 */
 
 /*
-  tsp43
-  Testilo score proc 43
+  tsp49
+  Testilo score proc 49
 
-  Computes target score data and adds them to a ts40 report.
+  Computes target score data and adds them to a Testaro report.
 */
 
 // IMPORTS
 
-const {issues} = require('./tic43');
+const {issues} = require('./tic49');
 
-// CONSTANTS
+// MISCELLANEOUS CONSTANTS
 
 // ID of this proc.
-const scoreProcID = 'tsp43';
-// Latency weight (how much each second of excess latency adds to the score).
-const latencyWeight = 1;
-// Normal latency (6 visits, with 1.5 second per visit).
-const normalLatency = 9;
-// Prevention weights (how much each prevention adds to the score).
-const preventionWeight = 300;
-const testaroRulePreventionWeight = 30;
-// Maximum instance count addition weight (divisor of max).
-const maxWeight = 30;
-// Issue count weight.
+const scoreProcID = 'tsp49';
+
+// WEIGHT CONSTANTS
+// How much is added to the page score by each component.
+
+// 1. Issue
+// Each issue.
 const issueCountWeight = 10;
-// Other weights.
+/*
+  Expander of instance counts for issues with inherently limited instance counts. Divide this by
+  the maximum possible instance count and add the quotient to 1, then multiply the sum by the actual
+  instance count, i.e. the largest rule-quality-weighted instance count among the tools with any
+  instances of the issue.
+*/
+const maxWeight = 30;
+
+// 2. Solo
+
+// 3. Tool
+/*
+  Severity: amount added to each raw tool score by each violation of a rule with ordinal severity 0
+  through 3.
+*/
 const severityWeights = [1, 2, 3, 4];
+// Final: multiplier of the raw tool score to obtain the final tool score.
 const toolWeight = 0.1;
+
+// 4. Element
+// Multiplier of the count of elements with at least 1 rule violation.
 const elementWeight = 2;
+
+// 5. Prevention
+// Each tool prevention by the page.
+const preventionWeight = 300;
+// Each prevention of a Testaro rule test by the page.
+const testaroRulePreventionWeight = 30;
+
+// 6. Log
+// Multipliers of log values to obtain the log score.
 const logWeights = {
   logCount: 0.1,
   logSize: 0.002,
@@ -58,6 +81,15 @@ const logWeights = {
   prohibitedCount: 3,
   visitRejectionCount: 2
 };
+
+// 7. Latency
+// Normal latency (11 visits [1 per tool], with 2 seconds per visit).
+const normalLatency = 22;
+// Total latency exceeding normal, in seconds.
+const latencyWeight = 2;
+
+// RULE CONSTANTS
+
 // Initialize a table of tool rules.
 const issueIndex = {};
 // Initialize an array of variably named tool rules.
@@ -164,6 +196,7 @@ exports.scorer = report => {
           // For each instance of the tool:
           standardResult.instances.forEach(instance => {
             const {count, ordinalSeverity, pathID, ruleID, what} = instance;
+            count ??= 1;
             // If the rule ID is not in the table of tool rules:
             let canonicalRuleID = ruleID;
             if (! issueIndex[which][ruleID]) {
@@ -201,7 +234,7 @@ exports.scorer = report => {
                 if (! details.issue[issueName].instanceCounts[which]) {
                   details.issue[issueName].instanceCounts[which] = 0;
                 }
-                details.issue[issueName].instanceCounts[which] += count || 1;
+                details.issue[issueName].instanceCounts[which] += count;
                 if (! details.issue[issueName].tools[which][canonicalRuleID]) {
                   const ruleData = issues[issueName].tools[which][canonicalRuleID];
                   details.issue[issueName].tools[which][canonicalRuleID] = {

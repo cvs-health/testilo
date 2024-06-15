@@ -279,6 +279,11 @@ exports.issues = {
           quality: 0,
           what: 'No link at the top of the page goes directly to the main content area [invalid]'
         },
+        'QW-WCAG-T24': {
+          variable: false,
+          quality: 0.5,
+          what: 'Script removes the focus when focus is received [invalid]'
+        },
         qualWeb: {
           'QW-WCAG-T32': {
             variable: false,
@@ -6485,11 +6490,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'iframe with negative tabindex has interactive elements'
-        },
-        'QW-WCAG-T24': {
-          variable: false,
-          quality: 0.5,
-          what: 'Script removes the focus when focus is received?'
         }
       },
       testaro: {

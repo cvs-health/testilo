@@ -284,12 +284,10 @@ exports.issues = {
           quality: 0.5,
           what: 'Script removes the focus when focus is received [invalid]'
         },
-        qualWeb: {
-          'QW-WCAG-T32': {
-            variable: false,
-            quality: 1,
-            what: 'ol, ul or dl may fail to be used for a list or group of links [speculative]'
-          }
+        'QW-WCAG-T32': {
+          variable: false,
+          quality: 1,
+          what: 'ol, ul or dl may fail to be used for a list or group of links [speculative]'
         }
       }
     }

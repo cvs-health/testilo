@@ -50,8 +50,6 @@ const issueCountWeight = 10;
 */
 const maxWeight = 30;
 
-// 2. Solo
-
 // 3. Tool
 /*
   Severity: amount added to each raw tool score by each violation of a rule with ordinal severity 0
@@ -90,7 +88,7 @@ const latencyWeight = 2;
 
 // RULE CONSTANTS
 
-// Initialize a table of tool rules.
+// Initialize a table of issue-classified tool rules.
 const issueIndex = {};
 // Initialize an array of variably named tool rules.
 const issueMatcher = [];
@@ -100,10 +98,8 @@ Object.keys(issues).forEach(issueName => {
   Object.keys(issues[issueName].tools).forEach(toolName => {
     // For each of those rules:
     Object.keys(issues[issueName].tools[toolName]).forEach(ruleID => {
+      issueIndex[toolName] ??= {};
       // Add it to the table of tool rules.
-      if (! issueIndex[toolName]) {
-        issueIndex[toolName] = {};
-      }
       issueIndex[toolName][ruleID] = issueName;
       // If it is variably named:
       if (issues[issueName].tools[toolName][ruleID].variable) {
@@ -197,8 +193,8 @@ exports.scorer = report => {
           standardResult.instances.forEach(instance => {
             const {ordinalSeverity, pathID, ruleID, what} = instance;
             const count = instance.count || 1;
-            // If the rule ID is not in the table of tool rules:
             let canonicalRuleID = ruleID;
+            // If the rule ID is not in the table of issue-classified tool rules:
             if (! issueIndex[which][ruleID]) {
               // Convert it to the variably named tool rule that it matches, if any.
               canonicalRuleID = issueMatcher.find(pattern => {

@@ -66,6 +66,16 @@ exports.issues = {
           quality: 1,
           what: 'Background image may be informative [speculative]'
         },
+        empty_link_element: {
+          variable: false,
+          quality: 1,
+          what: 'Element has no visible and accessible name [invalid]'
+        },
+        fieldset_no_legend: {
+          variable: false,
+          quality: 1,
+          what: 'First child element of the element is not a legend [duplicative]'
+        },
         flickering: {
           variable: false,
           quality: 0,
@@ -76,10 +86,20 @@ exports.issues = {
           quality: 1,
           what: 'Link destination has a named host and may be in an unexpected language [speculative]'
         },
+        links_not_visually_evident_without_color_vision: {
+          variable: false,
+          quality: 1,
+          what: 'Element is a link, but its style properties do not differentiate it from its parent [irrelevant]'
+        },
         meaningful_content_sequence: {
           variable: false,
           quality: 0,
           what: 'The content sequence may fail to be meaningful [speculative]'
+        },
+        missing_alt_attribute: {
+          variable: false,
+          quality: 1,
+          what: 'Image has no alt attribute [invalid]'
         },
         motion_actuation: {
           variable: false,
@@ -161,6 +181,13 @@ exports.issues = {
           what: 'Element is a visualization, so may lack a nonvisual equivalent [speculative]'
         }
       },
+      ibm: {
+        aria_child_valid: {
+          variable: false,
+          quality: 1,
+          what: 'Child element has a role not allowed for the role of the parent [invalid]'
+        }
+      },
       nuVal: {
         'Element head is missing a required instance of child element title.': {
           variable: false,
@@ -174,6 +201,11 @@ exports.issues = {
         }
       },
       qualWeb: {
+        'QW-ACT-R13': {
+          variable: false,
+          quality: 1,
+          what: 'Element with aria-hidden has focusable content [invalid]'
+        },
         'QW-ACT-R52': {
           variable: false,
           quality: 0,
@@ -608,13 +640,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Image has no accessible name'
-        }
-      },
-      aslint: {
-        missing_alt_attribute: {
-          variable: false,
-          quality: 1,
-          what: 'Image has no alt attribute'
         }
       },
       axe: {
@@ -1898,11 +1923,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element is an image in a link but has no text alternative'
-        },
-        empty_link_element: {
-          variable: false,
-          quality: 1,
-          what: 'Element has no visible and accessible name'
         }
       },
       axe: {
@@ -2837,8 +2857,8 @@ exports.issues = {
       qualWeb: {
         'QW-WCAG-T28': {
           variable: false,
-          quality: 1,
-          what: 'Percent, em, or name is used for a font size'
+          quality: 0.8,
+          what: 'Font size set to an absolute unit value'
         }
       }
     }
@@ -3415,11 +3435,6 @@ exports.issues = {
     weight: 4,
     tools: {
       ibm: {
-        aria_child_valid: {
-          variable: false,
-          quality: 1,
-          what: 'Child element has a role not allowed for the role of the parent'
-        },
         aria_descendant_valid: {
           variable: false,
           quality: 1,
@@ -4824,7 +4839,7 @@ exports.issues = {
         'heading-order': {
           variable: false,
           quality: 1,
-          what: 'Heading levels do not increase by only one'
+          what: 'Heading levels do not increase by only one or their order is ambiguous'
         }
       },
       ed11y: {
@@ -5572,11 +5587,6 @@ exports.issues = {
     weight: 2,
     tools: {
       aslint: {
-        fieldset_no_legend: {
-          variable: false,
-          quality: 1,
-          what: 'First child element of the element is not a legend'
-        },
         legend_first_child_of_fieldset: {
           variable: false,
           quality: 1,
@@ -7251,13 +7261,6 @@ exports.issues = {
           quality: 1,
           what: 'Element has an ancestor with a true aria-hidden attribute but is focusable'
         }
-      },
-      qualWeb: {
-        'QW-ACT-R13': {
-          variable: false,
-          quality: 1,
-          what: 'Element with aria-hidden has focusable content'
-        }
       }
     }
   },
@@ -7660,13 +7663,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Inline link is not distinct from the surrounding text except by color'
-        }
-      },
-      aslint: {
-        links_not_visually_evident_without_color_vision: {
-          variable: false,
-          quality: 1,
-          what: 'Element is a link, but its style properties do not differentiate it from its parent'
         }
       },
       axe: {

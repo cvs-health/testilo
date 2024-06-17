@@ -251,6 +251,11 @@ exports.issues = {
           quality: 0,
           what: 'h1-h6 may fail to be used to identify headings [speculative]'
         },
+        'QW-BP2': {
+          variable: false,
+          quality: 1,
+          what: 'Image text alternative is not concise'
+        },
         'QW-BP17': {
           variable: false,
           quality: 1,
@@ -320,6 +325,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'ol, ul or dl may fail to be used for a list or group of links [speculative]'
+        },
+        'QW-WCAG-T35': {
+          variable: false,
+          quality: 1,
+          what: 'Several elements have this id attribute value [invalid]'
         }
       }
     }
@@ -409,11 +419,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'id attribute value is not unique'
-        },
-        'QW-WCAG-T35': {
-          variable: false,
-          quality: 1,
-          what: 'Several elements have this id attribute value'
         }
       }
     }
@@ -821,14 +826,14 @@ exports.issues = {
         'QW-WCAG-T8': {
           variable: false,
           quality: 1,
-          what: 'Text alternative is not an alternative'
+          what: 'Text alternative is suspect'
         }
       },
       wave: {
         alt_suspicious: {
           variable: false,
           quality: 1,
-          what: 'Image text alternative is suspicious'
+          what: 'Image text alternative is suspect'
         }
       }
     }
@@ -999,13 +1004,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Linked img alt value longer than 160 characters'
-        }
-      },
-      qualWeb: {
-        'QW-BP2': {
-          variable: false,
-          quality: 1,
-          what: 'Image text alternative is not concise'
         }
       },
       wave: {
@@ -2284,11 +2282,6 @@ exports.issues = {
         }
       },
       qualWeb: {
-        'QW-WCAG-T10': {
-          variable: false,
-          quality: 1,
-          what: 'Adjacent image and text links for the same resource are not combined'
-        },
         'QW-BP13': {
           variable: false,
           quality: 1,
@@ -2315,6 +2308,21 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Adjacent links, one with text and the other with a textless image, may merit combination'
+        }
+      }
+    }
+  },
+  linkNameRisk: {
+    summary: 'image link text suspect',
+    why: 'Keyboard-only user may misunderstand the effect of following a link',
+    wcag: '2.4.4',
+    weight: 1,
+    tools: {
+      qualWeb: {
+        'QW-WCAG-T10': {
+          variable: false,
+          quality: 0.8,
+          what: 'Link name repeats its image name and/or that name is suspect'
         }
       }
     }

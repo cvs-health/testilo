@@ -3583,7 +3583,7 @@ exports.issues = {
           quality: 1,
           what: 'Attribute not allowed here'
         },
-        '^Attribute .+ is not serializable as XML 1\\.0.*$': {
+        '^Attribute .+ is not serializable as XML 1[.]0.*$': {
           variable: true,
           quality: 1,
           what: 'Attribute is invalidly nonserializable'
@@ -5731,7 +5731,7 @@ exports.issues = {
           quality: 1,
           what: 'Table row has a column count larger than that of the first row'
         },
-        '^Table column \d+ established by element td has no cells beginning in it.*$': {
+        '^Table column [0-9]+ established by element td has no cells beginning in it.*$': {
           variable: true,
           quality: 1,
           what: 'Element is td but the prior cells in its table column do not exist'
@@ -8959,7 +8959,7 @@ exports.issues = {
     weight: 3,
     tools: {
       nuVal: {
-        '^Bad value [^\ufffd]+ Tab, new line or carriage return found.*$': {
+        '^Bad value [^ ]+ Tab, new line or carriage return found.*$': {
           variable: true,
           quality: 1,
           what: 'Attribute value contains an illegal spacing character'
@@ -9124,12 +9124,12 @@ exports.issues = {
           quality: 1,
           what: 'Comment is missing a valid termination'
         },
-        '^Element name .+ cannot be represented as XML 1\\.0.*$': {
+        '^Element name .+ cannot be represented as XML 1[.]0.*$': {
           variable: true,
           quality: 1,
           what: 'Invalid element name'
         },
-        '^Quote . in attribute name\\. Probable cause: Matching quote missing somewhere earlier.*$': {
+        '^Quote . in attribute name[.] Probable cause: Matching quote missing somewhere earlier.*$': {
           variable: true,
           quality: 1,
           what: 'Attribute name includes an apostrophe or double quotation mark'

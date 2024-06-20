@@ -37,6 +37,7 @@ const {issues} = require('./tic49');
 const scoreProcID = 'tsp49';
 
 // WEIGHT CONSTANTS
+
 // How much is added to the page score by each component.
 
 // 1. Issue
@@ -117,9 +118,9 @@ exports.scorer = report => {
   // If there are any acts in the report:
   const {acts} = report;
   if (Array.isArray(acts) && acts.length) {
-    // If any of them are test acts:
     const testActs = acts.filter(act => act.type === 'test');
     const testTools = new Set(testActs.map(act => act.which));
+    // If any of them are test acts:
     if (testActs.length) {
       // Initialize the score data.
       const score = {
@@ -402,7 +403,7 @@ exports.scorer = report => {
       + summary.prevention
       + summary.log
       + summary.latency;
-      // Add the score to the report or replace the existing score of the report.
+      // Add a, or replace the, score property of the report.
       report.score = score;
     }
     // Otherwise, i.e. if none of them is a test act:

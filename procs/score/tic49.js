@@ -905,7 +905,7 @@ exports.issues = {
     weight: 4,
     tools: {
       nuVal: {
-        '^CSS: padding[-a-z]*: .+ negative values are not allowed\.$': {
+        '^CSS: padding[-a-z]*: .+ negative values are not allowed.*$': {
           variable: true,
           quality: 1,
           what: 'One of the CSS padding values is negative'
@@ -920,7 +920,7 @@ exports.issues = {
     weight: 4,
     tools: {
       nuVal: {
-        '^CSS: gap: .+ negative values are not allowed\.$': {
+        '^CSS: gap: .+ negative values are not allowed.*$': {
           variable: true,
           quality: 1,
           what: 'CSS gap value is negative'
@@ -3079,7 +3079,7 @@ exports.issues = {
     weight: 4,
     tools: {
       nuVal: {
-        '^Saw a start tag [a-z]+\.$': {
+        '^Saw a start tag [a-z]+.*$': {
           variable: true,
           quality: 1,
           what: 'Element does not exist in HTML'
@@ -5731,7 +5731,7 @@ exports.issues = {
           quality: 1,
           what: 'Table row has a column count larger than that of the first row'
         },
-        '^Table column \d+ established by element td has no cells beginning in it\.$': {
+        '^Table column \d+ established by element td has no cells beginning in it.*$': {
           variable: true,
           quality: 1,
           what: 'Element is td but the prior cells in its table column do not exist'
@@ -8824,7 +8824,7 @@ exports.issues = {
           quality: 1,
           what: 'Space is misused as a CSS operator'
         },
-        '^CSS: .+: , is an incorrect operator\.$': {
+        '^CSS: .+: , is an incorrect operator.*$': {
           variable: true,
           quality: 1,
           what: 'Comma is misused as a CSS operator'
@@ -8894,7 +8894,7 @@ exports.issues = {
           quality: 1,
           what: 'Invalid closing tag'
         },
-        '^End tag [a-z]+\.$': {
+        '^End tag [a-z]+.*$': {
           variable: true,
           quality: 1,
           what: 'Closing tag of an ineligible element'
@@ -9129,7 +9129,7 @@ exports.issues = {
           quality: 1,
           what: 'Invalid element name'
         },
-        '^Quote . in attribute name\. Probable cause: Matching quote missing somewhere earlier\.$': {
+        '^Quote . in attribute name\\. Probable cause: Matching quote missing somewhere earlier.*$': {
           variable: true,
           quality: 1,
           what: 'Attribute name includes an apostrophe or double quotation mark'

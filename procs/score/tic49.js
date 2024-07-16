@@ -3140,6 +3140,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element has an as attribute but no rel attribute with preload or modulepreload as its value'
+        },
+        'A link element with a color attribute must have a rel attribute that contains the value mask-icon.': {
+          variable: false,
+          quality: 1,
+          what: 'Element has a color attribute but no rel attribute with mask-icon as its value'
         }
       }
     }
@@ -5883,6 +5888,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Complex table is missing headers attributes of cells'
+        },
+        'AAA.1_3_1.H43,H63': {
+          variable: false,
+          quality: 1,
+          what: 'Relationship among td and th elements of the table is not defined'
         }
       },
       ibm: {

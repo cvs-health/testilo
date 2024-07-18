@@ -52,7 +52,7 @@
         });
         const svg = Plot.plot({
           style: 'overflow: visible;',
-          height: 600,
+          height: 300 + 40 * graphData.length,
           y: {grid: true},
           marks: [
             Plot.ruleY([0]),

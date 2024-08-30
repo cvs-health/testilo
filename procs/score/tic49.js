@@ -514,7 +514,7 @@ exports.issues = {
           quality: 1,
           what: 'Text input has no accessible name'
         },
-        '^AAA.4_1_2.H91.Input[-a-zA-Z]+.Name$': {
+        '^AAA\.4_1_2\.H91\.Input[-a-zA-Z]+\.Name$': {
           variable: true,
           quality: 1,
           what: 'input element has no accessible name'
@@ -2553,6 +2553,11 @@ exports.issues = {
         }
       },
       wax: {
+        'Add discernible text to button elements.': {
+          variable: false,
+          quality: 1,
+          what: 'button element has no discernible text'
+        },
         'Buttons must have discernible text': {
           variable: false,
           quality: 1,
@@ -2707,6 +2712,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element is svg and has an img role but has no text alternative'
+        }
+      },
+      ibm: {
+        'svg_graphics_labelled': {
+          variable: false,
+          quality: 1,
+          what: 'Element is svg but has no accessible name'
         }
       },
       qualWeb: {
@@ -3322,6 +3334,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'iframe element has no accessible name'
+        },
+        'Provide accessible names for <iframe> and <frame> elements.': {
+          variable: false,
+          quality: 1,
+          what: 'iframe or frame element has no accessible name'
         }
       }
     }
@@ -6684,6 +6701,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Content is not within a landmark element'
+        },
+        'Use landmarks to contain page content.': {
+          variable: false,
+          quality: 1,
+          what: 'Content is not within a landmark element'
         }
       }
     }
@@ -8904,7 +8926,7 @@ exports.issues = {
           quality: 1,
           what: 'Invalid closing tag'
         },
-        '^End tag [a-z]+.*$': {
+        '^End tag [a-z]+\.$': {
           variable: true,
           quality: 1,
           what: 'Closing tag of an ineligible element'

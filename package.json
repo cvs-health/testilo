@@ -8,9 +8,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/cvs-health/testilo"
+    "url": "git+https://github.com/cvs-health/testilo.git"
   },
-  "keywords": ["accessibility", "a11y", "testing"],
+  "keywords": [
+    "accessibility",
+    "a11y",
+    "testing"
+  ],
   "author": "Jonathan Pool <jonathan.pool@cvshealth.com>",
   "license": "MIT",
   "bugs": {

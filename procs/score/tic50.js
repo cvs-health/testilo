@@ -464,6 +464,28 @@ exports.issues = {
       }
     }
   },
+  progressNoText: {
+    summary: 'progress bar not named',
+    why: 'User cannot get help understanding the state of a process',
+    wcag: '4.1.2',
+    weight: 4,
+    tools: {
+      axe: {
+        'aria-progressbar-name': {
+          variable: false,
+          quality: 1,
+          what: 'Progress bar has no accessible name'
+        }
+      },
+      wax: {
+        'Ensure ARIA progressbar elements have accessible names.': {
+          variable: false,
+          quality: 1,
+          what: 'Progress bar has no accessible name'
+        }
+      }
+    }
+  },
   componentNoText: {
     summary: 'interactive component not named',
     why: 'User cannot get help understanding a custom item',
@@ -556,6 +578,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'email input element has no accessible name'
+        },
+        'Provide accessible names for ARIA input fields.': {
+          variable: false,
+          quality: 1,
+          what: 'Element with an input role has no accessible name'
         }
       }
     }
@@ -632,6 +659,21 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Image button has no alternative text'
+        }
+      }
+    }
+  },
+  numberInputNoText: {
+    summary: 'number input not named',
+    why: 'User cannot get help understanding what to enter into a number field',
+    wcag: '4.1.2',
+    weight: 4,
+    tools: {
+      wax: {
+        'This numberinput element does not have a name available to an accessibility API. Valid names are: label element, title , aria-label , aria-labelledby , aria-description , aria-describedby .': {
+          variable: false,
+          quality: 1,
+          what: 'Element is an input of type number but has no accessible name'
         }
       }
     }
@@ -1925,6 +1967,13 @@ exports.issues = {
           quality: 1,
           what: 'Orphaned form label'
         }
+      },
+      wax: {
+        'This label\'s "for" attribute contains an ID that does not exist in the document fragment.': {
+          variable: false,
+          quality: 1,
+          what: 'label has a for attribute whose value is not the id of any element'
+        }
       }
     }
   },
@@ -2073,6 +2122,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Link has an href attribute but no content'
+        },
+        'Anchor element found with no link content and no name and/or ID attribute.': {
+          variable: false,
+          quality: 1,
+          what: 'Link has no content, accessible name, or id attribute'
         }
       }
     }
@@ -2177,6 +2231,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element has an empty href attribute'
+        }
+      },
+      wax: {
+        'Link element is missing a non-empty href attribute pointing to the resource being linked.': {
+          variable: false,
+          quality: 1,
+          what: 'link element is missing a non-empty href for the linked resource'
         }
       }
     }
@@ -2706,6 +2767,11 @@ exports.issues = {
           what: 'button element has no accessible name'
         },
         'This element has role of "button" but does not have a name available to an accessibility API. Valid names are: element content, aria-label , aria-labelledby , aria-description , aria-describedby .': {
+          variable: false,
+          quality: 1,
+          what: 'Element with a button role has no accessible name'
+        },
+        'This element has role of "button" but does not have a name available to an accessibility API. Valid names are: title , element content, aria-label , aria-labelledby , aria-description , aria-describedby .': {
           variable: false,
           quality: 1,
           what: 'Element with a button role has no accessible name'
@@ -4118,6 +4184,11 @@ exports.issues = {
           quality: 1,
           what: 'ARIA attribute is invalid for the role'
         },
+        aria_attribute_exists: {
+          variable: false,
+          quality: 1,
+          what: 'ARIA attribute has an empty value'
+        },
         Rpt_Aria_ValidPropertyValue: {
           variable: false,
           quality: 1,
@@ -4186,6 +4257,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'ARIA state or property has an invalid value'
+        }
+      },
+      wax: {
+        'Apply aria-roledescription only to elements with a valid ARIA role.': {
+          variable: false,
+          quality: 1,
+          what: 'Element has no valid ARIA role but has an aria-roledescription attribute'
         }
       }
     }
@@ -4331,6 +4409,13 @@ exports.issues = {
     tools: {
       htmlcs: {
         'AAA.1_3_5.H98': {
+          variable: false,
+          quality: 1,
+          what: 'Element contains a potentially faulty value in its autocomplete attribute'
+        }
+      },
+      wax: {
+        'This element contains a potentially faulty value in its autocomplete attribute: .': {
           variable: false,
           quality: 1,
           what: 'Element contains a potentially faulty value in its autocomplete attribute'
@@ -5098,6 +5183,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Document contains no title element'
+        },
+        'A title should be provided for the document, using a non-empty title element in the head section.': {
+          variable: false,
+          quality: 1,
+          what: 'Document contains no title element in the head element'
         }
       }
     }
@@ -5852,11 +5942,25 @@ exports.issues = {
           what: 'accesskey attribute value is not unique'
         }
       },
+      ibm: {
+        element_accesskey_unique: {
+          variable: false,
+          quality: 1,
+          what: 'accesskey attribute value is not unique'
+        }
+      },
       wave: {
         accesskey: {
           variable: false,
           quality: 1,
-          what: 'Accesskey'
+          what: 'accesskey invalid'
+        }
+      },
+      wax: {
+        'Assign unique values to each accesskey attribute to avoid conflicts.': {
+          variable: false,
+          quality: 1,
+          what: 'accesskey attribute value is not unique'
         }
       }
     }
@@ -5905,6 +6009,13 @@ exports.issues = {
       },
       htmlcs: {
         'AAA.1_3_1.H71.SameName': {
+          variable: false,
+          quality: 1,
+          what: 'Radio buttons or check boxes may require a group description via a fieldset element'
+        }
+      },
+      wax: {
+        'If these radio buttons or check boxes require a further group-level description, they should be contained within a fieldset element.': {
           variable: false,
           quality: 1,
           what: 'Radio buttons or check boxes may require a group description via a fieldset element'
@@ -6586,6 +6697,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Form control element has no label'
+        },
+        'Avoid using hidden labels, title, or aria-describedby attributes as the sole label for form elements.': {
+          variable: false,
+          quality: 1,
+          what: 'Form control element has a substitute for a valid label'
         }
       }
     }
@@ -7734,12 +7850,19 @@ exports.issues = {
         'AAA.1_3_1.F68.Hidden': {
           variable: false,
           quality: 1,
-          what: 'Hidden form field is needlessly labeled.'
+          what: 'Hidden form field is needlessly labeled'
         },
         'AAA.1_3_1.F68.HiddenAttr': {
           variable: false,
           quality: 1,
-          what: 'Form field with a hidden attribute is needlessly labeled.'
+          what: 'Form field with a hidden attribute is needlessly labeled'
+        }
+      },
+      wax: {
+        'This hidden form field is labelled in some way. There should be no need to label a hidden form field.': {
+          variable: false,
+          quality: 1,
+          what: 'Hidden form field is needlessly labeled'
         }
       }
     }
@@ -7936,6 +8059,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Empty form label'
+        }
+      },
+      wax: {
+        'This form control has an "aria-label" attribute that is empty or contains only spaces. It will be ignored for labelling test purposes.': {
+          variable: false,
+          quality: 1,
+          what: 'Element is a form control but has a label whose value is empty or only whitespace'
         }
       }
     }
@@ -8840,6 +8970,13 @@ exports.issues = {
     wcag: '3.3.1',
     weight: 4,
     tools: {
+      ibm: {
+        error_message_exists: {
+          variable: false,
+          quality: 1,
+          what: 'Element has an aria-errormessage attribute whose value is an invalid id'
+        }
+      },
       qualWeb: {
         'QW-ACT-R41': {
           variable: false,
@@ -9359,7 +9496,7 @@ exports.issues = {
     weight: 3,
     tools: {
       nuVal: {
-        '^Bad value [^ ]+ Tab, new line or carriage return found.*$': {
+        '^Bad value [^`]+ Tab, new line or carriage return found.*$': {
           variable: true,
           quality: 1,
           what: 'Attribute value contains an illegal spacing character'

@@ -809,16 +809,16 @@ The `report` argument is a scored report. The `summary` constant is an object. T
 A user can invoke `summarize()` in either of these two ways:
 
 ```javaScript
-node call summarize divisions
-node call summarize divisions 2411
+node call summarize "company divisions"
+node call summarize "company divisions" 2411
 ```
 
 When a user invokes `summarize` in this example, the `call` module:
 - gets all the reports in the `scored` subdirectory of the `REPORTDIR` directory, or (if the third argument is present) all those whose file names begin with `2411`.
 - creates a summary of each report.
 - combines the summaries into an array.
-- creates a _summary report_, an object containing three properties: `id` (an ID), `what` (a description, such as `'divisions'`), and `summaries` (the array of summaries).
-- writes the summary report in JSON format to the `summarized` subdirectory of the `REPORTDIR` directory, using the ID as the base of the file name.
+- creates a _summary report_, an object containing three properties: `id` (an ID), `what` (a description, such as `'company divisions'`), and `summaries` (the array of summaries).
+- writes the summary report in JSON format to the `summarized` subdirectory of the `REPORTDIR` directory.
 
 ### Comparison
 

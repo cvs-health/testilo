@@ -44,7 +44,9 @@ const getMaxScore = summaryReport => summaryReport.summaries.reduce(
 );
 // Converts summary report data to a table body.
 const getTableBody = async summaryReport => {
+  // Get the maximum of the scores.
   const maxScore = getMaxScore(summaryReport);
+  // Create table body rows for the targets.
   const rows = summaryReport.summaries
   .sort((a, b) => a.score - b.score)
   .map(result => {

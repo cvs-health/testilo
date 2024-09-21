@@ -914,13 +914,15 @@ When a user invokes `track()` in this example, the `call` module:
 
 The tracking reports created by `track()` are HTML files, and they expect a `style.css` file to exist in their directory. The `reports/tracking/style.css` file in Testilo is an appropriate stylesheet to be copied into the directory where tracking reports are written.
 
-### Tool crediting
+### Statistics
 
-If you use Testaro to perform all the tests of all the tools on multiple targets and score the reports with a score proc that maps tool rules onto tool-agnostic issues, you may want to tabulate the comparative efficacy of each tool in discovering instances of issues. Testilo can help you do this by producing a _credit report_.
+If you use Testaro to perform all the tests of all the tools on multiple targets and score the reports with a score proc that maps tool rules onto tool-agnostic issues, you may want to get statistics on tools and issues, aggregated from the scored reports. Testilo has two procs for this purpose.
+
+#### Tool crediting
 
 The `credit` module tabulates the contribution of each tool to the discovery of issue instances in a collection of scored reports. Its `credit()` function takes two arguments: a report description and an array of `score` properties of scored reports.
 
-The credit report contains four sections:
+The function produces a credit report containing four sections:
 - `counts`: for each issue, how many instances each tool reported
 - `onlies`: for each issue of which only 1 tool reported instances, which tool it was
 - `mosts`: for each issue of which at least 2 tools reported instances, which tool(s) reported the maximum instance count
@@ -928,11 +930,11 @@ The credit report contains four sections:
     - `onlies`: a list of the issues that only the tool reported instances of
     - `mosts`: a list of the issues for which the instance count of the tool was not surpassed by that of any other tool
 
-#### Invocation
+##### Invocation
 
 There are two ways to use the `credit` module.
 
-##### By a module
+###### By a module
 
 A module can invoke `credit()` in this way:
 
@@ -944,7 +946,7 @@ const creditReport = credit('June 2025', reportScores);
 
 The first argument to `credit()` is a description to be included in the credit report. The second argument is an array of `score` properties of scored report objects. The `credit()` function returns a credit report. The invoking module can further dispose of the credit report as needed.
 
-##### By a user
+###### By a user
 
 A user can invoke `credit()` in one of these ways:
 
@@ -958,6 +960,43 @@ When a user invokes `credit` in this example, the `call` module:
 - gets the `score` properties of those reports.
 - creates an ID for the credit report.
 - writes the credit report as a JSON file, with the ID as the base of its file name and `legislators` as its description, to the `credit` subdirectory of the `REPORTDIR` directory.
+
+### Issue scores
+
+The `issues` module tabulates total issue scores. Its `issues()` function takes two arguments: a report description and an array of `score` properties of scored reports.
+
+The function produces an issue report, an object with issue properties, whose values are the totals of the scores of the respective issues.
+
+##### Invocation
+
+There are two ways to use the `credit` module.
+
+###### By a module
+
+A module can invoke `issues()` in this way:
+
+```javaScript
+const {issues} = require('testilo/issues');
+const reportScores = […];
+const issuesReport = issues('legislators', reportScores);
+```
+
+The arguments to `issues()` are a report description and an array of `score` properties of scored report objects. The `issues()` function returns an issues report. The invoking module can further dispose of the issues report as needed.
+
+###### By a user
+
+A user can invoke `issues()` in one of these ways:
+
+```bash
+node call issues legislators
+node call issues legislators 241106
+```
+
+When a user invokes `issues` in this example, the `call` module:
+- gets all reports, or if the third argument to `call()` exists all reports whose file names begin with `'241106'`, in the `scored` subdirectory of the `REPORTDIR` directory.
+- gets the `score` properties of those reports.
+- creates an ID for the issues report.
+- writes the issues report as a JSON file, with the ID as the base of its file name and `legislators` as its description, to the `issues` subdirectory of the `REPORTDIR` directory.
 
 ## Origin
 

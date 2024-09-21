@@ -60,6 +60,8 @@ const {difgest} = require('./difgest');
 const {compare} = require('./compare');
 // Function to credit tools for issues in reports.
 const {credit} = require('./credit');
+// Function to credit tools for issues in reports.
+const {issues} = require('./issues');
 // Function to summarize reports.
 const {summarize} = require('./summarize');
 // Function to track results.
@@ -482,6 +484,34 @@ const callCredit = async (what, selector = '') => {
     console.log('ERROR: No scored reports to be credited');
   }
 };
+// Fulfills an issues request.
+const callIssues = async (what, selector = '') => {
+  // Get the IDs of the scored reports to be analyzed.
+  const reportIDs = await getReportIDs('scored', selector);
+  // If any exist:
+  if (reportIDs.length) {
+    // Get an array of the score properties of the reports to be credited.
+    const reportScores = [];
+    for (const id of reportIDs) {
+      const report = await getReport('scored', id);
+      reportScores.push(report.score);
+    }
+    // Analyze the reports.
+    const reportObj = issues(what, reportScores);
+    // Save the issues report.
+    const issuesDir = `${reportDir}/issues`;
+    await fs.mkdir(issuesDir, {recursive: true});
+    const issuesReportID = getFileID(2);
+    const reportPath = `${issuesDir}/${issuesReportID}.json`;
+    await fs.writeFile(reportPath, `${JSON.stringify(reportObj, null, 2)}\n`);
+    console.log(`Issue scores tallied and issues report saved as ${reportPath}`);
+  }
+  // Otherwise, i.e. if no scored reports are to be analyzed:
+  else {
+    // Report this.
+    console.log('ERROR: No scored reports to be analyzed');
+  }
+};
 
 // ########## OPERATION
 
@@ -554,6 +584,12 @@ else if (fn === 'track' && fnArgs.length > 1 && fnArgs.length < 5) {
 }
 else if (fn === 'credit' && fnArgs.length > 0 && fnArgs.length < 3) {
   callCredit(... fnArgs)
+  .then(() => {
+    console.log('Execution completed');
+  });
+}
+else if (fn === 'issues' && fnArgs.length > 0 && fnArgs.length < 3) {
+  callIssues(... fnArgs)
   .then(() => {
     console.log('Execution completed');
   });

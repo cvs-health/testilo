@@ -359,7 +359,7 @@ The second form will create a script that prescribes tests for all the rules of 
 
 The third form will create a script that prescribes tests for all the rules classified by the named issue-classification file into any of the specified issues.
 
-In this statement, replace `id` with an ID for the script, such as `headings1`, consisting of ASCII alphanumeric characters, or with `''` if you want Testilo to create an ID. Replace `what` with a string describing the script, or with `''` if you want Testilo to create a generic description. Replace `device` with a valid device ID.
+In this statement, replace `id` with an ID for the script, such as `headings1`, consisting of ASCII alphanumeric characters, or with `''` if you want Testilo to create an ID. Replace `what` with a string describing the script, or with `''` if you want Testilo to create a generic description. Replace `deviceID` with a valid device ID.
 
 The `call` module will retrieve the named classification, if any.
 The `script` module will create a script.

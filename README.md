@@ -215,7 +215,6 @@ Here is a script:
   timeLimit: 80,
   creationTimeStamp: ''
   executionTimeStamp: '',
-  sendReportTo: 'https://abccorp.com/api/report',
   target: {
     what: '',
     url: ''
@@ -262,7 +261,6 @@ A script has several properties that specify facts about the jobs to be created.
 - `device`: This specifies the ID of a device and properties that each new browser context (window) will have that correspond to that device. The permitted devices are those (about 125 in number) [recognized by Playwright](https://github.com/microsoft/playwright/blob/main/packages/playwright-core/src/server/deviceDescriptorsSource.json), as well as `'default'`.
 - `browserID`: This specifies the default browser type (`'chromium'`, `'firefox'`, or `'webkit'`) of the job.
 - `creationTimeStamp` and `executionTimeStamp`: These properties will have values assigned to them when jobs are created from the script.
-- `sendReportTo`: This is a URL that Testaro is to send its job reports to, or `''` if the jobs will not be network jobs.
 - `target`: This object contains blank `url` and `what` properties, which will be populated each time the script is converted to a job.
 - `sources.script`: This preserves the ID of the script. The `id` property may be revised to a job ID when the script is converted to a job.
 - `sources.requester`: This is the email address to which a message announcing the completion of the job is to be sent, if any.
@@ -376,7 +374,6 @@ When the `script` module creates a script for you, it does not ask you for all o
 - `browserID`: `'webkit'`
 - `lowMotion`: `false`
 - `timeLimit`: 50 plus 30 per tool
-- `sendReportTo`: `process.env.SEND_REPORT_TO`, or `''` if none
 - `sources.id`: script ID
 - `sources.requester`: `''`
 - test acts: `launch` = {}
@@ -480,7 +477,6 @@ Thus, a report produced by Testaro contains these properties:
 - `timeLimit`
 - `standard`
 - `observe`
-- `sendReportTo`
 - `timeStamp`
 - `acts`
 - `sources`

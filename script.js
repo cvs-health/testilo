@@ -161,7 +161,6 @@ exports.script = (id, what, deviceID, options = {}) => {
       timeLimit: Math.round(50 + 30 * Object.keys(toolsRulesData).length),
       creationTimeStamp: '',
       executionTimeStamp: '',
-      sendReportTo: process.env.SEND_REPORT_TO || '',
       target: {
         what: '',
         url: ''

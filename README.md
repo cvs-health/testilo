@@ -805,8 +805,8 @@ The `report` argument is a scored report. The `summary` constant is an object. T
 A user can invoke `summarize()` in either of these two ways:
 
 ```javaScript
-node call summarize "company divisions"
-node call summarize "company divisions" 2411
+node call summarize 'company divisions'
+node call summarize 'company divisions' 2411
 ```
 
 When a user invokes `summarize` in this example, the `call` module:

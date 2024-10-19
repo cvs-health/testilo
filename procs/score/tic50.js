@@ -2855,6 +2855,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'ARIA role is not contained by a required parent'
+        },
+        'Ensure elements with ARIA roles are within required parent roles.': {
+          variable: false,
+          quality: 1,
+          what: 'ARIA role is not contained by a required parent'
         }
       }
     }
@@ -4295,6 +4300,21 @@ exports.issues = {
       }
     }
   },
+  ariaVersusHTML: {
+    summary: 'aria and HTML attributes have conflicting value',
+    why: 'User gets erroneous help with content',
+    wcag: '4.1.2',
+    weight: 4,
+    tools: {
+      ibm: {
+        aria_attribute_conflict: {
+          variable: false,
+          quality: 1,
+          what: 'ARIA and HTML attributes on the same element have conflicting values'
+        }
+      }
+    }
+  },
   ariaReferenceBad: {
     summary: 'aria reference invalid',
     why: 'Item behavior violates user expectations',
@@ -5703,6 +5723,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element is ul or ol but directly contains an element other than li, script, or template'
+        },
+        'Ensure lists are structured correctly with <li> elements.': {
+          variable: false,
+          quality: 1,
+          what: 'List contains non-li items'
         }
       }
     }
@@ -6831,6 +6856,21 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Target size is substandard'
+        }
+      }
+    }
+  },
+  targetsNear: {
+    summary: 'small targets too near to each other',
+    why: 'User cannot reliably choose an item to click or tap',
+    wcag: '2.5.8',
+    weight: 3,
+    tools: {
+      ibm: {
+        target_spacing_sufficient: {
+          variable: false,
+          quality: 1,
+          what: 'Small targets are not far enough apart'
         }
       }
     }
@@ -8511,6 +8551,11 @@ exports.issues = {
       },
       wax: {
         'Elements should not have tabindex greater than zero': {
+          variable: false,
+          quality: 1,
+          what: 'Element has a positive tabIndex attribute'
+        },
+        'Remove or adjust tabindex attributes greater than zero.': {
           variable: false,
           quality: 1,
           what: 'Element has a positive tabIndex attribute'

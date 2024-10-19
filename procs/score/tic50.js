@@ -1344,6 +1344,13 @@ exports.issues = {
           quality: 1,
           what: 'HTML lang and xml:lang do not match'
         }
+      },
+      wax: {
+        'Use valid values for lang attributes.': {
+          variable: false,
+          quality: 1,
+          what: 'lang attribute of the html element has an invalid value'
+        }
       }
     }
   },

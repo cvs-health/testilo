@@ -4707,16 +4707,16 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Contrast between the text and its background image may be less than 7:1'
-        },
-        qualWeb: {
-          'QW-ACT-R37': {
-            variable: false,
-            quality: 1,
-            what: 'Text has less than the minimum contrast or has an image background'
-          }
+        }
+      },
+      qualWeb: {
+        'QW-ACT-R37': {
+          variable: false,
+          quality: 1,
+          what: 'Text has less than the minimum contrast or has an image background'
         }
       }
-    }
+  }
   },
   colorMissing: {
     summary: 'color missing',

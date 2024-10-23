@@ -9458,6 +9458,16 @@ exports.issues = {
           quality: 1,
           what: 'CSS webkit-mask linear-gradient property has too few values'
         },
+        'CSS: --solidHeaderNavigationColor: Cannot invoke "org.w3c.css.values.CssValue.getType()" because "val" is null.': {
+          variable: false,
+          quality: 1,
+          what: 'CSS solidHeaderNavigationColor property is null'
+        },
+        'CSS: --gradientHeaderBackgroundColor: Cannot invoke "org.w3c.css.values.CssValue.getType()" because "val" is null.': {
+          variable: false,
+          quality: 1,
+          what: 'CSS gradientHeaderBackgroundColor property is null'
+        },
         '^CSS: In CSS1, a class name could start with a digit .+, unless it was a dimension .+ In CSS2, such classes are parsed as unknown dimensions .+ To make .+ a valid class, CSS2 requires the first digit to be escaped: .+$': {
           variable: true,
           quality: 0.5,

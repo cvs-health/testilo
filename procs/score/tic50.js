@@ -569,20 +569,25 @@ exports.issues = {
         }
       },
       wax: {
-        'This textinput element does not have a name available to an accessibility API. Valid names are: label element, title , aria-label , aria-labelledby , aria-description , aria-describedby .': {
+        'Provide accessible names for ARIA input fields.': {
           variable: false,
           quality: 1,
-          what: 'text input element has no accessible name'
+          what: 'Element with an input role has no accessible name'
         },
         'This emailinput element does not have a name available to an accessibility API. Valid names are: label element, title , aria-label , aria-labelledby , aria-description , aria-describedby .': {
           variable: false,
           quality: 1,
           what: 'email input element has no accessible name'
         },
-        'Provide accessible names for ARIA input fields.': {
+        'This searchinput element does not have a name available to an accessibility API. Valid names are: label element, title , aria-label , aria-labelledby , aria-description , aria-describedby .': {
           variable: false,
           quality: 1,
-          what: 'Element with an input role has no accessible name'
+          what: 'search input element has no accessible name'
+        },
+        'This textinput element does not have a name available to an accessibility API. Valid names are: label element, title , aria-label , aria-labelledby , aria-description , aria-describedby .': {
+          variable: false,
+          quality: 1,
+          what: 'text input element has no accessible name'
         }
       }
     }
@@ -1976,6 +1981,11 @@ exports.issues = {
         }
       },
       wax: {
+        '^This form control contains an aria-labelledby attribute, however it includes an ID "[^"]+" that does not exist on an element. The aria-labelledby attribute will be ignored for labelling test purposes\.$': {
+          variable: true,
+          quality: 1,
+          what: 'aria-labelledby value is not the id of any element'
+        },
         'This label\'s "for" attribute contains an ID that does not exist in the document fragment.': {
           variable: false,
           quality: 1,
@@ -4276,6 +4286,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element has no valid ARIA role but has an aria-roledescription attribute'
+        },
+        'Use only valid ARIA attributes that conform to specifications.': {
+          variable: false,
+          quality: 1,
+          what: 'Element has an invalid ARIA attribute'
         }
       }
     }
@@ -7296,6 +7311,13 @@ exports.issues = {
           quality: 1,
           what: 'main landmark is not at the top level'
         }
+      },
+      wax: {
+        'Place the main landmark at the top level, not within another landmark.': {
+          variable: false,
+          quality: 1,
+          what: 'main landmark is not at the top level'
+        }
       }
     }
   },
@@ -7361,6 +7383,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Page includes more than 1 visible main element'
+        }
+      },
+      wax: {
+        'Include only one main landmark in the document.': {
+          variable: false,
+          quality: 1,
+          what: 'Page includes more than 1 main element'
         }
       }
     }

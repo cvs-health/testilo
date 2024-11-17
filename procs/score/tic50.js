@@ -840,6 +840,21 @@ exports.issues = {
       }
     }
   },
+  svgNoText: {
+    summary: 'SVG image not named',
+    why: 'User cannot get help to know what is in an image',
+    wcag: '1.1.1',
+    weight: 4,
+    tools: {
+      wax: {
+        'Add alternative text to <svg> elements with an img, graphics-document, or graphics-symbol role.': {
+          variable: false,
+          quality: 1,
+          what: 'Element is svg with an image role but has no accessible name'
+        }
+      }
+    }
+  },
   imageTextSpaces: {
     summary: 'image name contains only spacing characters',
     why: 'User cannot get help understanding an image',
@@ -7447,6 +7462,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'banner landmark is not at the top level'
+        }
+      },
+      wax: {
+        'Place the banner landmark at the top level, not within another landmark.': {
+          variable: false,
+          quality: 1,
+          what: 'banner is within another landmark'
         }
       }
     }

@@ -622,6 +622,21 @@ exports.issues = {
       }
     }
   },
+  placeholderPlusAria: {
+    summary: 'element has competing placeholder attributes',
+    why: 'User gets conflicting help on what information to enter in a form item',
+    wcag: '4.1.2',
+    weight: 3,
+    tools: {
+      nuVal: {
+        'The aria-placeholder attribute must not be specified on elements that have a placeholder attribute.': {
+          variable: false,
+          quality: 1,
+          what: 'Element has both placeholder and aria-placeholder attributes'
+        }
+      }
+    }
+  },
   imageButtonNoText: {
     summary: 'image button not named',
     why: 'User cannot get help understanding an image used as a button',
@@ -1791,6 +1806,13 @@ exports.issues = {
           quality: 1,
           what: 'for attribute of the label element does not reference a non-hidden form control'
         }
+      },
+      wax: {
+        'This label\'s "for" attribute contains an ID for an element that is not a form control. Ensure that you have entered the correct ID for the intended element.': {
+          variable: false,
+          quality: 1,
+          what: 'for attribute of the label element does not reference a form control'
+        }
       }
     }
   },
@@ -2673,6 +2695,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element is select and has no multiple attribute, but has more than 1 selected option'
+        },
+        'A select element with a required attribute, and without a multiple attribute, and without a size attribute whose value is greater than 1, must have a child option element.': {
+          variable: false,
+          quality: 1,
+          what: 'Element is select and has no child option element, but its attributes require one'
         }
       }
     }
@@ -3453,6 +3480,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element has a color attribute but no rel attribute with mask-icon as its value'
+        }
+      },
+      wax: {
+        'Link element is missing a non-empty rel attribute identifying the link type.': {
+          variable: false,
+          quality: 1,
+          what: 'Element is link, but its rel attribute is empty or missing'
         }
       }
     }
@@ -6197,6 +6231,13 @@ exports.issues = {
     wcag: '1.3.1',
     weight: 2,
     tools: {
+      ibm: {
+        table_structure_misuse: {
+          variable: false,
+          quality: 1,
+          what: 'table has a presentation or none role but has a summary attribute or structural elements'
+        }
+      },
       qualWeb: {
         'QW-WCAG-T12': {
           variable: false,
@@ -7262,6 +7303,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element is contentinfo but is within another landmark'
+        },
+        'Ensure the contentinfo landmark is at the top level without being nested.': {
+          variable: false,
+          quality: 1,
+          what: 'Element is contentinfo but is nested in another landmark'
         }
       }
     }

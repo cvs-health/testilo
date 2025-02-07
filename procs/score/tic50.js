@@ -8603,21 +8603,6 @@ exports.issues = {
       }
     }
   },
-  filterStyle: {
-    summary: 'filter style',
-    why: 'Item is too distorted for understandability',
-    wcag: '4.1',
-    weight: 1,
-    tools: {
-      testaro: {
-        filter: {
-          variable: false,
-          quality: 1,
-          what: 'Element styles include filter'
-        }
-      }
-    }
-  },
   zIndexNotZero: {
     summary: 'z-index not zero',
     why: 'User cannot predict the effect of clicking',

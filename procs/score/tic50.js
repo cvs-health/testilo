@@ -51,6 +51,11 @@ exports.issues = {
     weight: 0,
     tools: {
       aslint: {
+        capital_letters_words: {
+          variable: false,
+          quality: 1,
+          what: 'Element or its title has entirely upper-case words [invalid]'
+        },
         color_contrast_aa: {
           variable: false,
           quality: 0,
@@ -198,6 +203,11 @@ exports.issues = {
           variable: false,
           quality: 0,
           what: 'Element contains a prohibited mediaelementwrapper element [invalid]'
+        },
+        'Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.': {
+          variable: false,
+          quality: 1,
+          what: 'Void element has a useless trailing slash. [invalid]'
         }
       },
       qualWeb: {
@@ -205,6 +215,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element with aria-hidden has focusable content [invalid]'
+        },
+        'QW-ACT-R41': {
+          variable: false,
+          quality: 1,
+          what: 'Error message describes no invalid form field value [speculative]'
         },
         'QW-ACT-R52': {
           variable: false,
@@ -295,6 +310,11 @@ exports.issues = {
           variable: false,
           quality: 0,
           what: 'summary attribute is not used to give an overview of a data table [invalid]'
+        },
+        'QW-WCAG-T8': {
+          variable: false,
+          quality: 1,
+          what: 'Text alternative is suspect [invalid]'
         },
         'QW-WCAG-T9': {
           variable: false,
@@ -965,13 +985,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Text alternative may fail to give information provided by colors'
-        }
-      },
-      qualWeb: {
-        'QW-WCAG-T8': {
-          variable: false,
-          quality: 1,
-          what: 'Text alternative is suspect'
         }
       },
       wave: {
@@ -7168,13 +7181,6 @@ exports.issues = {
           what: 'Paragraph text is uppercased'
         }
       },
-      aslint: {
-        capital_letters_words: {
-          variable: false,
-          quality: 1,
-          what: 'Element or its title has entirely upper-case words'
-        }
-      },
       ed11y: {
         textUppercase: {
           variable: false,
@@ -9117,13 +9123,6 @@ exports.issues = {
           quality: 1,
           what: 'Element has an aria-errormessage attribute whose value is an invalid id'
         }
-      },
-      qualWeb: {
-        'QW-ACT-R41': {
-          variable: false,
-          quality: 1,
-          what: 'Error message describes no invalid form field value'
-        }
       }
     }
   },
@@ -9875,21 +9874,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'longdesc attribute has a value that is not a URL (and is obsolete)'
-        }
-      }
-    }
-  },
-  slashParseRisk: {
-    summary: 'void element has trailing slash',
-    why: 'Document contains invalid code',
-    wcag: '4.1',
-    weight: 1,
-    tools: {
-      nuVal: {
-        'Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.': {
-          variable: false,
-          quality: 1,
-          what: 'Void element has a useless trailing slash.'
         }
       }
     }

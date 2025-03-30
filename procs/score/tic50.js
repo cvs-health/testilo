@@ -2732,9 +2732,24 @@ exports.issues = {
       }
     }
   },
+  buttonNoContent: {
+    summary: 'button name not visible',
+    why: 'User cannot get help explaining a button',
+    wcag: '4.1.2',
+    weight: 1,
+    tools: {
+      aslint: {
+        empty_button_description: {
+          variable: false,
+          quality: 1,
+          what: 'button element has no visible accessible name'
+        }
+      }
+    }
+  },
   buttonNoText: {
     summary: 'button not named',
-    why: 'User cannot get help explaing a button',
+    why: 'User cannot get help explaining a button',
     wcag: '4.1.2',
     weight: 4,
     tools: {
@@ -2743,13 +2758,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'button element has no accessible name'
-        }
-      },
-      aslint: {
-        empty_button_description: {
-          variable: false,
-          quality: 1,
-          what: 'button element has no visible accessible name'
         }
       },
       axe: {

@@ -4091,20 +4091,6 @@ exports.issues = {
     wcag: '4.1.2',
     weight: 4,
     tools: {
-      axe: {
-        'aria-required-attr': {
-          variable: false,
-          quality: 1,
-          what: 'Required ARIA attribute is not provided'
-        }
-      },
-      ibm: {
-        aria_attribute_required: {
-          variable: false,
-          quality: 1,
-          what: 'Element does not have an ARIA attribute required by its role'
-        }
-      },
       nuVal: {
         '^Element image is missing required attribute (?:height|width).*$': {
           variable: true,
@@ -4130,13 +4116,6 @@ exports.issues = {
           variable: true,
           quality: 1,
           what: 'Element is missing a required attribute'
-        }
-      },
-      wax: {
-        'Include required ARIA attributes for elements with ARIA roles.': {
-          variable: false,
-          quality: 1,
-          what: 'Element does not have an ARIA attribute required by the role of the element'
         }
       }
     }
@@ -4184,6 +4163,20 @@ exports.issues = {
           what: 'Element does not have all required states and properties'
         }
       },
+      axe: {
+        'aria-required-attr': {
+          variable: false,
+          quality: 1,
+          what: 'Required ARIA attribute is not provided'
+        }
+      },
+      ibm: {
+        aria_attribute_required: {
+          variable: false,
+          quality: 1,
+          what: 'Element does not have an ARIA attribute required by its role'
+        }
+      },
       nuVal: {
         '^Element .+ is missing required attribute aria-.+$': {
           variable: true,
@@ -4196,6 +4189,13 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Element with a role attribute does not have the required states and properties'
+        }
+      },
+      wax: {
+        'Include required ARIA attributes for elements with ARIA roles.': {
+          variable: false,
+          quality: 1,
+          what: 'Element does not have an ARIA attribute required by the role of the element'
         }
       }
     }

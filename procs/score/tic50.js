@@ -96,6 +96,11 @@ exports.issues = {
           quality: 1,
           what: 'Element is a link, but its style properties do not differentiate it from its parent [irrelevant]'
         },
+        links_same_content_different_url: {
+          variable: false,
+          quality: 1,
+          what: 'Links with the same text content have different destination URLs [invalid]'
+        },
         meaningful_content_sequence: {
           variable: false,
           quality: 0,
@@ -198,6 +203,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'head element has no child title element [invalid]'
+        },
+        'Element img is missing required attribute src.': {
+          variable: false,
+          quality: 1,
+          what: 'img element has no src attribute [invalid]'
         },
         'Element mediaelementwrapper not allowed as child of element div in this context. (Suppressing further errors from this subtree.)': {
           variable: false,
@@ -340,6 +350,11 @@ exports.issues = {
           variable: false,
           quality: 0.5,
           what: 'Script removes the focus when focus is received [invalid]'
+        },
+        'QW-WCAG-T28': {
+          variable: false,
+          quality: 0.8,
+          what: 'Font size set to an absolute unit value [invalid]'
         },
         'QW-WCAG-T32': {
           variable: false,
@@ -992,21 +1007,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Image text alternative is suspect'
-        }
-      }
-    }
-  },
-  imageNoSource: {
-    summary: 'image has no src',
-    why: 'Image to be shown cannot be found',
-    wcag: '1.3.1',
-    weight: 4,
-    tools: {
-      nuVal: {
-        'Element img is missing required attribute src.': {
-          variable: false,
-          quality: 1,
-          what: 'img element has no src attribute'
         }
       }
     }
@@ -2475,13 +2475,6 @@ exports.issues = {
     wcag: '2.4.4',
     weight: 2,
     tools: {
-      aslint: {
-        links_same_content_different_url: {
-          variable: false,
-          quality: 1,
-          what: 'Links with the same text content have different destination URLs'
-        }
-      },
       qualWeb: {
         'QW-ACT-R9': {
           variable: false,
@@ -3197,13 +3190,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Paragraph text has an absolute font size'
-        }
-      },
-      qualWeb: {
-        'QW-WCAG-T28': {
-          variable: false,
-          quality: 0.8,
-          what: 'Font size set to an absolute unit value'
         }
       }
     }

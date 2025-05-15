@@ -196,6 +196,11 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Child element has a role not allowed for the role of the parent [invalid]'
+        },
+        aria_landmark_name_unique: {
+          variable: false,
+          quality: 1,
+          what: 'Multiple landmarks with the same parent region are not distinguished from one another [invalid on invisible elements]'
         }
       },
       nuVal: {
@@ -221,6 +226,11 @@ exports.issues = {
         }
       },
       qualWeb: {
+        'QW-ACT-R10': {
+          variable: false,
+          quality: 1,
+          what: 'iframe elements with identical accessible names have different purposes [invalid on invisible elements]'
+        },
         'QW-ACT-R13': {
           variable: false,
           quality: 1,
@@ -355,6 +365,11 @@ exports.issues = {
           variable: false,
           quality: 0.8,
           what: 'Font size set to an absolute unit value [invalid]'
+        },
+        'QW-WCAG-T31': {
+          variable: false,
+          quality: 1,
+          what: 'Foreground or background color is specified but not both [invalid on invisible elements'
         },
         'QW-WCAG-T32': {
           variable: false,
@@ -2527,7 +2542,7 @@ exports.issues = {
     }
   },
   linkPair: {
-    summary: 'text and image link not combined',
+    summary: 'adjacent links not combined',
     why: 'Keyboard-only user expends extra effort to skip a link',
     wcag: '2.4.4',
     weight: 2,
@@ -3670,11 +3685,6 @@ exports.issues = {
         }
       },
       qualWeb: {
-        'QW-ACT-R10': {
-          variable: false,
-          quality: 1,
-          what: 'iframe elements with identical accessible names have different purposes'
-        },
         'QW-ACT-R19': {
           variable: false,
           quality: 1,
@@ -4785,21 +4795,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Text has less than the minimum contrast or has an image background'
-        }
-      }
-  }
-  },
-  colorMissing: {
-    summary: 'color missing',
-    why: 'Content is impossible to perceive under some conditions',
-    wcag: '1.4.3',
-    weight: 4,
-    tools: {
-      qualWeb: {
-        'QW-WCAG-T31': {
-          variable: false,
-          quality: 1,
-          what: 'Foreground or background color is specified but not both'
         }
       }
     }
@@ -7608,11 +7603,6 @@ exports.issues = {
           variable: false,
           quality: 1,
           what: 'Landmark has no unique aria-labelledby or aria-label among landmarks in the same parent region'
-        },
-        aria_landmark_name_unique: {
-          variable: false,
-          quality: 1,
-          what: 'Multiple landmarks with the same parent region are not distinguished from one another'
         }
       },
       wax: {

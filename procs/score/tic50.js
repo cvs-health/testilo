@@ -50,6 +50,13 @@ exports.issues = {
     wcag: '',
     weight: 0,
     tools: {
+      alfa: {
+        r73: {
+          variable: false,
+          quality: 1,
+          what: 'Text line height is not at least 1.5 [invalid]'
+        }
+      },
       aslint: {
         capital_letters_words: {
           variable: false,
@@ -3329,13 +3336,6 @@ exports.issues = {
     wcag: '1.4.8',
     weight: 2,
     tools: {
-      alfa: {
-        r73: {
-          variable: false,
-          quality: 1,
-          what: 'Text line height is not at least 1.5'
-        }
-      },
       testaro: {
         lineHeight: {
           variable: false,
